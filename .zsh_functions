@@ -1,0 +1,229 @@
+function ncsend() {
+	nc -N -w 3 "$1" 1234 < "$2"
+}
+
+function cl() {
+	cd "$@" && ls
+}
+
+# development
+function jjj() {
+	clear
+	echo "###############"
+	echo "# COMPILATION #"
+	echo "###############"
+	javac "$1"
+	echo "\n###############"
+	echo "## EXECUTION ##"
+	echo "###############\n"
+	time java $(sed 's/.java//' <<< "$1")
+	rm *.class
+}
+
+function ccc() {
+	clear
+	echo "###############"
+	echo "# COMPILATION #"
+	echo "###############"
+    gcc "$1" -g -Wall -rdynamic -o $(sed 's/\.c//' <<< "$1")
+	echo "\n###############"
+	echo "## EXECUTION ##"
+	echo "###############\n"
+	rm $(sed 's/\.c//' <<< "$1")
+}
+
+function ccd() {
+	gcc "$1" -g -Wall -rdynamic -o $(sed 's/\.c//' <<< "$1")
+}
+
+function cca() {
+	for f in *.c; do
+        gcc "$f" -g -Wall -rdynamic -o $(sed 's/\.c//' <<< "$f")
+	done
+}
+
+# automata graph generation
+function graph() {
+	dot -Tpng -Gsize=192,108\! -Gdpi=10 "$1".gv -o "$1".png && xdg-open "$1".png
+
+}
+
+function graphsvg() {
+	dot -Tsvg "$1".gv -o "$1".svg && xsvg "$1".svg
+}
+
+# misc
+function f() {
+	find -iname "*$1*" 2>/dev/null
+}
+
+function vack() {
+    vim $(ack -l "$1")
+}
+
+function extractall() {
+	for f in $(ls); do
+		extract "$f"
+	done
+}
+
+function up() {
+	cd $(eval printf '../'%.0s {1.."$1"})
+}
+
+function fixpermissions() {
+	find . -type d -exec chmod 755 -- {} +
+	find . -type f -exec chmod 644 -- {} +
+}
+
+# new tmux session with name if parameter exists
+function t() {
+    if [ -z "$1" ]; then
+        tmux
+    else
+        tmux new -A -s "$1"
+    fi
+}
+
+# throw away directory
+function tad() {
+	local ts=$(date +%s)
+	local d="$HOME/.throw-away/$ts"
+	mkdir -p "$d"
+	(cd "$d"; zsh -c tmux)
+	rm -r "$d"
+}
+
+function dnd() {
+	local name="$(date +%F)"
+	mkdir "$name" && cd "$name"
+}
+
+function ldf() {
+	local file=~/Downloads/$(ls -1t ~/Downloads/ | head -n1)
+	echo "$file"
+	mv "$file" .
+}
+
+function mkd() {
+	mkdir -p $1 && cd $1
+}
+
+function lt-ascii() {
+	sed -e 's/[ÀÁÂÃÄÅ]/A/g'|
+	sed -e 's/Æ/AE/g'      |
+	sed -e 's/Ç/C/g'       |
+	sed -e 's/[ÈÉÊË]/E/g'  |
+	sed -e 's/[ÌÍÎÏ]/I/g'  |
+	sed -e 's/Ñ/N/g'       |
+	sed -e 's/[ÒÓÔÕÖØ]/O/g'|
+	sed -e 's/[ÙÚÛÜ]/U/g'  |
+	sed -e 's/ Ý /Y/g'     |
+	sed -e 's/[àáâãä]/a/g' |
+	sed -e 's/æ/ae/g'      |
+	sed -e 's/ç/c/g'       |
+	sed -e 's/[èéêë]/e/g'  |
+	sed -e 's/[ìíîï]/i/g'  |
+	sed -e 's/ñ/n/g'       |
+	sed -e 's/[òóôöø]/o/g' |
+	sed -e 's/[ùúûü]/u/g'  |
+	sed -e 's/ ý /y/g'
+}
+
+function man2pdf(){
+	man -t "$1" > /tmp/"$1".pdf && zathura /tmp/"$1".pdf &
+}
+
+function tre() {
+	tree -aC -I '.git|node_modules|vendor|.idea|.vscode' --dirsfirst "$@" | less -FRNX
+}
+
+# colorful man
+function man() {
+	env \
+		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+		LESS_TERMCAP_md=$(printf "\e[1;31m") \
+		LESS_TERMCAP_me=$(printf "\e[0m") \
+		LESS_TERMCAP_se=$(printf "\e[0m") \
+		LESS_TERMCAP_so=$(printf "\e[1;40;33m") \
+		LESS_TERMCAP_ue=$(printf "\e[0m") \
+		LESS_TERMCAP_us=$(printf "\e[1;32m") \
+		PAGER="${commands[less]:-$PAGER}" \
+		_NROFF_U=1 \
+		PATH="$HOME/bin:$PATH" \
+			man "$@"
+}
+
+function extract() {
+	if [ -f "$1" ] ; then
+		local filename=$(basename "$1")
+		local foldername="${filename%%.*}"
+		local fullpath=`perl -e 'use Cwd "abs_path";print abs_path(shift)' "$1"`
+		local didfolderexist=false
+		if [ -d "$foldername" ]; then
+			didfolderexist=true
+			read -p "$foldername already exists, do you want to overwrite it? (y/n) " -n 1
+			echo
+			if [[ $REPLY =~ ^[Nn]$ ]]; then
+				return
+			fi
+		fi
+		mkdir -p "$foldername" && cd "$foldername"
+		case $1 in
+			*.tar.bz2) tar xjf "$fullpath" ;;
+			*.tar.gz) tar xzf "$fullpath" ;;
+			*.tar.xz) tar Jxvf "$fullpath" ;;
+			*.tar.Z) tar xzf "$fullpath" ;;
+			*.tar) tar xf "$fullpath" ;;
+			*.taz) tar xzf "$fullpath" ;;
+			*.tb2) tar xjf "$fullpath" ;;
+			*.tbz) tar xjf "$fullpath" ;;
+			*.tbz2) tar xjf "$fullpath" ;;
+			*.tgz) tar xzf "$fullpath" ;;
+			*.txz) tar Jxvf "$fullpath" ;;
+			*.zip) unzip "$fullpath" ;;
+			*) echo "'$1' cannot be extracted via extract()" && cd .. && ! $didfolderexist && rm -r "$foldername" ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
+}
+
+# add extension to all files in a directory
+function add_extension() {
+	find . -type f -exec mv '{}' '{}'.$1 \;
+}
+
+# search for a string in file and replace it
+function sifr() {
+    find . -type f -name '*.txt' -exec sed -i "s/$1/$2/g" {} \;
+}
+
+function proc() {
+    pgrep "$1" && ps -o uid,pid,ppid,time,command -C "$1"
+}
+
+function isotoutf() {
+    iconv -f ISO-8859-1 -t UTF-8//TRANSLIT "$1" -o "$1".utf8
+}
+
+function ptex() {
+    pdflatex "$1"
+    rm $(sed 's/tex/log/' <<< "$1")
+    rm $(sed 's/tex/aux/' <<< "$1")
+}
+
+function skepy() {
+    cp ~/Coding/Python/skeleton.py "%2"
+    vim "%2".py
+
+}
+
+# ctf
+function longstrings() {
+    strings "$1" | awk 'length($0) > 10' | sort -u
+}
+
+function mvk() {
+    mv "$@" ~/CTF/Kali
+}

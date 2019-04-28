@@ -1,0 +1,138 @@
+# pacman
+alias pacs="sudo pacman -S"
+alias pacu="sudo pacman -Syu"
+alias pacr="sudo pacman -R"
+alias pacc="sudo pacman -Rnsc"
+alias pacss="pacman -Ss"
+alias yays="yay -S"
+alias yayss="yay -Ss"
+
+# systemd
+alias start="sudo systemctl start"
+alias restart="sudo systemctl restart"
+alias stop="sudo systemctl stop"
+alias status="systemctl status"
+
+alias cdw="cd /run/media/samir/WhitePassport"
+alias cdb="cd /run/media/samir/BlackPassport"
+
+# fans
+alias fans="sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 0 && sudo i8kctl fan 0 0 && sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 1"
+alias forcefans="sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 0 && sudo i8kctl fan 0 0"
+alias cool="sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 0 && sudo i8kctl fan 2 2"
+
+# ls
+alias l="ls"
+alias sl="ls"
+alias la="ls -aF"
+alias ll="ls -lF"
+alias lal="ls -laF"
+alias lla="ls -laF"
+alias lsd="ls -lFh | grep --color=never '^d'"
+alias ls="ls -F --group-directories-first --color=auto"
+
+# grep
+alias grep="grep --color"
+alias fgrep="fgrep --color"
+alias egrep="egrep --color"
+
+# editing
+alias vc="vim *.c *.h"
+alias vj="vim *.java"
+
+# config files
+alias vz="vim ~/.zshrc && source ~/.zshrc"
+alias va="vim ~/.zsh_aliases && source ~/.zshrc"
+alias vf="vim ~/.zsh_functions && source ~/.zshrc"
+alias vt="vim ~/.tmux.conf"
+alias vv="vim ~/.config/nvim/init.vim"
+
+# tmux
+alias tt="tmux new -A -s term"
+alias tl="tmux ls"
+
+# ricing
+alias rlz="source ~/.zshrc"
+alias color="~/Scripts/colors.sh"
+
+# scripts
+alias copy="xclip -sel clip"
+alias wip="curl ipinfo.io; echo"
+
+alias countfiles="find . -type f | wc -l"
+alias countfolders="find . -type d | wc -l"
+alias filetypes="find . -type f -printf '%f\n' | sed -r -n 's/.+(\..*)$/\1/p' | sort | uniq -c | sort -bn"
+alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
+
+# development
+alias cj="clear && mkdir -p bin && javac -g -d bin -sourcepath src src/Main.java; cd bin; java -ea Main; cd ..;"
+alias cjm="clear && javac Main.java && java Main && rm *.class"
+alias gccall="gcc -g -pedantic -Wall -Wextra -Wshadow -Wunreachable-code -Wconversion -Werror -Wno-padded"
+
+# software
+alias v="nvim"
+alias vim="nvim"
+alias nano="nvim"
+alias emacs="nvim"
+alias sv="sudo nvim"
+alias vimdiff="nvim -d"
+alias d="dolphin ."
+alias m="mutt"
+alias s="sudo su -"
+
+# misc
+alias c="clear"
+alias kdereload="kquitapp5 plasmashell; kstart5 plasmashell"
+
+# git
+alias g="git"
+alias gm="git merge"
+alias gmv="git mv"
+alias grm="git rm"
+alias gs="git status"
+alias gss="git status -s"
+alias gl="git pull"
+alias gc="git clone"
+alias ga="git add"
+alias grh="git reset HEAD"
+alias gap="git add -p"
+alias ga="git add -A"
+alias glum="git pull upstream master"
+alias gpr="git pull --rebase"
+alias gppd="git pull && git push origin develop"
+alias gppm="git pull && git push origin master"
+alias gfrb="git fetch && git rebase"
+alias gp="git push"
+alias gcount="git shortlog -sn"
+alias gcp="git cherry-pick"
+alias gco="git checkout"
+alias gcm="git checkout master"
+alias gsl="git shortlog -sn"
+alias gwc="git whatchanged"
+alias gnew="git log HEAD@{1}..HEAD@{0}"
+alias gcaa="git commit -a --amend -C HEAD"
+alias gstd="git stash drop"
+alias gpm="git push origin master"
+alias gpd="git push origin development"
+alias gr="git remote"
+alias gra="git remote add"
+alias gd="git diff"
+alias gb="git branch"
+alias gt="git tag"
+alias glog="git log --decorate --oneline --graph --all"
+alias groot='cd `git rev-parse --show-toplevel`'
+alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+
+# youtube
+alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
+alias ytmp3="youtube-dl -R infinite --extract-audio --audio-format mp3 --audio-quality 0 -w --output \"%(title)s.%(ext)s\""
+
+# software
+alias reg="~/Git/regldg/regldg"
+alias regd="~/Git/regldg/regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
+
+# ctf
+alias htb="cd ~/CTF/HackTheBox"
+alias pyweb="python2 -m SimpleHTTPServer 9999"
+alias kali="cd ~/CTF/Kali; vagrant up && vagrant ssh"
+alias stegsolve="java -jar ~/CTF/Tools/Stego/stegsolve.jar; disown"
