@@ -68,7 +68,6 @@ export EDITOR=nvim
 export KEYTIMEOUT=1
 export BROWSER=firefox
 export WORDCHARS='*?_[]~=&;!#$%^(){}'
-export KALI=/home/samir/Documents/Hacking/Kali
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
 __fzfcmd() {
