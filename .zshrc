@@ -64,6 +64,7 @@ else
     bindkey "^[[3~" delete-char
 fi
 
+PATH=$PATH:~/.local/bin
 export EDITOR=nvim
 export KEYTIMEOUT=1
 export BROWSER=firefox

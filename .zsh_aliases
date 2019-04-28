@@ -3,6 +3,7 @@ alias pacs="sudo pacman -S"
 alias pacu="sudo pacman -Syu"
 alias pacr="sudo pacman -R"
 alias pacc="sudo pacman -Rnsc"
+alias pacorph="sudo pacman -Rs $(pacman -Qtdq)"
 alias pacss="pacman -Ss"
 alias yays="yay -S"
 alias yayss="yay -Ss"
@@ -58,7 +59,6 @@ alias color="~/Scripts/colors.sh"
 # scripts
 alias copy="xclip -sel clip"
 alias wip="curl ipinfo.io; echo"
-
 alias countfiles="find . -type f | wc -l"
 alias countfolders="find . -type d | wc -l"
 alias filetypes="find . -type f -printf '%f\n' | sed -r -n 's/.+(\..*)$/\1/p' | sort | uniq -c | sort -bn"
@@ -136,3 +136,6 @@ alias htb="cd ~/CTF/HackTheBox"
 alias pyweb="python2 -m SimpleHTTPServer 9999"
 alias kali="cd ~/CTF/Kali; vagrant up && vagrant ssh"
 alias stegsolve="java -jar ~/CTF/Tools/Stego/stegsolve.jar; disown"
+
+# uni
+alias lft="cd /home/samir/Uni/2/LFT/18-19/Laboratorio/LFT-Ettali/src"
