@@ -57,7 +57,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Git
     Plug 'rhysd/committia.vim' " Better commit editing
     Plug 'airblade/vim-gitgutter'
-    " Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
 
     " Web development
     " Plug 'mattn/emmet-vim'
@@ -110,12 +110,11 @@ set synmaxcol=200                  " Don't bother highlighting off screen lines
 
 set termguicolors
 set background=dark
-" colorscheme candy
-colorscheme base16-oceanicnext
+" colorscheme base16-oceanicnext
 " colorscheme spacegray
 " colorscheme base16-tomorrow-night
 " colorscheme base16-default-dark
-" colorscheme base16-bright
+colorscheme base16-bright
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -324,6 +323,9 @@ nnoremap <Leader>lc mzguiw`za<Esc>
 " Replace word globally
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
+" Compile using make file
+nnoremap <Leader>m :make<CR>
+
 " Java mappings
 inoremap <Leader>pri <Esc>ISystem.out.println(<Esc>A);<Esc>
 " inoremap <Leader>for <Esc>Ifor (int i = 0; i < <Esc>A; i++) {<enter>}<Esc>O
@@ -382,6 +384,8 @@ let g:mkdp_auto_start = 1
 " let g:ale_set_loclist = 0
 " let g:ale_set_quickfix = 1
 " let g:ale_open_list = 1
+" Enable completion where available.
+let g:ale_completion_enabled = 1
 
 " vim-nerdtree-syntax-highlight
 let g:NERDTreeFileExtensionHighlightFullName = 1
