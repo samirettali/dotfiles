@@ -1,12 +1,19 @@
 # pacman
-alias pacs="sudo pacman -S"
-alias pacu="sudo pacman -Syu"
-alias pacr="sudo pacman -R"
-alias pacc="sudo pacman -Rnsc"
-alias pacorph="sudo pacman -Rs $(pacman -Qtdq)"
-alias pacss="pacman -Ss"
-alias yays="yay -S"
-alias yayss="yay -Ss"
+if uname -a | grep -i 'arch'; then
+    alias pacs="sudo pacman -S"
+    alias pacu="sudo pacman -Syu"
+    alias pacr="sudo pacman -R"
+    alias pacc="sudo pacman -Rnsc"
+    alias pacorph="sudo pacman -Rs $(pacman -Qtdq)"
+    alias pacss="pacman -Ss"
+    alias yays="yay -S"
+    alias yayss="yay -Ss"
+elif uname -a | grep -i 'ubuntu\|debian'; then
+    alias apti="sudo apt install"
+    alias aptr="sudo apt remove --purge"
+    alias aptu="sudo apt-get update && sudo apt-get upgrade"
+fi
+
 
 # systemd
 alias start="sudo systemctl start"
