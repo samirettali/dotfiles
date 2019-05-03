@@ -1,0 +1,2 @@
+vnoremap < <gv
+vnoremap > >gv
