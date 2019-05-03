@@ -8,21 +8,21 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
     " Moving
-    " Plug 'matze/vim-move' " Move visually selected lines
+    " Plug 'matze/vim-move'                     " Move visually selected lines
 
     " Writing
-    Plug 'godlygeek/tabular' " Align text automatically
-    Plug 'chrisbra/Colorizer' " Show RGB colors
-    Plug 'Raimondi/delimitMate' " Auto completion for quotes, brackets, etc.
-    Plug 'wellle/tmux-complete.vim' " Autocomplete from tmux
-    Plug 'scrooloose/nerdcommenter' " Add shortcuts to comment
-    " Plug 'caigithub/a_pair' " Combine parenthesis in a vim object
+    Plug 'godlygeek/tabular'                    " Align text automatically
+    Plug 'chrisbra/Colorizer'                   " Show RGB colors
+    Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
+    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
+    Plug 'scrooloose/nerdcommenter'             " Add shortcuts to comment
+    " Plug 'caigithub/a_pair'                   " Combine parenthesis in a vim object
 
     " Text objects
-    " Plug 'machakann/vim-swap' " Swap delimited items
-    Plug 'tpope/vim-surround' " Add surround object for editing
-    Plug 'machakann/vim-textobj-delimited' " Add delimiting object to strings
-    " Plug 'michaeljsmith/vim-indent-object' " Add current indentation level object
+    Plug 'machakann/vim-swap'                   " Swap delimited items
+    Plug 'tpope/vim-surround'                   " Add surround object for editing
+    Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
+    " Plug 'michaeljsmith/vim-indent-object'    " Add current indentation level object
 
     " Deoplete
     " Plug 'roxma/nvim-yarp'
@@ -37,6 +37,8 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Python
     " Plug 'vim-scripts/indentpython.vim'
 
+    Plug 'junegunn/goyo.vim'
+
     " Latex
     Plug 'xuhdev/vim-latex-live-preview'
 
@@ -47,15 +49,15 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Linting and syntax
     Plug 'w0rp/ale'
     " Plug 'nvie/vim-flake8'
-    " Plug 'PProvost/vim-ps1' " Powershell syntax
+    " Plug 'PProvost/vim-ps1'                   " Powershell syntax
     " Plug 'vim-syntastic/syntastic'
-    Plug 'Chiel92/vim-autoformat' " Code auto formatting
+    Plug 'Chiel92/vim-autoformat'               " Code auto formatting
 
     " Auto completion
-    " Plug 'Valloric/YouCompleteMe'
+    Plug 'Valloric/YouCompleteMe'
 
     " Git
-    Plug 'rhysd/committia.vim' " Better commit editing
+    Plug 'rhysd/committia.vim'                  " Better commit editing
     Plug 'airblade/vim-gitgutter'
     Plug 'Xuyuanp/nerdtree-git-plugin'
 
@@ -70,36 +72,42 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Plug 'captbaritone/better-indent-support-for-php-with-html'
 
     " Navigation
-    Plug 'majutsushi/tagbar' " Show a panel to browse tags
-    Plug 'ap/vim-buftabline' " Show a list of the current buffers
-    Plug 'scrooloose/nerdtree' " Nerdtree file navigator
-    Plug 'christoomey/vim-tmux-navigator' " Navigate between vim and tmux splits
+    Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
+    Plug 'ap/vim-buftabline'                    " Show a list of the current buffers
+    Plug 'scrooloose/nerdtree'                  " Nerdtree file navigator
+    Plug 'christoomey/vim-tmux-navigator'       " Navigate between vim and tmux splits
 
     " Nerdtree
     Plug 'ryanoasis/vim-devicons'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
     " Misc
-    " Plug 'xolox/vim-misc'
     Plug 'mileszs/ack.vim'
-    Plug 'romainl/vim-cool' " Disable search highlighting automatically
-    Plug 'tpope/vim-eunuch' " UNIX commands in vim
-    Plug 'mhinz/vim-startify' " Start screen for vim
-    " Plug 'Yggdroot/indentLine' " Show lines for indentation level
-    Plug 'itchyny/lightline.vim' " Status line
-    " Plug 'junegunn/limelight.vim' " Show syntax only for current indentation level
-    Plug 'justinmk/vim-syntax-extra' " Add some syntax definitions
-    Plug 'machakann/vim-highlightedyank' " Hightlight yanked text
+    Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
+    Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
+    Plug 'mhinz/vim-startify'                   " Start screen for vim
+    Plug 'Yggdroot/indentLine'                  " Show lines for indentation level
+    Plug 'itchyny/lightline.vim'                " Status line
+    Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
+    Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
 
     " Themes
     " Plug 'sheerun/vim-polyglot'
-    " Plug 'mhartington/oceanic-next'
+    Plug 'dracula/vim'
+    Plug 'ayu-theme/ayu-vim'
     Plug 'ajh17/Spacegray.vim'
     Plug 'chriskempson/base16-vim'
+    Plug 'mhartington/oceanic-next'
+    Plug 'yarisgutierrez/ayu-lightline'
+    Plug 'xolox/vim-colorscheme-switcher'
+    Plug 'xolox/vim-misc'
 
     " To try
-    " Plug 'terryma/vim-multiple-cursors'
     " Plug 'tmhedberg/SimpylFold'
+
+    " Snippets
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
 call plug#end()
 
 set nocompatible
@@ -110,11 +118,7 @@ set synmaxcol=200                  " Don't bother highlighting off screen lines
 
 set termguicolors
 set background=dark
-" colorscheme base16-oceanicnext
-" colorscheme spacegray
-" colorscheme base16-tomorrow-night
-" colorscheme base16-default-dark
-colorscheme base16-bright
+colorscheme dracula
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -128,11 +132,9 @@ set ignorecase                     " Make searching case insensitive
 set smartcase                      " Make search sensitive to capital letters
 set noshowmode                     " Hide current vim mode because of lightline
 set title
-" set laststatus=0                 " Remove status bar
 set textwidth=80
 set colorcolumn=81
-highlight ColorColumn guibg=#373b41
-" match ErrorMsg '\%>80v.\+'
+highlight ColorColumn ctermbg=Red
 set wrap
 set showmode
 set formatoptions-=t
@@ -213,8 +215,11 @@ nnoremap <F1> <Esc>
 inoremap <F1> <Esc>
 vnoremap <F1> <Esc>
 
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprev<CR>
+" Compile using make file
+nnoremap <C-m> :make<CR>
+
+nnoremap <C-x> :bnext<CR>
+nnoremap <C-z> :bprev<CR>
 
 nnoremap <C-j> <C-w><C-j>
 nnoremap <C-k> <C-w><C-k>
@@ -323,29 +328,10 @@ nnoremap <Leader>lc mzguiw`za<Esc>
 " Replace word globally
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
-" Compile using make file
-nnoremap <Leader>m :make<CR>
-
-" Java mappings
-inoremap <Leader>pri <Esc>ISystem.out.println(<Esc>A);<Esc>
-" inoremap <Leader>for <Esc>Ifor (int i = 0; i < <Esc>A; i++) {<enter>}<Esc>O
-inoremap <Leader>if <Esc>Iif (<Esc>A) {<enter>}<Esc>O<Tab>
-
 " C mappings
-" map <Leader>df i#define 
-" imap <Leader>df #define 
-map <Leader>in i#include <.h><Esc>2hi
-imap <Leader>in #include <.h><Esc>2hi
 let @d = "0"
 map <Leader>d oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
 map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
-map <Leader>k o#include "/home/samir/code/c/library.c"<Esc>
-inoremap <Leader>; <C-o>A;<Esc>
-nnoremap <Leader>; A;<Esc>
-
-" Termbin upload
-" nmap <Leader>pb :!php ~/scripts/pastebin.php < %<CR>
-" nmap <Leader>tb :!nc termbin.com 9999 < % \| xclip -sel clip<CR>
 
 " Keep text selected after indentation
 vnoremap < <gv
@@ -361,7 +347,7 @@ nnoremap ù ])
 nnoremap <Leader>13 ggVGg?<CR> 
 
 " PLUGIN SETTINGS
-let g:lightline = { 'colorscheme' : 'Tomorrow_Night' }
+let g:lightline = { 'colorscheme' : 'dracula' }
 let g:buftabline_numbers = 2
 let g:deoplete#enable_at_startup = 1
 " let g:neomake_open_list = 2
@@ -385,56 +371,32 @@ let g:mkdp_auto_start = 1
 " let g:ale_set_quickfix = 1
 " let g:ale_open_list = 1
 " Enable completion where available.
-let g:ale_completion_enabled = 1
+" let g:ale_completion_enabled = 1
+
+" ultiSnips
+let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
 
 " vim-nerdtree-syntax-highlight
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
-" Remove buffer when you delete a file from NERDTree
-let NERDTreeAutoDeleteBuffer = 1
-" Hide pyc files
-let NERDTreeIgnore=['\.pyc$', '\~$']
+let NERDTreeAutoDeleteBuffer = 1                        " Remove buffer when you delete a file from NERDTree
 
 " YouCompleteMe
 let g:ycm_autoclose_preview_window_after_completion=1
+let g:loaded_youcompleteme = 1
 
 " Javascript libraries syntax
 let g:used_javascript_libs = 'angularjs,angularui,angularuirouter,jquery'
 
-" Open NERDTree automatically when folder is opened
-autocmd StdinReadPre * let s:std_in=1
+" NERDTree
+autocmd StdinReadPre * let s:std_in=1                   " Open NERDTree automatically when folder is opened
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 " Close vim when only window left open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Clean NERDTree's UI
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
-
-" Limelight
-" Color name (:help cterm-colors) or ANSI code
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_conceal_ctermfg = 240
-
-" Color name (:help gui-colors) or RGB color
-let g:limelight_conceal_guifg = 'DarkGray'
-let g:limelight_conceal_guifg = '#777777'
-
-" Default: 0.5
-let g:limelight_default_coefficient = 0.1
-
-" Number of preceding/following paragraphs to include (default: 0)
-let g:limelight_paragraph_span = 1
-
-" Beginning/end of paragraph
-"   When there's no empty line between the paragraphs
-"   and each paragraph starts with indentation
-let g:limelight_bop = '^\s'
-let g:limelight_eop = '\ze\n^\s'
-
-" Highlighting priority (default: 10)
-"   Set it to -1 not to overrule hlsearch
-let g:limelight_priority = -1
 
 " Match tag always
 let g:mta_filetypes = {
@@ -453,18 +415,14 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.php'
 
 " PLUGIN MAPPINGS
 map <silent> <F6> :ColorToggle<CR>
-map <F7> :make<CR>
 map <F8> :TagbarToggle<CR>
 map <F9> :PrevColorScheme<CR>
 map <F10> :NextColorScheme<CR>
 map <F12> :lnext<CR>
 map <C-n> :NERDTreeToggle<CR>
 
-nnoremap <Leader>t :Tabularize /
-
 " YouCompleteMe
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
 
 nmap <F3> <Plug>(JavaComplete-Imports-AddMissing)
 imap <F3> <Plug>(JavaComplete-Imports-AddMissing)
@@ -477,18 +435,6 @@ let g:user_emmet_leader_key='<C-M>'
 
 map f <Plug>Sneak_s
 map F <Plug>Sneak_S
-
-" TODO vim-multiple-cursors
-let g:multi_cursor_use_default_mapping=0
-" Default mapping
-let g:multi_cursor_start_word_key      = '<Leader>m'
-" let g:multi_cursor_select_all_word_key = '<A-n>'
-" let g:multi_cursor_start_key           = 'g<C-n>'
-" let g:multi_cursor_select_all_key      = 'g<A-n>'
-" let g:multi_cursor_next_key            = '<C-n>'
-" let g:multi_cursor_prev_key            = '<C-p>'
-" let g:multi_cursor_skip_key            = '<C-x>'
-" let g:multi_cursor_quit_key            = '<Esc>'
 
 " FUNCTIONS
 function! Zap()
@@ -531,29 +477,6 @@ autocmd VimResized * :wincmd =
 " PROGRAMMING SETTINGS
 " Decompile class files
 autocmd BufReadCmd *.class call <SID>ReadClass(expand("<afile>:p:h"), expand("<afile>:t:r"))
-
-" Java class template
-autocmd BufNewFile *.java exe "normal ipublic class " . expand('%:t:r') . " {\n}\<Esc>1G"
-
-" Insert package name
-" autocmd BufNewFile *.java call InsertJavaPackage()
-function! InsertJavaPackage()
-    let filename = expand("%")
-    let filename = substitute(filename, "\.java$", "", "")
-    let dir = getcwd() . "/" . filename
-    let dir = substitute(dir, "^.*\/src\/", "", "")
-    let dir = substitute(dir, "\/[^\/]*$", "", "")
-    let dir = substitute(dir, "\/", ".", "g")
-    let filename = substitute(filename, "^.*\/", "", "")
-    let dir = "package " . dir . ";"
-    let result = append(0, dir)
-    let result = append(1, "")
-    let result = append(2, "public class " . filename . " {")
-    let result = append(3, "    ")
-    let result = append(4, "}")
-    exe 4
-    :startinsert!
-endfunction
 
 " Display register, press a key and paste into the buffer
 function! Reg()
