@@ -41,7 +41,7 @@ alias tl="tmux ls"
 
 # ricing
 alias rlz="source ~/.zshrc"
-alias color="~/Scripts/colors.sh"
+alias color="~/Scripts/term/colors.sh"
 
 # scripts
 alias copy="xclip -sel clip"
@@ -52,6 +52,7 @@ alias filetypes="find . -type f -printf '%f\n' | sed -r -n 's/.+(\..*)$/\1/p' | 
 alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
 
 # development
+alias cm="clear; make"
 alias cj="clear && mkdir -p bin && javac -g -d bin -sourcepath src src/Main.java; cd bin; java -ea Main; cd ..;"
 alias cjm="clear && javac Main.java && java Main && rm *.class"
 alias gccall="gcc -g -pedantic -Wall -Wextra -Wshadow -Wunreachable-code -Wconversion -Werror -Wno-padded"
@@ -126,3 +127,4 @@ alias stegsolve="java -jar ~/CTF/Tools/Stego/stegsolve.jar; disown"
 
 # uni
 alias lft="cd /home/samir/Uni/2/LFT/18-19/Laboratorio/LFT-Ettali/src"
+alias asd="cd /home/samir/Uni/2/asd/18-19/laboratorio-algoritmi-2018-19"
