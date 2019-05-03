@@ -1,5 +1,5 @@
 export PATH=~/.local/bin:$PATH
-export ZSH="/home/samir/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="samir"
 
@@ -42,7 +42,7 @@ source ~/.zsh_functions
 
 REPORTTIME=3
 export EDITOR='nvim'
-export SSH_ASKPASS=ksshaskpass export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
 bindkey '^ ' autosuggest-accept
 
