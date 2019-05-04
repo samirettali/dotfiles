@@ -98,6 +98,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'ajh17/Spacegray.vim'
     Plug 'chriskempson/base16-vim'
     Plug 'mhartington/oceanic-next'
+    Plug 'rafi/awesome-vim-colorschemes'
     Plug 'yarisgutierrez/ayu-lightline'
     Plug 'xolox/vim-colorscheme-switcher'
     Plug 'xolox/vim-misc'
@@ -118,7 +119,9 @@ set synmaxcol=200                  " Don't bother highlighting off screen lines
 
 set termguicolors
 set background=dark
-colorscheme dracula
+let themes = ['deep-space', 'dracula', 'base16-tomorrow-night', 'hybrid', 'hybrid_material', 'hybrid_reverse', 'OceanicNext', 'onedark', 'spacegray']
+execute 'colorscheme '.themes[localtime() % len(themes)]
+unlet themes
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
