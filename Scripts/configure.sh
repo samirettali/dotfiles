@@ -27,7 +27,7 @@ config config --local status.showUntrackedFiles no
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # zplug
-curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+zsh -c "$(curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh)"
 
 # oh my zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
