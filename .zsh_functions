@@ -1,12 +1,4 @@
-ncsend() {
-	nc -N -w 3 "$1" 1234 < "$2"
-}
-
-cl() {
-	cd "$@" && ls
-}
-
-# development
+# Development
 jjj() {
 	clear
 	echo "###############"
@@ -42,7 +34,7 @@ cca() {
 	done
 }
 
-# automata graph generation
+# Automata graph generation
 graph() {
 	dot -Tpng -Gsize=192,108\! -Gdpi=10 "$1".gv -o "$1".png && xdg-open "$1".png
 
@@ -52,21 +44,17 @@ graphsvg() {
 	dot -Tsvg "$1".gv -o "$1".svg && xsvg "$1".svg
 }
 
-# misc
+# Find files
 f() {
 	find -iname "*$1*" 2>/dev/null
 }
 
+# Edit all files containing a string
 vack() {
     vim $(ack -l "$1")
 }
 
-extractall() {
-	for f in $(ls); do
-		extract "$f"
-	done
-}
-
+# Go up n directories
 up() {
 	cd $(eval printf '../'%.0s {1.."$1"})
 }
@@ -76,7 +64,7 @@ fixpermissions() {
 	find . -type f -exec chmod 644 -- {} +
 }
 
-# new tmux session with name if parameter exists
+# Create new tmux session with name if passed
 t() {
     if [ -z "$1" ]; then
         tmux
@@ -85,7 +73,7 @@ t() {
     fi
 }
 
-# throw away directory
+# Throw away directory
 tad() {
 	local ts=$(date +%s)
 	local d="$HOME/.throw-away/$ts"
@@ -99,14 +87,11 @@ dnd() {
 	mkdir "$name" && cd "$name"
 }
 
+# Last downloaded file
 ldf() {
 	local file=~/Downloads/$(ls -1t ~/Downloads/ | head -n1)
 	echo "$file"
 	mv "$file" .
-}
-
-mkd() {
-	mkdir -p $1 && cd $1
 }
 
 lt-ascii() {
@@ -130,13 +115,12 @@ lt-ascii() {
 	sed -e 's/ ý /y/g'
 }
 
-man2pdf(){
-	man -t "$1" > /tmp/"$1".pdf && zathura /tmp/"$1".pdf &
-}
-
+# Better tree visualization
 tre() {
 	tree -aC -I '.git|node_modules|vendor|.idea|.vscode' --dirsfirst "$@" | less -FRNX
 }
+
+# Extract archive
 extract() {
 	if [ -f "$1" ] ; then
 		local filename=$(basename "$1")
@@ -172,16 +156,17 @@ extract() {
 	fi
 }
 
-# add extension to all files in a directory
+# Add extension to all files in a directory
 add_extension() {
 	find . -type f -exec mv '{}' '{}'.$1 \;
 }
 
-# search for a string in file and replace it
+# Search for a string in file and replace it
 sifr() {
     find . -type f -name '*.txt' -exec sed -i "s/$1/$2/g" {} \;
 }
 
+# See all processes with given name
 proc() {
     pgrep "$1" && ps -o uid,pid,ppid,time,command -C "$1"
 }
@@ -190,31 +175,28 @@ isotoutf() {
     iconv -f ISO-8859-1 -t UTF-8//TRANSLIT "$1" -o "$1".utf8
 }
 
+# Compile and clean latex
 ptex() {
     pdflatex "$1"
     rm $(sed 's/tex/log/' <<< "$1")
     rm $(sed 's/tex/aux/' <<< "$1")
 }
 
-skepy() {
-    cp ~/Coding/Python/skeleton.py "%2"
-    vim "%2".py
+# CTF stuff
 
-}
-
-# ctf
 longstrings() {
     strings "$1" | awk 'length($0) > 10' | sort -u
 }
 
+# Move to Kali vm shared folder
 mvk() {
     mv "$@" ~/CTF/Kali
 }
 
-# cd to selected directory
+# Use ack to find folder and move to it
 fd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
+    local dir
+    dir=$(find ${1:-.} -path '*/\.*' -prune \
+        -o -type d -print 2> /dev/null | fzf +m) &&
+    cd "$dir"
 }
