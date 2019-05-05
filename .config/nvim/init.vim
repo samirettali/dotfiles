@@ -15,8 +15,10 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'chrisbra/Colorizer'                   " Show RGB colors
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
-    Plug 'scrooloose/nerdcommenter'             " Add shortcuts to comment
+    " Plug 'scrooloose/nerdcommenter'             " Add shortcuts to comment
+    Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
     " Plug 'caigithub/a_pair'                   " Combine parenthesis in a vim object
+    Plug 'junegunn/goyo.vim'
 
     " Text objects
     Plug 'machakann/vim-swap'                   " Swap delimited items
@@ -24,20 +26,9 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
     " Plug 'michaeljsmith/vim-indent-object'    " Add current indentation level object
 
-    " Deoplete
-    " Plug 'roxma/nvim-yarp'
-    " Plug 'Shougo/deoplete.nvim'
-    " Plug 'roxma/vim-hug-neovim-rpc'
-
     " Coding
     " Plug 'szw/vim-tags'
-    " Plug 'neomake/neomake'
     " Plug 'artur-shaik/vim-javacomplete2'
-
-    " Python
-    " Plug 'vim-scripts/indentpython.vim'
-
-    Plug 'junegunn/goyo.vim'
 
     " Latex
     Plug 'xuhdev/vim-latex-live-preview'
@@ -47,41 +38,30 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
     " Linting and syntax
-    Plug 'w0rp/ale'
-    " Plug 'nvie/vim-flake8'
-    " Plug 'PProvost/vim-ps1'                   " Powershell syntax
+    Plug 'neomake/neomake'                      " Error checking
     " Plug 'vim-syntastic/syntastic'
+    Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting for languages
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
-
-    " Auto completion
-    Plug 'Valloric/YouCompleteMe'
+    Plug 'Shougo/deoplete.nvim'
 
     " Git
     Plug 'rhysd/committia.vim'                  " Better commit editing
     Plug 'airblade/vim-gitgutter'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
-
-    " Web development
-    " Plug 'mattn/emmet-vim'
-    " Plug 'alvan/vim-closetag'
-    " Plug 'beanworks/vim-phpfmt'
-    " Plug 'pangloss/vim-javascript'
-    " Plug 'Valloric/MatchTagAlways'
-    " Plug '2072/PHP-Indenting-for-VIm'
-    " Plug 'othree/javascript-libraries-syntax.vim'
-    " Plug 'captbaritone/better-indent-support-for-php-with-html'
+    Plug 'tpope/vim-fugitive'
 
     " Navigation
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
-    Plug 'ap/vim-buftabline'                    " Show a list of the current buffers
-    Plug 'scrooloose/nerdtree'                  " Nerdtree file navigator
+    Plug 'ap/vim-buftabline'                    " Emulate tabs with buffers
     Plug 'christoomey/vim-tmux-navigator'       " Navigate between vim and tmux splits
 
-    " Nerdtree
+    " NERDTree
+    Plug 'scrooloose/nerdtree'                  " Nerdtree file navigator
     Plug 'ryanoasis/vim-devicons'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
     " Misc
+    Plug 'xolox/vim-misc'                       " Required by colorscheme switcher
     Plug 'mileszs/ack.vim'
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
@@ -92,23 +72,22 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
 
     " Themes
-    " Plug 'sheerun/vim-polyglot'
     Plug 'dracula/vim'
     Plug 'ayu-theme/ayu-vim'
     Plug 'ajh17/Spacegray.vim'
     Plug 'chriskempson/base16-vim'
     Plug 'mhartington/oceanic-next'
     Plug 'rafi/awesome-vim-colorschemes'
-    Plug 'yarisgutierrez/ayu-lightline'
     Plug 'xolox/vim-colorscheme-switcher'
-    Plug 'xolox/vim-misc'
-
-    " To try
-    " Plug 'tmhedberg/SimpylFold'
 
     " Snippets
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
+
+    " To try
+    " Plug 'tmhedberg/SimpylFold'
+    Plug 'benmills/vimux'
+    Plug 'tpope/vim-obsession'
 call plug#end()
 
 set nocompatible
@@ -199,11 +178,58 @@ set cmdheight=1
 :command! W w
 :command! Q q
 
-" MAPPINGS
-" Auto indent pasted text
-" nnoremap p p=`]<C-o>
-" nnoremap P P=`]<C-o>""
+" Functions
+function! Zap()
+    let l:pos=getcurpos()
+    let l:search=@/
+    keepjumps %/\s\+$//e
+    let @/=l:search
+    nohlsearch
+    call setpos('.', l:pos)
+endfunction
 
+function! NumberToggle()
+    if(&relativenumber == 1)
+        set nornu
+        set number
+    else
+        set rnu
+    endif
+endfunc
+
+" Decompile java .class files
+function! s:ReadClass(dir, classname)
+    execute "cd " . a:dir
+    execute "0read !javap -c " . a:classname
+    1
+    setlocal readonly
+    setlocal nomodified
+endfunction
+
+" Display register, press a key and paste into the buffer
+function! Reg()
+    reg
+    echo "Register: "
+    let char = nr2char(getchar())
+    if char != "\<Esc>"
+        execute "normal! \"".char."p"
+    endif
+    redraw
+endfunction
+command! -nargs=0 Reg call Reg()
+
+" Used for lightline
+function! ObsessionStatus()
+    return '%{ObsessionStatus()}'
+endfunction
+
+" Check battery status
+function! MyOnBattery()
+    return readfile('/sys/class/power_supply/AC/online') == ['0']
+endfunction
+
+
+" Mappings
 noremap <up>    <C-W>+
 noremap <down>  <C-W>-
 noremap <left>  3<C-W><
@@ -212,34 +238,23 @@ noremap <right> 3<C-W>>
 nnoremap j gj
 nnoremap k gk
 
-inoremap jj <Esc>
-
-nnoremap <F1> <Esc>
-inoremap <F1> <Esc>
-vnoremap <F1> <Esc>
-
 " Compile using make file
 nnoremap <C-m> :make<CR>
 
 nnoremap <C-x> :bnext<CR>
 nnoremap <C-z> :bprev<CR>
 
+" Better splits navigation
 nnoremap <C-j> <C-w><C-j>
 nnoremap <C-k> <C-w><C-k>
 nnoremap <C-l> <C-w><C-l>
 nnoremap <C-h> <C-w><C-h>
 
+" Copy and paste using system clipboard
 vmap <C-c> "+y
 vmap <C-x> "+c
 vmap <C-v> c<Esc>"+p
 imap <C-v> <C-r><C-o>+"
-
-" map ,c :-1read ~/.config/nvim/skeletons/c.sk<CR>5jA
-map ,py :-1read ~/.config/nvim/skeletons/python.sk<CR>jA
-map ,j o<Esc>:-1read ~/.config/nvim/skeletons/java.sk<CR>jA
-imap ,j <Esc>:-1read ~/.config/nvim/skeletons/java.sk<CR>jA
-
-nmap <F5> :set pastetoggle<CR>
 
 " Move visually selected text block
 " vnoremap J :m '>+1<CR>gv=gv
@@ -252,28 +267,13 @@ nnoremap gV `[v`]
 nnoremap \ :vsplit 
 nnoremap - :split 
 
-" LEADER MAPPINGS
+" Leader mappings
 let mapleader = ","
 
+nnoremap <Leader>e :edit 
 nnoremap <Leader>o :only<CR>
 " nnoremap <Leader>p :expand('%')<CR>
 " nnoremap <Leader>pp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
-
-nnoremap <Leader>q :bd<CR>
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>e :edit 
-
-" map <Leader>h :set hlsearch!<Bar>set hlsearch?<CR>
-
-" inoremap <Leader>s <Esc>:w<CR>
-inoremap <Leader>q <Esc>:q<CR>
-inoremap <Leader>w <Esc>:wq<CR>
-
-" Open NERDTree on current file
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
-
-" Edit vimrc
-" nnoremap <Leader>vv :edit $MYVIMRC<CR>
 
 " Reload vim configuration
 nnoremap <Leader>rv :source $MYVIMRC<CR>:PlugInstall<CR>
@@ -284,27 +284,19 @@ nnoremap <silent> <Leader>l :set list!<CR>
 " Copy paragraph
 noremap <Leader>cp yap<S-}>p
 
-" Align paragraph
-" noremap <Leader>f =ip
-
-" Add author java style
-nnoremap <Leader>a o<CR>/**<CR>@author Samir Ettali<CR><BS>*/<CR><Esc>
-
-" Comment block
-map <Leader>b vaBgc<Esc>
-
-" Remove empty lines
-
-" Center line
-" nnoremap <space> zz
-
 " Toggle fold
 nnoremap <space> za
 
+" Draw underline with = symbol
 nnoremap <Leader>1 yypVr=
 
+" Toggle numeration mode
 nnoremap <Leader>n :call NumberToggle()<CR>
+
+" Trim whitespaces
 nnoremap <silent> <Leader>zs :call Zap()<CR>
+
+" Remove empty lines
 map <Leader>ze :g/^$/d<CR>
 
 " Toggle colorcolumn
@@ -349,18 +341,43 @@ nnoremap ù ])
 " ROT 13
 nnoremap <Leader>13 ggVGg?<CR> 
 
-" PLUGIN SETTINGS
-let g:lightline = { 'colorscheme' : 'dracula' }
+" Plugins settings
+" buftabline
 let g:buftabline_numbers = 2
+
+" deoplete
 let g:deoplete#enable_at_startup = 1
-" let g:neomake_open_list = 2
-let g:NERDSpaceDelims = 1
-let g:vimtex_view_method = 'zathura'
-let g:livepreview_previewer = 'zathura'
 let g:python3_host_prog = 'python3.7'
+
+" highlightedyank
 let g:highlightedyank_highlight_duration = 3000
 let g:CoolTotalMatches = 1
+
+" java-omnicomplete
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" neomake
+let g:neomake_open_list = 2
+if MyOnBattery()
+    call neomake#configure#automake('w')
+else
+    call neomake#configure#automake('nrwi', 500)
+endif
+
+" lightline
+let g:lightline = {
+\   'colorscheme': 'wombat',
+\   'active': {
+\       'left': [ [ 'mode', 'paste' ],
+\               [ 'readonly', 'filename', 'modified' ] ],
+\       'right': [ [ 'lineinfo' ],
+\                [ 'percent' ],
+\                [ 'obsession', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+\   },
+\   'component_function': {
+\       'obsession': 'ObsessionStatus'
+\   },
+\ }
 
 " vim-latex-live-preview
 let g:livepreview_previewer = 'okular'
@@ -369,15 +386,20 @@ let g:livepreview_cursorhold_recompile = 0
 " markdown-preview
 let g:mkdp_auto_start = 1
 
-" ale
-" let g:ale_set_loclist = 0
-" let g:ale_set_quickfix = 1
-" let g:ale_open_list = 1
-" Enable completion where available.
-" let g:ale_completion_enabled = 1
-
 " ultiSnips
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
+
+
+" NERDTree
+let g:NERDSpaceDelims = 1
+autocmd StdinReadPre * let s:std_in=1                   " Open NERDTree automatically when folder is opened
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" Close vim when only window left open is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Clean NERDTree's UI
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
 " vim-nerdtree-syntax-highlight
 let g:NERDTreeFileExtensionHighlightFullName = 1
@@ -385,38 +407,16 @@ let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
 let NERDTreeAutoDeleteBuffer = 1                        " Remove buffer when you delete a file from NERDTree
 
-" YouCompleteMe
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:loaded_youcompleteme = 1
-
-" Javascript libraries syntax
-let g:used_javascript_libs = 'angularjs,angularui,angularuirouter,jquery'
-
-" NERDTree
-autocmd StdinReadPre * let s:std_in=1                   " Open NERDTree automatically when folder is opened
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-" Close vim when only window left open is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" Clean NERDTree's UI
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
-" Match tag always
-let g:mta_filetypes = {
-    \ 'html' : 1,
-    \ 'xhtml' : 1,
-    \ 'xml' : 1,
-    \ 'jinja' : 1,
-    \ 'php' : 1,
-    \}
-
-" DelimitMate
+" delimitMate
 let delimitMate_matchpairs = "(:),[:],{:}"
 
-" Closetag
+" closetag
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.php'
 
-" PLUGIN MAPPINGS
+" Plugin mappings
+" Open NERDTree on current file
+nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+
 map <silent> <F6> :ColorToggle<CR>
 map <F8> :TagbarToggle<CR>
 map <F9> :PrevColorScheme<CR>
@@ -424,51 +424,33 @@ map <F10> :NextColorScheme<CR>
 map <F12> :lnext<CR>
 map <C-n> :NERDTreeToggle<CR>
 
-" YouCompleteMe
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
 nmap <F3> <Plug>(JavaComplete-Imports-AddMissing)
 imap <F3> <Plug>(JavaComplete-Imports-AddMissing)
 nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 
-" noremap <F3> :Autoformat<CR>
-
-let g:user_emmet_leader_key='<C-M>'
-
 map f <Plug>Sneak_s
 map F <Plug>Sneak_S
 
-" FUNCTIONS
-function! Zap()
-    let l:pos=getcurpos()
-    let l:search=@/
-    keepjumps %/\s\+$//e
-    let @/=l:search
-    nohlsearch
-    call setpos('.', l:pos)
-endfunction
+" Autocommands
+" Decompile class files
+autocmd BufReadCmd *.class call <SID>ReadClass(expand("<afile>:p:h"), expand("<afile>:t:r"))
 
-function! NumberToggle()
-    if(&relativenumber == 1)
-        set nornu
-        set number
-    else
-        set rnu
-    endif
-endfunc
+" Remember cursor position
+augroup vimrc-remember-cursor-position
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
 
-" Read pdf file
-:command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
+" Disable continuation of comments
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-" Decompile java .class files
-function! s:ReadClass(dir, classname)
-    execute "cd " . a:dir
-    execute "0read !javap -c " . a:classname
-    1
-    setlocal readonly
-    setlocal nomodified
-endfunction
+" Close vim when the only opened buffer is neomake error list
+autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+\   q :cclose<cr>:lclose<cr>
+autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+\   bd|
+\   q | endif
 
 " Set latest search register to empty string on insert event
 autocmd InsertEnter * :let @/=""
@@ -476,42 +458,3 @@ autocmd InsertLeave * :let @/=""
 
 " Resize splits proportionally to window resize
 autocmd VimResized * :wincmd =
-
-" PROGRAMMING SETTINGS
-" Decompile class files
-autocmd BufReadCmd *.class call <SID>ReadClass(expand("<afile>:p:h"), expand("<afile>:t:r"))
-
-" Display register, press a key and paste into the buffer
-function! Reg()
-    reg
-    echo "Register: "
-    let char = nr2char(getchar())
-    if char != "\<Esc>"
-        execute "normal! \"".char."p"
-    endif
-    redraw
-endfunction
-command! -nargs=0 Reg call Reg()
-
-" Remember cursor position
-augroup vimrc-remember-cursor-position
-  autocmd!
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-augroup END
-
-" Disable continuation of comments
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-" Python PEP 8 style
-" au BufNewFile,BufRead *.py
-    " \ set tabstop=4
-    " \ set softtabstop=4
-    " \ set shiftwidth=4
-    " \ set textwidth=79
-    " \ set expandtab
-    " \ set autoindent
-    " \ set fileformat=unix
-
-let g:clever_f_across_no_line = 1
-let g:clever_f_fix_key_direction = 1
-let g:clever_f_timeout_ms = 3000
