@@ -1,11 +1,7 @@
 export PATH=~/.local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 
-if [ -f $ZSH/custom/themes/samir.zsh-theme ]; then
-    ZSH_THEME="samir"
-else
-    ZSH_THEME="robbyrussell"
-fi
+ZSH_THEME="samir"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
