@@ -7,43 +7,25 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-    " Moving
-    " Plug 'matze/vim-move'                     " Move visually selected lines
-
     " Writing
     " Plug 'caigithub/a_pair'                   " Combine parenthesis in a vim object
-    Plug 'godlygeek/tabular'                    " Align text automatically
-    Plug 'chrisbra/Colorizer'                   " Show RGB colors
     Plug 'tpope/vim-repeat'                     " Use . to repeate plugins motions
-    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/goyo.vim'                    " Minimal UI
+    Plug 'chrisbra/Colorizer'                   " Show RGB colors
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
     Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
+
+    " Formatting
+    Plug 'matze/vim-move'                       " Move visually selected lines
+    Plug 'godlygeek/tabular'                    " Align text automatically
+
 
     " Text objects
     Plug 'machakann/vim-swap'                   " Swap delimited items
     Plug 'tpope/vim-surround'                   " Add surround object for editing
     Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
     " Plug 'michaeljsmith/vim-indent-object'    " Add current indentation level object
-
-    " Latex
-    Plug 'xuhdev/vim-latex-live-preview'       " Latex live preview
-
-    " Markdown
-    Plug 'plasticboy/vim-markdown'
-    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-
-    " Linting and syntax
-    Plug 'neomake/neomake'                      " Error checking
-    Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting for languages
-    Plug 'Chiel92/vim-autoformat'               " Code auto formatting
-    Plug 'Shougo/deoplete.nvim'
-    " Plug 'artur-shaik/vim-javacomplete2'
-
-    " Git
-    Plug 'tpope/vim-fugitive'
-    Plug 'rhysd/committia.vim'                  " Better commit editing
-    Plug 'airblade/vim-gitgutter'
 
     " Navigation
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
@@ -55,6 +37,25 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'ryanoasis/vim-devicons'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+    " Git
+    Plug 'tpope/vim-fugitive'
+    Plug 'rhysd/committia.vim'                  " Better commit editing
+    Plug 'airblade/vim-gitgutter'
+
+    " Linting and syntax
+    Plug 'neomake/neomake'                      " Error checking
+    Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting for languages
+    Plug 'Chiel92/vim-autoformat'               " Code auto formatting
+    Plug 'Shougo/deoplete.nvim'
+    " Plug 'artur-shaik/vim-javacomplete2'
+
+    " Latex
+    Plug 'xuhdev/vim-latex-live-preview'       " Latex live preview
+
+    " Markdown
+    Plug 'plasticboy/vim-markdown'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
     " Misc
     Plug 'xolox/vim-misc'                       " Required by colorscheme switcher
@@ -160,7 +161,7 @@ set showbreak=↳
 
 set updatetime=100
 
-" set clipboard^=unnamedplus " Use system clipboard
+set clipboard^=unnamedplus " Use system clipboard
 
 set completeopt=menuone,menu,longest
 
@@ -252,10 +253,6 @@ vmap <C-c> "+y
 vmap <C-x> "+c
 vmap <C-v> c<Esc>"+p
 imap <C-v> <C-r><C-o>+"
-
-" Move visually selected text block
-" vnoremap J :m '>+1<CR>gv=gv
-" vnoremap K :m '<-2<CR>gv=gv
 
 " Select text inserted during last insert mode usage
 nnoremap gV `[v`]
