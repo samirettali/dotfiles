@@ -228,3 +228,16 @@ fd() {
         -o -type d -print 2> /dev/null | fzf +m) &&
     cd "$dir"
 }
+
+# Create new vagrant machine
+vm() {
+    mkdir "$1"
+    cd "$1"
+    cp ~/Documents/Vagrantfile .
+    vim Vagrantfile
+
+    read REPLY\?"Do you want to build the machine? [Y\n] "
+    if [[ -z $REPLY || $REPLY =~ ^[Yy]$ ]]; then
+        vagrant up && vagrant ssh
+    fi
+}
