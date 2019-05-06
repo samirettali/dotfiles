@@ -11,14 +11,14 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Plug 'matze/vim-move'                     " Move visually selected lines
 
     " Writing
+    " Plug 'caigithub/a_pair'                   " Combine parenthesis in a vim object
     Plug 'godlygeek/tabular'                    " Align text automatically
     Plug 'chrisbra/Colorizer'                   " Show RGB colors
-    Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
-    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
-    " Plug 'scrooloose/nerdcommenter'             " Add shortcuts to comment
-    Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
-    " Plug 'caigithub/a_pair'                   " Combine parenthesis in a vim object
+    Plug 'tpope/vim-repeat'                     " Use . to repeate plugins motions
     Plug 'junegunn/goyo.vim'
+    Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
+    Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
+    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
 
     " Text objects
     Plug 'machakann/vim-swap'                   " Swap delimited items
@@ -26,12 +26,8 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
     " Plug 'michaeljsmith/vim-indent-object'    " Add current indentation level object
 
-    " Coding
-    " Plug 'szw/vim-tags'
-    " Plug 'artur-shaik/vim-javacomplete2'
-
     " Latex
-    Plug 'xuhdev/vim-latex-live-preview'
+    Plug 'xuhdev/vim-latex-live-preview'       " Latex live preview
 
     " Markdown
     Plug 'plasticboy/vim-markdown'
@@ -39,15 +35,15 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Linting and syntax
     Plug 'neomake/neomake'                      " Error checking
-    " Plug 'vim-syntastic/syntastic'
     Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting for languages
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
     Plug 'Shougo/deoplete.nvim'
+    " Plug 'artur-shaik/vim-javacomplete2'
 
     " Git
+    Plug 'tpope/vim-fugitive'
     Plug 'rhysd/committia.vim'                  " Better commit editing
     Plug 'airblade/vim-gitgutter'
-    Plug 'tpope/vim-fugitive'
 
     " Navigation
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
@@ -62,7 +58,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Misc
     Plug 'xolox/vim-misc'                       " Required by colorscheme switcher
-    Plug 'mileszs/ack.vim'
+    Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
     Plug 'mhinz/vim-startify'                   " Start screen for vim
@@ -70,15 +66,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'itchyny/lightline.vim'                " Status line
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
-
-    " Themes
-    Plug 'dracula/vim'
-    Plug 'ayu-theme/ayu-vim'
-    Plug 'ajh17/Spacegray.vim'
-    Plug 'chriskempson/base16-vim'
-    Plug 'mhartington/oceanic-next'
-    Plug 'rafi/awesome-vim-colorschemes'
-    Plug 'xolox/vim-colorscheme-switcher'
 
     " Snippets
     Plug 'SirVer/ultisnips'
@@ -88,6 +75,15 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Plug 'tmhedberg/SimpylFold'
     Plug 'benmills/vimux'
     Plug 'tpope/vim-obsession'
+
+    " Themes
+    Plug 'dracula/vim'
+    Plug 'ayu-theme/ayu-vim'
+    Plug 'ajh17/Spacegray.vim'
+    Plug 'chriskempson/base16-vim'
+    Plug 'mhartington/oceanic-next'
+    Plug 'rafi/awesome-vim-colorschemes'
+    Plug 'xolox/vim-colorscheme-switcher'
 call plug#end()
 
 set nocompatible
@@ -120,41 +116,41 @@ highlight ColorColumn ctermbg=Red
 set wrap
 set showmode
 set formatoptions-=t
-set history=1000
+set history=1000                   " Increase history
 set undofile
 set undodir=~/.config/nvim/undo
 set undolevels=1000
 set undoreload=10000
 set backupdir=~/.config/nvim/tmp
 set directory=~/.config/nvim/tmp
-set autoread
+set autoread                        " Reload files if modified externally
 set shell=zsh
-set number                           " Show line number
-set relativenumber                   " Show relative line numbers
-set fillchars+=vert:\│               " Make vertical split separator full line"
+set number                          " Show line number
+set relativenumber                  " Show relative line numbers
+set fillchars+=vert:\│              " Make vertical split separator full line"
 set encoding=utf-8
 set foldmethod=indent
 set foldlevel=1
 set foldclose=all
-set splitbelow                       " More natural split
-set splitright                       " More natural split
+set splitbelow                      " More natural split
+set splitright                      " More natural split
 set complete=.,b,u,]
 set cursorline
 set hidden
 set path+=**
-set nostartofline                    " Do not jump to first character with j/k
-set showmatch                        " Show matching brackets
-" set ruler
+set nostartofline                   " Do not jump to first character with j/k
+set showmatch                       " Show matching brackets
 set confirm
 set wildmenu
-set scrolloff=5
-set incsearch
+set scrolloff=5                     " Keep 5 lines above and below the cursor
+set sidescrolloff=5                 " Keep 5 columns left and right of the cursor
+set incsearch                       " Hightlight matches as you tipe
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set listchars=tab:»·,trail:·,nbsp:~,eol:¶ " Visualize tab, spaces and newlines
 set backspace=2
 set mouse=n
-set lazyredraw
-set timeoutlen=1000 ttimeoutlen=0 " Wait 1 second for multikey mappings
+set lazyredraw                      " Buffer screen updates
+set timeoutlen=1000 ttimeoutlen=0   " Wait 1 second for multikey mappings
 set cpt-=t
 set cpt-=i
 set linebreak
@@ -167,9 +163,10 @@ set updatetime=100
 " set clipboard^=unnamedplus " Use system clipboard
 
 set completeopt=menuone,menu,longest
+
+" Turno on wildmenu for file name tab completion
 set wildmode=longest,list,full
 set wildmenu
-set completeopt+=longest
 
 set cmdheight=1
 
@@ -423,6 +420,7 @@ map <F9> :PrevColorScheme<CR>
 map <F10> :NextColorScheme<CR>
 map <F12> :lnext<CR>
 map <C-n> :NERDTreeToggle<CR>
+map <C-f> :FZF<CR>
 
 nmap <F3> <Plug>(JavaComplete-Imports-AddMissing)
 imap <F3> <Plug>(JavaComplete-Imports-AddMissing)
