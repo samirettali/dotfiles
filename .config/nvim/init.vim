@@ -161,7 +161,7 @@ set showbreak=↳
 
 set updatetime=100
 
-set clipboard^=unnamedplus " Use system clipboard
+" set clipboard^=unnamedplus " Use system clipboard
 
 set completeopt=menuone,menu,longest
 
@@ -239,8 +239,8 @@ nnoremap k gk
 " Compile using make file
 nnoremap <C-m> :make<CR>
 
-nnoremap <C-x> :bnext<CR>
-nnoremap <C-z> :bprev<CR>
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprev<CR>
 
 " Better splits navigation
 nnoremap <C-j> <C-w><C-j>
@@ -426,6 +426,12 @@ imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 
 map f <Plug>Sneak_s
 map F <Plug>Sneak_S
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<C-s>"
+let g:UltiSnipsJumpForwardTrigger="<C-b>"
+let g:UltiSnipsJumpBackwardTrigger="<C-z>"
+
 
 " Autocommands
 " Decompile class files
