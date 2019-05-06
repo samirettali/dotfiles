@@ -46,6 +46,8 @@ alias rlz="source ~/.zshrc"
 alias tl="tmux ls"
 alias tt="tmux new -A -s term"
 
+alias -g gp="| grep -i"
+
 # Scripts
 alias copy="xclip -sel clip"
 alias wip="curl ipinfo.io; echo"
@@ -66,7 +68,6 @@ alias nano="nvim"
 alias emacs="nvim"
 alias sv="sudo nvim"
 alias vimdiff="nvim -d"
-alias d="dolphin ."
 alias s="sudo su -"
 alias reg="~/Git/regldg/regldg"
 alias regd="~/Git/regldg/regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
