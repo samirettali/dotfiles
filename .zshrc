@@ -22,7 +22,8 @@ ENABLE_CORRECTION="true"
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-plugins=(git colored-man-pages colorize pip python zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git git-prompt colored-man-pages colorize pip python \
+    zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
