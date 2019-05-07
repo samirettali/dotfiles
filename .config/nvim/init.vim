@@ -14,6 +14,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'chrisbra/Colorizer'                   " Show RGB colors
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
     Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
+    Plug 'wincent/scalpel'                      " Replace words with shortcut
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
 
     " Formatting
@@ -264,8 +265,6 @@ nnoremap - :split
 " Leader mappings
 let mapleader = ","
 
-nnoremap <Leader>e :edit 
-nnoremap <Leader>o :only<CR>
 " nnoremap <Leader>p :expand('%')<CR>
 " nnoremap <Leader>pp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
 
@@ -315,7 +314,7 @@ nnoremap <Leader>lc mzguiw`za<Esc>
 " nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 
 " Replace word globally
-nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
+" nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " C mappings
 let @d = "0"
