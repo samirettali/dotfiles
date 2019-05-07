@@ -314,7 +314,7 @@ nnoremap <Leader>lc mzguiw`za<Esc>
 " nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 
 " Replace word globally
-" nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
+ nmap <Leader>s <Plug>(Scalpel)
 
 " C mappings
 let @d = "0"
@@ -381,7 +381,6 @@ let g:mkdp_auto_start = 1
 
 " ultiSnips
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
-
 
 " NERDTree
 let g:NERDSpaceDelims = 1
