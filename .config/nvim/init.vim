@@ -379,6 +379,9 @@ let g:livepreview_cursorhold_recompile = 0
 " markdown-preview
 let g:mkdp_auto_start = 1
 
+" indentLine
+let g:indentLine_fileTypeExclude = ['markdown']
+
 " ultiSnips
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
 
