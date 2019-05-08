@@ -27,14 +27,13 @@ git_custom_status() {
 function () {
     # Check for tmux by looking at $TERM, because $TMUX won't be propagated to any
     # nested sudo shells but $TERM will.
-    local TMUXING=$([[ "$TERM" =~ "tmux" ]] && echo tmux)
-    if [ -n "$TMUXING" -a -n "$TMUX" ]; then
+    if [ -n "$TMUX" ]; then
         # In a a tmux session created in a non-root or root shell.
-        local LVL=$(($SHLVL - 2))
+        local LVL=$SHLVL
     else
         # Either in a root shell created inside a non-root tmux session,
         # or not in a tmux session.
-        local LVL=$(($SHLVL - 1))
+        local LVL=$(($SHLVL - 2))
     fi
     # Check if the current shell is being executed by root to append # or $
     # accordingly
