@@ -28,6 +28,7 @@ fi
 # Fast cd
 alias cdw="cd /run/media/samir/WhitePassport"
 alias cdb="cd /run/media/samir/BlackPassport"
+alias b="cd -"
 
 # Fans fix (to remove)
 alias fans="sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 0 && sudo i8kctl fan 0 0 && sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 1"
