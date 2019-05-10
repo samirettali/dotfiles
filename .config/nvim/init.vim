@@ -240,8 +240,8 @@ nnoremap k gk
 " Compile using make file
 nnoremap <C-m> :make<CR>
 
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprev<CR>
+" nnoremap <Tab> :bnext<CR>
+" nnoremap <S-Tab> :bprev<CR>
 
 " Better splits navigation
 nnoremap <C-j> <C-w><C-j>
@@ -408,7 +408,7 @@ let delimitMate_matchpairs = "(:),[:],{:}"
 " closetag
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.php'
 
-" Plugin mappings
+" Plugins mappings
 " Open NERDTree on current file
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 
@@ -433,6 +433,9 @@ let g:UltiSnipsExpandTrigger="<C-s>"
 let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
+" buftabline
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
 
 " Autocommands
 " Decompile class files
