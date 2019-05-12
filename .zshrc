@@ -52,3 +52,7 @@ if [[ -n "$TMUX" ]]; then
     bindkey "^[[4~" end-of-line
     bindkey "^[[3~" delete-char
 fi
+
+if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
+    tmux attach-session -t ssh || tmux new-session -s ssh
+fi
