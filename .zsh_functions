@@ -241,3 +241,9 @@ vm() {
         vagrant up && vagrant ssh
     fi
 }
+
+mkjavaproj () {
+    mkdir src
+    mkdir classes
+    cp ~/Coding/Skeletons/JavaMakefile Makefile
+}
