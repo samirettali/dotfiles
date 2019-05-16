@@ -8,18 +8,7 @@ alias stop="sudo systemctl stop"
 alias status="systemctl status"
 
 # Distro dependent aliases
-if uname -a | grep -i 'arch' > /dev/null 2>/dev/null; then
-    # Pacman
-    alias pacs="sudo pacman -S"
-    alias pacu="sudo pacman -Syu"
-    alias pacr="sudo pacman -R"
-    alias pacc="sudo pacman -Rnsc"
-    alias pacorph="sudo pacman -Rs $(pacman -Qtdq)"
-    alias pacss="pacman -Ss"
-    alias yays="yay -S"
-    alias yayu="yay -u"
-    alias yayss="yay -Ss"
-elif uname -a | grep -i 'ubuntu\|debian' > /dev/null 2>/dev/null; then
+if uname -a | grep -i 'ubuntu\|debian' > /dev/null 2>/dev/null; then
     # Apt
     alias apti="sudo apt install"
     alias aptr="sudo apt remove --purge"
@@ -43,6 +32,8 @@ alias vf="vim ~/.zsh_functions && source ~/.zshrc"
 alias vt="vim ~/.tmux.conf"
 alias vv="vim ~/.config/nvim/init.vim"
 alias rlz="source ~/.zshrc"
+alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+alias repos="git -C ~/Scripts status && git -C ~/.cfg --work-tree=$HOME status"
 
 # Tmux
 alias tl="tmux ls"
@@ -63,6 +54,7 @@ alias cm="clear; make"
 alias cj="clear && mkdir -p bin && javac -g -d bin -sourcepath src src/Main.java; cd bin; java -ea Main; cd ..;"
 alias cjm="clear && javac Main.java && java Main && rm *.class"
 alias gccall="gcc -g -pedantic -Wall -Wextra -Wshadow -Wunreachable-code -Wconversion -Werror -Wno-padded"
+alias mkpc="mkdir {src,build,bin} && touch Makefile"
 
 # Software
 alias v="nvim *"
@@ -71,7 +63,6 @@ alias nano="nvim"
 alias emacs="nvim"
 alias sv="sudo nvim"
 alias vimdiff="nvim -d"
-alias vimw="nvim -c 'colorscheme OceanicNextLight'"
 alias s="sudo su -"
 alias reg="~/Git/regldg/regldg"
 alias regd="~/Git/regldg/regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
@@ -92,5 +83,3 @@ alias stegsolve="java -jar ~/CTF/Tools/Stego/stegsolve.jar; disown"
 # University
 alias lft="cd ~/Uni/2/LFT/18-19/Laboratorio/LFT-Ettali/src"
 alias asd="cd ~/Uni/2/asd/18-19/laboratorio-algoritmi-2018-19"
-
-alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
