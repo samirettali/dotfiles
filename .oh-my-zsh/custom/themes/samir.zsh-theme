@@ -29,7 +29,7 @@ function () {
     # nested sudo shells but $TERM will.
     if [ -n "$TMUX" ] || [ -n "$SSH_CONNECTION" ]; then
         # In a a tmux session created in a non-root or root shell.
-        local LVL=$SHLVL
+        local LVL=$(($SHLVL - 3))
     else
         # Either in a root shell created inside a non-root tmux session,
         # or not in a tmux session.
@@ -42,7 +42,7 @@ function () {
     else
         local SUFFIX=$(printf '%%F{red}$%.0s%%f' {1..$LVL})
     fi
-    export PS1="%F{blue}${SSH_TTY:+%n@%m}%f%B${SSH_TTY:+:}%b%F{blue}%B%1d%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B${SUFFIX}%b "
+    export PS1="%F{blue}${SSH_CONNECTION:+%n@%m}%f%B${SSSH_CONNECTION:+:}%b%F{blue}%B%1d%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B${SUFFIX}%b "
 }
 export RPROMPT="\$(git_custom_status) " #%F{blue}%~%b"
 export SPROMPT="zsh: correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
