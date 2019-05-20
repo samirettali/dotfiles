@@ -7,6 +7,8 @@ alias restart="sudo systemctl restart"
 alias stop="sudo systemctl stop"
 alias status="systemctl status"
 
+# Vagrant
+
 # Distro dependent aliases
 if uname -a | grep -i 'ubuntu\|debian' > /dev/null 2>/dev/null; then
     # Apt
@@ -59,6 +61,7 @@ alias mkcproj="mkdir {src,build,bin} && touch Makefile"
 # Software
 alias v="nvim *"
 alias vim="nvim"
+alias vanillavim="nvim -u /dev/null"
 alias nano="nvim"
 alias emacs="nvim"
 alias sv="sudo nvim"
@@ -73,7 +76,12 @@ alias kdereload="kquitapp5 plasmashell; kstart5 plasmashell"
 
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
-alias ytmp3="youtube-dl -R infinite --extract-audio --audio-format mp3 --audio-quality 0 -w --output \"%(title)s.%(ext)s\""
+alias ytmp3="youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audio-quality 0 -w --output \"%(title)s.%(ext)s\""
+
+# Vagrant
+alias vup="vagrant up"
+alias vss="vagrant ssh"
+alias vag="vagrant up; vagrant ssh"
 
 # CTF
 alias pyweb="python2 -m SimpleHTTPServer 9999"
