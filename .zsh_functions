@@ -201,6 +201,22 @@ groot() {
     done
 }
 
+proot() {
+    readonly old_pwd="$PWD"
+    while [[ 1 ]]; do
+        cd ..
+        if [[ "$PWD" == "/" ]]; then
+            cd "$old_pwd"
+            echo "No repository found, returned to $PWD"
+            return 1
+        fi
+        if [[ -f "Makefile" ]]; then
+            echo "Found Makefile at $PWD"
+            return 0
+        fi
+    done
+}
+
 # Backup file
 bak() {
     declare target=$1;
@@ -233,7 +249,7 @@ fd() {
 vm() {
     mkdir "$1"
     cd "$1"
-    cp ~/Documents/Vagrantfile .
+    cp ~/Documents/Vagrant/Vagrantfile .
     vim Vagrantfile
 
     read REPLY\?"Do you want to build the machine? [Y\n] "
