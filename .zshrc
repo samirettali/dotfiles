@@ -18,8 +18,8 @@ ENABLE_CORRECTION="true"
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-plugins=(git git-prompt colored-man-pages colorize pip python \
-    zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git git-prompt colored-man-pages colorize fzf pip python \
+    zsh-autosuggestions zsh-syntax-highlighting archlinux)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -43,16 +43,56 @@ source ~/.zsh_functions
 
 REPORTTIME=3
 export EDITOR='nvim'
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export TERMINAL_THEME="dark"
+# export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
 bindkey '^ ' autosuggest-accept
 
+# Fix for end, home and delete keys in tmux
 if [[ -n "$TMUX" ]]; then
     bindkey "^[[1~" beginning-of-line
     bindkey "^[[4~" end-of-line
     bindkey "^[[3~" delete-char
 fi
 
+# Automatically start tmux in ssh sessions
 if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
     tmux attach-session -t ssh || tmux new-session -s ssh
 fi
+
+# Remove grv alias to use grv
+unalias grv
+
+# function() {
+#     oldstty=$(stty -g)
+
+#     oldstty=$(stty -g)
+#     Ps=${1:-11}
+#     stty raw -echo min 0 time 0
+#     printf "\e]$Ps;?\a"
+#     sleep 0.1
+#     read -r answer
+#     result=${answer#*;}
+#     stty $oldstty
+#     bg=$(sed 's/[^rgb:0-9a-f/]\+$//' <<< $result)
+
+#     r=$((0x${bg:4:2}))
+#     g=$((0x${bg:9:2}))
+#     b=$((0x${bg:14:2}))
+#     color=$(echo "$r*0.299+$g*0.587+$b*0.114" | bc)
+#     if [ $(echo "$color > 186" | bc -l) = 1 ]; then
+#         export TERMINAL_THEME="light"
+#     else
+#         export TERMINAL_THEME="dark"
+#     fi
+# }
+
+function light() {
+    konsoleprofile "colors=base16-one-light"
+    export TERMINAL_THEME="light"
+}
+
+function dark() {
+    konsoleprofile "colors=base16-onedark"
+    export TERMINAL_THEME="dark"
+}
