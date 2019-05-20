@@ -15,12 +15,10 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
     Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
     Plug 'wincent/scalpel'                      " Replace words with shortcut
-    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
 
     " Formatting
     Plug 'matze/vim-move'                       " Move visually selected lines
     Plug 'godlygeek/tabular'                    " Align text automatically
-
 
     " Text objects
     Plug 'machakann/vim-swap'                   " Swap delimited items
@@ -32,6 +30,14 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
     Plug 'ap/vim-buftabline'                    " Emulate tabs with buffers
     Plug 'christoomey/vim-tmux-navigator'       " Navigate between vim and tmux splits
+    Plug 'blueyed/vim-diminactive'              " Dim inactive panels
+
+    " Snippets
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
+
+    " Development
+    " Plug 'janko/vim-test'
 
     " NERDTree
     Plug 'scrooloose/nerdtree'                  " Nerdtree file navigator
@@ -49,6 +55,8 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting for languages
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
     Plug 'Shougo/deoplete.nvim'
+    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
+    Plug 'artur-shaik/vim-javacomplete2'             " Autocomplete from tmux
     " Plug 'artur-shaik/vim-javacomplete2'
 
     " Latex
@@ -69,23 +77,21 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
 
-    " Snippets
-    Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
-
-    " To try
-    " Plug 'tmhedberg/SimpylFold'
-    Plug 'benmills/vimux'
-    Plug 'tpope/vim-obsession'
-
     " Themes
     Plug 'dracula/vim'
     Plug 'ayu-theme/ayu-vim'
     Plug 'ajh17/Spacegray.vim'
     Plug 'chriskempson/base16-vim'
     Plug 'mhartington/oceanic-next'
+    Plug 'yarisgutierrez/ayu-lightline'
+    Plug 'joshdick/onedark.vim'
     Plug 'rafi/awesome-vim-colorschemes'
-    Plug 'xolox/vim-colorscheme-switcher'
+
+    " To try
+    " Plug 'tmhedberg/SimpylFold'
+    Plug 'benmills/vimux'
+    Plug 'tpope/vim-obsession'
+
 call plug#end()
 
 set nocompatible
@@ -95,10 +101,18 @@ set modelines=0
 set synmaxcol=200                  " Don't bother highlighting off screen lines
 
 set termguicolors
-set background=dark
-let themes = ['deep-space', 'dracula', 'base16-tomorrow-night', 'hybrid', 'hybrid_material', 'hybrid_reverse', 'OceanicNext', 'onedark', 'spacegray']
-execute 'colorscheme '.themes[localtime() % len(themes)]
-unlet themes
+if $TERMINAL_THEME == "light"
+    set background=light
+    colorscheme one
+    " let ayucolor="light"
+    " colorscheme ayu
+else
+    set background=dark
+    " let themes = ['deep-space', 'dracula', 'base16-tomorrow-night', 'hybrid', 'hybrid_reverse', 'OceanicNext', 'onedark', 'spacegray']
+    " execute 'colorscheme '.themes[localtime() % len(themes)]
+    " unlet themes
+    colorscheme base16-tomorrow-night
+endif
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -113,52 +127,54 @@ set smartcase                      " Make search sensitive to capital letters
 set noshowmode                     " Hide current vim mode because of lightline
 set title
 set textwidth=80
-set colorcolumn=81
-highlight ColorColumn ctermbg=Red
-set wrap
+set colorcolumn=81                 " Color the 81st column
+"highlight ColorColumn guibg=grey
+set wrap                           " Wrap lines longer than terminal width
 set showmode
 set formatoptions-=t
 set history=1000                   " Increase history
-set undofile
-set undodir=~/.config/nvim/undo
-set undolevels=1000
+set undofile                       " Create undo files
+set undodir=~/.config/nvim/undo    " Undo files directory"
+set undolevels=1000                " Number of undos allowed
 set undoreload=10000
 set backupdir=~/.config/nvim/tmp
 set directory=~/.config/nvim/tmp
 set autoread                        " Reload files if modified externally
 set shell=zsh
-set number                          " Show line number
+set number                          " Show lines number
 set relativenumber                  " Show relative line numbers
 set fillchars+=vert:\│              " Make vertical split separator full line"
 set encoding=utf-8
 set foldmethod=indent
 set foldlevel=1
 set foldclose=all
+set foldlevelstart=20
 set splitbelow                      " More natural split
 set splitright                      " More natural split
 set complete=.,b,u,]
-set cursorline
-set hidden
+set cursorline                      " Highlight current line
+set hidden                          " Allow buffer swap when modified
 set path+=**
 set nostartofline                   " Do not jump to first character with j/k
 set showmatch                       " Show matching brackets
 set confirm
-set wildmenu
 set scrolloff=5                     " Keep 5 lines above and below the cursor
 set sidescrolloff=5                 " Keep 5 columns left and right of the cursor
 set incsearch                       " Hightlight matches as you tipe
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set listchars=tab:»·,trail:·,nbsp:~,eol:¶ " Visualize tab, spaces and newlines
-set backspace=2
+set backspace=indent,eol,start      " Make backspace behave properly "
 set mouse=n
 set lazyredraw                      " Buffer screen updates
-set timeoutlen=1000 ttimeoutlen=0   " Wait 1 second for multikey mappings
+set timeout
+set ttimeoutlen=50   " Time to wait for multikey mappings
 set cpt-=t
 set cpt-=i
 set linebreak
 set breakindent
 set breakindentopt=shift:2
 set showbreak=↳
+set spelllang=it,en_us
 
 set updatetime=100
 
@@ -166,8 +182,8 @@ set updatetime=100
 
 set completeopt=menuone,menu,longest
 
-" Turno on wildmenu for file name tab completion
-set wildmode=longest,list,full
+" Turn on wildmenu for file name tab completion
+set wildmode=longest:full,full
 set wildmenu
 
 set cmdheight=1
@@ -223,12 +239,13 @@ function! ObsessionStatus()
 endfunction
 
 " Check battery status
+" TODO check if file exists
 function! MyOnBattery()
     return readfile('/sys/class/power_supply/AC/online') == ['0']
 endfunction
 
-
 " Mappings
+map <F10> :setlocal spell!<CR>
 noremap <up>    <C-W>+
 noremap <down>  <C-W>-
 noremap <left>  3<C-W><
@@ -239,9 +256,6 @@ nnoremap k gk
 
 " Compile using make file
 nnoremap <C-m> :make<CR>
-
-" nnoremap <Tab> :bnext<CR>
-" nnoremap <S-Tab> :bprev<CR>
 
 " Better splits navigation
 nnoremap <C-j> <C-w><C-j>
@@ -332,7 +346,7 @@ nnoremap à [(
 nnoremap ù ])
 
 " ROT 13
-nnoremap <Leader>13 ggVGg?<CR> 
+" nnoremap <Leader>13 ggVGg?<CR> 
 
 " Plugins settings
 " buftabline
@@ -365,12 +379,13 @@ let g:lightline = {
 \               [ 'readonly', 'filename', 'modified' ] ],
 \       'right': [ [ 'lineinfo' ],
 \                [ 'percent' ],
-\                [ 'obsession', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+\                [ 'gitbranch', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
 \   },
 \   'component_function': {
-\       'obsession': 'ObsessionStatus'
+\       'gitbranch': 'fugitive#head'
 \   },
 \ }
+" \       'obsession': 'ObsessionStatus'
 
 " vim-latex-live-preview
 let g:livepreview_previewer = 'okular'
@@ -380,7 +395,7 @@ let g:livepreview_cursorhold_recompile = 0
 let g:mkdp_auto_start = 1
 
 " indentLine
-let g:indentLine_fileTypeExclude = ['markdown']
+" let g:indentLine_fileTypeExclude = ['markdown', 'tex']
 
 " ultiSnips
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
@@ -414,10 +429,8 @@ nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 
 map <silent> <F6> :ColorToggle<CR>
 map <F8> :TagbarToggle<CR>
-map <F9> :PrevColorScheme<CR>
-map <F10> :NextColorScheme<CR>
 map <F12> :lnext<CR>
-map <C-n> :NERDTreeToggle<CR>
+map <C-o> :NERDTreeToggle<CR>
 map <C-f> :FZF<CR>
 
 nmap <F3> <Plug>(JavaComplete-Imports-AddMissing)
@@ -429,13 +442,17 @@ map f <Plug>Sneak_s
 map F <Plug>Sneak_S
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger="<C-s>"
+let g:UltiSnipsExpandTrigger="<Leader>e"
 let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 " buftabline
-nnoremap <C-N> :bnext<CR>
-nnoremap <C-P> :bprev<CR>
+nnoremap <C-n> :bnext<CR>
+nnoremap <C-p> :bprev<CR>
+" nnoremap gd :bdelete<CR>
+
+" deoplete
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Autocommands
 " Decompile class files
@@ -463,3 +480,25 @@ autocmd InsertLeave * :let @/=""
 
 " Resize splits proportionally to window resize
 autocmd VimResized * :wincmd =
+
+" Automaticalli insert java package and class name in new Java file
+autocmd BufNewFile *.java call InsertJavaPackage()
+function! InsertJavaPackage()
+  let dir = getcwd()
+  let dir = substitute(dir, "^.*\/src\/", "", "")
+  let dir = substitute(dir, "\/", ".", "g")
+  let dir = "package " . dir . ";"
+  let result = append(0, dir)
+  let filename = expand("%")
+  let filename = substitute(filename, "\.java", "", "")
+  let result = append(1, "")
+  let result = append(2, "/**")
+  let result = append(3, " * @author Samir Ettali")
+  let result = append(4, " **/")
+  let result = append(5, "")
+  let result = append(6, "public class " . filename . " {")
+  let result = append(7, "     ")
+  let result = append(8, "}")
+  call cursor(8, 5)
+  startinsert
+endfunction
