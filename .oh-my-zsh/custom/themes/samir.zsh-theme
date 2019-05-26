@@ -42,7 +42,7 @@ function () {
     else
         local SUFFIX=$(printf '%%F{red}$%.0s%%f' {1..$LVL})
     fi
-    export PS1="%F{blue}${SSH_CONNECTION:+%n@%m}%f%B${SSSH_CONNECTION:+:}%b%F{blue}%B%1d%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B${SUFFIX}%b "
+    export PS1="%F{blue}${SSH_CONNECTION:+%n@%m}%f%B${SSH_CONNECTION:+:}%b%F{blue}%B%1d%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B${SUFFIX}%b "
 }
 # export RPROMPT="\$(git_custom_status) " #%F{blue}%~%b"
 export SPROMPT="zsh: correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
