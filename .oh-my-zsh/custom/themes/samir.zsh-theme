@@ -33,7 +33,7 @@ function () {
     else
         # Either in a root shell created inside a non-root tmux session,
         # or not in a tmux session.
-        local LVL=$(($SHLVL - 1))
+        local LVL=$SHLVL
     fi
     # Check if the current shell is being executed by root to append # or $
     # accordingly
@@ -46,3 +46,17 @@ function () {
 }
 # export RPROMPT="\$(git_custom_status) " #%F{blue}%~%b"
 export SPROMPT="zsh: correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
+
+# Updates editor information when the keymap changes.
+function zle-keymap-select() {
+    zle reset-prompt
+    zle -R
+}
+
+zle -N zle-keymap-select
+
+function vi_mode_prompt_info() {
+    echo "${${KEYMAP/vicmd/}/(main|viins)/}"
+}
+
+export RPS1='%F{red}$(vi_mode_prompt_info)%f $(git_super_status)'
