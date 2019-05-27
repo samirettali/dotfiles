@@ -23,6 +23,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Text objects
     Plug 'machakann/vim-swap'                   " Swap delimited items
     Plug 'tpope/vim-surround'                   " Add surround object for editing
+    Plug 'justinmk/vim-sneak'                   " Better find
     Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
     " Plug 'michaeljsmith/vim-indent-object'    " Add current indentation level object
 
@@ -72,20 +73,26 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
     Plug 'mhinz/vim-startify'                   " Start screen for vim
-    Plug 'Yggdroot/indentLine'                  " Show lines for indentation level
+    " Plug 'Yggdroot/indentLine'                  " Show lines for indentation level
     Plug 'itchyny/lightline.vim'                " Status line
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
 
     " Themes
-    Plug 'dracula/vim'
-    Plug 'ayu-theme/ayu-vim'
-    Plug 'ajh17/Spacegray.vim'
-    Plug 'chriskempson/base16-vim'
-    Plug 'mhartington/oceanic-next'
-    Plug 'yarisgutierrez/ayu-lightline'
-    Plug 'joshdick/onedark.vim'
-    Plug 'rafi/awesome-vim-colorschemes'
+    Plug 'dracula/vim'                          " Dracula theme
+    Plug 'ayu-theme/ayu-vim'                    " Ayu theme
+    Plug 'ajh17/Spacegray.vim'                  " Spacegray theme
+    Plug 'haishanh/night-owl.vim'               " nightowl theme
+    Plug 'chriskempson/base16-vim'              " base16 themes
+    Plug 'lifepillar/vim-solarized8'            " solarized8 theme
+
+    " Themes with airline theme
+    Plug 'joshdick/onedark.vim'                 " onedark theme
+    Plug 'mhartington/oceanic-next'             " OceanicNext theme
+    Plug 'tyrannicaltoucan/vim-deep-space'      " deep-space theme
+    
+    " Lightline themes
+    Plug 'yarisgutierrez/ayu-lightline'         " Ayu lightline theme
 
     " To try
     " Plug 'tmhedberg/SimpylFold'
@@ -103,15 +110,14 @@ set synmaxcol=200                  " Don't bother highlighting off screen lines
 set termguicolors
 if $TERMINAL_THEME == "light"
     set background=light
-    colorscheme one
-    " let ayucolor="light"
-    " colorscheme ayu
+    let ayucolor="light"
+    colorscheme ayu
 else
     set background=dark
-    " let themes = ['deep-space', 'dracula', 'base16-tomorrow-night', 'hybrid', 'hybrid_reverse', 'OceanicNext', 'onedark', 'spacegray']
+    colorscheme night-owl
+    " let themes = ['deep-space', 'dracula', 'base16-tomorrow-night', 'OceanicNext', 'onedark', 'spacegray', 'night-owl', 'solarized8_flat']
     " execute 'colorscheme '.themes[localtime() % len(themes)]
     " unlet themes
-    colorscheme base16-tomorrow-night
 endif
 
 set expandtab                      " Insert spaces instead of tabs
@@ -128,7 +134,6 @@ set noshowmode                     " Hide current vim mode because of lightline
 set title
 set textwidth=80
 set colorcolumn=81                 " Color the 81st column
-"highlight ColorColumn guibg=grey
 set wrap                           " Wrap lines longer than terminal width
 set showmode
 set formatoptions-=t
@@ -283,7 +288,8 @@ let mapleader = ","
 " nnoremap <Leader>pp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
 
 " Reload vim configuration
-nnoremap <Leader>rv :source $MYVIMRC<CR>:PlugInstall<CR>
+nnoremap <Leader>rv :source $MYVIMRC<CR>
+nnoremap <Leader>pi :PlugInstall<CR>
 
 " Show invisible characters
 nnoremap <silent> <Leader>l :set list!<CR>
@@ -307,7 +313,7 @@ nnoremap <silent> <Leader>zs :call Zap()<CR>
 map <Leader>ze :g/^$/d<CR>
 
 " Toggle colorcolumn
-nnoremap <Leader>co :let &cc = &cc == '' ? '81' : ''<CR>
+nnoremap <Leader>cc :let &cc = &cc == '' ? '81' : ''<CR>
 
 " Replace under cursor and continue replacing with .
 nnoremap <Leader>x *``xgn
@@ -388,8 +394,8 @@ let g:lightline = {
 " \       'obsession': 'ObsessionStatus'
 
 " vim-latex-live-preview
-let g:livepreview_previewer = 'okular'
-let g:livepreview_cursorhold_recompile = 0
+let g:livepreview_previewer = 'evince'
+" let g:livepreview_cursorhold_recompile = 0
 
 " markdown-preview
 let g:mkdp_auto_start = 1
@@ -424,13 +430,14 @@ let delimitMate_matchpairs = "(:),[:],{:}"
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.php'
 
 " Plugins mappings
+
 " Open NERDTree on current file
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
+map <silent> <C-o> :NERDTreeToggle<CR>
 
 map <silent> <F6> :ColorToggle<CR>
-map <F8> :TagbarToggle<CR>
+map <silent> <F8> :TagbarToggle<CR>
 map <F12> :lnext<CR>
-map <C-o> :NERDTreeToggle<CR>
 map <C-f> :FZF<CR>
 
 nmap <F3> <Plug>(JavaComplete-Imports-AddMissing)
@@ -447,9 +454,8 @@ let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 " buftabline
-nnoremap <C-n> :bnext<CR>
-nnoremap <C-p> :bprev<CR>
-" nnoremap gd :bdelete<CR>
+nnoremap <silent> <C-n> :bnext<CR>
+nnoremap <silent> <C-p> :bprev<CR>
 
 " deoplete
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
