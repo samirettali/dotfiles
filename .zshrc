@@ -35,15 +35,10 @@ zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
 source ~/.zsh_aliases
 source ~/.zsh_functions
 
 REPORTTIME=3
-export EDITOR='nvim'
-# export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 
 # Reduce time to enter normal mode
 export KEYTIMEOUT=1
@@ -56,6 +51,10 @@ if [[ -n "$TMUX" ]]; then
     bindkey "^[[1~" beginning-of-line
     bindkey "^[[4~" end-of-line
     bindkey "^[[3~" delete-char
+else
+    bindkey "${terminfo[khome]}" beginning-of-line
+    bindkey "${terminfo[kend]}" end-of-line
+    bindkey "${terminfo[kdch1]}" delete-char
 fi
 
 # Automatically start tmux in ssh sessions
@@ -73,4 +72,6 @@ unalias grv
 #     export TERMINAL_THEME="dark"
 # #     konsoleprofile "colors=SpaceGray"
 # fi
+export EDITOR='nvim'
 export TERMINAL_THEME="dark"
+export QT_QPA_PLATFORMTHEME=qt5ct
