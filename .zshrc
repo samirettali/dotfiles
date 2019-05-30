@@ -35,6 +35,7 @@ zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
+source ~/.fzfrc
 source ~/.zsh_aliases
 source ~/.zsh_functions
 
