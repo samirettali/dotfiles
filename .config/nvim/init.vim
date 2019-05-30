@@ -153,7 +153,6 @@ set relativenumber                  " Show relative line numbers
 set fillchars+=vert:\│              " Make vertical split separator full line"
 set encoding=utf-8
 set foldmethod=indent
-set foldlevel=1
 set foldclose=all
 set foldlevelstart=20
 set splitbelow                      " More natural split
