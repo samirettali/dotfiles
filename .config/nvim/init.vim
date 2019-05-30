@@ -349,7 +349,7 @@ let g:lightline = {
 \               [ 'readonly', 'filename', 'modified' ] ],
 \       'right': [ [ 'lineinfo' ],
 \                [ 'percent' ],
-\                [ 'gitbranch', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+\                [ 'spell', 'gitbranch', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
 \   },
 \   'component_function': {
 \       'gitbranch': 'fugitive#head'
@@ -461,21 +461,21 @@ autocmd VimResized * :wincmd =
 " Automatically insert java package and class name in new Java file
 autocmd BufNewFile *.java call InsertJavaPackage()
 function! InsertJavaPackage()
-  let dir = getcwd()
-  let dir = substitute(dir, "^.*\/src\/", "", "")
-  let dir = substitute(dir, "\/", ".", "g")
-  let dir = "package " . dir . ";"
-  let result = append(0, dir)
-  let filename = expand("%")
-  let filename = substitute(filename, "\.java", "", "")
-  let result = append(1, "")
-  let result = append(2, "/**")
-  let result = append(3, " * @author Samir Ettali")
-  let result = append(4, " **/")
-  let result = append(5, "")
-  let result = append(6, "public class " . filename . " {")
-  let result = append(7, "     ")
-  let result = append(8, "}")
-  call cursor(8, 5)
-  startinsert
+    let dir = getcwd()
+    let dir = substitute(dir, "^.*\/src\/", "", "")
+    let dir = substitute(dir, "\/", ".", "g")
+    let dir = "package " . dir . ";"
+    let result = append(0, dir)
+    let filename = expand("%")
+    let filename = substitute(filename, "\.java", "", "")
+    let result = append(1, "")
+    let result = append(2, "/**")
+    let result = append(3, " * @author Samir Ettali")
+    let result = append(4, " **/")
+    let result = append(5, "")
+    let result = append(6, "public class " . filename . " {")
+    let result = append(7, "     ")
+    let result = append(8, "}")
+    call cursor(8, 5)
+    startinsert
 endfunction
