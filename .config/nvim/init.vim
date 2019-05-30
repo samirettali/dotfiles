@@ -112,15 +112,14 @@ set synmaxcol=200                  " Don't bother highlighting off screen lines
 set termguicolors
 if $TERMINAL_THEME == "light"
     set background=light
-    let ayucolor="light"
-    colorscheme ayu
+    " let ayucolor="light"
 else
     set background=dark
-    colorscheme night-owl
     " let themes = ['deep-space', 'dracula', 'base16-tomorrow-night', 'OceanicNext', 'onedark', 'spacegray', 'night-owl', 'solarized8_flat']
     " execute 'colorscheme '.themes[localtime() % len(themes)]
     " unlet themes
 endif
+colorscheme solarized8_flat
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -343,7 +342,7 @@ endif
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'wombat',
+\   'colorscheme': 'solarized',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'filename', 'modified' ] ],
