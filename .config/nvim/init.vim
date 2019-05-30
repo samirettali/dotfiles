@@ -77,9 +77,11 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'itchyny/lightline.vim'                " Status line
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
+    Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
 
     " Themes
     Plug 'dracula/vim'                          " Dracula theme
+    Plug 'herrbischoff/cobalt2.vim'             " Cobalt theme
     Plug 'ayu-theme/ayu-vim'                    " Ayu theme
     Plug 'ajh17/Spacegray.vim'                  " Spacegray theme
     Plug 'haishanh/night-owl.vim'               " nightowl theme
@@ -183,8 +185,6 @@ set spelllang=it,en_us
 
 set updatetime=100
 
-" set clipboard^=unnamedplus " Use system clipboard
-
 set completeopt=menuone,menu,longest
 
 " Turn on wildmenu for file name tab completion
@@ -199,24 +199,6 @@ set cmdheight=1
 :command! Q q
 
 " Functions
-function! Zap()
-    let l:pos=getcurpos()
-    let l:search=@/
-    keepjumps %/\s\+$//e
-    let @/=l:search
-    nohlsearch
-    call setpos('.', l:pos)
-endfunction
-
-function! NumberToggle()
-    if(&relativenumber == 1)
-        set nornu
-        set number
-    else
-        set rnu
-    endif
-endfunc
-
 " Decompile java .class files
 function! s:ReadClass(dir, classname)
     execute "cd " . a:dir
@@ -292,7 +274,7 @@ nnoremap <Leader>rv :source $MYVIMRC<CR>
 nnoremap <Leader>pi :PlugInstall<CR>
 
 " Show invisible characters
-nnoremap <silent> <Leader>l :set list!<CR>
+nnoremap <silent> <Leader>i :set list!<CR>
 
 " Copy paragraph
 noremap <Leader>cp yap<S-}>p
@@ -303,38 +285,21 @@ nnoremap <space> za
 " Draw underline with = symbol
 nnoremap <Leader>1 yypVr=
 
-" Toggle numeration mode
-nnoremap <Leader>n :call NumberToggle()<CR>
-
-" Trim whitespaces
-nnoremap <silent> <Leader>zs :call Zap()<CR>
-
 " Remove empty lines
 map <Leader>ze :g/^$/d<CR>
 
 " Toggle colorcolumn
 nnoremap <Leader>cc :let &cc = &cc == '' ? '81' : ''<CR>
 
-" Replace under cursor and continue replacing with .
-nnoremap <Leader>x *``xgn
-nnoremap <Leader>X #``cgN
-
-" Same thing as above but case sensitive
-" nnoremap <Leader>x /\<<C-R>=expand('<cword>')<CR>\>\C<CR>``cgn
-" nnoremap <Leader>X ?\<<C-R>=expand('<cword>')<CR>\>\C<CR>``cgN
-
 " Change vim directory into current buffer
 nnoremap <Leader>cd :cd %:p:h<CR>
 
 " Replace word with uppercase/lowercase
-nnoremap <Leader>uc mzgUiw`za<Esc>
-nnoremap <Leader>lc mzguiw`za<Esc>
+nnoremap <Leader>u mzgUiw`za<Esc>
+nnoremap <Leader>l mzguiw`za<Esc>
 
 " Replace word with title case
 " nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
-
-" Replace word globally
- nmap <Leader>s <Plug>(Scalpel)
 
 " C mappings
 let @d = "0"
@@ -395,7 +360,7 @@ let g:lightline = {
 
 " vim-latex-live-preview
 let g:livepreview_previewer = 'evince'
-" let g:livepreview_cursorhold_recompile = 0
+let g:livepreview_cursorhold_recompile = 0
 
 " markdown-preview
 let g:mkdp_auto_start = 1
@@ -460,7 +425,14 @@ nnoremap <silent> <C-p> :bprev<CR>
 " deoplete
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
+" Scalpel
+nmap <Leader>s <Plug>(Scalpel)
+
 " Autocommands
+
+" Wrap at column 80 on latex and markdown files
+autocmd BufRead,BufNewFile *.md,*.tex setlocal formatoptions+=t
+
 " Decompile class files
 autocmd BufReadCmd *.class call <SID>ReadClass(expand("<afile>:p:h"), expand("<afile>:t:r"))
 
@@ -475,10 +447,10 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Close vim when the only opened buffer is neomake error list
 autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-\   q :cclose<cr>:lclose<cr>
+    \ q :cclose<cr>:lclose<cr>
 autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
-\   bd|
-\   q | endif
+    \ bd|
+    \ q | endif
 
 " Set latest search register to empty string on insert event
 autocmd InsertEnter * :let @/=""
@@ -487,7 +459,7 @@ autocmd InsertLeave * :let @/=""
 " Resize splits proportionally to window resize
 autocmd VimResized * :wincmd =
 
-" Automaticalli insert java package and class name in new Java file
+" Automatically insert java package and class name in new Java file
 autocmd BufNewFile *.java call InsertJavaPackage()
 function! InsertJavaPackage()
   let dir = getcwd()
