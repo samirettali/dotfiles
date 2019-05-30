@@ -163,7 +163,7 @@ add_extension() {
 
 # Search for a string in file and replace it
 sifr() {
-    find . -type f -name '*.txt' -exec sed -i "s/$1/$2/g" {} \;
+    find . -type f -name '*' -exec sed -i "s/$1/$2/g" {} \;
 }
 
 # See all processes with given name

@@ -91,3 +91,7 @@ alias stegsolve="java -jar ~/CTF/Tools/Stego/stegsolve.jar; disown"
 # University
 alias lft="cd ~/Uni/2/LFT/18-19/Laboratorio/LFT-Ettali/src"
 alias asd="cd ~/Uni/2/asd/18-19/laboratorio-algoritmi-2018-19"
+
+# Theme
+alias dark="~/Scripts/gnome-theme.sh dark"
+alias light="~/Scripts/gnome-theme.sh light"
