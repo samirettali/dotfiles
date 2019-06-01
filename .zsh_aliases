@@ -56,7 +56,7 @@ alias cm="clear; make"
 alias cj="clear && mkdir -p bin && javac -g -d bin -sourcepath src src/Main.java; cd bin; java -ea Main; cd ..;"
 alias cjm="clear && javac Main.java && java Main && rm *.class"
 alias gccall="gcc -g -pedantic -Wall -Wextra -Wshadow -Wunreachable-code -Wconversion -Werror -Wno-padded"
-alias mkcproj="mkdir {src,build,bin} && touch Makefile"
+alias mkproject="~/Scripts/create-project.sh"
 
 # Software
 alias v="nvim *"

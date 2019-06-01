@@ -258,12 +258,6 @@ vm() {
     fi
 }
 
-mkjavaproj () {
-    mkdir src
-    mkdir classes
-    cp ~/Coding/Skeletons/JavaMakefile Makefile
-}
-
 # Open file with xdg and disown the process
 function o() {
     xdg-open "$1" & > /dev/null 2>&1
