@@ -357,7 +357,7 @@ let g:lightline = {
 " \       'obsession': 'ObsessionStatus'
 
 " vim-latex-live-preview
-let g:livepreview_previewer = 'evince'
+let g:livepreview_previewer = 'okular'
 let g:livepreview_cursorhold_recompile = 0
 
 " markdown-preview
