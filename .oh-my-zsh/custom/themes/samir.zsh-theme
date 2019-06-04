@@ -33,7 +33,7 @@ function () {
     else
         # Either in a root shell created inside a non-root tmux session,
         # or not in a tmux session.
-        local LVL=$SHLVL
+        local LVL=$SHLVL-1
     fi
     # Check if the current shell is being executed by root to append # or $
     # accordingly
