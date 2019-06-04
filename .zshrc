@@ -65,10 +65,10 @@ export TERMINAL_THEME=dark
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 # Set terminal theme based on gtk theme
-if [[ $(command -v kreadconfig) && $(kreadconfig5 --file ~/.config/kdeglobals --group General --key ColorScheme) = "BreezeDark" ]]; then
-    export TERMINAL_THEME=dark
-else
+if [[ $(command -v kreadconfig) && $(kreadconfig5 --file ~/.config/kdeglobals --group General --key ColorScheme) = "Breeze" ]]; then
     export TERMINAL_THEME=light
+else
+    export TERMINAL_THEME=dark
 fi
 
 # Automatically start tmux in ssh sessions
