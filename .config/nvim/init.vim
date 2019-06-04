@@ -8,13 +8,11 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
     " Writing
-    " Plug 'caigithub/a_pair'                   " Combine parenthesis in a vim object
     Plug 'tpope/vim-repeat'                     " Use . to repeate plugins motions
-    Plug 'junegunn/goyo.vim'                    " Minimal UI
+    Plug 'wincent/scalpel'                      " Replace words with shortcut
     Plug 'chrisbra/Colorizer'                   " Show RGB colors
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
     Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
-    Plug 'wincent/scalpel'                      " Replace words with shortcut
 
     " Formatting
     Plug 'matze/vim-move'                       " Move visually selected lines
@@ -53,12 +51,10 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Linting and syntax
     Plug 'neomake/neomake'                      " Error checking
-    Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting for languages
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
     Plug 'Shougo/deoplete.nvim'
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
-    Plug 'artur-shaik/vim-javacomplete2'             " Autocomplete from tmux
-    " Plug 'artur-shaik/vim-javacomplete2'
+    Plug 'artur-shaik/vim-javacomplete2'        " Java auto completion
 
     " Latex
     Plug 'xuhdev/vim-latex-live-preview'       " Latex live preview
@@ -73,7 +69,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
     Plug 'mhinz/vim-startify'                   " Start screen for vim
-    " Plug 'Yggdroot/indentLine'                  " Show lines for indentation level
     Plug 'itchyny/lightline.vim'                " Status line
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
@@ -81,15 +76,15 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Themes
     Plug 'dracula/vim'                          " Dracula theme
-    Plug 'herrbischoff/cobalt2.vim'             " Cobalt theme
     Plug 'ayu-theme/ayu-vim'                    " Ayu theme
     Plug 'ajh17/Spacegray.vim'                  " Spacegray theme
     Plug 'haishanh/night-owl.vim'               " nightowl theme
     Plug 'chriskempson/base16-vim'              " base16 themes
+    Plug 'herrbischoff/cobalt2.vim'             " Cobalt theme
     Plug 'lifepillar/vim-solarized8'            " solarized8 theme
 
-    " Themes with airline theme
-    Plug 'joshdick/onedark.vim'                 " onedark theme
+    " Themes with lightline theme
+    Plug 'rakr/vim-one'                         " One theme
     Plug 'mhartington/oceanic-next'             " OceanicNext theme
     Plug 'tyrannicaltoucan/vim-deep-space'      " deep-space theme
     
@@ -97,7 +92,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'yarisgutierrez/ayu-lightline'         " Ayu lightline theme
 
     " To try
-    " Plug 'tmhedberg/SimpylFold'
     Plug 'benmills/vimux'
     Plug 'tpope/vim-obsession'
 
@@ -119,7 +113,7 @@ else
     " execute 'colorscheme '.themes[localtime() % len(themes)]
     " unlet themes
 endif
-colorscheme solarized8_flat
+colorscheme one
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -167,7 +161,7 @@ set scrolloff=5                     " Keep 5 lines above and below the cursor
 set sidescrolloff=5                 " Keep 5 columns left and right of the cursor
 set incsearch                       " Hightlight matches as you tipe
 set wildignore=*.swp,*.bak,*.pyc,*.class
-set listchars=tab:»·,trail:·,nbsp:~,eol:¶ " Visualize tab, spaces and newlines
+set listchars=tab:»·,trail:·,nbsp:~,eol:↲ " Visualize tab, spaces and newlines
 set backspace=indent,eol,start      " Make backspace behave properly "
 set mouse=n
 set lazyredraw                      " Buffer screen updates
@@ -341,14 +335,27 @@ else
 endif
 
 " lightline
+" let g:lightline = {
+" \   'colorscheme': 'solarized',
+" \   'active': {
+" \       'left': [ [ 'mode', 'paste' ],
+" \               [ 'readonly', 'filename', 'modified' ] ],
+" \       'right': [ [ 'lineinfo' ],
+" \                [ 'percent' ],
+" \                [ 'spell', 'gitbranch', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+" \   },
+" \   'component_function': {
+" \       'gitbranch': 'fugitive#head'
+" \   },
+" \ }
+
+" Minimal lightline
 let g:lightline = {
-\   'colorscheme': 'solarized',
+\   'colorscheme': 'one',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
-\               [ 'readonly', 'filename', 'modified' ] ],
-\       'right': [ [ 'lineinfo' ],
-\                [ 'percent' ],
-\                [ 'spell', 'gitbranch', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+\               [ 'readonly', 'modified' ] ],
+\       'right': [ [ 'spell', 'gitbranch', 'filetype' ] ]
 \   },
 \   'component_function': {
 \       'gitbranch': 'fugitive#head'
@@ -358,10 +365,10 @@ let g:lightline = {
 
 " vim-latex-live-preview
 let g:livepreview_previewer = 'okular'
-let g:livepreview_cursorhold_recompile = 0
+let g:livepreview_cursorhold_recompile = 1
 
 " markdown-preview
-let g:mkdp_auto_start = 1
+" let g:mkdp_auto_start = 1
 
 " indentLine
 let g:indentLine_fileTypeExclude = ['markdown', 'tex']
