@@ -31,7 +31,6 @@ zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
-# source ~/.fzfrc
 source ~/.zsh_aliases
 source ~/.zsh_functions
 
@@ -51,9 +50,6 @@ else
     bindkey "${terminfo[kdch1]}" delete-char
 fi
 
-# Remove grv alias to use grv
-unalias grv
-
 # Reduce time to enter normal mode
 export KEYTIMEOUT=1
 
@@ -61,11 +57,8 @@ export KEYTIMEOUT=1
 export REPORTTIME=3
 
 export EDITOR=nvim
-export TERMINAL_THEME=dark
-export QT_QPA_PLATFORMTHEME=qt5ct
-export FZF_BASE=$(which fzf)
 
-# Set terminal theme based on gtk theme
+# Set terminal theme based on UI theme
 if [[ $(command -v kreadconfig) && $(kreadconfig5 --file ~/.config/kdeglobals --group General --key ColorScheme) = "Breeze" ]]; then
     export TERMINAL_THEME=light
 else
