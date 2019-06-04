@@ -63,6 +63,7 @@ export REPORTTIME=3
 export EDITOR=nvim
 export TERMINAL_THEME=dark
 export QT_QPA_PLATFORMTHEME=qt5ct
+export FZF_BASE=$(which fzf)
 
 # Set terminal theme based on gtk theme
 if [[ $(command -v kreadconfig) && $(kreadconfig5 --file ~/.config/kdeglobals --group General --key ColorScheme) = "Breeze" ]]; then
