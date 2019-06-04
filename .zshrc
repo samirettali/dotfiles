@@ -1,4 +1,4 @@
-export PATH=~/.local/bin:$PATH
+export PATH=$HOME/Scripts:$HOME/.local/bin:$(ruby -e 'puts Gem.user_dir')/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="samir"
@@ -57,9 +57,6 @@ unalias grv
 # Reduce time to enter normal mode
 export KEYTIMEOUT=1
 
-# Option for zsh-you-should-use to force alias usage
-export YSU_HARDCORE=1
-
 # If the command takes longer than 3 seconds print the execution time
 export REPORTTIME=3
 
@@ -68,10 +65,10 @@ export TERMINAL_THEME=dark
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 # Set terminal theme based on gtk theme
-if [[ $(gsettings get org.gnome.desktop.interface gtk-theme) =~ "light" ]]; then
-    export TERMINAL_THEME=light
-else
+if [[ $(kreadconfig5 --file ~/.config/kdeglobals --group General --key ColorScheme) = "BreezeDark" ]]; then
     export TERMINAL_THEME=dark
+else
+    export TERMINAL_THEME=light
 fi
 
 # Automatically start tmux in ssh sessions
