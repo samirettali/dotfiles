@@ -234,7 +234,12 @@ longstrings() {
 
 # Move to Kali vm shared folder
 mvk() {
-    mv "$@" ~/CTF/Kali
+    mv "$@" ~/CTF/kali-ctf
+}
+
+# Copy to Kali vm shared folder
+cpk() {
+    cp "$@" ~/CTF/kali-ctf
 }
 
 # Use ack to find folder and move to it
