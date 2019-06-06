@@ -29,7 +29,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
     Plug 'ap/vim-buftabline'                    " Emulate tabs with buffers
     Plug 'christoomey/vim-tmux-navigator'       " Navigate between vim and tmux splits
-    Plug 'blueyed/vim-diminactive'              " Dim inactive panels
 
     " Snippets
     Plug 'SirVer/ultisnips'
@@ -39,7 +38,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Plug 'janko/vim-test'
 
     " NERDTree
-    Plug 'scrooloose/nerdtree'                  " Nerdtree file navigator
+    Plug 'scrooloose/nerdtree'                  " Nerdtree file explorer
     Plug 'ryanoasis/vim-devicons'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -76,21 +75,15 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Themes
     Plug 'dracula/vim'                          " Dracula theme
-    Plug 'ayu-theme/ayu-vim'                    " Ayu theme
-    Plug 'ajh17/Spacegray.vim'                  " Spacegray theme
     Plug 'haishanh/night-owl.vim'               " nightowl theme
     Plug 'chriskempson/base16-vim'              " base16 themes
-    Plug 'herrbischoff/cobalt2.vim'             " Cobalt theme
-    Plug 'lifepillar/vim-solarized8'            " solarized8 theme
+    Plug 'lifepillar/vim-solarized8'            " solarized8 themes
+    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 
     " Themes with lightline theme
     Plug 'rakr/vim-one'                         " One theme
     Plug 'mhartington/oceanic-next'             " OceanicNext theme
-    Plug 'tyrannicaltoucan/vim-deep-space'      " deep-space theme
     
-    " Lightline themes
-    Plug 'yarisgutierrez/ayu-lightline'         " Ayu lightline theme
-
     " To try
     Plug 'benmills/vimux'
     Plug 'tpope/vim-obsession'
@@ -106,14 +99,14 @@ set synmaxcol=200                  " Don't bother highlighting off screen lines
 set termguicolors
 if $TERMINAL_THEME == "light"
     set background=light
-    " let ayucolor="light"
+    colorscheme solarized8_high
 else
     set background=dark
-    " let themes = ['deep-space', 'dracula', 'base16-tomorrow-night', 'OceanicNext', 'onedark', 'spacegray', 'night-owl', 'solarized8_flat']
+    colorscheme base16-tomorrow-night
+    " let themes = ['challenger_deep', 'dracula', 'base16-tomorrow-night', 'OceanicNext', 'night-owl']
     " execute 'colorscheme '.themes[localtime() % len(themes)]
     " unlet themes
 endif
-colorscheme one
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -258,9 +251,6 @@ nnoremap - :split
 " Leader mappings
 let mapleader = ","
 
-" nnoremap <Leader>p :expand('%')<CR>
-" nnoremap <Leader>pp :let @0=expand('%') <Bar> :Clip<CR> :echo expand('%')<CR>
-
 " Reload vim configuration
 nnoremap <Leader>rv :source $MYVIMRC<CR>
 nnoremap <Leader>pi :PlugInstall<CR>
@@ -335,23 +325,9 @@ else
 endif
 
 " lightline
-" let g:lightline = {
-" \   'colorscheme': 'solarized',
-" \   'active': {
-" \       'left': [ [ 'mode', 'paste' ],
-" \               [ 'readonly', 'filename', 'modified' ] ],
-" \       'right': [ [ 'lineinfo' ],
-" \                [ 'percent' ],
-" \                [ 'spell', 'gitbranch', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
-" \   },
-" \   'component_function': {
-" \       'gitbranch': 'fugitive#head'
-" \   },
-" \ }
 
 " Minimal lightline
 let g:lightline = {
-\   'colorscheme': 'one',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
@@ -363,15 +339,22 @@ let g:lightline = {
 \ }
 " \       'obsession': 'ObsessionStatus'
 
+" Set lightline theme based on the colorscheme
+if g:colors_name == 'challenger_deep'
+    let g:lightline.colorscheme = 'challenger_deep'
+elseif g:colors_name == 'dracula'
+    let g:lightline.colorscheme = 'dracula'
+elseif g:colors_name == 'solarized8_high'
+    let g:lightline.colorscheme = 'solarized8'
+elseif g:colors_name == 'OceanicNext'
+    let g:lightline.colorscheme = 'oceanicnext'
+elseif g:colors_name == 'base16-tomorrow-night'
+    let g:lightline.colorscheme = 'Tomorrow_Night'
+endif
+
 " vim-latex-live-preview
 let g:livepreview_previewer = 'okular'
 let g:livepreview_cursorhold_recompile = 1
-
-" markdown-preview
-" let g:mkdp_auto_start = 1
-
-" indentLine
-let g:indentLine_fileTypeExclude = ['markdown', 'tex']
 
 " ultiSnips
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
