@@ -24,6 +24,8 @@
 #   [ -n "$git_where" ] && echo "$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_PREFIX${git_where#(refs/heads/|tags/)}$ZSH_THEME_GIT_PROMPT_SUFFIX"
 # }
 
+RPROMPT_BASE='%F{red}$(vi_mode_prompt_info)%f $(git_super_status)'
+
 function () {
     # Check for tmux by looking at $TERM, because $TMUX won't be propagated to any
     # nested sudo shells but $TERM will.
@@ -59,4 +61,37 @@ function vi_mode_prompt_info() {
     echo "${${KEYMAP/vicmd/}/(main|viins)/}"
 }
 
-export RPS1='%F{red}$(vi_mode_prompt_info)%f $(git_super_status)'
+typeset -F SECONDS
+function -record-start-time() {
+  emulate -L zsh
+  ZSH_START_TIME=${ZSH_START_TIME:-$SECONDS}
+}
+add-zsh-hook preexec -record-start-time
+
+function -report-start-time() {
+  emulate -L zsh
+  if [ $ZSH_START_TIME ]; then
+    local DELTA=$(($SECONDS - $ZSH_START_TIME))
+    local DAYS=$((~~($DELTA / 86400)))
+    local HOURS=$((~~(($DELTA - $DAYS * 86400) / 3600)))
+    local MINUTES=$((~~(($DELTA - $DAYS * 86400 - $HOURS * 3600) / 60)))
+    local SECS=$(($DELTA - $DAYS * 86400 - $HOURS * 3600 - $MINUTES * 60))
+    local ELAPSED=''
+    test "$DAYS" != '0' && ELAPSED="${DAYS}d"
+    test "$HOURS" != '0' && ELAPSED="${ELAPSED}${HOURS}h"
+    test "$MINUTES" != '0' && ELAPSED="${ELAPSED}${MINUTES}m"
+    if [ "$ELAPSED" = '' ]; then
+      SECS="$(print -f "%.2f" $SECS)s"
+    elif [ "$DAYS" != '0' ]; then
+      SECS=''
+    else
+      SECS="$((~~$SECS))s"
+    fi
+    ELAPSED="${ELAPSED}${SECS}"
+    export RPROMPT="%F{cyan}%{$__WINCENT[ITALIC_ON]%}${ELAPSED}%{$__WINCENT[ITALIC_OFF]%}%f $RPROMPT_BASE"
+    unset ZSH_START_TIME
+  else
+    export RPROMPT="$RPROMPT_BASE"
+  fi
+}
+add-zsh-hook precmd -report-start-time
