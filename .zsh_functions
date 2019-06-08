@@ -237,7 +237,7 @@ mvk() {
     mv "$@" ~/CTF/kali-ctf
 }
 
-# Copy to Kali vm shared folder
+# Move to Kali vm shared folder
 cpk() {
     cp "$@" ~/CTF/kali-ctf
 }
@@ -267,4 +267,13 @@ vm() {
 function o() {
     xdg-open "$1" & > /dev/null 2>&1
     disown
+}
+
+# Foreground and background switching
+function fg-bg() {
+  if [[ $#BUFFER -eq 0 ]]; then
+    fg
+  else
+    zle push-input
+  fi
 }
