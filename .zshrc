@@ -1,14 +1,21 @@
-export PATH=$HOME/Scripts:$HOME/.local/bin:$(ruby -e 'puts Gem.user_dir')/bin:$PATH
-export ZSH="$HOME/.oh-my-zsh"
+ZSH="$HOME/.oh-my-zsh"
+
+# Auto update oh-my-zsh
+UPDATE_ZSH_DAYS=1
+
+# Reduce time to enter normal mode
+KEYTIMEOUT=1
 
 ZSH_THEME="samir"
 
-HYPHEN_INSENSITIVE="true"
-
-# Auto update
-export UPDATE_ZSH_DAYS=1
-
 ENABLE_CORRECTION="false"
+
+# Text editor
+export EDITOR=nvim
+
+# Path
+export PATH=$HOME/Scripts:$HOME/.local/bin:$(ruby -e 'puts Gem.user_dir')/bin:$PATH
+# Set terminal theme based on UI theme
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -22,14 +29,12 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-setopt incappendhistory
-
-# Add a package to completion right after install
-zstyle ':completion:*' rehash true
-# Mismatch completion
+# # Add a package to completion right after install
+# zstyle ':completion:*' rehash true
+# # Mismatch completion
 zstyle ':completion:*' completer _complete _match _approximate
-zstyle ':completion:*:match:*' original only
-zstyle ':completion:*:approximate:*' max-errors 1 numeric
+# zstyle ':completion:*:match:*' original only
+# zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
 source ~/.zsh_aliases
 source ~/.zsh_functions
@@ -38,6 +43,10 @@ bindkey -v
 
 bindkey '^ ' autosuggest-accept
 bindkey '^R' fzf-history-widget
+
+# Switch between foreground and background
+zle -N fg-bg
+bindkey '^Z' fg-bg
 
 # Fix for end, home and delete keys
 if [[ -n "$TMUX" ]]; then
@@ -48,21 +57,6 @@ else
     bindkey "${terminfo[khome]}" beginning-of-line
     bindkey "${terminfo[kend]}" end-of-line
     bindkey "${terminfo[kdch1]}" delete-char
-fi
-
-# Reduce time to enter normal mode
-export KEYTIMEOUT=1
-
-# If the command takes longer than 3 seconds print the execution time
-export REPORTTIME=3
-
-export EDITOR=nvim
-
-# Set terminal theme based on UI theme
-if [[ $(command -v kreadconfig) && $(kreadconfig5 --file ~/.config/kdeglobals --group General --key ColorScheme) = "Breeze" ]]; then
-    export TERMINAL_THEME=light
-else
-    export TERMINAL_THEME=dark
 fi
 
 # Automatically start tmux in ssh sessions
