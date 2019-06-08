@@ -76,6 +76,7 @@ alias regd="~/Git/regldg/regldg --debug-code=1 --universe-set=7 --universe-check
 # Misc
 alias c="clear"
 alias kdereload="kquitapp5 plasmashell; kstart5 plasmashell"
+alias upg="~/Scripts/upgrade"
 
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
