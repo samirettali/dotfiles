@@ -21,7 +21,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Text objects
     Plug 'machakann/vim-swap'                   " Swap delimited items
     Plug 'tpope/vim-surround'                   " Add surround object for editing
-    Plug 'justinmk/vim-sneak'                   " Better find
     Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
     " Plug 'michaeljsmith/vim-indent-object'    " Add current indentation level object
 
@@ -102,10 +101,10 @@ if $TERMINAL_THEME == "light"
     colorscheme solarized8_high
 else
     set background=dark
-    colorscheme base16-tomorrow-night
     " let themes = ['challenger_deep', 'dracula', 'base16-tomorrow-night', 'OceanicNext', 'night-owl']
     " execute 'colorscheme '.themes[localtime() % len(themes)]
     " unlet themes
+    colorscheme challenger_deep
 endif
 
 set expandtab                      " Insert spaces instead of tabs
@@ -345,7 +344,7 @@ if g:colors_name == 'challenger_deep'
 elseif g:colors_name == 'dracula'
     let g:lightline.colorscheme = 'dracula'
 elseif g:colors_name == 'solarized8_high'
-    let g:lightline.colorscheme = 'solarized8'
+    let g:lightline.colorscheme = 'solarized'
 elseif g:colors_name == 'OceanicNext'
     let g:lightline.colorscheme = 'oceanicnext'
 elseif g:colors_name == 'base16-tomorrow-night'
@@ -397,9 +396,6 @@ nmap <F3> <Plug>(JavaComplete-Imports-AddMissing)
 imap <F3> <Plug>(JavaComplete-Imports-AddMissing)
 nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-
-map f <Plug>Sneak_s
-map F <Plug>Sneak_S
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<Leader>e"
