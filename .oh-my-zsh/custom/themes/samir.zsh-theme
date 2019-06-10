@@ -58,7 +58,7 @@ function zle-keymap-select() {
 zle -N zle-keymap-select
 
 function vi_mode_prompt_info() {
-    echo "${${KEYMAP/vicmd/}/(main|viins)/}"
+    echo "${${KEYMAP/vicmd/🔒}/(main|viins)/}"
 }
 
 typeset -F SECONDS

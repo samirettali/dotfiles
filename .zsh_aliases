@@ -1,5 +1,5 @@
 # Better defaults
-alias ls="ls -N --group-directories-first --color=auto"
+alias ls="ls -G"
 
 # Systemd
 alias start="sudo systemctl start"
@@ -17,28 +17,17 @@ if uname -a | grep -i 'ubuntu\|debian' > /dev/null 2>/dev/null; then
     alias aptu="sudo apt-get update && sudo apt-get upgrade"
 fi
 
-# Fast cd
-alias cdw="cd /run/media/samir/WhitePassport"
-alias cdb="cd /run/media/samir/BlackPassport"
-alias b="cd -"
-
-# Fans fix (to remove)
-alias fans="sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 0 && sudo i8kctl fan 0 0 && sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 1"
-alias forcefans="sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 0 && sudo i8kctl fan 0 0"
-alias cool="sudo ~/Git/dell-bios-fan-control/dell-bios-fan-control 0 && sudo i8kctl fan 2 2"
-
 # Dotfiles editing
-alias vz="vim ~/.zshrc && source ~/.zshrc"
 alias va="vim ~/.zsh_aliases && source ~/.zshrc"
 alias vf="vim ~/.zsh_functions && source ~/.zshrc"
 alias vt="vim ~/.tmux.conf"
 alias vv="vim ~/.config/nvim/init.vim"
-alias rlz="source ~/.zshrc"
-alias dotfiles="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+alias vz="vim ~/.zshrc && source ~/.zshrc"
+alias dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
 # Git repositories
 alias repos="git -C ~/Scripts status && git -C ~/.cfg --work-tree=$HOME status"
-alias dotfiles-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/Scripts/install.sh"
+alias dots-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/Scripts/install.sh"
 
 # Tmux
 alias tl="tmux ls"
@@ -47,10 +36,7 @@ alias tt="tmux new -A -s term"
 alias -g gp="| grep -i"
 
 # Scripts
-alias copy="xclip -sel clip"
 alias wip="curl ipinfo.io; echo"
-alias countfiles="find . -type f | wc -l"
-alias countfolders="find . -type d | wc -l"
 alias filetypes="find . -type f -printf '%f\n' | sed -r -n 's/.+(\..*)$/\1/p' | sort | uniq -c | sort -bn"
 alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
 
@@ -62,21 +48,13 @@ alias gccall="gcc -g -pedantic -Wall -Wextra -Wshadow -Wunreachable-code -Wconve
 alias mkproject="~/Scripts/create-project.sh"
 
 # Software
-alias v="nvim *"
 alias vim="nvim"
 alias vanillavim="nvim -u /dev/null"
-alias nano="nvim"
-alias emacs="nvim"
 alias sv="sudo nvim"
 alias vimdiff="nvim -d"
 alias s="sudo su -"
 alias reg="~/Git/regldg/regldg"
 alias regd="~/Git/regldg/regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
-
-# Misc
-alias c="clear"
-alias kdereload="kquitapp5 plasmashell; kstart5 plasmashell"
-alias upg="~/Scripts/upgrade"
 
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
@@ -88,14 +66,12 @@ alias vss="vagrant ssh"
 alias vag="vagrant up; vagrant ssh"
 
 # CTF
-alias pyweb="python2 -m SimpleHTTPServer 9999"
 alias kali="cd ~/CTF/kali-ctf; vagrant up && vagrant ssh"
 alias stegsolve="java -jar ~/CTF/Tools/Stego/stegsolve.jar; disown"
 
-# University
-alias lft="cd ~/Uni/2/LFT/18-19/Laboratorio/LFT-Ettali/src"
-alias asd="cd ~/Uni/2/asd/18-19/laboratorio-algoritmi-2018-19"
-
-# Theme
-alias dark="~/Scripts/kde-theme.sh dark"
-alias light="~/Scripts/kde-theme.sh light"
+# Linux only
+# alias copy="xclip -sel clip"
+# alias dark="~/Scripts/kde-theme.sh dark"
+# alias light="~/Scripts/kde-theme.sh light"
+# alias kdereload="kquitapp5 plasmashell; kstart5 plasmashell"
+# alias upg="~/Scripts/upgrade"

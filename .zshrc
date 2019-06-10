@@ -14,8 +14,7 @@ ENABLE_CORRECTION="false"
 export EDITOR=nvim
 
 # Path
-export PATH=$HOME/Scripts:$HOME/.local/bin:$(ruby -e 'puts Gem.user_dir')/bin:$PATH
-# Set terminal theme based on UI theme
+export PATH=$HOME/.local/bin:$PATH
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -23,7 +22,7 @@ export PATH=$HOME/Scripts:$HOME/.local/bin:$(ruby -e 'puts Gem.user_dir')/bin:$P
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 plugins=(git git-prompt colored-man-pages colorize fzf pip python \
-    zsh-autosuggestions zsh-syntax-highlighting archlinux you-should-use)
+    zsh-autosuggestions zsh-syntax-highlighting you-should-use)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -62,4 +61,10 @@ fi
 # Automatically start tmux in ssh sessions
 if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
     tmux attach-session -t ssh || tmux new-session -s ssh
+fi
+
+if [[ $(command -v defaults) && $(defaults read -g AppleInterfaceStyle 2>/dev/null) = "Dark" ]]; then
+    export TERMINAL_THEME=dark
+else
+    export TERMINAL_THEME=light
 fi

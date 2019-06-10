@@ -1,52 +1,43 @@
 # Development
 jjj() {
-	clear
-	echo "###############"
-	echo "# COMPILATION #"
-	echo "###############"
-	javac "$1"
-	echo "\n###############"
-	echo "## EXECUTION ##"
-	echo "###############\n"
-	time java $(sed 's/.java//' <<< "$1")
-	rm *.class
+    clear
+    echo "###############"
+    echo "# COMPILATION #"
+    echo "###############"
+    javac "$1"
+    echo "\n###############"
+    echo "## EXECUTION ##"
+    echo "###############\n"
+    time java $(sed 's/.java//' <<< "$1")
+    rm *.class
 }
 
 ccc() {
-	clear
-	echo "###############"
-	echo "# COMPILATION #"
-	echo "###############"
+    clear
+    echo "###############"
+    echo "# COMPILATION #"
+    echo "###############"
     gcc "$1" -g -Wall -rdynamic -o $(sed 's/\.c//' <<< "$1")
-	echo "\n###############"
-	echo "## EXECUTION ##"
-	echo "###############\n"
-	rm $(sed 's/\.c//' <<< "$1")
+    echo "\n###############"
+    echo "## EXECUTION ##"
+    echo "###############\n"
+    rm $(sed 's/\.c//' <<< "$1")
 }
 
 ccd() {
-	gcc "$1" -g -Wall -rdynamic -o $(sed 's/\.c//' <<< "$1")
+    gcc "$1" -g -Wall -rdynamic -o $(sed 's/\.c//' <<< "$1")
 }
 
 cca() {
-	for f in *.c; do
+    for f in *.c; do
         gcc "$f" -g -Wall -rdynamic -o $(sed 's/\.c//' <<< "$f")
-	done
-}
-
-# Automata graph generation
-graph() {
-	dot -Tpng -Gsize=192,108\! -Gdpi=10 "$1".gv -o "$1".png && xdg-open "$1".png
-
-}
-
-graphsvg() {
-	dot -Tsvg "$1".gv -o "$1".svg && xsvg "$1".svg
+    done
 }
 
 # Find files
+# TODO fix for MacOS
 f() {
-	find -iname "*$1*" 2>/dev/null
+    find -iname "*$1*" 2>/dev/null
 }
 
 # Edit all files containing a string
@@ -56,12 +47,12 @@ vack() {
 
 # Go up n directories
 up() {
-	cd $(eval printf '../'%.0s {1.."$1"})
+    cd $(eval printf '../'%.0s {1.."$1"})
 }
 
 fixpermissions() {
-	find . -type d -exec chmod 755 -- {} +
-	find . -type f -exec chmod 644 -- {} +
+    find . -type d -exec chmod 755 -- {} +
+    find . -type f -exec chmod 644 -- {} +
 }
 
 # Create new tmux session with name if passed
@@ -75,90 +66,64 @@ t() {
 
 # Throw away directory
 tad() {
-	local ts=$(date +%s)
-	local d="$HOME/.throw-away/$ts"
-	mkdir -p "$d"
-	(cd "$d"; zsh -c tmux)
-	rm -r "$d"
-}
-
-dnd() {
-	local name="$(date +%F)"
-	mkdir "$name" && cd "$name"
+    local ts=$(date +%s)
+    local d="$HOME/.throw-away/$ts"
+    mkdir -p "$d"
+    (cd "$d"; zsh -c tmux)
+    rm -r "$d"
 }
 
 # Last downloaded file
 ldf() {
-	local file=~/Downloads/$(ls -1t ~/Downloads/ | head -n1)
-	echo "$file"
-	mv "$file" .
-}
-
-lt-ascii() {
-	sed -e 's/[ÀÁÂÃÄÅ]/A/g'|
-	sed -e 's/Æ/AE/g'      |
-	sed -e 's/Ç/C/g'       |
-	sed -e 's/[ÈÉÊË]/E/g'  |
-	sed -e 's/[ÌÍÎÏ]/I/g'  |
-	sed -e 's/Ñ/N/g'       |
-	sed -e 's/[ÒÓÔÕÖØ]/O/g'|
-	sed -e 's/[ÙÚÛÜ]/U/g'  |
-	sed -e 's/ Ý /Y/g'     |
-	sed -e 's/[àáâãä]/a/g' |
-	sed -e 's/æ/ae/g'      |
-	sed -e 's/ç/c/g'       |
-	sed -e 's/[èéêë]/e/g'  |
-	sed -e 's/[ìíîï]/i/g'  |
-	sed -e 's/ñ/n/g'       |
-	sed -e 's/[òóôöø]/o/g' |
-	sed -e 's/[ùúûü]/u/g'  |
-	sed -e 's/ ý /y/g'
+    local file=~/Downloads/$(ls -1t ~/Downloads/ | head -n1)
+    echo "$file"
+    mv "$file" .
 }
 
 # Better tree visualization
 tre() {
-	tree -aC -I '.git|node_modules|vendor|.idea|.vscode' --dirsfirst "$@" | less -FRNX
+    tree -aC -I '.git|node_modules|vendor|.idea|.vscode' --dirsfirst "$@" | less -FRNX
 }
 
 # Extract archive
 extract() {
-	if [ -f "$1" ] ; then
-		local filename=$(basename "$1")
-		local foldername="${filename%%.*}"
-		local fullpath=`perl -e 'use Cwd "abs_path";print abs_path(shift)' "$1"`
-		local didfolderexist=false
-		if [ -d "$foldername" ]; then
-			didfolderexist=true
-			read -p "$foldername already exists, do you want to overwrite it? (y/n) " -n 1
-			echo
-			if [[ $REPLY =~ ^[Nn]$ ]]; then
-				return
-			fi
-		fi
-		mkdir -p "$foldername" && cd "$foldername"
-		case $1 in
-			*.tar.bz2) tar xjf "$fullpath" ;;
-			*.tar.gz) tar xzf "$fullpath" ;;
-			*.tar.xz) tar Jxvf "$fullpath" ;;
-			*.tar.Z) tar xzf "$fullpath" ;;
-			*.tar) tar xf "$fullpath" ;;
-			*.taz) tar xzf "$fullpath" ;;
-			*.tb2) tar xjf "$fullpath" ;;
-			*.tbz) tar xjf "$fullpath" ;;
-			*.tbz2) tar xjf "$fullpath" ;;
-			*.tgz) tar xzf "$fullpath" ;;
-			*.txz) tar Jxvf "$fullpath" ;;
-			*.zip) unzip "$fullpath" ;;
-			*) echo "'$1' cannot be extracted via extract()" && cd .. && ! $didfolderexist && rm -r "$foldername" ;;
-		esac
-	else
-		echo "'$1' is not a valid file"
-	fi
+    if [ -f "$1" ] ; then
+        local filename=$(basename "$1")
+        local foldername="${filename%%.*}"
+        local fullpath=`perl -e 'use Cwd "abs_path";print abs_path(shift)' "$1"`
+        local didfolderexist=false
+        if [ -d "$foldername" ]; then
+            didfolderexist=true
+            read -p "$foldername already exists, do you want to overwrite it? (y/n) " -n 1
+            echo
+            if [[ $REPLY =~ ^[Nn]$ ]]; then
+                return
+            fi
+        fi
+        mkdir -p "$foldername" && cd "$foldername"
+        case $1 in
+            *.tar.bz2) tar xjf "$fullpath" ;;
+            *.tar.gz) tar xzf "$fullpath" ;;
+            *.tar.xz) tar Jxvf "$fullpath" ;;
+            *.tar.Z) tar xzf "$fullpath" ;;
+            *.tar) tar xf "$fullpath" ;;
+            *.taz) tar xzf "$fullpath" ;;
+            *.tb2) tar xjf "$fullpath" ;;
+            *.tbz) tar xjf "$fullpath" ;;
+            *.tbz2) tar xjf "$fullpath" ;;
+            *.tgz) tar xzf "$fullpath" ;;
+            *.txz) tar Jxvf "$fullpath" ;;
+            *.zip) unzip "$fullpath" ;;
+            *) echo "'$1' cannot be extracted via extract()" && cd .. && ! $didfolderexist && rm -r "$foldername" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
 }
 
 # Add extension to all files in a directory
 add_extension() {
-	find . -type f -exec mv '{}' '{}'.$1 \;
+    find . -type f -exec mv '{}' '{}'.$1 \;
 }
 
 # Search for a string in file and replace it
@@ -201,13 +166,14 @@ groot() {
     done
 }
 
+# Go to project root
 proot() {
     readonly old_pwd="$PWD"
     while [[ 1 ]]; do
         cd ..
         if [[ "$PWD" == "/" ]]; then
             cd "$old_pwd"
-            echo "No repository found, returned to $PWD"
+            echo "Project structure not found, returned to $PWD"
             return 1
         fi
         if [[ -f "Makefile" ]]; then
@@ -228,6 +194,7 @@ bak() {
 
 # CTF stuff
 
+# Find strings longer than 10 characters
 longstrings() {
     strings "$1" | awk 'length($0) > 10' | sort -u
 }
@@ -263,12 +230,6 @@ vm() {
     fi
 }
 
-# Open file with xdg and disown the process
-function o() {
-    xdg-open "$1" & > /dev/null 2>&1
-    disown
-}
-
 # Foreground and background switching
 function fg-bg() {
   if [[ $#BUFFER -eq 0 ]]; then
@@ -276,4 +237,32 @@ function fg-bg() {
   else
     zle push-input
   fi
+}
+
+# Replace non-ascii characters
+lt-ascii() {
+    sed -e 's/[ÀÁÂÃÄÅ]/A/g'|
+    sed -e 's/Æ/AE/g'      |
+    sed -e 's/Ç/C/g'       |
+    sed -e 's/[ÈÉÊË]/E/g'  |
+    sed -e 's/[ÌÍÎÏ]/I/g'  |
+    sed -e 's/Ñ/N/g'       |
+    sed -e 's/[ÒÓÔÕÖØ]/O/g'|
+    sed -e 's/[ÙÚÛÜ]/U/g'  |
+    sed -e 's/ Ý /Y/g'     |
+    sed -e 's/[àáâãä]/a/g' |
+    sed -e 's/æ/ae/g'      |
+    sed -e 's/ç/c/g'       |
+    sed -e 's/[èéêë]/e/g'  |
+    sed -e 's/[ìíîï]/i/g'  |
+    sed -e 's/ñ/n/g'       |
+    sed -e 's/[òóôöø]/o/g' |
+    sed -e 's/[ùúûü]/u/g'  |
+    sed -e 's/ ý /y/g'
+}
+
+# Start a simple web server in the current directory
+http() {
+    local port="${1:-8000}"
+    python -m SimpleHTTPServer $port
 }

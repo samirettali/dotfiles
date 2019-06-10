@@ -29,12 +29,13 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'ap/vim-buftabline'                    " Emulate tabs with buffers
     Plug 'christoomey/vim-tmux-navigator'       " Navigate between vim and tmux splits
 
+    " Fuzzy file finder
+    Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
+    Plug 'junegunn/fzf.vim'                     " Fzf plugin
+
     " Snippets
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
-
-    " Development
-    " Plug 'janko/vim-test'
 
     " NERDTree
     Plug 'scrooloose/nerdtree'                  " Nerdtree file explorer
@@ -52,7 +53,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
     Plug 'Shougo/deoplete.nvim'
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
-    Plug 'artur-shaik/vim-javacomplete2'        " Java auto completion
 
     " Latex
     Plug 'xuhdev/vim-latex-live-preview'       " Latex live preview
@@ -75,8 +75,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Themes
     Plug 'dracula/vim'                          " Dracula theme
     Plug 'haishanh/night-owl.vim'               " nightowl theme
-    Plug 'chriskempson/base16-vim'              " base16 themes
-    Plug 'lifepillar/vim-solarized8'            " solarized8 themes
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 
     " Themes with lightline theme
@@ -87,6 +85,10 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'benmills/vimux'
     Plug 'tpope/vim-obsession'
 
+    " Development
+    " Plug 'janko/vim-test'
+
+
 call plug#end()
 
 set nocompatible
@@ -95,17 +97,22 @@ filetype indent plugin on
 set modelines=0
 set synmaxcol=200                  " Don't bother highlighting off screen lines
 
+" Theme management
 set termguicolors
-if $TERMINAL_THEME == "light"
-    set background=light
-    colorscheme solarized8_high
-else
-    set background=dark
-    " let themes = ['challenger_deep', 'dracula', 'base16-tomorrow-night', 'OceanicNext', 'night-owl']
-    " execute 'colorscheme '.themes[localtime() % len(themes)]
-    " unlet themes
-    colorscheme challenger_deep
+" Get the operating system
+let s:operating_system = substitute(system('uname'), '\n', '', '')
+if s:operating_system == 'Darwin'
+    " Mac OS theme detection (Light or dark)
+    let s:theme_mode = substitute(system('defaults read -g AppleInterfaceStyle 2>/dev/null'), '\n', '', '')
+    if s:theme_mode == 'Dark'
+        set background=dark
+        colorscheme challenger_deep
+    else
+        set background=light
+        colorscheme one
+    endif
 endif
+
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -211,12 +218,11 @@ endfunction
 
 " Check battery status
 " TODO check if file exists
-function! MyOnBattery()
-    return readfile('/sys/class/power_supply/AC/online') == ['0']
-endfunction
+" function! MyOnBattery()
+"     return readfile('/sys/class/power_supply/AC/online') == ['0']
+" endfunction
 
 " Mappings
-map <F10> :setlocal spell!<CR>
 noremap <up>    <C-W>+
 noremap <down>  <C-W>-
 noremap <left>  3<C-W><
@@ -240,6 +246,9 @@ vmap <C-x> "+c
 vmap <C-v> c<Esc>"+p
 imap <C-v> <C-r><C-o>+"
 
+" Activate spelling
+map <silent> <C-s> :setlocal spell!<CR>
+
 " Select text inserted during last insert mode usage
 nnoremap gV `[v`]
 
@@ -251,8 +260,8 @@ nnoremap - :split
 let mapleader = ","
 
 " Reload vim configuration
-nnoremap <Leader>rv :source $MYVIMRC<CR>
-nnoremap <Leader>pi :PlugInstall<CR>
+nnoremap <silent> <Leader>rv :source $MYVIMRC<CR>
+nnoremap <silent> <Leader>pi :PlugInstall<CR>
 
 " Show invisible characters
 nnoremap <silent> <Leader>i :set list!<CR>
@@ -301,6 +310,7 @@ nnoremap ù ])
 " nnoremap <Leader>13 ggVGg?<CR> 
 
 " Plugins settings
+
 " buftabline
 let g:buftabline_numbers = 2
 
@@ -312,20 +322,10 @@ let g:python3_host_prog = 'python3.7'
 let g:highlightedyank_highlight_duration = 3000
 let g:CoolTotalMatches = 1
 
-" java-omnicomplete
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
 " neomake
-let g:neomake_open_list = 2
-if MyOnBattery()
-    call neomake#configure#automake('w')
-else
-    call neomake#configure#automake('nrwi', 500)
-endif
+call neomake#configure#automake('w')
 
 " lightline
-
-" Minimal lightline
 let g:lightline = {
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
@@ -341,18 +341,12 @@ let g:lightline = {
 " Set lightline theme based on the colorscheme
 if g:colors_name == 'challenger_deep'
     let g:lightline.colorscheme = 'challenger_deep'
-elseif g:colors_name == 'dracula'
-    let g:lightline.colorscheme = 'dracula'
-elseif g:colors_name == 'solarized8_high'
-    let g:lightline.colorscheme = 'solarized'
-elseif g:colors_name == 'OceanicNext'
-    let g:lightline.colorscheme = 'oceanicnext'
-elseif g:colors_name == 'base16-tomorrow-night'
-    let g:lightline.colorscheme = 'Tomorrow_Night'
+else
+    let g:lightline.colorscheme = 'Wombat'
 endif
 
 " vim-latex-live-preview
-let g:livepreview_previewer = 'okular'
+let g:livepreview_previewer = 'open -a Preview'
 let g:livepreview_cursorhold_recompile = 1
 
 " ultiSnips
@@ -383,19 +377,15 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.php'
 
 " Plugins mappings
 
-" Open NERDTree on current file
+" Fuzzy file finder
+nnoremap <C-f> :FZF<CR>
+
+" NERDTree
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 map <silent> <C-o> :NERDTreeToggle<CR>
 
-map <silent> <F6> :ColorToggle<CR>
-map <silent> <F8> :TagbarToggle<CR>
-map <F12> :lnext<CR>
-map <C-f> :FZF<CR>
-
-nmap <F3> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F3> <Plug>(JavaComplete-Imports-AddMissing)
-nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
-imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+" Tagbar
+map <silent> <C-t> :TagbarToggle<CR>
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<Leader>e"
