@@ -97,22 +97,10 @@ filetype indent plugin on
 set modelines=0
 set synmaxcol=200                  " Don't bother highlighting off screen lines
 
-" Theme management
+" Theme
 set termguicolors
-" Get the operating system
-let s:operating_system = substitute(system('uname'), '\n', '', '')
-if s:operating_system == 'Darwin'
-    " Mac OS theme detection (Light or dark)
-    let s:theme_mode = substitute(system('defaults read -g AppleInterfaceStyle 2>/dev/null'), '\n', '', '')
-    if s:theme_mode == 'Dark'
-        set background=dark
-        colorscheme challenger_deep
-    else
-        set background=light
-        colorscheme one
-    endif
-endif
-
+set background=dark
+colorscheme challenger_deep
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
