@@ -1,22 +1,6 @@
 # Better defaults
 alias ls="ls -G"
 
-# Systemd
-alias start="sudo systemctl start"
-alias restart="sudo systemctl restart"
-alias stop="sudo systemctl stop"
-alias status="systemctl status"
-
-# Vagrant
-
-# Distro dependent aliases
-if uname -a | grep -i 'ubuntu\|debian' > /dev/null 2>/dev/null; then
-    # Apt
-    alias apti="sudo apt install"
-    alias aptr="sudo apt remove --purge"
-    alias aptu="sudo apt-get update && sudo apt-get upgrade"
-fi
-
 # Dotfiles editing
 alias va="vim ~/.zsh_aliases && source ~/.zshrc"
 alias vf="vim ~/.zsh_functions && source ~/.zshrc"
@@ -37,7 +21,6 @@ alias -g gp="| grep -i"
 
 # Scripts
 alias wip="curl ipinfo.io; echo"
-alias filetypes="find . -type f -printf '%f\n' | sed -r -n 's/.+(\..*)$/\1/p' | sort | uniq -c | sort -bn"
 alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
 
 # Development
@@ -53,8 +36,7 @@ alias vanillavim="nvim -u /dev/null"
 alias sv="sudo nvim"
 alias vimdiff="nvim -d"
 alias s="sudo su -"
-alias reg="~/Git/regldg/regldg"
-alias regd="~/Git/regldg/regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
+alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
 
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
