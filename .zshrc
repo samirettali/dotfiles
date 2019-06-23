@@ -1,3 +1,4 @@
+export PATH=/Users/samir/.gem/ruby/2.3.0/bin:$PATH
 ZSH="$HOME/.oh-my-zsh"
 
 # Auto update oh-my-zsh
