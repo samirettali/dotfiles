@@ -73,14 +73,8 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
 
     " Themes
-    Plug 'dracula/vim'                          " Dracula theme
-    Plug 'haishanh/night-owl.vim'               " nightowl theme
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 
-    " Themes with lightline theme
-    Plug 'rakr/vim-one'                         " One theme
-    Plug 'mhartington/oceanic-next'             " OceanicNext theme
-    
     " To try
     Plug 'benmills/vimux'
     Plug 'tpope/vim-obsession'
@@ -318,7 +312,7 @@ let g:lightline = {
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
-\       'right': [ [ 'spell', 'gitbranch', 'charhex', 'filetype' ] ]
+\       'right': [ [ 'charhex', 'spell', 'gitbranch', 'filetype' ] ]
 \   },
 \   'component': {
 \       'charhex': '0x%B'
