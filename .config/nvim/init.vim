@@ -318,7 +318,10 @@ let g:lightline = {
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
-\       'right': [ [ 'spell', 'gitbranch', 'filetype' ] ]
+\       'right': [ [ 'spell', 'gitbranch', 'charhex', 'filetype' ] ]
+\   },
+\   'component': {
+\       'charhex': '0x%B'
 \   },
 \   'component_function': {
 \       'gitbranch': 'fugitive#head'
