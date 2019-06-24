@@ -1,5 +1,9 @@
 # Better defaults
-alias ls="ls -G"
+if [ $(uname) = 'Darwin' ]; then
+    alias ls="ls -G"
+else
+    alias ls="ls --color -h --group-directories-first"
+fi
 
 # Dotfiles editing
 alias va="vim ~/.zsh_aliases && source ~/.zshrc"
