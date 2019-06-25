@@ -210,9 +210,6 @@ noremap <down>  <C-W>-
 noremap <left>  3<C-W><
 noremap <right> 3<C-W>>
 
-nnoremap j gj
-nnoremap k gk
-
 " Compile using make file
 nnoremap <C-m> :make<CR>
 
