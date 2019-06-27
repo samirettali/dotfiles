@@ -189,7 +189,7 @@ bak() {
     if [[ "${target:0-1}" = "/" ]]; then
         target=${target%%/}; # Strip trailing / of directories
     fi
-    mv -v $target{,.bak}
+    cp -v $target{,.bak}
 }
 
 # CTF stuff
