@@ -3,6 +3,7 @@ if [ $(uname) = 'Darwin' ]; then
     alias ls="ls -G"
 else
     alias ls="ls --color -h --group-directories-first"
+    alias copy="xclip -sel clip"
 fi
 
 # Dotfiles editing
@@ -50,14 +51,4 @@ alias ytmp3="youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audi
 alias vup="vagrant up"
 alias vss="vagrant ssh"
 alias vag="vagrant up; vagrant ssh"
-
-# CTF
 alias kali="cd ~/CTF/kali-ctf; vagrant up && vagrant ssh"
-alias stegsolve="java -jar ~/CTF/Tools/Stego/stegsolve.jar; disown"
-
-# Linux only
-# alias copy="xclip -sel clip"
-# alias dark="~/Scripts/kde-theme.sh dark"
-# alias light="~/Scripts/kde-theme.sh light"
-# alias kdereload="kquitapp5 plasmashell; kstart5 plasmashell"
-# alias upg="~/Scripts/upgrade"
