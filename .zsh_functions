@@ -35,9 +35,8 @@ cca() {
 }
 
 # Find files
-# TODO fix for MacOS
 f() {
-    find -iname "*$1*" 2>/dev/null
+    find . -iname "*$1*" 2>/dev/null
 }
 
 # Edit all files containing a string
