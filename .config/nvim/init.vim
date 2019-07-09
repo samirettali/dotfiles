@@ -228,6 +228,9 @@ imap <C-v> <C-r><C-o>+"
 " Activate spelling
 map <silent> <C-s> :setlocal spell!<CR>
 
+" Open man page for word under cursor
+map K :call ReadMan()<CR>
+
 " Select text inserted during last insert mode usage
 nnoremap gV `[v`]
 
@@ -238,7 +241,8 @@ nnoremap - :split
 " Leader mappings
 let mapleader = ","
 
-" Reload vim configuration
+" Edit vim configuration
+nnoremap <silent> <Leader>ev :edit $MYVIMRC<CR>
 nnoremap <silent> <Leader>rv :source $MYVIMRC<CR>
 nnoremap <silent> <Leader>pi :PlugInstall<CR>
 
@@ -436,3 +440,18 @@ function! InsertJavaPackage()
     call cursor(8, 5)
     startinsert
 endfunction
+
+fun! ReadMan()
+    " Assign current word under cursor to a script variable:
+    let s:man_word = expand('<cword>')
+    " Open a new window:
+    :exe ":wincmd n"
+    " Read in the manpage for man_word (col -b is for formatting):
+    :exe ":r!man " . s:man_word . " | col -b"
+    " Goto first line...
+    :exe ":goto"
+    " and delete it:
+    :exe ":delete"
+    " finally set file type to 'man':
+    :exe ":set filetype=man"
+endfun
