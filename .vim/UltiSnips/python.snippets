@@ -1,0 +1,36 @@
+snippet ctf "Script" b
+#!/usr/bin/env python3
+from sys import argv
+
+def foo(text):
+
+def main():
+    if len(argv) != 2:
+        print('Usage: ./%s <file>' % argv[0])
+        exit(1)
+
+    text = open(argv[1], 'r').read()
+    foo(text)
+
+if __name__ == '__main__':
+    main()
+endsnippet
+
+snippet mclass "Class with main" b
+class ${1:Class} {
+	$1()
+	{
+	}
+
+	public static void main(String[] args)
+	{
+	}
+}
+endsnippet
+
+snippet au "Author" b
+/**
+ * @author Samir Ettali
+ **/
+
+endsnippet
