@@ -31,11 +31,11 @@ function () {
     # nested sudo shells but $TERM will.
     if [ -n "$TMUX" ] || [ -n "$SSH_CONNECTION" ]; then
         # In a a tmux session created in a non-root or root shell.
-        local LVL=$SHLVL-2
+        local LVL=$SHLVL-1
     else
         # Either in a root shell created inside a non-root tmux session,
         # or not in a tmux session.
-        local LVL=$SHLVL-1
+        local LVL=$SHLVL
     fi
     # Check if the current shell is being executed by root to append # or $
     # accordingly
