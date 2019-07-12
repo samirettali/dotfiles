@@ -1,6 +1,7 @@
 # Better defaults
 if [ $(uname) = 'Darwin' ]; then
     alias ls="ls -G"
+    alias upg="brew update && brew upgrade && brew cask upgrade"
 else
     alias ls="ls --color -h --group-directories-first"
     alias copy="xclip -sel clip"
