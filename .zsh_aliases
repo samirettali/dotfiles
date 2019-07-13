@@ -30,17 +30,12 @@ alias wip="curl ipinfo.io; echo"
 alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
 
 # Development
-alias cm="clear; make"
-alias cj="clear && mkdir -p bin && javac -g -d bin -sourcepath src src/Main.java; cd bin; java -ea Main; cd ..;"
-alias cjm="clear && javac Main.java && java Main && rm *.class"
-alias gccall="gcc -g -pedantic -Wall -Wextra -Wshadow -Wunreachable-code -Wconversion -Werror -Wno-padded"
 alias mkproject="~/Scripts/create-project.sh"
 
 # Software
 alias vim="nvim"
-alias vanillavim="nvim -u /dev/null"
+alias tree="tree -C"
 alias sv="sudo nvim"
-alias vimdiff="nvim -d"
 alias s="sudo su -"
 alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
 
