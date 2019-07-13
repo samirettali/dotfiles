@@ -63,9 +63,3 @@ fi
 if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
     tmux attach-session -t ssh || tmux new-session -s ssh
 fi
-
-if [[ $(command -v defaults) && $(defaults read -g AppleInterfaceStyle 2>/dev/null) = "Dark" ]]; then
-    export TERMINAL_THEME=dark
-else
-    export TERMINAL_THEME=light
-fi
