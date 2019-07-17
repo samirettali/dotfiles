@@ -25,6 +25,10 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(git git-prompt colored-man-pages colorize fzf pip python \
     you-should-use zsh-autosuggestions zsh-syntax-highlighting)
 
+if [ $(uname) = "Linux" ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+fi
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
