@@ -53,6 +53,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
     Plug 'Shougo/deoplete.nvim'
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
+    Plug 'nvie/vim-flake8'                      " Python pep8 style
 
     " Latex
     Plug 'xuhdev/vim-latex-live-preview'       " Latex live preview
@@ -310,6 +311,7 @@ call neomake#configure#automake('w')
 
 " lightline
 let g:lightline = {
+\   'colorscheme': 'challenger_deep',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
@@ -323,13 +325,6 @@ let g:lightline = {
 \   },
 \ }
 " \       'obsession': 'ObsessionStatus'
-
-" Set lightline theme based on the colorscheme
-if g:colors_name == 'challenger_deep'
-    let g:lightline.colorscheme = 'challenger_deep'
-else
-    let g:lightline.colorscheme = 'Wombat'
-endif
 
 " vim-latex-live-preview
 let g:livepreview_previewer = 'open -a Preview'
