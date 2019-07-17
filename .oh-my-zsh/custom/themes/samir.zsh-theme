@@ -40,7 +40,8 @@ function () {
     # Check if the current shell is being executed by root to append # or $
     # accordingly
     if [[ $EUID -eq 0 ]]; then
-        local SUFFIX='%F{yellow}%n%f'$(printf '%%F{yellow}#%.0s%%f' {1..$LVL})
+        local SUFFIX=$(printf '%%F{red}#%.0s%%f' {1..$LVL})
+        # local SUFFIX='%F{yellow}%n%f'$(printf '%%F{yellow}#%.0s%%f' {1..$LVL})
     else
         local SUFFIX=$(printf '%%F{red}$%.0s%%f' {1..$LVL})
     fi
