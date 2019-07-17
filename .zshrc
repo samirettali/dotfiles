@@ -23,7 +23,7 @@ export PATH=$HOME/.local/bin:$PATH
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 plugins=(git git-prompt colored-man-pages colorize fzf pip python \
-    zsh-autosuggestions zsh-syntax-highlighting you-should-use)
+    you-should-use zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
