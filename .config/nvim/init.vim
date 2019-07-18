@@ -62,16 +62,19 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'plasticboy/vim-markdown'
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
+    " Improving vim's functionalities
+    Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
+    Plug 'itchyny/lightline.vim'                " Status line
+    Plug 'junegunn/vim-peekaboo'                " Show registers content before pasting
+    Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
+
     " Misc
     Plug 'xolox/vim-misc'                       " Required by colorscheme switcher
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
     Plug 'mhinz/vim-startify'                   " Start screen for vim
-    Plug 'itchyny/lightline.vim'                " Status line
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
-    Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
-    Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
 
     " Themes
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
