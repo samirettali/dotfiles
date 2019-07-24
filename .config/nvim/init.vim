@@ -318,7 +318,7 @@ let g:lightline = {
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
-\       'right': [ [ 'charhex', 'spell', 'gitbranch', 'filetype' ] ]
+\       'right': [ [ 'charhex', 'lineinfo', 'spell', 'gitbranch', 'filetype' ] ]
 \   },
 \   'component': {
 \       'charhex': '0x%B'
