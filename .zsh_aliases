@@ -23,15 +23,16 @@ alias dots-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/Scripts/install.
 alias tl="tmux ls"
 alias tt="tmux new -A -s term"
 
-alias -g gp="| grep -i"
+# alias -g gp="| grep -i"
 
 # Scripts
 alias wip="curl ipinfo.io; echo"
 alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
 alias types="find . -type f | sed -n 's/..*\.//p' | sort | uniq -c"
+alias f="fd"
 
 # Development
-alias mkproject="~/Scripts/create-project.sh"
+alias mkproject="~/Scripts/create-project"
 
 # Software
 alias vim="nvim"
@@ -39,6 +40,7 @@ alias tree="tree -C"
 alias sv="sudo nvim"
 alias s="sudo su -"
 alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
+alias python="/usr/local/bin/python3"
 
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
