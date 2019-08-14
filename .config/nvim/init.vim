@@ -78,6 +78,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Themes
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+    Plug 'chriskempson/base16-vim'
 
     " To try
     Plug 'benmills/vimux'
