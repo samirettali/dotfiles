@@ -35,9 +35,9 @@ cca() {
 }
 
 # Find files
-f() {
-    find . -iname "*$1*" 2>/dev/null
-}
+# f() {
+#     find . -iname "*$1*" 2>/dev/null
+# }
 
 # Edit all files containing a string
 vack() {
@@ -209,12 +209,12 @@ cpk() {
 }
 
 # Use ack to find folder and move to it
-fd() {
-    local dir
-    dir=$(find ${1:-.} -path '*/\.*' -prune \
-        -o -type d -print 2> /dev/null | fzf +m) &&
-    cd "$dir"
-}
+# fd() {
+#     local dir
+#     dir=$(find ${1:-.} -path '*/\.*' -prune \
+#         -o -type d -print 2> /dev/null | fzf +m) &&
+#     cd "$dir"
+# }
 
 # Create new vagrant machine
 vm() {
