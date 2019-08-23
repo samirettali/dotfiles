@@ -55,6 +55,9 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
     Plug 'nvie/vim-flake8'                      " Python pep8 style
 
+    " Web development
+    Plug 'AndrewRadev/tagalong.vim'
+
     " Latex
     Plug 'xuhdev/vim-latex-live-preview'       " Latex live preview
 
