@@ -55,8 +55,11 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
     Plug 'nvie/vim-flake8'                      " Python pep8 style
 
+    " General development
+    Plug 'AndrewRadev/splitjoin.vim'            " Split and join single and multiple lines
+
     " Web development
-    Plug 'AndrewRadev/tagalong.vim'
+    Plug 'AndrewRadev/tagalong.vim'             " Automatically rename opening and closing tags
 
     " Latex
     Plug 'xuhdev/vim-latex-live-preview'       " Latex live preview
