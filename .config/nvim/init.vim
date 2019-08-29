@@ -96,7 +96,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 call plug#end()
 
-set nocompatible
 syntax on
 filetype indent plugin on
 set modelines=0
