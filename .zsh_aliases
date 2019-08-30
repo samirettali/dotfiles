@@ -16,7 +16,6 @@ alias vz="vim ~/.zshrc && source ~/.zshrc"
 alias dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 
 # Git repositories
-alias repos="git -C ~/Scripts status && git -C ~/.cfg --work-tree=$HOME status"
 alias dots-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/Scripts/install.sh"
 
 # Tmux
