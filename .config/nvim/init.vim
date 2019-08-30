@@ -118,6 +118,7 @@ set ignorecase                     " Make searching case insensitive
 set smartcase                      " Make search sensitive to capital letters
 set noshowmode                     " Hide current vim mode because of lightline
 set title
+set fileformat=unix
 set textwidth=80
 set colorcolumn=81                 " Color the 81st column
 set wrap                           " Wrap lines longer than terminal width
