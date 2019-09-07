@@ -16,6 +16,7 @@ alias vt="vim ~/.tmux.conf"
 alias vv="vim ~/.config/nvim/init.vim"
 alias vz="vim ~/.zshrc && source ~/.zshrc"
 alias dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+alias ds="dots status"
 
 # Git repositories
 alias dots-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/Scripts/install.sh"
@@ -39,8 +40,8 @@ alias vim="nvim"
 alias tree="tree -C"
 alias sv="sudo nvim"
 alias s="sudo su -"
-alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
 alias python="/usr/local/bin/python3"
+alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
 
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
