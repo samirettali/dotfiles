@@ -1,4 +1,3 @@
-export PATH=/Users/samir/.gem/ruby/2.3.0/bin:$PATH
 ZSH="$HOME/.oh-my-zsh"
 
 # Auto update oh-my-zsh
@@ -14,8 +13,10 @@ ENABLE_CORRECTION="false"
 # Text editor
 export EDITOR=nvim
 
-# Path
+# PATH
 export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.gem/ruby/2.3.0/bin:$PATH
+export PATH=$HOME/Library/Python/3.7/bin:$PATH
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -34,7 +35,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # # Add a package to completion right after install
-# zstyle ':completion:*' rehash true
+zstyle ':completion:*' rehash true
 # # Mismatch completion
 zstyle ':completion:*' completer _complete _match _approximate
 # zstyle ':completion:*:match:*' original only
