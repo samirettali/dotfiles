@@ -8,52 +8,52 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
     " Writing
+    Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
+    Plug 'chrisbra/Colorizer'                   " Show RGB colors
+    Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
     Plug 'tpope/vim-repeat'                     " Use . to repeate plugins motions
     Plug 'wincent/scalpel'                      " Replace words with shortcut
-    Plug 'chrisbra/Colorizer'                   " Show RGB colors
-    Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
-    Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
 
     " Formatting
-    Plug 'matze/vim-move'                       " Move visually selected lines
     Plug 'godlygeek/tabular'                    " Align text automatically
+    Plug 'matze/vim-move'                       " Move visually selected lines
 
     " Text objects
-    Plug 'machakann/vim-swap'                   " Swap delimited items
-    Plug 'tpope/vim-surround'                   " Add surround object for editing
-    Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
     " Plug 'michaeljsmith/vim-indent-object'    " Add current indentation level object
+    Plug 'machakann/vim-swap'                   " Swap delimited items
+    Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
+    Plug 'tpope/vim-surround'                   " Add surround object for editing
 
     " Navigation
-    Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
     Plug 'ap/vim-buftabline'                    " Emulate tabs with buffers
     Plug 'christoomey/vim-tmux-navigator'       " Navigate between vim and tmux splits
+    Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
 
     " Fuzzy file finder
     Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
     Plug 'junegunn/fzf.vim'                     " Fzf plugin
 
     " Snippets
-    Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
+    Plug 'SirVer/ultisnips'                     " Snippet completion
+    Plug 'honza/vim-snippets'                   " Snippets collection
 
     " NERDTree
-    Plug 'scrooloose/nerdtree'                  " Nerdtree file explorer
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'Xuyuanp/nerdtree-git-plugin'          " NERDTree git integration
+    Plug 'ryanoasis/vim-devicons'               " NERDTree icons
+    Plug 'scrooloose/nerdtree'                  " NERDTree file explorer
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
     " Git
-    Plug 'tpope/vim-fugitive'
+    Plug 'airblade/vim-gitgutter'               " Show git diff in the gutter
     Plug 'rhysd/committia.vim'                  " Better commit editing
-    Plug 'airblade/vim-gitgutter'
+    Plug 'tpope/vim-fugitive'                   " Git wrapper
 
     " Linting and syntax
-    Plug 'neomake/neomake'                      " Error checking
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
+    Plug 'Shougo/deoplete.nvim'                 " Completion framework
+    Plug 'neomake/neomake'                      " Error checking
     Plug 'nvie/vim-flake8'                      " Python pep8 style
+    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
 
     " General development
     Plug 'AndrewRadev/splitjoin.vim'            " Split and join single and multiple lines
@@ -62,11 +62,11 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'AndrewRadev/tagalong.vim'             " Automatically rename opening and closing tags
 
     " Latex
-    Plug 'xuhdev/vim-latex-live-preview'       " Latex live preview
+    Plug 'xuhdev/vim-latex-live-preview'        " Latex live preview
 
     " Markdown
-    Plug 'plasticboy/vim-markdown'
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+    Plug 'plasticboy/vim-markdown'
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
@@ -75,22 +75,25 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
 
     " Misc
-    Plug 'xolox/vim-misc'                       " Required by colorscheme switcher
+    Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
+    Plug 'mhinz/vim-startify'                   " Start screen for vim
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
-    Plug 'mhinz/vim-startify'                   " Start screen for vim
-    Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
+    Plug 'xolox/vim-misc'                       " Required by colorscheme switcher
 
     " Themes
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
+    Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'drewtempelmeyer/palenight.vim'
+    Plug 'noahfrederick/vim-hemisu'
+    Plug 'w0ng/vim-hybrid'
+    Plug 'xolox/vim-colorscheme-switcher'
 
     " To try
-    Plug 'benmills/vimux'
-    Plug 'tpope/vim-obsession'
-
-    " Development
+    " Plug 'benmills/vimux'
+    " Plug 'tpope/vim-obsession'
     " Plug 'janko/vim-test'
 
 
@@ -104,7 +107,8 @@ set synmaxcol=200                  " Don't bother highlighting off screen lines
 " Theme
 set termguicolors
 set background=dark
-colorscheme challenger_deep
+let base16colorspace=256
+colorscheme palenight
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -216,10 +220,14 @@ endfunction
 " endfunction
 
 " Mappings
-noremap <up>    <C-W>+
-noremap <down>  <C-W>-
-noremap <left>  3<C-W><
-noremap <right> 3<C-W>>
+imap <Up> <nop>
+imap <Down> <nop>
+imap <Left> <nop>
+imap <Right> <nop>
+nnoremap <Up>    <C-W>+
+nnoremap <Down>  <C-W>-
+nnoremap <Left>  3<C-W><
+nnoremap <Right> 3<C-W>>
 
 " Compile using make file
 nnoremap <C-m> :make<CR>
@@ -252,6 +260,9 @@ nnoremap - :split
 " Leader mappings
 let mapleader = ","
 
+" Go back to last selected file
+nmap <Leader><Leader> <C-^>
+
 " Edit vim configuration
 nnoremap <silent> <Leader>ev :edit $MYVIMRC<CR>
 nnoremap <silent> <Leader>rv :source $MYVIMRC<CR>
@@ -260,17 +271,23 @@ nnoremap <silent> <Leader>pi :PlugInstall<CR>
 " Show invisible characters
 nnoremap <silent> <Leader>i :set list!<CR>
 
-" Copy paragraph
-noremap <Leader>cp yap<S-}>p
+" Copy and paste paragraph
+nnoremap <Leader>cp yap<S-}>p
 
 " Toggle fold
-nnoremap <space> za
+nnoremap <Space> za
+
+" Sort selected lines
+vmap <Leader>o :!sort<CR>
 
 " Draw underline with = symbol
 nnoremap <Leader>1 yypVr=
 
 " Remove empty lines
-map <Leader>ze :g/^$/d<CR>
+nnoremap <Leader>ze :g/^$/d<CR>
+
+" Autoformat paragraph
+nnoremap <Leader>af mavapgq'a
 
 " Toggle colorcolumn
 nnoremap <Leader>cc :let &cc = &cc == '' ? '81' : ''<CR>
@@ -278,17 +295,10 @@ nnoremap <Leader>cc :let &cc = &cc == '' ? '81' : ''<CR>
 " Change vim directory into current buffer
 nnoremap <Leader>cd :cd %:p:h<CR>
 
-" Replace word with uppercase/lowercase
+" Replace word with uppercase/lowercase/title case
 nnoremap <Leader>u mzgUiw`za<Esc>
 nnoremap <Leader>l mzguiw`za<Esc>
-
-" Replace word with title case
-" nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
-
-" C mappings
-let @d = "0"
-map <Leader>d oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
-map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
+nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 
 " Keep text selected after indentation
 vnoremap < <gv
@@ -299,6 +309,11 @@ nnoremap è [{
 nnoremap + ]}
 nnoremap à [(
 nnoremap ù ])
+
+" C coding mappings
+let @d = "0"
+map <Leader>d oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
+map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
 
 " ROT 13
 " nnoremap <Leader>13 ggVGg?<CR> 
