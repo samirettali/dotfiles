@@ -5,7 +5,7 @@ if [ $(uname) = 'Darwin' ]; then
     alias upg="brew update && brew upgrade && brew cask upgrade && brew bundle --force cleanup"
 else
     alias ls="ls --color -h --group-directories-first"
-    alias f="fd-find"
+    alias f="fdfind"
     alias copy="xclip -sel clip"
 fi
 
