@@ -24,7 +24,7 @@ export PATH=$HOME/Library/Python/3.7/bin:$PATH
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 plugins=(git git-prompt colored-man-pages colorize fzf pip python \
-    you-should-use zsh-autosuggestions zsh-syntax-highlighting)
+    zsh-autosuggestions zsh-syntax-highlighting)
 
 if [ $(uname) = "Linux" ]; then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
