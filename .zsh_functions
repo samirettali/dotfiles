@@ -34,11 +34,6 @@ cca() {
     done
 }
 
-# Find files
-# f() {
-#     find . -iname "*$1*" 2>/dev/null
-# }
-
 # Edit all files containing a string
 vack() {
     vim $(ack -l "$1")
