@@ -301,8 +301,8 @@ nnoremap <Leader>l mzguiw`za<Esc>
 nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 
 " Keep text selected after indentation
-vnoremap < <gv
-vnoremap > >gv
+vmap <S-Tab> <gv
+vmap <Tab> >gv
 
 " Move between code blocks
 nnoremap è [{
@@ -336,7 +336,7 @@ call neomake#configure#automake('w')
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'challenger_deep',
+\   'colorscheme': 'palenight',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
