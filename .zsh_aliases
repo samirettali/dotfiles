@@ -40,7 +40,7 @@ alias vim="nvim"
 alias tree="tree -C"
 alias sv="sudo nvim"
 alias s="sudo su -"
-alias python="/usr/local/bin/python3"
+alias python="python3"
 alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
 
 # Youtube
