@@ -24,6 +24,10 @@ ccc() {
     rm $(sed 's/\.c//' <<< "$1")
 }
 
+cnasm() {
+    nasm -f bin $1 -o $(sed 's/\.asm//' <<< $1).bin && qemu-system-x86_64 $(sed 's/\.asm//' <<< $1).bin
+}
+
 ccd() {
     gcc "$1" -g -Wall -rdynamic -o $(sed 's/\.c//' <<< "$1")
 }
@@ -267,7 +271,10 @@ repos() {
     yellow='\033[0;33m'
     off='\033[0m'
 
-    repositories=("$HOME/Scripts" "$HOME/CTF/kali-ctf")
+    repositories=("$HOME/Scripts" "$HOME/CTF/kali-ctf" )
+    for folder in $(ls -1 $HOME/Projects); do
+        repositories+="$HOME/Projects/$folder"
+    done
 
     for repo in ${repositories[@]}; do
         repo_name=$(echo $repo | sed 's|.*/||')
