@@ -50,10 +50,16 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Linting and syntax
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
-    Plug 'Shougo/deoplete.nvim'                 " Completion framework
-    Plug 'neomake/neomake'                      " Error checking
+    " Plug 'neomake/neomake'                      " Error checking
     Plug 'nvie/vim-flake8'                      " Python pep8 style
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
+
+    " Auto completion
+    Plug 'ncm2/ncm2'
+    Plug 'roxma/nvim-yarp'
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-jedi'
 
     " General development
     Plug 'AndrewRadev/splitjoin.vim'            " Split and join single and multiple lines
@@ -86,10 +92,10 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
     Plug 'dracula/vim', { 'as': 'dracula' }
-    Plug 'drewtempelmeyer/palenight.vim'
     Plug 'noahfrederick/vim-hemisu'
     Plug 'w0ng/vim-hybrid'
     Plug 'xolox/vim-colorscheme-switcher'
+    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
     " To try
     " Plug 'benmills/vimux'
@@ -105,10 +111,11 @@ set modelines=0
 set synmaxcol=200                  " Don't bother highlighting off screen lines
 
 " Theme
-set termguicolors
+if has('nvim') || has('termguicolors')
+  set termguicolors
+endif
 set background=dark
-let base16colorspace=256
-colorscheme palenight
+colorscheme challenger_deep
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -173,7 +180,7 @@ set spelllang=it,en_us
 
 set updatetime=100
 
-set completeopt=menuone,menu,longest
+" set completeopt=menuone,menu,longest
 
 " Turn on wildmenu for file name tab completion
 set wildmode=longest:full,full
@@ -228,6 +235,8 @@ nnoremap <Up>    <C-W>+
 nnoremap <Down>  <C-W>-
 nnoremap <Left>  3<C-W><
 nnoremap <Right> 3<C-W>>
+
+inoremap jj <Esc>
 
 " Compile using make file
 nnoremap <C-m> :make<CR>
@@ -301,8 +310,8 @@ nnoremap <Leader>l mzguiw`za<Esc>
 nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 
 " Keep text selected after indentation
-vmap <S-Tab> <gv
-vmap <Tab> >gv
+vmap < <gv
+vmap > >gv
 
 " Move between code blocks
 nnoremap è [{
@@ -320,23 +329,24 @@ map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
 
 " Plugins settings
 
+" ncm2
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+
 " buftabline
 let g:buftabline_numbers = 2
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-let g:python3_host_prog = 'python3.7'
 
 " highlightedyank
 let g:highlightedyank_highlight_duration = 3000
 let g:CoolTotalMatches = 1
 
 " neomake
-call neomake#configure#automake('w')
+" call neomake#configure#automake('w')
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'palenight',
+\   'colorscheme': 'challenger_deep',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
@@ -354,6 +364,7 @@ let g:lightline = {
 " vim-latex-live-preview
 let g:livepreview_previewer = 'open -a Preview'
 let g:livepreview_cursorhold_recompile = 1
+autocmd Filetype tex setl updatetime=1
 
 " ultiSnips
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
@@ -383,6 +394,11 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.php'
 
 " Plugins mappings
 
+" ncm2
+inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+
 " Fuzzy file finder
 nnoremap <C-f> :FZF<CR>
 
@@ -401,9 +417,6 @@ let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 " buftabline
 nnoremap <silent> <C-n> :bnext<CR>
 nnoremap <silent> <C-p> :bprev<CR>
-
-" deoplete
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Scalpel
 nmap <Leader>s <Plug>(Scalpel)
@@ -426,11 +439,11 @@ augroup END
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Close vim when the only opened buffer is neomake error list
-autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-    \ q :cclose<cr>:lclose<cr>
-autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
-    \ bd|
-    \ q | endif
+" autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+"     \ q :cclose<cr>:lclose<cr>
+" autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+"     \ bd|
+"     \ q | endif
 
 " Set latest search register to empty string on insert event
 autocmd InsertEnter * :let @/=""
@@ -438,6 +451,9 @@ autocmd InsertLeave * :let @/=""
 
 " Resize splits proportionally to window resize
 autocmd VimResized * :wincmd =
+
+" Run flake8 on save
+autocmd BufWritePost *.py call flake8#Flake8()
 
 " Automatically insert java package and class name in new Java file
 autocmd BufNewFile *.java call InsertJavaPackage()
