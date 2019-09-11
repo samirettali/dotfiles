@@ -2,7 +2,9 @@ snippet ctf "Script" b
 #!/usr/bin/env python3
 from sys import argv
 
+
 def foo(text):
+
 
 def main():
     if len(argv) != 2:
@@ -16,21 +18,13 @@ if __name__ == '__main__':
     main()
 endsnippet
 
-snippet mclass "Class with main" b
-class ${1:Class} {
-	$1()
-	{
-	}
+snippet main "Main" b
+#!/usr/bin/env python3
 
-	public static void main(String[] args)
-	{
-	}
-}
-endsnippet
 
-snippet au "Author" b
-/**
- * @author Samir Ettali
- **/
+def main():
+	$1
 
+if __name__ == '__main__':
+    main()
 endsnippet
