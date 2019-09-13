@@ -92,9 +92,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
     Plug 'dracula/vim', { 'as': 'dracula' }
-    Plug 'noahfrederick/vim-hemisu'
-    Plug 'w0ng/vim-hybrid'
-    Plug 'xolox/vim-colorscheme-switcher'
+    Plug 'nanotech/jellybeans.vim'
     Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
     " To try
@@ -115,7 +113,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme challenger_deep
+colorscheme jellybeans
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -236,6 +234,7 @@ nnoremap <Down>  <C-W>-
 nnoremap <Left>  3<C-W><
 nnoremap <Right> 3<C-W>>
 
+inoremap kk <Esc>
 inoremap jj <Esc>
 
 " Compile using make file
@@ -346,7 +345,7 @@ let g:CoolTotalMatches = 1
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'challenger_deep',
+\   'colorscheme': 'jellybeans',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
