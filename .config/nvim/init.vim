@@ -164,7 +164,7 @@ set incsearch                       " Hightlight matches as you tipe
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set listchars=tab:»·,trail:·,nbsp:~,eol:↲ " Visualize tab, spaces and newlines
 set backspace=indent,eol,start      " Make backspace behave properly "
-set mouse=a
+set mouse=i                         " Allow mouse usage to copy over ssh
 set lazyredraw                      " Buffer screen updates
 set timeout
 set ttimeoutlen=50   " Time to wait for multikey mappings
