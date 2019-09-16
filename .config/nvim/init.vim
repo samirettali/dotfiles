@@ -113,7 +113,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme jellybeans
+colorscheme base16-tomorrow-night
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -311,12 +311,6 @@ nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 " Keep text selected after indentation
 vmap < <gv
 vmap > >gv
-
-" Move between code blocks
-nnoremap è [{
-nnoremap + ]}
-nnoremap à [(
-nnoremap ù ])
 
 " C coding mappings
 let @d = "0"
