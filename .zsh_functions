@@ -294,3 +294,19 @@ repos() {
         echo ""
     done
 }
+
+h() {
+    filename="$@"
+    if [[ -f "$filename" ]]; then
+        if [[ ${filename:0:1} == "." ]]; then
+            echo "Unhding $filename"
+            mv "$filename" "${filename:1}" 
+        else
+            echo "Hiding $filename"
+            mv "$filename" ".$filename"
+        fi
+
+    else
+        echo "Error: $filename does not exist"
+    fi
+}
