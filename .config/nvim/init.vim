@@ -79,6 +79,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'itchyny/lightline.vim'                " Status line
     Plug 'junegunn/vim-peekaboo'                " Show registers content before pasting
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
+    Plug 'mbbill/undotree'                      " Creates an undo tree at forks
 
     " Misc
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
@@ -113,7 +114,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme base16-tomorrow-night
+colorscheme challenger_deep
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -144,11 +145,13 @@ set autoread                        " Reload files if modified externally
 set shell=zsh
 set number                          " Show lines number
 set relativenumber                  " Show relative line numbers
-set fillchars+=vert:\│              " Make vertical split separator full line"
+" set fillchars+=vert:\│              " Make vertical split separator full line"
+set fillchars=diff:⣿,vert:│,fold:-
 set encoding=utf-8
 set foldmethod=indent
 set foldclose=all
 set foldlevelstart=20
+set foldtext=MyFoldText()
 set splitbelow                      " More natural split
 set splitright                      " More natural split
 set complete=.,b,u,]
@@ -162,7 +165,7 @@ set scrolloff=5                     " Keep 5 lines above and below the cursor
 set sidescrolloff=5                 " Keep 5 columns left and right of the cursor
 set incsearch                       " Hightlight matches as you tipe
 set wildignore=*.swp,*.bak,*.pyc,*.class
-set listchars=tab:»·,trail:·,nbsp:~,eol:↲ " Visualize tab, spaces and newlines
+set listchars=tab:»·,trail:·,nbsp:~,eol:¬ " Visualize tab, spaces and newlines
 set backspace=indent,eol,start      " Make backspace behave properly "
 set mouse=i                         " Allow mouse usage to copy over ssh
 set lazyredraw                      " Buffer screen updates
@@ -234,8 +237,20 @@ nnoremap <Down>  <C-W>-
 nnoremap <Left>  3<C-W><
 nnoremap <Right> 3<C-W>>
 
+" ESC mapping
 inoremap kk <Esc>
 inoremap jj <Esc>
+
+" Yank line without newline
+nmap Y y$
+
+" Do something smarter with enter and backspace (TODO)
+nnoremap <BS> {
+onoremap <BS> {
+vnoremap <BS> {
+nnoremap <expr> <CR> empty(&buftype) ? '}' : '<CR>'
+onoremap <expr> <CR> empty(&buftype) ? '}' : '<CR>'
+vnoremap <CR> }
 
 " Compile using make file
 nnoremap <C-m> :make<CR>
@@ -339,7 +354,7 @@ let g:CoolTotalMatches = 1
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'jellybeans',
+\   'colorscheme': 'challenger_deep',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
@@ -484,3 +499,20 @@ fun! ReadMan()
     " finally set file type to 'man':
     :exe ":set filetype=man"
 endfun
+
+function! MyFoldText()
+    let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+    let line = substitute(line, split(&foldmarker, ',')[0], '', '')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 9
+    return line . ' ⤥ ' . repeat("…", fillcharcount) . ' (' . foldedlinecount .')'
+endfunction
