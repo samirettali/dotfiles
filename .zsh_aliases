@@ -17,6 +17,7 @@ alias vv="vim ~/.config/nvim/init.vim"
 alias vz="vim ~/.zshrc && source ~/.zshrc"
 alias dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias ds="dots status"
+alias dt="dots grep -i todo"
 
 # Git repositories
 alias dots-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/Scripts/install.sh"
