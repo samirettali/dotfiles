@@ -26,13 +26,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(git git-prompt colored-man-pages colorize fzf pip python \
     zsh-autosuggestions zsh-syntax-highlighting)
 
-if [ $(uname) = "Linux" ]; then
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-fi
-
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
 
 # # Add a package to completion right after install
 zstyle ':completion:*' rehash true
@@ -41,6 +35,9 @@ zstyle ':completion:*' completer _complete _match _approximate
 # zstyle ':completion:*:match:*' original only
 # zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
+# Don't autocomplete with files already present in the command
+zstyle ':completion::complete:(rm|vi|vim|diff|mv):*' ignore-line true
+
 source ~/.zsh_aliases
 source ~/.zsh_functions
 
@@ -48,6 +45,9 @@ bindkey -v
 
 bindkey '^ ' autosuggest-accept
 bindkey '^R' fzf-history-widget
+
+# Options
+unsetopt HIST_IGNORE_SPACE
 
 # Switch between foreground and background
 zle -N fg-bg
