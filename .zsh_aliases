@@ -36,12 +36,13 @@ alias types="find . -type f | sed -n 's/..*\.//p' | sort | uniq -c"
 alias mkproject="~/Scripts/create-project"
 
 # Software
-alias vim="nvim"
-alias tree="tree -C"
-alias sv="sudo nvim"
-alias s="sudo su -"
+alias blog="hugo server --verbose --watch --buildDrafts --bind=192.168.1.15"
 alias python="python3"
 alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
+alias s="sudo su -"
+alias sv="sudo nvim"
+alias tree="tree -C"
+alias vim="nvim"
 
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
