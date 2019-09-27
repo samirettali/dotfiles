@@ -8,6 +8,7 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
     " Writing
+    Plug 'AndrewRadev/switch.vim'               " Switch between predefined text segments
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
     Plug 'chrisbra/Colorizer'                   " Show RGB colors
     Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
@@ -83,7 +84,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Misc
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
-    Plug 'mhinz/vim-startify'                   " Start screen for vim
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
@@ -114,7 +114,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme challenger_deep
+colorscheme base16-tomorrow-night
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -220,12 +220,6 @@ command! -nargs=0 Reg call Reg()
 function! ObsessionStatus()
     return '%{ObsessionStatus()}'
 endfunction
-
-" Check battery status
-" TODO check if file exists
-" function! MyOnBattery()
-"     return readfile('/sys/class/power_supply/AC/online') == ['0']
-" endfunction
 
 " Mappings
 imap <Up> <nop>
@@ -354,7 +348,7 @@ let g:CoolTotalMatches = 1
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'challenger_deep',
+\   'colorscheme': 'wombat',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
