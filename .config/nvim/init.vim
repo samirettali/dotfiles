@@ -56,11 +56,11 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
 
     " Auto completion
-    Plug 'ncm2/ncm2'
-    Plug 'roxma/nvim-yarp'
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-path'
-    Plug 'ncm2/ncm2-jedi'
+    " Plug 'ncm2/ncm2'
+    " Plug 'roxma/nvim-yarp'
+    " Plug 'ncm2/ncm2-bufword'
+    " Plug 'ncm2/ncm2-path'
+    " Plug 'ncm2/ncm2-jedi'
 
     " General development
     Plug 'AndrewRadev/splitjoin.vim'            " Split and join single and multiple lines
@@ -94,7 +94,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'chriskempson/base16-vim'
     Plug 'dracula/vim', { 'as': 'dracula' }
     Plug 'nanotech/jellybeans.vim'
-    Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 
     " To try
     " Plug 'benmills/vimux'
@@ -333,8 +332,8 @@ map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
 
 " ncm2
 " enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
+" autocmd BufEnter * call ncm2#enable_for_buffer()
+" set completeopt=noinsert,menuone,noselect
 
 " buftabline
 let g:buftabline_numbers = 2
@@ -397,9 +396,8 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.php'
 " Plugins mappings
 
 " ncm2
-inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
+" inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Fuzzy file finder
 nnoremap <C-f> :FZF<CR>
