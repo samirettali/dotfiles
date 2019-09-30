@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# A simple script that repeats a command until it returns 0
+
 COUNT=-1
 if [[ $1 =~ ^[0-9]+$ ]]; then
     COUNT=$1
