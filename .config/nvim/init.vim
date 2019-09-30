@@ -48,6 +48,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'airblade/vim-gitgutter'               " Show git diff in the gutter
     Plug 'rhysd/committia.vim'                  " Better commit editing
     Plug 'tpope/vim-fugitive'                   " Git wrapper
+    Plug 'tpope/vim-markdown'                   " Git wrapper
 
     " Linting and syntax
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
@@ -73,7 +74,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Markdown
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-    Plug 'plasticboy/vim-markdown'
+    " Plug 'plasticboy/vim-markdown'
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
@@ -334,6 +335,10 @@ map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
 " enable ncm2 for all buffers
 " autocmd BufEnter * call ncm2#enable_for_buffer()
 " set completeopt=noinsert,menuone,noselect
+
+" vim-markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
+let g:markdown_minlines = 100
 
 " buftabline
 let g:buftabline_numbers = 2
