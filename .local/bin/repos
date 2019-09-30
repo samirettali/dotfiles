@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# This script prints the repository status of all of my projects
+
+repos() {
+    red='\033[0;31m'
+    green='\033[0;32m'
+    yellow='\033[0;33m'
+    off='\033[0m'
+
+    repositories=("$HOME/Scripts" "$HOME/CTF/kali-ctf" )
+    for folder in $(ls -1 $HOME/Projects); do
+        repositories+="$HOME/Projects/$folder"
+    done
+
+    for repo in ${repositories[@]}; do
+        repo_name=$(echo $repo | sed 's|.*/||')
+        echo "${green}[*] Checking $repo_name repo${off}"
+        CHANGED=$(git -C $repo diff-index --name-only HEAD --)
+        UNSTAGED=$(git -C $repo status --porcelain 2>/dev/null| grep "^??" | wc -l)
+        if [ -z $CHANGED ] && [ -z $UNSTAGED ]; then
+            echo "${green}\t[+] Repo is clean${off}"
+        else
+            if [ $CHANGED ]; then
+                echo "${yellow}  [-] Repo has uncommitted files${off}"
+            fi
+            if [ $UNSTAGED ]; then
+                echo "${red}  [-] Repo has unstaged files${off}"
+            fi
+        fi
+        echo ""
+    done
+}
