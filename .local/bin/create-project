@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# This script is used to create a new project.
+# It needs a file in the home directory called .github_token containing the
+# TOKEN variable used to create the remote repository.
+
+# Supported project structures:
+#   - C/C++
+#   - Java
+
+# TODO
+# Add public/private project
+
+# Exit on error
+set -o errexit
+
+# Parameters check
+if [[ -z "$1" || -z "$2" ]]; then
+    echo "Usage: mkproject <name> <type>"
+    return 1
+fi
+
+# Variables initialization
+PROJECT_NAME=$1
+PROJECT_TYPE=$2
+
+# Sourcing Github token
+source $HOME/.github_token
+
+# Create Github repository
+curl -H "Authorization: token $TOKEN" --data '{"name":"'$PROJECT_NAME'"}' \
+    https://api.github.com/user/repos
+
+# Project folder creation
+mkdir "$PROJECT_NAME"
+cd "$PROJECT_NAME"
+
+# Git repostiory initialization
+echo "# $PROJECT_NAME" >> README.md
+git init
+git add README.md
+git commit -m "First commit"
+
+# Add remote Github repository
+git remote add origin git@github.com:samirettali/"$PROJECT_NAME".git
+
+# Create project structure based on the chosen language
+if [ "$PROJECT_TYPE" = "java" ]; then
+    mkdir src
+    mkdir classes
+    echo "classes" >> .gitignore
+    cp ~/Documents/Skeletons/JavaMakefile Makefile
+elif [[ "$PROJECT_TYPE" = "c" || "$PROJECT_TYPE" = "cpp" ]]; then
+    mkdir src
+    mkdir bin
+    mkdir build
+    echo "bin" >> .gitignore
+    echo "build" >> .gitignore
+    cp ~/Documents/Skeletons/CMakefile Makefile
+fi
+
+# Add gitignore and push to remote
+git add .gitignore
+git commit -m "Added gitignore"
+git push -u origin master
