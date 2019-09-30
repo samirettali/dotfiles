@@ -337,7 +337,7 @@ map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
 " set completeopt=noinsert,menuone,noselect
 
 " vim-markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'javascript']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'js=javascript']
 let g:markdown_minlines = 100
 
 " buftabline
