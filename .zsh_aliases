@@ -20,7 +20,7 @@ alias ds="dots status"
 alias dt="dots grep -i todo"
 
 # Git repositories
-alias dots-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/Scripts/install.sh"
+alias dots-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/.bin/install.sh"
 
 # Tmux
 alias tl="tmux ls"
@@ -33,11 +33,8 @@ alias wip="curl ipinfo.io; echo"
 alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
 alias types="find . -type f | sed -n 's/..*\.//p' | sort | uniq -c"
 
-# Development
-alias mkproject="~/Scripts/create-project"
-
 # Software
-alias blog="hugo server --verbose --watch --buildDrafts --bind=192.168.1.15"
+alias blog="hugo server --verbose --watch --buildDrafts"
 alias python="python3"
 alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
 alias s="sudo su -"
