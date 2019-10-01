@@ -57,11 +57,11 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
 
     " Auto completion
-    " Plug 'ncm2/ncm2'
-    " Plug 'roxma/nvim-yarp'
-    " Plug 'ncm2/ncm2-bufword'
-    " Plug 'ncm2/ncm2-path'
-    " Plug 'ncm2/ncm2-jedi'
+    Plug 'ncm2/ncm2'
+    Plug 'roxma/nvim-yarp'
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-jedi'
 
     " General development
     Plug 'AndrewRadev/splitjoin.vim'            " Split and join single and multiple lines
@@ -93,8 +93,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Themes
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
-    Plug 'dracula/vim', { 'as': 'dracula' }
-    Plug 'nanotech/jellybeans.vim'
 
     " To try
     " Plug 'benmills/vimux'
@@ -333,8 +331,8 @@ map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
 
 " ncm2
 " enable ncm2 for all buffers
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-" set completeopt=noinsert,menuone,noselect
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
 
 " vim-markdown
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'js=javascript']
