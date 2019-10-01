@@ -8,7 +8,6 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 
     " Writing
-    Plug 'AndrewRadev/switch.vim'               " Switch between predefined text segments
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
     Plug 'chrisbra/Colorizer'                   " Show RGB colors
     Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
@@ -31,7 +30,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
 
     " Fuzzy file finder
-    Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
+    " Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
     Plug 'junegunn/fzf.vim'                     " Fzf plugin
 
     " Snippets
@@ -47,13 +46,11 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Git
     Plug 'airblade/vim-gitgutter'               " Show git diff in the gutter
     Plug 'rhysd/committia.vim'                  " Better commit editing
-    Plug 'tpope/vim-fugitive'                   " Git wrapper
-    Plug 'tpope/vim-markdown'                   " Git wrapper
 
     " Linting and syntax
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
-    " Plug 'neomake/neomake'                      " Error checking
-    Plug 'nvie/vim-flake8'                      " Python pep8 style
+    Plug 'neomake/neomake'                      " Error checking
+    " Plug 'nvie/vim-flake8'                      " Python pep8 style
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
 
     " Auto completion
@@ -63,18 +60,12 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'ncm2/ncm2-path'
     Plug 'ncm2/ncm2-jedi'
 
-    " General development
+    " Development
     Plug 'AndrewRadev/splitjoin.vim'            " Split and join single and multiple lines
-
-    " Web development
+    Plug 'tpope/vim-markdown'                   " Markdown
     Plug 'AndrewRadev/tagalong.vim'             " Automatically rename opening and closing tags
-
-    " Latex
     Plug 'xuhdev/vim-latex-live-preview'        " Latex live preview
-
-    " Markdown
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-    " Plug 'plasticboy/vim-markdown'
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
@@ -93,13 +84,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Themes
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
-
-    " To try
-    " Plug 'benmills/vimux'
-    " Plug 'tpope/vim-obsession'
-    " Plug 'janko/vim-test'
-
-
 call plug#end()
 
 syntax on
