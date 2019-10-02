@@ -65,6 +65,6 @@ else
 fi
 
 # Automatically start tmux in ssh sessions
-if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
-    tmux attach-session -t ssh || tmux new-session -s ssh
-fi
+# if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
+#     tmux attach-session -t ssh || tmux new-session -s ssh
+# fi
