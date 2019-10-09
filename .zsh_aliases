@@ -2,7 +2,7 @@
 if [ $(uname) = 'Darwin' ]; then
     alias ls="ls -G"
     alias f="fd"
-    alias upg="brew update && brew upgrade && brew cask upgrade && brew bundle --force cleanup"
+    alias upg="brew update && brew upgrade && brew cask upgrade && nvim +PlugUpdate +PlugUpgrade +UpdateRemotePlugin +exit"
 else
     alias ls="ls --color -h --group-directories-first"
     alias f="fdfind"
@@ -18,8 +18,6 @@ alias vz="vim ~/.zshrc && source ~/.zshrc"
 alias dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias ds="dots status"
 alias dt="dots grep -i todo"
-
-# Git repositories
 alias dots-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/.bin/install.sh"
 
 # Tmux
@@ -34,7 +32,6 @@ alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html
 alias types="find . -type f | sed -n 's/..*\.//p' | sort | uniq -c"
 
 # Software
-alias blog="hugo server --verbose --watch --buildDrafts"
 alias python="python3"
 alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
 alias s="sudo su -"
