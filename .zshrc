@@ -15,8 +15,10 @@ export EDITOR=nvim
 
 # PATH
 export PATH=$HOME/.local/bin:$PATH
-export PATH=$HOME/.gem/ruby/2.3.0/bin:$PATH
 export PATH=$HOME/Library/Python/3.7/bin:$PATH
+if [ $(command -v ruby) ]; then
+    export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
+fi
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
