@@ -9,7 +9,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Writing
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
-    Plug 'chrisbra/Colorizer'                   " Show RGB colors
+    Plug 'norcalli/nvim-colorizer.lua'          " Show RGB colors
     Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
     Plug 'tpope/vim-repeat'                     " Use . to repeate plugins motions
     Plug 'wincent/scalpel'                      " Replace words with shortcut
@@ -30,7 +30,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
 
     " Fuzzy file finder
-    " Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
+    Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
     Plug 'junegunn/fzf.vim'                     " Fzf plugin
 
     " Snippets
@@ -50,7 +50,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Linting and syntax
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
     Plug 'neomake/neomake'                      " Error checking
-    " Plug 'nvie/vim-flake8'                      " Python pep8 style
+    Plug 'nvie/vim-flake8'                      " Python pep8 style
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
 
     " Auto completion
@@ -84,6 +84,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Themes
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
+    Plug 'sjl/badwolf'
 call plug#end()
 
 syntax on
@@ -229,7 +230,7 @@ onoremap <expr> <CR> empty(&buftype) ? '}' : '<CR>'
 vnoremap <CR> }
 
 " Compile using make file
-nnoremap <C-m> :make<CR>
+" nnoremap <C-m> :make<CR>
 
 " Better splits navigation
 nnoremap <C-j> <C-w><C-j>
@@ -253,8 +254,8 @@ map K :call ReadMan()<CR>
 nnoremap gV `[v`]
 
 " Split faster 
-nnoremap \ :vsplit 
-nnoremap - :split 
+" nnoremap \ :vsplit 
+" nnoremap - :split 
 
 " Leader mappings
 let mapleader = ","
@@ -308,6 +309,9 @@ let @d = "0"
 map <Leader>d oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
 map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
 
+" Make word a link in markdown
+map <Leader>lmd ysiw]wwa(<Esc>"+p)
+
 " ROT 13
 " nnoremap <Leader>13 ggVGg?<CR> 
 
@@ -319,7 +323,7 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 
 " vim-markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'js=javascript']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'js=javascript', 'c', 'asm', 'php']
 let g:markdown_minlines = 100
 
 " buftabline
@@ -426,11 +430,11 @@ augroup END
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Close vim when the only opened buffer is neomake error list
-" autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-"     \ q :cclose<cr>:lclose<cr>
-" autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
-"     \ bd|
-"     \ q | endif
+autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+    \ q :cclose<cr>:lclose<cr>
+autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+    \ bd|
+    \ q | endif
 
 " Set latest search register to empty string on insert event
 autocmd InsertEnter * :let @/=""
