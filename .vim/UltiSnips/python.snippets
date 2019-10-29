@@ -28,3 +28,9 @@ def main():
 if __name__ == '__main__':
     main()
 endsnippet
+
+snippet cl "Clear screen function" b
+def clear_screen():
+    rows, columns = os.popen('stty size', 'r').read().split()
+    print(' '*int(columns), end='\r')
+endsnippet
