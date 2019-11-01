@@ -14,7 +14,7 @@ ENABLE_CORRECTION="false"
 export EDITOR=nvim
 
 # PATH
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.bin:$PATH
 export PATH=$HOME/Library/Python/3.7/bin:$PATH
 if [ $(command -v ruby) ]; then
     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
@@ -47,6 +47,7 @@ bindkey -v
 
 bindkey '^ ' autosuggest-accept
 bindkey '^R' fzf-history-widget
+bindkey '^F' fzf-file-widget
 
 # Options
 unsetopt HIST_IGNORE_SPACE
@@ -70,3 +71,14 @@ fi
 # if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
 #     tmux attach-session -t ssh || tmux new-session -s ssh
 # fi
+pasteinit() {
+    OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+    zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+    zle -N self-insert $OLD_SELF_INSERT
+}
+
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
