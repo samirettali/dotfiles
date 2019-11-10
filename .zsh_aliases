@@ -27,7 +27,7 @@ alias tt="tmux new -A -s term"
 # alias -g gp="| grep -i"
 
 # Scripts
-alias wip="curl ipinfo.io; echo"
+alias wip="http://ipv4.cat/"
 alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
 alias types="find . -type f | sed -n 's/..*\.//p' | sort | uniq -c"
 
@@ -48,3 +48,13 @@ alias vup="vagrant up"
 alias vss="vagrant ssh"
 alias vag="vagrant up; vagrant ssh"
 alias kali="cd ~/CTF/kali-ctf; vagrant up && vagrant ssh"
+
+# CTF
+alias gdb="gdb -q"
+
+# Editing
+alias -s md="vim"
+alias -s java="vim"
+alias -s c="vim"
+alias -s py="vim"
+alias -s html="vim"
