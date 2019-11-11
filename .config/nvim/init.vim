@@ -85,6 +85,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
     Plug 'sjl/badwolf'
+    Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 syntax on
@@ -97,7 +98,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme base16-tomorrow-night
+colorscheme challenger_deep
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -213,10 +214,6 @@ nnoremap <Up>    <C-W>+
 nnoremap <Down>  <C-W>-
 nnoremap <Left>  3<C-W><
 nnoremap <Right> 3<C-W>>
-
-" ESC mapping
-inoremap kk <Esc>
-inoremap jj <Esc>
 
 " Yank line without newline
 nmap Y y$
