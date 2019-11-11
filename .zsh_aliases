@@ -7,6 +7,10 @@ else
     alias ls="ls --color -h --group-directories-first"
     alias f="fdfind"
     alias copy="xclip -sel clip"
+    alias start="sudo systemctl start"
+    alias stop="sudo systemctl stop"
+    alias status="sudo systemctl status"
+    alias restart="sudo systemctl restart"
 fi
 
 # Dotfiles editing
