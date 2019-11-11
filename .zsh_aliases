@@ -55,11 +55,3 @@ alias kali="cd ~/CTF/kali-ctf; vagrant up && vagrant ssh"
 
 # CTF
 alias gdb="gdb -q"
-
-# Editing
-alias -s md="vim"
-alias -s java="vim"
-alias -s c="vim"
-alias -s py="vim"
-alias -s html="vim"
-alias -s css="vim"
