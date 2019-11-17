@@ -245,3 +245,9 @@ h() {
         echo "Error: $filename does not exist"
     fi
 }
+
+mt() {
+    mkdir "$1"
+    cd "$1"
+    t "$1"
+}
