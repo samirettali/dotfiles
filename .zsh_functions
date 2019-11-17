@@ -159,7 +159,7 @@ bak() {
 
 # Find strings longer than 10 characters
 longstrings() {
-    strings "$1" | awk 'length($0) > 10' | sort -u
+    strings "$1" | awk 'length > 10' | sort -u
 }
 
 # Move to Kali vm shared folder
