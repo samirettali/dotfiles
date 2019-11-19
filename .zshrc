@@ -14,8 +14,7 @@ ENABLE_CORRECTION="false"
 export EDITOR=nvim
 
 # PATH
-export PATH=$HOME/.local/bin:$HOME/.bin:$PATH
-export PATH=$HOME/Library/Python/3.7/bin:$PATH
+export PATH=$PATH:$HOME/.bin
 if [ $(command -v ruby) ]; then
     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
 fi
@@ -82,3 +81,6 @@ pastefinish() {
 
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
