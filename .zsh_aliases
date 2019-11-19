@@ -11,6 +11,7 @@ else
     alias stop="sudo systemctl stop"
     alias status="sudo systemctl status"
     alias restart="sudo systemctl restart"
+    alias open="xdg-open"
 fi
 
 # Dotfiles editing
