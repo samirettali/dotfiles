@@ -251,3 +251,7 @@ mt() {
     cd "$1"
     t "$1"
 }
+
+gcap() {
+    git add "$1" && git commit && git push
+}
