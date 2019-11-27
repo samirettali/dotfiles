@@ -8,11 +8,8 @@ def foo(text):
 
 def main():
     if len(argv) != 2:
-        print('Usage: ./%s <file>' % argv[0])
+        print('Usage: ./%s <param>' % argv[0])
         exit(1)
-
-    text = open(argv[1], 'r').read()
-    foo(text)
 
 if __name__ == '__main__':
     main()
