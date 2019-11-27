@@ -44,6 +44,9 @@ alias sv="sudo nvim"
 alias tree="tree -C"
 alias vim="nvim"
 
+# Misc
+alias ex='chmod +x'
+
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
 alias ytmp3="youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audio-quality 0 -w --output \"%(title)s.%(ext)s\""
