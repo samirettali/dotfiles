@@ -1,33 +1,38 @@
-#!/bin/bash
+#!/usr/bin/env zsh
+
+set -e
 
 # This script prints the repository status of all of my projects
 
-repos() {
-    red='\033[0;31m'
-    green='\033[0;32m'
-    yellow='\033[0;33m'
-    off='\033[0m'
+red='\e[31m'
+green='\e[32m'
+yellow='\e[33m'
+blue='\e[34m'
+off='\e[0m'
 
-    repositories=("$HOME/Scripts" "$HOME/CTF/kali-ctf" )
-    for folder in $(ls -1 $HOME/Projects); do
+repositories=( "$HOME/CTF/kali-ctf" "$HOME/CTF/ctf-scripts")
+unstaged_ignore=( "kali-ctf" "Blog" )
+for folder in $(ls -1 $HOME/Projects); do
+    if [ -d "$HOME/Projects/$folder/.git" ]; then
         repositories+="$HOME/Projects/$folder"
-    done
+    else
+        echo -e "$red"'[!]'"$off Projects/$folder is not a repository"
+    fi
+done
 
-    for repo in ${repositories[@]}; do
-        repo_name=$(echo $repo | sed 's|.*/||')
-        echo "${green}[*] Checking $repo_name repo${off}"
-        CHANGED=$(git -C $repo diff-index --name-only HEAD --)
-        UNSTAGED=$(git -C $repo status --porcelain 2>/dev/null| grep "^??" | wc -l)
-        if [ -z $CHANGED ] && [ -z $UNSTAGED ]; then
-            echo "${green}\t[+] Repo is clean${off}"
-        else
-            if [ $CHANGED ]; then
-                echo "${yellow}  [-] Repo has uncommitted files${off}"
-            fi
-            if [ $UNSTAGED ]; then
-                echo "${red}  [-] Repo has unstaged files${off}"
-            fi
+for repo in ${repositories[@]}; do
+    repo_name=$(echo $repo | sed 's|.*/||')
+    CHANGED=$(git -C $repo diff-index --name-only HEAD --)
+    UNSTAGED=$(git -C $repo ls-files --others --exclude-standard)
+    if [ -z $CHANGED ] && [ -z $UNSTAGED ]; then
+        echo -e "$green"'[+]'"$off $repo_name is clean"
+    else
+        if [ $CHANGED ] && [ $UNSTAGED ]; then
+            echo -e "$yellow"'[-]'"$off $repo_name has unstaged and uncommitted files"
+        elif [ $UNSTAGED ]; then
+            echo -e "$red"'[-]'"$off $repo_name has unstaged files"
+        elif [ $CHANGES ]; then
+            echo -e "$red"'[-]'"$off $repo_name has uncommitted files"
         fi
-        echo ""
-    done
-}
+    fi
+done
