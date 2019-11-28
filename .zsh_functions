@@ -227,7 +227,7 @@ lt-ascii() {
 # Start a simple web server in the current directory
 http() {
     local port="${1:-8000}"
-    python2.7 -m SimpleHTTPServer $port
+    python3 -m http.server $port
 }
 
 h() {
