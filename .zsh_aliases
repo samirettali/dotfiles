@@ -59,3 +59,6 @@ alias kali="cd ~/CTF/kali-ctf; vagrant up && vagrant ssh"
 
 # CTF
 alias gdb="gdb -q"
+
+alias von="sudo wg-quick up wg0"
+alias voff="sudo wg-quick down wg0"
