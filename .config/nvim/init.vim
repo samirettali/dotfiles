@@ -114,6 +114,7 @@ set noshowmode                     " Hide current vim mode because of lightline
 set title
 set fileformat=unix
 set textwidth=80
+set colorcolumn=+1
 set wrap                           " Wrap lines longer than terminal width
 set showmode
 set formatoptions-=t
@@ -171,7 +172,7 @@ set wildmenu
 set cmdheight=1
 
 " Color all columns from the 81st
-let &colorcolumn=join(range(81,999),",")
+" let &colorcolumn=join(range(81,999),",")
 
 :command! WQ wq
 :command! Wq wq
