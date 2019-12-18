@@ -194,7 +194,7 @@ vm() {
 }
 
 # Foreground and background switching
-function fg-bg() {
+fg-bg() {
   if [[ $#BUFFER -eq 0 ]]; then
     fg
   else
@@ -254,4 +254,13 @@ mt() {
 
 gcap() {
     git add "$1" && git commit && git push
+}
+
+kali() {
+    cd ~/CTF/kali-ctf
+    if [ -z "$(vagrant global-status | grep kali-ctf | grep running | tr -d '\n')" ]; then
+        vagrant up && vagrant ssh
+    else
+        vagrant ssh
+    fi
 }
