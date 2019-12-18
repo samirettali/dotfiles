@@ -55,7 +55,6 @@ alias ytmp3="youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audi
 alias vup="vagrant up"
 alias vss="vagrant ssh"
 alias vag="vagrant up; vagrant ssh"
-alias kali="cd ~/CTF/kali-ctf; vagrant up && vagrant ssh"
 
 # CTF
 alias gdb="gdb -q"
