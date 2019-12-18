@@ -110,6 +110,15 @@ ptex() {
     rm $(sed 's/tex/aux/' <<< "$1")
 }
 
+# Compile C++
+gpp() {
+    g++ -std=c++17 -Wshadow -Wall -o "sed 's/.cpp//' <<< $1" "$1" -O2 -Wno-unused-result
+}
+
+gppp() {
+    g++ -std=c++17 -Wshadow -Wall -o "sed 's/.cpp//' <<< $1" "$1" -g -fsanitize=address -fsanitize=undefined -D_GLIBCXX_DEBUG
+}
+
 # Go to git repository root
 groot() {
     readonly old_pwd="$PWD"
