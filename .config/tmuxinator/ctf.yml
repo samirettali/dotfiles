@@ -1,0 +1,17 @@
+name: blog
+root: ~/Projects/Blog
+
+windows:
+  - server:
+      layout: even-horizontal
+      panes:
+        - hugo server --verbose --watch --buildDrafts
+        - sudo /usr/local/sbin/openvpn /Users/samir/CTF/kali-ctf/HTB/samirettali.ovpn
+  - editor:
+      layout: tiled
+      panes:
+        - vim content
+  - kali:
+      layout: tiled
+      panes:
+          - cd ~/CTF/kali-ctf
