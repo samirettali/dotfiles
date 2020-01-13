@@ -85,6 +85,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
     Plug 'sjl/badwolf'
+    Plug 'george-b/zenchrome'
     Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
@@ -98,7 +99,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme challenger_deep
+colorscheme base16-tomorrow-night
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -524,3 +525,14 @@ endif
 endfunction
 
 :autocmd BufNewFile *.* :call Hashbang(1,1,0)
+
+" Create non existent directories
+augroup BWCCreateDir
+  autocmd!
+  autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
+fun! s:MkNonExDir(file, buf)
+  if empty(getbufvar(a:buf, '&buftype')) && a:file !~# '\v^\w+\:\/'
+    call mkdir(fnamemodify(a:file, ':h'), 'p')
+  endif
+endfun
