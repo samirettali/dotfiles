@@ -11,18 +11,18 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
     Plug 'norcalli/nvim-colorizer.lua'          " Show RGB colors
     Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
-    Plug 'tpope/vim-repeat'                     " Use . to repeate plugins motions
+    Plug 'tpope/vim-repeat'                     " Use . to repeat plugins motions
     Plug 'wincent/scalpel'                      " Replace words with shortcut
 
     " Formatting
     Plug 'godlygeek/tabular'                    " Align text automatically
-    Plug 'matze/vim-move'                       " Move visually selected lines
+    " Plug 'matze/vim-move'                       " Move visually selected lines
 
     " Text objects
     " Plug 'michaeljsmith/vim-indent-object'    " Add current indentation level object
     Plug 'machakann/vim-swap'                   " Swap delimited items
     Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
-    Plug 'tpope/vim-surround'                   " Add surround object for editing
+    Plug 'machakann/vim-sandwich'               " Add surround object for editing
 
     " Navigation
     Plug 'ap/vim-buftabline'                    " Emulate tabs with buffers
@@ -52,6 +52,8 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'neomake/neomake'                      " Error checking
     Plug 'nvie/vim-flake8'                      " Python pep8 style
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
+    Plug 'vim-scripts/indentpython.vim'
+    Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
 
     " Auto completion
     Plug 'ncm2/ncm2'
@@ -79,16 +81,14 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
-    Plug 'xolox/vim-misc'                       " Required by colorscheme switcher
 
     " Themes
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
-    Plug 'sjl/badwolf'
-    Plug 'george-b/zenchrome'
     Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
+let python_highlight_all=1
 syntax on
 filetype indent plugin on
 set modelines=0
@@ -99,7 +99,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme base16-tomorrow-night
+colorscheme challenger_deep
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -232,19 +232,16 @@ vnoremap <CR> }
 " nnoremap <C-m> :make<CR>
 
 " Better splits navigation
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
-nnoremap <C-h> <C-w><C-h>
+" nnoremap <C-j> <C-w><C-j>
+" nnoremap <C-k> <C-w><C-k>
+" nnoremap <C-l> <C-w><C-l>
+" nnoremap <C-h> <C-w><C-h>
 
 " Copy and paste using system clipboard
 vmap <C-c> "+y
 vmap <C-x> "+c
 vmap <C-v> c<Esc>"+p
 imap <C-v> <C-r><C-o>+"
-
-" Activate spelling
-map <silent> <C-s> :setlocal spell!<CR>
 
 " Open man page for word under cursor
 map K :call ReadMan()<CR>
@@ -333,11 +330,11 @@ let g:highlightedyank_highlight_duration = 3000
 let g:CoolTotalMatches = 1
 
 " neomake
-" call neomake#configure#automake('w')
+call neomake#configure#automake('w')
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'wombat',
+\   'colorscheme': 'challenger_deep',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
@@ -398,6 +395,8 @@ map <silent> <C-o> :NERDTreeToggle<CR>
 
 " Tagbar
 map <silent> <C-t> :TagbarToggle<CR>
+
+map <C-y> :NextColorScheme<CR>:colorscheme<CR>
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<Leader>e"
