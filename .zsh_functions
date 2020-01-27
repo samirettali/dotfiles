@@ -33,7 +33,7 @@ tad() {
     local d="$HOME/.throw-away/$ts"
     mkdir -p "$d"
     (cd "$d"; zsh -c tmux)
-    rm -r "$d"
+    rm -rf "$d"
 }
 
 # Last downloaded file
@@ -161,7 +161,7 @@ bak() {
     if [[ "${target:0-1}" = "/" ]]; then
         target=${target%%/}; # Strip trailing / of directories
     fi
-    cp -v $target{,.bak}
+    cp -r -v $target{,.bak}
 }
 
 # CTF stuff
@@ -272,4 +272,9 @@ kali() {
     else
         vagrant ssh
     fi
+}
+
+lar() {
+    filename="$1"
+    echo $filename | entr -c ./"$filename"
 }
