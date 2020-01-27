@@ -37,7 +37,6 @@ alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html
 alias types="find . -type f | sed -n 's/..*\.//p' | sort | uniq -c"
 
 # Software
-alias python="python3"
 alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
 alias s="sudo su -"
 alias sv="sudo nvim"
