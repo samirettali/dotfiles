@@ -14,7 +14,7 @@ ENABLE_CORRECTION="false"
 export EDITOR=nvim
 
 # PATH
-export PATH=$PATH:$HOME/.bin
+export PATH=$PATH:$HOME/.bin:$HOME/.local/bin
 if [ $(command -v ruby) ]; then
     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
 fi
