@@ -6,7 +6,6 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
-
     " Writing
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
     Plug 'norcalli/nvim-colorizer.lua'          " Show RGB colors
@@ -85,6 +84,10 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Themes
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     Plug 'chriskempson/base16-vim'
+    Plug 'haishanh/night-owl.vim'
+    Plug 'bluz71/vim-nightfly-guicolors'
+    Plug 'lifepillar/vim-solarized8'
+    Plug 'sentientmachine/Pretty-Vim-Python'
     Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
@@ -99,7 +102,8 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme challenger_deep
+" colorscheme solarized8_flat
+colorscheme nightfly
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -115,7 +119,6 @@ set noshowmode                     " Hide current vim mode because of lightline
 set title
 set fileformat=unix
 set textwidth=80
-set colorcolumn=+1
 set wrap                           " Wrap lines longer than terminal width
 set showmode
 set formatoptions-=t
@@ -130,8 +133,7 @@ set autoread                        " Reload files if modified externally
 set shell=zsh
 set number                          " Show lines number
 set relativenumber                  " Show relative line numbers
-" set fillchars+=vert:\│              " Make vertical split separator full line"
-set fillchars=diff:⣿,vert:│,fold:-
+set fillchars+=vert:\│              " Make vertical split separator full line
 set encoding=utf-8
 set foldmethod=indent
 set foldclose=all
@@ -173,7 +175,7 @@ set wildmenu
 set cmdheight=1
 
 " Color all columns from the 81st
-" let &colorcolumn=join(range(81,999),",")
+let &colorcolumn=join(range(81,999),",")
 
 :command! WQ wq
 :command! Wq wq
@@ -244,7 +246,7 @@ vmap <C-v> c<Esc>"+p
 imap <C-v> <C-r><C-o>+"
 
 " Open man page for word under cursor
-map K :call ReadMan()<CR>
+" map K :call ReadMan()<CR>
 
 " Select text inserted during last insert mode usage
 nnoremap gV `[v`]
@@ -286,7 +288,7 @@ nnoremap <Leader>ze :g/^$/d<CR>
 nnoremap <Leader>af mavapgq'a
 
 " Toggle colorcolumn
-nnoremap <Leader>cc :let &cc = &cc == '' ? '81' : ''<CR>
+nnoremap <Leader>cc :let &cc = &cc == '' ? join(range(81, 999), ",") : ''<CR>
 
 " Change vim directory into current buffer
 nnoremap <Leader>cd :cd %:p:h<CR>
@@ -319,7 +321,8 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 
 " vim-markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'js=javascript', 'c', 'asm', 'php']
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'js=javascript',
+    \                              'c', 'asm', 'php']
 let g:markdown_minlines = 100
 
 " buftabline
@@ -334,7 +337,7 @@ call neomake#configure#automake('w')
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'challenger_deep',
+\   'colorscheme': 'nightfly',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
@@ -475,55 +478,49 @@ function! MyFoldText()
     let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 9
     return line . ' ⤥ ' . repeat("…", fillcharcount) . ' (' . foldedlinecount .')'
 endfunction
-function! Hashbang(portable, permission, RemExt)
 
 " Automatic Shebang
-let shells = { 
-        \    'awk': "awk",
-        \     'sh': "bash",
-        \     'hs': "runhaskell",
-        \     'jl': "julia",
-        \    'lua': "lua",
-        \    'mak': "make",
-        \     'js': "node",
-        \      'm': "octave",
-        \     'pl': "perl", 
-        \    'php': "php",
-        \     'py': "python3",
-        \      'r': "Rscript",
-        \     'rb': "ruby",
-        \  'scala': "scala",
-        \    'tcl': "tclsh",
-        \     'tk': "wish"
-        \    }
+function! Hashbang(portable, permission, RemExt)
+    let shells = { 
+            \    'awk': "awk",
+            \     'sh': "bash",
+            \     'hs': "runhaskell",
+            \     'jl': "julia",
+            \    'lua': "lua",
+            \    'mak': "make",
+            \     'js': "node",
+            \      'm': "octave",
+            \     'pl': "perl", 
+            \    'php': "php",
+            \     'py': "python3",
+            \      'r': "Rscript",
+            \     'rb': "ruby",
+            \  'scala': "scala",
+            \    'tcl': "tclsh",
+            \     'tk': "wish"
+            \    }
 
-let extension = expand("%:e")
+    let extension = expand("%:e")
 
-if has_key(shells,extension)
-	let fileshell = shells[extension]
-
-	if a:portable
-		let line =  "#!/usr/bin/env " . fileshell 
-	else 
-		let line = "#!" . system("which " . fileshell)
-	endif
-
-	0put = line
-
-	if a:permission
-		:autocmd BufWritePost * :autocmd VimLeave * :!chmod u+x %
-	endif
-
-
-	if a:RemExt
-		:autocmd BufWritePost * :autocmd VimLeave * :!mv % "%:p:r"
-	endif
-
-endif
-
+    if has_key(shells,extension)
+        let fileshell = shells[extension]
+        if a:portable
+            let line =  "#!/usr/bin/env " . fileshell 
+        else 
+            let line = "#!" . system("which " . fileshell)
+        endif
+        0put = line
+        exe 2
+        if a:permission
+            :autocmd BufWritePost * :autocmd VimLeave * :!chmod u+x %
+        endif
+        if a:RemExt
+            :autocmd BufWritePost * :autocmd VimLeave * :!mv % "%:p:r"
+        endif
+    endif
 endfunction
 
-:autocmd BufNewFile *.* :call Hashbang(1,1,0)
+autocmd BufNewFile *.* :call Hashbang(1,1,0)
 
 " Create non existent directories
 augroup BWCCreateDir
