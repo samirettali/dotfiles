@@ -276,5 +276,9 @@ kali() {
 
 lar() {
     filename="$1"
-    echo $filename | entr -c ./"$filename"
+    find . | entr -c python3 ./"$filename"
+}
+
+sif() {
+    ack --type-set='all:match:.*' -k
 }
