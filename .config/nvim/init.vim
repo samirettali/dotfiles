@@ -5,6 +5,8 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" TODO dd on empty lines to _ register
+
 call plug#begin('~/.local/share/nvim/plugged')
     " Writing
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
@@ -48,7 +50,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Linting and syntax
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
-    Plug 'neomake/neomake'                      " Error checking
+    " Plug 'neomake/neomake'                      " Error checking
     Plug 'nvie/vim-flake8'                      " Python pep8 style
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
     Plug 'vim-scripts/indentpython.vim'
@@ -80,18 +82,15 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
+    Plug 'blueyed/vim-diminactive'              " Dim inactive splits
+    " Plug 'camspiers/animate.vim'               " Animation for lens.vim
+    Plug 'camspiers/lens.vim'                   " Auto resize small splits
 
     " Themes
-    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-    Plug 'chriskempson/base16-vim'
-    Plug 'haishanh/night-owl.vim'
     Plug 'bluz71/vim-nightfly-guicolors'
-    Plug 'lifepillar/vim-solarized8'
-    Plug 'sentientmachine/Pretty-Vim-Python'
-    Plug 'dracula/vim', { 'as': 'dracula' }
+    Plug 'arzg/vim-colors-xcode'
 call plug#end()
 
-let python_highlight_all=1
 syntax on
 filetype indent plugin on
 set modelines=0
@@ -102,7 +101,6 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-" colorscheme solarized8_flat
 colorscheme nightfly
 
 set expandtab                      " Insert spaces instead of tabs
@@ -246,7 +244,7 @@ vmap <C-v> c<Esc>"+p
 imap <C-v> <C-r><C-o>+"
 
 " Open man page for word under cursor
-" map K :call ReadMan()<CR>
+map K :call ReadMan()<CR>
 
 " Select text inserted during last insert mode usage
 nnoremap gV `[v`]
@@ -315,6 +313,11 @@ map <Leader>lmd ysiw]wwa(<Esc>"+p)
 
 " Plugins settings
 
+" Lens
+let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'qf']
+let g:lens#height_resize_min = 5
+let g:lens#width_resize_min = 20
+
 " ncm2
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -333,7 +336,7 @@ let g:highlightedyank_highlight_duration = 3000
 let g:CoolTotalMatches = 1
 
 " neomake
-call neomake#configure#automake('w')
+" call neomake#configure#automake('w')
 
 " lightline
 let g:lightline = {
@@ -399,8 +402,6 @@ map <silent> <C-o> :NERDTreeToggle<CR>
 " Tagbar
 map <silent> <C-t> :TagbarToggle<CR>
 
-map <C-y> :NextColorScheme<CR>:colorscheme<CR>
-
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<Leader>e"
 let g:UltiSnipsJumpForwardTrigger="<C-b>"
@@ -431,11 +432,11 @@ augroup END
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Close vim when the only opened buffer is neomake error list
-autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-    \ q :cclose<cr>:lclose<cr>
-autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
-    \ bd|
-    \ q | endif
+" autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+"     \ q :cclose<cr>:lclose<cr>
+" autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+"     \ bd|
+"     \ q | endif
 
 " Set latest search register to empty string on insert event
 autocmd InsertEnter * :let @/=""
