@@ -1,6 +1,6 @@
 # Better defaults
 if [ $(uname) = 'Darwin' ]; then
-    alias ls="ls -G"
+    alias ls="ls -GFp"
     alias f="fd"
     alias upg="brew update && brew upgrade && brew cask upgrade && nvim +PlugUpdate +PlugUpgrade +UpdateRemotePlugin +exit"
 else
@@ -43,9 +43,6 @@ alias sv="sudo nvim"
 alias tree="tree -C"
 alias vim="nvim"
 
-# Misc
-alias ex='chmod +x'
-
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
 alias ytmp3="youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audio-quality 0 -w --output \"%(title)s.%(ext)s\""
@@ -58,5 +55,8 @@ alias vag="vagrant up; vagrant ssh"
 # CTF
 alias gdb="gdb -q"
 
+# Misc
+alias ex='chmod +x'
+alias memusage="ps -o rss,command -waxc | sort -n"
 alias von="sudo wg-quick up wg0"
 alias voff="sudo wg-quick down wg0"
