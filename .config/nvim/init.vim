@@ -536,6 +536,7 @@ fun! s:MkNonExDir(file, buf)
   endif
 endfun
 
+" Exclude quickfix from bnext and bprev
 augroup qf
     autocmd!
     autocmd FileType qf set nobuflisted
