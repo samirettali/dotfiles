@@ -76,6 +76,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'junegunn/vim-peekaboo'                " Show registers content before pasting
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
     Plug 'mbbill/undotree'                      " Creates an undo tree at forks
+    Plug 'romainl/vim-qf'                       " Fix quickfix navigation
 
     " Misc
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
@@ -89,6 +90,8 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Themes
     Plug 'bluz71/vim-nightfly-guicolors'
     Plug 'arzg/vim-colors-xcode'
+    Plug 'ajh17/Spacegray.vim'
+    Plug 'dneto/spacegray-lightline'
 call plug#end()
 
 syntax on
@@ -101,7 +104,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme nightfly
+colorscheme spacegray
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -340,7 +343,7 @@ let g:CoolTotalMatches = 1
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'nightfly',
+\   'colorscheme': 'spacegray',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
@@ -432,11 +435,11 @@ augroup END
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Close vim when the only opened buffer is neomake error list
-" autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-"     \ q :cclose<cr>:lclose<cr>
-" autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
-"     \ bd|
-"     \ q | endif
+autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+    \ q :cclose<cr>:lclose<cr>
+autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+    \ bd|
+    \ q | endif
 
 " Set latest search register to empty string on insert event
 autocmd InsertEnter * :let @/=""
