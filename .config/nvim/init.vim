@@ -76,7 +76,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'junegunn/vim-peekaboo'                " Show registers content before pasting
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
     Plug 'mbbill/undotree'                      " Creates an undo tree at forks
-    Plug 'romainl/vim-qf'                       " Fix quickfix navigation
 
     " Misc
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
@@ -536,3 +535,8 @@ fun! s:MkNonExDir(file, buf)
     call mkdir(fnamemodify(a:file, ':h'), 'p')
   endif
 endfun
+
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END
