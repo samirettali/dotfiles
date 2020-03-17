@@ -5,8 +5,6 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" TODO dd on empty lines to _ register
-
 call plug#begin('~/.local/share/nvim/plugged')
     " Writing
     Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
@@ -17,10 +15,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Formatting
     Plug 'godlygeek/tabular'                    " Align text automatically
-    " Plug 'matze/vim-move'                       " Move visually selected lines
 
     " Text objects
-    " Plug 'michaeljsmith/vim-indent-object'    " Add current indentation level object
+    Plug 'michaeljsmith/vim-indent-object'      " Add current indentation level object
     Plug 'machakann/vim-swap'                   " Swap delimited items
     Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
     Plug 'machakann/vim-sandwich'               " Add surround object for editing
@@ -50,11 +47,12 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Linting and syntax
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
-    " Plug 'neomake/neomake'                      " Error checking
+    " Plug 'neomake/neomake'                    " Error checking
     Plug 'nvie/vim-flake8'                      " Python pep8 style
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
-    Plug 'vim-scripts/indentpython.vim'
     Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
+    Plug 'fatih/vim-go'                         " Golang plugins
+    Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
 
     " Auto completion
     Plug 'ncm2/ncm2'
@@ -62,13 +60,13 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'ncm2/ncm2-bufword'
     Plug 'ncm2/ncm2-path'
     Plug 'ncm2/ncm2-jedi'
+    Plug 'ncm2/ncm2-go'
 
     " Development
     Plug 'AndrewRadev/splitjoin.vim'            " Split and join single and multiple lines
-    Plug 'tpope/vim-markdown'                   " Markdown
     Plug 'AndrewRadev/tagalong.vim'             " Automatically rename opening and closing tags
     Plug 'xuhdev/vim-latex-live-preview'        " Latex live preview
-    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+    Plug 'tpope/vim-markdown'                   " Markdown
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
@@ -76,33 +74,36 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'junegunn/vim-peekaboo'                " Show registers content before pasting
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
     Plug 'mbbill/undotree'                      " Creates an undo tree at forks
+    Plug 'drzel/vim-split-line'                      " Creates an undo tree at forks
 
     " Misc
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
-    Plug 'blueyed/vim-diminactive'              " Dim inactive splits
-    " Plug 'camspiers/animate.vim'               " Animation for lens.vim
+    Plug 'blueyed/vim-diminactive'            " Dim inactive splits
+    " Plug 'camspiers/animate.vim'              " Animation for lens.vim
     Plug 'camspiers/lens.vim'                   " Auto resize small splits
+    Plug 'vimwiki/vimwiki'                      " Personal wiki
 
     " Themes
     Plug 'bluz71/vim-nightfly-guicolors'
-    Plug 'arzg/vim-colors-xcode'
     Plug 'ajh17/Spacegray.vim'
     Plug 'dneto/spacegray-lightline'
+    Plug 'mhartington/oceanic-next'
+    Plug 'lifepillar/vim-solarized8'
+    Plug 'junegunn/seoul256.vim'
 call plug#end()
 
 syntax on
 filetype indent plugin on
 set modelines=0
-set synmaxcol=200                  " Don't bother highlighting off screen lines
+set synmaxcol=200                  " Don't highlight off screen lines
 
 " Theme
 if has('nvim') || has('termguicolors')
   set termguicolors
 endif
-set background=dark
 colorscheme spacegray
 
 set expandtab                      " Insert spaces instead of tabs
@@ -302,21 +303,55 @@ nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 vmap < <gv
 vmap > >gv
 
-" C coding mappings
-let @d = "0"
-map <Leader>d oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
-map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
+" Format JSON
+map <Leader>js :%!python -m json.tool<CR>
 
 " Make word a link in markdown
 map <Leader>lmd ysiw]wwa(<Esc>"+p)
+
+" Quick commit and push
+map <Leader>gw :!git add . && git commit -m 'WIP' && git push<CR>
+
+" Debug print
+let @d = "0"
+map <Leader>pd oprint('debug ')<Esc>F "dp<C-a>"dyiw:w<CR>
+map <Leader>cd oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
+" map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
 
 " ROT 13
 " nnoremap <Leader>13 ggVGg?<CR> 
 
 " Plugins settings
 
+" vim-polyglot
+let g:python_highlight_all = 1
+
+" vim-go
+let g:go_highlight_array_whitespace_error = 1
+let g:go_highlight_chan_whitespace_error = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_space_tab_error = 1
+let g:go_highlight_trailing_whitespace_error = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_string_spellcheck = 1
+let g:go_highlight_format_strings = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
+let g:go_highlight_diagnostic_errors = 1
+let g:go_highlight_diagnostic_warnings = 1
+
+" vim-sandwich
+runtime macros/sandwich/keymap/surround.vim
+
 " Lens
-let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'qf']
+let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'qf', 'vim-plug', 'tagbar']
 let g:lens#height_resize_min = 5
 let g:lens#width_resize_min = 20
 
@@ -367,7 +402,8 @@ let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
 
 " NERDTree
 let g:NERDSpaceDelims = 1
-autocmd StdinReadPre * let s:std_in=1                   " Open NERDTree automatically when folder is opened
+" Open NERDTree automatically when folder is opened
+autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 " Close vim when only window left open is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -380,7 +416,7 @@ let NERDTreeDirArrows = 1
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
-let NERDTreeAutoDeleteBuffer = 1                        " Remove buffer when you delete a file from NERDTree
+let NERDTreeAutoDeleteBuffer = 1
 
 " delimitMate
 let delimitMate_matchpairs = "(:),[:],{:}"
@@ -412,6 +448,9 @@ let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 " buftabline
 nnoremap <silent> <C-n> :bnext<CR>
 nnoremap <silent> <C-p> :bprev<CR>
+
+" vim-split-line
+nnoremap S :keeppatterns substitute/\s*\%#\s*/\r/e <bar> normal! ==<CR>
 
 " Scalpel
 nmap <Leader>s <Plug>(Scalpel)
