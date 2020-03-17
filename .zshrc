@@ -14,7 +14,7 @@ ENABLE_CORRECTION="false"
 export EDITOR=nvim
 
 # PATH
-export PATH=$PATH:$HOME/.bin:$HOME/.local/bin
+export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/go/bin
 if [ $(command -v ruby) ]; then
     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
 fi
@@ -70,9 +70,10 @@ fi
 # if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
 #     tmux attach-session -t ssh || tmux new-session -s ssh
 # fi
+
 pasteinit() {
     OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-    zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+    zle -N self-insert url-quote-magic
 }
 
 pastefinish() {
