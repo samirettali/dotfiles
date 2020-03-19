@@ -14,7 +14,7 @@ ENABLE_CORRECTION="false"
 export EDITOR=nvim
 
 # PATH
-export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/go/bin
+export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin
 if [ $(command -v ruby) ]; then
     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
 fi
@@ -24,7 +24,7 @@ fi
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-plugins=(git git-prompt colored-man-pages colorize fzf pip python \
+plugins=(git git-prompt colored-man-pages colorize fzf pass pip python \
     zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
