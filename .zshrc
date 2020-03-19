@@ -8,10 +8,13 @@ KEYTIMEOUT=1
 
 ZSH_THEME="samir"
 
-ENABLE_CORRECTION="false"
+ENABLE_CORRECTION="true"
 
 # Text editor
 export EDITOR=nvim
+
+# Colorize color scheme
+export ZSH_COLORIZE_STYLE="native"
 
 # PATH
 export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin
@@ -19,9 +22,6 @@ if [ $(command -v ruby) ]; then
     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
 fi
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 plugins=(git git-prompt colored-man-pages colorize fzf pass pip python \
@@ -33,8 +33,8 @@ source $ZSH/oh-my-zsh.sh
 zstyle ':completion:*' rehash true
 # # Mismatch completion
 zstyle ':completion:*' completer _complete _match _approximate
-# zstyle ':completion:*:match:*' original only
-# zstyle ':completion:*:approximate:*' max-errors 1 numeric
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
 
 # Don't autocomplete with files already present in the command
 zstyle ':completion::complete:(rm|vi|vim|diff|mv):*' ignore-line true
@@ -67,10 +67,11 @@ else
 fi
 
 # Automatically start tmux in ssh sessions
-# if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
-#     tmux attach-session -t ssh || tmux new-session -s ssh
-# fi
+if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
+    tmux attach-session -t ssh || tmux new-session -s ssh
+fi
 
+# Paste auto escape
 pasteinit() {
     OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
     zle -N self-insert url-quote-magic
