@@ -323,6 +323,16 @@ map <Leader>cd oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
 " nnoremap <Leader>13 ggVGg?<CR> 
 
 " Plugins settings
+" wimeiki
+let g:vimwiki_list = [{'path': '~/Documents/wiki',
+    \ 'syntax': 'markdown',
+    \ 'ext': '.md',
+    \ 'template_path': '~/Documents/wiki/templates/',
+    \ 'template_default': 'default',
+    \ 'custom_wiki2html': 'vimwiki_markdown',
+    \ 'html_filename_parametrization': 1,
+    \ 'template_ext': '.tpl',
+    \ 'auto_export': 1}]
 
 " vim-polyglot
 let g:python_highlight_all = 1
