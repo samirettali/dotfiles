@@ -74,7 +74,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'junegunn/vim-peekaboo'                " Show registers content before pasting
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
     Plug 'mbbill/undotree'                      " Creates an undo tree at forks
-    Plug 'drzel/vim-split-line'                      " Creates an undo tree at forks
+    Plug 'drzel/vim-split-line'                 " Split line at cursor
 
     " Misc
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
@@ -85,6 +85,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Plug 'camspiers/animate.vim'              " Animation for lens.vim
     Plug 'camspiers/lens.vim'                   " Auto resize small splits
     Plug 'vimwiki/vimwiki'                      " Personal wiki
+    Plug 'AndrewRadev/switch.vim'               " Personal wiki
 
     " Themes
     Plug 'bluz71/vim-nightfly-guicolors'
