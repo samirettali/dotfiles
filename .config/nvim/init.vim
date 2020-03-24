@@ -77,6 +77,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
     Plug 'mbbill/undotree'                      " Creates an undo tree at forks
     Plug 'drzel/vim-split-line'                 " Split line at cursor
+    Plug 'terryma/vim-expand-region'                 " Split line at cursor
 
     " Misc
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
@@ -250,9 +251,6 @@ vmap <C-x> "+c
 vmap <C-v> c<Esc>"+p
 imap <C-v> <C-r><C-o>+"
 
-" Open man page for word under cursor
-map K :call ReadMan()<CR>
-
 " Select text inserted during last insert mode usage
 nnoremap gV `[v`]
 
@@ -308,6 +306,9 @@ nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 " Keep text selected after indentation
 vmap < <gv
 vmap > >gv
+
+" Open man page for word under cursor
+map <Leader>m :call ReadMan()<CR>
 
 " Format JSON
 map <Leader>js :%!python -m json.tool<CR>
@@ -448,6 +449,10 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.php'
 " ncm2
 " inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" vim-expand-region
+map K <Plug>(expand_region_expand)
+map J <Plug>(expand_region_shrink)
 
 " Fuzzy file finder
 nnoremap <C-f> :FZF<CR>
