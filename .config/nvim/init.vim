@@ -31,6 +31,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
     Plug 'junegunn/fzf.vim'                     " Fzf plugin
 
+
     " Snippets
     Plug 'SirVer/ultisnips'                     " Snippet completion
     Plug 'honza/vim-snippets'                   " Snippets collection
@@ -85,15 +86,16 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Plug 'camspiers/animate.vim'              " Animation for lens.vim
     Plug 'camspiers/lens.vim'                   " Auto resize small splits
     Plug 'vimwiki/vimwiki'                      " Personal wiki
-    Plug 'AndrewRadev/switch.vim'               " Personal wiki
+    Plug 'AndrewRadev/switch.vim'               " Switch predefined values
 
     " Themes
-    Plug 'bluz71/vim-nightfly-guicolors'
     Plug 'ajh17/Spacegray.vim'
+    Plug 'challenger-deep-theme/vim'
+    Plug 'bluz71/vim-nightfly-guicolors'
     Plug 'dneto/spacegray-lightline'
-    Plug 'mhartington/oceanic-next'
     Plug 'lifepillar/vim-solarized8'
-    Plug 'junegunn/seoul256.vim'
+    Plug 'mhartington/oceanic-next'
+    Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 syntax on
@@ -254,8 +256,10 @@ map K :call ReadMan()<CR>
 nnoremap gV `[v`]
 
 " Split faster 
-" nnoremap \ :vsplit 
-" nnoremap - :split 
+nnoremap \ :vsplit<CR>
+nnoremap - :split<CR>
+nnoremap \| :vsplit 
+nnoremap _ :split 
 
 " Leader mappings
 let mapleader = ","
@@ -323,16 +327,18 @@ map <Leader>cd oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
 " nnoremap <Leader>13 ggVGg?<CR> 
 
 " Plugins settings
-" wimeiki
+" wimiki
+autocmd FileType vimwiki set ft=markdown
+let g:vimwiki_global_ext = 0
 let g:vimwiki_list = [{'path': '~/Documents/wiki',
     \ 'syntax': 'markdown',
     \ 'ext': '.md',
-    \ 'template_path': '~/Documents/wiki/templates/',
-    \ 'template_default': 'default',
-    \ 'custom_wiki2html': 'vimwiki_markdown',
-    \ 'html_filename_parametrization': 1,
-    \ 'template_ext': '.tpl',
     \ 'auto_export': 1}]
+
+    " \ 'template_default': 'default',
+    " \ 'template_ext': '.tpl',
+    " \ 'template_path': '~/Documents/wiki/templates/',
+    " \ 'html_filename_parametrization': 1,
 
 " vim-polyglot
 let g:python_highlight_all = 1
@@ -357,9 +363,10 @@ let g:go_highlight_variable_declarations = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_diagnostic_errors = 1
 let g:go_highlight_diagnostic_warnings = 1
+let g:go_auto_type_info = 1
 
 " vim-sandwich
-runtime macros/sandwich/keymap/surround.vim
+" runtime macros/sandwich/keymap/surround.vim
 
 " Lens
 let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'qf', 'vim-plug', 'tagbar']
@@ -462,6 +469,9 @@ nnoremap <silent> <C-p> :bprev<CR>
 
 " vim-split-line
 nnoremap S :keeppatterns substitute/\s*\%#\s*/\r/e <bar> normal! ==<CR>
+
+" nvim-colorizer
+nnoremap <Leader>ct :ColorizerToggle<CR>
 
 " Scalpel
 nmap <Leader>s <Plug>(Scalpel)
