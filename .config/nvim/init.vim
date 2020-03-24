@@ -45,6 +45,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Git
     Plug 'airblade/vim-gitgutter'               " Show git diff in the gutter
     Plug 'rhysd/committia.vim'                  " Better commit editing
+    Plug 'tpope/vim-fugitive'                   " Git wrapper
 
     " Linting and syntax
     Plug 'Chiel92/vim-autoformat'               " Code auto formatting
