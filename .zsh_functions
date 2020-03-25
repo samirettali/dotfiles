@@ -282,3 +282,11 @@ lar() {
 sif() {
     ack --type-set='all:match:.*' -k
 }
+
+hashdir() {
+    if [ $(uname) = 'Darwin' ]; then
+        find "$1" -type f -exec shasum -a 256 {} \; | sort | shasum -a 256
+    else
+        find "$1" -type f -exec sha256sum \; | sort | sha256sum
+    fi
+}
