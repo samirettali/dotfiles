@@ -34,7 +34,7 @@ alias tt="tmux new -A -s term"
 # alias -g gp="| grep -i"
 
 # Scripts
-alias ip="ifconfig en0 | grep inet | grep -v inet6 | awk '{ print $2 }'"
+alias lip="ifconfig en0 | grep inet | grep -v inet6 | awk '{ print $2 }'"
 alias wip="curl icanhazip.com"
 alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
 alias types="find . -type f | sed -n 's/..*\.//p' | sort | uniq -c"
