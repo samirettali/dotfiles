@@ -269,7 +269,7 @@ kali() {
 
 lar() {
     filename="$1"
-    find . | entr -c python3 ./"$filename"
+    find . | entr -c ./"$filename"
 }
 
 sif() {
