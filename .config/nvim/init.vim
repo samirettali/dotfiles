@@ -280,9 +280,6 @@ nnoremap <Leader>cp yap<S-}>p
 " Toggle fold
 nnoremap <Space> za
 
-" Sort selected lines
-vmap <Leader>o :!sort<CR>
-
 " Draw underline with = symbol
 nnoremap <Leader>1 yypVr=
 
