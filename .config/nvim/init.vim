@@ -72,12 +72,12 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
+    Plug 'drzel/vim-split-line'                 " Split line at cursor
     Plug 'itchyny/lightline.vim'                " Status line
     Plug 'junegunn/vim-peekaboo'                " Show registers content before pasting
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
     Plug 'mbbill/undotree'                      " Creates an undo tree at forks
-    Plug 'drzel/vim-split-line'                 " Split line at cursor
-    Plug 'terryma/vim-expand-region'                 " Split line at cursor
+    Plug 'christoomey/vim-sort-motion'          " Sort motion
 
     " Misc
     Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
@@ -109,7 +109,7 @@ set synmaxcol=200                  " Don't highlight off screen lines
 if has('nvim') || has('termguicolors')
   set termguicolors
 endif
-colorscheme spacegray
+colorscheme nightfly
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -334,8 +334,8 @@ autocmd FileType vimwiki set ft=markdown
 let g:vimwiki_global_ext = 0
 let g:vimwiki_list = [{'path': '~/Documents/wiki',
     \ 'syntax': 'markdown',
-    \ 'ext': '.md',
-    \ 'auto_export': 1}]
+    \ 'ext': '.md'}]
+    " \ 'auto_export': 1}]
 
     " \ 'template_default': 'default',
     " \ 'template_ext': '.tpl',
@@ -397,7 +397,7 @@ let g:CoolTotalMatches = 1
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'spacegray',
+\   'colorscheme': 'nightfly',
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
