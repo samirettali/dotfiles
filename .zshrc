@@ -16,8 +16,10 @@ export EDITOR=nvim
 # Colorize color scheme
 export ZSH_COLORIZE_STYLE="native"
 
+export PYENV_ROOT="$HOME/.pyenv"
+
 # PATH
-export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin
+export PATH=$PYENV_ROOT/bin:$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin
 if [ $(command -v ruby) ]; then
     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
 fi
@@ -85,3 +87,5 @@ zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+eval "$(pyenv init -)"
