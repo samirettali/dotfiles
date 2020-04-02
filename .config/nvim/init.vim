@@ -48,13 +48,13 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'tpope/vim-fugitive'                   " Git wrapper
 
     " Linting and syntax
-    Plug 'Chiel92/vim-autoformat'               " Code auto formatting
-    " Plug 'neomake/neomake'                    " Error checking
-    Plug 'nvie/vim-flake8'                      " Python pep8 style
+    " Plug 'nvie/vim-flake8'                      " Python pep8 style
+    Plug 'dense-analysis/ale'                   " Linting
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
     Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
     Plug 'fatih/vim-go'                         " Golang plugins
     Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
+    Plug 'maximbaz/lightline-ale'               " Show lint status on lightline
 
     " Auto completion
     Plug 'ncm2/ncm2'
@@ -286,9 +286,6 @@ nnoremap <Leader>1 yypVr=
 " Remove empty lines
 nnoremap <Leader>ze :g/^$/d<CR>
 
-" Autoformat paragraph
-nnoremap <Leader>af mavapgq'a
-
 " Toggle colorcolumn
 nnoremap <Leader>cc :let &cc = &cc == '' ? join(range(81, 999), ",") : ''<CR>
 
@@ -326,6 +323,11 @@ map <Leader>cd oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
 " nnoremap <Leader>13 ggVGg?<CR> 
 
 " Plugins settings
+" ale
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_open_list = 1
+
 " wimiki
 autocmd FileType vimwiki set ft=markdown
 let g:vimwiki_global_ext = 0
@@ -362,7 +364,7 @@ let g:go_highlight_variable_declarations = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_diagnostic_errors = 1
 let g:go_highlight_diagnostic_warnings = 1
-let g:go_auto_type_info = 1
+" let g:go_auto_type_info = 1
 
 " vim-sandwich
 " runtime macros/sandwich/keymap/surround.vim
@@ -389,12 +391,12 @@ let g:buftabline_numbers = 2
 let g:highlightedyank_highlight_duration = 3000
 let g:CoolTotalMatches = 1
 
-" neomake
-" call neomake#configure#automake('w')
-
 " lightline
 let g:lightline = {
 \   'colorscheme': 'nightfly',
+\   'component_function': {
+\       'gitbranch': 'fugitive#head'
+\   },
 \   'active': {
 \       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
@@ -402,9 +404,6 @@ let g:lightline = {
 \   },
 \   'component': {
 \       'charhex': '0x%B'
-\   },
-\   'component_function': {
-\       'gitbranch': 'fugitive#head'
 \   },
 \ }
 " \       'obsession': 'ObsessionStatus'
@@ -496,7 +495,7 @@ augroup END
 " Disable continuation of comments
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-" Close vim when the only opened buffer is neomake error list
+" Close vim when the only opened buffer is quickfix
 autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
     \ q :cclose<cr>:lclose<cr>
 autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
@@ -510,8 +509,8 @@ autocmd InsertLeave * :let @/=""
 " Resize splits proportionally to window resize
 autocmd VimResized * :wincmd =
 
-" Run flake8 on save
-autocmd BufWritePost *.py call flake8#Flake8()
+" " Run flake8 on save
+" autocmd BufWritePost *.py call flake8#Flake8()
 
 fun! ReadMan()
     " Assign current word under cursor to a script variable:
