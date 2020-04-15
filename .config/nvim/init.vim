@@ -31,7 +31,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
     Plug 'junegunn/fzf.vim'                     " Fzf plugin
 
-
     " Snippets
     Plug 'SirVer/ultisnips'                     " Snippet completion
     Plug 'honza/vim-snippets'                   " Snippets collection
@@ -84,10 +83,9 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
-    Plug 'blueyed/vim-diminactive'            " Dim inactive splits
-    " Plug 'camspiers/animate.vim'              " Animation for lens.vim
+    Plug 'blueyed/vim-diminactive'              " Dim inactive splits
     Plug 'camspiers/lens.vim'                   " Auto resize small splits
-    Plug 'vimwiki/vimwiki'                      " Personal wiki
+    Plug 'fcpg/vim-waikiki'                     " Personal wiki
     Plug 'AndrewRadev/switch.vim'               " Switch predefined values
 
     " Themes
@@ -278,7 +276,7 @@ nnoremap <silent> <Leader>i :set list!<CR>
 nnoremap <Leader>cp yap<S-}>p
 
 " Toggle fold
-nnoremap <Space> za
+" nnoremap <Space> za
 
 " Draw underline with = symbol
 nnoremap <Leader>1 yypVr=
@@ -328,18 +326,10 @@ let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_open_list = 1
 
-" wimiki
-autocmd FileType vimwiki set ft=markdown
-let g:vimwiki_global_ext = 0
-let g:vimwiki_list = [{'path': '~/Documents/wiki',
-    \ 'syntax': 'markdown',
-    \ 'ext': '.md'}]
-    " \ 'auto_export': 1}]
-
-    " \ 'template_default': 'default',
-    " \ 'template_ext': '.tpl',
-    " \ 'template_path': '~/Documents/wiki/templates/',
-    " \ 'html_filename_parametrization': 1,
+" waikiki
+let g:waikiki_roots = ['~/Documents/wiki/']
+let maplocalleader = "\<Space>"
+let g:waikiki_default_maps = 1
 
 " vim-polyglot
 let g:python_highlight_all = 1
@@ -364,10 +354,9 @@ let g:go_highlight_variable_declarations = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_diagnostic_errors = 1
 let g:go_highlight_diagnostic_warnings = 1
-" let g:go_auto_type_info = 1
 
 " vim-sandwich
-" runtime macros/sandwich/keymap/surround.vim
+runtime macros/sandwich/keymap/surround.vim
 
 " Lens
 let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'qf', 'vim-plug', 'tagbar']
@@ -470,7 +459,7 @@ nnoremap <silent> <C-n> :bnext<CR>
 nnoremap <silent> <C-p> :bprev<CR>
 
 " vim-split-line
-nnoremap S :keeppatterns substitute/\s*\%#\s*/\r/e <bar> normal! ==<CR>
+nnoremap S :SplitLine<CR>
 
 " nvim-colorizer
 nnoremap <Leader>ct :ColorizerToggle<CR>
