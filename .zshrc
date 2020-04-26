@@ -19,7 +19,7 @@ export ZSH_COLORIZE_STYLE="native"
 export PYENV_ROOT="$HOME/.pyenv"
 
 # PATH
-export PATH=$PYENV_ROOT/bin:$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin
+export PATH=$PYENV_ROOT/bin:$PATH:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin
 if [ $(command -v ruby) ]; then
     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
 fi
