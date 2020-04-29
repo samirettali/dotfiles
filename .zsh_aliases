@@ -50,11 +50,6 @@ alias vim="nvim"
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
 alias ytmp3="youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audio-quality 0 -w --output \"%(title)s.%(ext)s\""
 
-# Vagrant
-alias vup="vagrant up"
-alias vss="vagrant ssh"
-alias vag="vagrant up; vagrant ssh"
-
 # CTF
 alias gdb="gdb -q"
 
