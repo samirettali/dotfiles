@@ -8,8 +8,6 @@ KEYTIMEOUT=1
 
 ZSH_THEME="samir"
 
-ENABLE_CORRECTION="true"
-
 # Text editor
 export EDITOR=nvim
 
