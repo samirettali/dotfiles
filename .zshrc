@@ -1,3 +1,4 @@
+zmodload zsh/zprof
 ZSH="$HOME/.oh-my-zsh"
 
 # Auto update oh-my-zsh
@@ -24,8 +25,8 @@ fi
 
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-plugins=(git git-prompt colored-man-pages colorize fzf pass pip python \
-    zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git git-prompt colored-man-pages colorize fzf zsh-autosuggestions \
+    zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -65,11 +66,6 @@ else
     bindkey "${terminfo[kend]}" end-of-line
     bindkey "${terminfo[kdch1]}" delete-char
 fi
-
-# Automatically start tmux in ssh sessions
-# if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
-#     tmux attach-session -t ssh || tmux new-session -s ssh
-# fi
 
 # Paste auto escape
 pasteinit() {
