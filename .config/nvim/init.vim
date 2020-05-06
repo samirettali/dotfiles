@@ -15,6 +15,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Formatting
     Plug 'godlygeek/tabular'                    " Align text automatically
+    Plug 'noahfrederick/vim-hemisu'                    " Align text automatically
 
     " Text objects
     Plug 'michaeljsmith/vim-indent-object'      " Add current indentation level object
@@ -83,19 +84,14 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
     Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
-    Plug 'blueyed/vim-diminactive'              " Dim inactive splits
     Plug 'camspiers/lens.vim'                   " Auto resize small splits
     Plug 'fcpg/vim-waikiki'                     " Personal wiki
     Plug 'AndrewRadev/switch.vim'               " Switch predefined values
 
     " Themes
     Plug 'ajh17/Spacegray.vim'
-    Plug 'challenger-deep-theme/vim'
     Plug 'bluz71/vim-nightfly-guicolors'
-    Plug 'dneto/spacegray-lightline'
-    Plug 'lifepillar/vim-solarized8'
     Plug 'mhartington/oceanic-next'
-    Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 syntax on
@@ -107,7 +103,7 @@ set synmaxcol=200                  " Don't highlight off screen lines
 if has('nvim') || has('termguicolors')
   set termguicolors
 endif
-colorscheme nightfly
+colorscheme hemisu
 
 set expandtab                      " Insert spaces instead of tabs
 set tabstop=4                      " Number of spaces representing a tab
@@ -124,6 +120,7 @@ set title
 set fileformat=unix
 set textwidth=80
 set wrap                           " Wrap lines longer than terminal width
+set colorcolumn=81                 " Highlight 81st column
 set showmode
 set formatoptions-=t
 set history=1000                   " Increase history
@@ -178,9 +175,6 @@ set wildmenu
 
 set cmdheight=1
 
-" Color all columns from the 81st
-let &colorcolumn=join(range(81,999),",")
-
 :command! WQ wq
 :command! Wq wq
 :command! W w
@@ -226,22 +220,13 @@ nnoremap <Right> 3<C-W>>
 " Yank line without newline
 nmap Y y$
 
-" Do something smarter with enter and backspace (TODO)
+" Do something smarter with enter and backspace
 nnoremap <BS> {
 onoremap <BS> {
 vnoremap <BS> {
 nnoremap <expr> <CR> empty(&buftype) ? '}' : '<CR>'
 onoremap <expr> <CR> empty(&buftype) ? '}' : '<CR>'
 vnoremap <CR> }
-
-" Compile using make file
-" nnoremap <C-m> :make<CR>
-
-" Better splits navigation
-" nnoremap <C-j> <C-w><C-j>
-" nnoremap <C-k> <C-w><C-k>
-" nnoremap <C-l> <C-w><C-l>
-" nnoremap <C-h> <C-w><C-h>
 
 " Copy and paste using system clipboard
 vmap <C-c> "+y
@@ -276,7 +261,7 @@ nnoremap <silent> <Leader>i :set list!<CR>
 nnoremap <Leader>cp yap<S-}>p
 
 " Toggle fold
-" nnoremap <Space> za
+nnoremap <Space> za
 
 " Draw underline with = symbol
 nnoremap <Leader>1 yypVr=
@@ -285,7 +270,7 @@ nnoremap <Leader>1 yypVr=
 nnoremap <Leader>ze :g/^$/d<CR>
 
 " Toggle colorcolumn
-nnoremap <Leader>cc :let &cc = &cc == '' ? join(range(81, 999), ",") : ''<CR>
+nnoremap <Leader>cc :let &cc = &cc == '' ? 81 : ''<CR>
 
 " Change vim directory into current buffer
 nnoremap <Leader>cd :cd %:p:h<CR>
@@ -328,7 +313,7 @@ let g:ale_open_list = 1
 
 " waikiki
 let g:waikiki_roots = ['~/Documents/wiki/']
-let maplocalleader = "\<Space>"
+" let maplocalleader = "\<Space>"
 let g:waikiki_default_maps = 1
 
 " vim-polyglot
@@ -382,7 +367,7 @@ let g:CoolTotalMatches = 1
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'nightfly',
+\   'colorscheme': 'hemisu',
 \   'component_function': {
 \       'gitbranch': 'fugitive#head'
 \   },
@@ -538,20 +523,11 @@ function! Hashbang(portable, permission, RemExt)
     let shells = { 
             \    'awk': "awk",
             \     'sh': "bash",
-            \     'hs': "runhaskell",
-            \     'jl': "julia",
             \    'lua': "lua",
-            \    'mak': "make",
             \     'js': "node",
-            \      'm': "octave",
             \     'pl': "perl", 
-            \    'php': "php",
             \     'py': "python3",
-            \      'r': "Rscript",
-            \     'rb': "ruby",
-            \  'scala': "scala",
-            \    'tcl': "tclsh",
-            \     'tk': "wish"
+            \     'rb': "ruby"
             \    }
 
     let extension = expand("%:e")
