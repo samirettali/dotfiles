@@ -6,27 +6,8 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
-    " Writing
-    Plug 'Raimondi/delimitMate'                 " Auto completion for quotes, brackets, etc.
-    Plug 'norcalli/nvim-colorizer.lua'          " Show RGB colors
-    Plug 'tpope/vim-commentary'                 " Add shortcuts to comment
-    Plug 'tpope/vim-repeat'                     " Use . to repeat plugins motions
-    Plug 'wincent/scalpel'                      " Replace words with shortcut
-
     " Formatting
     Plug 'godlygeek/tabular'                    " Align text automatically
-    Plug 'noahfrederick/vim-hemisu'                    " Align text automatically
-
-    " Text objects
-    Plug 'michaeljsmith/vim-indent-object'      " Add current indentation level object
-    Plug 'machakann/vim-swap'                   " Swap delimited items
-    Plug 'machakann/vim-textobj-delimited'      " Add delimiting object to strings
-    Plug 'machakann/vim-sandwich'               " Add surround object for editing
-
-    " Navigation
-    Plug 'ap/vim-buftabline'                    " Emulate tabs with buffers
-    Plug 'christoomey/vim-tmux-navigator'       " Navigate between vim and tmux splits
-    Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
 
     " Fuzzy file finder
     Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
@@ -36,63 +17,49 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'SirVer/ultisnips'                     " Snippet completion
     Plug 'honza/vim-snippets'                   " Snippets collection
 
-    " NERDTree
-    Plug 'Xuyuanp/nerdtree-git-plugin'          " NERDTree git integration
-    Plug 'ryanoasis/vim-devicons'               " NERDTree icons
-    Plug 'scrooloose/nerdtree'                  " NERDTree file explorer
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
     " Git
     Plug 'airblade/vim-gitgutter'               " Show git diff in the gutter
     Plug 'rhysd/committia.vim'                  " Better commit editing
     Plug 'tpope/vim-fugitive'                   " Git wrapper
 
-    " Linting and syntax
-    " Plug 'nvie/vim-flake8'                      " Python pep8 style
+    " Coding
+    Plug 'jiangmiao/auto-pairs'                 " Auto completion for quotes, brackets, etc.
     Plug 'dense-analysis/ale'                   " Linting
-    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
-    Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
+    Plug 'maximbaz/lightline-ale'               " Linting integration for lightline
     Plug 'fatih/vim-go'                         " Golang plugins
+    Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
     Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
-    Plug 'maximbaz/lightline-ale'               " Show lint status on lightline
-
-    " Auto completion
-    Plug 'ncm2/ncm2'
-    Plug 'roxma/nvim-yarp'
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-path'
-    Plug 'ncm2/ncm2-jedi'
-    Plug 'ncm2/ncm2-go'
-
-    " Development
-    Plug 'AndrewRadev/splitjoin.vim'            " Split and join single and multiple lines
-    Plug 'AndrewRadev/tagalong.vim'             " Automatically rename opening and closing tags
-    Plug 'xuhdev/vim-latex-live-preview'        " Latex live preview
-    Plug 'tpope/vim-markdown'                   " Markdown
+    Plug 'tpope/vim-commentary'                 " Commenting plugin
+    Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
+    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'deoplete-plugins/deoplete-jedi'       " Python autocompletion
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
+    Plug 'christoomey/vim-sort-motion'          " Sort motion
+    Plug 'sunaku/tmux-navigate'                 " Tmux splits integration
     Plug 'drzel/vim-split-line'                 " Split line at cursor
     Plug 'itchyny/lightline.vim'                " Status line
-    Plug 'junegunn/vim-peekaboo'                " Show registers content before pasting
+    Plug 'wincent/scalpel'                      " Replace word under cursor
     Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
+    Plug 'machakann/vim-sandwich'               " Add surround object for editing
+    Plug 'machakann/vim-swap'                   " Swap delimited items
+    Plug 'machakann/vim-textobj-delimited'      " More delimiting object
     Plug 'mbbill/undotree'                      " Creates an undo tree at forks
-    Plug 'christoomey/vim-sort-motion'          " Sort motion
+    Plug 'mengelbrecht/lightline-bufferline'    " Show opened buffers
 
     " Misc
-    Plug 'justinmk/vim-syntax-extra'            " Add some syntax definitions
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
-    Plug 'tpope/vim-eunuch'                     " UNIX commands in vim
-    Plug 'camspiers/lens.vim'                   " Auto resize small splits
-    Plug 'fcpg/vim-waikiki'                     " Personal wiki
-    Plug 'AndrewRadev/switch.vim'               " Switch predefined values
 
     " Themes
     Plug 'ajh17/Spacegray.vim'
     Plug 'bluz71/vim-nightfly-guicolors'
-    Plug 'mhartington/oceanic-next'
+    Plug 'bluz71/vim-moonfly-colors'
 call plug#end()
+
+
 
 syntax on
 filetype indent plugin on
@@ -103,13 +70,14 @@ set synmaxcol=200                  " Don't highlight off screen lines
 if has('nvim') || has('termguicolors')
   set termguicolors
 endif
-colorscheme hemisu
+set background=dark
+colorscheme moonfly
 
-set expandtab                      " Insert spaces instead of tabs
-set tabstop=4                      " Number of spaces representing a tab
+set expandtab                      " Use spaces for tabulation
+set tabstop=4                      " Number of spaces representing a TAB
 set shiftwidth=4                   " Number of spaces for < and > command in vim
-set softtabstop=4
-set shiftround
+set softtabstop=4                  " Number of spaces corresponding to a TAB
+set shiftround                     " Round indentation to multiple of shiftwidth
 set smarttab
 set smartindent
 set autoindent
@@ -139,7 +107,6 @@ set encoding=utf-8
 set foldmethod=indent
 set foldclose=all
 set foldlevelstart=20
-set foldtext=MyFoldText()
 set splitbelow                      " More natural split
 set splitright                      " More natural split
 set complete=.,b,u,]
@@ -148,7 +115,7 @@ set hidden                          " Allow buffer swap when modified
 set path+=**
 set nostartofline                   " Do not jump to first character with j/k
 set showmatch                       " Show matching brackets
-set confirm
+set confirm                         " Show confirmation instead of errors
 set scrolloff=5                     " Keep 5 lines above and below the cursor
 set sidescrolloff=5                 " Keep 5 columns left and right of the cursor
 set incsearch                       " Hightlight matches as you tipe
@@ -158,20 +125,21 @@ set backspace=indent,eol,start      " Make backspace behave properly "
 set mouse=i                         " Allow mouse usage to copy over ssh
 set lazyredraw                      " Buffer screen updates
 set timeout
-set ttimeoutlen=50   " Time to wait for multikey mappings
-set cpt-=t
-set cpt-=i
+set timeoutlen=500                  " Time to wait for key mapping
+set ttimeoutlen=50                  " Time to wait for multikey mappings
+" set cpt-=t
+" set cpt-=i
 set linebreak
-set breakindent
-set breakindentopt=shift:2
+set breakindent                     " Visually indent wrapped lines
+set breakindentopt=shift:2          " Shift option for breakindent
 set showbreak=↳
 set spelllang=it,en_us
 
 set updatetime=100
 
 " Turn on wildmenu for file name tab completion
-set wildmode=longest:full,full
-set wildmenu
+" set wildmode=longest:full,full
+" set wildmenu
 
 set cmdheight=1
 
@@ -180,34 +148,7 @@ set cmdheight=1
 :command! W w
 :command! Q q
 
-" Functions
-" Decompile java .class files
-function! s:ReadClass(dir, classname)
-    execute "cd " . a:dir
-    execute "0read !javap -c " . a:classname
-    1
-    setlocal readonly
-    setlocal nomodified
-endfunction
-
-" Display register, press a key and paste into the buffer
-function! Reg()
-    reg
-    echo "Register: "
-    let char = nr2char(getchar())
-    if char != "\<Esc>"
-        execute "normal! \"".char."p"
-    endif
-    redraw
-endfunction
-command! -nargs=0 Reg call Reg()
-
-" Used for lightline
-function! ObsessionStatus()
-    return '%{ObsessionStatus()}'
-endfunction
-
-" Mappings
+" Simple mappings
 imap <Up> <nop>
 imap <Down> <nop>
 imap <Left> <nop>
@@ -220,19 +161,9 @@ nnoremap <Right> 3<C-W>>
 " Yank line without newline
 nmap Y y$
 
-" Do something smarter with enter and backspace
-nnoremap <BS> {
-onoremap <BS> {
-vnoremap <BS> {
-nnoremap <expr> <CR> empty(&buftype) ? '}' : '<CR>'
-onoremap <expr> <CR> empty(&buftype) ? '}' : '<CR>'
-vnoremap <CR> }
-
 " Copy and paste using system clipboard
 vmap <C-c> "+y
-vmap <C-x> "+c
-vmap <C-v> c<Esc>"+p
-imap <C-v> <C-r><C-o>+"
+vmap <C-x> "+d
 
 " Select text inserted during last insert mode usage
 nnoremap gV `[v`]
@@ -243,6 +174,10 @@ nnoremap - :split<CR>
 nnoremap \| :vsplit 
 nnoremap _ :split 
 
+" Buffer switching
+nnoremap <silent> <C-n> :bnext<CR>
+nnoremap <silent> <C-p> :bprev<CR>
+
 " Leader mappings
 let mapleader = ","
 
@@ -250,7 +185,6 @@ let mapleader = ","
 nmap <Leader><Leader> <C-^>
 
 " Edit vim configuration
-nnoremap <silent> <Leader>ev :edit $MYVIMRC<CR>
 nnoremap <silent> <Leader>rv :source $MYVIMRC<CR>
 nnoremap <silent> <Leader>pi :PlugInstall<CR>
 
@@ -263,21 +197,13 @@ nnoremap <Leader>cp yap<S-}>p
 " Toggle fold
 nnoremap <Space> za
 
-" Draw underline with = symbol
-nnoremap <Leader>1 yypVr=
-
 " Remove empty lines
 nnoremap <Leader>ze :g/^$/d<CR>
 
 " Toggle colorcolumn
 nnoremap <Leader>cc :let &cc = &cc == '' ? 81 : ''<CR>
 
-" Change vim directory into current buffer
-nnoremap <Leader>cd :cd %:p:h<CR>
-
-" Replace word with uppercase/lowercase/title case
-nnoremap <Leader>u mzgUiw`za<Esc>
-nnoremap <Leader>l mzguiw`za<Esc>
+" Make line title case
 nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 
 " Keep text selected after indentation
@@ -287,34 +213,19 @@ vmap > >gv
 " Open man page for word under cursor
 map <Leader>m :call ReadMan()<CR>
 
-" Format JSON
-map <Leader>js :%!python -m json.tool<CR>
-
 " Make word a link in markdown
-map <Leader>lmd ysiw]wwa(<Esc>"+p)
-
-" Quick commit and push
-map <Leader>gw :!git add . && git commit -m 'WIP' && git push<CR>
-
-" Debug print
-let @d = "0"
-map <Leader>pd oprint('debug ')<Esc>F "dp<C-a>"dyiw:w<CR>
-map <Leader>cd oprintf("DEBUG \n");<Esc>5h"dp<C-a>"dyiw
-" map <Leader>rd :g/^.*printf("DEBUG .*$/ d<CR>
-
-" ROT 13
-" nnoremap <Leader>13 ggVGg?<CR> 
+" map <Leader>lmd ysiw]wwa(<Esc>"+p)
 
 " Plugins settings
 " ale
 let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_quickfix = 0
 let g:ale_open_list = 1
+let g:ale_sign_warning = '!!'
 
-" waikiki
-let g:waikiki_roots = ['~/Documents/wiki/']
-" let maplocalleader = "\<Space>"
-let g:waikiki_default_maps = 1
+" deoplete
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 
 " vim-polyglot
 let g:python_highlight_all = 1
@@ -343,20 +254,10 @@ let g:go_highlight_diagnostic_warnings = 1
 " vim-sandwich
 runtime macros/sandwich/keymap/surround.vim
 
-" Lens
-let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'qf', 'vim-plug', 'tagbar']
-let g:lens#height_resize_min = 5
-let g:lens#width_resize_min = 20
-
-" ncm2
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
-
 " vim-markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'js=javascript',
-    \                              'c', 'asm', 'php']
-let g:markdown_minlines = 100
+" let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'js=javascript',
+"     \                              'c', 'asm', 'php']
+" let g:markdown_minlines = 100
 
 " buftabline
 let g:buftabline_numbers = 2
@@ -367,58 +268,54 @@ let g:CoolTotalMatches = 1
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'hemisu',
+\   'colorscheme': 'moonfly',
 \   'component_function': {
 \       'gitbranch': 'fugitive#head'
 \   },
 \   'active': {
-\       'left': [ [ 'mode', 'paste' ],
+\       'left': [ [ 'mode', 'paste', 'buffers' ],
 \               [ 'readonly', 'modified' ] ],
-\       'right': [ [ 'charhex', 'lineinfo', 'spell', 'gitbranch', 'filetype' ] ]
-\   },
-\   'component': {
-\       'charhex': '0x%B'
+\       'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok', 'lineinfo', 'spell', 'gitbranch', 'filetype' ] ]
 \   },
 \ }
 " \       'obsession': 'ObsessionStatus'
-
-" vim-latex-live-preview
-let g:livepreview_previewer = 'open -a Preview'
-let g:livepreview_cursorhold_recompile = 1
-autocmd Filetype tex setl updatetime=1
+let g:lightline.component_expand = {
+      \ 'buffers': 'lightline#bufferline#buffers',
+      \  'linter_checking': 'lightline#ale#checking',
+      \  'linter_infos': 'lightline#ale#infos',
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \     'buffers': 'tabsel',
+      \     'linter_checking': 'right',
+      \     'linter_infos': 'right',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'right',
+      \ }
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_infos = "\uf129"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_ok = "\uf00c"
+let g:lightline#bufferline#show_number  = 1
+nmap <Leader>1 <Plug>lightline#bufferline#go(1)
+nmap <Leader>2 <Plug>lightline#bufferline#go(2)
+nmap <Leader>3 <Plug>lightline#bufferline#go(3)
+nmap <Leader>4 <Plug>lightline#bufferline#go(4)
+nmap <Leader>5 <Plug>lightline#bufferline#go(5)
+nmap <Leader>6 <Plug>lightline#bufferline#go(6)
+nmap <Leader>7 <Plug>lightline#bufferline#go(7)
+nmap <Leader>8 <Plug>lightline#bufferline#go(8)
+nmap <Leader>9 <Plug>lightline#bufferline#go(9)
+nmap <Leader>0 <Plug>lightline#bufferline#go(10)
+nmap <silent> <BS> <Plug>(ale_previous_wrap)
+nmap <silent> <CR> <Plug>(ale_next_wrap)
 
 " ultiSnips
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
-
-" NERDTree
-let g:NERDSpaceDelims = 1
-" Open NERDTree automatically when folder is opened
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-" Close vim when only window left open is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" Clean NERDTree's UI
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
-" vim-nerdtree-syntax-highlight
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-let NERDTreeAutoDeleteBuffer = 1
-
-" delimitMate
-let delimitMate_matchpairs = "(:),[:],{:}"
-
-" closetag
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.php'
-
-" Plugins mappings
-
-" ncm2
-" inoremap <expr><Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " vim-expand-region
 map K <Plug>(expand_region_expand)
@@ -427,38 +324,23 @@ map J <Plug>(expand_region_shrink)
 " Fuzzy file finder
 nnoremap <C-f> :FZF<CR>
 
-" NERDTree
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
-map <silent> <C-o> :NERDTreeToggle<CR>
-
 " Tagbar
 map <silent> <C-t> :TagbarToggle<CR>
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger="<Leader>e"
 let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
-" buftabline
-nnoremap <silent> <C-n> :bnext<CR>
-nnoremap <silent> <C-p> :bprev<CR>
-
 " vim-split-line
 nnoremap S :SplitLine<CR>
-
-" nvim-colorizer
-nnoremap <Leader>ct :ColorizerToggle<CR>
 
 " Scalpel
 nmap <Leader>s <Plug>(Scalpel)
 
 " Autocommands
 
-" Wrap at column 80 on latex and markdown files
+" Wrap at column 80 on markdown and latex files
 autocmd BufRead,BufNewFile *.md,*.tex setlocal formatoptions+=t
-
-" Decompile class files
-autocmd BufReadCmd *.class call <SID>ReadClass(expand("<afile>:p:h"), expand("<afile>:t:r"))
 
 " Remember cursor position
 augroup vimrc-remember-cursor-position
@@ -467,7 +349,7 @@ augroup vimrc-remember-cursor-position
 augroup END
 
 " Disable continuation of comments
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+autocmd FileType * setlocal formatoptions-=cro
 
 " Close vim when the only opened buffer is quickfix
 autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
@@ -476,15 +358,8 @@ autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
     \ bd|
     \ q | endif
 
-" Set latest search register to empty string on insert event
-autocmd InsertEnter * :let @/=""
-autocmd InsertLeave * :let @/=""
-
 " Resize splits proportionally to window resize
 autocmd VimResized * :wincmd =
-
-" " Run flake8 on save
-" autocmd BufWritePost *.py call flake8#Flake8()
 
 fun! ReadMan()
     " Assign current word under cursor to a script variable:
@@ -499,68 +374,6 @@ fun! ReadMan()
     :exe ":delete"
     " finally set file type to 'man':
     :exe ":set filetype=man"
-endfun
-
-function! MyFoldText()
-    let line = getline(v:foldstart)
-
-    let nucolwidth = &fdc + &number * &numberwidth
-    let windowwidth = winwidth(0) - nucolwidth - 3
-    let foldedlinecount = v:foldend - v:foldstart
-
-    " expand tabs into spaces
-    let onetab = strpart('          ', 0, &tabstop)
-    let line = substitute(line, '\t', onetab, 'g')
-    let line = substitute(line, split(&foldmarker, ',')[0], '', '')
-
-    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-    let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - 9
-    return line . ' ⤥ ' . repeat("…", fillcharcount) . ' (' . foldedlinecount .')'
-endfunction
-
-" Automatic Shebang
-function! Hashbang(portable, permission, RemExt)
-    let shells = { 
-            \    'awk': "awk",
-            \     'sh': "bash",
-            \    'lua': "lua",
-            \     'js': "node",
-            \     'pl': "perl", 
-            \     'py': "python3",
-            \     'rb': "ruby"
-            \    }
-
-    let extension = expand("%:e")
-
-    if has_key(shells,extension)
-        let fileshell = shells[extension]
-        if a:portable
-            let line =  "#!/usr/bin/env " . fileshell 
-        else 
-            let line = "#!" . system("which " . fileshell)
-        endif
-        0put = line
-        exe 2
-        if a:permission
-            :autocmd BufWritePost * :autocmd VimLeave * :!chmod u+x %
-        endif
-        if a:RemExt
-            :autocmd BufWritePost * :autocmd VimLeave * :!mv % "%:p:r"
-        endif
-    endif
-endfunction
-
-autocmd BufNewFile *.* :call Hashbang(1,1,0)
-
-" Create non existent directories
-augroup BWCCreateDir
-  autocmd!
-  autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
-augroup END
-fun! s:MkNonExDir(file, buf)
-  if empty(getbufvar(a:buf, '&buftype')) && a:file !~# '\v^\w+\:\/'
-    call mkdir(fnamemodify(a:file, ':h'), 'p')
-  endif
 endfun
 
 " Exclude quickfix from bnext and bprev
