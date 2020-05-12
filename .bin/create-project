@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euf -o pipefail
+
 # This script is used to create a new project.
 # It needs a file in the home directory called .github_token containing the
 # TOKEN variable used to create the remote repository.
@@ -11,55 +13,64 @@
 # TODO
 # Add public/private project
 
-# Exit on error
-set -o errexit
-
 # Parameters check
-if [[ -z "$1" || -z "$2" ]]; then
-    echo "Usage: mkproject <name> <type>"
+if [[ -z "$1" ]]; then
+    echo "Usage: mkproject <name> [type]"
     return 1
 fi
 
 # Variables initialization
 PROJECT_NAME=$1
-PROJECT_TYPE=$2
 
 # Sourcing Github token
-source $HOME/.github_token
+. "${HOME}/.github_token"
+
+# Getting Github username...
+username=$(curl -s -H "Authorization: token ${TOKEN}" \
+    https://api.github.com/user | jq -r .login)
 
 # Create Github repository
-curl -H "Authorization: token $TOKEN" --data '{"name":"'$PROJECT_NAME'"}' \
-    https://api.github.com/user/repos
+echo "Creating Github repository..."
+curl -s -H "Authorization: token ${TOKEN}" \
+    --data '{"name":"'"${PROJECT_NAME}"'"}' \
+    https://api.github.com/user/repos > /dev/null
 
 # Project folder creation
-mkdir "$PROJECT_NAME"
-cd "$PROJECT_NAME"
+mkdir "${PROJECT_NAME}"
+cd "${PROJECT_NAME}"
 
 # Git repostiory initialization
-echo "# $PROJECT_NAME" >> README.md
-git init
-git add README.md
-git commit -m "First commit"
+echo "Initializing local repository..."
+echo "# ${PROJECT_NAME}" >> README.md
+git init > /dev/null
+git add README.md > /dev/null
+git commit -m "First commit" > /dev/null
 
 # Add remote Github repository
-git remote add origin git@github.com:samirettali/"$PROJECT_NAME".git
+echo "Adding remote..."
+git remote add origin git@github.com:"${username}"/"${PROJECT_NAME}".git
 
-# Create project structure based on the chosen language
-if [ "$PROJECT_TYPE" = "java" ]; then
-    mkdir src
-    mkdir classes
-    echo "classes" >> .gitignore
-    cp ~/Documents/Skeletons/JavaMakefile Makefile
-elif [[ "$PROJECT_TYPE" = "c" || "$PROJECT_TYPE" = "cpp" ]]; then
-    mkdir src
-    mkdir bin
-    mkdir build
-    echo "bin" >> .gitignore
-    echo "build" >> .gitignore
-    cp ~/Documents/Skeletons/CMakefile Makefile
+# Create project structure based on the choosen language
+if [[ "$#" -eq 2 ]]; then
+    PROJECT_TYPE=$2
+    if [ "${PROJECT_TYPE}" = "java" ]; then
+        mkdir src
+        mkdir classes
+        echo "classes" >> .gitignore
+        git add .gitignore
+        cp ~/Documents/Skeletons/JavaMakefile Makefile
+    elif [[ "${PROJECT_TYPE}" = "c" || "${PROJECT_TYPE}" = "cpp" ]]; then
+        mkdir src
+        mkdir bin
+        mkdir build
+        echo "bin" >> .gitignore
+        echo "build" >> .gitignore
+        git add .gitignore
+        cp ~/Documents/Skeletons/CMakefile Makefile
+    fi
 fi
 
 # Add gitignore and push to remote
-git add .gitignore
-git commit -m "Added gitignore"
-git push -u origin master
+echo "Pushing to remote..."
+git push -u origin master > /dev/null
+echo "Done!"
