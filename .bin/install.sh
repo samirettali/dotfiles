@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # Prerequisites:
 #   - git
@@ -31,7 +31,7 @@ dots checkout
 dots config --local status.showUntrackedFiles no
 
 # Temporarily move my zsh theme
-mv $HOME/.oh-my-zsh/custom/themes/samir.zsh-theme samir.zsh-theme
+mv $HOME/.oh-my-zsh/custom/themes/samir.zsh-theme $HOME/samir.zsh-theme
 rm -rf $HOME/.oh-my-zsh
 
 # Install tmux plugin manager
@@ -45,7 +45,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # Restore my zsh theme
-mv samir.zsh-theme $HOME/.oh-my-zsh/custom/themes
+mv $HOME/samir.zsh-theme $HOME/.oh-my-zsh/custom/themes
 
 # Restore my zshrc after oh-my-zsh installation
 mv $HOME/.zshrc.pre-oh-my-zsh $HOME/.zshrc
