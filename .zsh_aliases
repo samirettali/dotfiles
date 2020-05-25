@@ -8,53 +8,24 @@ if [ $(uname) = 'Darwin' ]; then
 else
     alias ls="ls --color -h --group-directories-first"
     alias f="fdfind"
-    alias copy="xclip -sel clip"
-    alias start="sudo systemctl start"
-    alias stop="sudo systemctl stop"
-    alias status="sudo systemctl status"
-    alias restart="sudo systemctl restart"
-    alias open="xdg-open"
 fi
 
 # Dotfiles editing
-alias va="vim ~/.zsh_aliases && source ~/.zshrc"
-alias vf="vim ~/.zsh_functions && source ~/.zshrc"
-alias vt="vim ~/.tmux.conf"
-alias vv="vim ~/.config/nvim/init.vim"
-alias vz="vim ~/.zshrc && source ~/.zshrc"
 alias dots="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
 alias ds="dots status"
 alias dt="dots grep -i todo"
-alias dots-gist="gist -u 9f190ac180aecba1872867acc1e9c83b $HOME/.bin/install.sh"
-
-# Tmux
-alias tl="tmux ls"
-alias tt="tmux new -A -s term"
-
-# alias -g gp="| grep -i"
 
 # Scripts
-alias lip="ifconfig en0 | grep inet | grep -v inet6 | awk '{ print $2 }'"
 alias wip="curl icanhazip.com"
 alias clonesite="wget --mirror --recursive --no-clobber --page-requisites --html-extension --convert-links --restrict-file-names=windows --no-parent"
-alias types="find . -type f | sed -n 's/..*\.//p' | sort | uniq -c"
+alias memusage="ps -o rss,command -waxc | sort -n"
 
 # Software
-alias regd="regldg --debug-code=1 --universe-set=7 --universe-checking=3 --max-length=8"
-alias s="sudo su -"
 alias sv="sudo nvim"
 alias tree="tree -C"
 alias vim="nvim"
+alias tl="tmux ls"
 
 # Youtube
 alias ytdl="youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\""
 alias ytmp3="youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audio-quality 0 -w --output \"%(title)s.%(ext)s\""
-
-# CTF
-alias gdb="gdb -q"
-
-# Misc
-alias ex='chmod +x'
-alias memusage="ps -o rss,command -waxc | sort -n"
-alias von="sudo wg-quick up wg0"
-alias voff="sudo wg-quick down wg0"
