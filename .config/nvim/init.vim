@@ -6,9 +6,6 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
-    " Formatting
-    Plug 'godlygeek/tabular'                    " Align text automatically
-
     " Fuzzy file finder
     Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
     Plug 'junegunn/fzf.vim'                     " Fzf plugin
@@ -27,22 +24,21 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'dense-analysis/ale'                   " Linting
     Plug 'maximbaz/lightline-ale'               " Linting integration for lightline
     Plug 'fatih/vim-go'                         " Golang plugins
-    Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
     Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
     Plug 'tpope/vim-commentary'                 " Commenting plugin
     Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
     Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
+    Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'deoplete-plugins/deoplete-jedi'       " Python autocompletion
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
-    Plug 'christoomey/vim-sort-motion'          " Sort motion
+    " Plug 'christoomey/vim-sort-motion'          " Sort motion
     Plug 'sunaku/tmux-navigate'                 " Tmux splits integration
     Plug 'drzel/vim-split-line'                 " Split line at cursor
     Plug 'itchyny/lightline.vim'                " Status line
     Plug 'wincent/scalpel'                      " Replace word under cursor
-    Plug 'machakann/vim-highlightedyank'        " Hightlight yanked text
     Plug 'machakann/vim-sandwich'               " Add surround object for editing
     Plug 'machakann/vim-swap'                   " Swap delimited items
     Plug 'machakann/vim-textobj-delimited'      " More delimiting object
@@ -52,14 +48,8 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Misc
     Plug 'mileszs/ack.vim'                      " Ack plugin for vim
     Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
-
-    " Themes
-    Plug 'ajh17/Spacegray.vim'
-    Plug 'bluz71/vim-nightfly-guicolors'
     Plug 'bluz71/vim-moonfly-colors'
 call plug#end()
-
-
 
 syntax on
 filetype indent plugin on
@@ -148,16 +138,6 @@ set cmdheight=1
 :command! W w
 :command! Q q
 
-" Simple mappings
-imap <Up> <nop>
-imap <Down> <nop>
-imap <Left> <nop>
-imap <Right> <nop>
-nnoremap <Up>    <C-W>+
-nnoremap <Down>  <C-W>-
-nnoremap <Left>  3<C-W><
-nnoremap <Right> 3<C-W>>
-
 " Yank line without newline
 nmap Y y$
 
@@ -191,37 +171,25 @@ nnoremap <silent> <Leader>pi :PlugInstall<CR>
 " Show invisible characters
 nnoremap <silent> <Leader>i :set list!<CR>
 
-" Copy and paste paragraph
-nnoremap <Leader>cp yap<S-}>p
-
 " Toggle fold
 nnoremap <Space> za
 
-" Remove empty lines
-nnoremap <Leader>ze :g/^$/d<CR>
-
 " Toggle colorcolumn
 nnoremap <Leader>cc :let &cc = &cc == '' ? 81 : ''<CR>
-
-" Make line title case
-nnoremap <Leader>t :silent s/\<\(\w\)\(\S*\)/\u\1\L\2/g<CR>
 
 " Keep text selected after indentation
 vmap < <gv
 vmap > >gv
 
-" Open man page for word under cursor
-map <Leader>m :call ReadMan()<CR>
-
-" Make word a link in markdown
-" map <Leader>lmd ysiw]wwa(<Esc>"+p)
-
 " Plugins settings
 " ale
-let g:ale_set_loclist = 0
+let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
 let g:ale_open_list = 1
 let g:ale_sign_warning = '!!'
+nmap <silent> <BS> <Plug>(ale_previous_wrap)
+nmap <silent> <CR> <Plug>(ale_next_wrap)
+autocmd FileType qf setlocal norelativenumber nonumber colorcolumn=
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -250,20 +218,11 @@ let g:go_highlight_variable_declarations = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_diagnostic_errors = 1
 let g:go_highlight_diagnostic_warnings = 1
+let g:go_fmt_command = "goimports"
 
 " vim-sandwich
 runtime macros/sandwich/keymap/surround.vim
 
-" vim-markdown
-" let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'js=javascript',
-"     \                              'c', 'asm', 'php']
-" let g:markdown_minlines = 100
-
-" buftabline
-let g:buftabline_numbers = 2
-
-" highlightedyank
-let g:highlightedyank_highlight_duration = 3000
 let g:CoolTotalMatches = 1
 
 " lightline
@@ -275,10 +234,11 @@ let g:lightline = {
 \   'active': {
 \       'left': [ [ 'mode', 'paste', 'buffers' ],
 \               [ 'readonly', 'modified' ] ],
-\       'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok', 'lineinfo', 'spell', 'gitbranch', 'filetype' ] ]
+\       'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 
+\                    'linter_infos', 'linter_ok', 'lineinfo', 'spell', 
+\                    'gitbranch', 'filetype' ] ]
 \   },
 \ }
-" \       'obsession': 'ObsessionStatus'
 let g:lightline.component_expand = {
       \ 'buffers': 'lightline#bufferline#buffers',
       \  'linter_checking': 'lightline#ale#checking',
@@ -300,29 +260,15 @@ let g:lightline#ale#indicator_infos = "\uf129"
 let g:lightline#ale#indicator_warnings = "\uf071"
 let g:lightline#ale#indicator_errors = "\uf05e"
 let g:lightline#ale#indicator_ok = "\uf00c"
-let g:lightline#bufferline#show_number  = 1
-nmap <Leader>1 <Plug>lightline#bufferline#go(1)
-nmap <Leader>2 <Plug>lightline#bufferline#go(2)
-nmap <Leader>3 <Plug>lightline#bufferline#go(3)
-nmap <Leader>4 <Plug>lightline#bufferline#go(4)
-nmap <Leader>5 <Plug>lightline#bufferline#go(5)
-nmap <Leader>6 <Plug>lightline#bufferline#go(6)
-nmap <Leader>7 <Plug>lightline#bufferline#go(7)
-nmap <Leader>8 <Plug>lightline#bufferline#go(8)
-nmap <Leader>9 <Plug>lightline#bufferline#go(9)
-nmap <Leader>0 <Plug>lightline#bufferline#go(10)
-nmap <silent> <BS> <Plug>(ale_previous_wrap)
-nmap <silent> <CR> <Plug>(ale_next_wrap)
 
 " ultiSnips
 let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
 
-" vim-expand-region
-map K <Plug>(expand_region_expand)
-map J <Plug>(expand_region_shrink)
-
 " Fuzzy file finder
 nnoremap <C-f> :FZF<CR>
+
+" ack
+nnoremap <Leader>a :Ack!<Space>
 
 " Tagbar
 map <silent> <C-t> :TagbarToggle<CR>
@@ -336,8 +282,6 @@ nnoremap S :SplitLine<CR>
 
 " Scalpel
 nmap <Leader>s <Plug>(Scalpel)
-
-" Autocommands
 
 " Wrap at column 80 on markdown and latex files
 autocmd BufRead,BufNewFile *.md,*.tex setlocal formatoptions+=t
@@ -361,23 +305,12 @@ autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
 " Resize splits proportionally to window resize
 autocmd VimResized * :wincmd =
 
-fun! ReadMan()
-    " Assign current word under cursor to a script variable:
-    let s:man_word = expand('<cword>')
-    " Open a new window:
-    :exe ":wincmd n"
-    " Read in the manpage for man_word (col -b is for formatting):
-    :exe ":r!man " . s:man_word . " | col -b"
-    " Goto first line...
-    :exe ":goto"
-    " and delete it:
-    :exe ":delete"
-    " finally set file type to 'man':
-    :exe ":set filetype=man"
-endfun
-
 " Exclude quickfix from bnext and bprev
 augroup qf
     autocmd!
     autocmd FileType qf set nobuflisted
 augroup END
+
+" Do not show colorcolumn for certain file types
+autocmd FileType html setlocal colorcolumn=
+autocmd FileType template setlocal colorcolumn=
