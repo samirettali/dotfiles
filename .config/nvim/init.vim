@@ -220,9 +220,7 @@ let g:go_highlight_diagnostic_errors = 1
 let g:go_highlight_diagnostic_warnings = 1
 let g:go_fmt_command = "goimports"
 
-" vim-sandwich
-runtime macros/sandwich/keymap/surround.vim
-
+" vim-cool
 let g:CoolTotalMatches = 1
 
 " lightline
