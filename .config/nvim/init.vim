@@ -6,13 +6,10 @@ if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
-    " Fuzzy file finder
+    " External tools integrations
+    Plug 'mileszs/ack.vim'                      " Ack integration
     Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
     Plug 'junegunn/fzf.vim'                     " Fzf plugin
-
-    " Snippets
-    Plug 'SirVer/ultisnips'                     " Snippet completion
-    Plug 'honza/vim-snippets'                   " Snippets collection
 
     " Git
     Plug 'airblade/vim-gitgutter'               " Show git diff in the gutter
@@ -22,33 +19,34 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Coding
     Plug 'jiangmiao/auto-pairs'                 " Auto completion for quotes, brackets, etc.
     Plug 'dense-analysis/ale'                   " Linting
-    Plug 'maximbaz/lightline-ale'               " Linting integration for lightline
     Plug 'fatih/vim-go'                         " Golang plugins
-    Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
     Plug 'tpope/vim-commentary'                 " Commenting plugin
-    Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
-    Plug 'wellle/tmux-complete.vim'             " Autocomplete from tmux
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'deoplete-plugins/deoplete-jedi'       " Python autocompletion
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
-    " Plug 'christoomey/vim-sort-motion'          " Sort motion
-    Plug 'sunaku/tmux-navigate'                 " Tmux splits integration
+    Plug 'christoomey/vim-tmux-navigator'                 " Tmux splits integration
     Plug 'drzel/vim-split-line'                 " Split line at cursor
-    Plug 'itchyny/lightline.vim'                " Status line
     Plug 'wincent/scalpel'                      " Replace word under cursor
     Plug 'machakann/vim-sandwich'               " Add surround object for editing
     Plug 'machakann/vim-swap'                   " Swap delimited items
     Plug 'machakann/vim-textobj-delimited'      " More delimiting object
-    Plug 'mbbill/undotree'                      " Creates an undo tree at forks
-    Plug 'mengelbrecht/lightline-bufferline'    " Show opened buffers
+    Plug 'romainl/vim-cool'                     " Disable search highlighting on mode change
+    Plug 'tpope/vim-repeat'                     " Repeat plugin mappings with .
 
-    " Misc
-    Plug 'mileszs/ack.vim'                      " Ack plugin for vim
-    Plug 'romainl/vim-cool'                     " Disable search highlighting automatically
+    " Lightline
+    Plug 'itchyny/lightline.vim'                " Status line
+    Plug 'mengelbrecht/lightline-bufferline'    " Show opened buffers in lightline
+    Plug 'maximbaz/lightline-ale'               " Ale integration for lightline
+
     Plug 'bluz71/vim-moonfly-colors'
+
+    " Remove?
+    " Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
+    " Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
+    " Plug 'deoplete-plugins/deoplete-jedi'       " Python autocompletion
+    " Plug 'christoomey/vim-sort-motion'          " Sort motion
 call plug#end()
 
 syntax on
@@ -78,7 +76,7 @@ set title
 set fileformat=unix
 set textwidth=80
 set wrap                           " Wrap lines longer than terminal width
-set colorcolumn=81                 " Highlight 81st column
+set colorcolumn=81                " Highlight column
 set showmode
 set formatoptions-=t
 set history=1000                   " Increase history
@@ -164,9 +162,8 @@ let mapleader = ","
 " Go back to last selected file
 nmap <Leader><Leader> <C-^>
 
-" Edit vim configuration
+" Reload vim configuration
 nnoremap <silent> <Leader>rv :source $MYVIMRC<CR>
-nnoremap <silent> <Leader>pi :PlugInstall<CR>
 
 " Show invisible characters
 nnoremap <silent> <Leader>i :set list!<CR>
@@ -183,10 +180,12 @@ vmap > >gv
 
 " Plugins settings
 " ale
-let g:ale_set_loclist = 1
-let g:ale_set_quickfix = 0
-let g:ale_open_list = 1
-let g:ale_sign_warning = '!!'
+" let g:ale_set_loclist = 1
+" let g:ale_set_quickfix = 0
+" let g:ale_open_list = 1
+" let g:ale_sign_warning = '!!'
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
 nmap <silent> <BS> <Plug>(ale_previous_wrap)
 nmap <silent> <CR> <Plug>(ale_next_wrap)
 autocmd FileType qf setlocal norelativenumber nonumber colorcolumn=
@@ -200,25 +199,32 @@ let g:python_highlight_all = 1
 
 " vim-go
 let g:go_highlight_array_whitespace_error = 1
-let g:go_highlight_chan_whitespace_error = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_space_tab_error = 1
-let g:go_highlight_trailing_whitespace_error = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_parameters = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
 let g:go_highlight_build_constraints = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_string_spellcheck = 1
-let g:go_highlight_format_strings = 1
-let g:go_highlight_variable_declarations = 1
-let g:go_highlight_variable_assignments = 1
+let g:go_highlight_chan_whitespace_error = 1
 let g:go_highlight_diagnostic_errors = 1
 let g:go_highlight_diagnostic_warnings = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_format_strings = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_space_tab_error = 1
+let g:go_highlight_string_spellcheck = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_trailing_whitespace_error = 1
+let g:go_highlight_types = 1
+let g:go_highlight_variable_assignments = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_auto_type_info = 1
+" let g:go_auto_sameids = 1
 let g:go_fmt_command = "goimports"
+let g:go_addtags_transform = "snakecase"
+au FileType go nmap <Leader>gt :GoDeclsDir<CR>
+au FileType go nmap <Leader>gf <Plug>(go-def)
 
 " vim-cool
 let g:CoolTotalMatches = 1
@@ -259,8 +265,10 @@ let g:lightline#ale#indicator_warnings = "\uf071"
 let g:lightline#ale#indicator_errors = "\uf05e"
 let g:lightline#ale#indicator_ok = "\uf00c"
 
-" ultiSnips
-let g:UltiSnipsSnippetDirectories = [$HOME.'/.vim/UltiSnips']
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 
 " Fuzzy file finder
 nnoremap <C-f> :FZF<CR>
@@ -271,17 +279,13 @@ nnoremap <Leader>a :Ack!<Space>
 " Tagbar
 map <silent> <C-t> :TagbarToggle<CR>
 
-" UltiSnips
-let g:UltiSnipsJumpForwardTrigger="<C-b>"
-let g:UltiSnipsJumpBackwardTrigger="<C-z>"
-
 " vim-split-line
 nnoremap S :SplitLine<CR>
 
 " Scalpel
 nmap <Leader>s <Plug>(Scalpel)
 
-" Wrap at column 80 on markdown and latex files
+" Wrap text on markdown and latex files
 autocmd BufRead,BufNewFile *.md,*.tex setlocal formatoptions+=t
 
 " Remember cursor position
