@@ -18,15 +18,17 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Coding
     Plug 'jiangmiao/auto-pairs'                 " Auto completion for quotes, brackets, etc.
-    Plug 'dense-analysis/ale'                   " Linting
     Plug 'fatih/vim-go'                         " Golang plugins
     Plug 'tpope/vim-commentary'                 " Commenting plugin
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
+    Plug 'neovim/nvim-lsp'                      " Language server protocol
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete-lsp'                  " Deoplete integration with LSP
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
-    Plug 'christoomey/vim-tmux-navigator'                 " Tmux splits integration
+    Plug 'junegunn/vim-easy-align'              " Align stuff based on a symbol
+    Plug 'christoomey/vim-tmux-navigator'       " Tmux splits integration
     Plug 'drzel/vim-split-line'                 " Split line at cursor
     Plug 'wincent/scalpel'                      " Replace word under cursor
     Plug 'machakann/vim-sandwich'               " Add surround object for editing
@@ -34,16 +36,17 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'machakann/vim-textobj-delimited'      " More delimiting object
     Plug 'romainl/vim-cool'                     " Disable search highlighting on mode change
     Plug 'tpope/vim-repeat'                     " Repeat plugin mappings with .
+    " Plug 'plasticboy/vim-markdown'
 
     " Lightline
     Plug 'itchyny/lightline.vim'                " Status line
     Plug 'mengelbrecht/lightline-bufferline'    " Show opened buffers in lightline
-    Plug 'maximbaz/lightline-ale'               " Ale integration for lightline
+    " Plug 'maximbaz/lightline-ale'               " Ale integration for lightline
 
     Plug 'bluz71/vim-moonfly-colors'
 
     " Remove?
-    " Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
+    Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
     " Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
     " Plug 'deoplete-plugins/deoplete-jedi'       " Python autocompletion
     " Plug 'christoomey/vim-sort-motion'          " Sort motion
@@ -107,6 +110,7 @@ set confirm                         " Show confirmation instead of errors
 set scrolloff=5                     " Keep 5 lines above and below the cursor
 set sidescrolloff=5                 " Keep 5 columns left and right of the cursor
 set incsearch                       " Hightlight matches as you tipe
+set inccommand=nosplit              " Substitute words as you type
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set listchars=tab:»·,trail:·,nbsp:~,eol:¬ " Visualize tab, spaces and newlines
 set backspace=indent,eol,start      " Make backspace behave properly "
@@ -179,16 +183,6 @@ vmap < <gv
 vmap > >gv
 
 " Plugins settings
-" ale
-" let g:ale_set_loclist = 1
-" let g:ale_set_quickfix = 0
-" let g:ale_open_list = 1
-" let g:ale_sign_warning = '!!'
-let g:ale_sign_error = '⤫'
-let g:ale_sign_warning = '⚠'
-nmap <silent> <BS> <Plug>(ale_previous_wrap)
-nmap <silent> <CR> <Plug>(ale_next_wrap)
-autocmd FileType qf setlocal norelativenumber nonumber colorcolumn=
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -285,6 +279,9 @@ nnoremap S :SplitLine<CR>
 " Scalpel
 nmap <Leader>s <Plug>(Scalpel)
 
+" vim-markdown
+let g:vim_markdown_conceal_code_blocks = 0
+
 " Wrap text on markdown and latex files
 autocmd BufRead,BufNewFile *.md,*.tex setlocal formatoptions+=t
 
@@ -313,6 +310,16 @@ augroup qf
     autocmd FileType qf set nobuflisted
 augroup END
 
+" Highlight yanked text
+augroup LuaHighlight
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+augroup END
+
 " Do not show colorcolumn for certain file types
 autocmd FileType html setlocal colorcolumn=
 autocmd FileType template setlocal colorcolumn=
+
+lua << EOF
+    require'nvim_lsp'.gopls.setup{}
+EOF
