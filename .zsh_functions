@@ -81,19 +81,11 @@ http() {
 
 # Function that starts my Kali Linux container
 kali() {
-    xhost + 127.0.0.1
-    [[ $(docker ps -f "name=ctf" --format '{{.Names}}') == ctf ]] && \
-        docker exec -it ctf bash || \
-        docker run \
-            --rm \
-            -it \
-            --name ctf \
-            -e DISPLAY=host.docker.internal:0 \
-            -v $HOME/Projects/recon:/data \
-            -v $HOME/CTF:/home/user/ctf \
-            -p 135:135 -p 139:139 -p 445:445 -p 1337:1337 -p 9000-9010:9000-9010 \
-            samirettali/kali-ctf \
-            bash
+    [[ $(docker ps -f "name=ctf" --format '{{.Names}}') == ctf ]] && docker exec -it ctf bash || docker run --rm -it --name ctf -h ctf --cap-add sys_admin --privileged=true -e DISPLAY=host.docker.internal:0 -v $HOME/Projects/recon:/data -v $HOME/Hacking:/home/user/hacking -p 135:135 -p 139:139 -p 445:445 -p 1337:1337 -p 9000-9010:9000-9010 samirettali/kali-ctf bash
+}
+
+bounty() {
+    [[ $(docker ps -f "name=bounty" --format '{{.Names}}') == bounty ]] && docker exec -it bounty bash || docker run --rm -it --name bounty -h bounty -v $HOME/Projects/recon:/home/user/recon -v $HOME/Hacking:/home/user/hacking samirettali/kali-bounty bash
 }
 
 # List all interfaces and their IPs
@@ -109,4 +101,14 @@ ips() {
 gotest() {
     go test -cover -coverprofile=c.out
     go tool cover -html=c.out -o coverage.html
+}
+
+gobench() {
+    go test -bench=. -cpuprofile=cpu.out
+}
+
+gocheck() {
+    go vet .
+    errcheck .
+    golangci-lint run
 }
