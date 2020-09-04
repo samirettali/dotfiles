@@ -18,12 +18,15 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Coding
     Plug 'jiangmiao/auto-pairs'                 " Auto completion for quotes, brackets, etc.
+    Plug 'mattn/emmet-vim'                      " Emmet for vim
     Plug 'fatih/vim-go'                         " Golang plugins
     Plug 'tpope/vim-commentary'                 " Commenting plugin
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
     Plug 'neovim/nvim-lsp'                      " Language server protocol
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'Shougo/deoplete-lsp'                  " Deoplete integration with LSP
+    Plug 'deoplete-plugins/deoplete-jedi'       " Python autocompletion
+    Plug 'kelwin/vim-smali'
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
@@ -36,7 +39,7 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'machakann/vim-textobj-delimited'      " More delimiting object
     Plug 'romainl/vim-cool'                     " Disable search highlighting on mode change
     Plug 'tpope/vim-repeat'                     " Repeat plugin mappings with .
-    " Plug 'plasticboy/vim-markdown'
+    Plug 'plasticboy/vim-markdown'
 
     " Lightline
     Plug 'itchyny/lightline.vim'                " Status line
@@ -44,11 +47,12 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Plug 'maximbaz/lightline-ale'               " Ale integration for lightline
 
     Plug 'bluz71/vim-moonfly-colors'
+    Plug 'bluz71/vim-nightfly-guicolors'
+    Plug 'ajh17/Spacegray.vim'
 
     " Remove?
     Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
     " Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
-    " Plug 'deoplete-plugins/deoplete-jedi'       " Python autocompletion
     " Plug 'christoomey/vim-sort-motion'          " Sort motion
 call plug#end()
 
@@ -62,7 +66,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme moonfly
+colorscheme spacegray
 
 set expandtab                      " Use spaces for tabulation
 set tabstop=4                      " Number of spaces representing a TAB
@@ -217,6 +221,8 @@ let g:go_auto_type_info = 1
 " let g:go_auto_sameids = 1
 let g:go_fmt_command = "goimports"
 let g:go_addtags_transform = "snakecase"
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 au FileType go nmap <Leader>gt :GoDeclsDir<CR>
 au FileType go nmap <Leader>gf <Plug>(go-def)
 
