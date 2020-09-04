@@ -6,7 +6,7 @@ if [ $(uname) = 'Darwin' ]; then
     # Copy output of last command to clipboard
     alias cl="fc -e -|pbcopy"
     # Fix for wireguard bash path
-    alias vpn = "sudo su root -c 'PATH=/usr/local/bin:$PATH wg-quick'"
+    alias vpn="sudo su root -c 'PATH=/usr/local/bin:$PATH wg-quick'"
 else
     alias ls="ls --color -h --group-directories-first"
     alias f="fdfind"
