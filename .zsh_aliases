@@ -5,8 +5,6 @@ if [ $(uname) = 'Darwin' ]; then
     alias upg="brew update && brew upgrade && brew cask upgrade && nvim +PlugUpdate +PlugUpgrade +UpdateRemotePlugin +exit"
     # Copy output of last command to clipboard
     alias cl="fc -e -|pbcopy"
-    # Fix for wireguard bash path
-    alias vpn="sudo su root -c 'PATH=/usr/local/bin:$PATH wg-quick'"
 else
     alias ls="ls --color -h --group-directories-first"
     alias f="fdfind"
@@ -25,6 +23,7 @@ alias memusage="ps -o rss,command -waxc | sort -n"
 # Software
 alias sv="sudo nvim"
 alias tree="tree -C"
+alias vi="nvim"
 alias vim="nvim"
 alias tl="tmux ls"
 
