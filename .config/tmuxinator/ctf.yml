@@ -1,4 +1,4 @@
-name: blog
+name: ctf
 root: ~/Projects/Blog
 
 windows:
@@ -6,7 +6,7 @@ windows:
       layout: even-vertical
       panes:
         - cd ~/Projects/Blog && hugo server --verbose --watch --buildDrafts
-        - sudo /usr/local/sbin/openvpn /Users/samir/CTF/kali-ctf/HTB/samirettali.ovpn
+        - sudo /usr/local/sbin/openvpn /Users/samir/Hacking/ctf/htb/samirettali.ovpn
   - editor:
       layout: tiled
       panes:
@@ -14,4 +14,4 @@ windows:
   - kali:
       layout: even-horizontal
       panes:
-          - kali
+        - kali
