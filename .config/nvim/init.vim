@@ -12,21 +12,26 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'junegunn/fzf.vim'                     " Fzf plugin
 
     " Git
-    Plug 'airblade/vim-gitgutter'               " Show git diff in the gutter
+    Plug 'mhinz/vim-signify'                    " Show git diff in the gutter
     Plug 'rhysd/committia.vim'                  " Better commit editing
     Plug 'tpope/vim-fugitive'                   " Git wrapper
 
     " Coding
     Plug 'jiangmiao/auto-pairs'                 " Auto completion for quotes, brackets, etc.
+    Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
     Plug 'mattn/emmet-vim'                      " Emmet for vim
     Plug 'fatih/vim-go'                         " Golang plugins
     Plug 'tpope/vim-commentary'                 " Commenting plugin
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
-    Plug 'neovim/nvim-lsp'                      " Language server protocol
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'Shougo/deoplete-lsp'                  " Deoplete integration with LSP
-    Plug 'deoplete-plugins/deoplete-jedi'       " Python autocompletion
-    Plug 'kelwin/vim-smali'
+    Plug 'neovim/nvim-lspconfig'                " Language server protocol
+    Plug 'nvim-lua/completion-nvim'             " Auto completion using LSP
+    Plug 'nvim-lua/diagnostic-nvim'
+    Plug 'Valloric/MatchTagAlways'              " Highlight matching HTML tag
+    Plug 'plasticboy/vim-markdown'              " Markdown improving
+    Plug 'AndrewRadev/tagalong.vim'
+    Plug 'prettier/vim-prettier', {
+      \ 'do': 'yarn install',
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
@@ -34,26 +39,25 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'christoomey/vim-tmux-navigator'       " Tmux splits integration
     Plug 'drzel/vim-split-line'                 " Split line at cursor
     Plug 'wincent/scalpel'                      " Replace word under cursor
-    Plug 'machakann/vim-sandwich'               " Add surround object for editing
+    " Plug 'machakann/vim-sandwich'             " Add surround object for editing
     Plug 'machakann/vim-swap'                   " Swap delimited items
     Plug 'machakann/vim-textobj-delimited'      " More delimiting object
     Plug 'romainl/vim-cool'                     " Disable search highlighting on mode change
     Plug 'tpope/vim-repeat'                     " Repeat plugin mappings with .
-    Plug 'plasticboy/vim-markdown'
+    Plug 'tpope/vim-obsession'
+    Plug 'chrisbra/Colorizer'                   " Show colors
+    Plug 'justinmk/vim-sneak'                   " Adds a motion
+    Plug 'tpope/vim-eunuch'                     " Adds UNIX commands
+    Plug 'machakann/vim-highlightedundo'        " Highlights undo region
+    Plug 'wellle/targets.vim'                   " Add more targets for commands
 
     " Lightline
     Plug 'itchyny/lightline.vim'                " Status line
     Plug 'mengelbrecht/lightline-bufferline'    " Show opened buffers in lightline
-    " Plug 'maximbaz/lightline-ale'               " Ale integration for lightline
 
+    " Colorscheme
     Plug 'bluz71/vim-moonfly-colors'
-    Plug 'bluz71/vim-nightfly-guicolors'
-    Plug 'ajh17/Spacegray.vim'
-
-    " Remove?
-    Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
-    " Plug 'tpope/vim-unimpaired'                 " Replace words with shortcut
-    " Plug 'christoomey/vim-sort-motion'          " Sort motion
+    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 call plug#end()
 
 syntax on
@@ -66,12 +70,12 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme spacegray
+colorscheme moonfly
 
 set expandtab                      " Use spaces for tabulation
-set tabstop=4                      " Number of spaces representing a TAB
-set shiftwidth=4                   " Number of spaces for < and > command in vim
-set softtabstop=4                  " Number of spaces corresponding to a TAB
+set tabstop=2                      " Number of spaces representing a TAB
+set shiftwidth=2                   " Number of spaces for < and > command in vim
+set softtabstop=2                  " Number of spaces corresponding to a TAB
 set shiftround                     " Round indentation to multiple of shiftwidth
 set smarttab
 set smartindent
@@ -83,7 +87,6 @@ set title
 set fileformat=unix
 set textwidth=80
 set wrap                           " Wrap lines longer than terminal width
-set colorcolumn=81                " Highlight column
 set showmode
 set formatoptions-=t
 set history=1000                   " Increase history
@@ -130,8 +133,9 @@ set breakindent                     " Visually indent wrapped lines
 set breakindentopt=shift:2          " Shift option for breakindent
 set showbreak=↳
 set spelllang=it,en_us
-
 set updatetime=100
+
+let &colorcolumn=join(range(81,254),",") " Change background for columns > 80
 
 " Turn on wildmenu for file name tab completion
 " set wildmode=longest:full,full
@@ -167,6 +171,9 @@ nnoremap <silent> <C-p> :bprev<CR>
 " Leader mappings
 let mapleader = ","
 
+" Delete trailing spaces
+nmap <Leader>t :%s/\s\+$//e<CR>
+
 " Go back to last selected file
 nmap <Leader><Leader> <C-^>
 
@@ -186,11 +193,37 @@ nnoremap <Leader>cc :let &cc = &cc == '' ? 81 : ''<CR>
 vmap < <gv
 vmap > >gv
 
+map <silent> <Leader>o :only<CR>
+
 " Plugins settings
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+" highlightedundo
+nmap u     <Plug>(highlightedundo-undo)
+nmap <C-r> <Plug>(highlightedundo-redo)
+nmap U     <Plug>(highlightedundo-Undo)
+nmap g-    <Plug>(highlightedundo-gminus)
+nmap g+    <Plug>(highlightedundo-gplus)
+
+" vim-sneak
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
+
+" Prettier
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#quickfix_enabled = 0
+
+" MatchTagAlways
+let g:mta_use_matchparen_group = 1
+let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'gohtmltmpl' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \}
 
 " vim-polyglot
 let g:python_highlight_all = 1
@@ -238,32 +271,17 @@ let g:lightline = {
 \   'active': {
 \       'left': [ [ 'mode', 'paste', 'buffers' ],
 \               [ 'readonly', 'modified' ] ],
-\       'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 
-\                    'linter_infos', 'linter_ok', 'lineinfo', 'spell', 
-\                    'gitbranch', 'filetype' ] ]
+\       'right': [ ['lineinfo', 'percent', 'gitbranch', 'filetype' ] ]
 \   },
 \ }
+
 let g:lightline.component_expand = {
       \ 'buffers': 'lightline#bufferline#buffers',
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_infos': 'lightline#ale#infos',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
       \ }
+
 let g:lightline.component_type = {
       \     'buffers': 'tabsel',
-      \     'linter_checking': 'right',
-      \     'linter_infos': 'right',
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \     'linter_ok': 'right',
       \ }
-let g:lightline#ale#indicator_checking = "\uf110"
-let g:lightline#ale#indicator_infos = "\uf129"
-let g:lightline#ale#indicator_warnings = "\uf071"
-let g:lightline#ale#indicator_errors = "\uf05e"
-let g:lightline#ale#indicator_ok = "\uf00c"
 
 " For conceal markers.
 if has('conceal')
@@ -272,6 +290,7 @@ endif
 
 " Fuzzy file finder
 nnoremap <C-f> :FZF<CR>
+nnoremap <C-l> :Lines<CR>
 
 " ack
 nnoremap <Leader>a :Ack!<Space>
@@ -280,12 +299,13 @@ nnoremap <Leader>a :Ack!<Space>
 map <silent> <C-t> :TagbarToggle<CR>
 
 " vim-split-line
-nnoremap S :SplitLine<CR>
+" nnoremap S :SplitLine<CR>
 
 " Scalpel
 nmap <Leader>s <Plug>(Scalpel)
 
 " vim-markdown
+let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
 
 " Wrap text on markdown and latex files
@@ -317,15 +337,94 @@ augroup qf
 augroup END
 
 " Highlight yanked text
-augroup LuaHighlight
-  autocmd!
-  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
-augroup END
+if exists ('##TextYankPost')
+  augroup LuaHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+  augroup END
+endif
 
-" Do not show colorcolumn for certain file types
-autocmd FileType html setlocal colorcolumn=
-autocmd FileType template setlocal colorcolumn=
+" LSP
+" pyls_ms
+" jsonls
+" htm
+" vuels
+" bashls
+" cssls
+" jedi_language_server
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
 
 lua << EOF
-    require'nvim_lsp'.gopls.setup{}
+  local nvim_lsp = require('nvim_lsp')
+
+  local on_attach = function(_, bufnr)
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    require'diagnostic'.on_attach()
+    require'completion'.on_attach()
+
+    -- Mappings.
+    local opts = { noremap=true, silent=true }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
+  end
+
+  local servers = {'gopls', 'html', 'cssls', 'tsserver', 'jedi_language_server'}
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+    }
+  end
 EOF
+
+function! Hashbang(portable, permission, RemExt)
+let shells = {
+        \    'awk': "awk",
+        \     'sh': "bash",
+        \     'hs': "runhaskell",
+        \     'jl': "julia",
+        \    'lua': "lua",
+        \    'mak': "make",
+        \      'm': "octave",
+        \     'pl': "perl",
+        \    'php': "php",
+        \     'py': "python3",
+        \      'r': "Rscript",
+        \     'rb': "ruby",
+        \  'scala': "scala",
+        \    'tcl': "tclsh",
+        \     'tk': "wish"
+        \    }
+
+let extension = expand("%:e")
+
+if has_key(shells,extension)
+  let fileshell = shells[extension]
+  if a:portable
+    let line =  "#!/usr/bin/env " . fileshell
+  else
+    let line = "#!" . system("which " . fileshell)
+  endif
+  0put = line
+  if a:permission
+    :autocmd BufWritePost * :autocmd VimLeave * :!chmod u+x %
+  endif
+  if a:RemExt
+    :autocmd BufWritePost * :autocmd VimLeave * :!mv % "%:p:r"
+  endif
+  call cursor(2, 0)
+endif
+
+endfunction
+
+:autocmd BufNewFile *.* :call Hashbang(1,1,0)
