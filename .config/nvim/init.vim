@@ -29,6 +29,9 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'Valloric/MatchTagAlways'              " Highlight matching HTML tag
     Plug 'plasticboy/vim-markdown'              " Markdown improving
     Plug 'AndrewRadev/tagalong.vim'
+    Plug 'Shougo/deoppet.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'kana/vim-textobj-indent'
+    Plug 'kana/vim-textobj-user'
     Plug 'prettier/vim-prettier', {
       \ 'do': 'yarn install',
       \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
@@ -39,17 +42,19 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'christoomey/vim-tmux-navigator'       " Tmux splits integration
     Plug 'drzel/vim-split-line'                 " Split line at cursor
     Plug 'wincent/scalpel'                      " Replace word under cursor
-    " Plug 'machakann/vim-sandwich'             " Add surround object for editing
+    Plug 'tpope/vim-surround'                   " Add surround object for editing
     Plug 'machakann/vim-swap'                   " Swap delimited items
     Plug 'machakann/vim-textobj-delimited'      " More delimiting object
     Plug 'romainl/vim-cool'                     " Disable search highlighting on mode change
     Plug 'tpope/vim-repeat'                     " Repeat plugin mappings with .
-    Plug 'tpope/vim-obsession'
-    Plug 'chrisbra/Colorizer'                   " Show colors
+    Plug 'norcalli/nvim-colorizer.lua'          " Show colors
     Plug 'justinmk/vim-sneak'                   " Adds a motion
     Plug 'tpope/vim-eunuch'                     " Adds UNIX commands
     Plug 'machakann/vim-highlightedundo'        " Highlights undo region
+    Plug 'stefandtw/quickfix-reflector.vim'
     Plug 'wellle/targets.vim'                   " Add more targets for commands
+    Plug 'vimwiki/vimwiki'
+    Plug 'michal-h21/vimwiki-sync'
 
     " Lightline
     Plug 'itchyny/lightline.vim'                " Status line
@@ -57,7 +62,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 
     " Colorscheme
     Plug 'bluz71/vim-moonfly-colors'
-    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 call plug#end()
 
 syntax on
@@ -96,51 +100,43 @@ set undolevels=1000                " Number of undos allowed
 set undoreload=10000
 set backupdir=~/.config/nvim/tmp
 set directory=~/.config/nvim/tmp
-set autoread                        " Reload files if modified externally
+set autoread                       " Reload files if modified externally
 set shell=zsh
-set number                          " Show lines number
-set relativenumber                  " Show relative line numbers
-set fillchars+=vert:\│              " Make vertical split separator full line
+set number                         " Show lines number
+set relativenumber                 " Show relative line numbers
+set fillchars+=vert:\│             " Make vertical split separator full line
 set encoding=utf-8
 set foldmethod=indent
 set foldclose=all
 set foldlevelstart=20
-set splitbelow                      " More natural split
-set splitright                      " More natural split
+set splitbelow                     " More natural split
+set splitright                     " More natural split
 set complete=.,b,u,]
-set cursorline                      " Highlight current line
-set hidden                          " Allow buffer swap when modified
+set cursorline                     " Highlight current line
+set hidden                         " Allow buffer swap when modified
 set path+=**
-set nostartofline                   " Do not jump to first character with j/k
-set showmatch                       " Show matching brackets
-set confirm                         " Show confirmation instead of errors
-set scrolloff=5                     " Keep 5 lines above and below the cursor
-set sidescrolloff=5                 " Keep 5 columns left and right of the cursor
-set incsearch                       " Hightlight matches as you tipe
-set inccommand=nosplit              " Substitute words as you type
+set nostartofline                  " Do not jump to first character with j/k
+set showmatch                      " Show matching brackets
+set confirm                        " Show confirmation instead of errors
+set scrolloff=5                    " Keep 5 lines above and below the cursor
+set sidescrolloff=5                " Keep 5 columns left and right of the cursor
+set incsearch                      " Hightlight matches as you tipe
+set inccommand=split               " Substitute words as you type
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set listchars=tab:»·,trail:·,nbsp:~,eol:¬ " Visualize tab, spaces and newlines
-set backspace=indent,eol,start      " Make backspace behave properly "
-set mouse=i                         " Allow mouse usage to copy over ssh
-set lazyredraw                      " Buffer screen updates
+set backspace=indent,eol,start     " Make backspace behave properly "
+set mouse=i                        " Allow mouse usage to copy over ssh
+set lazyredraw                     " Buffer screen updates
 set timeout
-set timeoutlen=500                  " Time to wait for key mapping
-set ttimeoutlen=50                  " Time to wait for multikey mappings
-" set cpt-=t
-" set cpt-=i
+set timeoutlen=500                 " Time to wait for key mapping
+set ttimeoutlen=50                 " Time to wait for multikey mappings
 set linebreak
-set breakindent                     " Visually indent wrapped lines
-set breakindentopt=shift:2          " Shift option for breakindent
+set breakindent                    " Visually indent wrapped lines
+set breakindentopt=shift:2         " Shift option for breakindent
 set showbreak=↳
 set spelllang=it,en_us
 set updatetime=100
-
-let &colorcolumn=join(range(81,254),",") " Change background for columns > 80
-
-" Turn on wildmenu for file name tab completion
-" set wildmode=longest:full,full
-" set wildmenu
-
+set colorcolumn=81 " Change background for columns > 80
 set cmdheight=1
 
 :command! WQ wq
@@ -179,6 +175,7 @@ nmap <Leader><Leader> <C-^>
 
 " Reload vim configuration
 nnoremap <silent> <Leader>rv :source $MYVIMRC<CR>
+nnoremap <silent> <Leader>pi :source $MYVIMRC<CR> :PlugInstall<CR>
 
 " Show invisible characters
 nnoremap <silent> <Leader>i :set list!<CR>
@@ -196,6 +193,17 @@ vmap > >gv
 map <silent> <Leader>o :only<CR>
 
 " Plugins settings
+
+" vimwiki
+let g:vimwiki_global_ext = 0
+let g:vimwiki_list = [{'path': '~/Documents/Notes', 'template_path': '~/Documents/Templates/',
+    \ 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md',
+    \ 'path_html': '~/Documents/Wiki/', 'custom_wiki2html': 'vimwiki_markdown',
+    \ 'html_filename_parameterization': 1,
+    \ 'template_ext': '.tpl'}]
+
+" nvim-colorizer.lua
+lua require'colorizer'.setup()
 
 " highlightedundo
 nmap u     <Plug>(highlightedundo-undo)
@@ -251,13 +259,10 @@ let g:go_highlight_types = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_variable_declarations = 1
 let g:go_auto_type_info = 1
-" let g:go_auto_sameids = 1
 let g:go_fmt_command = "goimports"
 let g:go_addtags_transform = "snakecase"
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
-au FileType go nmap <Leader>gt :GoDeclsDir<CR>
-au FileType go nmap <Leader>gf <Plug>(go-def)
 
 " vim-cool
 let g:CoolTotalMatches = 1
@@ -268,6 +273,12 @@ let g:lightline = {
 \   'component_function': {
 \       'gitbranch': 'fugitive#head'
 \   },
+\   'component_expand': {
+\       'buffers': 'lightline#bufferline#buffers'
+\   },
+\   'component_type': {
+\       'buffers': 'tabsel'
+\   },
 \   'active': {
 \       'left': [ [ 'mode', 'paste', 'buffers' ],
 \               [ 'readonly', 'modified' ] ],
@@ -275,22 +286,29 @@ let g:lightline = {
 \   },
 \ }
 
-let g:lightline.component_expand = {
-      \ 'buffers': 'lightline#bufferline#buffers',
-      \ }
-
-let g:lightline.component_type = {
-      \     'buffers': 'tabsel',
-      \ }
-
-" For conceal markers.
+" Concealing
 if has('conceal')
-  set conceallevel=2 concealcursor=niv
+    set concealcursor=n
 endif
 
+function! ToggleConcealLevel()
+    if &conceallevel == 0
+        setlocal conceallevel=2
+    else
+        setlocal conceallevel=0
+    endif
+endfunction
+
+nnoremap <silent> <C-c><C-y> :call ToggleConcealLevel()<CR>
+au VimEnter * syntax keyword Statement lambda conceal cchar=λ
+au VimEnter * hi! link Conceal Statement
+au VimEnter * set conceallevel=2
+
 " Fuzzy file finder
-nnoremap <C-f> :FZF<CR>
-nnoremap <C-l> :Lines<CR>
+nnoremap <C-f> :Files<CR>
+nnoremap <C-g> :GFiles<CR>
+nnoremap <C-o> :Buffers<CR>
+" nnoremap <C-l> :Lines<CR>
 
 " ack
 nnoremap <Leader>a :Ack!<Space>
@@ -308,55 +326,31 @@ nmap <Leader>s <Plug>(Scalpel)
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
 
-" Wrap text on markdown and latex files
-autocmd BufRead,BufNewFile *.md,*.tex setlocal formatoptions+=t
-
-" Remember cursor position
-augroup vimrc-remember-cursor-position
-    autocmd!
-    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-augroup END
-
-" Disable continuation of comments
-autocmd FileType * setlocal formatoptions-=cro
-
-" Close vim when the only opened buffer is quickfix
-autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-    \ q :cclose<cr>:lclose<cr>
-autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
-    \ bd|
-    \ q | endif
-
-" Resize splits proportionally to window resize
-autocmd VimResized * :wincmd =
-
-" Exclude quickfix from bnext and bprev
-augroup qf
-    autocmd!
-    autocmd FileType qf set nobuflisted
-augroup END
-
-" Highlight yanked text
-if exists ('##TextYankPost')
-  augroup LuaHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
-  augroup END
-endif
-
+" Various settings and autocommands
 " LSP
-" pyls_ms
-" jsonls
-" htm
-" vuels
-" bashls
-" cssls
-" jedi_language_server
+if has('nvim-0.5')
+  inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  set completeopt=menuone,noinsert,noselect
+  set shortmess+=c
 
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-set completeopt=menuone,noinsert,noselect
-set shortmess+=c
+  let g:diagnostic_enable_virtual_text = 1
+  let g:diagnostic_virtual_text_prefix = ' '
+  let g:diagnostic_enable_underline = 0
+  let g:diagnostic_insert_delay = 1
+  nmap dn :NextDiagnostic<CR>
+  nmap dp :PrevDiagnostic<CR>
+
+  " TODO change gi and C-k
+  " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+  " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
+  " pyls_ms
+  " jsonls
+  " htm
+  " vuels
+  " bashls
+  " cssls
+  " jedi_language_server
 
 lua << EOF
   local nvim_lsp = require('nvim_lsp')
@@ -386,8 +380,40 @@ lua << EOF
     }
   end
 EOF
+endif
 
-function! Hashbang(portable, permission, RemExt)
+" Wrap text on markdown and latex files
+autocmd BufRead,BufNewFile *.md,*.tex setlocal formatoptions+=t
+
+" Remember cursor position
+augroup vimrc-remember-cursor-position
+    autocmd!
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | 
+        \ exe "normal! g`\"" | endif
+augroup END
+
+" Disable continuation of comments
+autocmd FileType * setlocal formatoptions-=cro
+
+" Resize splits proportionally to window resize
+autocmd VimResized * :wincmd =
+
+" Exclude quickfix from bnext and bprev
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END
+
+" Highlight yanked text
+if exists('##TextYankPost')
+    augroup LuaHighlight
+        autocmd!
+        autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+    augroup END
+endif
+
+" Automatic shabang in new files
+function! ShaBang(portable, permission, RemExt)
 let shells = {
         \    'awk': "awk",
         \     'sh': "bash",
@@ -427,4 +453,12 @@ endif
 
 endfunction
 
-:autocmd BufNewFile *.* :call Hashbang(1,1,0)
+autocmd BufNewFile *.* :call ShaBang(1,1,0)
+
+" Abbreviations
+autocmd FileType python iabbrev <buffer> im import
+autocmd FileType python iabbrev <buffer> rt return
+autocmd FileType python iabbrev <buffer> yl yield
+autocmd FileType python iabbrev <buffer> fa false
+autocmd FileType python iabbrev <buffer> tr true
+autocmd FileType python iabbrev <buffer> br break
