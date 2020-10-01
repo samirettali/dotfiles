@@ -1,0 +1,18 @@
+[user]
+  email = ettali.samir@gmail.com
+  name = "Samir Ettali"
+
+[core]
+  excludesfile = .gitignore_global
+
+[mergetool "nvim"]
+  cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
+
+[merge]
+  tool = nvim
+
+[mergetool]
+  prompt = false
+
+[pull]
+  rebase = false
