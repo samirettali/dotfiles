@@ -23,9 +23,6 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'fatih/vim-go'                         " Golang plugins
     Plug 'tpope/vim-commentary'                 " Commenting plugin
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
-    Plug 'neovim/nvim-lspconfig'                " Language server protocol
-    Plug 'nvim-lua/completion-nvim'             " Auto completion using LSP
-    Plug 'nvim-lua/diagnostic-nvim'
     Plug 'Valloric/MatchTagAlways'              " Highlight matching HTML tag
     Plug 'plasticboy/vim-markdown'              " Markdown improving
     Plug 'AndrewRadev/tagalong.vim'
@@ -35,6 +32,12 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'prettier/vim-prettier', {
       \ 'do': 'yarn install',
       \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+
+    if has('nvim-0.5')
+        Plug 'neovim/nvim-lspconfig'                " Language server protocol
+        Plug 'nvim-lua/completion-nvim'             " Auto completion using LSP
+        Plug 'nvim-lua/diagnostic-nvim'
+    endif
 
     " Improving vim's functionalities
     Plug 'chrisbra/Recover.vim'                 " Show diff of a recovered or swap file
