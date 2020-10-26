@@ -20,10 +20,16 @@ if [ $(command -v ruby) ]; then
     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
 fi
 
+if [ $(command -v python3) ]; then
+    export PATH=$PATH:$(python3 -c "import sys; print(':'.join(p for p in sys.path if '$HOME' in p))")
+fi
+
+export BC_ENV_ARGS="${HOME}/.config/bc"
+
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-plugins=(git git-prompt colored-man-pages colorize fzf zsh-autosuggestions \
-    zsh-syntax-highlighting)
+plugins=(git git-prompt colored-man-pages colorize fzf pass \
+    zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
