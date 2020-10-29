@@ -7,9 +7,13 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
     " External tools integrations
-    Plug 'mileszs/ack.vim'                      " Ack integration
+    Plug 'jremmen/vim-ripgrep'                  " Ripgrep integration
     Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
     Plug 'junegunn/fzf.vim'                     " Fzf plugin
+    Plug 'prettier/vim-prettier', {
+      \ 'do': 'yarn install',
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
+      \ }
 
     " Git
     Plug 'mhinz/vim-signify'                    " Show git diff in the gutter
@@ -19,19 +23,19 @@ call plug#begin('~/.local/share/nvim/plugged')
     " Coding
     Plug 'jiangmiao/auto-pairs'                 " Auto completion for quotes, brackets, etc.
     Plug 'sheerun/vim-polyglot'                 " Better syntax highlighting
-    Plug 'mattn/emmet-vim'                      " Emmet for vim
     Plug 'fatih/vim-go'                         " Golang plugins
     Plug 'tpope/vim-commentary'                 " Commenting plugin
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
     Plug 'Valloric/MatchTagAlways'              " Highlight matching HTML tag
     Plug 'plasticboy/vim-markdown'              " Markdown improving
-    Plug 'AndrewRadev/tagalong.vim'
-    Plug 'Shougo/deoppet.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'AndrewRadev/tagalong.vim'             " Automatically rename matching HTML tag
     Plug 'kana/vim-textobj-indent'
     Plug 'kana/vim-textobj-user'
-    Plug 'prettier/vim-prettier', {
-      \ 'do': 'yarn install',
-      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+    Plug 'pantharshit00/vim-prisma'             " Prisma syntax
+
+    " Snippets
+    Plug 'Shougo/neosnippet.vim'
+    Plug 'Shougo/neosnippet-snippets'
 
     if has('nvim-0.5')
         Plug 'neovim/nvim-lspconfig'                " Language server protocol
@@ -56,6 +60,10 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'machakann/vim-highlightedundo'        " Highlights undo region
     Plug 'stefandtw/quickfix-reflector.vim'
     Plug 'wellle/targets.vim'                   " Add more targets for commands
+    Plug 'rbgrouleff/bclose.vim'
+    Plug 'francoiscabrol/ranger.vim'
+
+    " Vimwiki
     Plug 'vimwiki/vimwiki'
     Plug 'michal-h21/vimwiki-sync'
 
@@ -164,8 +172,8 @@ nnoremap \| :vsplit
 nnoremap _ :split 
 
 " Buffer switching
-nnoremap <silent> <C-n> :bnext<CR>
-nnoremap <silent> <C-p> :bprev<CR>
+nnoremap <silent> <Tab> :bnext<CR>
+nnoremap <silent> <S-Tab> :bprev<CR>
 
 " Leader mappings
 let mapleader = ","
@@ -221,10 +229,10 @@ map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
-" Prettier
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_require_pragma = 0
-let g:prettier#quickfix_enabled = 0
+" " Prettier
+" let g:prettier#autoformat = 1
+" let g:prettier#autoformat_require_pragma = 0
+" let g:prettier#quickfix_enabled = 0
 
 " MatchTagAlways
 let g:mta_use_matchparen_group = 1
@@ -289,32 +297,11 @@ let g:lightline = {
 \   },
 \ }
 
-" Concealing
-if has('conceal')
-    set concealcursor=n
-endif
-
-function! ToggleConcealLevel()
-    if &conceallevel == 0
-        setlocal conceallevel=2
-    else
-        setlocal conceallevel=0
-    endif
-endfunction
-
-nnoremap <silent> <C-c><C-y> :call ToggleConcealLevel()<CR>
-au VimEnter * syntax keyword Statement lambda conceal cchar=λ
-au VimEnter * hi! link Conceal Statement
-au VimEnter * set conceallevel=2
-
 " Fuzzy file finder
 nnoremap <C-f> :Files<CR>
 nnoremap <C-g> :GFiles<CR>
 nnoremap <C-o> :Buffers<CR>
 " nnoremap <C-l> :Lines<CR>
-
-" ack
-nnoremap <Leader>a :Ack!<Space>
 
 " Tagbar
 map <silent> <C-t> :TagbarToggle<CR>
@@ -328,6 +315,7 @@ nmap <Leader>s <Plug>(Scalpel)
 " vim-markdown
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
+
 
 " Various settings and autocommands
 " LSP
@@ -376,7 +364,7 @@ lua << EOF
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   end
 
-  local servers = {'gopls', 'html', 'cssls', 'tsserver', 'jedi_language_server'}
+  local servers = {'gopls', 'html', 'cssls', 'tsserver', 'jedi_language_server', 'jdtls'}
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = on_attach,
@@ -432,7 +420,7 @@ let shells = {
         \     'rb': "ruby",
         \  'scala': "scala",
         \    'tcl': "tclsh",
-        \     'tk': "wish"
+        \     'tk': "wish",
         \    }
 
 let extension = expand("%:e")
@@ -465,3 +453,39 @@ autocmd FileType python iabbrev <buffer> yl yield
 autocmd FileType python iabbrev <buffer> fa false
 autocmd FileType python iabbrev <buffer> tr true
 autocmd FileType python iabbrev <buffer> br break
+
+let g:completion_enable_snippet = 'Neosnippet'
+let g:neosnippet#snippets_directory='~/.config/nvim/snippets'
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+
+imap <C-e>     <Plug>(neosnippet_expand_or_jump)
+smap <C-e>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-e>     <Plug>(neosnippet_expand_target)
+
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+imap <C-s> <Esc>:w<CR>a
+map <C-s> :w<CR>
+
+autocmd FileType markdown setlocal spell
+autocmd FileType vimwiki setlocal spell
+
+noremap <silent> <leader>om :call OpenMarkdownPreview()<cr>
+
+function! OpenMarkdownPreview() abort
+  if exists('s:markdown_job_id') && s:markdown_job_id > 0
+    call jobstop(s:markdown_job_id)
+    unlet s:markdown_job_id
+  endif
+  let available_port = system(
+    \ "lsof -s tcp:listen -i :40500-40800 | awk -F ' *|:' '{ print $10 }' | sort -n | tail -n1"
+    \ ) + 1
+  if available_port == 1 | let available_port = 40500 | endif
+  let s:markdown_job_id = jobstart('grip ' . shellescape(expand('%:p')) . ' :' . available_port)
+  if s:markdown_job_id <= 0 | return | endif
+  call system('open http://localhost:' . available_port)
+endfunction
+map <Leader>j i/**<CR><BS> * @author Samir Ettali<CR><BS> **/<CR><Esc>
+
+" nnoremap <buffer> <CR> :exec '!pipenv run' shellescape(@%, 1)<cr>
