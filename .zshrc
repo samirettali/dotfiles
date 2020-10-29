@@ -38,7 +38,7 @@ fi
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
 
-if [ $TERM == "xterm-256color" ]; then  
+if [[ "$TERM" == "xterm-256color" ]]; then  
   # Automatic escaping of pasted urls, this has to be here in order to not
   # interfere with zsh-autosuggestions
   autoload -U url-quote-magic bracketed-paste-magic
