@@ -162,6 +162,14 @@ nmap Y y$
 vmap <C-c> "+y
 vmap <C-x> "+d
 
+" Keep text selected after indentation
+vmap < <gv
+vmap > >gv
+
+" Apply macros with Q
+nnoremap Q @q
+vnoremap Q :norm @q<cr>
+
 " Select text inserted during last insert mode usage
 nnoremap gV `[v`]
 
@@ -181,6 +189,9 @@ let mapleader = ","
 " Delete trailing spaces
 nmap <Leader>t :%s/\s\+$//e<CR>
 
+" Duplicate paragraph
+noremap <Leader>d yap<S-}>p
+
 " Go back to last selected file
 nmap <Leader><Leader> <C-^>
 
@@ -196,10 +207,6 @@ nnoremap <Space> za
 
 " Toggle colorcolumn
 nnoremap <Leader>cc :let &cc = &cc == '' ? 81 : ''<CR>
-
-" Keep text selected after indentation
-vmap < <gv
-vmap > >gv
 
 map <silent> <Leader>o :only<CR>
 
