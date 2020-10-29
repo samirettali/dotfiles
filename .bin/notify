@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+set -euf
+
+if [ "$(uname)" != "Darwin" ]; then
+  echo "Unsupported OS. This should be ran on Mac OS."
+  exit 1
+fi
+
+message=${1:-""}
+shift
+title=${1:-""}
+notification="display notification \"${message}\""
+[ "${title}" != "" ] && notification="${notification} with title \"${title}\""
+
+osascript -e "${notification}"
