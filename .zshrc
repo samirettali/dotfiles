@@ -1,41 +1,13 @@
-ZSH="$HOME/.oh-my-zsh"
+autoload -Uz compinit && compinit
 
-# Auto update oh-my-zsh
-UPDATE_ZSH_DAYS=1
+source ~/.zsh_aliases
+source ~/.zsh_functions
+source ~/.zsh_env
 
-# Reduce time to enter normal mode
-KEYTIMEOUT=1
-
-ZSH_THEME="samir"
-
-# Text editor
-export EDITOR=nvim
-
-# Colorize color scheme
-export ZSH_COLORIZE_STYLE="native"
-
-# PATH
-export PATH=$PYENV_ROOT/bin:$PATH:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.axiom/interact:/usr/lib/go-1.14/bin
-if [ $(command -v ruby) ]; then
-    export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
-fi
-
-if [ $(command -v python3) ]; then
-    export PATH=$PATH:$(python3 -c "import sys; print(':'.join(p for p in sys.path if '$HOME' in p))")
-fi
-
-export BC_ENV_ARGS="${HOME}/.config/bc"
-
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-plugins=(git git-prompt colored-man-pages colorize fzf pass \
-    zsh-autosuggestions zsh-syntax-highlighting)
-
-source $ZSH/oh-my-zsh.sh
-
-# # Add a package to completion right after install
+# Add a package to completion right after install
 zstyle ':completion:*' rehash true
-# # Mismatch completion
+
+# Mismatch completion
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
@@ -43,17 +15,13 @@ zstyle ':completion:*:approximate:*' max-errors 1 numeric
 # Don't autocomplete with files already present in the command
 zstyle ':completion::complete:(rm|vi|vim|diff|mv):*' ignore-line true
 
-source ~/.zsh_aliases
-source ~/.zsh_functions
-
 bindkey -v
-
-bindkey '^ ' autosuggest-accept
-bindkey '^R' fzf-history-widget
-bindkey '^F' fzf-file-widget
 
 # Options
 unsetopt HIST_IGNORE_SPACE
+
+# Reduce time to enter normal mode
+KEYTIMEOUT=1
 
 # Switch between foreground and background
 zle -N fg-bg
@@ -64,23 +32,40 @@ if [[ -n "$TMUX" ]]; then
     bindkey "^[[1~" beginning-of-line
     bindkey "^[[4~" end-of-line
     bindkey "^[[3~" delete-char
-else
-    bindkey "${terminfo[khome]}" beginning-of-line
-    bindkey "${terminfo[kend]}" end-of-line
-    bindkey "${terminfo[kdch1]}" delete-char
 fi
 
-# Paste auto escape
-pasteinit() {
-    OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-    zle -N self-insert url-quote-magic
-}
+# Autosuggestions plugin
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^ ' autosuggest-accept
 
-pastefinish() {
-    zle -N self-insert $OLD_SELF_INSERT
-}
+if [ $TERM == "xterm-256color" ]; then  
+  # Automatic escaping of pasted urls, this has to be here in order to not
+  # interfere with zsh-autosuggestions
+  autoload -U url-quote-magic bracketed-paste-magic
+  zle -N self-insert url-quote-magic
+  zle -N bracketed-paste bracketed-paste-magic
 
-zstyle :bracketed-paste-magic paste-init pasteinit
-zstyle :bracketed-paste-magic paste-finish pastefinish
+  pasteinit() {
+      OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+      zle -N self-insert url-quote-magic
+  }
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+  pastefinish() {
+      zle -N self-insert $OLD_SELF_INSERT
+  }
+
+  zstyle :bracketed-paste-magic paste-init pasteinit
+  zstyle :bracketed-paste-magic paste-finish pastefinish
+
+  ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
+fi
+
+# Highlight plugin
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# FZF plugin
+source /usr/local/opt/fzf/shell/key-bindings.zsh
+bindkey '^R' fzf-history-widget
+bindkey '^F' fzf-file-widget
+
+PS1="%F{blue}%B%1d%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B%F{red}$%f%b "

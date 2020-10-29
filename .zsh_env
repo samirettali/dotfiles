@@ -1,0 +1,18 @@
+export PATH=$PYENV_ROOT/bin:$PATH:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:/usr/lib/go-1.14/bin
+export DIRSTACKSIZE=20
+
+export LSCOLORS=Gxfxcxdxbxegedabagacad
+export EDITOR=nvim
+
+if [ $(command -v ruby) ]; then
+    export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
+fi
+
+if [ $(command -v python3) ]; then
+    export PATH=$PATH:$(python3 -c "import sys; print(':'.join(p for p in sys.path if '$HOME' in p))")
+fi
+
+export BC_ENV_ARGS="${HOME}/.config/bc"
+
+# Reduce time to enter normal mode
+KEYTIMEOUT=1
