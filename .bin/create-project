@@ -73,4 +73,5 @@ fi
 # Add gitignore and push to remote
 echo "Pushing to remote..."
 git push -u origin master > /dev/null
-echo "Done!"
+echo "Done! Have fun!"
+cd "${PROJECT_NAME}"
