@@ -1,0 +1,30 @@
+matches:
+  - trigger: ":gm"
+    replace: "ettali.samir@gmail.com"
+
+  - trigger: ":pm"
+    replace: "samir.ettali@protonmail.com"
+
+  - trigger: ":se"
+    replace: "samirettali"
+
+  - trigger: ":si"
+    replace: "Samir Ettali"
+
+  # Dates
+  - trigger: ":date"
+    replace: "{{mydate}}"
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%d/%m/%Y"
+
+  # Shell commands
+  - trigger: ":shell"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "echo Hello from your shell"
