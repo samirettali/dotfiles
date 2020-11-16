@@ -34,6 +34,9 @@ if [[ -n "$TMUX" ]]; then
     bindkey "^[[3~" delete-char
 fi
 
+# Disable r command
+disable r
+
 # Autosuggestions plugin
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
@@ -64,8 +67,10 @@ fi
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # FZF plugin
-source /usr/local/opt/fzf/shell/key-bindings.zsh
+[ $(uname) = 'Darwin' ] && source /usr/local/opt/fzf/shell/key-bindings.zsh || source /usr/share/fzf/key-bindings.zsh
 bindkey '^R' fzf-history-widget
 bindkey '^F' fzf-file-widget
+
+source ~/.zsh/ssh-find-agent/ssh-find-agent.sh
 
 PS1="%F{blue}%B%1d%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B%F{red}$%f%b "
