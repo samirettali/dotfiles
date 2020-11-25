@@ -2,6 +2,12 @@
 if [ $(uname) = 'Darwin' ]; then
     alias ls='ls -GF'
     alias cl='fc -e -|pbcopy'
+    alias bs='brew search'
+    alias bi='brew install'
+    alias bu='brew uninstall'
+    alias bcs='brew cask search'
+    alias bci='brew cask install'
+    alias bcu='brew cask uninstall'
 else
     alias ls='ls --color -h --group-directories-first'
 fi
