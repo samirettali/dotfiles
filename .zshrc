@@ -71,6 +71,6 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 bindkey '^R' fzf-history-widget
 bindkey '^F' fzf-file-widget
 
-source ~/.zsh/ssh-find-agent/ssh-find-agent.sh
+[ -f ~/.zsh/ssh-find-agent ] && source ~/.zsh/ssh-find-agent/ssh-find-agent.sh
 
 PS1="%F{blue}${SSH_CONNECTION:+%B%n@%m%B}%f%B${SSH_CONNECTION:+:}%b%F{blue}%B%1d%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B%F{red}$%f%b "
