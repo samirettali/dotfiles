@@ -148,6 +148,7 @@ upd() {
     brew update
     brew upgrade
     brew upgrade --cask
+    nvim -c ':PlugUpdate | :PlugUpgrade | :UpdateRemotePlugins | :GoUpdateBinaries'
   fi
   cd ~/.zsh
   find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull \;
