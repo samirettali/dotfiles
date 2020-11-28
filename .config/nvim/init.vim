@@ -7,13 +7,13 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
     " External tools integrations
-    Plug 'jremmen/vim-ripgrep'                  " Ripgrep integration
-    Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
-    Plug 'junegunn/fzf.vim'                     " Fzf plugin
-    Plug 'prettier/vim-prettier', {
-      \ 'do': 'yarn install',
-      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
-      \ }
+    " Plug 'jremmen/vim-ripgrep'                  " Ripgrep integration
+    " Plug '/usr/local/opt/fzf'                   " Local fzf on Mac OS
+    " Plug 'junegunn/fzf.vim'                     " Fzf plugin
+    " Plug 'prettier/vim-prettier', {
+    "   \ 'do': 'yarn install',
+    "   \ 'for': ['javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
+    "   \ }
 
     " Git
     Plug 'mhinz/vim-signify'                    " Show git diff in the gutter
@@ -26,10 +26,12 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'fatih/vim-go'                         " Golang plugins
     Plug 'tpope/vim-commentary'                 " Commenting plugin
     Plug 'majutsushi/tagbar'                    " Show a panel to browse tags
-    Plug 'Valloric/MatchTagAlways'              " Highlight matching HTML tag
+    " Plug 'Valloric/MatchTagAlways'              " Highlight matching HTML tag
     Plug 'plasticboy/vim-markdown'              " Markdown improving
     Plug 'AndrewRadev/tagalong.vim'             " Automatically rename matching HTML tag
     Plug 'kana/vim-textobj-indent'
+
+    " Syntax highlighting
     Plug 'kana/vim-textobj-user'
     Plug 'pantharshit00/vim-prisma'             " Prisma syntax
 
@@ -38,9 +40,13 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'Shougo/neosnippet-snippets'
 
     if has('nvim-0.5')
-        Plug 'neovim/nvim-lspconfig'                " Language server protocol
         Plug 'nvim-lua/completion-nvim'             " Auto completion using LSP
-        Plug 'nvim-lua/diagnostic-nvim'
+        Plug 'neovim/nvim-lspconfig'
+        Plug 'RishabhRD/popfix'
+        Plug 'RishabhRD/nvim-lsputils'
+        Plug 'nvim-lua/popup.nvim'
+        Plug 'nvim-lua/plenary.nvim'
+        Plug 'nvim-telescope/telescope.nvim'
     endif
 
     " Improving vim's functionalities
@@ -62,17 +68,38 @@ call plug#begin('~/.local/share/nvim/plugged')
     Plug 'wellle/targets.vim'                   " Add more targets for commands
     Plug 'rbgrouleff/bclose.vim'
     Plug 'francoiscabrol/ranger.vim'
+    Plug 'tommcdo/vim-exchange'                 " Exchange two objects
+    Plug 'tommcdo/vim-nowchangethat'            " Reapply previous change to a differen object
+
+    " UI components
+    Plug 'romgrk/barbar.nvim'                   " Buffers bar
+    Plug 'itchyny/lightline.vim'                " Status line
+
+    " NERDTree
+    Plug 'preservim/nerdtree'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'Xuyuanp/nerdtree-git-plugin'
 
     " Vimwiki
     Plug 'vimwiki/vimwiki'
     Plug 'michal-h21/vimwiki-sync'
 
-    " Lightline
-    Plug 'itchyny/lightline.vim'                " Status line
-    Plug 'mengelbrecht/lightline-bufferline'    " Show opened buffers in lightline
-
     " Colorscheme
     Plug 'bluz71/vim-moonfly-colors'
+    Plug 'ajh17/Spacegray.vim'
+    Plug 'nanotech/jellybeans.vim'
+    Plug 'dneto/spacegray-lightline'
+    Plug 'joshdick/onedark.vim'
+    Plug 'KeitaNakamura/neodark.vim'
+    Plug 'mhartington/oceanic-next'
+    Plug 'w0ng/vim-hybrid'
+    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+    Plug 'ghifarit53/tokyonight-vim'
+
+
+    Plug 'HerringtonDarkholme/yats.vim/'
+    Plug 'othree/html5.vim'
+    Plug 'othree/yajs.vim'
 call plug#end()
 
 syntax on
@@ -85,7 +112,8 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 set background=dark
-colorscheme moonfly
+let g:tokyonight_style = 'night' " available: night, storm
+colorscheme tokyonight
 
 set expandtab                      " Use spaces for tabulation
 set tabstop=2                      " Number of spaces representing a TAB
@@ -136,7 +164,7 @@ set inccommand=split               " Substitute words as you type
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set listchars=tab:»·,trail:·,nbsp:~,eol:¬ " Visualize tab, spaces and newlines
 set backspace=indent,eol,start     " Make backspace behave properly "
-set mouse=i                        " Allow mouse usage to copy over ssh
+" set mouse=n                        " Allow mouse usage to copy over ssh
 set lazyredraw                     " Buffer screen updates
 set timeout
 set timeoutlen=500                 " Time to wait for key mapping
@@ -149,6 +177,7 @@ set spelllang=it,en_us
 set updatetime=100
 set colorcolumn=81 " Change background for columns > 80
 set cmdheight=1
+let g:vimsyn_embed= 'l'
 
 :command! WQ wq
 :command! Wq wq
@@ -179,10 +208,6 @@ nnoremap - :split<CR>
 nnoremap \| :vsplit 
 nnoremap _ :split 
 
-" Buffer switching
-nnoremap <silent> <Tab> :bnext<CR>
-nnoremap <silent> <S-Tab> :bprev<CR>
-
 " Leader mappings
 let mapleader = ","
 
@@ -195,15 +220,14 @@ noremap <Leader>d yap<S-}>p
 " Go back to last selected file
 nmap <Leader><Leader> <C-^>
 
-" Reload vim configuration
-nnoremap <silent> <Leader>rv :source $MYVIMRC<CR>
+" Reload vim configuration and install plugins
 nnoremap <silent> <Leader>pi :source $MYVIMRC<CR> :PlugInstall<CR>
 
 " Show invisible characters
 nnoremap <silent> <Leader>i :set list!<CR>
 
 " Toggle fold
-nnoremap <Space> za
+" nnoremap <Space> za
 
 " Toggle colorcolumn
 nnoremap <Leader>cc :let &cc = &cc == '' ? 81 : ''<CR>
@@ -211,6 +235,40 @@ nnoremap <Leader>cc :let &cc = &cc == '' ? 81 : ''<CR>
 map <silent> <Leader>o :only<CR>
 
 " Plugins settings
+
+" Neosnippet
+let g:neosnippet#snippets_directory='~/.config/nvim/snippets'
+imap <C-e>     <Plug>(neosnippet_expand_or_jump)
+smap <C-e>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-e>     <Plug>(neosnippet_expand_target)
+
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" NERDTree
+" Open automatically when opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
+" Close if NERDTree is the only buffer
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Options and mappings
+let NERDTreeMinimalUI=1
+map <C-o> :NERDTreeFocus<CR>
+
+" barbar.nvim
+let bufferline = {}
+let bufferline.icons = v:false
+let bufferline.closable = v:false
+let bufferline.maximum_padding = 0
+nnoremap <silent> <C-s> :BufferPick<CR>
+nnoremap <silent> <C-n> :BufferNext<CR>
+nnoremap <silent> <C-p> :BufferPrevious<CR>
+nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+nnoremap <silent> <M-Right> :BufferMoveNext<CR>
+nnoremap <silent> <M-Left> :BufferMovePrevious<CR>
 
 " vimwiki
 let g:vimwiki_global_ext = 0
@@ -237,9 +295,9 @@ map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
 " " Prettier
-" let g:prettier#autoformat = 1
-" let g:prettier#autoformat_require_pragma = 0
-" let g:prettier#quickfix_enabled = 0
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#quickfix_enabled = 0
 
 " MatchTagAlways
 let g:mta_use_matchparen_group = 1
@@ -287,27 +345,26 @@ let g:CoolTotalMatches = 1
 
 " lightline
 let g:lightline = {
-\   'colorscheme': 'moonfly',
+\   'colorscheme': 'tokyonight',
 \   'component_function': {
 \       'gitbranch': 'fugitive#head'
 \   },
-\   'component_expand': {
-\       'buffers': 'lightline#bufferline#buffers'
-\   },
-\   'component_type': {
-\       'buffers': 'tabsel'
-\   },
 \   'active': {
-\       'left': [ [ 'mode', 'paste', 'buffers' ],
+\       'left': [ [ 'mode', 'paste' ],
 \               [ 'readonly', 'modified' ] ],
 \       'right': [ ['lineinfo', 'percent', 'gitbranch', 'filetype' ] ]
 \   },
 \ }
 
 " Fuzzy file finder
-nnoremap <C-f> :Files<CR>
-nnoremap <C-g> :GFiles<CR>
-nnoremap <C-o> :Buffers<CR>
+" nnoremap <C-f> :Files<CR>
+nnoremap <C-f> <Cmd>Telescope find_files<CR>
+nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <Leader>fb <cmd>Telescope buffers<cr>
+nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
+
+" nnoremap <C-g> :GFiles<CR>
+" nnoremap <C-o> :Buffers<CR>
 " nnoremap <C-l> :Lines<CR>
 
 " Tagbar
@@ -323,63 +380,7 @@ nmap <Leader>s <Plug>(Scalpel)
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
 
-
 " Various settings and autocommands
-" LSP
-if has('nvim-0.5')
-  inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  set completeopt=menuone,noinsert,noselect
-  set shortmess+=c
-
-  let g:diagnostic_enable_virtual_text = 1
-  let g:diagnostic_virtual_text_prefix = ' '
-  let g:diagnostic_enable_underline = 0
-  let g:diagnostic_insert_delay = 1
-  nmap dn :NextDiagnostic<CR>
-  nmap dp :PrevDiagnostic<CR>
-
-  " TODO change gi and C-k
-  " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-  " vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
-  " pyls_ms
-  " jsonls
-  " htm
-  " vuels
-  " bashls
-  " cssls
-  " jedi_language_server
-
-lua << EOF
-  local nvim_lsp = require('nvim_lsp')
-
-  local on_attach = function(_, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    require'diagnostic'.on_attach()
-    require'completion'.on_attach()
-
-    -- Mappings.
-    local opts = { noremap=true, silent=true }
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
-  end
-
-  local servers = {'gopls', 'html', 'cssls', 'tsserver', 'jedi_language_server', 'jdtls'}
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-      on_attach = on_attach,
-    }
-  end
-EOF
-endif
-
 " Wrap text on markdown and latex files
 autocmd BufRead,BufNewFile *.md,*.tex setlocal formatoptions+=t
 
@@ -461,20 +462,6 @@ autocmd FileType python iabbrev <buffer> fa false
 autocmd FileType python iabbrev <buffer> tr true
 autocmd FileType python iabbrev <buffer> br break
 
-let g:completion_enable_snippet = 'Neosnippet'
-let g:neosnippet#snippets_directory='~/.config/nvim/snippets'
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-
-imap <C-e>     <Plug>(neosnippet_expand_or_jump)
-smap <C-e>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-e>     <Plug>(neosnippet_expand_target)
-
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-imap <C-s> <Esc>:w<CR>a
-map <C-s> :w<CR>
-
 autocmd FileType markdown setlocal spell
 autocmd FileType vimwiki setlocal spell
 
@@ -495,4 +482,20 @@ function! OpenMarkdownPreview() abort
 endfunction
 map <Leader>j i/**<CR><BS> * @author Samir Ettali<CR><BS> **/<CR><Esc>
 
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
 " nnoremap <buffer> <CR> :exec '!pipenv run' shellescape(@%, 1)<cr>
+
+nmap ,w :b#<bar>bd#<bar>b<CR>
+
+" Load Lua settings
+if has('nvim-0.5')
+  " inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+  " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  imap <silent> <C-n> <Plug>(completion_trigger)
+  set completeopt=menuone,noinsert,noselect
+  set shortmess+=c
+
+  let g:completion_trigger_on_delete = 1
+
+  lua require('init')
+endif
