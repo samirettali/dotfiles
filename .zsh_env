@@ -17,5 +17,7 @@ fi
 
 export BC_ENV_ARGS="${HOME}/.config/bc"
 
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+
 # Reduce time to enter normal mode
 KEYTIMEOUT=1
