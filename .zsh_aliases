@@ -5,9 +5,9 @@ if [ $(uname) = 'Darwin' ]; then
     alias bs='brew search'
     alias bi='brew install'
     alias bu='brew uninstall'
-    alias bcs='brew cask search'
-    alias bci='brew cask install'
-    alias bcu='brew cask uninstall'
+    alias bcs='brew search --cask'
+    alias bci='brew install --cask'
+    alias bcu='brew uninstall --cask'
 else
     alias ls='ls --color -h --group-directories-first'
 fi
@@ -26,7 +26,8 @@ alias dev='docker run --rm -it -v $(pwd):/data samirettali/ubuntu bash'
 alias tree='tree -C'
 alias vim='nvim'
 alias tl='tmux ls'
-alias qr="qrencode -l H -t ANSI256UTF8"
+alias qre="qrencode -l H -t ANSI256UTF8"
+alias qrd="pngpaste - | zbarimg -q --raw - | tee | pbcopy"
 
 # Git
 alias ga='git add'

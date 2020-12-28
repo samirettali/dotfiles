@@ -1,4 +1,4 @@
-export PATH=$PATH:$PYENV_ROOT/bin:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.cargo/bin:/usr/lib/go-1.14/bin:/usr/local/opt/llvm/bin
+export PATH=$PATH:/usr/local/sbin:$PYENV_ROOT/bin:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.cargo/bin:/usr/lib/go-1.14/bin:/usr/local/opt/llvm/bin
 [ -d "$HOME/.zsh/zsh-git-prompt/src/.bin" ] && export PATH=$PATH:$HOME/.zsh/zsh-git-prompt/src/.bin
 export DIRSTACKSIZE=20
 export SAVEHIST=100000
