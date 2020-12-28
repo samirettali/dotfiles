@@ -4,6 +4,12 @@ source ~/.zsh_aliases
 source ~/.zsh_functions
 source ~/.zsh_env
 
+# Immediately write commands into history file and load it as soon as it changes
+setopt SHARE_HISTORY
+
+# Do not save duplicate commands
+setopt HIST_FIND_NO_DUPS
+
 # Add a package to completion right after install
 zstyle ':completion:*' rehash true
 
@@ -41,7 +47,7 @@ disable r
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
 
-if [[ "$TERM" == "xterm-256color" ]]; then  
+if [[ "$TERM" == "xterm-256color" || "$TERM" == "st-256color" ]]; then
   # Automatic escaping of pasted urls, this has to be here in order to not
   # interfere with zsh-autosuggestions
   autoload -U url-quote-magic bracketed-paste-magic
@@ -67,10 +73,48 @@ fi
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # FZF plugin
-[ $(uname) = 'Darwin' ] && source /usr/local/opt/fzf/shell/key-bindings.zsh || source /usr/share/fzf/key-bindings.zsh
+[ $(uname) = 'Darwin' ] && \
+  source /usr/local/opt/fzf/shell/key-bindings.zsh || \
+  source /usr/share/fzf/key-bindings.zsh
 bindkey '^R' fzf-history-widget
 bindkey '^F' fzf-file-widget
 
-[ -f ~/.zsh/ssh-find-agent ] && source ~/.zsh/ssh-find-agent/ssh-find-agent.sh
+# # # SSH agent
+# [ -d ~/.zsh/ssh-find-agent ] && \
+#   source ~/.zsh/ssh-find-agent/ssh-find-agent.zsh
+# eval "$(ssh-agent -s)"
 
-PS1="%F{blue}${SSH_CONNECTION:+%B%n@%m%B}%f%B${SSH_CONNECTION:+:}%b%F{blue}%B%1d%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B%F{red}$%f%b "
+# Git plugin
+if [ -d ~/.zsh/zsh-git-prompt ]; then
+  source ~/.zsh/zsh-git-prompt/zshrc.sh
+  GIT_PROMPT_EXECUTABLE="haskell"
+  export ZSH_THEME_GIT_PROMPT_CACHE=1
+  export ZSH_THEME_GIT_PROMPT_PREFIX='['
+  export ZSH_THEME_GIT_PROMPT_SUFFIX=']'
+  export ZSH_THEME_GIT_PROMPT_SEPARATOR=''
+  export RPROMPT='$(git_super_status)'
+fi
+
+# SSH_ENV="$HOME/.ssh/agent-environment"
+
+# function start_agent {
+#     echo "Initialising new SSH agent..."
+#     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+#     echo succeeded
+#     chmod 600 "${SSH_ENV}"
+#     . "${SSH_ENV}" > /dev/null
+#     # /usr/bin/ssh-add;
+# }
+
+# Source SSH settings, if applicable
+#if [ -f "${SSH_ENV}" ]; then
+#    . "${SSH_ENV}" > /dev/null
+#    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+#    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+#        start_agent;
+#    }
+#else
+#    start_agent;
+#fi
+
+PS1="%F{blue}${SSH_CONNECTION:+%B%n@%m%B}%f%B${SSH_CONNECTION:+:}%b%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B%F{red}$%f%b "
