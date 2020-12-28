@@ -87,7 +87,9 @@ bindkey '^F' fzf-file-widget
 # Git plugin
 if [ -d ~/.zsh/zsh-git-prompt ]; then
   source ~/.zsh/zsh-git-prompt/zshrc.sh
-  GIT_PROMPT_EXECUTABLE="haskell"
+  if [[ -f "${HOME}/.zsh/zsh-git-prompt/src/.bin/gitstatus" ]]; then
+    GIT_PROMPT_EXECUTABLE="haskell"
+  fi
   export ZSH_THEME_GIT_PROMPT_CACHE=1
   export ZSH_THEME_GIT_PROMPT_PREFIX='['
   export ZSH_THEME_GIT_PROMPT_SUFFIX=']'
