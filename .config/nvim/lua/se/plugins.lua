@@ -81,8 +81,9 @@ return require('packer').startup(function()
   use {'rbgrouleff/bclose.vim'}
   use {'francoiscabrol/ranger.vim'}
   use {'tommcdo/vim-exchange'}                 -- Exchange two objects
-  use {'tommcdo/vim-nowchangethat'}            -- Reapply previous change to a differen object
-  use {'farmergreg/vim-lastplace'}
+  use {'tommcdo/vim-nowchangethat'}            -- Reapply previous change to a different object
+  use {'farmergreg/vim-lastplace'}             -- Restore cursor position when reopening files
+  use {'mbbill/undotree'}                      -- Show a tree of undo history
   
   -- UI components
   use {'romgrk/barbar.nvim'}                  -- Buffers bar
@@ -94,8 +95,8 @@ return require('packer').startup(function()
   use {'kyazdani42/nvim-tree.lua'}
   
   -- Vimwiki
-  use {'vimwiki/vimwiki'}
-  use {'michal-h21/vimwiki-sync'}
+  -- use {'vimwiki/vimwiki'}
+  -- use {'michal-h21/vimwiki-sync'}
   
   -- use {'blueyed/vim-diminactive'
   
