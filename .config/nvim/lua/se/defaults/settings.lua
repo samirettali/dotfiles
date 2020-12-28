@@ -62,4 +62,4 @@ local function set_all(opts)
 end
 
 set_all(options)
-vim.cmd 'colorscheme default'
+vim.cmd 'colorscheme moonfly'
