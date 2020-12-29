@@ -25,7 +25,6 @@ local function custom_attach(client)
   map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>')
   map('n', 'gt',         '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   map('n', 'gr',         '<cmd>lua vim.lsp.buf.rename()<CR>')
-  -- map('n', 'gR',         '<cmd>lua vim.lsp.buf.references()<CR>')
   map('n', 'gR',         '<cmd>lua require("telescope.builtin").lsp_references()<CR>')
   map('n', 'gh',         '<cmd>lua vim.lsp.buf.signature_help()<CR>')
   map('n', 'dn',         '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
@@ -79,6 +78,7 @@ local servers = {
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
+    root_dir = lspconfig.util.root_pattern('.git', vim.fn.getcwd()),
     on_attach = custom_attach,
   }
 end

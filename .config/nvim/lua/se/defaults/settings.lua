@@ -4,7 +4,7 @@ local GLOBAL = vim.o
 local WINDOW = vim.wo
 
 local options = {
-  [BUFFER] = { -- b
+  [BUFFER] = {
       expandtab = true,
       tabstop = INDENT,
       shiftwidth = INDENT,
@@ -16,32 +16,29 @@ local options = {
       undofile = true,
       spelllang='it,en_us'
   },
-  [GLOBAL] = { -- o
+  [GLOBAL] = {
       bg = 'dark',
       hidden = true,                   -- Enable modified buffers in background
       ignorecase = true,               -- Ignore case
       smartcase = true,                -- Don't ignore case with capitals
       joinspaces = false,              -- No double spaces with join after a dot
-      scrolloff = 5,                  -- Lines of context
+      scrolloff = 5,                   -- Lines of context
       sidescrolloff = 8 ,              -- Columns of context
       shiftround = true,               -- Round indent
       splitbelow = true,               -- Put new windows below current
       splitright = true,               -- Put new windows right of current
       termguicolors = true,            -- True color support
       wildmode = 'longest:full,full',  -- Command-line completion mode
-      title = true,
-      showmatch = true,
+      -- showmatch = true,
       confirm = true,
-      -- undodir= '~/.config/nvim/undo',
-      -- backupdir='~/.config/nvim/tmp',
-      -- directory='~/.config/nvim/swap'
       wildignore = '*.swp,*.bak,*.pyc,*.class',
-      listchars='tab:»·,trail:·,nbsp:~,eol:¬', -- Visualize tab, spaces and newlines'
-      mouse='nv',
+      listchars ='tab:»·,trail:·,nbsp:~,eol:¬', -- Characters to visualize instead of whitespaces
+      mouse ='nv',
       lazyredraw = true,
-      timeoutlen=500,
+      timeoutlen= 500,
+      completeopt= 'menuone,noinsert,noselect'
   },
-  [WINDOW] = { -- w
+  [WINDOW] = {
       cursorline = true,
       cursorcolumn = false,
       list = false,
@@ -63,3 +60,4 @@ end
 
 set_all(options)
 vim.cmd 'colorscheme moonfly'
+vim.cmd 'set shortmess+=c'

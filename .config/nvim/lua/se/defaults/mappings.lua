@@ -40,4 +40,4 @@ map('n', '<Leader>o', ':only<CR>', { silent = true })
 
 -- map('n', '<Leader>t', ':%s/\s\+$//e<CR>')
 
--- map('n', 'u' '<Paq>(highlightedundo-undo)')
+map('v', '<leader>c', ':OSCYank<CR>')

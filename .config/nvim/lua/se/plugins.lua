@@ -84,6 +84,8 @@ return require('packer').startup(function()
   use {'tommcdo/vim-nowchangethat'}            -- Reapply previous change to a different object
   use {'farmergreg/vim-lastplace'}             -- Restore cursor position when reopening files
   use {'mbbill/undotree'}                      -- Show a tree of undo history
+  use {'samirettali/shebang.nvim'}             -- Show a tree of undo history
+  use {'ojroques/vim-oscyank'}
   
   -- UI components
   use {'romgrk/barbar.nvim'}                  -- Buffers bar
