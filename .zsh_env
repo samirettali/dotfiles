@@ -3,7 +3,7 @@ export PATH=$PATH:/usr/local/sbin:$PYENV_ROOT/bin:$HOME/.bin:$HOME/go/bin:$HOME/
 export DIRSTACKSIZE=20
 export SAVEHIST=100000
 export HISTSIZE=10000
-export $HISTFILE="${HOME}/.zsh_history"
+export HISTFILE=~/.zsh_history
 
 
 export LSCOLORS=Gxfxcxdxbxegedabagacad
