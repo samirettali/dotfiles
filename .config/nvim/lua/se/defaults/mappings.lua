@@ -39,5 +39,3 @@ map('n', '<Leader>cc', ':let &cc = &cc == "" ? 81 : ""<CR>', { silent = true })
 map('n', '<Leader>o', ':only<CR>', { silent = true })
 
 -- map('n', '<Leader>t', ':%s/\s\+$//e<CR>')
-
-map('v', '<leader>c', ':OSCYank<CR>')

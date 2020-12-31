@@ -10,10 +10,6 @@ vim.api.nvim_exec([[
 ]], false)
 
 vim.api.nvim_exec([[
-    filetype plugin indent on
-]], false)
-
-vim.api.nvim_exec([[
     let g:shebang_shells = { 'asd': 'dsadsdas' }
 ]], false)
 

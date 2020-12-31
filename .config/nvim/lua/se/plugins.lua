@@ -90,7 +90,7 @@ return require('packer').startup(function()
   -- UI components
   use {'romgrk/barbar.nvim'}                  -- Buffers bar
   -- use {'akinsho/nvim-bufferline.lua'}                  -- Buffers bar
-  use {'itchyny/lightline.vim'}               -- Status line
+  use {'hoob3rt/lualine.nvim'}               -- Status line
   
   -- Tree navigator
   use {'kyazdani42/nvim-web-devicons'}

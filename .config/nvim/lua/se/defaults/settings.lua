@@ -36,7 +36,7 @@ local options = {
       mouse ='nv',
       lazyredraw = true,
       timeoutlen= 500,
-      completeopt= 'menuone,noinsert,noselect'
+      completeopt= 'menuone,noinsert,noselect',
   },
   [WINDOW] = {
       cursorline = true,
@@ -58,6 +58,11 @@ local function set_all(opts)
   end
 end
 
+vim.api.nvim_exec([[
+    filetype plugin indent on
+]], false)
+
+vim.g.mapleader = ','
 set_all(options)
 vim.cmd 'colorscheme moonfly'
 vim.cmd 'set shortmess+=c'
