@@ -1,2 +1,2 @@
-require 'se.defaults.settings'
-require 'se.defaults.mappings'
+require 'samir.defaults.settings'
+require 'samir.defaults.mappings'
