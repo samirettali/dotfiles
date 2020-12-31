@@ -1,28 +1,28 @@
 -- Load plugins
-require 'se.plugins'
+require 'samir.plugins'
 
-require 'se.utils.remaps'
+require 'samir.utils.remaps'
 
 -- Load settings
-require 'se.defaults'
-require 'se.lsp'
+require 'samir.defaults'
+require 'samir.lsp'
 
 -- Load plugins settings
-require 'se.barbar'
-require 'se.camelcasemotion'
-require 'se.colorizer'
-require 'se.gitsigns'
-require 'se.highlightedundo'
-require 'se.lualine'
-require 'se.matchtag'
-require 'se.oscyank'
-require 'se.ripgrep'
-require 'se.scalpel'
-require 'se.sneak'
-require 'se.telescope'
-require 'se.tree'
-require 'se.treesitter'
-require 'se.vsnip'
+require 'samir.barbar'
+require 'samir.camelcasemotion'
+require 'samir.colorizer'
+require 'samir.gitsigns'
+require 'samir.highlightedundo'
+require 'samir.lualine'
+require 'samir.matchtag'
+require 'samir.oscyank'
+require 'samir.ripgrep'
+require 'samir.scalpel'
+require 'samir.sneak'
+require 'samir.telescope'
+require 'samir.tree'
+require 'samir.treesitter'
+require 'samir.vsnip'
 
 -- Vimscript stuff
-require 'se.vimscript'
+require 'samir.vimscript'
