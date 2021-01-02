@@ -148,9 +148,9 @@ upd() {
     brew update
     brew upgrade
     brew upgrade --cask
+    brew upgrade --fetch-HEAD
   fi
-  cd ~/.zsh
-  find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull \;
+  find ~/.zsh -type d -depth 1 -exec git --git-dir={}/.git --work-tree={} pull \;
 }
 
 pss() {
