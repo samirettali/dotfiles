@@ -16,6 +16,7 @@ fi
 alias dots='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias ds='dots status'
 alias dt='dots grep -i todo'
+alias vv="nvim ~/.config/nvim/init.lua"
 
 # Docker
 # TODO switch to a function and create reusable container, update it if necessary
