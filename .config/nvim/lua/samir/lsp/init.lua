@@ -42,6 +42,7 @@ local function custom_attach(client)
   -- vim.cmd [[augroup lsp]]
   -- vim.cmd       [[au! BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()]]
   -- vim.cmd [[augroup END]]
+  vim.cmd [[autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics()]]
 
   vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 end
