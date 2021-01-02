@@ -3,6 +3,7 @@
   name = "Samir Ettali"
 
 [core]
+  editor = nvim
   excludesfile = .gitignore_global
 
 [mergetool "nvim"]
