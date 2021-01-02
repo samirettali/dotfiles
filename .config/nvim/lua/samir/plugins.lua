@@ -20,8 +20,7 @@ return require('packer').startup(function()
     -- \ }
   
   -- Git
-  -- use {'mhinz/vim-signify'}                    -- Show git diff in the gutter
-  use {'lewis6991/gitsigns.nvim'}                    -- Show git diff in the gutter
+  use {'lewis6991/gitsigns.nvim'}              -- Show git diff in the gutter
   use {'rhysd/committia.vim'}                  -- Better commit editing
   use {'tpope/vim-fugitive'}                   -- Git wrapper
   use {'f-person/git-blame.nvim'}
