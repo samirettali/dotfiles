@@ -84,13 +84,13 @@ return require('packer').startup(function()
   use {'tommcdo/vim-nowchangethat'}            -- Reapply previous change to a different object
   use {'farmergreg/vim-lastplace'}             -- Restore cursor position when reopening files
   use {'mbbill/undotree'}                      -- Show a tree of undo history
-  use {'samirettali/shebang.nvim'}             -- Show a tree of undo history
+  use {'samirettali/shebang.nvim'}             -- Automatic shebang for new files
   use {'ojroques/vim-oscyank'}
   
   -- UI components
   use {'romgrk/barbar.nvim'}                  -- Buffers bar
   -- use {'akinsho/nvim-bufferline.lua'}                  -- Buffers bar
-  use {'hoob3rt/lualine.nvim'}               -- Status line
+  use {'hoob3rt/lualine.nvim'}                -- Status line
   
   -- Tree navigator
   use {'kyazdani42/nvim-web-devicons'}
@@ -99,8 +99,7 @@ return require('packer').startup(function()
   -- Vimwiki
   -- use {'vimwiki/vimwiki'}
   -- use {'michal-h21/vimwiki-sync'}
-  
-  -- use {'blueyed/vim-diminactive'
+  use {'wincent/corpus'}
   
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
