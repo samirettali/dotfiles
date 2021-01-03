@@ -23,6 +23,7 @@ require 'samir.sneak'
 require 'samir.telescope'
 require 'samir.tree'
 require 'samir.treesitter'
+require 'samir.vimgo'
 require 'samir.vsnip'
 
 -- Vimscript stuff
