@@ -15,7 +15,6 @@ return require('packer').startup(function()
 
   use {'jremmen/vim-ripgrep'}                  -- Ripgrep integration
   -- use {'prettier/vim-prettier', run = 'yarn install'}
-  use {'sbdchd/neoformat'}
     -- \ 'for': ['javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
     -- \ }
   
@@ -54,14 +53,12 @@ return require('packer').startup(function()
   use {'hrsh7th/vim-vsnip'}
   use {'hrsh7th/vim-vsnip-integ'}
   use {'nvim-telescope/telescope.nvim'}
-  -- use {'nvim-treesitter/nvim-treesitter'}, {'do': ':TSUpdate'}
-  use {'nvim-treesitter/nvim-treesitter'}
+  use {'nvim-treesitter/nvim-treesitter', run= ":TSUpdate" }
   
   -- Improving vim's functionalities
   use {'bkad/CamelCaseMotion'}
   use {'chrisbra/Recover.vim'}                 -- Show diff of a recovered or swap file
   use {'junegunn/vim-easy-align'}              -- Align stuff based on a symbol
-  -- use {'Yggdroot/indentLine'}
   use {'christoomey/vim-tmux-navigator'}       -- Tmux splits integration
   use {'drzel/vim-split-line'}                 -- Split line at cursor
   use {'wincent/scalpel'}                      -- Replace word under cursor
@@ -88,16 +85,13 @@ return require('packer').startup(function()
   
   -- UI components
   use {'romgrk/barbar.nvim'}                  -- Buffers bar
-  -- use {'akinsho/nvim-bufferline.lua'}                  -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                -- Status line
   
   -- Tree navigator
   use {'kyazdani42/nvim-web-devicons'}
   use {'kyazdani42/nvim-tree.lua'}
   
-  -- Vimwiki
-  -- use {'vimwiki/vimwiki'}
-  -- use {'michal-h21/vimwiki-sync'}
+  -- Note management
   use {'wincent/corpus'}
   
   -- Colorscheme
@@ -109,4 +103,8 @@ return require('packer').startup(function()
   use {'KeitaNakamura/neodark.vim'}
   use {'challenger-deep-theme/vim', as = 'challenger-deep' }
   use {'ghifarit53/tokyonight-vim'}
+
+  -- Stuff in/to test
+  -- use {'akinsho/nvim-bufferline.lua'}
+  use {'sbdchd/neoformat'}
 end)
