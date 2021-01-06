@@ -16,7 +16,7 @@ fi
 alias dots='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias ds='dots status'
 alias dt='dots grep -i todo'
-alias vv="nvim ~/.config/nvim/init.lua"
+alias vv='nvim ~/.config/nvim/init.lua'
 
 # Docker
 # TODO switch to a function and create reusable container, update it if necessary
@@ -27,8 +27,8 @@ alias dev='docker run --rm -it -v $(pwd):/data samirettali/ubuntu bash'
 alias tree='tree -C'
 alias vim='nvim'
 alias tl='tmux ls'
-alias qre="qrencode -l H -t ANSI256UTF8"
-alias qrd="pngpaste - | zbarimg -q --raw - | tee | pbcopy"
+alias qre='qrencode -l H -t ANSI256UTF8'
+alias qrd='pngpaste - | zbarimg -q --raw - | tee | pbcopy'
 
 # Git
 alias ga='git add'
