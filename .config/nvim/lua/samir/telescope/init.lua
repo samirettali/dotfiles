@@ -11,6 +11,9 @@ require('telescope').setup{
 }
 
 map('n', '<C-f>', '<Cmd>Telescope find_files<CR>')
+map('n', '<C-b>', '<Cmd>Telescope buffers<CR>')
+map('n', '<C-g>', '<Cmd>Telescope live_grep<CR>')
+
 -- local functions = {}
 
 -- functions.show_diagnostics = function(opts)
