@@ -1,22 +1,23 @@
 [user]
-  email = ettali.samir@gmail.com
-  name = "Samir Ettali"
+	email = ettali.samir@gmail.com
+	name = "Samir Ettali"
 
 [core]
-  editor = nvim
-  excludesfile = .gitignore_global
+	editor = nvim
+	excludesfile = .gitignore_global
+	ignorecase = false
 
 [mergetool "nvim"]
-  cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
+	cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
 
 [merge]
-  tool = nvim
+	tool = nvim
 
 [mergetool]
-  prompt = false
+	prompt = false
 
 [pull]
-  rebase = false
+	rebase = false
 
 [init]
-  defaultBranch = main
+	defaultBranch = main
