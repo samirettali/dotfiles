@@ -19,7 +19,7 @@ return require('packer').startup(function()
     -- \ }
   
   -- Git
-  use {'lewis6991/gitsigns.nvim'}              -- Show git diff in the gutter
+  use {'mhinz/vim-signify'}              -- Show git diff in the gutter
   use {'rhysd/committia.vim'}                  -- Better commit editing
   use {'tpope/vim-fugitive'}                   -- Git wrapper
   use {'f-person/git-blame.nvim'}
@@ -35,6 +35,7 @@ return require('packer').startup(function()
   use {'AndrewRadev/tagalong.vim'}             -- Automatically rename matching HTML tag
   use {'kana/vim-textobj-user'}
   use {'kana/vim-textobj-indent'}
+  use {'iamcco/markdown-preview.nvim', hook = 'cd app && yarn install'}
   
   -- Syntax highlighting
   use {'pantharshit00/vim-prisma'}             -- Prisma syntax
@@ -53,7 +54,8 @@ return require('packer').startup(function()
   use {'hrsh7th/vim-vsnip'}
   use {'hrsh7th/vim-vsnip-integ'}
   use {'nvim-telescope/telescope.nvim'}
-  use {'nvim-treesitter/nvim-treesitter', run= ":TSUpdate" }
+  use {'nvim-treesitter/nvim-treesitter', run = ":TSUpdate" }
+  use {'RRethy/vim-illuminate'}
   
   -- Improving vim's functionalities
   use {'bkad/CamelCaseMotion'}
@@ -84,8 +86,10 @@ return require('packer').startup(function()
   use {'ojroques/vim-oscyank'}
   
   -- UI components
-  use {'romgrk/barbar.nvim'}                  -- Buffers bar
-  use {'hoob3rt/lualine.nvim'}                -- Status line
+  use {'romgrk/barbar.nvim'}                   -- Buffers bar
+  -- use {'hoob3rt/lualine.nvim'}                -- Status line
+  use {'kxmndev/lualine.nvim', branch = 'patch-2'}                -- Status line
+  -- use {'dstein64/nvim-scrollview'}
   
   -- Tree navigator
   use {'kyazdani42/nvim-web-devicons'}
@@ -107,4 +111,5 @@ return require('packer').startup(function()
   -- Stuff in/to test
   -- use {'akinsho/nvim-bufferline.lua'}
   use {'sbdchd/neoformat'}
+  -- use {'lewis6991/gitsigns.nvim'}              -- Show git diff in the gutter
 end)
