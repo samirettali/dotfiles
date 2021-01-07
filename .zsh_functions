@@ -37,7 +37,7 @@ add_extension() {
 }
 
 # Go to git repository root
-groot() {
+gr() {
     readonly old_pwd="$PWD"
     while [[ 1 ]]; do
         cd ..
