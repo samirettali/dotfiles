@@ -81,11 +81,7 @@ http() {
 
 # Function that starts my Kali Linux container
 kali() {
-    [[ $(docker ps -f "name=ctf" --format '{{.Names}}') == ctf ]] && docker exec -it ctf bash || docker run --rm -it --name ctf -h ctf --cap-add sys_admin --privileged=true -e DISPLAY=host.docker.internal:0 -v $HOME/dev/recon:/data -v $HOME/Hacking:/home/user/hacking -p 135:135 -p 139:139 -p 445:445 -p 1337:1337 -p 9000-9010:9000-9010 samirettali/kali-ctf bash
-}
-
-bounty() {
-    [[ $(docker ps -f "name=bounty" --format '{{.Names}}') == bounty ]] && docker exec -it bounty bash || docker run --rm -it --name bounty -h bounty -v $HOME/dev/recon:/home/user/recon -v $HOME/Hacking:/home/user/hacking samirettali/kali-bounty bash
+    [[ $(docker ps -f "name=kali" --format '{{.Names}}') == kali ]] && docker exec -it kali bash || docker run --rm -it --name kali -h ctf --cap-add sys_admin --privileged=true -e DISPLAY=host.docker.internal:0 -v $HOME/dev/recon:/root/recon -v $HOME/Hacking:/root/hacking -p 135:135 -p 139:139 -p 445:445 -p 1337:1337 -p 9000-9010:9000-9010 samirettali/kali bash
 }
 
 # List all interfaces and their IPs
