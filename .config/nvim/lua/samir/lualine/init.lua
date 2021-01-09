@@ -49,6 +49,6 @@ lualine.inactiveSections = {
   lualine_z = {  }
 }
 
-lualine.theme = 'auto'
+-- lualine.theme = 'auto'
 
 lualine.status()
