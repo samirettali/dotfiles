@@ -88,7 +88,6 @@ return require('packer').startup(function()
   -- UI components
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                 -- Status line
-  -- use {'dstein64/nvim-scrollview'}
   
   -- Tree navigator
   use {'kyazdani42/nvim-web-devicons'}
