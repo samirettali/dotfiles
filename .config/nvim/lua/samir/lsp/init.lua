@@ -1,5 +1,6 @@
 local completion = require('completion')
 local lspconfig = require('lspconfig')
+local illuminate = require('illuminate')
 
 vim.g.completion_trigger_on_delete = 1
 vim.g.completion_enable_snippet = 'vim-vsnip'
@@ -19,6 +20,7 @@ vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handle
 
 local function custom_attach(client)
   completion.on_attach(client)
+  illuminate.on_attach(client)
 
   map('n', 'gd',         '<cmd>lua vim.lsp.buf.definition()<CR>')
   map('n', 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>')
