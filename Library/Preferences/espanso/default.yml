@@ -2,14 +2,17 @@ matches:
   - trigger: ":gm"
     replace: "ettali.samir@gmail.com"
 
+  - trigger: ":ho"
+    replace: "samirettali@wearehackerone.com"
+
+  - trigger: ":inti"
+    replace: "samirettali@intigriti.me"
+
+  - trigger: ":bgcr"
+    replace: "samirettali@bugcrowdninja.com"
+
   - trigger: ":pm"
     replace: "samir.ettali@protonmail.com"
-
-  - trigger: ":se"
-    replace: "samirettali"
-
-  - trigger: ":si"
-    replace: "Samir Ettali"
 
   - trigger: ":lorem"
     replace: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vestibulum, tortor id imperdiet fringilla, purus ante fermentum felis, et tincidunt libero est eget felis. Cras euismod vitae nisl eu tristique. Nullam auctor nisl dui, et gravida sapien pretium sed. Phasellus non risus laoreet, varius mauris sit amet, ultrices tortor. Nam vel dignissim neque. Etiam faucibus ante sit amet lacus posuere auctor. Donec sed lorem vel sem imperdiet lobortis at sed ipsum. Proin non nisi augue."
