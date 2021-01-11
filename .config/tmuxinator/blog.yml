@@ -2,11 +2,8 @@ name: blog
 root: ~/dev/blog
 
 windows:
-  - servers:
-      layout: even-vertical
+  - yarn: yarn dev
+  - edit:
+      root: ~/dev/blog/posts
       panes:
-        - hugo server --verbose --watch --buildDrafts
-  - editor:
-      layout: even-vertical
-      panes:
-        - cd content/writeups && vim .
+        - nvim
