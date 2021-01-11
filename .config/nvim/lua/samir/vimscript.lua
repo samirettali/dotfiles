@@ -8,15 +8,3 @@ vim.api.nvim_exec([[
 vim.api.nvim_exec([[
     autocmd VimResized * :wincmd =
 ]], false)
-
-vim.api.nvim_exec([[
-    let g:shebang_shells = { 'asd': 'dsadsdas' }
-]], false)
-
-vim.g.shebang_commands = {
-    dsa = '/my/path/python'
-}
-
--- vim.g.shebang_commands = {
---     dsa = '/my/path/python'
--- }
