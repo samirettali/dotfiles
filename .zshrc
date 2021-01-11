@@ -47,7 +47,7 @@ disable r
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
 
-if [[ "$TERM" == "xterm-256color" || "$TERM" == "st-256color" ]]; then
+if [[ "$TERM" == "xterm-256color" || "$TERM" == "alacritty" ]]; then
   # Automatic escaping of pasted urls, this has to be here in order to not
   # interfere with zsh-autosuggestions
   autoload -U url-quote-magic bracketed-paste-magic
@@ -120,3 +120,6 @@ fi
 #fi
 
 PS1="%F{blue}${SSH_CONNECTION:+%B%n@%m%B}%f%B${SSH_CONNECTION:+:}%b%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B%F{red}$%f%b "
+
+# Local configs
+[ -f "${HOME}/.zshrc_local"  && source "${HOME}/.zshrc_local"]
