@@ -87,16 +87,15 @@ return require('packer').startup(function()
   
   -- UI components
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
-  -- use {'hoob3rt/lualine.nvim'}                -- Status line
-  use {'kxmndev/lualine.nvim', branch = 'patch-2'}                -- Status line
+  use {'hoob3rt/lualine.nvim'}                 -- Status line
   -- use {'dstein64/nvim-scrollview'}
   
   -- Tree navigator
   use {'kyazdani42/nvim-web-devicons'}
   use {'kyazdani42/nvim-tree.lua'}
   
-  -- Note management
-  use {'wincent/corpus'}
+  -- -- Note management
+  -- use {'wincent/corpus'}
   
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
