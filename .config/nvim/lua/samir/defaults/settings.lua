@@ -14,7 +14,8 @@ local options = {
       -- autoindent  = true
       synmaxcol = 200,
       undofile = true,
-      spelllang='it,en_us'
+      spelllang ='it,en_us',
+      textwidth = 80
   },
   [GLOBAL] = {
       bg = 'dark',
@@ -33,10 +34,11 @@ local options = {
       confirm = true,
       wildignore = '*.swp,*.bak,*.pyc,*.class',
       listchars ='tab:»·,trail:·,nbsp:~,eol:¬', -- Characters to visualize instead of whitespaces
-      mouse ='nv',
+      mouse = 'nv',
       lazyredraw = true,
-      timeoutlen= 500,
-      completeopt= 'menuone,noinsert,noselect',
+      timeoutlen = 500,
+      completeopt = 'menuone,noinsert,noselect',
+      inccommand = 'split'
   },
   [WINDOW] = {
       cursorline = true,
@@ -44,7 +46,8 @@ local options = {
       list = false,
       number = true,
       relativenumber = true,
-      wrap = false,
+      wrap = true,
+      linebreak = true,
       cursorline = true,
       colorcolumn = '81'
   },
@@ -58,11 +61,10 @@ local function set_all(opts)
   end
 end
 
-vim.api.nvim_exec([[
-    filetype plugin indent on
-]], false)
+vim.cmd[[ filetype plugin indent on ]]
 
 vim.g.mapleader = ','
 set_all(options)
 vim.cmd 'colorscheme moonfly'
 vim.cmd 'set shortmess+=c'
+vim.cmd 'set formatoptions-=t'

@@ -38,4 +38,7 @@ map('n', '<Leader>cc', ':let &cc = &cc == "" ? 81 : ""<CR>', { silent = true })
 
 map('n', '<Leader>o', ':only<CR>', { silent = true })
 
+-- Load current buffer
+map('n', '<Leader>l', ':luafile %<CR>', { silent = true })
+
 -- map('n', '<Leader>t', ':%s/\s\+$//e<CR>')
