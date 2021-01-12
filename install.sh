@@ -3,6 +3,9 @@
 set -euf
 set -o pipefail
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd "${DIR}"
+
 # Check if zsh and stow are installed
 command -v git >/dev/null 2>&1 || { echo >&2 "git is required, aborting."; exit 1; }
 command -v stow >/dev/null 2>&1 || { echo >&2 "stow is required, aborting."; exit 1; }
@@ -44,29 +47,33 @@ if [ ! -d "${ZSH_PLUGINS}/ssh-syntax-highlighting" ]; then
   git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting 
 fi
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-# stow $(ls -d "*/")
+stow_home() {
+  stow -t "${HOME}" "${@}"
+}
 
-stow "${DIR}/alacritty"
-stow "${DIR}/bc"
-stow "${DIR}/mpd"
-stow "${DIR}/ncmpcpp"
-stow "${DIR}/nvim"
-stow "${DIR}/ripgrep"
-stow "${DIR}/tmuxinator"
-stow "${DIR}/zsh"
-stow "${DIR}/git"
-stow "${DIR}/tmux"
+stow -t "${HOME}" ack
+stow -t "${HOME}" alacritty
+stow -t "${HOME}" bc
+stow -t "${HOME}" git
+stow -t "${HOME}" mpd
+stow -t "${HOME}" ncmpcpp
+stow -t "${HOME}" nvim
+stow -t "${HOME}" ripgrep
+stow -t "${HOME}" scripts
+stow -t "${HOME}" tmux
+stow -t "${HOME}" tmuxinator
+stow -t "${HOME}" zsh
 
 OS=$(uname)
 
 if [ "${OS}" = 'Darwin' ]; then
   print_message "MacOS detected"
-  stow "${DIR}/espanso"
-  stow "${DIR}/karabiner"
+  stow -t "${HOME}" espanso
+  stow -t "${HOME}" karabiner
 else if [ "${OS}" = 'Linux' ]; then
   print_message "Linux detected"
-  stow "${DIR}/xinit"
+  stow -t "${HOME}" xdefaults
+  stow -t "${HOME}" xinit
 else
   echo "Unsupported OS."
 fi
