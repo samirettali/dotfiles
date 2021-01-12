@@ -56,7 +56,8 @@ for module in "${modules[@]}"; do
     if [[ ! -z $(git submodule status "${module}/${package}") ]]; then
       git submodule update --quiet "${module}/${package}"
     fi
-    stow -t "${HOME}" -d  "${module}" "${package}"
+    # stow -t "${HOME}" -d  "${module}" "${package}"
+    stow -t "${HOME}" -d  "${module}" -R "${package}"
   done
   echo
 done
