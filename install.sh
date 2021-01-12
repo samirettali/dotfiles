@@ -1,17 +1,13 @@
 #!/usr/bin/env sh
 
-# Prerequisites:
-#   - git
-#   - zsh
-
-# Check if zsh and git are installed
-command -v git >/dev/null 2>&1 || { echo >&2 "Git is required, aborting."; exit 1; }
-command -v zsh >/dev/null 2>&1 || { echo >&2 "Zsh is required, aborting."; exit 1; }
+# Check if zsh and stow are installed
+command -v git >/dev/null 2>&1 || { echo >&2 "git is required, aborting."; exit 1; }
+command -v stow >/dev/null 2>&1 || { echo >&2 "stow is required, aborting."; exit 1; }
 
 # Install tmux plugin manager
 if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then
   mkdir -p "${HOME}/.tmux/plugins"
-  git -C "${HOME}/.tmux/plugins" https://github.com/tmux-plugins/tpm
+  git -C "${HOME}/.tmux/plugins" clone https://github.com/tmux-plugins/tpm
 fi
 
 # Zsh plugings
