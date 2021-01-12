@@ -3,5 +3,4 @@
 .gitignore
 .stow-local-ignore
 .*.example
-^/@.*
 README.*
