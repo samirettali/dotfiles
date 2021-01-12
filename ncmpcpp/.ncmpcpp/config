@@ -1,0 +1,12 @@
+mpd_host = "localhost"
+
+user_interface = alternative
+
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "my_fifo"
+visualizer_sync_interval = "30" 
+visualizer_in_stereo = "yes"
+visualizer_type = "spectrum"
+visualizer_look = "+|"
+execute_on_song_change = notify "$(mpc --format '%title%')" "$(mpc --format '%artist% - %album%' current)"
+show_hidden_files_in_local_browser = no
