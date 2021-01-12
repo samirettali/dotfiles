@@ -3,10 +3,7 @@
 set -euf
 set -o pipefail
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd "${DIR}"
-
-# Check if zsh and stow are installed
+# Check if git and stow are installed
 command -v git >/dev/null 2>&1 || { echo >&2 "git is required, aborting."; exit 1; }
 command -v stow >/dev/null 2>&1 || { echo >&2 "stow is required, aborting."; exit 1; }
 
@@ -15,6 +12,9 @@ print_message() {
   NC='\033[0m'
   echo -e "${GREEN}[*]${NC} ${*}"
 }
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd "${DIR}"
 
 # Install tmux plugin manager
 if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then
@@ -47,10 +47,6 @@ if [ ! -d "${ZSH_PLUGINS}/zsh-syntax-highlighting" ]; then
   git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting 
 fi
 
-stow_home() {
-  stow -t "${HOME}" "${@}"
-}
-
 stow -t "${HOME}" ack
 stow -t "${HOME}" alacritty
 stow -t "${HOME}" bc
@@ -66,11 +62,11 @@ stow -t "${HOME}" zsh
 
 OS=$(uname)
 
-if [ "${OS}" = 'Darwin' ]; then
+if [[ "${OS}" = 'Darwin' ]]; then
   print_message "MacOS detected"
   stow -t "${HOME}" espanso
   stow -t "${HOME}" karabiner
-else if [ "${OS}" = 'Linux' ]; then
+else if [[ "${OS}" = 'Linux' ]]; then
   print_message "Linux detected"
   stow -t "${HOME}" xdefaults
   stow -t "${HOME}" xinit
