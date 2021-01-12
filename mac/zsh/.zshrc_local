@@ -1,0 +1,20 @@
+# MacOS specific aliases
+alias ls='ls -GF'
+alias cl='fc -e -|pbcopy'
+alias bs='brew search'
+alias bi='brew install'
+alias bu='brew uninstall'
+alias bcs='brew search --cask'
+alias bci='brew install --cask'
+alias bcu='brew uninstall --cask'
+alias dots='cd ~/dev/dotfiles && nvim'
+
+export PATH="$PATH:$HOME/.axiom/interact"
+source /Users/samir/.axiom/functions/autocomplete.zsh
+compdef _axiom-ssh axiom-rm
+compdef _axiom-ssh axiom-ssh
+compdef _axiom-ssh axiom-select
+compdef _axiom-ssh axiom-backup
+compdef _axiom-ssh axiom-vpn
+compdef _axiom-restore axiom-restore
+compdef _axiom-deploy axiom-deploy
