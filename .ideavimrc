@@ -1,2 +1,0 @@
-vnoremap < <gv
-vnoremap > >gv
