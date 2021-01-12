@@ -4,6 +4,12 @@
 command -v git >/dev/null 2>&1 || { echo >&2 "git is required, aborting."; exit 1; }
 command -v stow >/dev/null 2>&1 || { echo >&2 "stow is required, aborting."; exit 1; }
 
+print_message() {
+  GREEN='\033[0;32m'
+  NC='\033[0m'
+  echo -e "${GREEN}[*]${NC} ${*}"
+}
+
 # Install tmux plugin manager
 if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then
   mkdir -p "${HOME}/.tmux/plugins"
@@ -32,6 +38,30 @@ fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 stow $(ls -d "*/")
+
+stow alacritty
+stow bc
+stow mpd
+stow ncmpcpp
+stow nvim
+stow ripgrep
+stow tmuxinator
+stow zsh
+stow git
+stow tmux
+
+OS=$(uname)
+
+if [ "${OS}" = 'Darwin' ]; then
+  print_message "MacOS detected"
+  stow espanso
+  stow karabiner
+else if [ "${OS}" = 'Linux' ]; then
+  print_message "Linux detected"
+  stow xinit
+else
+  echo "Unsupported OS."
+fi
 
 # if hash stack 2>/dev/null; then
 #   echo "Haskell detected, compiling zsh-git-prompt..."
