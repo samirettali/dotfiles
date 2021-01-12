@@ -66,7 +66,7 @@ if [[ "${OS}" = 'Darwin' ]]; then
   print_message "MacOS detected"
   stow -t "${HOME}" espanso
   stow -t "${HOME}" karabiner
-else if [[ "${OS}" = 'Linux' ]]; then
+elif [[ "${OS}" = 'Linux' ]]; then
   print_message "Linux detected"
   stow -t "${HOME}" xdefaults
   stow -t "${HOME}" xinit
