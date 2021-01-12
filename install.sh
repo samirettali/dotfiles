@@ -13,43 +13,36 @@ print_message() {
   echo -e "${GREEN}[*]${NC} ${*}"
 }
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd "${DIR}"
+# Utility function to check if a repo already exists, if not then print a
+# message and clone it
+clone_repo() {
+  LOCATION="${1}"
+  REPO="${2}"
+  REPO_NAME=$(sed 's|^.*/||' <<< "${REPO}")
+  if [[ ! -d "${LOCATION}/${REPO_NAME}" ]]; then
+    print_message "Cloning ${REPO_NAME} repository"
+    mkdir -p "${LOCATION}"
+    git -C "${LOCATION}" clone --quiet "${REPO}"
+  fi
+}
 
-# Install tmux plugin manager
-if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then
-  mkdir -p "${HOME}/.tmux/plugins"
-  print_message "Installing tmux plugin manager"
-  git -C "${HOME}/.tmux/plugins" clone --quiet https://github.com/tmux-plugins/tpm
-fi
+# Change directory to script location
+cd $(dirname $0)
 
-# Zsh plugings
+# Clone tmux plugin manager
+clone_repo "${HOME}/.tmux/plugins"  https://github.com/tmux-plugins/tpm
+
+# Clone zsh plugings
 ZSH_PLUGINS="${HOME}/.zsh"
-
-if [ ! -d "${ZSH_PLUGINS}" ]; then
-  mkdir -p "${ZSH_PLUGINS}"
-fi
-
-if [ ! -d "${ZSH_PLUGINS}/ssh-find-agent" ]; then
-  print_message "Installing ssh-find-agent"
-  git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/wwalker/ssh-find-agent
-fi
-if [ ! -d "${ZSH_PLUGINS}/zsh-autosuggestions" ]; then
-  print_message "Installing zsh-autosuggestions"
-  git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-autosuggestions
-fi
-if [ ! -d "${ZSH_PLUGINS}/zsh-git-prompt" ]; then
-  print_message "Installing zsh-git-prompt"
-  git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/starcraftman/zsh-git-prompt
-fi
-if [ ! -d "${ZSH_PLUGINS}/zsh-syntax-highlighting" ]; then
-  print_message "Installing zsh-syntax-highlighting"
-  git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting 
-fi
+clone_repo "${ZSH_PLUGINS}" https://github.com/wwalker/ssh-find-agent
+clone_repo "${ZSH_PLUGINS}" https://github.com/zsh-users/zsh-autosuggestions
+clone_repo "${ZSH_PLUGINS}" https://github.com/starcraftman/zsh-git-prompt
+clone_repo "${ZSH_PLUGINS}" https://github.com/zsh-users/zsh-syntax-highlighting 
 
 OS=$(uname)
 modules=()
 
+# Detect the operating system in order to know which dotfiles to install
 if [[ "${OS}" = "Darwin" ]]; then
   print_message "MacOS detected"
   modules=("common" "mac")
@@ -61,9 +54,9 @@ else
   exit 1
 fi
 
+# Link files with stow
 for module in "${modules[@]}"; do
   print_message "Installing ${module} packages"
-  # stow -t "${HOME}" -
   for package in $(find ${module} -maxdepth 1 | grep '/' | sed 's|^.*/||'); do
     print_message "${package}"
     stow -t "${HOME}" -d  "${module}" "${package}"
