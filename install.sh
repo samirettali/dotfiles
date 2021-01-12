@@ -46,11 +46,15 @@ else
   exit 1
 fi
 
+git submodule init
 # Link files with stow
 for module in "${modules[@]}"; do
   print_message "Installing ${module} packages"
   for package in $(find ${module} -maxdepth 1 | grep '/' | sed 's|^.*/||'); do
     print_message "${package}"
+    if [[ ! -z $(git submodule status "${module}/${package}") ]]; then
+      git submodule update "${module}/${package}"
+    fi
     stow -t "${HOME}" -d  "${module}" "${package}"
   done
   echo
