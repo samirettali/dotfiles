@@ -29,15 +29,7 @@ clone_repo() {
 # Change directory to script location
 cd $(dirname $0)
 
-# Clone tmux plugin manager
-clone_repo "${HOME}/.tmux/plugins"  https://github.com/tmux-plugins/tpm
-
-# Clone zsh plugings
-ZSH_PLUGINS="${HOME}/.zsh"
-clone_repo "${ZSH_PLUGINS}" https://github.com/wwalker/ssh-find-agent
-clone_repo "${ZSH_PLUGINS}" https://github.com/zsh-users/zsh-autosuggestions
-clone_repo "${ZSH_PLUGINS}" https://github.com/starcraftman/zsh-git-prompt
-clone_repo "${ZSH_PLUGINS}" https://github.com/zsh-users/zsh-syntax-highlighting 
+# clone_repo "${ZSH_PLUGINS}" https://github.com/wwalker/ssh-find-agent
 
 OS=$(uname)
 modules=()
