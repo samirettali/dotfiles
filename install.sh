@@ -13,7 +13,8 @@ print_message() {
 # Install tmux plugin manager
 if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then
   mkdir -p "${HOME}/.tmux/plugins"
-  git -C "${HOME}/.tmux/plugins" clone https://github.com/tmux-plugins/tpm
+  print_message "Installing tmux plugin manager"
+  git -C "${HOME}/.tmux/plugins" clone https://github.com/tmux-plugins/tpm > /dev/null
 fi
 
 # Zsh plugings
@@ -24,41 +25,45 @@ if [ ! -d "${ZSH_PLUGINS}" ]; then
 fi
 
 if [ ! -d "${ZSH_PLUGINS}/ssh-find-agent" ]; then
-  git -C "${ZSH_PLUGINS}" clone https://github.com/wwalker/ssh-find-agent
+  print_message "Installing ssh-find-agent"
+  git -C "${ZSH_PLUGINS}" clone https://github.com/wwalker/ssh-find-agent > /dev/null
 fi
 if [ ! -d "${ZSH_PLUGINS}/zsh-autosuggestions" ]; then
-  git -C "${ZSH_PLUGINS}" clone https://github.com/zsh-users/zsh-autosuggestions
+  print_message "Installing zsh-autosuggestions"
+  git -C "${ZSH_PLUGINS}" clone https://github.com/zsh-users/zsh-autosuggestions > /dev/null
 fi
 if [ ! -d "${ZSH_PLUGINS}/ssh-git-prompt" ]; then
-  git -C "${ZSH_PLUGINS}" clone https://github.com/starcraftman/zsh-git-prompt
+  print_message "Installing ssh-git-prompt"
+  git -C "${ZSH_PLUGINS}" clone https://github.com/starcraftman/zsh-git-prompt > /dev/null
 fi
 if [ ! -d "${ZSH_PLUGINS}/ssh-syntax-highlighting" ]; then
-  git -C "${ZSH_PLUGINS}" clone https://github.com/zsh-users/zsh-syntax-highlighting
+  print_message "Installing ssh-syntax-highlighting"
+  git -C "${ZSH_PLUGINS}" clone https://github.com/zsh-users/zsh-syntax-highlighting > /dev/null
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-stow $(ls -d "*/")
+# stow $(ls -d "*/")
 
-stow alacritty
-stow bc
-stow mpd
-stow ncmpcpp
-stow nvim
-stow ripgrep
-stow tmuxinator
-stow zsh
-stow git
-stow tmux
+stow "${DIR}/alacritty"
+stow "${DIR}/bc"
+stow "${DIR}/mpd"
+stow "${DIR}/ncmpcpp"
+stow "${DIR}/nvim"
+stow "${DIR}/ripgrep"
+stow "${DIR}/tmuxinator"
+stow "${DIR}/zsh"
+stow "${DIR}/git"
+stow "${DIR}/tmux"
 
 OS=$(uname)
 
 if [ "${OS}" = 'Darwin' ]; then
   print_message "MacOS detected"
-  stow espanso
-  stow karabiner
+  stow "${DIR}/espanso"
+  stow "${DIR}/karabiner"
 else if [ "${OS}" = 'Linux' ]; then
   print_message "Linux detected"
-  stow xinit
+  stow "${DIR}/xinit"
 else
   echo "Unsupported OS."
 fi
