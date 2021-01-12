@@ -1,0 +1,9 @@
+name: blog
+root: ~/dev/blog
+
+windows:
+  - yarn: yarn dev
+  - edit:
+      root: ~/dev/blog/posts
+      panes:
+        - nvim

@@ -1,0 +1,45 @@
+# Better defaults
+if [ $(uname) = 'Darwin' ]; then
+    alias ls='ls -GF'
+    alias cl='fc -e -|pbcopy'
+    alias bs='brew search'
+    alias bi='brew install'
+    alias bu='brew uninstall'
+    alias bcs='brew search --cask'
+    alias bci='brew install --cask'
+    alias bcu='brew uninstall --cask'
+else
+    alias ls='ls --color -h --group-directories-first'
+fi
+
+# Dotfiles
+alias dots='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+alias ds='dots status'
+alias dt='dots grep -i todo'
+alias vv='nvim ~/.config/nvim/init.lua'
+
+# Docker
+# TODO switch to a function and create reusable container, update it if necessary
+alias dr='docker run --rm -it -v $(pwd):/data'
+alias dev='docker run --rm -it -v $(pwd):/data samirettali/ubuntu bash'
+
+# Misc
+alias tree='tree -C'
+alias vim='nvim'
+alias tl='tmux ls'
+alias qre='qrencode -l H -t ANSI256UTF8'
+alias qrd='pngpaste - | zbarimg -q --raw - | tee | pbcopy'
+alias tms='tmuxinator start'
+
+# Git
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit -v'
+alias gcl='git clone'
+alias gd='git diff'
+alias gp='git push'
+alias gst='git status'
+
+# Youtube
+alias ytdl='youtube-dl -R infinite -f bestvideo+bestaudio --output "%(title)s.%(ext)s"'
+alias ytmp3='youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audio-quality 0 -w --output "%(title)s.%(ext)s"'

@@ -1,0 +1,26 @@
+# export PATH=$PATH:/usr/local/sbin:$PYENV_ROOT/bin:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.cargo/bin:/usr/lib/go-1.14/bin:/usr/local/opt/llvm/bin
+# $PYENV_ROOT/bin:
+export PATH=$PATH:/usr/local/sbin:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/opt/llvm/bin
+[ -d "$HOME/.zsh/zsh-git-prompt/src/.bin" ] && export PATH=$PATH:$HOME/.zsh/zsh-git-prompt/src/.bin
+export DIRSTACKSIZE=20
+export SAVEHIST=100000
+export HISTSIZE=10000
+export HISTFILE=~/.zsh_history
+
+export LSCOLORS=Gxfxcxdxbxegedabagacad
+export EDITOR=nvim
+
+if [ $(command -v ruby) ]; then
+    export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
+fi
+
+if [ $(command -v python3) ]; then
+    export PATH=$PATH:$(python3 -c "import sys; print(':'.join(p for p in sys.path if '$HOME' in p))")
+fi
+
+export BC_ENV_ARGS="${HOME}/.config/bc"
+
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+
+# Reduce time to enter normal mode
+KEYTIMEOUT=1

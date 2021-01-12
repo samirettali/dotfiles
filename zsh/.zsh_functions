@@ -1,0 +1,154 @@
+# Edit all files containing a string
+vack() {
+    vim $(ack -l "$1")
+}
+
+# Go up n directories
+up() {
+    cd $(eval printf '../'%.0s {1.."$1"})
+}
+
+# Create new tmux session with name if passed
+t() {
+    if [ -z "$1" ]; then
+        tmux
+    else
+        tmux new -A -s "$1"
+    fi
+}
+
+# Throw away directory
+tad() {
+    local ts=$(date +%s)
+    local d="$HOME/.throw-away/$ts"
+    mkdir -p "$d"
+    (cd "$d"; zsh -c tmux)
+    rm -rf "$d"
+}
+
+# Better tree visualization
+tre() {
+    tree -aC -I '.git|node_modules|vendor|.idea|.vscode' --dirsfirst "$@" | less -FRNX
+}
+
+# Add extension to all files in a directory
+add_extension() {
+    find . -type f -exec mv '{}' '{}'.$1 \;
+}
+
+# Go to git repository root
+gr() {
+    readonly old_pwd="$PWD"
+    while [[ 1 ]]; do
+        cd ..
+        if [[ "$PWD" == "/" ]]; then
+            cd "$old_pwd"
+            echo "No repository found, returned to $PWD"
+            return 1
+        fi
+        for repo in ".git" ".hg"; do
+            if [[ -d "$repo" ]]; then
+                echo "Found $repo at $PWD"
+                return 0
+            fi
+        done
+    done
+}
+
+# Backup file
+bak() {
+    declare target=$1;
+    if [[ "${target:0-1}" = "/" ]]; then
+        target=${target%%/}; # Strip trailing / of directories
+    fi
+    cp -r -v $target{,.bak}
+}
+
+# Foreground and background switching
+fg-bg() {
+  if [[ $#BUFFER -eq 0 ]]; then
+    fg
+  else
+    zle push-input
+  fi
+}
+
+# Start a simple web server in the current directory
+http() {
+    local port="${1:-8000}"
+    python3 -m http.server $port
+}
+
+# Function that starts my Kali Linux container
+kali() {
+    [[ $(docker ps -f "name=kali" --format '{{.Names}}') == kali ]] && docker exec -it kali bash || docker run --rm -it --name kali -h ctf --cap-add sys_admin --privileged=true -e DISPLAY=host.docker.internal:0 -v $HOME/dev/recon:/root/recon -v $HOME/Hacking:/root/hacking -p 135:135 -p 139:139 -p 445:445 -p 1337:1337 -p 9000-9010:9000-9010 samirettali/kali bash
+}
+
+# List all interfaces and their IPs
+ips() {
+    interfaces=$(ifconfig | grep -oE '^[a-z0-9]+' | sort -u)
+    while read interface; do
+        ip=$(ifconfig "${interface}" | grep 'inet ' | cut -d ' ' -f 2)
+        [ -z "${ip}" ] || printf '%-10s %s\n' "${interface}" "${ip}"
+    done <<< "${interfaces}"
+}
+
+# Test coverage for Go
+gotest() {
+    go test -cover -coverprofile=c.out
+    go tool cover -html=c.out -o coverage.html
+}
+
+gobench() {
+    go test -bench=. -cpuprofile=cpu.out
+}
+
+gocheck() {
+    go vet .
+    errcheck .
+    golangci-lint run
+    goconst ./...
+}
+
+mvk() {
+    mv "${@}" ~/Hacking/ctf
+}
+
+ntr() {
+    # TODO add -d
+      find . -path "./.git" -prune -o -path './node_modules' -prune -o -type f -print | entr -csr \"${@}\"
+}
+
+# A simple function that generates a bip39 mnemonic seed with optional count and
+# length. It is not intended for actual usage but for testing purposes only.
+seed() {
+    length=${1:-12}
+    count=${2:-1}
+    for i in {1..$count}; do
+        seed=$(sort -R "$HOME/Documents/english.txt" | head -n "${length}" | \
+            paste -sd ' ' -)
+        echo $seed
+        if [[ $count -eq 1 ]]; then
+            echo $seed | tr -d '\n' | pbcopy
+        fi
+    done
+}
+
+
+j() {
+    javac "${1}" && java "${1%.java}" && rm "${1%.java}.class"
+}
+
+upd() {
+  if [ $(uname) = 'Darwin' ]; then
+    brew update
+    brew upgrade
+    brew upgrade --cask
+    brew upgrade --fetch-HEAD
+  fi
+  find ~/.zsh -type d -depth 1 -exec git --git-dir={}/.git --work-tree={} pull \;
+}
+
+pss() {
+    ps auxww | grep -i "${@}" | grep -v grep
+}

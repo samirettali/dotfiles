@@ -1,0 +1,16 @@
+name: ctf
+root: ~/dev/blog
+
+windows:
+  - servers:
+      layout: even-vertical
+      panes:
+        - sudo openvpn ~/Hacking/ctf/htb/samirettali.ovpn
+  - editor:
+      layout: tiled
+      panes:
+        - cd ~/dev/blog/content/writeups && vim .
+  - kali:
+      layout: even-horizontal
+      panes:
+        - kali
