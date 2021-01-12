@@ -42,8 +42,8 @@ if [ ! -d "${ZSH_PLUGINS}/zsh-git-prompt" ]; then
   print_message "Installing zsh-git-prompt"
   git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/starcraftman/zsh-git-prompt
 fi
-if [ ! -d "${ZSH_PLUGINS}/ssh-syntax-highlighting" ]; then
-  print_message "Installing ssh-syntax-highlighting"
+if [ ! -d "${ZSH_PLUGINS}/zsh-syntax-highlighting" ]; then
+  print_message "Installing zsh-syntax-highlighting"
   git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting 
 fi
 
