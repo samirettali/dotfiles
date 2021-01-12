@@ -38,8 +38,8 @@ if [ ! -d "${ZSH_PLUGINS}/zsh-autosuggestions" ]; then
   print_message "Installing zsh-autosuggestions"
   git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-autosuggestions
 fi
-if [ ! -d "${ZSH_PLUGINS}/ssh-git-prompt" ]; then
-  print_message "Installing ssh-git-prompt"
+if [ ! -d "${ZSH_PLUGINS}/zsh-git-prompt" ]; then
+  print_message "Installing zsh-git-prompt"
   git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/starcraftman/zsh-git-prompt
 fi
 if [ ! -d "${ZSH_PLUGINS}/ssh-syntax-highlighting" ]; then
