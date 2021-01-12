@@ -46,6 +46,8 @@ else
   exit 1
 fi
 
+stow -t "${HOME}" -T stow
+
 git submodule init --quiet
 
 # Link files with stow and download submodules if any
@@ -56,7 +58,7 @@ for module in "${modules[@]}"; do
     if [[ ! -z $(git submodule status "${module}/${package}") ]]; then
       git submodule update --quiet "${module}/${package}"
     fi
-    stow -t "${HOME}" -d  "${module}" -R "${package}"
+    stow -t "${HOME}" -d "${module}" -R "${package}"
   done
   echo
 done
