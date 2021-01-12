@@ -8,8 +8,8 @@ command -v git >/dev/null 2>&1 || { echo >&2 "git is required, aborting."; exit 
 command -v stow >/dev/null 2>&1 || { echo >&2 "stow is required, aborting."; exit 1; }
 
 print_message() {
-  GREEN='\033[0;32m'
-  NC='\033[0m'
+  GREEN="\033[0;32m"
+  NC="\033[0m"
   echo -e "${GREEN}[*]${NC} ${*}"
 }
 
@@ -47,32 +47,44 @@ if [ ! -d "${ZSH_PLUGINS}/zsh-syntax-highlighting" ]; then
   git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting 
 fi
 
-stow -t "${HOME}" ack
-stow -t "${HOME}" alacritty
-stow -t "${HOME}" bc
-stow -t "${HOME}" git
-stow -t "${HOME}" mpd
-stow -t "${HOME}" ncmpcpp
-stow -t "${HOME}" nvim
-stow -t "${HOME}" ripgrep
-stow -t "${HOME}" scripts
-stow -t "${HOME}" tmux
-stow -t "${HOME}" tmuxinator
-stow -t "${HOME}" zsh
+# stow -t "${HOME}" ack
+# stow -t "${HOME}" alacritty
+# stow -t "${HOME}" bc
+# stow -t "${HOME}" git
+# stow -t "${HOME}" mpd
+# stow -t "${HOME}" ncmpcpp
+# stow -t "${HOME}" nvim
+# stow -t "${HOME}" ripgrep
+# stow -t "${HOME}" scripts
+# stow -t "${HOME}" tmux
+# stow -t "${HOME}" tmuxinator
+# stow -t "${HOME}" zsh
 
 OS=$(uname)
+modules=()
 
-if [[ "${OS}" = 'Darwin' ]]; then
+if [[ "${OS}" = "Darwin" ]]; then
   print_message "MacOS detected"
-  stow -t "${HOME}" espanso
-  stow -t "${HOME}" karabiner
-elif [[ "${OS}" = 'Linux' ]]; then
+  modules=("common" "mac")
+elif [[ "${OS}" = "Linux" ]]; then
   print_message "Linux detected"
-  stow -t "${HOME}" xdefaults
-  stow -t "${HOME}" xinit
+  modules=(common linux)
 else
   echo "Unsupported OS."
+  exit 1
 fi
+
+for module in "${modules[@]}"; do
+  print_message "Installing ${module} packages"
+  # stow -t "${HOME}" -
+  for package in $(find ${module} -maxdepth 1 | grep '/' | sed 's|^.*/||'); do
+    print_message "${package}"
+    stow -t "${HOME}" -d  "${module}" "${package}"
+  done
+  echo
+done
+
+print_message "Done"
 
 # if hash stack 2>/dev/null; then
 #   echo "Haskell detected, compiling zsh-git-prompt..."
