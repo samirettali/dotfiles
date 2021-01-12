@@ -31,7 +31,7 @@ if [ ! -d "${ZSH_PLUGINS}/ssh-syntax-highlighting" ]; then
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-stow "${DIR}/*"
+stow $(ls -d "*/")
 
 # if hash stack 2>/dev/null; then
 #   echo "Haskell detected, compiling zsh-git-prompt..."
