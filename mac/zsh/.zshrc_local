@@ -9,6 +9,13 @@ alias bci='brew install --cask'
 alias bcu='brew uninstall --cask'
 alias dots='cd ~/dev/dotfiles && nvim'
 
+update() {
+  brew update
+  brew upgrade
+  brew upgrade --cask
+  brew upgrade --fetch-HEAD
+}
+
 export PATH="$PATH:$HOME/.axiom/interact"
 source /Users/samir/.axiom/functions/autocomplete.zsh
 compdef _axiom-ssh axiom-rm

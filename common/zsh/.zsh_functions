@@ -110,10 +110,6 @@ gocheck() {
     goconst ./...
 }
 
-mvk() {
-    mv "${@}" ~/Hacking/ctf
-}
-
 ntr() {
     # TODO add -d
       find . -path "./.git" -prune -o -path './node_modules' -prune -o -type f -print | entr -csr \"${@}\"
@@ -137,16 +133,6 @@ seed() {
 
 j() {
     javac "${1}" && java "${1%.java}" && rm "${1%.java}.class"
-}
-
-upd() {
-  if [ $(uname) = 'Darwin' ]; then
-    brew update
-    brew upgrade
-    brew upgrade --cask
-    brew upgrade --fetch-HEAD
-  fi
-  find ~/.zsh -type d -depth 1 -exec git --git-dir={}/.git --work-tree={} pull \;
 }
 
 pss() {
