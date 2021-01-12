@@ -47,19 +47,6 @@ if [ ! -d "${ZSH_PLUGINS}/zsh-syntax-highlighting" ]; then
   git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting 
 fi
 
-# stow -t "${HOME}" ack
-# stow -t "${HOME}" alacritty
-# stow -t "${HOME}" bc
-# stow -t "${HOME}" git
-# stow -t "${HOME}" mpd
-# stow -t "${HOME}" ncmpcpp
-# stow -t "${HOME}" nvim
-# stow -t "${HOME}" ripgrep
-# stow -t "${HOME}" scripts
-# stow -t "${HOME}" tmux
-# stow -t "${HOME}" tmuxinator
-# stow -t "${HOME}" zsh
-
 OS=$(uname)
 modules=()
 
@@ -68,7 +55,7 @@ if [[ "${OS}" = "Darwin" ]]; then
   modules=("common" "mac")
 elif [[ "${OS}" = "Linux" ]]; then
   print_message "Linux detected"
-  modules=(common linux)
+  modules=("common" "linux")
 else
   echo "Unsupported OS."
   exit 1
