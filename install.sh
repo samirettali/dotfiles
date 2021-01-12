@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -euf
-set -o pipeline
+set -o pipefail
 
 # Check if zsh and stow are installed
 command -v git >/dev/null 2>&1 || { echo >&2 "git is required, aborting."; exit 1; }
@@ -17,7 +17,7 @@ print_message() {
 if [ ! -d "${HOME}/.tmux/plugins/tpm" ]; then
   mkdir -p "${HOME}/.tmux/plugins"
   print_message "Installing tmux plugin manager"
-  git --quiet -C "${HOME}/.tmux/plugins" clone https://github.com/tmux-plugins/tpm
+  git -C "${HOME}/.tmux/plugins" clone --quiet https://github.com/tmux-plugins/tpm
 fi
 
 # Zsh plugings
@@ -29,19 +29,19 @@ fi
 
 if [ ! -d "${ZSH_PLUGINS}/ssh-find-agent" ]; then
   print_message "Installing ssh-find-agent"
-  git --quiet -C "${ZSH_PLUGINS}" clone https://github.com/wwalker/ssh-find-agent
+  git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/wwalker/ssh-find-agent
 fi
 if [ ! -d "${ZSH_PLUGINS}/zsh-autosuggestions" ]; then
   print_message "Installing zsh-autosuggestions"
-  git --quiet -C "${ZSH_PLUGINS}" clone https://github.com/zsh-users/zsh-autosuggestions
+  git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-autosuggestions
 fi
 if [ ! -d "${ZSH_PLUGINS}/ssh-git-prompt" ]; then
   print_message "Installing ssh-git-prompt"
-  git --quiet -C "${ZSH_PLUGINS}" clone https://github.com/starcraftman/zsh-git-prompt
+  git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/starcraftman/zsh-git-prompt
 fi
 if [ ! -d "${ZSH_PLUGINS}/ssh-syntax-highlighting" ]; then
   print_message "Installing ssh-syntax-highlighting"
-  git --quiet -C "${ZSH_PLUGINS}" clone https://github.com/zsh-users/zsh-syntax-highlighting 
+  git -C "${ZSH_PLUGINS}" clone --quiet https://github.com/zsh-users/zsh-syntax-highlighting 
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
