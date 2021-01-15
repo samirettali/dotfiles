@@ -34,7 +34,6 @@ local options = {
       confirm = true,
       wildignore = '*.swp,*.bak,*.pyc,*.class',
       listchars ='tab:»·,trail:·,nbsp:~,eol:¬', -- Characters to visualize instead of whitespaces
-      mouse = 'nv',
       lazyredraw = true,
       timeoutlen = 500,
       completeopt = 'menuone,noinsert,noselect',
