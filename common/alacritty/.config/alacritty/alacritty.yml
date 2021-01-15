@@ -1,10 +1,10 @@
 font:
   normal:
-    family: MesloLGS Nerd Font Mono
-    style: Regular
+    family: SauceCodePro Nerd Font Mono
+    style: Medium
 
   italic:
-    style: Italic
+    style: Medium Italic
 
   bold:
     style: Medium
@@ -14,11 +14,6 @@ font:
 
   use_thin_strokes: false
   size: 14
-
-window:
-  dimensions:
-    width: 80
-    height: 24
 
 draw_bold_text_with_bright_colors: true
 
