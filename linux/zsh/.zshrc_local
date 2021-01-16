@@ -1,1 +1,2 @@
 alias ls='ls --color -h --group-directories-first'
+alias fd='fdfind'
