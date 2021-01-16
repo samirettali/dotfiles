@@ -15,7 +15,7 @@ I previously used a bare git repository to manage my dotfiles[^1] but it became 
 * A `README`, finally
 * Git gitter, finally
 
-## Features
+## Structure
 
 The `install` script basically checks the current operating system, selects what modules to install and uses stow to link each folder.
 
