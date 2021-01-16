@@ -46,7 +46,7 @@ else
   exit 1
 fi
 
-stow -t "${HOME}" -T stow
+stow -t "${HOME}" stow
 
 git submodule init --quiet
 
