@@ -46,7 +46,7 @@ specific configurations:
     └── karabiner
 ```
 
-Application specific plugins are managed using git submodules inside the
+Software specific plugins are managed using git submodules inside the
 corresponding application folder.
 
 ## Missing
