@@ -2,7 +2,7 @@
 map('n', 'Y', 'y$')
 
 -- Copy and paste using system clipboard
-map('v', '<C-c>', '"+y') map('v', '<C-x>', '"+d')
+-- map('v', '<C-c>', '"+y') map('v', '<C-x>', '"+d')
 
 -- Keep text selected after intentating it
 map('v', '<', '<gv')
