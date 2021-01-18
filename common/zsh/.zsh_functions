@@ -1,13 +1,3 @@
-# Edit all files containing a string
-vack() {
-    vim $(ack -l "$1")
-}
-
-# Go up n directories
-up() {
-    cd $(eval printf '../'%.0s {1.."$1"})
-}
-
 # Create new tmux session with name if passed
 t() {
     if [ -z "$1" ]; then
@@ -24,11 +14,6 @@ tad() {
     mkdir -p "$d"
     (cd "$d"; zsh -c tmux)
     rm -rf "$d"
-}
-
-# Better tree visualization
-tre() {
-    tree -aC -I '.git|node_modules|vendor|.idea|.vscode' --dirsfirst "$@" | less -FRNX
 }
 
 # Add extension to all files in a directory
@@ -81,7 +66,7 @@ http() {
 
 # Function that starts my Kali Linux container
 kali() {
-    [[ $(docker ps -f "name=kali" --format '{{.Names}}') == kali ]] && docker exec -it kali bash || docker run --rm -it --name kali -h ctf --cap-add sys_admin --privileged=true -e DISPLAY=host.docker.internal:0 -v $HOME/dev/recon:/root/recon -v $HOME/Hacking:/root/hacking -p 135:135 -p 139:139 -p 445:445 -p 1337:1337 -p 9000-9010:9000-9010 samirettali/kali bash
+    [[ $(docker ps -f "name=kali" --format '{{.Names}}') == kali ]] && docker exec -it kali bash || docker run --rm -it --name kali -h kali -v $HOME/dev/recon:/root/recon -v $HOME/Hacking:/root/hacking -p 9000-9010:9000-9010 samirettali/kali bash
 }
 
 # List all interfaces and their IPs
