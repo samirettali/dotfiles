@@ -7,7 +7,10 @@ export SAVEHIST=100000
 export HISTSIZE=10000
 export HISTFILE=~/.zsh_history
 
-export LSCOLORS=Gxfxcxdxbxegedabagacad
+# vim-superman
+export PATH="$PATH:$HOME/.local/share/nvim/site/pack/packer/start/vim-superman/bin"
+
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 export EDITOR=nvim
 
 if [ $(command -v ruby) ]; then
