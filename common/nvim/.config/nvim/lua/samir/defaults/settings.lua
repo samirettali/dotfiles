@@ -15,7 +15,7 @@ local options = {
       synmaxcol = 200,
       undofile = true,
       spelllang ='it,en_us',
-      textwidth = 80
+      -- textwidth = 80
   },
   [GLOBAL] = {
       bg = 'dark',
@@ -30,6 +30,7 @@ local options = {
       splitright = true,               -- Put new windows right of current
       termguicolors = true,            -- True color support
       wildmode = 'longest:full,full',  -- Command-line completion mode
+      -- columns = 80,
       -- showmatch = true,
       confirm = true,
       wildignore = '*.swp,*.bak,*.pyc,*.class',
@@ -37,7 +38,8 @@ local options = {
       lazyredraw = true,
       timeoutlen = 500,
       completeopt = 'menuone,noinsert,noselect',
-      inccommand = 'split'
+      inccommand = 'split',
+      -- showbreak = true,
   },
   [WINDOW] = {
       cursorline = true,
@@ -46,7 +48,7 @@ local options = {
       number = true,
       relativenumber = true,
       wrap = true,
-      linebreak = true,
+      -- linebreak = true,
       cursorline = true,
       colorcolumn = '81'
   },
