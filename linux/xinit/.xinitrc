@@ -5,7 +5,6 @@ eval $(ssh-agent)
 xrandr --dpi 220
 sh ~/.fehbg &
 # picom -b --experimental-backends --backend glx
-compton --backend glx
 dunst &
 xset s 300 5
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
