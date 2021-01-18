@@ -17,13 +17,14 @@ return require('packer').startup(function()
   -- use {'prettier/vim-prettier', run = 'yarn install'}
     -- \ 'for': ['javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
     -- \ }
-  
+  use {'jez/vim-superman'}
+ 
   -- Git
-  use {'mhinz/vim-signify'}              -- Show git diff in the gutter
+  use {'mhinz/vim-signify'}                    -- Show git diff in the gutter
   use {'rhysd/committia.vim'}                  -- Better commit editing
   use {'tpope/vim-fugitive'}                   -- Git wrapper
   use {'f-person/git-blame.nvim'}
-  
+
   -- Coding
   use {'jiangmiao/auto-pairs'}                 -- Auto completion for quotes, brackets, etc.
   use {'sheerun/vim-polyglot'}                 -- Better syntax highlighting
@@ -31,19 +32,19 @@ return require('packer').startup(function()
   use {'tpope/vim-commentary'}                 -- Commenting plugin
   use {'majutsushi/tagbar'}                    -- Show a panel to browse tags
   -- use {'Valloric/MatchTagAlways'}              -- Highlight matching HTML tag
-  use {'plasticboy/vim-markdown'}              -- Markdown improving
+  -- use {'plasticboy/vim-markdown'}              -- Markdown improving
   use {'AndrewRadev/tagalong.vim'}             -- Automatically rename matching HTML tag
   use {'kana/vim-textobj-user'}
   use {'kana/vim-textobj-indent'}
   use {'iamcco/markdown-preview.nvim', hook = 'cd app && yarn install'}
-  
+
   -- Syntax highlighting
   use {'pantharshit00/vim-prisma'}             -- Prisma syntax
   use {'jparise/vim-graphql'}
   use {'HerringtonDarkholme/yats.vim'}
   use {'othree/html5.vim'}
   use {'othree/yajs.vim'}
-  
+
   use {'nvim-lua/completion-nvim'}             -- Auto completion using LSP
   use {'neovim/nvim-lspconfig'}
   use {'RishabhRD/popfix', hook = 'make' }
@@ -56,7 +57,7 @@ return require('packer').startup(function()
   use {'nvim-telescope/telescope.nvim'}
   use {'nvim-treesitter/nvim-treesitter', run = ":TSUpdate" }
   use {'RRethy/vim-illuminate'}
-  
+
   -- Improving vim's functionalities
   use {'bkad/CamelCaseMotion'}
   use {'chrisbra/Recover.vim'}                 -- Show diff of a recovered or swap file
@@ -84,18 +85,18 @@ return require('packer').startup(function()
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'samirettali/shebang.nvim'}             -- Automatic shebang for new files
   use {'ojroques/vim-oscyank'}
-  
+ 
   -- UI components
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                 -- Status line
-  
+
   -- Tree navigator
   use {'kyazdani42/nvim-web-devicons'}
   use {'kyazdani42/nvim-tree.lua'}
-  
+
   -- -- Note management
   -- use {'wincent/corpus'}
-  
+
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
   use {'bluz71/vim-nightfly-guicolors'}
