@@ -170,10 +170,10 @@ function () {
 
   # Show user@host if I'm in SSH or docker
   if [[ $SSH_CONNECTION ]] || [[ -f /.dockerenv ]]; then
-    local PREFIX="${%n@%m}"
+    export PS1="%B%F{blue}%n@%m%f:%F{blue}%1~%F{yellow}%(1j.*.)%(?..!)%f%F{red}${SUFFIX}%f%b "
+  else
+    export PS1="%B%%F{blue}%1~%F{yellow}%(1j.*.)%(?..!)%f%F{red}${SUFFIX}%f%b "
   fi
-
-  export PS1="%B%F{green}${PREFIX}%F{blue}%1~%F{yellow}%(1j.*.)%(?..!)%f%F{red}${SUFFIX}%f%b "
 }
 export SPROMPT="zsh: correct %F{red}%B'%R'%b%f to %F{green}%B'%r'%b%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
