@@ -7,6 +7,8 @@ export SAVEHIST=100000
 export HISTSIZE=10000
 export HISTFILE=~/.zsh_history
 
+export TERM=xterm-256color
+
 # vim-superman
 export PATH="$PATH:$HOME/.local/share/nvim/site/pack/packer/start/vim-superman/bin"
 
