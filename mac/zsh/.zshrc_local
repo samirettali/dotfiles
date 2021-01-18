@@ -1,5 +1,6 @@
+export CLICOLOR=1
+
 # MacOS specific aliases
-alias ls='ls -GF'
 alias cl='fc -e -|pbcopy'
 alias bs='brew search'
 alias bi='brew install'
@@ -9,7 +10,7 @@ alias bci='brew install --cask'
 alias bcu='brew uninstall --cask'
 alias dots='cd ~/dev/dotfiles && nvim'
 
-update() {
+upd() {
   brew update
   brew upgrade
   brew upgrade --cask
