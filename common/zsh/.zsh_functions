@@ -66,14 +66,18 @@ http() {
 
 # Function that starts my Kali Linux container
 kali() {
-    if [[ -z $(docker ps --filter 'name=kali' --format '{{.Names}}') ]]; then
+    if [[ $(docker container inspect -f '{{.State.Status}}' kali 2>/dev/null) == 'exited' ]]; then
+        docker start -a kali
+    elif [[ $(docker container inspect -f '{{.State.Status}}' kali 2>/dev/null) == 'running' ]]; then
+        docker exec -it kali ./entrypoint.sh
+    elif [[ -z $(docker ps --filter 'name=kali' --format '{{.Names}}' 2>/dev/null) ]]; then
         docker run -it \
             --name kali \
             -v $HOME/hacking:/root/hacking \
             -p 9000-9010:9000-9010 \
             samirettali/kali
     else
-        docker exec -it kali ./entrypoint.sh
+        echo "Container is probably starting, wait..."
     fi
 }
 
