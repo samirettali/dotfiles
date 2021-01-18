@@ -7,6 +7,3 @@
 [submodule "common/zsh/.zsh/zsh-syntax-highlighting"]
 	path = common/zsh/.zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
-[submodule "common/tmux/.tmux/tpm"]
-	path = common/tmux/.tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm
