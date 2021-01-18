@@ -172,7 +172,7 @@ function () {
   if [[ $SSH_CONNECTION ]] || [[ -f /.dockerenv ]]; then
     export PS1="%B%F{blue}%n@%m%f:%F{blue}%1~%F{yellow}%(1j.*.)%(?..!)%f%F{red}${SUFFIX}%f%b "
   else
-    export PS1="%B%%F{blue}%1~%F{yellow}%(1j.*.)%(?..!)%f%F{red}${SUFFIX}%f%b "
+    export PS1="%B%F{blue}%1~%F{yellow}%(1j.*.)%(?..!)%f%F{red}${SUFFIX}%f%b "
   fi
 }
 export SPROMPT="zsh: correct %F{red}%B'%R'%b%f to %F{green}%B'%r'%b%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
