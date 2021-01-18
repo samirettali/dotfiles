@@ -3,6 +3,8 @@ local BUFFER = vim.bo
 local GLOBAL = vim.o
 local WINDOW = vim.wo
 
+vim.cmd[[ filetype plugin indent on ]]
+
 local options = {
   [BUFFER] = {
       expandtab = true,
@@ -39,9 +41,6 @@ local options = {
       timeoutlen = 500,
       completeopt = 'menuone,noinsert,noselect',
       inccommand = 'split',
-      undodir = "~/.local/share/nvim/undo",
-      directory = "~/.local/share/nvim/swap",
-      backupdir = "~/.local/share/nvim/swap"
       -- showbreak = true,
   },
   [WINDOW] = {
@@ -65,7 +64,9 @@ local function set_all(opts)
   end
 end
 
-vim.cmd[[ filetype plugin indent on ]]
+vim.cmd 'set undodir=~/.local/share/nvim/undo'
+vim.cmd 'set directory=~/.local/share/nvim/swap'
+vim.cmd 'set backupdir=~/.local/share/nvim/tmp'
 
 vim.g.mapleader = ','
 set_all(options)
