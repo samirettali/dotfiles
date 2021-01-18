@@ -54,9 +54,6 @@ bindkey '^ ' autosuggest-accept
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # FZF plugin
-[ $(uname) = 'Darwin' ] && \
-  source /usr/local/opt/fzf/shell/key-bindings.zsh || \
-  source /usr/share/fzf/key-bindings.zsh
 bindkey '^R' fzf-history-widget
 bindkey '^F' fzf-file-widget
 
