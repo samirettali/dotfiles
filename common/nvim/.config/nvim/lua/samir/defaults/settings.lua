@@ -39,6 +39,9 @@ local options = {
       timeoutlen = 500,
       completeopt = 'menuone,noinsert,noselect',
       inccommand = 'split',
+      undodir = "~/.local/share/nvim/undo",
+      directory = "~/.local/share/nvim/swap",
+      backupdir = "~/.local/share/nvim/swap"
       -- showbreak = true,
   },
   [WINDOW] = {
