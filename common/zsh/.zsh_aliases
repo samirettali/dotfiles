@@ -20,6 +20,7 @@ alias gcl='git clone'
 alias gd='git diff'
 alias gp='git push'
 alias gst='git status'
+alias go='open $(git remote get-url --push origin)'
 
 # Youtube
 alias ytdl='youtube-dl -R infinite -f bestvideo+bestaudio --output "%(title)s.%(ext)s"'
