@@ -1,6 +1,7 @@
 export CLICOLOR=1
 
 # MacOS specific aliases
+alias f='fd'
 alias cl='fc -e -|pbcopy'
 alias bs='brew search'
 alias bi='brew install'
