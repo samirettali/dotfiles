@@ -29,6 +29,9 @@ unsetopt HIST_IGNORE_SPACE
 # Reduce time to enter normal mode
 KEYTIMEOUT=1
 
+# Set autocomplete options for vman
+compdef vman="man"
+
 # Switch between foreground and background
 zle -N fg-bg
 bindkey '^Z' fg-bg
@@ -46,28 +49,6 @@ disable r
 # Autosuggestions plugin
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
-
-if [[ "$TERM" == "xterm-256color" || "$TERM" == "alacritty" ]]; then
-  # Automatic escaping of pasted urls, this has to be here in order to not
-  # interfere with zsh-autosuggestions
-  autoload -U url-quote-magic bracketed-paste-magic
-  zle -N self-insert url-quote-magic
-  zle -N bracketed-paste bracketed-paste-magic
-
-  pasteinit() {
-      OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-      zle -N self-insert url-quote-magic
-  }
-
-  pastefinish() {
-      zle -N self-insert $OLD_SELF_INSERT
-  }
-
-  zstyle :bracketed-paste-magic paste-init pasteinit
-  zstyle :bracketed-paste-magic paste-finish pastefinish
-
-  ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
-fi
 
 # Highlight plugin
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -118,6 +99,28 @@ fi
 #else
 #    start_agent;
 #fi
+
+# Automatic escaping of pasted urls, this has to be here in order to not
+# interfere with zsh-autosuggestions
+if [[ "$TERM" == "xterm-256color" ]]; then
+  autoload -U url-quote-magic bracketed-paste-magic
+  zle -N self-insert url-quote-magic
+  zle -N bracketed-paste bracketed-paste-magic
+
+  pasteinit() {
+      OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+      zle -N self-insert url-quote-magic
+  }
+
+  pastefinish() {
+      zle -N self-insert $OLD_SELF_INSERT
+  }
+
+  zstyle :bracketed-paste-magic paste-init pasteinit
+  zstyle :bracketed-paste-magic paste-finish pastefinish
+
+  ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
+fi
 
 PS1="%F{blue}${SSH_CONNECTION:+%B%n@%m%B}%f%B${SSH_CONNECTION:+:}%b%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B%F{red}$%f%b "
 
