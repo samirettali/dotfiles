@@ -169,8 +169,8 @@ function () {
   fi
 
   # Show user@host if I'm in SSH or docker
-  if [[ ! -z $SSH_CONNECTION ]] || [[ -f /.dockerenv ]]; then
-    local PREFIX="${SSH_CONNECTION:+%n@%m}%f${SSH_CONNECTION:+:}"
+  if [[ $SSH_CONNECTION ]] || [[ -f /.dockerenv ]]; then
+    local PREFIX="${%n@%m}"
   fi
 
   export PS1="%B%F{green}${PREFIX}%F{blue}%1~%F{yellow}%(1j.*.)%(?..!)%f%F{red}${SUFFIX}%f%b "
