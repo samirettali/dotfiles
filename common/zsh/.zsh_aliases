@@ -10,6 +10,7 @@ alias tl='tmux ls'
 alias qre='qrencode -l H -t ANSI256UTF8'
 alias qrd='pngpaste - | zbarimg -q --raw - | tee | pbcopy'
 alias tms='tmuxinator start'
+alias python='python3'
 
 # Git
 alias ga='git add'
