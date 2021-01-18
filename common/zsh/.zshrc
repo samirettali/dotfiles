@@ -1,14 +1,20 @@
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+compinit
 
 source ~/.zsh_aliases
 source ~/.zsh_functions
 source ~/.zsh_env
+[ -f "${HOME}/.zshrc_local" ] && source "${HOME}/.zshrc_local"
 
 # Immediately write commands into history file and load it as soon as it changes
 setopt SHARE_HISTORY
 
 # Do not save duplicate commands
 setopt HIST_FIND_NO_DUPS
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors "${(@s.:.)LSCOLORS}"
+zstyle ':completion:*' completer _last_command_args _complete
 
 # Add a package to completion right after install
 zstyle ':completion:*' rehash true
@@ -45,6 +51,27 @@ fi
 
 # Disable r command
 disable r
+
+# This has to be before zsh-autosuggestions
+if [[ "$TERM" == "xterm-256color" ]]; then
+  autoload -U url-quote-magic bracketed-paste-magic
+  zle -N self-insert url-quote-magic
+  zle -N bracketed-paste bracketed-paste-magic
+
+  pasteinit() {
+      OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+      zle -N self-insert url-quote-magic
+  }
+
+  pastefinish() {
+      zle -N self-insert $OLD_SELF_INSERT
+  }
+
+  zstyle :bracketed-paste-magic paste-init pasteinit
+  zstyle :bracketed-paste-magic paste-finish pastefinish
+
+  ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
+fi
 
 # Autosuggestions plugin
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -99,27 +126,4 @@ fi
 
 # Automatic escaping of pasted urls, this has to be here in order to not
 # interfere with zsh-autosuggestions
-if [[ "$TERM" == "xterm-256color" ]]; then
-  autoload -U url-quote-magic bracketed-paste-magic
-  zle -N self-insert url-quote-magic
-  zle -N bracketed-paste bracketed-paste-magic
-
-  pasteinit() {
-      OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-      zle -N self-insert url-quote-magic
-  }
-
-  pastefinish() {
-      zle -N self-insert $OLD_SELF_INSERT
-  }
-
-  zstyle :bracketed-paste-magic paste-init pasteinit
-  zstyle :bracketed-paste-magic paste-finish pastefinish
-
-  ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
-fi
-
 PS1="%F{blue}${SSH_CONNECTION:+%B%n@%m%B}%f%B${SSH_CONNECTION:+:}%b%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B%F{red}$%f%b "
-
-# Local configs
-[ -f "${HOME}/.zshrc_local" ] && source "${HOME}/.zshrc_local"
