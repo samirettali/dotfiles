@@ -49,12 +49,3 @@ for module in "${modules[@]}"; do
 done
 
 print_message "Done"
-
-# if hash stack 2>/dev/null; then
-#   echo "Haskell detected, compiling zsh-git-prompt..."
-#   cd "${HOME}/.zsh/zsh-git-prompt"
-#   stack setup
-#   stack install
-# else
-#   echo "Haskell (stack) is not installed, using normal zsh-git-prompt"
-# fi
