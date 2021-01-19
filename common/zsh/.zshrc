@@ -89,72 +89,21 @@ if [[ "$TERM" == "xterm-256color" ]]; then
 
   ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
 fi
-
-# Autosuggestions plugin
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-bindkey '^ ' autosuggest-accept
-
-# Highlight plugin
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# FZF plugin
+# FZF shortcuts
 bindkey '^R' fzf-history-widget
 bindkey '^F' fzf-file-widget
 
-# autoload -Uz vcs_info
-# zstyle ':vcs_info:*' enable git hg
-# zstyle ':vcs_info:*' check-for-changes true
-# zstyle ':vcs_info:*' stagedstr "%F{green}●%f" # default 'S'
-# zstyle ':vcs_info:*' unstagedstr "%F{red}●%f" # default 'U'
-# zstyle ':vcs_info:*' use-simple true
-# zstyle ':vcs_info:git+set-message:*' hooks git-untracked
-# zstyle ':vcs_info:git*:*' formats '[%b%m%c%u] ' # default ' (%s)-[%b]%c%u-'
-# zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] ' # default ' (%s)-[%b|%a]%c%u-'
-# zstyle ':vcs_info:hg*:*' formats '[%m%b] '
-# zstyle ':vcs_info:hg*:*' actionformats '[%b|%a%m] '
-# zstyle ':vcs_info:hg*:*' branchformat '%b'
-# zstyle ':vcs_info:hg*:*' get-bookmarks true
-# zstyle ':vcs_info:hg*:*' get-revision true
-# zstyle ':vcs_info:hg*:*' get-mq false
-# zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
-# zstyle ':vcs_info:hg*+set-message:*' hooks hg-message
-
-# function +vi-hg-bookmarks() {
-#   emulate -L zsh
-#   if [[ -n "${hook_com[hg-active-bookmark]}" ]]; then
-#     hook_com[hg-bookmark-string]="${(Mj:,:)@}"
-#     ret=1
-#   fi
-# }
-
-# function +vi-hg-message() {
-#   emulate -L zsh
-#   # Suppress hg branch display if we can display a bookmark instead.
-#   if [[ -n "${hook_com[misc]}" ]]; then
-#     hook_com[branch]=''
-#   fi
-#   return 0
-# }
-
-# function +vi-git-untracked() {
-#   emulate -L zsh
-#   if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
-#     hook_com[unstaged]+="%F{blue}●%f"
-#   fi
-# }
-
-# export RPROMPT_BASE=\${vcs_info_msg_0_}
-# setopt prompt_subst
-# export RPROMPT=$RPROMPT_BASE
-
+# Git prompt
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
-zstyle ':vcs_info:git:*' formats '%F{white}[%b]%f'
+zstyle ':vcs_info:git:*' formats '%F{magenta}%B[%b]%%b%f'
 zstyle ':vcs_info:*' enable git
 
+# Prompt (Heavily inspired from Greg Hurrell)
+# https://github.com/wincent/wincent
 function () {
   if [[ -n "$TMUX" ]]; then
     local LVL=$(($SHLVL - 1))
@@ -177,4 +126,9 @@ function () {
 }
 export SPROMPT="zsh: correct %F{red}%B'%R'%b%f to %F{green}%B'%r'%b%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
-# PS1="%F{blue}${SSH_CONNECTION:+%B%n@%m%B}%f%B${SSH_CONNECTION:+:}%b%F{blue}%B%1~%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%B%F{red}$%f%b "
+# Autosuggestions plugin
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^ ' autosuggest-accept
+
+# Highlight plugin
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
