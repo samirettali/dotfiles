@@ -13,23 +13,8 @@ print_message() {
   echo -e "${GREEN}[*]${NC} ${*}"
 }
 
-# Utility function to check if a repo already exists, if not then print a
-# message and clone it
-clone_repo() {
-  LOCATION="${1}"
-  REPO="${2}"
-  REPO_NAME=$(sed 's|^.*/||' <<< "${REPO}")
-  if [[ ! -d "${LOCATION}/${REPO_NAME}" ]]; then
-    print_message "Cloning ${REPO_NAME} repository"
-    mkdir -p "${LOCATION}"
-    git -C "${LOCATION}" clone --quiet "${REPO}"
-  fi
-}
-
 # Change directory to script location
 cd $(dirname $0)
-
-# clone_repo "${ZSH_PLUGINS}" https://github.com/wwalker/ssh-find-agent
 
 OS=$(uname)
 modules=()
