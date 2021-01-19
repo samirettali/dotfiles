@@ -1,9 +1,6 @@
 [submodule "common/zsh/.zsh/zsh-autosuggestions"]
 	path = common/zsh/.zsh/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "common/zsh/.zsh/zsh-git-prompt"]
-	path = common/zsh/.zsh/zsh-git-prompt
-	url = https://github.com/starcraftman/zsh-git-prompt
 [submodule "common/zsh/.zsh/zsh-syntax-highlighting"]
 	path = common/zsh/.zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
