@@ -6,10 +6,6 @@
 	editor = nvim
 	excludesfile = .gitignore_global
 	ignorecase = false
-	pager = delta
-
-[interactive]
-	diffFilter = delta --color-only
 
 [mergetool "nvim"]
 	cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
@@ -25,6 +21,3 @@
 
 [init]
 	defaultBranch = main
-
-[delta]
-    features = side-by-side line-numbers decorations
