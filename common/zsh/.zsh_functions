@@ -74,6 +74,7 @@ kali() {
         docker run -it \
             --name kali \
             -v $HOME/hacking:/root/hacking \
+            -v $HOME/dev/recon:/root/recon \
             -p 9000-9010:9000-9010 \
             samirettali/kali
     else
