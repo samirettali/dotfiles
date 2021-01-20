@@ -34,6 +34,7 @@ fi
 stow -t "${HOME}" stow
 
 git submodule init --quiet
+git submodule update --quiet
 
 # Link files with stow and download submodules if any
 for module in "${modules[@]}"; do
