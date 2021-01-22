@@ -82,15 +82,6 @@ kali() {
     fi
 }
 
-# List all interfaces and their IPs
-ips() {
-    interfaces=$(ifconfig | grep -oE '^[a-z0-9]+' | sort -u)
-    while read interface; do
-        ip=$(ifconfig "${interface}" | grep 'inet ' | cut -d ' ' -f 2)
-        [ -z "${ip}" ] || printf '%-10s %s\n' "${interface}" "${ip}"
-    done <<< "${interfaces}"
-}
-
 # Test coverage for Go
 gotest() {
     go test -cover -coverprofile=c.out
