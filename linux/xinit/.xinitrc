@@ -1,13 +1,36 @@
 # vim: set ft=sh
-export QT_SCALE_FACTOR=2
+if [[ ! -z $(xrandr | grep '^DP1 connected') ]]; then
+  xrandr --output eDP1 --off --output DP1 --primary --mode 3440x1440 --pos 0x0 --rotate normal --output DP2 --off --output HDMI1 --off --output HDMI2 --off --output VIRTUAL1 --off
+else
+  export QT_SCALE_FACTOR=2
+  xrandr --dpi 220
+  xrdb -merge "${HOME}/.Xresources"
+fi
+
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true '
+
 export XSECURELOCK_NO_COMPOSITE=1
 eval $(ssh-agent)
-xrandr --dpi 220
+
+# Set background
 sh ~/.fehbg &
+
+# Compositor
 # picom -b --experimental-backends --backend glx
+
+# Notification daemon
 dunst &
-xset s 300 5
+
+# Autolock screen
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
-xautolock -locker slock -time 10 -corners '0-0+' -cornerredelay 3600 -cornerdelay 1 &
+
+# Set time to autolock
+xset s 300 5
+
+# Increase keyboard speed
 xset r rate 200 60
+
+slstatus &
+
+# Start dwm
 exec dwm
