@@ -114,7 +114,7 @@ function () {
   if [[ $EUID -eq 0 ]]; then
     local SUFFIX=$(printf '#%.0s' {1..$LVL})
   else
-    local SUFFIX=$(printf '$%.0s' {1..$LVL})
+    local SUFFIX=$(printf '\$%.0s' {1..$LVL})
   fi
 
   # Show user@host if I'm in SSH or docker
