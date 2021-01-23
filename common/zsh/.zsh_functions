@@ -87,7 +87,7 @@ kali() {
             --name "${container_name}" \
             -v $HOME/hacking:/root/hacking \
             -v $HOME/dev/recon:/root/recon \
-            -p "${array[$container_name]}":"${array[$container_name]}" \
+            -p "${ports[$container_name]}":"${ports[$container_name]}" \
             samirettali/kali
     else
         echo "Container is probably starting, wait..."
