@@ -66,15 +66,18 @@ http() {
 
 # Function that starts my Kali Linux container
 kali() {
+    declare -A ports
+
     image="samirettali/kali"
     container_name="kali"
+    ports[kali]="4000-4010"
+    ports[ctf]="9000-9010"
+
     if [[ ! -z "${1}" ]] && [[ "${1}" == "ctf" ]]; then
         image="samirettali/kali:ctf"
         container_name="ctf"
     fi
-    declare -A ports
-    array[kali]="4000-4010"
-    array[ctf]="9000-9010"
+
     if [[ $(docker container inspect -f '{{.State.Status}}' "${image}" 2>/dev/null) == 'exited' ]]; then
         docker start -a "${container_name}"
     elif [[ $(docker container inspect -f '{{.State.Status}}' "${image}" 2>/dev/null) == 'running' ]]; then
