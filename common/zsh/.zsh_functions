@@ -72,6 +72,9 @@ kali() {
         image="samirettali/kali:ctf"
         container_name="ctf"
     fi
+    declare -A ports
+    array[kali]="4000-4010"
+    array[ctf]="9000-9010"
     if [[ $(docker container inspect -f '{{.State.Status}}' "${image}" 2>/dev/null) == 'exited' ]]; then
         docker start -a "${container_name}"
     elif [[ $(docker container inspect -f '{{.State.Status}}' "${image}" 2>/dev/null) == 'running' ]]; then
@@ -81,7 +84,7 @@ kali() {
             --name "${container_name}" \
             -v $HOME/hacking:/root/hacking \
             -v $HOME/dev/recon:/root/recon \
-            -p 9000-9010:9000-9010 \
+            -p "${array[$container_name]}":"${array[$container_name]}" \
             samirettali/kali
     else
         echo "Container is probably starting, wait..."
