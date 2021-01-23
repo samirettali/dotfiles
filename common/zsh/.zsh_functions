@@ -66,29 +66,34 @@ http() {
 
 # Function that starts my Kali Linux container
 kali() {
-    declare -A ports
-
-    image="samirettali/kali"
-    container_name="kali"
-    ports[kali]="4000-4010"
-    ports[ctf]="9000-9010"
-
-    if [[ ! -z "${1}" ]] && [[ "${1}" == "ctf" ]]; then
-        image="samirettali/kali:ctf"
-        container_name="ctf"
-    fi
-
-    if [[ $(docker container inspect -f '{{.State.Status}}' "${image}" 2>/dev/null) == 'exited' ]]; then
-        docker start -a "${container_name}"
-    elif [[ $(docker container inspect -f '{{.State.Status}}' "${image}" 2>/dev/null) == 'running' ]]; then
-        docker exec -it "${container_name}" ./entrypoint.sh
-    elif [[ -z $(docker ps --filter "name=${container_name}" --format '{{.Names}}' 2>/dev/null) ]]; then
+    if [[ $(docker container inspect -f '{{.State.Status}}' kali 2>/dev/null) == 'exited' ]]; then
+        docker start -a kali
+    elif [[ $(docker container inspect -f '{{.State.Status}}' kali 2>/dev/null) == 'running' ]]; then
+        docker exec -it kali ./entrypoint.sh
+    elif [[ -z $(docker ps --filter 'name=kali' --format '{{.Names}}' 2>/dev/null) ]]; then
         docker run -it \
-            --name "${container_name}" \
+            --name kali \
             -v $HOME/hacking:/root/hacking \
             -v $HOME/dev/recon:/root/recon \
-            -p "${ports[$container_name]}":"${ports[$container_name]}" \
+            -p 4000-4010:4000-4010 \
             samirettali/kali
+    else
+        echo "Container is probably starting, wait..."
+    fi
+}
+
+# Function that starts my Kali Linux container
+ctf() {
+    if [[ $(docker container inspect -f '{{.State.Status}}' ctf 2>/dev/null) == 'exited' ]]; then
+        docker start -a ctf
+    elif [[ $(docker container inspect -f '{{.State.Status}}' ctf 2>/dev/null) == 'running' ]]; then
+        docker exec -it ctf ./entrypoint.sh
+    elif [[ -z $(docker ps --filter 'name=ctf' --format '{{.Names}}' 2>/dev/null) ]]; then
+        docker run -it \
+            --name ctf \
+            -v $HOME/hacking:/root/hacking \
+            -p 9000-9010:9000-9010 \
+            samirettali/kali:ctf
     else
         echo "Container is probably starting, wait..."
     fi
