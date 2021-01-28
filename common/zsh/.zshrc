@@ -128,6 +128,8 @@ export SPROMPT="zsh: correct %F{red}%B'%R'%b%f to %F{green}%B'%r'%b%f [%B%Uy%u%b
 
 # Autosuggestions plugin
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#858585"
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 bindkey '^ ' autosuggest-accept
 
 # Highlight plugin
