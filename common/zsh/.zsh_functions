@@ -58,12 +58,6 @@ fg-bg() {
   fi
 }
 
-# Start a simple web server in the current directory
-http() {
-    local port="${1:-8000}"
-    python3 -m http.server $port
-}
-
 # Function that starts my Kali Linux container
 kali() {
     if [[ $(docker container inspect -f '{{.State.Status}}' kali 2>/dev/null) == 'exited' ]]; then
