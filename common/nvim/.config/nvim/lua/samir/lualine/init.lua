@@ -49,6 +49,43 @@ lualine.inactiveSections = {
   lualine_z = {  }
 }
 
--- lualine.theme = 'auto'
+local colors = {
+  color3   = "#1c1c1c",
+  color6   = "#b2b2b2",
+  color7   = "#82aaff",
+  color8   = "#d183e8",
+  color0   = "#373c40",
+  color1   = "#ff5454",
+  color2   = "#eeeeee",
+  color9   = "#8cc85f",
+}
+
+local moonfly = {
+  replace = {
+    a = { fg = colors.color0, bg = colors.color1 , "bold", },
+    b = { fg = colors.color2, bg = colors.color3 },
+  },
+  inactive = {
+    a = { fg = colors.color6, bg = colors.color3 , "bold", },
+    b = { fg = colors.color6, bg = colors.color3 },
+    c = { fg = colors.color6, bg = colors.color3 },
+  },
+  normal = {
+    a = { fg = colors.color0, bg = colors.color7 , "bold", },
+    b = { fg = colors.color2, bg = colors.color3 },
+    c = { fg = colors.color2, bg = colors.color3 },
+  },
+  visual = {
+    a = { fg = colors.color0, bg = colors.color8 , "bold", },
+    b = { fg = colors.color2, bg = colors.color3 },
+  },
+  insert = {
+    a = { fg = colors.color0, bg = colors.color9 , "bold", },
+    b = { fg = colors.color2, bg = colors.color3 },
+  },
+}
+
+
+lualine.theme = moonfly
 
 lualine.status()
