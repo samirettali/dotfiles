@@ -122,9 +122,8 @@ function () {
 }
 
 # Autosuggestions plugin
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#858585"
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept
 
 # Highlight plugin
