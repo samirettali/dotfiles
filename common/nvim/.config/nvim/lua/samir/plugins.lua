@@ -26,7 +26,7 @@ return require('packer').startup(function()
   use {'f-person/git-blame.nvim'}
 
   -- Coding
-  use {'jiangmiao/auto-pairs'}                 -- Auto completion for quotes, brackets, etc.
+  use {'windwp/nvim-autopairs'}                -- Autopair brackets and other symbols
   use {'sheerun/vim-polyglot'}                 -- Better syntax highlighting
   use {'fatih/vim-go'}                         -- Golang plugins
   use {'tpope/vim-commentary'}                 -- Commenting plugin
