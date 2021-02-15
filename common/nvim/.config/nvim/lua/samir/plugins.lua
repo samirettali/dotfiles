@@ -30,7 +30,7 @@ return require('packer').startup(function()
   use {'windwp/nvim-autopairs'}                -- Autopair brackets and other symbols
   use {'sheerun/vim-polyglot'}                 -- Better syntax highlighting
   use {'fatih/vim-go'}                         -- Golang plugins
-  use {'tpope/vim-commentary'}                 -- Commenting plugin
+  use {'b3nj5m1n/kommentary'}                  -- Commenting plugin
   use {'majutsushi/tagbar'}                    -- Show a panel to browse tags
   -- use {'Valloric/MatchTagAlways'}              -- Highlight matching HTML tag
   -- use {'plasticboy/vim-markdown'}              -- Markdown improving
