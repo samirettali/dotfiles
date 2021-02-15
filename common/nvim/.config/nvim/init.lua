@@ -9,6 +9,7 @@ require 'samir.lsp'
 
 -- Load plugins settings
 -- require 'samir.gitsigns'
+require 'samir.prettier'
 require 'samir.barbar'
 require 'samir.camelcasemotion'
 require 'samir.colorizer'

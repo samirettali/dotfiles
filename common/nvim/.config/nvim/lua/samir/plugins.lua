@@ -14,9 +14,10 @@ return require('packer').startup(function()
   use {'wbthomason/packer.nvim', opt = true}
 
   use {'jremmen/vim-ripgrep'}                  -- Ripgrep integration
-  -- use {'prettier/vim-prettier', run = 'yarn install'}
-    -- \ 'for': ['javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html']
-    -- \ }
+  use {'prettier/vim-prettier',
+    run = 'yarn install',
+    ft = { 'javascript', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html' }
+  }
   use {'jez/vim-superman'}
  
   -- Git
@@ -47,16 +48,25 @@ return require('packer').startup(function()
 
   use {'nvim-lua/completion-nvim'}             -- Auto completion using LSP
   use {'neovim/nvim-lspconfig'}
-  use {'RishabhRD/popfix', hook = 'make' }
-  use {'RishabhRD/nvim-lsputils'}
-  use {'nvim-lua/popup.nvim'}
+  -- use {'RishabhRD/popfix', hook = 'make' }
+  -- use {'RishabhRD/nvim-lsputils'}
   -- use {'nvim-lua/lsp_extensions.nvim'}
-  use {'nvim-lua/plenary.nvim'}
+  use {'glepnir/lspsaga.nvim'}
+
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use {'RRethy/vim-illuminate'}
+
+  -- Snippets integration
   use {'hrsh7th/vim-vsnip'}
   use {'hrsh7th/vim-vsnip-integ'}
-  use {'nvim-telescope/telescope.nvim'}
-  use {'nvim-treesitter/nvim-treesitter', run = ":TSUpdate" }
-  use {'RRethy/vim-illuminate'}
+
+  -- Fuzzy file finder
+  use {'nvim-telescope/telescope.nvim',
+    requires = {{
+      'nvim-lua/popup.nvim',
+      'nvim-lua/plenary.nvim',
+    }}
+  }
 
   -- Improving vim's functionalities
   use {'bkad/CamelCaseMotion'}
@@ -75,7 +85,7 @@ return require('packer').startup(function()
   use {'christoomey/vim-sort-motion'}          -- Add sort motion
   use {'tpope/vim-eunuch'}                     -- Adds UNIX commands
   use {'machakann/vim-highlightedundo'}        -- Highlights undo region
-  use {'stefandtw/quickfix-reflector.vim'}
+  -- use {'stefandtw/quickfix-reflector.vim'}
   use {'wellle/targets.vim'}                   -- Add more targets for commands
   use {'rbgrouleff/bclose.vim'}
   use {'francoiscabrol/ranger.vim'}
