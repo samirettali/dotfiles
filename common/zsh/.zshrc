@@ -24,10 +24,6 @@ setopt NO_CASE_GLOB
 # Case insensitive globbing
 setopt AUTO_CD
 
-# Ask for correction when entering a wrong command
-setopt CORRECT
-setopt CORRECT_ALL
-
 # Options
 unsetopt HIST_IGNORE_SPACE
 
@@ -124,7 +120,6 @@ function () {
     export PS1="%B%F{blue}%1~%F{yellow}%(1j.*.)%(?..!)%f%F{red}${SUFFIX}%f%b "
   fi
 }
-export SPROMPT="zsh: correct %F{red}%B'%R'%b%f to %F{green}%B'%r'%b%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
 # Autosuggestions plugin
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
