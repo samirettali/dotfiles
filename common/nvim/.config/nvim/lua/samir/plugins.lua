@@ -34,6 +34,7 @@ return require('packer').startup(function()
   use {'majutsushi/tagbar'}                    -- Show a panel to browse tags
   -- use {'Valloric/MatchTagAlways'}              -- Highlight matching HTML tag
   -- use {'plasticboy/vim-markdown'}              -- Markdown improving
+  use {'alvan/vim-closetag'}                   -- Automatically close HTML tag
   use {'AndrewRadev/tagalong.vim'}             -- Automatically rename matching HTML tag
   use {'kana/vim-textobj-user'}
   use {'kana/vim-textobj-indent'}
