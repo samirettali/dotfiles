@@ -1,4 +1,5 @@
 export CLICOLOR=1
+export DOCKER_HOST=ssh://xps
 
 upd() {
   brew update
@@ -27,13 +28,3 @@ alias bcu='brew uninstall --cask'
 alias dots='cd ~/dev/dotfiles && nvim'
 
 source /usr/local/opt/fzf/shell/key-bindings.zsh
-
-export PATH="$PATH:$HOME/.axiom/interact"
-source /Users/samir/.axiom/functions/autocomplete.zsh
-compdef _axiom-ssh axiom-rm
-compdef _axiom-ssh axiom-ssh
-compdef _axiom-ssh axiom-select
-compdef _axiom-ssh axiom-backup
-compdef _axiom-ssh axiom-vpn
-compdef _axiom-restore axiom-restore
-compdef _axiom-deploy axiom-deploy
