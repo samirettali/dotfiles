@@ -2,8 +2,14 @@ matches:
   - trigger: ":gm"
     replace: "ettali.samir@gmail.com"
 
-  - trigger: ":ho"
+  - trigger: ":hone"
     replace: "samirettali@wearehackerone.com"
+
+  - trigger: ":dots"
+    replace: "https://github.com/samirettali/dotfiles"
+
+  - trigger: ":ytrss"
+    replace: "https://www.youtube.com/feeds/videos.xml?channel_id="
 
   - trigger: ":inti"
     replace: "samirettali@intigriti.me"
