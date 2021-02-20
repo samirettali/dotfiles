@@ -20,6 +20,9 @@ provision_macos() {
   font-sauce-code-pro-nerd-font karabiner-elements  maccy cleanshot iina \
     homebrew/cask-drivers/logitech-options alfred iina firefox
 
+  # CTF tools
+  brew install --cask sonic-visualizer
+
   brew install --head neovim
 
   # Make standard directories for neovim
