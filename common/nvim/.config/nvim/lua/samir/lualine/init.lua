@@ -86,6 +86,8 @@ local moonfly = {
 }
 
 
-lualine.theme = moonfly
+lualine.options.theme = moonfly
+lualine.options.section_separators = nil
+lualine.options.component_separators = nil
 
 lualine.status()
