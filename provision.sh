@@ -35,6 +35,8 @@ provision_macos() {
   espanso register
   espanso start
 
+  npm install -g typescript-language-server
+
   # Manual stuff (unfortunately for now)
   # System
   # * Autohide dock
