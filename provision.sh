@@ -37,6 +37,9 @@ provision_macos() {
 
   npm install -g typescript-language-server
 
+  # Disable accents insertion popup
+  defaults write -g ApplePressAndHoldEnabled -bool false
+
   # Manual stuff (unfortunately for now)
   # System
   # * Autohide dock
