@@ -36,7 +36,7 @@ provision_macos() {
   espanso register
   espanso start
 
-  npm install -g typescript-language-server
+  yarn global add expo-cli typescript-language-server
 
   # Disable accents insertion popup
   defaults write -g ApplePressAndHoldEnabled -bool false
