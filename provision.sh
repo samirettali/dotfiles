@@ -14,7 +14,8 @@ provision_macos() {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   brew install git stow tmux fzf golang restic rustup yarn ripgrep pass \
-    pass-otp fd ncdu federico-terzi/espanso pipenv youtube-dl entr scc
+    pass-otp fd ncdu federico-terzi/espanso pipenv youtube-dl entr scc \
+    android-studio cocoapods git-flow
 
   brew install --cask alacritty keepassxc brave-browser rectangle typora \
   font-sauce-code-pro-nerd-font karabiner-elements  maccy cleanshot iina \
