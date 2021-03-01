@@ -1,5 +1,7 @@
 export CLICOLOR=1
 export DOCKER_HOST=ssh://xps
+[[ -d "${HOME}/Library/Android/sdk" ]] && \
+  export ANDROID_SDK_ROOT="${HOME}/Library/Android/sdk"
 
 upd() {
   brew update
