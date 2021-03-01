@@ -83,8 +83,9 @@ if [[ "$TERM" == "xterm-256color" ]]; then
   zstyle :bracketed-paste-magic paste-init pasteinit
   zstyle :bracketed-paste-magic paste-finish pastefinish
 
-  ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
+  ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
 fi
+
 # FZF shortcuts
 bindkey '^R' fzf-history-widget
 bindkey '^F' fzf-file-widget
