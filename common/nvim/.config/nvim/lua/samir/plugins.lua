@@ -28,7 +28,7 @@ return require('packer').startup(function()
 
   -- Coding
   use {'windwp/nvim-autopairs'}                -- Autopair brackets and other symbols
-  use {'sheerun/vim-polyglot'}                 -- Better syntax highlighting
+  -- use {'sheerun/vim-polyglot'}                 -- Better syntax highlighting
   use {'fatih/vim-go'}                         -- Golang plugins
   use {'b3nj5m1n/kommentary'}                  -- Commenting plugin
   use {'majutsushi/tagbar'}                    -- Show a panel to browse tags
@@ -43,7 +43,7 @@ return require('packer').startup(function()
   -- Syntax highlighting
   use {'pantharshit00/vim-prisma'}             -- Prisma syntax
   use {'jparise/vim-graphql'}
-  use {'HerringtonDarkholme/yats.vim'}
+  -- use {'HerringtonDarkholme/yats.vim'}
   use {'othree/html5.vim'}
   use {'othree/yajs.vim'}
 
