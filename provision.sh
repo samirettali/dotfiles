@@ -13,13 +13,20 @@ provision_macos() {
   # Install brew
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-  brew install git stow tmux fzf golang restic rustup yarn ripgrep pass \
+  brew install git stow tmux fzf restic yarn ripgrep pass \
     pass-otp fd ncdu federico-terzi/espanso pipenv youtube-dl entr scc \
-    android-studio cocoapods git-flow
+    git-flow
 
   brew install --cask alacritty keepassxc brave-browser rectangle typora \
-  font-sauce-code-pro-nerd-font karabiner-elements  maccy cleanshot iina \
+  font-sauce-code-pro-nerd-font karabiner-elements maccy cleanshot iina \
     homebrew/cask-drivers/logitech-options alfred iina firefox
+
+  # Compilers
+  brew install rustup golang
+
+  # Mobile Development
+  brew install cocoapods
+  brew install --cask android-studio flutter
 
   # CTF tools
   brew install --cask sonic-visualizer
