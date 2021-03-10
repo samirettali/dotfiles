@@ -15,7 +15,7 @@ provision_macos() {
 
   brew install git stow tmux fzf restic yarn ripgrep pass \
     pass-otp fd ncdu federico-terzi/espanso pipenv youtube-dl entr scc \
-    git-flow ncmpcpp mpd mpc ranger
+    git-flow ncmpcpp mpd mpc ranger tig
 
   brew install --cask alacritty keepassxc brave-browser rectangle typora \
   font-sauce-code-pro-nerd-font karabiner-elements maccy cleanshot iina \
