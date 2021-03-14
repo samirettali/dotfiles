@@ -51,7 +51,7 @@ opt('o', 'undodir', home .. '/.local/share/nvim/undo')
 opt('o', 'directory', home .. '/.local/share/nvim/swap')
 opt('o', 'backupdir', home .. '/.local/share/nvim/tmp')
 
-cmd('colorscheme codedark')
+cmd('colorscheme moonfly')
 cmd(':command! W w')
 cmd(':command! Q q')
 cmd(':command! WQ wq')
