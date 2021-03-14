@@ -1,25 +1,39 @@
+local actions = require('telescope.actions')
+
 require('telescope').setup{
   defaults = {
-    prompt_position = "bottom",
-    prompt_prefix = ">",
+    file_sorter = require('telescope.sorters').get_fzy_sorter,
+
+    file_previewr   = require('telescope.previewers').vim_buffer_cat.new,
+    grep_previewr   = require('telescope.previewers').vim_buffer_vimgrep.new,
+    qflist_previewr = require('telescope.previewers').vim_buffer_qflist.new,
+
     selection_strategy = "reset",
     sorting_strategy = "descending",
     layout_strategy = "horizontal",
-    color_devicons = true,
     file_ignore_patterns = {"node_modules", "docker"},
+    mappings = {
+      i = {
+        -- Also close on Esc in insert mode
+        ["<esc>"] = actions.close,
+      },
+    },
+  },
+  extensions = {
+    fzy_native = {
+      override_generic_sorter =false,
+      override_file_sorter =false,
+    }
   }
 }
 
-map('n', '<C-f>', '<Cmd>Telescope find_files<CR>')
-map('n', '<C-b>', '<Cmd>Telescope buffers<CR>')
-map('n', '<C-g>', '<Cmd>Telescope live_grep<CR>')
+require('telescope').load_extension('fzy_native')
 
--- local functions = {}
+map('n', '<C-f>',      '<Cmd>Telescope find_files<CR>')
+map('n', '<C-b>',      '<Cmd>Telescope buffers<CR>')
+map('n', '<C-g>',      '<Cmd>Telescope live_grep<CR>')
 
--- functions.show_diagnostics = function(opts)
-  -- opts = opts or {}
-  -- vim.lsp.diagnostic.set_loclist({open_loclist = false})
-  -- require'telescope.builtin'.loclist(opts)
--- end
-
--- return functions
+map('n', '<Leader>fR', '<Cmd> lua require("telescope.builtin")["lsp_references"]()<CR>', { noremap = true, silent = true})
+map('n', '<Leader>fS', '<Cmd> lua require("telescope.builtin")["lsp_document_symbols"]()<CR>', { noremap = true, silent = true})
+map('n', '<Leader>fs', '<Cmd> lua require("telescope.builtin")["lsp_workspace_symbols"]()<CR>', { noremap = true, silent = true})
+map('n', '<Leader>fd', '<Cmd> lua require("telescope.builtin")["lsp_workspace_diagnostics"]()<CR>', { noremap = true, silent = true})

@@ -21,10 +21,7 @@ vim.g.nvim_tree_show_icons = {
 --     folder = {default = '', open = ''},
 -- }
 
--- highlight link NvimTreeFolderName NERDTreeDir
--- highlight link NvimTreeSpecialFile Normal
--- " edit_tab = '<C-t>',
-vim.g.nvim_tree_bindings = {
+--[[ vim.g.nvim_tree_bindings = {
     edit = { '<CR>', 'o' },
     edit_vsplit = '<C-v>',
     edit_split = '<C-x>',
@@ -41,6 +38,20 @@ vim.g.nvim_tree_bindings = {
     paste = 'p',
     prev_git_item = '[c',
     next_git_item = ']c',
+}
+ ]]
+
+local function get_lua_cb(cb_name)
+  return string.format(":lua require'nvim-tree'.on_keypress('%s')<CR>", cb_name)
+end
+
+vim.g.nvim_tree_bindings = {
+  ["<cr>"] = get_lua_cb("edit"),
+  ["<s-cr>"] = get_lua_cb("close_node"),
+  ["o"] = get_lua_cb("edit"),
+  ["<BS>"] = get_lua_cb("close_node"),
+  ["l"] = get_lua_cb("edit"),
+  ["h"] = get_lua_cb("close_node"),
 }
 
 map('n', '<C-t>', ':NvimTreeToggle<CR>')

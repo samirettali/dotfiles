@@ -1,3 +1,5 @@
+vim.g.mapleader = ','
+
 -- Yank entire line except newline
 map('n', 'Y', 'y$')
 

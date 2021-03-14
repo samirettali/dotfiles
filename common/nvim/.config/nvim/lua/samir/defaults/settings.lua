@@ -1,75 +1,58 @@
-local INDENT = 2
-local BUFFER = vim.bo
-local GLOBAL = vim.o
-local WINDOW = vim.wo
+local cmd = vim.cmd
+local scopes = { o = vim.o, b = vim.bo, w = vim.wo}
 
-vim.cmd[[ filetype plugin indent on ]]
+local indentation = 2
+local home = os.getenv("HOME")
 
-local options = {
-  [BUFFER] = {
-      expandtab = true,
-      tabstop = INDENT,
-      shiftwidth = INDENT,
-      smartindent = true,
-      softtabstop = INDENT,
-      autoindent = true,
-      synmaxcol = 200,
-      undofile = true,
-      spelllang ='it,en_us',
-      -- textwidth = 80
-  },
-  [GLOBAL] = {
-      bg = 'dark',
-      hidden = true,                   -- Enable modified buffers in background
-      ignorecase = true,               -- Ignore case
-      smartcase = true,                -- Don't ignore case with capitals
-      smarttab = true,
-      joinspaces = false,              -- No double spaces with join after a dot
-      scrolloff = 5,                   -- Lines of context
-      sidescrolloff = 8,               -- Columns of context
-      shiftround = true,               -- Round indent
-      splitbelow = true,               -- Put new windows below current
-      splitright = true,               -- Put new windows right of current
-      termguicolors = true,            -- True color support
-      wildmode = 'longest:full,full',  -- Command-line completion mode
-      -- columns = 80,
-      -- showmatch = true,
-      confirm = true,
-      wildignore = '*.swp,*.bak,*.pyc,*.class',
-      listchars ='tab:»·,trail:·,nbsp:~,eol:¬', -- Characters to visualize instead of whitespaces
-      lazyredraw = true,
-      timeoutlen = 500,
-      completeopt = 'menuone,noinsert,noselect',
-      inccommand = 'split',
-      -- showbreak = true,
-  },
-  [WINDOW] = {
-      cursorline = true,
-      cursorcolumn = false,
-      list = false,
-      number = true,
-      relativenumber = true,
-      wrap = true,
-      -- linebreak = true,
-      cursorline = true,
-      colorcolumn = '81'
-  },
-}
-
-local function set_all(opts)
-  for scope, args in pairs(opts) do
-      for option, value in pairs(args) do
-          scope[option] = value
-      end
+local function opt(scope, key, value)
+  scopes[scope][key] = value
+  if scope ~= 'o' then
+    scopes['o'][key] = value
   end
 end
 
-vim.cmd 'set undodir=~/.local/share/nvim/undo'
-vim.cmd 'set directory=~/.local/share/nvim/swap'
-vim.cmd 'set backupdir=~/.local/share/nvim/tmp'
+opt('b', 'expandtab', true)                -- Insert spaces instead of tabs
+opt('b', 'tabstop', indentation)           -- Tab size
+opt('b', 'shiftwidth', indentation)        -- Number of spaces to use for auto indenting
+opt('b', 'smartindent', true)
+opt('b', 'softtabstop', indentation)
+opt('b', 'autoindent', true)
+opt('b', 'synmaxcol', 200)                 -- Highlight up to the 200th column
+opt('b', 'undofile', true)                 -- Use undo files
+opt('b', 'spelllang', 'it,en_us')
 
-vim.g.mapleader = ','
-set_all(options)
-vim.cmd 'colorscheme moonfly'
-vim.cmd 'set shortmess+=c'
-vim.cmd 'set formatoptions-=t'
+opt('w', 'number', true)                   -- Show line numbers
+opt('w', 'relativenumber', true)           -- Show relative line numbers
+opt('w', 'wrap', true)                     -- Wrap visually long lines
+opt('w', 'cursorline', true)               -- Highlight current line
+opt('w', 'colorcolumn', '81')              -- Highlight 81st column
+
+opt('o', 'hidden', true)                   -- Enable modified buffers in background
+opt('o', 'ignorecase', true)               -- Ignore case
+opt('o', 'smartcase', true)                -- Don't ignore case with capitals
+opt('o', 'smarttab', true)
+opt('o', 'joinspaces', false)              -- No double spaces with join after a dot
+opt('o', 'scrolloff', 5)                   -- Lines of context
+opt('o', 'sidescrolloff', 8)               -- Columns of context
+opt('o', 'shiftround', true)               -- Round indent
+opt('o', 'splitbelow', true)               -- Put new windows below current
+opt('o', 'splitright', true)               -- Put new windows right of current
+opt('o', 'termguicolors', true)            -- True color support
+opt('o', 'wildmode', 'longest:full,full')  -- Command-line completion mode
+opt('o', 'showmatch', true)                -- Temporarily jump to matching parentheresis when inserting one
+opt('o', 'confirm', true)
+opt('o', 'lazyredraw', true)               -- Disable redrawing while running macros
+opt('o', 'inccommand', 'split')
+opt('o', 'mouse', 'nv')                    -- Enable mouse in normal and visual mode
+opt('o', 'showbreak', '↳ ')
+opt('o', 'listchars', 'tab:»·,trail:·,nbsp:~,eol:¬') -- Characters to visualize instead of whitespaces
+opt('o', 'completeopt', 'menuone,noselect')
+opt('o', 'undodir', home .. '/.local/share/nvim/undo')
+opt('o', 'directory', home .. '/.local/share/nvim/swap')
+opt('o', 'backupdir', home .. '/.local/share/nvim/tmp')
+
+cmd('colorscheme codedark')
+cmd(':command! W w')
+cmd(':command! Q q')
+cmd(':command! WQ wq')
+cmd(':command! Wq wq')

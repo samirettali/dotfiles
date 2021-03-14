@@ -15,7 +15,7 @@ provision_macos() {
 
   brew install git stow tmux fzf restic yarn ripgrep pass \
     pass-otp fd ncdu federico-terzi/espanso pipenv youtube-dl entr scc \
-    git-flow ncmpcpp mpd mpc ranger tig
+    git-flow ncmpcpp mpd mpc ranger tig dos2unix
 
   brew install --cask alacritty keepassxc brave-browser rectangle typora \
   font-sauce-code-pro-nerd-font karabiner-elements maccy cleanshot iina \
@@ -43,7 +43,9 @@ provision_macos() {
   espanso register
   espanso start
 
-  yarn global add expo-cli typescript-language-server
+  # Install language servers for Neovim
+  yarn global add expo-cli typescript-language-server vscode-css-languageserver-bin
+  rustup component add rls rust-analysis rust-src
 
   # Disable accents insertion popup
   defaults write -g ApplePressAndHoldEnabled -bool false
