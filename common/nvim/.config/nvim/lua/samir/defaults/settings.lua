@@ -40,11 +40,11 @@ opt('o', 'splitright', true)               -- Put new windows right of current
 opt('o', 'termguicolors', true)            -- True color support
 opt('o', 'wildmode', 'longest:full,full')  -- Command-line completion mode
 opt('o', 'showmatch', true)                -- Temporarily jump to matching parentheresis when inserting one
-opt('o', 'confirm', true)
+opt('o', 'confirm', true)                  -- Ask for some operations like quitting an unsaved file instead of failing
 opt('o', 'lazyredraw', true)               -- Disable redrawing while running macros
-opt('o', 'inccommand', 'split')
+opt('o', 'inccommand', 'split')            -- Show result of substitution as you type
 opt('o', 'mouse', 'nv')                    -- Enable mouse in normal and visual mode
-opt('o', 'showbreak', '↳ ')
+opt('o', 'showbreak', '↳ ')                -- Show character at visually wrapped lines
 opt('o', 'listchars', 'tab:»·,trail:·,nbsp:~,eol:¬') -- Characters to visualize instead of whitespaces
 opt('o', 'completeopt', 'menuone,noselect')
 opt('o', 'undodir', home .. '/.local/share/nvim/undo')

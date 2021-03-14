@@ -13,8 +13,6 @@ end
 return require('packer').startup(function()
   use {'wbthomason/packer.nvim', opt = true}
 
-  use {'jez/vim-superman'}
-
   -- Git
   use {'rhysd/committia.vim'}                  -- Better commit editing
   use {'tpope/vim-fugitive'}                   -- Git wrapper
@@ -25,34 +23,23 @@ return require('packer').startup(function()
   use {'windwp/nvim-autopairs'}                -- Autopair brackets and other symbols
   use {'fatih/vim-go', run = ':GoInstallBinaries'}
   use {'b3nj5m1n/kommentary'}                  -- Commenting plugin
-  -- use {'majutsushi/tagbar'}
   use {'liuchengxu/vista.vim'}                 -- Show a panel to browse tags
-  -- use {'Valloric/MatchTagAlways'}              -- Highlight matching HTML tag
-  -- use {'plasticboy/vim-markdown'}              -- Markdown improving
   use {'alvan/vim-closetag'}                   -- Automatically close HTML tag
   use {'AndrewRadev/tagalong.vim'}             -- Automatically rename matching HTML tag
-  use {'kana/vim-textobj-user'}
-  use {'kana/vim-textobj-indent'}
   use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
 
   -- Syntax highlighting
   use {'pantharshit00/vim-prisma'}             -- Prisma syntax
   use {'jparise/vim-graphql'}                  -- GraphQL syntax
+  use {'dart-lang/dart-vim-plugin'}            -- Dart syntax
   -- use {'HerringtonDarkholme/yats.vim'}
   --[[ use {'othree/html5.vim'}
   use {'othree/yajs.vim'} ]]
-  use {'dart-lang/dart-vim-plugin'}            -- Dart plugin
 
-  -- use {'nvim-lua/completion-nvim'}             -- Auto completion using LSP
+  -- LSP and related
   use {'hrsh7th/nvim-compe'}                   -- Auto completion
-  use {'neovim/nvim-lspconfig'}
-  -- use {'nvim-lua/lsp_extensions.nvim'}
-  use {'glepnir/lspsaga.nvim'}
-  use {'RRethy/vim-illuminate'}
-
-  -- use {'RishabhRD/popfix', run = 'make' }
-  -- use {'RishabhRD/nvim-lsputils'} -- Requires popfix
-
+  use {'neovim/nvim-lspconfig'}                -- LSP
+  use {'glepnir/lspsaga.nvim'}                 -- LSP functions
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
   -- Snippets integration
@@ -68,16 +55,29 @@ return require('packer').startup(function()
   }
   use{'nvim-telescope/telescope-fzy-native.nvim'}
 
-  -- Improving vim's functionalities
-  use {'bkad/CamelCaseMotion'}
+  -- UI components
+  use {'romgrk/barbar.nvim'}                   -- Buffers bar
+  use {'hoob3rt/lualine.nvim'}                 -- Status line
+  use {'Yggdroot/indentLine'}                  -- Show indent line
+  use {'mbbill/undotree'}                      -- Show a tree of undo history
+  use {'kyazdani42/nvim-tree.lua',             -- Tree navigation
+    requires = {{
+      'kyazdani42/nvim-web-devicons'
+    }}
+  }
+
+  -- Objects
+  use {'tpope/vim-surround'}                   -- Add surround object for editing
+  use {'chaoren/vim-wordmotion'}               -- Treat words separated by undescores, case changing etc
+  use {'wellle/targets.vim'}                   -- Add more targets for commands
+
+  -- Improving functionalities
   use {'chrisbra/Recover.vim'}                 -- Show diff of a recovered or swap file
   use {'junegunn/vim-easy-align'}              -- Align stuff based on a symbol
   use {'christoomey/vim-tmux-navigator'}       -- Tmux splits integration
   use {'drzel/vim-split-line'}                 -- Split line at cursor
   use {'wincent/scalpel'}                      -- Replace word under cursor
-  use {'tpope/vim-surround'}                   -- Add surround object for editing
-  use {'machakann/vim-swap'}                   -- Swap delimited items
-  use {'machakann/vim-textobj-delimited'}      -- More delimiting object
+  -- use {'machakann/vim-swap'}                   -- Swap delimited items
   use {'romainl/vim-cool'}                     -- Disable search highlighting on mode change
   use {'tpope/vim-repeat'}                     -- Repeat plugin mappings with .
   use {'norcalli/nvim-colorizer.lua'}          -- Show colors
@@ -85,30 +85,19 @@ return require('packer').startup(function()
   use {'christoomey/vim-sort-motion'}          -- Add sort motion
   use {'tpope/vim-eunuch'}                     -- Adds UNIX commands
   use {'machakann/vim-highlightedundo'}        -- Highlights undo region
-  -- use {'stefandtw/quickfix-reflector.vim'}
-  use {'wellle/targets.vim'}                   -- Add more targets for commands
-  use {'rbgrouleff/bclose.vim'}
   use {'tommcdo/vim-exchange'}                 -- Exchange two objects
   use {'tommcdo/vim-nowchangethat'}            -- Reapply previous change to a different object
   use {'farmergreg/vim-lastplace'}             -- Restore cursor position when reopening files
-  use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'samirettali/shebang.nvim'}             -- Automatic shebang for new files
-  use {'ojroques/vim-oscyank'}
+  use {'ojroques/vim-oscyank'}                 -- Copy in OS clipboard in SSH
+  use {'RRethy/vim-illuminate'}                -- Illuminate occurrences of word under cursor
 
-  -- UI components
-  use {'romgrk/barbar.nvim'}                   -- Buffers bar
-  use {'hoob3rt/lualine.nvim'}                 -- Status line
-  use {'Yggdroot/indentLine'}
-  use {'kyazdani42/nvim-tree.lua',             -- Tree
-    requires = {{
-      'kyazdani42/nvim-web-devicons'
-    }}
-  }
+  -- Other
+  use {'jez/vim-superman'}                     -- Use vman to read man inside vim
 
-  -- Colorscheme
+  -- Colorschemes
   use {'bluz71/vim-moonfly-colors'}
   use {'KeitaNakamura/neodark.vim'}
   use {'ghifarit53/tokyonight-vim'}
   use {'sainnhe/sonokai'}
-  use {'tomasiser/vim-code-dark'}
 end)
