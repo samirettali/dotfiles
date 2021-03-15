@@ -28,6 +28,10 @@ provision_macos() {
   brew install cocoapods
   brew install --cask android-studio flutter
 
+  # Ethereum development
+  brew install truffle
+  brew install --cask ganache
+
   # CTF tools
   brew install --cask sonic-visualizer
 
