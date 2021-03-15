@@ -32,7 +32,7 @@ opt('o', 'ignorecase', true)               -- Ignore case
 opt('o', 'smartcase', true)                -- Don't ignore case with capitals
 opt('o', 'smarttab', true)
 opt('o', 'joinspaces', false)              -- No double spaces with join after a dot
-opt('o', 'scrolloff', 5)                   -- Lines of context
+opt('o', 'scrolloff', 12)                  -- Lines of context
 opt('o', 'sidescrolloff', 8)               -- Columns of context
 opt('o', 'shiftround', true)               -- Round indent
 opt('o', 'splitbelow', true)               -- Put new windows below current
