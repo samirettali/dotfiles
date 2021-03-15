@@ -32,6 +32,7 @@ return require('packer').startup(function()
   use {'pantharshit00/vim-prisma'}             -- Prisma syntax
   use {'jparise/vim-graphql'}                  -- GraphQL syntax
   use {'dart-lang/dart-vim-plugin'}            -- Dart syntax
+  use {'TovarishFin/vim-solidity'}
   -- use {'HerringtonDarkholme/yats.vim'}
   --[[ use {'othree/html5.vim'}
   use {'othree/yajs.vim'} ]]
@@ -58,7 +59,7 @@ return require('packer').startup(function()
   -- UI components
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                 -- Status line
-  use {'Yggdroot/indentLine'}                  -- Show indent line
+  use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'} -- Show indent line
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'kyazdani42/nvim-tree.lua',             -- Tree navigation
     requires = {{
