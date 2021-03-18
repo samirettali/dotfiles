@@ -102,7 +102,9 @@ zstyle ':vcs_info:*' enable git
 # Prompt (Heavily inspired from Greg Hurrell)
 # https://github.com/wincent/wincent
 function () {
-  if [[ -n "$TMUX" ]]; then
+  if [[ "$TERM_PROGRAM" == 'vscode' ]]; then
+    local LVL=$(($SHLVL - 3))
+  elif [[ -n "$TMUX" ]]; then
     local LVL=$(($SHLVL - 1))
   else
     local LVL=$SHLVL
