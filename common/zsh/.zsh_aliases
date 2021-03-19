@@ -20,6 +20,9 @@ alias gcl='git clone'
 alias gd='git diff'
 alias gp='git push'
 alias gst='git status'
+alias gco='git checkout'
+alias gcd='git checkout develop'
+alias gcm='git checkout main'
 alias gor='open $(git remote get-url --push origin)'
 
 # Youtube
