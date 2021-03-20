@@ -43,4 +43,7 @@ map('n', '<Leader>o', ':only<CR>', { silent = true })
 -- Load current buffer
 map('n', '<Leader>l', ':luafile %<CR>', { silent = true })
 
+-- Sync plugins
+map('n', '<Leader>ps', ':PackerSync<CR>', { silent = true })
+
 -- map('n', '<Leader>t', ':%s/\s\+$//e<CR>')
