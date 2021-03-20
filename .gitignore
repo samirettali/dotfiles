@@ -4,3 +4,5 @@ common/nvim/.config/nvim/spell
 common/mpd/.mpd/database
 common/mpd/.mpd/log
 common/mpd/.mpd/state
+
+mac/espanso/Library/Preferences/espanso/user/work.yml
