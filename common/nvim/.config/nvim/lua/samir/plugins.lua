@@ -101,4 +101,5 @@ return require('packer').startup(function()
   use {'KeitaNakamura/neodark.vim'}
   use {'ghifarit53/tokyonight-vim'}
   use {'sainnhe/sonokai'}
+  use {'ChristianChiarulli/nvcode-color-schemes.vim'}
 end)
