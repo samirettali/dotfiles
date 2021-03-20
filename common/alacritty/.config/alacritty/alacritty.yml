@@ -12,7 +12,7 @@ font:
   bold_italic:
     style: Regular Italic
 
-  use_thin_strokes: true
+  use_thin_strokes: false
   size: 14
 
 draw_bold_text_with_bright_colors: true
