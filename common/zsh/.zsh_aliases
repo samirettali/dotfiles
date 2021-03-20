@@ -26,6 +26,7 @@ alias gcm='git checkout main'
 alias gor='open $(git remote get-url --push origin)'
 alias gpl='git pull'
 alias gpb='git push -u origin $(git branch --show-current)'
+alias gl='git log --graph --abbrev-commit --decorate --format=format:"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)" --all'
 
 # Youtube
 alias ytdl='youtube-dl -R infinite -f bestvideo+bestaudio --output "%(title)s.%(ext)s"'
