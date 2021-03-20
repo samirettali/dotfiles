@@ -12,12 +12,6 @@ require('telescope').setup{
     sorting_strategy = "descending",
     layout_strategy = "horizontal",
     file_ignore_patterns = {"node_modules", "docker"},
-    mappings = {
-      i = {
-        -- Also close on Esc in insert mode
-        ["<esc>"] = actions.close,
-      },
-    },
   },
   extensions = {
     fzy_native = {
