@@ -37,7 +37,7 @@ end
 
 local function custom_attach(client)
   -- completion.on_attach(client)
-  map('n', 'gd',         '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+  -- map('n', 'gd',         '<cmd>lua vim.lsp.buf.type_definition()<CR>')
   map('n', 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>')
 
   map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>')
