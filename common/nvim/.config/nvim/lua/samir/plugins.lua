@@ -61,6 +61,7 @@ return require('packer').startup(function()
   use {'hoob3rt/lualine.nvim'}                 -- Status line
   use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'} -- Show indent line
   use {'mbbill/undotree'}                      -- Show a tree of undo history
+  use {'ms-jpq/chadtree'}                      -- Tree file navigator
   use {'kyazdani42/nvim-tree.lua',             -- Tree navigation
     requires = {{
       'kyazdani42/nvim-web-devicons'
