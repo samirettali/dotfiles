@@ -15,11 +15,14 @@ provision_macos() {
 
   brew install git stow tmux fzf restic yarn ripgrep pass \
     pass-otp fd ncdu federico-terzi/espanso pipenv youtube-dl entr scc \
-    git-flow ncmpcpp mpd mpc ranger tig dos2unix
+    git-flow ncmpcpp mpd mpc ranger dos2unix
 
   brew install --cask alacritty keepassxc brave-browser rectangle typora \
   font-sauce-code-pro-nerd-font karabiner-elements maccy cleanshot iina \
     homebrew/cask-drivers/logitech-options alfred iina firefox
+
+  # Git terminal clients
+  brew install lazygit tig
 
   # Compilers
   brew install rustup golang
@@ -30,7 +33,7 @@ provision_macos() {
 
   # Ethereum development
   brew install truffle
-  brew install --cask ganache
+  brew install --cask ganache ipfs
 
   # CTF tools
   brew install --cask sonic-visualizer
