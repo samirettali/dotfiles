@@ -3,18 +3,13 @@ vim.g.mapleader = ','
 -- Yank entire line except newline
 map('n', 'Y', 'y$')
 
--- Copy and paste using system clipboard
--- map('v', '<C-c>', '"+y') map('v', '<C-x>', '"+d')
-
 -- Keep text selected after intentating it
 map('v', '<', '<gv')
 map('v', '>', '>gv')
 
-
 -- Apply macros with Q
 map('n', 'Q', '@q')
--- TODO needed?
-map('v', 'Q', ':norm @q<CR>')
+map('v', 'Q', ':norm @q<CR>') -- TODO needed?
 
 -- Select text inserted during last insert mode usage
 map ('n', 'gV', '`[v`]')
