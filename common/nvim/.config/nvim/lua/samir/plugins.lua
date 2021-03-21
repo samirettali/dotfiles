@@ -59,9 +59,11 @@ return require('packer').startup(function()
   -- UI components
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                 -- Status line
-  use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'} -- Show indent line
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'ms-jpq/chadtree'}                      -- Tree file navigator
+  use {'lukas-reineke/indent-blankline.nvim',  -- Show indent line
+    branch = 'lua'
+  }
   use {'kyazdani42/nvim-tree.lua',             -- Tree navigation
     requires = {{
       'kyazdani42/nvim-web-devicons'
