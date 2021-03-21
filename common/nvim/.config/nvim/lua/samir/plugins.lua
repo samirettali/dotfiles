@@ -99,10 +99,6 @@ return require('packer').startup(function()
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim
 
-  -- Colorschemes
+  -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
-  use {'KeitaNakamura/neodark.vim'}
-  use {'ghifarit53/tokyonight-vim'}
-  use {'sainnhe/sonokai'}
-  use {'ChristianChiarulli/nvcode-color-schemes.vim'}
 end)
