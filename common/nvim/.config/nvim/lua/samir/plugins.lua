@@ -16,6 +16,7 @@ return require('packer').startup(function()
   -- Git
   use {'rhysd/committia.vim'}                  -- Better commit editing
   use {'tpope/vim-fugitive'}                   -- Git wrapper
+  use {'kdheepak/lazygit.nvim'}                -- Lazygit integration
   use {'f-person/git-blame.nvim'}              -- Show git blame
   use {'lewis6991/gitsigns.nvim'}              -- Show git diff in the gutter (requires plenary)
 
@@ -54,7 +55,7 @@ return require('packer').startup(function()
       'nvim-lua/plenary.nvim',
     }}
   }
-  use{'nvim-telescope/telescope-fzy-native.nvim'}
+  use {'nvim-telescope/telescope-fzy-native.nvim'}
 
   -- UI components
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
@@ -69,6 +70,7 @@ return require('packer').startup(function()
       'kyazdani42/nvim-web-devicons'
     }}
   }
+  use {'yardnsm/vim-import-cost', run = 'yarn install' }
 
   -- Objects
   use {'tpope/vim-surround'}                   -- Add surround object for editing
