@@ -1,5 +1,3 @@
-local lualine = require('lualine')
-
 function lspStatus()
   if not vim.tbl_isempty(vim.lsp.buf_get_clients(0)) then
     local indicators = {}
@@ -30,25 +28,6 @@ function lspStatus()
   end
 end
 
-lualine.sections = {
-  lualine_a = { 'mode' },
-  lualine_b = { 'filename' },
-  lualine_c = { lspStatus },
-  lualine_x = { 'location' },
-  lualine_y = { 'progress' },
-  lualine_z = { 'filetype' },
-  lualine_diagnostics = {  }
-}
-
-lualine.inactiveSections = {
-  lualine_a = {  },
-  lualine_b = { 'filename' },
-  lualine_c = {  },
-  lualine_x = { 'location' },
-  lualine_y = {  },
-  lualine_z = {  }
-}
-
 local colors = {
   color3   = "#1c1c1c",
   color6   = "#b2b2b2",
@@ -72,7 +51,7 @@ local moonfly = {
   },
   normal = {
     a = { fg = colors.color0, bg = colors.color7 , "bold", },
-    b = { fg = colors.color2, bg = colors.color3 },
+    b = { fg = colors.color2, bg = colors.color0 },
     c = { fg = colors.color2, bg = colors.color3 },
   },
   visual = {
@@ -85,8 +64,11 @@ local moonfly = {
   },
 }
 
-lualine.options.theme = moonfly
-lualine.options.section_separators = nil
-lualine.options.component_separators = nil
-
-lualine.status()
+require('lualine').setup{
+  options = {
+    theme = moonfly,
+    section_separators = '',
+    component_separators = '',
+  },
+  extensions = { 'chadtree' }
+}
