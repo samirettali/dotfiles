@@ -1,5 +1,5 @@
 local cmd = vim.cmd
-local scopes = { o = vim.o, b = vim.bo, w = vim.wo}
+local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
 
 local indentation = 2
 local home = os.getenv("HOME")
@@ -51,8 +51,9 @@ opt('o', 'undodir', home .. '/.local/share/nvim/undo')
 opt('o', 'directory', home .. '/.local/share/nvim/swap')
 opt('o', 'backupdir', home .. '/.local/share/nvim/tmp')
 
-cmd('colorscheme moonfly')
 cmd(':command! W w')
 cmd(':command! Q q')
 cmd(':command! WQ wq')
 cmd(':command! Wq wq')
+
+vim.g.colors_name = 'moonfly'
