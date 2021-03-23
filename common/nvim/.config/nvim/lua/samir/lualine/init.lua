@@ -60,7 +60,7 @@ local moonfly = {
   },
   insert = {
     a = { fg = colors.color0, bg = colors.color9 , "bold", },
-    b = { fg = colors.color2, bg = colors.color3 },
+    b = { fg = colors.color2, bg = colors.color0 },
   },
 }
 
