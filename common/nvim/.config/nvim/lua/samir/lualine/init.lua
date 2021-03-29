@@ -64,11 +64,31 @@ local moonfly = {
   },
 }
 
+local function obsession()
+   return vim.api.nvim_eval('ObsessionStatus("$", "S")')
+end
+
 require('lualine').setup{
   options = {
     theme = moonfly,
     section_separators = '',
     component_separators = '',
+  },
+  sections = {
+    lualine_a = { {'mode', upper = true} },
+    lualine_b = { {'branch', icon = ''} },
+    lualine_c = { {'filename', file_status = true, full_path = true}, obsession },
+    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location'  },
+  },
+  inactive_sections = {
+    lualine_a = {  },
+    lualine_b = {  },
+    lualine_c = { 'filename' },
+    lualine_x = { 'location' },
+    lualine_y = {  },
+    lualine_z = {   }
   },
   extensions = { 'chadtree' }
 }
