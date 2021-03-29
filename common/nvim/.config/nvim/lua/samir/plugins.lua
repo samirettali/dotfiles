@@ -16,7 +16,6 @@ return require('packer').startup(function()
   -- Git
   use {'rhysd/committia.vim'}                  -- Better commit editing
   use {'tpope/vim-fugitive'}                   -- Git wrapper
-  use {'kdheepak/lazygit.nvim'}                -- Lazygit integration
   use {'f-person/git-blame.nvim'}              -- Show git blame
   use {'lewis6991/gitsigns.nvim'}              -- Show git diff in the gutter (requires plenary)
 
@@ -43,6 +42,9 @@ return require('packer').startup(function()
   use {'neovim/nvim-lspconfig'}                -- LSP
   use {'glepnir/lspsaga.nvim'}                 -- LSP functions
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+
+  use 'RishabhRD/popfix'
+  use 'RishabhRD/nvim-lsputils'
 
   -- Snippets integration
   use {'hrsh7th/vim-vsnip'}
@@ -74,7 +76,7 @@ return require('packer').startup(function()
 
   -- Objects
   use {'tpope/vim-surround'}                   -- Add surround object for editing
-  use {'chaoren/vim-wordmotion'}               -- Treat words separated by undescores, case changing etc
+  -- use {'chaoren/vim-wordmotion'}            -- Treat words separated by undescores, case changing etc
   use {'wellle/targets.vim'}                   -- Add more targets for commands
 
   -- Improving functionalities
@@ -97,6 +99,7 @@ return require('packer').startup(function()
   use {'samirettali/shebang.nvim'}             -- Automatic shebang for new files
   use {'ojroques/vim-oscyank'}                 -- Copy in OS clipboard in SSH
   use {'RRethy/vim-illuminate'}                -- Illuminate occurrences of word under cursor
+  use {'tpope/vim-obsession'}                  -- Continuously save session
 
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim
