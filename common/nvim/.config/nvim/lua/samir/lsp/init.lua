@@ -1,15 +1,14 @@
--- local completion = require('completion')
 local lspconfig = require('lspconfig')
 local saga = require('lspsaga')
 saga.init_lsp_saga()
 
---[[ vim.g.completion_trigger_on_delete = 1
-vim.g.completion_enable_snippet = 'vim-vsnip'
- ]]
+vim.g.completion_trigger_on_delete = 1
+-- vim.g.completion_enable_snippet = 'vim-vsnip'
+
 -- vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
 -- vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
 -- vim.lsp.handlers['textDocument/definition'] = require'lsputil.locations'.definition_handler
--- vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
+vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
 -- vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
 -- vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
 -- vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
@@ -98,26 +97,25 @@ vim.fn.sign_define("LspDiagnosticsSignHint",
     {text = "!", texthl = "LspDiagnosticsSignHint"})
 
 
---[[ vim.api.nvim_exec([[
-  autocmd BufWritePre *.ts lua vim.lsp.buf.formatting_sync(nil, 100)
-  autocmd BufWritePre *.tsx lua vim.lsp.buf.formatting_sync(nil, 100)
+vim.api.nvim_exec([[
+  " autocmd BufWritePre *.ts lua vim.lsp.buf.formatting_sync(nil, 100)
+  " autocmd BufWritePre *.tsx lua vim.lsp.buf.formatting_sync(nil, 100)
 
-  autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
-  autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
+  " autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
+  " autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
 
-  " autocmd BufWritePre *.css lua vim.lsp.buf.formatting_sync(nil, 100)
-  " autocmd BufWritePre *.less lua vim.lsp.buf.formatting_sync(nil, 100)
-  " autocmd BufWritePre *.scss lua vim.lsp.buf.formatting_sync(nil, 100)
-, false) --]]
+  autocmd BufWritePre *.css lua vim.lsp.buf.formatting_sync(nil, 100)
+  autocmd BufWritePre *.less lua vim.lsp.buf.formatting_sync(nil, 100)
+  autocmd BufWritePre *.scss lua vim.lsp.buf.formatting_sync(nil, 100)
+  autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 100)
+]], false)
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 --[[ 'clangd',
-  'cssls',
   'jdtls',
   'pyls',
-  'rls',
 ]]
 
 -- cssls = { filetypes = { 'css', 'less', 'scss' } },
@@ -135,7 +133,8 @@ local servers = {
   },
   html = { filetypes = { 'html' } },
   gopls = { filetypes = { 'go' } },
-  rls = { filetypes = { 'rust' } }
+  rls = { filetypes = { 'rust' } },
+  cssls = { filetypes = { 'css' } }
 }
 
 for lsp, opts in pairs(servers) do
