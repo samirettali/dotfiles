@@ -1,11 +1,11 @@
 require('gitsigns').setup {
 
   signs = {
-    add          = {hl = 'SignifySignAdd'   , text = '+', numhl='GitSignsAddNr'},
-    change       = {hl = 'SignifySignChange', text = '~', numhl='GitSignsChangeNr'},
-    delete       = {hl = 'SignifySignDelete', text = '-', numhl='GitSignsDeleteNr'},
-    topdelete    = {hl = 'SignifySignChange', text = '‾', numhl='GitSignsDeleteNr'},
-    changedelete = {hl = 'SignifySignChange', text = '~', numhl='GitSignsChangeNr'},
+    add          = { text = '+' },
+    change       = { text = '~' },
+    delete       = { text = '-' },
+    topdelete    = { text = '‾' },
+    changedelete = { text = '~' },
   },
   numhl = false,
   keymaps = {
