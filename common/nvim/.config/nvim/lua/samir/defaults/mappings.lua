@@ -17,11 +17,9 @@ map ('n', 'gV', '`[v`]')
 -- Splits
 map('n', '\\', ':vsplit<CR>')
 map('n', '-', ':split<CR>')
-map('n', '\\|', ':vsplit')
-map('n', '_', ':split')
 
 -- Duplicate paragraph
-map('n', '<Leader>d', 'yap<S-}>p')
+map('n', '<Leader>d', 'yap<S-}>p', { silent = true})
 
 -- Go back to last selected file
 map('n', '<Leader><Leader>', '<C-^>')
@@ -30,9 +28,9 @@ map('n', '<Leader><Leader>', '<C-^>')
 map('n', '<Leader>i', ':set list!<CR>', { silent = true })
 
 -- Toggle colorcolumn
--- TODO let or set?
 map('n', '<Leader>cc', ':let &cc = &cc == "" ? 81 : ""<CR>', { silent = true })
 
+-- Keep only the current window
 map('n', '<Leader>o', ':only<CR>', { silent = true })
 
 -- Load current buffer
@@ -41,4 +39,5 @@ map('n', '<Leader>l', ':luafile %<CR>', { silent = true })
 -- Sync plugins
 map('n', '<Leader>ps', ':PackerSync<CR>', { silent = true })
 
--- map('n', '<Leader>t', ':%s/\s\+$//e<CR>')
+-- Remove trailing whitespace
+map('n', '<Leader>t', ':%s/\s\+$//e<CR>')
