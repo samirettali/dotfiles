@@ -63,7 +63,7 @@ return require('packer').startup(function()
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                 -- Status line
   use {'mbbill/undotree'}                      -- Show a tree of undo history
-  use {'ms-jpq/chadtree'}                      -- Tree file navigator
+  -- use {'ms-jpq/chadtree'}                   -- Tree file navigator
   use {'lukas-reineke/indent-blankline.nvim',  -- Show indent line
     branch = 'lua'
   }
