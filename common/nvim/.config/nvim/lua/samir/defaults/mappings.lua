@@ -40,4 +40,4 @@ map('n', '<Leader>l', ':luafile %<CR>', { silent = true })
 map('n', '<Leader>ps', ':PackerSync<CR>', { silent = true })
 
 -- Remove trailing whitespace
-map('n', '<Leader>t', ':%s/\s\+$//e<CR>')
+map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
