@@ -4,6 +4,7 @@ Someone once said:
 > Show me your dotfiles and I'll tell you who you are.
 
 This is a typical neovim session:
+
 ![](/.screenshots/neovim.png)
 
 ## Why `stow`?
