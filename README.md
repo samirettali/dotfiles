@@ -18,7 +18,7 @@ I previously used a bare git repository to manage my dotfiles[^1] but it became 
 * Much more structured filesystem, see below
 * Removing dotfiles is really easy, just `stow -D <config>`
 * A `README`, finally
-* Git gitter, finally
+* Git gutter, finally
 
 ## Structure
 
