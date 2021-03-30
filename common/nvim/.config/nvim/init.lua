@@ -1,8 +1,3 @@
-if vim.g.vscode then
-  print("VSCode detected, loading custom settings")
-  return
-end
-
 -- Load plugins
 require 'samir.plugins'
 
