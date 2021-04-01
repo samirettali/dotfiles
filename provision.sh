@@ -2,6 +2,7 @@
 
 set -euf
 set -o pipefail
+HOSTNAME="mbp"
 
 print_message() {
   GREEN="\033[0;32m"
@@ -19,7 +20,7 @@ provision_macos() {
 
   brew install --cask alacritty keepassxc brave-browser rectangle typora \
   font-sauce-code-pro-nerd-font karabiner-elements maccy cleanshot iina \
-    homebrew/cask-drivers/logitech-options alfred iina firefox
+    homebrew/cask-drivers/logitech-options alfred iina firefox transmission
 
   # Git terminal clients
   brew install lazygit tig
@@ -51,8 +52,12 @@ provision_macos() {
   espanso start
 
   # Install language servers for Neovim
-  yarn global add expo-cli typescript-language-server vscode-css-languageserver-bin
+  yarn global add expo-cli typescript-language-server vscode-css-languageserver-bin \
+    vscode-html-languageserver-bin
   rustup component add rls rust-analysis rust-src
+
+  # Set hostname
+  sudo scutil --set HostName "${HOSTNAME}"
 
   # Disable accents insertion popup
   defaults write -g ApplePressAndHoldEnabled -bool false
