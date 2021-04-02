@@ -90,5 +90,4 @@ require('lualine').setup{
     lualine_y = {  },
     lualine_z = {   }
   },
-  extensions = { 'chadtree' }
 }
