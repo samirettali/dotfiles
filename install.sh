@@ -18,7 +18,6 @@ cd $(dirname $0)
 
 OS=$(uname)
 modules=()
-declare -A destinations=( ["mac"]="$HOME" ["linux"]="$HOME" ["common"]="$HOME" ["linux-root"]="/" )
 
 # Detect the operating system in order to know which dotfiles to install
 if [[ "${OS}" = "Darwin" ]]; then
@@ -26,7 +25,7 @@ if [[ "${OS}" = "Darwin" ]]; then
   modules=("common" "mac")
 elif [[ "${OS}" = "Linux" ]]; then
   print_message "Linux detected"
-  modules=("common" "linux")
+  modules=("common" "linux" "linux-root")
 else
   echo "Unsupported OS."
   exit 1
@@ -42,14 +41,13 @@ for module in "${modules[@]}"; do
   print_message "Installing ${module} packages"
   for package in $(find ${module} -maxdepth 1 | grep '/' | sed 's|^.*/||'); do
     print_message "${package}"
-    destination=${destinations["${module}"]}
     if [[ ! -z $(git submodule status "${module}/${package}") ]]; then
       git submodule update --quiet "${module}/${package}"
     fi
-    if [[ $destination -eq "/" ]]; then
-      sudo stow -R -t "${destination}" -d "${module}" "${package}"
+    if [[ "${module}" == "*-root" ]]; then
+      sudo stow -R -t "/" -d "${module}" "${package}"
     else
-      stow -R -t "${destination}" -d "${module}" "${package}"
+      stow -R -t "${HOME}" -d "${module}" "${package}"
     fi
   done
   echo
