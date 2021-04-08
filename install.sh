@@ -18,6 +18,7 @@ cd $(dirname $0)
 
 OS=$(uname)
 modules=()
+declare -A destinations=( ["mac"]="$HOME" ["linux"]="$HOME" ["common"]="$HOME" ["linux-root"]="/" )
 
 # Detect the operating system in order to know which dotfiles to install
 if [[ "${OS}" = "Darwin" ]]; then
@@ -41,10 +42,15 @@ for module in "${modules[@]}"; do
   print_message "Installing ${module} packages"
   for package in $(find ${module} -maxdepth 1 | grep '/' | sed 's|^.*/||'); do
     print_message "${package}"
+    destination=${destinations["${module}"]}
     if [[ ! -z $(git submodule status "${module}/${package}") ]]; then
       git submodule update --quiet "${module}/${package}"
     fi
-    stow -R -t "${HOME}" -d "${module}" "${package}"
+    if [[ $destination -eq "/" ]]; then
+      sudo stow -R -t "${destination}" -d "${module}" "${package}"
+    else
+      stow -R -t "${destination}" -d "${module}" "${package}"
+    fi
   done
   echo
 done
