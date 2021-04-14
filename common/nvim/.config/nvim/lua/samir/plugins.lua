@@ -10,6 +10,8 @@ else
   vim.cmd [[packadd packer.nvim]]
 end
 
+vim.g.solarized_termcolors=256
+
 return require('packer').startup(function()
   use {'wbthomason/packer.nvim', opt = true}
 
@@ -63,7 +65,8 @@ return require('packer').startup(function()
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                 -- Status line
   use {'mbbill/undotree'}                      -- Show a tree of undo history
-  -- use {'ms-jpq/chadtree'}                   -- Tree file navigator
+  use {'mhinz/vim-startify'}                      -- Show a tree of undo history
+  use {'dstein64/nvim-scrollview'}
   use {'lukas-reineke/indent-blankline.nvim',  -- Show indent line
     branch = 'lua'
   }
@@ -98,7 +101,6 @@ return require('packer').startup(function()
   use {'farmergreg/vim-lastplace'}             -- Restore cursor position when reopening files
   use {'samirettali/shebang.nvim'}             -- Automatic shebang for new files
   use {'ojroques/vim-oscyank'}                 -- Copy in OS clipboard in SSH
-  use {'RRethy/vim-illuminate'}                -- Illuminate occurrences of word under cursor
   use {'tpope/vim-obsession'}                  -- Continuously save session
 
   -- Other

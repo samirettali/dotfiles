@@ -16,7 +16,7 @@ provision_macos() {
 
   brew install git stow tmux fzf restic yarn ripgrep pass \
     pass-otp fd ncdu federico-terzi/espanso pipenv youtube-dl entr scc \
-    git-flow ncmpcpp mpd mpc ranger dos2unix
+    git-flow ncmpcpp mpd mpc ranger dos2unix watch
 
   brew install --cask alacritty keepassxc brave-browser rectangle typora \
   font-sauce-code-pro-nerd-font karabiner-elements maccy cleanshot iina \
@@ -51,10 +51,15 @@ provision_macos() {
   espanso register
   espanso start
 
+  # Configure npm
+  mkdir "${HOME}/.npm-global"
+  npm config set prefix "${HOME}/.npm-global"
+
   # Install language servers for Neovim
   yarn global add expo-cli typescript-language-server vscode-css-languageserver-bin \
-    vscode-html-languageserver-bin
+    vscode-html-languageserver-bin eslint_d
   rustup component add rls rust-analysis rust-src
+  pip3 install 'python-language-server[all]'
 
   # Set hostname
   sudo scutil --set HostName "${HOSTNAME}"
@@ -69,6 +74,7 @@ provision_macos() {
   # * Scroll direction
   # * Set keyboard repeat and delay
   # * Set hostname
+  # * Disable minimizing with keyboard (annoying)
 
   # zsh
   # * Change conflicting language switch shortcut to Cmd+Shift+L

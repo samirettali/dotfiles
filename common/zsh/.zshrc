@@ -5,6 +5,7 @@ source ~/.zsh_aliases
 source ~/.zsh_functions
 source ~/.zsh_env
 [ -f "${HOME}/.zshrc_local" ] && source "${HOME}/.zshrc_local"
+[ -f "${HOME}/.zsh_work" ] && source "${HOME}/.zsh_work"
 
 # Use vim bindings (of course)
 bindkey -v
