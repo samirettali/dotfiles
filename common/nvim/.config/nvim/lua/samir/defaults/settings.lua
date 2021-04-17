@@ -10,7 +10,6 @@ local function opt(scope, key, value)
     scopes['o'][key] = value
   end
 end
-
 opt('b', 'expandtab', true)                -- Insert spaces instead of tabs
 opt('b', 'tabstop', indentation)           -- Tab size
 opt('b', 'shiftwidth', indentation)        -- Number of spaces to use for auto indenting

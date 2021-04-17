@@ -122,3 +122,7 @@ j() {
 pss() {
     ps auxww | grep -i "${@}" | grep -v grep
 }
+
+mc() {
+  mkdir "${1}" && cd "${1}"
+}

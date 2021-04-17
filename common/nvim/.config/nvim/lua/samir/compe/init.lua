@@ -25,3 +25,11 @@ require('compe').setup {
     treesitter = true;
   };
 }
+
+-- silent, exprs noremap
+map('i', '<C-n>',     'compe#complete()', { silent = true, expr = true, noremap = true })
+map('i', '<CR>',      'compe#confirm()', { silent = true, expr = true, noremap = true })
+map('i', '<C-e>',     'compe#close()', { silent = true, expr = true, noremap = true })
+
+--[[ map('i', '<Tab>',     'pumvisible() ? "\<C-n>" : "\<Tab>"', { silent = true, expr = true, noremap = true })
+map('i', '<S-Tab>',   'pumvisible() ? "\<C-p>" : "\<S-Tab>"', { silent = true, expr = true, noremap = true }) ]]

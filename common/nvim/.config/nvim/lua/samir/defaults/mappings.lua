@@ -1,4 +1,4 @@
-vim.g.mapleader = ','
+vim.g.mapleader = ' '
 
 -- Yank entire line except newline
 map('n', 'Y', 'y$')
@@ -41,3 +41,6 @@ map('n', '<Leader>ps', ':PackerSync<CR>', { silent = true })
 
 -- Remove trailing whitespace
 map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
+
+-- Paste replace visual selection without copying it
+map('v', '<Leader>p', '"_dP"', { noremap = true })

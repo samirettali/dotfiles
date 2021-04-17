@@ -4,6 +4,7 @@ local saga = require('lspsaga')
 saga.init_lsp_saga()
 
 vim.g.completion_trigger_on_delete = 1
+vim.g.lsp_document_highlight_enabled = 1
 
 local function custom_attach(client)
   map('n', 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>')
@@ -36,6 +37,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = true,
     signs = true,
+    underline = true,
     update_in_insert = false,
   }
 )
@@ -79,9 +81,11 @@ local servers = {
     }
   },
   html = { filetypes = { 'html' } },
-  gopls = { filetypes = { 'go' } },
+  gopls = { filetypes = { 'go', "gomod" } },
   rls = { filetypes = { 'rust' } },
-  cssls = { filetypes = { 'css' } }
+  cssls = { filetypes = { 'css' } },
+  pyls = { filetypes = { 'python' } },
+  sqls = { filetypes = { 'sql' } }
 }
 
 for lsp, opts in pairs(servers) do
