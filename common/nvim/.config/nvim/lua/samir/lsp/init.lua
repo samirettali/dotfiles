@@ -81,11 +81,12 @@ local servers = {
     }
   },
   html = { filetypes = { 'html' } },
-  gopls = { filetypes = { 'go', "gomod" } },
+  gopls = { filetypes = { 'go', 'gomod' } },
   rls = { filetypes = { 'rust' } },
   cssls = { filetypes = { 'css' } },
   pyls = { filetypes = { 'python' } },
-  sqls = { filetypes = { 'sql' } }
+  sqls = { filetypes = { 'sql' } },
+  clangd = { filetypes = { 'c', 'cpp', 'objc', 'objcpp' }}
 }
 
 for lsp, opts in pairs(servers) do

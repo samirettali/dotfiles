@@ -1,5 +1,8 @@
-- JOB:
-    - intercept -g $DEVNODE | caps2esc | uinput -d $DEVNODE
+- JOB: "intercept -g $DEVNODE | dual-function-keys -c /etc/interception/dual-function.yaml | uinput -d $DEVNODE"
+  DEVICE:
+    NAME: "Topre Corporation HHKB Professional"
+
+- JOB: intercept -g $DEVNODE | caps2esc | uinput -d $DEVNODE
   DEVICE:
     EVENTS:
       EV_KEY: [KEY_CAPSLOCK, KEY_ESC]

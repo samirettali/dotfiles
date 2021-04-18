@@ -23,7 +23,6 @@ return require('packer').startup(function()
 
   -- Coding
   use {'windwp/nvim-autopairs'}                -- Autopair brackets and other symbols
-  use {'fatih/vim-go', run = ':GoInstallBinaries'}
   use {'b3nj5m1n/kommentary'}                  -- Commenting plugin
   use {'liuchengxu/vista.vim'}                 -- Show a panel to browse tags
   use {'alvan/vim-closetag'}                   -- Automatically close HTML tag
@@ -32,6 +31,7 @@ return require('packer').startup(function()
 
   -- Syntax highlighting
   use {'pantharshit00/vim-prisma'}             -- Prisma syntax
+  use {'plasticboy/vim-markdown'}              -- Markdown
   use {'jparise/vim-graphql'}                  -- GraphQL syntax
   use {'dart-lang/dart-vim-plugin'}            -- Dart syntax
   use {'TovarishFin/vim-solidity'}
@@ -105,7 +105,9 @@ return require('packer').startup(function()
 
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim
+  use {'sebdah/vim-delve'}                     -- Use vman to read man inside vim
 
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
+  use {'ChristianChiarulli/nvcode-color-schemes.vim'}
 end)
