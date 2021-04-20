@@ -60,6 +60,7 @@ provision_macos() {
     vscode-html-languageserver-bin eslint_d
   rustup component add rls rust-analysis rust-src
   pip3 install 'python-language-server[all]'
+  GO111MODULE=on go get golang.org/x/tools/gopls@latest
 
   # Set hostname
   sudo scutil --set HostName "${HOSTNAME}"
