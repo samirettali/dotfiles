@@ -1,4 +1,4 @@
-# Dotfiles
+# Mouseless
 
 Someone once said:
 > Show me your dotfiles and I'll tell you who you are.
