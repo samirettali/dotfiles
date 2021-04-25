@@ -44,3 +44,5 @@ map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
 
 -- Paste replace visual selection without copying it
 map('v', '<Leader>p', '"_dP"', { noremap = true })
+
+map('n', '<Leader>k', 'gcip', { noremap = false })
