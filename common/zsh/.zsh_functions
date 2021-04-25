@@ -49,6 +49,10 @@ bak() {
     cp -r -v $target{,.bak}
 }
 
+up() {
+  cd $(printf "%0.s../" $(seq 1 $1 ));
+}
+
 # Foreground and background switching
 fg-bg() {
   if [[ $#BUFFER -eq 0 ]]; then
