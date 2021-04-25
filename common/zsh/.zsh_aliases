@@ -5,7 +5,6 @@ alias dev='docker run --rm -it -v $(pwd):/data samirettali/ubuntu bash'
 
 # Misc
 alias tree='tree -C'
-alias vim='nvim'
 alias tl='tmux ls'
 alias qre='qrencode -l H -t ANSI256UTF8'
 alias qrd='pngpaste - | zbarimg -q --raw - | tee | pbcopy'
