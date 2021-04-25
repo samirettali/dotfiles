@@ -53,11 +53,13 @@ vim.fn.sign_define("LspDiagnosticsSignHint",
 
 
 vim.api.nvim_exec([[
-  " autocmd BufWritePre *.ts lua vim.lsp.buf.formatting_sync(nil, 100)
-  " autocmd BufWritePre *.tsx lua vim.lsp.buf.formatting_sync(nil, 100)
+  autocmd BufWritePre *.ts lua vim.lsp.buf.formatting_sync(nil, 100)
+  autocmd BufWritePre *.tsx lua vim.lsp.buf.formatting_sync(nil, 100)
 
-  " autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
-  " autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
+  autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
+  autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
+
+  autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 100)
 
   autocmd BufWritePre *.css lua vim.lsp.buf.formatting_sync(nil, 100)
   autocmd BufWritePre *.less lua vim.lsp.buf.formatting_sync(nil, 100)
