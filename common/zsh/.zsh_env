@@ -1,8 +1,11 @@
 # export PATH=$PATH:/usr/local/sbin:$PYENV_ROOT/bin:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.cargo/bin:/usr/lib/go-1.14/bin:/usr/local/opt/llvm/bin
 # $PYENV_ROOT/bin:
-export PATH=$PATH:/usr/local/sbin:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin:/usr/local/opt/llvm/bin
+# :/usr/local/opt/llvm/bin
+export PATH=$PATH:/usr/local/sbin:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin
 [[ -d "${HOME}/.zsh/zsh-git-prompt/src/.bin" ]] && export PATH=$PATH:$HOME/.zsh/zsh-git-prompt/src/.bin
 [[ -d "${HOME}/.npm-global" ]] && export PATH=$PATH:$HOME/.npm-global/bin
+[[ -d "${HOME}/.yarn/bin" ]] && export PATH=$PATH:$HOME/.yarn/bin
+[[ -d "${HOME}/.cargo/bin" ]] && export PATH="${PATH}:${HOME}/.cargo/bin"
 export DIRSTACKSIZE=20
 export SAVEHIST=100000
 export HISTSIZE=10000
@@ -16,13 +19,13 @@ export PATH="$PATH:$HOME/.local/share/nvim/site/pack/packer/start/vim-superman/b
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
 export EDITOR=nvim
 
-if [ $(command -v ruby) ]; then
-    export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
-fi
+# if [ $(command -v ruby) ]; then
+#     export PATH="$PATH:$(ruby -r rubygems -e 'puts Gem.user_dir')"/bin
+# fi
 
-if [ $(command -v python3) ]; then
-    export PATH=$PATH:$(python3 -c "import sys; print(':'.join(p for p in sys.path if '$HOME' in p))")
-fi
+# if [ $(command -v python3) ]; then
+#     export PATH=$PATH:$(python3 -c "import sys; print(':'.join(p for p in sys.path if '$HOME' in p))")
+# fi
 
 export BC_ENV_ARGS="${HOME}/.config/bc"
 
@@ -32,3 +35,4 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 KEYTIMEOUT=1
 
 [[ -f "${HOME}/.cargo/env" ]] && source "${HOME}/.cargo/env"
+[[ -f "${HOME}/.work_env" ]] && source "${HOME}/.work_env"
