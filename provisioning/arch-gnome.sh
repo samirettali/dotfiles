@@ -21,14 +21,14 @@ install alacritty entr
 install chrome-gnome-shell
 
 # Shell stuff
-install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc ranger tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp
+install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc ranger tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp rsync
 
 install base-devel syncthing docker openssh man sudo adobe-source-code-pro-fonts python wireguard-tools nvidia nvidia-prime > /dev/null
 
 cargo install --git 'https://github.com/Soft/xcolor.git'
 
 # System tools
-install restic
+install restic net-tools
 
 # Keyboard customization
 install interception-tools interception-caps2esc
