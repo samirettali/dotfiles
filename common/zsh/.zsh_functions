@@ -98,8 +98,8 @@ ctf() {
 }
 
 # Test coverage for Go
-gotest() {
-    go test -cover -coverprofile=c.out
+gotestcover() {
+    go test -cover -coverprofile=c.out ./...
     go tool cover -html=c.out -o coverage.html
 }
 
