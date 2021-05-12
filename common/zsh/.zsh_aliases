@@ -1,7 +1,7 @@
 # Docker
 # TODO switch to a function and create reusable container, update it if necessary
 alias dr='docker run --rm -it -v $(pwd):/data'
-alias dev='docker run --rm -it -v $(pwd):/data samirettali/ubuntu bash'
+alias dev='docker run -it -v $(pwd):/data samirettali/ubuntu bash'
 
 # Misc
 alias tree='tree -C'
@@ -27,6 +27,9 @@ alias gor='open $(git remote get-url --push origin)'
 alias gpl='git pull'
 alias gpb='git push -u origin $(git branch --show-current)'
 alias gl='git log --graph --abbrev-commit --decorate --format=format:"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)" --all'
+alias gwho="git log --format='%aN' | sort | uniq -c | sort -nr"
+
+alias gt='gotest ./...'
 
 # Youtube
 alias ytdl='youtube-dl -R infinite -f bestvideo+bestaudio --output "%(title)s.%(ext)s"'
