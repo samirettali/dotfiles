@@ -28,7 +28,7 @@ install base-devel syncthing docker openssh man sudo adobe-source-code-pro-fonts
 cargo install --git 'https://github.com/Soft/xcolor.git'
 
 # System tools
-install restic net-tools
+install restic net-tools cronie
 
 # Keyboard customization
 install interception-tools interception-caps2esc
