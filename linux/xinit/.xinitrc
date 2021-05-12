@@ -19,6 +19,8 @@ dunst &
 
 nm-applet &
 
+flameshot &
+
 # Autolock screen
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
 
