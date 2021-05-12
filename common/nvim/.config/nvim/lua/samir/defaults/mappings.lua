@@ -46,3 +46,7 @@ map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
 map('v', '<Leader>p', '"_dP"', { noremap = true })
 
 map('n', '<Leader>k', 'gcip', { noremap = false })
+
+map('n', ',', 'zA', { noremap = false })
+
+map('v', '<C-c>', '"+y')

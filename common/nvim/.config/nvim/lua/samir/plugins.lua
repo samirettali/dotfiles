@@ -66,7 +66,7 @@ return require('packer').startup(function()
   use {'hoob3rt/lualine.nvim'}                 -- Status line
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'mhinz/vim-startify'}                      -- Show a tree of undo history
-  use {'dstein64/nvim-scrollview'}
+  -- use {'dstein64/nvim-scrollview'}
   use {'lukas-reineke/indent-blankline.nvim',  -- Show indent line
     branch = 'lua'
   }
@@ -105,9 +105,8 @@ return require('packer').startup(function()
 
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim
-  use {'sebdah/vim-delve'}                     -- Use vman to read man inside vim
 
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
-  use {'ChristianChiarulli/nvcode-color-schemes.vim'}
+  use {'drewtempelmeyer/palenight.vim'}
 end)

@@ -1,1 +1,1 @@
-map('v', '<C-c>', ':OSCYank<CR>')
+-- map('v', '<C-c>', ':OSCYank<CR>')

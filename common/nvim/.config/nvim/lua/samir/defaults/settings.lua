@@ -25,6 +25,7 @@ opt('w', 'relativenumber', true)           -- Show relative line numbers
 opt('w', 'wrap', true)                     -- Wrap visually long lines
 opt('w', 'cursorline', true)               -- Highlight current line
 opt('w', 'colorcolumn', '81')              -- Highlight 81st column
+opt('w', 'foldmethod', 'expr')             -- Set fold method
 
 opt('o', 'hidden', true)                   -- Enable modified buffers in background
 opt('o', 'ignorecase', true)               -- Ignore case
@@ -54,5 +55,13 @@ cmd(':command! W w')
 cmd(':command! Q q')
 cmd(':command! WQ wq')
 cmd(':command! Wq wq')
+
+vim.api.nvim_exec([[
+  set foldexpr=nvim_treesitter#foldexpr()
+]], false)
+
+vim.api.nvim_exec([[
+let g:palenight_color_overrides = { 'black': { 'gui': '#000000', "cterm": "0", "cterm16": "0" } }
+]], false)
 
 vim.g.colors_name = 'moonfly'
