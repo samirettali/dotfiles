@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+git reset --hard
+for patch in $(find ./patches -type f); do
+  git apply -v "${patch}"
+done
