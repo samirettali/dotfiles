@@ -1,41 +1,37 @@
 #!/bin/bash
 
-export DISPLAY=:0
-export XAUTHORITY="${HOME}/.Xauthority"
-
-# if [[ $(hostname) -eq "xps" ]]; then
-  if [[ ! -z $(xrandr | grep '^DP1 connected') ]]; then
-    # LG 34
-    xrandr --dpi 96\
-      --output eDP1 --off \
-      --output DP1 --primary --mode 3440x1440 --pos 0x0 --rotate normal \
-      --output DP2 --off \
-      --output HDMI1 --off \
-      --output HDMI2 --off \
-      --output VIRTUAL1 --off
-    xrdb -merge "${HOME}/.Xresources-alt"
-  elif [[ ! -z $(xrandr | grep '^DP2 connected') ]]; then
-    # Work
-    xrandr --dpi 96 \
-      --output eDP1 --off \
-      --output DP1 --off \
-      --output DP2 --mode 1920x1080 --pos 1920x0 --rotate normal \
-      --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal \
-      --output HDMI2 --off \
-      --output VIRTUAL1 --off
-    xrdb -merge "${HOME}/.Xresources-alt"
-  else
-    # laptop only
-    # export QT_SCALE_FACTOR=2
-    xrandr --dpi 220 \
-      --output eDP1 --primary --mode 3840x2160 --pos 0x0 --rotate normal \
-      --output DP1 --off \
-      --output DP2 --off \
-      --output HDMI1 --off \
-      --output HDMI2 --off \
-      --output VIRTUAL1 --off
-    xrdb -merge "${HOME}/.Xresources"
-  fi
-# else
-#   notify-send "Unknown host"
-# fi
+if [[ ! -z $(xrandr | grep '^DP1 connected') ]]; then
+  echo "$(date) - home"
+  # LG 34
+  xrandr --dpi 96\
+    --output eDP1 --off \
+    --output DP1 --primary --mode 3440x1440 --pos 0x0 --rotate normal \
+    --output DP2 --off \
+    --output HDMI1 --off \
+    --output HDMI2 --off \
+    --output VIRTUAL1 --off
+  xrdb -merge "${HOME}/.Xresources-alt"
+elif [[ ! -z $(xrandr | grep '^DP2 connected') ]]; then
+  # Work
+  echo "$(date) - work"
+  xrandr --dpi 96 \
+    --output eDP1 --off \
+    --output DP1 --off \
+    --output DP2 --mode 1920x1080 --pos 1920x0 --rotate normal \
+    --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal \
+    --output HDMI2 --off \
+    --output VIRTUAL1 --off
+  xrdb -merge "${HOME}/.Xresources-alt"
+else
+  echo "$(date) - laptop"
+  # laptop only
+  # export QT_SCALE_FACTOR=2
+  xrandr --dpi 220 \
+    --output eDP1 --primary --mode 3840x2160 --pos 0x0 --rotate normal \
+    --output DP1 --off \
+    --output DP2 --off \
+    --output HDMI1 --off \
+    --output HDMI2 --off \
+    --output VIRTUAL1 --off
+  xrdb -merge "${HOME}/.Xresources"
+fi
