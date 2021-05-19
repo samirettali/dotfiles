@@ -138,3 +138,10 @@ vim() {
     nvim "${@}"
   fi
 }
+
+loadenv() {
+  if [[ -f .env ]]; then
+    export $(cat .env | sed 's/#.*//g' | xargs)
+    echo "Loaded"
+  fi
+}
