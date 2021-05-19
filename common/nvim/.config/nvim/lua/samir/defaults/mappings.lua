@@ -27,9 +27,6 @@ map('n', '<Leader><Leader>', '<C-^>')
 -- Toggle listchars
 map('n', '<Leader>i', ':set list!<CR>', { silent = true })
 
--- Toggle colorcolumn
-map('n', '<Leader>cc', ':let &cc = &cc == "" ? 81 : ""<CR>', { silent = true })
-
 -- Keep only the current window
 map('n', '<Leader>o', ':only<CR>', { silent = true })
 
@@ -46,7 +43,5 @@ map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
 map('v', '<Leader>p', '"_dP"', { noremap = true })
 
 map('n', '<Leader>k', 'gcip', { noremap = false })
-
-map('n', ',', 'zA', { noremap = false })
 
 map('v', '<C-c>', '"+y')

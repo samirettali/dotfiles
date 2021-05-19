@@ -4,3 +4,5 @@ require'colorizer'.setup({
     css = { css = true };
     html = { css = true };
 })
+
+map('n', '<Leader>c', ':ColorizerToggle<CR>', { silent = true })

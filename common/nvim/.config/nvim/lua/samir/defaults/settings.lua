@@ -37,6 +37,7 @@ opt('o', 'sidescrolloff', 8)               -- Columns of context
 opt('o', 'shiftround', true)               -- Round indent
 opt('o', 'splitbelow', true)               -- Put new windows below current
 opt('o', 'splitright', true)               -- Put new windows right of current
+opt('o', 'foldlevelstart', 20)             -- Set initial fold level
 opt('o', 'termguicolors', true)            -- True color support
 opt('o', 'wildmode', 'longest:full,full')  -- Command-line completion mode
 opt('o', 'showmatch', true)                -- Temporarily jump to matching parentheresis when inserting one
