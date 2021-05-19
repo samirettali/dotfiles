@@ -17,9 +17,14 @@ picom -b --experimental-backends --backend glx
 # Notification daemon
 dunst &
 
+# Network manager
 nm-applet &
 
+# Screenshots
 flameshot &
+
+# Slack
+slack &
 
 # Autolock screen
 xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
