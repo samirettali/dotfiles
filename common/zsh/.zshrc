@@ -52,10 +52,6 @@ KEYTIMEOUT=1
 # Set autocomplete options for vman
 compdef vman="man"
 
-# Switch between foreground and background
-zle -N fg-bg
-bindkey '^Z' fg-bg
-
 # Fix for end, home and delete keys
 if [[ -n "$TMUX" ]]; then
     bindkey "^[[1~" beginning-of-line
