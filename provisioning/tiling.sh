@@ -7,3 +7,7 @@ sudo pacman --noconfirm --needed lxappearance pavucontrol pulsemixer
 install xorg-xev xorg-xprop xorg-xinput xorg-xbacklight
 
 install pcmanfm ffmpegthumbnailer
+
+install hsetroot xarchiver
+
+install xmonad xmonad-contrib xmobar
