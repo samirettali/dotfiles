@@ -145,3 +145,9 @@ loadenv() {
     echo "Loaded"
   fi
 }
+
+randombg() {
+  color=$(echo "#$(openssl rand -hex 3)")
+  echo "${color}"
+  hsetroot -solid "${color}"
+}

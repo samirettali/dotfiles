@@ -102,13 +102,14 @@ function () {
   if [[ "$TERM_PROGRAM" == 'vscode' ]]; then
     local LVL=$(($SHLVL - 3))
   elif [[ -n "$TMUX" ]]; then
-    local LVL=$(($SHLVL - 1))
+    local LVL=$(($SHLVL - 2))
   else
-    local LVL=$SHLVL
+    # Simple terminal
+    local LVL=$SHLVL-2
   fi
 
   if [[ $EUID -eq 0 ]]; then
-    local SUFFIX=$(printf '#%.0s' {1..$LVL})
+    local SUFFIX=$(printf '\#%.0s' {1..$LVL})
   else
     local SUFFIX=$(printf '\$%.0s' {1..$LVL})
   fi
@@ -128,3 +129,8 @@ bindkey '^ ' autosuggest-accept
 
 # Highlight plugin
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Autostart X on vt1
+if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
+  exec startx
+fi
