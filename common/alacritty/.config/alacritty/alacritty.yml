@@ -1,6 +1,6 @@
 font:
   normal:
-    family: JetBrainsMono Nerd Font Mono
+    family: SauceCodePro Nerd Font Mono
     style: Medium
 
   italic:
@@ -13,7 +13,7 @@ font:
     style: Medium Italic
 
   use_thin_strokes: false
-  size: 11.5
+  size: 13
   offset:
     x: -1
     y: -1
