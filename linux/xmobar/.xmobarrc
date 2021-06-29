@@ -1,7 +1,7 @@
 -- vi:syntax=haskell
 Config {
      -- Appearance
-      font     = "xft:SauceCodePro Nerd Font Mono:weight=Medium:size=11.5:antialias=true:hinting=true"
+      font     = "xft:JetBrainsMono Nerd Font Mono:weight=Medium:size=10:antialias=true:hinting=true"
     , bgColor  = "#000000"
     , fgColor  = "#ffffff"
     , position = Top
@@ -17,14 +17,13 @@ Config {
     -- Layout
     , sepChar = "%"
     , alignSep = "}{"
-    -- , template = " %UnsafeStdinReader% }{ %cpu% | %memory% | %battery% | %date% | %time% "
-    , template = " %UnsafeStdinReader% }{ <fc=#ff55ff>%cpu%</fc> | <fc=#5555ff>%memory%</fc> | <fc=#55ff55>%battery%</fc> | <fc=#55ffff>%default:Master%</fc> | <fc=#ffff55>%date%</fc> | <fc=#ff5555>%time%</fc>%trayerpad%"
+    , template = " %UnsafeStdinReader% }{ <fc=#b5d5ff>%kbd%</fc><fc=#555555> | </fc><fc=#ff55ff>%cpu%</fc><fc=#555555> | </fc><fc=#ff5555>%multicoretemp%</fc><fc=#555555> | </fc><fc=#5555ff>%memory%</fc><fc=#555555> | </fc><fc=#55ff55>%battery%</fc><fc=#555555> | </fc><fc=#55ffff>%default:Master%</fc><fc=#555555> | </fc><fc=#ffff55>%date%</fc><fc=#555555> | </fc><fc=#ff5555>%time%</fc>%trayerpad% "
 
 
     -- Plugins
     , commands = [
-          Run Date "%D" "date" 50
-        , Run Date "%H:%M:%S" "time" 10
+          Run Date    "%a %d %b" "date" 50
+        , Run Date    "%H:%M:%S" "time" 10
         , Run Cpu     [ "--template", "CPU: <total>%"
                       ] 20
         , Run Memory  [ "--template", "MEM: <usedratio>%"
@@ -35,6 +34,8 @@ Config {
                        "--template", "VOL: <volume>%"
                       ] 10
         , Run Com "/home/samir/.bin/padding-icon.sh" ["panel"] "trayerpad" 10
+        , Run Kbd [("us", "US"), ("it", "IT")]
+        , Run MultiCoreTemp ["-t", "TEMP: <avg>°C", "--"] 50
 
         -- , Run DiskU [("/", " H : <free> free")] [] 60
         -- , Run MPD ["-t", "<state>: <artist> - <track>"] 10
