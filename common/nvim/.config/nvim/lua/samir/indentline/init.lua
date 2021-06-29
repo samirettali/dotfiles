@@ -1,4 +1,4 @@
-vim.g.indent_blankline_enabled = true
+vim.g.indent_blankline_enabled = false
 vim.g.indent_blankline_show_trailing_blankline_indent = false
 vim.g.indent_blankline_char = "▏"
 
