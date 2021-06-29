@@ -3,9 +3,13 @@
 set -euf
 set -o pipefail
 
+check_installed() {
+  command -v "${1}" >/dev/null 2>&1 || { echo >&2 "${1} is required, aborting."; exit 1; }
+}
+
 # Check if git and stow are installed
-command -v git >/dev/null 2>&1 || { echo >&2 "git is required, aborting."; exit 1; }
-command -v stow >/dev/null 2>&1 || { echo >&2 "stow is required, aborting."; exit 1; }
+check_installed git
+check_installed stow
 
 print_message() {
   GREEN="\033[0;32m"
