@@ -6,6 +6,7 @@ export PATH=$PATH:/usr/local/sbin:$HOME/.bin:$HOME/go/bin:$HOME/.local/bin
 [[ -d "${HOME}/.npm-global" ]] && export PATH=$PATH:$HOME/.npm-global/bin
 [[ -d "${HOME}/.yarn/bin" ]] && export PATH=$PATH:$HOME/.yarn/bin
 [[ -d "${HOME}/.cargo/bin" ]] && export PATH="${PATH}:${HOME}/.cargo/bin"
+[[ -d "/usr/share/dotnet" ]] && export PATH="${PATH}:/usr/share/dotnet"
 export DIRSTACKSIZE=20
 export SAVEHIST=100000
 export HISTSIZE=10000
