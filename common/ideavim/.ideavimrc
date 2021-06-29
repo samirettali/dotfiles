@@ -1,0 +1,31 @@
+let mapleader = ' '
+
+" Settings
+set showmode
+set incsearch
+set ignorecase true
+set smartcase true
+set scrolloff=5
+set number
+set relativenumber
+set clipboard+=unnamed
+
+" Plugins
+set surround
+set commentary
+set easymotion
+set exchange
+set highlightedyank
+
+" Mappings
+vnoremap < <gv
+vnoremap > >gv
+
+command :W :w
+command :Wq :wq
+command :WQ :wq
+
+nmap <C-h> <C-w><C-h>
+nmap <C-j> <C-w><C-j>
+nmap <C-k> <C-w><C-k>
+nmap <C-l> <C-w><C-l>
