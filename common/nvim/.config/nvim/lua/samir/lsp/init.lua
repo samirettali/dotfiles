@@ -1,7 +1,9 @@
 local lspconfig = require('lspconfig')
 local saga = require('lspsaga')
 
-saga.init_lsp_saga()
+saga.init_lsp_saga {
+  max_preview_lines = 10,
+}
 
 vim.g.completion_trigger_on_delete = 1
 vim.g.lsp_document_highlight_enabled = 1
@@ -105,27 +107,33 @@ local servers = {
   pyls = { filetypes = { 'python' } },
   sqls = { filetypes = { 'sql' } },
   clangd = { filetypes = { 'c', 'cpp', 'objc', 'objcpp' } },
+  java_language_server = { filetypes = { 'java' }}
 }
+
+vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
 
 for lsp, opts in pairs(servers) do
   lspconfig[lsp].setup {
-    -- root_dir = lspconfig.util.root_pattern('.git', vim.fn.getcwd()),
     on_attach = custom_attach,
     filetypes = opts.filetypes,
     capabilities = capabilities,
   }
 end
 
+-- vim.g.OmniSharp_server_use_mono = 1
+
 local pid = vim.fn.getpid()
 lspconfig.omnisharp.setup{
-    cmd = { '/usr/bin/omnisharp', "--languageserver" , "--hostPID", tostring(pid) };
+    cmd = { '/usr/bin/omnisharp', "--languageserver" , "--hostPID", tostring(pid) },
+    -- root_dir = lspconfig.util.root_pattern(".csproj", ".sln"),
+    on_attach = custom_attach
 }
 
 lspconfig.gopls.setup{
-	cmd = {'gopls'},
+  cmd = {'gopls'},
   filetypes = { 'go', 'gomod' },
-	-- for postfix snippets and analyzers
-	capabilities = capabilities,
+  -- for postfix snippets and analyzers
+  capabilities = capabilities,
   settings = {
     gopls = {
       experimentalPostfixCompletions = true,
@@ -136,7 +144,11 @@ lspconfig.gopls.setup{
       staticcheck = true,
     },
   },
-	on_attach = custom_attach,
+  init_options = {
+      -- usePlaceHolders = true,
+      completeUnimported = true,
+  },
+  on_attach = custom_attach,
 }
 
 function goimports(timeoutms)

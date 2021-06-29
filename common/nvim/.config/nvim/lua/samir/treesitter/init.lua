@@ -9,7 +9,13 @@ require('nvim-treesitter.configs').setup {
     "css",
     "javascript"
   },
+  matchup = {
+    enable = true,
+  },
   highlight = {
+    enable = true,
+  },
+  autotag = {
     enable = true,
   },
   incremental_selection = {

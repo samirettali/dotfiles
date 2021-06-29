@@ -10,6 +10,7 @@ local function opt(scope, key, value)
     scopes['o'][key] = value
   end
 end
+
 opt('b', 'expandtab', true)                -- Insert spaces instead of tabs
 opt('b', 'tabstop', indentation)           -- Tab size
 opt('b', 'shiftwidth', indentation)        -- Number of spaces to use for auto indenting
@@ -18,7 +19,7 @@ opt('b', 'softtabstop', indentation)
 opt('b', 'autoindent', true)
 opt('b', 'synmaxcol', 200)                 -- Highlight up to the 200th column
 opt('b', 'undofile', true)                 -- Use undo files
-opt('b', 'spelllang', 'it,en_us')
+-- opt('b', 'spelllang', 'it,en_us')
 
 opt('w', 'number', true)                   -- Show line numbers
 opt('w', 'relativenumber', true)           -- Show relative line numbers
@@ -61,8 +62,6 @@ vim.api.nvim_exec([[
   set foldexpr=nvim_treesitter#foldexpr()
 ]], false)
 
-vim.api.nvim_exec([[
-let g:palenight_color_overrides = { 'black': { 'gui': '#000000', "cterm": "0", "cterm16": "0" } }
-]], false)
+vim.g.palenight_color_overrides = { black = { gui = '#000000', cterm = '0', cterm16 = '0' } }
 
 vim.g.colors_name = 'moonfly'

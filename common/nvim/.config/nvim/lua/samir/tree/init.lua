@@ -8,7 +8,7 @@ vim.g.nvim_tree_hide_dotfiles = 1
 vim.g.nvim_tree_ignore = { '.git', 'node_modules', '.cache' }
 vim.g.nvim_tree_root_folder_modifier = ':~'
 vim.g.nvim_tree_side = 'left'
-vim.g.nvim_tree_tab_open = 1
+vim.g.nvim_tree_tab_open = 0
 vim.g.nvim_tree_show_icons = {
     git = 1,
     folders = 1,
@@ -16,10 +16,28 @@ vim.g.nvim_tree_show_icons = {
     icons = 1,
 }
 
--- vim.g.nvim_tree_icons = {
---     default = '  ',
---     folder = {default = '', open = ''},
--- }
+vim.g.nvim_tree_icons = {
+    default = "",
+    symlink = "",
+    git = {
+        unstaged = "✗",
+        staged = "✓",
+        unmerged = "",
+        renamed = "➜",
+        untracked = "★",
+        deleted = "",
+        ignored = "◌"
+    },
+    folder = {
+        default = "",
+        open = "",
+        symlink = "",
+        empty = "",
+        empty_open = "",
+        symlink_open = ""
+    }
+}
+
 
 --[[ vim.g.nvim_tree_bindings = {
     edit = { '<CR>', 'o' },

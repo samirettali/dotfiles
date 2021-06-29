@@ -28,6 +28,7 @@ return require('packer').startup(function()
   use {'alvan/vim-closetag'}                   -- Automatically close HTML tag
   use {'AndrewRadev/tagalong.vim'}             -- Automatically rename matching HTML tag
   use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
+  use {'omnisharp/omnisharp-vim'}
 
   -- Syntax highlighting
   use {'pantharshit00/vim-prisma'}             -- Prisma syntax
@@ -44,6 +45,8 @@ return require('packer').startup(function()
   use {'neovim/nvim-lspconfig'}                -- LSP
   use {'glepnir/lspsaga.nvim'}                 -- LSP functions
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use {'nvim-treesitter/playground'}
+  use {'onsails/lspkind-nvim'}
 
   use 'RishabhRD/popfix'
   use 'RishabhRD/nvim-lsputils'
@@ -88,7 +91,7 @@ return require('packer').startup(function()
   use {'christoomey/vim-tmux-navigator'}       -- Tmux splits integration
   use {'drzel/vim-split-line'}                 -- Split line at cursor
   use {'wincent/scalpel'}                      -- Replace word under cursor
-  -- use {'machakann/vim-swap'}                   -- Swap delimited items
+  use {'machakann/vim-swap'}                   -- Swap delimited items
   use {'romainl/vim-cool'}                     -- Disable search highlighting on mode change
   use {'tpope/vim-repeat'}                     -- Repeat plugin mappings with .
   use {'norcalli/nvim-colorizer.lua'}          -- Show colors
@@ -109,4 +112,5 @@ return require('packer').startup(function()
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
   use {'drewtempelmeyer/palenight.vim'}
+  use {'ChristianChiarulli/nvcode-color-schemes.vim'}
 end)
