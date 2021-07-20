@@ -85,6 +85,7 @@ vim.api.nvim_exec([[
   autocmd BufWritePre *.less lua vim.lsp.buf.formatting()
   autocmd BufWritePre *.scss lua vim.lsp.buf.formatting()
   autocmd BufWritePre *.rs lua vim.lsp.buf.formatting()
+  autocmd BufWritePre *.py lua vim.lsp.buf.formatting()
 ]], false)
 
 local servers = {
@@ -104,7 +105,7 @@ local servers = {
   -- gopls = { filetypes = { 'go', 'gomod' } },
   rls = { filetypes = { 'rust' } },
   cssls = { filetypes = { 'css' } },
-  pyls = { filetypes = { 'python' } },
+  pylsp = { filetypes = { 'python' } },
   sqls = { filetypes = { 'sql' } },
   clangd = { filetypes = { 'c', 'cpp', 'objc', 'objcpp' } },
   java_language_server = { filetypes = { 'java' }}
