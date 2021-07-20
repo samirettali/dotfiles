@@ -50,10 +50,9 @@ import XMonad.Layout.IndependentScreens
 
 -- Layouts modifiers
 import XMonad.Layout.LayoutModifier
-import XMonad.Layout.LimitWindows (limitWindows, increaseLimit, decreaseLimit)
 import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
-import XMonad.Layout.NoBorders (smartBorders)
+import XMonad.Layout.NoBorders (Ambiguity(Screen), smartBorders, lessBorders)
 import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Layout.Spacing
 import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
@@ -112,13 +111,13 @@ myModMask :: KeyMask
 myModMask = mod1Mask            -- Sets modkey to super/windows key
 
 myTerminal :: String
-myTerminal = "st"               -- Sets default terminal
+myTerminal = "alacritty"               -- Sets default terminal
 
 myBrowser :: String
 myBrowser = "brave "            -- Sets qutebrowser as browser for tree select
 
 myFileManager :: String
-myFileManager = myTerminal ++ " -e ranger"       -- Sets pcmanfm as file manager
+myFileManager = "pcmanfm"       -- Sets pcmanfm as file manager
 
 myEditor :: String
 myEditor = myTerminal ++ " -e nvim"  -- Sets neovim as editor for tree select
@@ -127,10 +126,10 @@ myBorderWidth :: Dimension
 myBorderWidth = 2               -- Sets border width for windows
 
 myNormColor :: String
-myNormColor = gray              -- Border color of normal windows
+myNormColor = "#2c425c"              -- Border color of normal windows
 
 myFocusColor :: String
-myFocusColor  = red             -- Border color of focused windows
+myFocusColor  = "#9dbadf"             -- Border color of focused windows
 
 altMask :: KeyMask
 altMask = mod1Mask              -- Setting this for use in xprompts
@@ -154,9 +153,10 @@ myStartupHook = do
           spawnOnce "xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &"
           spawnOnce "xset s 300 5"
           spawnOnce "nm-applet &"
-          -- spawnOnce "xset r rate 200 60 &"
+          spawnOnce "xset r rate 200 60 &"
           spawnOnce "xsetroot -cursor_name left_ptr &"
-          spawnOnce "sleep 5 && ~/.fehbg"
+          spawnOnce "sleep 1 && ~/.fehbg"
+          spawnOnce "amixer set Master 0%"
           setWMName "LG3D"
 
 --------------------------------------------------------------------------------------
@@ -196,7 +196,6 @@ mySpacing w = spacingRaw True (Border w w w w) True (Border w w w w) True
 
 tall      = renamed [Replace "tall"]
            $ reflectHoriz
-           $ limitWindows 12
            $ mySpacing 8
            $ ResizableTall 1 (1/20) (6/10) []
 
@@ -204,15 +203,17 @@ monocle  = renamed [Replace "monocle"]
            $ Full
 
 columns  = renamed [Replace "columns"]
-           $ reflectHoriz
            $ mySpacing 8
-           $ limitWindows 12
            $ ThreeColMid 1 (1/20) (6/10)
 
 -- LAYOUT HOOK
 myLayouts = tall ||| columns ||| monocle
-myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ smartBorders $
-               mkToggle (NBFULL ?? NOBORDERS ?? EOT) myLayouts
+myLayoutHook = avoidStruts $
+                mouseResize $
+                windowArrange $
+                smartBorders $
+                lessBorders Screen $
+                mkToggle (NBFULL ?? NOBORDERS ?? EOT) myLayouts
 
 --------------------------------------------------------------------------------------
 ------------------------------------ WORKSPACES --------------------------------------
@@ -225,16 +226,20 @@ xmobarEscape = concatMap doubleLts
         doubleLts x   = [x]
 
 myWorkspaces :: [String]
+-- myWorkspaces = withScreens 2
 myWorkspaces = clickable . (map xmobarEscape)
-               $["1:web", "2:code", "3:term", "4:postman", "5:datagrip", "6", "7", "8", "9:chat"]
+               $["1", "2", "3", "4", "5", "6", "7", "8", "9"]
                where
                         clickable l = [ "<action=xdotool key alt+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
                              (i,ws) <- zip [1..9] l,                                        
                             let n = i ]
 
---------------------------------------------------------------------------------------
------------------ SHIFTING APP TO DESIRED WORKSPACE ON APP STARTUP -------------------
---------------------------------------------------------------------------------------
+--------------------------------
+-- CUSTOM PER WINDOW SETTINGS --
+--------------------------------
+--
+role :: Query String
+role = stringProperty "WM_WINDOW_ROLE"
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
@@ -245,21 +250,24 @@ myManageHook = composeAll
      , className =? "discord"         --> doShift (myWorkspaces !! 8)
      , className =? "Pcmanfm"         --> doCenterFloat
      , className =? "KeePassXC"       --> doCenterFloat
+     , title     =? "Scratchpad"      --> doCenterFloat
      , title     =? "ranger"          --> doCenterFloat
+     , role      =? "pop-up"          --> doCenterFloat
      ]
 
---------------------------------------------------------------------------------------
--------------------------------- XMONAD KEYBINDINGS ----------------------------------
---------------------------------------------------------------------------------------
+-----------------
+-- KEYBINDINGS --
+-----------------
 
 myKeys :: [(String, X ())]
 myKeys =
         -- XMONAD
-        [ ("M-C-r", spawn "xmonad --recompile")      -- Recompiles xmonad
+        [ ("M-C-r", spawn "xmonad --recompile")                                              -- Recompiles xmonad
         , ("M-S-r", spawn "xmonad --restart && notify-send 'Xmonad Recompiled'")             -- Restarts xmonad
 
         -- TERMINAL
         , ("M-<Return>", spawn (myTerminal))
+        , ("M-C-<Return>", spawn (myTerminal ++ " -t Scratchpad"))
         , ("M-C-n", spawn (myTerminal ++ " -e ncmpcpp"))
         , ("M-e", spawn (myTerminal ++ " -e nvim"))
         , ("M-f", spawn (myFileManager))
@@ -283,19 +291,16 @@ myKeys =
 
         -- WINDOW
         , ("M-S-c", kill1)                                                                   -- Kill the currently focused client
-        -- , ("M-S-a", killAll)                                                                 -- Kill all windows on current workspace
+        -- , ("M-S-a", killAll)                                                              -- Kill all windows on current workspace
 
         -- FLOAT LAYOUT
-        -- , ("M-<Space>", withFocused $ windows . W.sink)                                            -- Push floating window back to tile
-        , ("M-S-f", sinkAll)                                                                 -- Push ALL floating windows to tile
-        -- , (("M-d"), withFocused (keysResizeWindow (-10,-10) (1,1)))
-        , (("M-s"), withFocused (keysResizeWindow (10,10) (1,1)))
+        , ("M-S-f", withFocused $ windows . W.sink)                                          -- Push floating window to tile
+        , ("M-s", spawn "selected=$(ls --color=never ~/work/young/scripts/|rofi -dmenu -p 'Run: ') && bash ~/work/young/scripts/${selected}")
 
         --Keybindings
         , ("M-t" , sendMessage $ JumpToLayout "tall"    )
         -- , ("M-f" , sendMessage $ JumpToLayout "full"     )
         -- , ("M-c" , sendMessage $ JumpToLayout "columns"     )
-        , ("M-c M-d" , spawn "date +%s | tr -d '\n' | xclip -selection clipboard")
 
         -- WINDOW NAVIGATION
         , ("M-m", windows W.focusMaster)                                                     -- Move focus to the master window
@@ -320,13 +325,12 @@ myKeys =
         , ("M-<Space>", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)          -- Toggles noborder/full
         , ("M-i", sendMessage (IncMasterN 1))                                                -- Increase number of clients in master pane
         , ("M-d", sendMessage (IncMasterN (-1)))                                             -- Decrease number of clients in master pane
-        , ("M-S-i", increaseLimit)                                                           -- Increase number of windows
-        , ("M-S-d", decreaseLimit)                                                           -- Decrease number of windows
 
         , ("M-n", addWorkspacePrompt myXPConfig)                                             -- Decrease number of windows
-        -- , ("M-S-d", removeWorkspace)                                                         -- Decrease number of windows
-        {- , ("M-'", selectWorkspace myXPConfig)                                                -- Decrease number of windows
-        , ("M-S-'", withWorkspace myXPConfig (windows . W.shift) ) -}
+        , ("M-S-d", removeWorkspace)                                                         -- Decrease number of windows
+        , ("M-'", selectWorkspace myXPConfig)                                                -- Decrease number of windows
+        , ("M-S-'", withWorkspace myXPConfig (windows . W.shift) )
+        -- , ("M-u", renameWorkspace)
 
 
         -- RESIZING
@@ -335,18 +339,15 @@ myKeys =
         , ("M-C-j", sendMessage MirrorShrink)                                                -- Shrink vert window width
         , ("M-C-k", sendMessage MirrorExpand)                                                -- Expand vert window width
 
-        -- , ("M-u", renameWorkspace)
-
         -- SCRIPTS
         -- , ("M-u s", spawn "bash ~/.bin/setup_display")
-        , ("M-S-l", spawn "pkill picom; xset s activate && picom")
+        , ("M-S-l", spawn "xset s activate")
       ]
 
 
 main :: IO ()
 main = do
     n <- countScreens
-    -- START XMOBAR
     xmproc <- spawnPipe "bash -c 'tee >(xmobar -x 1) | xmobar -x 0'"
 
     -- XMONAD HOOKS
@@ -367,13 +368,13 @@ main = do
         , focusFollowsMouse  = True
         , logHook            = workspaceHistoryHook <+> dynamicLogWithPP xmobarPP
                               { ppOutput = hPutStrLn xmproc
-                              , ppCurrent = xmobarColor white ""                   -- Current workspace in xmobar
-                              , ppVisible = xmobarColor gray ""                    -- Visible but not current workspace
-                              , ppHidden = xmobarColor gray ""                     -- Hidden workspaces in xmobar
-                              , ppTitle = xmobarColor green "" . shorten 100       -- Title of active window in xmobar
+                              , ppCurrent = xmobarColor white ""                             -- Current workspace in xmobar
+                              , ppVisible = xmobarColor gray ""                              -- Visible but not current workspace
+                              , ppHidden = xmobarColor gray ""                               -- Hidden workspaces in xmobar
+                              , ppTitle = xmobarColor green "" . shorten 100                 -- Title of active window in xmobar
                               , ppLayout = xmobarColor white ""
-                              , ppSep =  "<fc=#555555> | </fc>"                    -- Separators in xmobar
-                              , ppUrgent = xmobarColor red "" . wrap "!" "!"       -- Urgent workspace
+                              , ppSep =  "<fc=#555555> | </fc>"                              -- Separators in xmobar
+                              , ppUrgent = xmobarColor red "" . wrap "!" "!"                 -- Urgent workspace
                               , ppOrder  = \(ws:l:t:ex) -> ws : l : t : ex
                               }
         } `additionalKeysP` myKeys
