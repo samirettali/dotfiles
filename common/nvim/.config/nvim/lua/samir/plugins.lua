@@ -26,7 +26,7 @@ return require('packer').startup(function()
   use {'b3nj5m1n/kommentary'}                  -- Commenting plugin
   use {'liuchengxu/vista.vim'}                 -- Show a panel to browse tags
   use {'alvan/vim-closetag'}                   -- Automatically close HTML tag
-  use {'AndrewRadev/tagalong.vim'}             -- Automatically rename matching HTML tag
+  -- use {'AndrewRadev/tagalong.vim'}             -- Automatically rename matching HTML tag
   use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
   use {'omnisharp/omnisharp-vim'}
 
@@ -54,6 +54,7 @@ return require('packer').startup(function()
   -- Snippets integration
   use {'hrsh7th/vim-vsnip'}
   use {'hrsh7th/vim-vsnip-integ'}
+  use {'craigmac/vim-vsnip-snippets'}
 
   -- Fuzzy file finder
   use {'nvim-telescope/telescope.nvim',
@@ -70,9 +71,7 @@ return require('packer').startup(function()
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'mhinz/vim-startify'}                      -- Show a tree of undo history
   -- use {'dstein64/nvim-scrollview'}
-  use {'lukas-reineke/indent-blankline.nvim',  -- Show indent line
-    branch = 'lua'
-  }
+  use {'lukas-reineke/indent-blankline.nvim'}  -- Show indent line
   use {'kyazdani42/nvim-tree.lua',             -- Tree navigation
     requires = {{
       'kyazdani42/nvim-web-devicons'
