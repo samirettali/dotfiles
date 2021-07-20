@@ -11,7 +11,7 @@ require('telescope').setup{
     selection_strategy = "reset",
     sorting_strategy = "descending",
     layout_strategy = "horizontal",
-    file_ignore_patterns = {"node_modules", "docker", "%.mmdb"},
+    file_ignore_patterns = {"node_modules", "docker", "%.mmdb", "vendor"},
   },
   extensions = {
     fzy_native = {
@@ -24,6 +24,7 @@ require('telescope').setup{
 require('telescope').load_extension('fzy_native')
 
 map('n', '<C-f>',      '<Cmd>Telescope find_files<CR>')
+map('n', '<C-q>',      '<Cmd>Telescope lsp_workspace_diagnostics<CR>')
 map('n', '<C-s>',      '<Cmd>Telescope lsp_document_symbols<CR>')
 map('n', '<C-w>',      '<Cmd>Telescope lsp_workspace_symbols<CR>')
 map('n', '<C-b>',      '<Cmd>Telescope buffers<CR>')
