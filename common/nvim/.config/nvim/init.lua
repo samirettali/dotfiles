@@ -9,7 +9,6 @@ require 'samir.plugins'
 require 'samir.utils.remaps'
 
 -- Load settings
-require 'samir.highlights'
 require 'samir.defaults'
 require 'samir.lsp'
 require 'samir.lspkind'
