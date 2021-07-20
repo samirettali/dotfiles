@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+USER="samir"
+
 install() {
   sudo pacman -S --noconfirm --needed "${@}"
 }
@@ -20,14 +22,18 @@ install alacritty entr
 install chrome-gnome-shell
 
 # Shell stuff
-install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc ranger tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp rsync taskell mpv
+install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp rsync taskell mpv gpg-tui
+install ranger ueberzug
+aur lazydocker tmuxinator
 
 install base-devel syncthing docker openssh man sudo adobe-source-code-pro-fonts python wireguard-tools nvidia nvidia-prime > /dev/null
 
+aur apkstudio-git
+cargo install du-dust
 cargo install --git 'https://github.com/Soft/xcolor.git'
 
 # System tools
-install restic net-tools cronie tmate tailscale
+install restic net-tools cronie tmate tailscale rsync
 aur ngrok
 
 # Virtual machines
@@ -48,15 +54,24 @@ install discord keepassxc flameshot
 install docker docker-compose
 
 # Dev stuff
-install python-pipenv
-install kubectl
+install python-pipenv pyenv
+install kubectl android-tools
 aur postman-bin visual-studio-code-bin google-cloud-sdk
+aur flutter android-studio
+sudo groupadd flutterusers
+
+# Fix permission
+sudo gpasswd -a "${USER}" flutterusers
+sudo setfacl -R -m g:flutterusers:rwx /opt/flutter
+sudo setfacl -d -m g:flutterusers:rwX /opt/flutter
+
 install nodejs npm yarn
 
 # Language servers
 yarn global add expo-cli typescript-language-server vscode-css-languageserver-bin \
   vscode-html-languageserver-bin eslint_d
 pip3 install 'python-language-server[all]'
+go get github.com/lighttiger2505/sqls
 GO111MODULE=on go get golang.org/x/tools/gopls@latest
 
 # Ethereum
@@ -87,11 +102,14 @@ install hsetroot xarchiver
 
 install xmonad xmonad-contrib xmobar trayer
 
+aur spotify spotify-tui
+
 # Enable services
 sudo systemctl enable --now udevmon
 sudo systemctl enable --now tailscale
 sudo systemctl enable --now udevmon
 sudo systemctl enable --now docker
+sudo systemctl enable --now systemd-timesyncd
 espanso start
 
 rustup toolchain install stable
