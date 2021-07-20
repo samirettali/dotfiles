@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+color=$(xcolor | tr -d '\n')
+notify-send "Color picker" "${color}"
+echo -n "${color}" | xclip -selection clipboard
