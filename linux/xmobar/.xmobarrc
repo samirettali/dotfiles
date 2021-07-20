@@ -1,7 +1,8 @@
 -- vi:syntax=haskell
+
 Config {
      -- Appearance
-      font     = "xft:JetBrainsMono Nerd Font Mono:weight=Medium:size=10:antialias=true:hinting=true"
+      font     = "xft:JetBrainsMono Nerd Font Mono:weight=Medium:size=11:antialias=true:hinting=true"
     , bgColor  = "#000000"
     , fgColor  = "#ffffff"
     , position = Top
