@@ -44,7 +44,10 @@ return require('packer').startup(function()
   use {'hrsh7th/nvim-compe'}                   -- Auto completion
   use {'neovim/nvim-lspconfig'}                -- LSP
   use {'glepnir/lspsaga.nvim'}                 -- LSP functions
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use {'nvim-treesitter/nvim-treesitter',
+    branch = '0.5-compat',
+    run = ':TSUpdate'
+  }
   use {'nvim-treesitter/playground'}
   use {'onsails/lspkind-nvim'}
 
@@ -112,4 +115,5 @@ return require('packer').startup(function()
   use {'bluz71/vim-moonfly-colors'}
   use {'drewtempelmeyer/palenight.vim'}
   use {'ChristianChiarulli/nvcode-color-schemes.vim'}
+  use {'siduck76/nvim-base16.lua'}
 end)
