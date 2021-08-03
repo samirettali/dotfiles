@@ -108,34 +108,38 @@ myFont :: String
 myFont = "xft:SauceCodePro Nerd Font Mono:Medium:size=11.5:regular:antialias=true:hinting=true"
 
 myModMask :: KeyMask
-myModMask = mod1Mask            -- Sets modkey to super/windows key
+myModMask = mod1Mask                 -- Sets modkey to super/windows key
 
 myTerminal :: String
-myTerminal = "alacritty"               -- Sets default terminal
+myTerminal = "alacritty"             -- Sets default terminal
 
 myBrowser :: String
-myBrowser = "brave "            -- Sets qutebrowser as browser for tree select
+myBrowser = "brave "                 -- Sets brave as browser for tree select
 
 myFileManager :: String
-myFileManager = "pcmanfm"       -- Sets pcmanfm as file manager
+myFileManager = "pcmanfm"            -- Sets pcmanfm as file manager
+
+myLauncher :: String
+myLauncher = "rofi -show run"     -- Sets rofi as app launcher
 
 myEditor :: String
 myEditor = myTerminal ++ " -e nvim"  -- Sets neovim as editor for tree select
 
 myBorderWidth :: Dimension
-myBorderWidth = 2               -- Sets border width for windows
+myBorderWidth = 2                    -- Sets border width for windows
 
 myNormColor :: String
-myNormColor = "#2c425c"              -- Border color of normal windows
+-- myNormColor = "#2c425c"              -- Border color of normal windows
+myNormColor = "#000000"              -- Border color of normal windows
 
 myFocusColor :: String
-myFocusColor  = "#9dbadf"             -- Border color of focused windows
+myFocusColor  = "#bc92f8"            -- Border color of focused windows
 
 altMask :: KeyMask
-altMask = mod1Mask              -- Setting this for use in xprompts
+altMask = mod1Mask                   -- Setting this for use in xprompts
 
-windowCount :: X (Maybe String)
-windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
+{- windowCount :: X (Maybe String)
+windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset -}
 
 
 --------------------------------------------------------------------------------------
@@ -250,6 +254,7 @@ myManageHook = composeAll
      , className =? "discord"         --> doShift (myWorkspaces !! 8)
      , className =? "Pcmanfm"         --> doCenterFloat
      , className =? "KeePassXC"       --> doCenterFloat
+     , className =? "Lxappearance"    --> doCenterFloat
      , title     =? "Scratchpad"      --> doCenterFloat
      , title     =? "ranger"          --> doCenterFloat
      , role      =? "pop-up"          --> doCenterFloat
@@ -262,25 +267,25 @@ myManageHook = composeAll
 myKeys :: [(String, X ())]
 myKeys =
         -- XMONAD
-        [ ("M-C-r", spawn "xmonad --recompile")                                              -- Recompiles xmonad
-        , ("M-S-r", spawn "xmonad --restart && notify-send 'Xmonad Recompiled'")             -- Restarts xmonad
+        [ ("M-C-r", spawn "xmonad --recompile && notify-send 'XMonad recompiled")            -- Recompiles xmonad
+        , ("M-S-r", spawn "xmonad --restart && notify-send 'XMonad restarted'")              -- Restarts xmonad
 
         -- TERMINAL
         , ("M-<Return>", spawn (myTerminal))
         , ("M-C-<Return>", spawn (myTerminal ++ " -t Scratchpad"))
-        , ("M-C-n", spawn (myTerminal ++ " -e ncmpcpp"))
+        , ("M-C-m", spawn (myTerminal ++ " -e ncmpcpp"))
         , ("M-e", spawn (myTerminal ++ " -e nvim"))
         , ("M-f", spawn (myFileManager))
 
         -- MENU
-        , ("M-p",     shellPrompt myXPConfig)                                                -- Shell Prompt
-        , ("M-<Tab>", toggleWS)                                                              -- Toggle last workspace
+        , ("M-p",     spawn myLauncher)                                                      -- Run app launcher
+        , ("M-d",     spawn "rofi-pass")                                                     -- Run password manager
 
         -- MISC
         , ("M-y", spawn "color-picker")
         , ("M-u", spawn "setxkbmap -query | grep -q 'us' && setxkbmap it || setxkbmap us")
 
-        -- VOLUME
+        -- VOLUME AND MULTIMEDIA
         , ("<XF86AudioMute>",        spawn "amixer set Master toggle")
         , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
         , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
@@ -312,26 +317,27 @@ myKeys =
         , ("M-S-<Tab>", rotSlavesDown)                                                       -- Rotate all windows except master and keep focus in place
         , ("M-C-<Tab>", rotAllDown)                                                          -- Rotate all the windows in the current stack
         , ("M-C-s", killAllOtherCopies)
+        , ("M-<Tab>", toggleWS)                                                              -- Toggle last workspace
 
-        , ("M-,", prevScreen)
-        , ("M-.", nextScreen)
-        , ("M-S-,", shiftNextScreen)
-        , ("M-S-.", shiftPrevScreen)
+        , ("M-,", prevScreen)                                                                -- Move focus to previous screen
+        , ("M-.", nextScreen)                                                                -- Move focus to next screen
+        , ("M-S-,", shiftNextScreen)                                                         -- Move focused window to previous screen
+        , ("M-S-.", shiftPrevScreen)                                                         -- Move focused window to next screen
 
         -- LAYOUT KEY
         , ("M-z", sendMessage NextLayout)                                                    -- Switch to next layout
         , ("M-C-M1-<Up>", sendMessage Arrange)
         , ("M-C-M1-<Down>", sendMessage DeArrange)
         , ("M-<Space>", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)          -- Toggles noborder/full
-        , ("M-i", sendMessage (IncMasterN 1))                                                -- Increase number of clients in master pane
-        , ("M-d", sendMessage (IncMasterN (-1)))                                             -- Decrease number of clients in master pane
+        -- , ("M-i", sendMessage (IncMasterN 1))                                                -- Increase number of clients in master pane
+        -- , ("M-d", sendMessage (IncMasterN (-1)))                                             -- Decrease number of clients in master pane
 
-        , ("M-n", addWorkspacePrompt myXPConfig)                                             -- Decrease number of windows
-        , ("M-S-d", removeWorkspace)                                                         -- Decrease number of windows
+        -- WORKSPACE CONTROL
+        -- , ("M-n", addWorkspacePrompt myXPConfig)                                             -- Decrease number of windows
+        -- , ("M-S-d", removeWorkspace)                                                         -- Decrease number of windows
         , ("M-'", selectWorkspace myXPConfig)                                                -- Decrease number of windows
         , ("M-S-'", withWorkspace myXPConfig (windows . W.shift) )
         -- , ("M-u", renameWorkspace)
-
 
         -- RESIZING
         , ("M-h", sendMessage Expand)                                                        -- Shrink horiz window width
