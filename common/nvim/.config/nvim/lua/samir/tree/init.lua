@@ -38,37 +38,5 @@ vim.g.nvim_tree_icons = {
     }
 }
 
-
---[[ vim.g.nvim_tree_bindings = {
-    edit = { '<CR>', 'o' },
-    edit_vsplit = '<C-v>',
-    edit_split = '<C-x>',
-    toggle_ignored = 'I',
-    toggle_dotfiles = 'H',
-    refresh = 'R',
-    preview = '<Tab>',
-    cd = '<C-]>',
-    create = 'a',
-    remove = 'd',
-    rename = 'r',
-    cut = 'x',
-    copy = 'c',
-    paste = 'p',
-    prev_git_item = '[c',
-    next_git_item = ']c',
-}
- ]]
-
-local tree_cb = require('nvim-tree.config').nvim_tree_callback
-
-vim.g.nvim_tree_bindings = {
-  { key = { "<cr>" }, cb = tree_cb("edit") },
-  { key = { "<s-cr>" }, cb = tree_cb("close_node") },
-  { key = { "o" }, cb = tree_cb("edit") },
-  { key = { "<BS>" }, cb = tree_cb("close_node") },
-  { key = { "l" }, cb = tree_cb("edit") },
-  { key = { "h" }, cb = tree_cb("close_node") }
-}
-
 map('n', '<C-t>', ':NvimTreeToggle<CR>')
 map('n', '<Leader>n', ':NvimTreeFindFile<CR>')

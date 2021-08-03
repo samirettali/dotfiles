@@ -66,8 +66,4 @@ vim.api.nvim_exec([[
 
 vim.g.palenight_color_overrides = { black = { gui = '#000000', cterm = '0', cterm16 = '0' } }
 
--- vim.g.colors_name = 'moonfly'
-vim.g.nvchad_theme = "javacafe"
-
-local base16 = require'base16'
-base16(base16.themes["javacafe"], true)
+vim.g.colors_name = 'moonfly'

@@ -50,6 +50,11 @@ return require('packer').startup(function()
   }
   use {'nvim-treesitter/playground'}
   use {'onsails/lspkind-nvim'}
+  use {'sbdchd/neoformat'}
+  use {'folke/trouble.nvim',
+       requires = "kyazdani42/nvim-web-devicons",
+       config = function() require("trouble").setup {} end
+  }
 
   use 'RishabhRD/popfix'
   use 'RishabhRD/nvim-lsputils'
@@ -81,6 +86,7 @@ return require('packer').startup(function()
     }}
   }
   use {'yardnsm/vim-import-cost', run = 'yarn install' }
+  use {'p00f/nvim-ts-rainbow'}
 
   -- Objects
   use {'tpope/vim-surround'}                   -- Add surround object for editing
@@ -116,4 +122,5 @@ return require('packer').startup(function()
   use {'drewtempelmeyer/palenight.vim'}
   use {'ChristianChiarulli/nvcode-color-schemes.vim'}
   use {'siduck76/nvim-base16.lua'}
+  use {'simrat39/symbols-outline.nvim'}
 end)
