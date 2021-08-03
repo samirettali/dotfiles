@@ -58,6 +58,8 @@ cmd(':command! Q q')
 cmd(':command! WQ wq')
 cmd(':command! Wq wq')
 
+vim.cmd [[set shortmess+=c]]
+
 vim.api.nvim_exec([[
   set foldexpr=nvim_treesitter#foldexpr()
 ]], false)
