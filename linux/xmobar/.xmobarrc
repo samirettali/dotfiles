@@ -2,7 +2,7 @@
 
 Config {
      -- Appearance
-      font     = "xft:JetBrainsMono Nerd Font Mono:weight=Medium:size=11:antialias=true:hinting=true"
+      font     = "xft:JetBrainsMono Nerd Font Mono:weight=Medium:size=10:antialias=true:hinting=true"
     , bgColor  = "#000000"
     , fgColor  = "#ffffff"
     , position = Top
@@ -18,7 +18,7 @@ Config {
     -- Layout
     , sepChar = "%"
     , alignSep = "}{"
-    , template = " %UnsafeStdinReader% }{ <fc=#b5d5ff>%kbd%</fc><fc=#555555> | </fc><fc=#ff55ff>%cpu%</fc><fc=#555555> | </fc><fc=#ff5555>%multicoretemp%</fc><fc=#555555> | </fc><fc=#5555ff>%memory%</fc><fc=#555555> | </fc><fc=#55ff55>%battery%</fc><fc=#555555> | </fc><fc=#55ffff>%default:Master%</fc><fc=#555555> | </fc><fc=#ffff55>%date%</fc><fc=#555555> | </fc><fc=#ff5555>%time%</fc>%trayerpad% "
+    , template = " %UnsafeStdinReader% }{ <fc=#5555ff>%mpd%</fc><fc=#555555> | </fc><fc=#b5d5ff>%kbd%</fc><fc=#555555> | </fc><fc=#ff55ff>%cpu%</fc><fc=#555555> | </fc><fc=#ff5555>%multicoretemp%</fc><fc=#555555> | </fc><fc=#5555ff>%memory%</fc><fc=#555555> | </fc><fc=#55ff55>%battery%</fc><fc=#555555> | </fc><fc=#55ffff>%default:Master%</fc><fc=#555555> | </fc><fc=#ffff55>%date%</fc><fc=#555555> | </fc><fc=#ff5555>%time%</fc>%trayerpad% "
 
 
     -- Plugins
@@ -39,7 +39,7 @@ Config {
         , Run MultiCoreTemp ["-t", "TEMP: <avg>°C", "--"] 50
 
         -- , Run DiskU [("/", " H : <free> free")] [] 60
-        -- , Run MPD ["-t", "<state>: <artist> - <track>"] 10
+        , Run MPD ["-t", "<state>: <artist> - <title>"] 3
 
         , Run UnsafeStdinReader
     ]
