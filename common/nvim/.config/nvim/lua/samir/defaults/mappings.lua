@@ -45,3 +45,21 @@ map('v', '<Leader>p', '"_dP"', { noremap = true })
 map('n', '<Leader>k', 'gcip', { noremap = false })
 
 map('v', '<C-c>', '"+y')
+
+map('n', '<C-i>', '<C-a>', { noremap = false })
+
+-- Keep lines centered
+map('n', 'n', 'nzzzv')
+map('n', 'N', 'nzzzv')
+map('n', 'J', 'mzJ`z')
+map('n', '<C-j>', ':cnext<CR>zzzv')
+
+-- Undo break points
+map('i', ',', ',<C-g>u')
+map('i', '.', '.<C-g>u')
+map('i', '!', '!<C-g>u')
+map('i', '?', '?<C-g>u')
+map('i', '[', '[<C-g>u')
+map('i', ']', ']<C-g>u')
+map('i', '{', '{<C-g>u')
+map('i', '{', '}<C-g>u')
