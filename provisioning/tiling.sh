@@ -11,3 +11,5 @@ install pcmanfm ffmpegthumbnailer
 install hsetroot xarchiver
 
 install xmonad xmonad-contrib xmobar
+
+aur polybar xmonad-log xininfo-git

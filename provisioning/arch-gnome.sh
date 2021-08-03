@@ -22,9 +22,9 @@ install alacritty entr
 install chrome-gnome-shell
 
 # Shell stuff
-install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp rsync taskell mpv gpg-tui
-install ranger ueberzug
-aur lazydocker tmuxinator
+install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp rsync taskell mpv
+install ranger ueberzug gpg-tui
+aur lazydocker tmuxinator git-quick-stats
 
 install base-devel syncthing docker openssh man sudo adobe-source-code-pro-fonts python wireguard-tools nvidia nvidia-prime > /dev/null
 
