@@ -3,9 +3,12 @@
 Config {
      -- Appearance
       font     = "xft:JetBrainsMono Nerd Font Mono:weight=Medium:size=10:antialias=true:hinting=true"
-    , bgColor  = "#000000"
+    , bgColor  = "#0a0d10"
     , fgColor  = "#ffffff"
-    , position = Top
+    , position = TopSize C 40 30
+    , border = BottomB
+    , borderColor = "#181a23"
+    , borderWidth = 2
 
     -- Behaviour
     , lowerOnStart     = True    -- send to bottom of window stack on start
@@ -18,16 +21,16 @@ Config {
     -- Layout
     , sepChar = "%"
     , alignSep = "}{"
-    , template = " %UnsafeStdinReader% }{ <fc=#5555ff>%mpd%</fc><fc=#555555> | </fc><fc=#b5d5ff>%kbd%</fc><fc=#555555> | </fc><fc=#ff55ff>%cpu%</fc><fc=#555555> | </fc><fc=#ff5555>%multicoretemp%</fc><fc=#555555> | </fc><fc=#5555ff>%memory%</fc><fc=#555555> | </fc><fc=#55ff55>%battery%</fc><fc=#555555> | </fc><fc=#55ffff>%default:Master%</fc><fc=#555555> | </fc><fc=#ffff55>%date%</fc><fc=#555555> | </fc><fc=#ff5555>%time%</fc>%trayerpad% "
+    , template = " %UnsafeStdinReader% }{ <fc=#b5d5ff>%kbd%</fc><fc=#555555> | </fc><fc=#ff55ff>%cpu%</fc><fc=#555555> | </fc><fc=#ff5555>%multicoretemp%</fc><fc=#555555> | </fc><fc=#5555ff>%memory%</fc><fc=#555555> | </fc><fc=#55ff55>%battery%</fc><fc=#555555> | </fc><fc=#55ffff>%default:Master%</fc><fc=#555555> | </fc><fc=#ffff55>%date%</fc><fc=#555555> | </fc><fc=#ff5555>%time%</fc>%trayerpad% "
 
 
     -- Plugins
     , commands = [
           Run Date    "%a %d %b" "date" 50
         , Run Date    "%H:%M:%S" "time" 10
-        , Run Cpu     [ "--template", "CPU: <total>%"
+        , Run Cpu     [ "--template", " <total>%"
                       ] 20
-        , Run Memory  [ "--template", "MEM: <usedratio>%"
+        , Run Memory  [ "--template", ": <usedratio>%"
                       ] 20
         , Run Battery [ "--template" , "BAT: <left>%"
                       ] 50
