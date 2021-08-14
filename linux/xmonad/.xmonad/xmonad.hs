@@ -1,368 +1,63 @@
--- TODO workspaceNamesPP
--- TODO trayer for each screen
--- TODO improve xmobar for each screen
-
 -- Base
 import XMonad
 import System.IO (hPutStrLn)
 import System.Exit (exitSuccess)
 import qualified XMonad.StackSet as W
+import GHC.IO.Handle.Types (Handle)
 
 -- Actions
 import XMonad.Actions.CopyWindow (kill1, killAllOtherCopies)
-import XMonad.Actions.CycleWS (moveTo, shiftTo, WSType(..), nextScreen, prevScreen, toggleWS, shiftNextScreen, shiftPrevScreen)
-import XMonad.Actions.CycleRecentWS
-import XMonad.Actions.MouseResize
-import XMonad.Actions.Promote
+import XMonad.Actions.CycleWS (nextScreen, prevScreen, toggleWS, shiftNextScreen, shiftPrevScreen)
+import XMonad.Actions.Promote (promote)
 import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
-import qualified XMonad.Actions.TreeSelect as TS
-import XMonad.Actions.WindowGo (runOrRaise)
-import XMonad.Actions.WithAll (sinkAll, killAll)
-import qualified XMonad.Actions.Search as S
-import XMonad.Actions.FloatKeys
-import XMonad.Actions.WorkspaceNames (renameWorkspace)
-import XMonad.Actions.DynamicWorkspaces
+import XMonad.Actions.CopyWindow (copyToAll, wsContainingCopies)
 
 -- Data
-import Data.Char (isSpace)
-import Data.Monoid
-import Data.Maybe (isJust)
-import Data.Tree
-import qualified Data.Map as M
+import Data.Monoid (All, Endo)
 
 -- Hooks
-import XMonad.Hooks.ToggleHook
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
-import XMonad.Hooks.EwmhDesktops  -- for some fullscreen events, also for xcomposite in obs.
-import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.EwmhDesktops (ewmh)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
-import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat)
-import XMonad.Hooks.ServerMode
-import XMonad.Hooks.SetWMName
+import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat, isDialog)
+import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Hooks.WorkspaceHistory (workspaceHistoryHook)
+import XMonad.Hooks.InsertPosition (insertPosition, Position(End), Focus(Newer))
 
 -- Layouts
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.ThreeColumns
-import XMonad.Layout.Reflect
-import XMonad.Layout.LayoutCombinators (JumpToLayout(..))
-import XMonad.Layout.IndependentScreens
+import XMonad.Layout.ThreeColumns (ThreeCol(ThreeColMid))
+import XMonad.Layout.Reflect (reflectHoriz)
 
 -- Layouts modifiers
-import XMonad.Layout.LayoutModifier
-import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
-import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
-import XMonad.Layout.NoBorders (Ambiguity(Screen), smartBorders, lessBorders)
+import XMonad.Layout.LayoutModifier (ModifiedLayout)
+import XMonad.Layout.MultiToggle (mkToggle, EOT(EOT), (??))
+import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL))
+import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Layout.Spacing
-import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
-import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
-import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
+import XMonad.Layout.MultiToggle (Toggle(Toggle))
 
 -- Prompt
 import XMonad.Prompt
-import XMonad.Prompt.Input
-import XMonad.Prompt.FuzzyMatch
+import XMonad.Prompt.FuzzyMatch (fuzzyMatch)
 import XMonad.Prompt.Shell (shellPrompt)
-import XMonad.Prompt.XMonad
-import Control.Arrow (first)
 
 -- Utilities
 import XMonad.Util.EZConfig (additionalKeysP)
-import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
-import XMonad.Util.SpawnOnce
-import XMonad.Util.Loggers
+import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.SpawnOnce (spawnOnce)
+import XMonad.Util.NamedScratchpad (NamedScratchpad(NS), namedScratchpadManageHook, namedScratchpadAction)
+import XMonad.Util.Cursor (setDefaultCursor)
 
---------------------------------------------------------------------------------------
--------------------------- DEFAULTS SETTINGS / APPS ----------------------------------
---------------------------------------------------------------------------------------
-
-black :: String
-black = "#000000"
-
-white :: String
-white = "#ffffff"
-
-red :: String
-red = "#ff5555"
-
-green :: String
-green = "#55ff55"
-
-yellow :: String
-yellow = "#ffff55"
-
-blue :: String
-blue = "#5555ff"
-
-magenta :: String
-magenta = "#ff55ff"
-
-cyan :: String
-cyan = "#55ffff"
-
-gray :: String
-gray = "#555555"
-
-myFont :: String
-myFont = "xft:SauceCodePro Nerd Font Mono:Medium:size=11.5:regular:antialias=true:hinting=true"
-
-myModMask :: KeyMask
-myModMask = mod1Mask                 -- Sets modkey to super/windows key
-
-myTerminal :: String
-myTerminal = "alacritty"             -- Sets default terminal
-
-myBrowser :: String
-myBrowser = "brave "                 -- Sets brave as browser for tree select
-
-myFileManager :: String
-myFileManager = "pcmanfm"            -- Sets pcmanfm as file manager
-
-myLauncher :: String
-myLauncher = "rofi -show run"     -- Sets rofi as app launcher
-
-myEditor :: String
-myEditor = myTerminal ++ " -e nvim"  -- Sets neovim as editor for tree select
-
-myBorderWidth :: Dimension
-myBorderWidth = 2                    -- Sets border width for windows
-
-myNormColor :: String
--- myNormColor = "#2c425c"              -- Border color of normal windows
-myNormColor = "#000000"              -- Border color of normal windows
-
-myFocusColor :: String
-myFocusColor  = "#bc92f8"            -- Border color of focused windows
-
-altMask :: KeyMask
-altMask = mod1Mask                   -- Setting this for use in xprompts
-
-{- windowCount :: X (Maybe String)
-windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset -}
-
-
---------------------------------------------------------------------------------------
--------------------------------- XMONAD STARTUP --------------------------------------
---------------------------------------------------------------------------------------
-
-myStartupHook :: X ()
-myStartupHook = do
-          spawnOnce "eval $(ssh-agent) &"
-          spawnOnce "~/.bin/setup_display"
-          spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 0 --tint 0x000000  --height 22 &"
-          spawnOnce "picom --experimental-backends --backend glx -b"
-          spawnOnce "flameshot &"
-          spawnOnce "dunst &"
-          spawnOnce "xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &"
-          spawnOnce "xset s 300 5"
-          spawnOnce "nm-applet &"
-          spawnOnce "xset r rate 200 60 &"
-          spawnOnce "xsetroot -cursor_name left_ptr &"
-          spawnOnce "sleep 1 && ~/.fehbg"
-          spawnOnce "amixer set Master 0%"
-          setWMName "LG3D"
-
---------------------------------------------------------------------------------------
--------------------------------- RUN PROMPT THEME ------------------------------------
---------------------------------------------------------------------------------------
-
-myXPConfig :: XPConfig
-myXPConfig = def
-      { font                = myFont
-      , bgColor             = black
-      , fgColor             = white
-      , bgHLight            = white
-      , fgHLight            = black
-      , borderColor         = red
-      , promptBorderWidth   = 2
-      , position            = CenteredAt { xpCenterY = 0.3, xpWidth = 0.3 }
-      , height              = 40
-      , historySize         = 256
-      , historyFilter       = id
-      , defaultText         = []
-      , autoComplete        = Just 100000  -- set Just 100000 for .1 sec
-      , showCompletionOnTab = False
-      , searchPredicate     = fuzzyMatch
-      , alwaysHighlight     = True
-      , maxComplRows        = Just 7
-      }
-
---------------------------------------------------------------------------------------
------------------------------- PER-LAYOUT SETTINGS -----------------------------------
---------------------------------------------------------------------------------------
-
-mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-mySpacing w = spacingRaw True (Border w w w w) True (Border w w w w) True
--- mySpacing w = spacingRaw False (Border w w w w) True (Border w w w w) False
-
---- LAYOUT
-
-tall      = renamed [Replace "tall"]
-           $ reflectHoriz
-           $ mySpacing 8
-           $ ResizableTall 1 (1/20) (6/10) []
-
-monocle  = renamed [Replace "monocle"]
-           $ Full
-
-columns  = renamed [Replace "columns"]
-           $ mySpacing 8
-           $ ThreeColMid 1 (1/20) (6/10)
-
--- LAYOUT HOOK
-myLayouts = tall ||| columns ||| monocle
-myLayoutHook = avoidStruts $
-                mouseResize $
-                windowArrange $
-                smartBorders $
-                lessBorders Screen $
-                mkToggle (NBFULL ?? NOBORDERS ?? EOT) myLayouts
-
---------------------------------------------------------------------------------------
------------------------------------- WORKSPACES --------------------------------------
---------------------------------------------------------------------------------------
-
-xmobarEscape :: String -> String
-xmobarEscape = concatMap doubleLts
-  where
-        doubleLts '<' = "<<"
-        doubleLts x   = [x]
-
-myWorkspaces :: [String]
--- myWorkspaces = withScreens 2
-myWorkspaces = clickable . (map xmobarEscape)
-               $["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-               where
-                        clickable l = [ "<action=xdotool key alt+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-                             (i,ws) <- zip [1..9] l,                                        
-                            let n = i ]
-
---------------------------------
--- CUSTOM PER WINDOW SETTINGS --
---------------------------------
---
-role :: Query String
-role = stringProperty "WM_WINDOW_ROLE"
-
-myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
-myManageHook = composeAll
-     [ className =? "brave"           --> doShift (myWorkspaces !! 0)
-     , className =? "Code"            --> doShift (myWorkspaces !! 1)
-     , className =? "jetbrains-rider" --> doShift (myWorkspaces !! 1)
-     , className =? "Slack"           --> doShift (myWorkspaces !! 8)
-     , className =? "discord"         --> doShift (myWorkspaces !! 8)
-     , className =? "Pcmanfm"         --> doCenterFloat
-     , className =? "KeePassXC"       --> doCenterFloat
-     , className =? "Lxappearance"    --> doCenterFloat
-     , title     =? "Scratchpad"      --> doCenterFloat
-     , title     =? "ranger"          --> doCenterFloat
-     , role      =? "pop-up"          --> doCenterFloat
-     ]
-
------------------
--- KEYBINDINGS --
------------------
-
-myKeys :: [(String, X ())]
-myKeys =
-        -- XMONAD
-        [ ("M-C-r", spawn "xmonad --recompile && notify-send 'XMonad recompiled")            -- Recompiles xmonad
-        , ("M-S-r", spawn "xmonad --restart && notify-send 'XMonad restarted'")              -- Restarts xmonad
-
-        -- TERMINAL
-        , ("M-<Return>", spawn (myTerminal))
-        , ("M-C-<Return>", spawn (myTerminal ++ " -t Scratchpad"))
-        , ("M-C-m", spawn (myTerminal ++ " -e ncmpcpp"))
-        , ("M-e", spawn (myTerminal ++ " -e nvim"))
-        , ("M-f", spawn (myFileManager))
-
-        -- MENU
-        , ("M-p",     spawn myLauncher)                                                      -- Run app launcher
-        , ("M-d",     spawn "rofi-pass")                                                     -- Run password manager
-
-        -- MISC
-        , ("M-y", spawn "color-picker")
-        , ("M-u", spawn "setxkbmap -query | grep -q 'us' && setxkbmap it || setxkbmap us")
-
-        -- VOLUME AND MULTIMEDIA
-        , ("<XF86AudioMute>",        spawn "amixer set Master toggle")
-        , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
-        , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
-        , ("<XF86AudioPlay>",        spawn "mpc toggle")
-        , ("<XF86AudioPrev>",        spawn "mpc prev")
-        , ("<XF86AudioNext>",        spawn "mpc next")
-
-
-        -- WINDOW
-        , ("M-S-c", kill1)                                                                   -- Kill the currently focused client
-        -- , ("M-S-a", killAll)                                                              -- Kill all windows on current workspace
-
-        -- FLOAT LAYOUT
-        , ("M-S-f", withFocused $ windows . W.sink)                                          -- Push floating window to tile
-        , ("M-s", spawn "selected=$(ls --color=never ~/work/young/scripts/|rofi -dmenu -p 'Run: ') && bash ~/work/young/scripts/${selected}")
-
-        --Keybindings
-        , ("M-t" , sendMessage $ JumpToLayout "tall"    )
-        -- , ("M-f" , sendMessage $ JumpToLayout "full"     )
-        -- , ("M-c" , sendMessage $ JumpToLayout "columns"     )
-
-        -- WINDOW NAVIGATION
-        , ("M-m", windows W.focusMaster)                                                     -- Move focus to the master window
-        , ("M-j", windows W.focusUp)                                                         -- Move focus to the next window
-        , ("M-k", windows W.focusDown)                                                       -- Move focus to the prev window
-        , ("M-S-j", windows W.swapDown)                                                      -- Swap focused window with next window
-        , ("M-S-k", windows W.swapUp)                                                        -- Swap focused window with prev window
-        , ("M-<Backspace>", promote)                                                         -- Moves focused window to master, others maintain order
-        , ("M-S-<Tab>", rotSlavesDown)                                                       -- Rotate all windows except master and keep focus in place
-        , ("M-C-<Tab>", rotAllDown)                                                          -- Rotate all the windows in the current stack
-        , ("M-C-s", killAllOtherCopies)
-        , ("M-<Tab>", toggleWS)                                                              -- Toggle last workspace
-
-        , ("M-,", prevScreen)                                                                -- Move focus to previous screen
-        , ("M-.", nextScreen)                                                                -- Move focus to next screen
-        , ("M-S-,", shiftNextScreen)                                                         -- Move focused window to previous screen
-        , ("M-S-.", shiftPrevScreen)                                                         -- Move focused window to next screen
-
-        -- LAYOUT KEY
-        , ("M-z", sendMessage NextLayout)                                                    -- Switch to next layout
-        , ("M-C-M1-<Up>", sendMessage Arrange)
-        , ("M-C-M1-<Down>", sendMessage DeArrange)
-        , ("M-<Space>", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)          -- Toggles noborder/full
-        -- , ("M-i", sendMessage (IncMasterN 1))                                                -- Increase number of clients in master pane
-        -- , ("M-d", sendMessage (IncMasterN (-1)))                                             -- Decrease number of clients in master pane
-
-        -- WORKSPACE CONTROL
-        -- , ("M-n", addWorkspacePrompt myXPConfig)                                             -- Decrease number of windows
-        -- , ("M-S-d", removeWorkspace)                                                         -- Decrease number of windows
-        , ("M-'", selectWorkspace myXPConfig)                                                -- Decrease number of windows
-        , ("M-S-'", withWorkspace myXPConfig (windows . W.shift) )
-        -- , ("M-u", renameWorkspace)
-
-        -- RESIZING
-        , ("M-h", sendMessage Expand)                                                        -- Shrink horiz window width
-        , ("M-l", sendMessage Shrink)                                                        -- Expand horiz window width
-        , ("M-C-j", sendMessage MirrorShrink)                                                -- Shrink vert window width
-        , ("M-C-k", sendMessage MirrorExpand)                                                -- Expand vert window width
-
-        -- SCRIPTS
-        -- , ("M-u s", spawn "bash ~/.bin/setup_display")
-        , ("M-S-l", spawn "xset s activate")
-      ]
-
-
+-- TODO trayer for each screen
+-- TODO launch xmobar on all displays
 main :: IO ()
 main = do
-    n <- countScreens
-    xmproc <- spawnPipe "bash -c 'tee >(xmobar -x 1) | xmobar -x 0'"
-
-    -- XMONAD HOOKS
+    -- n <- countScreens
+    xmproc <- spawnPipe "xmobar"
     xmonad $ ewmh def
-        { manageHook = ( isFullscreen --> doFullFloat ) <+> myManageHook <+> manageDocks
-        , handleEventHook    = serverModeEventHookCmd
-                               <+> serverModeEventHook
-                               <+> serverModeEventHookF "XMONAD_PRINT" (io . putStrLn)
-                               <+> docksEventHook
+        { manageHook = myManageHook
+        , handleEventHook    = docksEventHook
         , modMask            = myModMask
         , terminal           = myTerminal
         , startupHook        = myStartupHook
@@ -372,15 +67,253 @@ main = do
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
         , focusFollowsMouse  = True
-        , logHook            = workspaceHistoryHook <+> dynamicLogWithPP xmobarPP
-                              { ppOutput = hPutStrLn xmproc
-                              , ppCurrent = xmobarColor white ""                             -- Current workspace in xmobar
-                              , ppVisible = xmobarColor gray ""                              -- Visible but not current workspace
-                              , ppHidden = xmobarColor gray ""                               -- Hidden workspaces in xmobar
-                              , ppTitle = xmobarColor green "" . shorten 100                 -- Title of active window in xmobar
-                              , ppLayout = xmobarColor white ""
-                              , ppSep =  "<fc=#555555> | </fc>"                              -- Separators in xmobar
-                              , ppUrgent = xmobarColor red "" . wrap "!" "!"                 -- Urgent workspace
-                              , ppOrder  = \(ws:l:t:ex) -> ws : l : t : ex
-                              }
+        , logHook            = myLogHook xmproc
         } `additionalKeysP` myKeys
+
+myLogHook :: Handle -> X ()
+myLogHook proc = workspaceHistoryHook <+> dynamicLogWithPP xmobarPP
+    { ppOutput = hPutStrLn proc
+    , ppCurrent = xmobarColor white ""
+    , ppVisible = xmobarColor gray ""
+    , ppHidden = xmobarColor gray ""
+    , ppUrgent = xmobarColor red "" . wrap "!" "!"
+    , ppTitle = xmobarColor green "" . shorten 100
+    , ppLayout = xmobarColor white ""
+    , ppSep =  "<fc=#555555> :: </fc>"
+    , ppOrder  = \(ws:l:t:ex) -> ws : l : t : ex
+    }
+
+myStartupHook :: X ()
+myStartupHook = do
+    spawnOnce "eval $(ssh-agent) &"
+    spawnOnce "~/.bin/setup_display"
+    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 0 --tint 0x000000  --height 22 &"
+    spawnOnce "picom --experimental-backends --backend glx -b"
+    spawnOnce "flameshot &"
+    spawnOnce "dunst &"
+    spawnOnce "xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &"
+    spawnOnce "xset s 300 5"
+    spawnOnce "nm-applet &"
+    spawnOnce "xset r rate 200 60 &"
+    spawnOnce "sleep 1 && ~/.fehbg"
+    spawnOnce "amixer set Master 0%"
+    spawnOnce "mpd &"
+    setWMName "LG3D"
+    setDefaultCursor xC_left_ptr
+
+myXPConfig :: XPConfig
+myXPConfig = def
+    { font                = myFont
+    , bgColor             = black
+    , fgColor             = white
+    , bgHLight            = black
+    , fgHLight            = magenta
+    , borderColor         = magenta
+    , promptBorderWidth   = myBorderWidth
+    , position            = CenteredAt { xpCenterY = 0.3, xpWidth = 0.3 }
+    , height              = 40
+    , historySize         = 256
+    , historyFilter       = id
+    , defaultText         = []
+    , autoComplete        = Just 1
+    , showCompletionOnTab = False
+    , searchPredicate     = fuzzyMatch
+    , alwaysHighlight     = True
+    , maxComplRows        = Just 4
+    }
+
+-- Layouts
+mySpacing :: Integer -> l a -> ModifiedLayout Spacing l a
+mySpacing w = spacingRaw True (Border w w w w) True (Border w w w w) True
+
+myLayoutHook =
+    avoidStruts $
+    smartBorders $
+    mkToggle (NBFULL ?? EOT) $
+    tall ||| columns ||| full
+  where
+    tall = renamed [Replace "tall"]
+        $ mySpacing 8
+        $ reflectHoriz
+        $ Tall 1 (1/20) (1/2)
+
+    full = renamed [Replace "full"]
+      $ Full
+
+    columns = renamed [Replace "cols"]
+        $ mySpacing 8
+        $ reflectHoriz
+        $ ThreeColMid 1 (1/20) (3/5)
+
+-- Workspaces
+myWorkspaces :: [String]
+myWorkspaces = map show [1..9]
+
+-- Scratchpads
+myScratchpads :: [NamedScratchpad]
+myScratchpads =
+    [ NS "term" spawnTerm findTerm doCenterFloat
+    , NS "calc" spawnCalc findCalc doCenterFloat
+    , NS "pavu" spawnPavu findPavu doCenterFloat
+    , NS "music" spawnMusic findMusic doCenterFloat
+    ]
+  where
+    spawnTerm  = myTerminal ++ " -t scratchpad -e tmux new -A -s scratchpad"
+    findTerm   = title =? "scratchpad"
+
+    spawnCalc  = "qalculate-gtk"
+    findCalc   = className =? "Qalculate-gtk"
+
+    spawnPavu = "pavucontrol"
+    findPavu = (className =? "Pavucontrol")
+
+    spawnMusic  = myTerminal ++ " -t ncmpcpp -e ncmpcpp"
+    findMusic   = title =? "ncmpcpp"
+
+-- Manage hook
+myManageHook :: ManageHook
+myManageHook = manageApps
+    <+> manageDocks
+    <+> namedScratchpadManageHook myScratchpads
+  where
+    tileEnd = insertPosition End Newer
+    manageApps :: XMonad.Query (Endo WindowSet)
+    manageApps = composeAll . concat $
+        [ [ className =? "brave"           --> doShift (myWorkspaces !! 0) ]
+        , [ className =? "Code"            --> doShift (myWorkspaces !! 1) ]
+        , [ className =? "jetbrains-rider" --> doShift (myWorkspaces !! 1) ]
+        , [ className =? "Slack"           --> doShift (myWorkspaces !! 8) ]
+        , [ className =? "discord"         --> doShift (myWorkspaces !! 8) ]
+        , [ className =? c --> doCenterFloat | c <- myFloatsC ]
+        , [ title =?     t --> doFloat <+> doF copyToAll | t <- myStickyFloats ]
+        -- , [ isFullscreen --> doFullFloat ]
+        , [ pure True --> tileEnd ]
+        ]
+      where
+        myFloatsC = ["Pcmanfm", "Xarchiver", "KeePassXC", "Lxappearance"]
+        myStickyFloats = ["Picture in picture"]
+
+-- Custom functions
+toggleGlobal :: X ()
+toggleGlobal = do
+    ws <- wsContainingCopies
+    if null ws
+    then windows copyToAll
+    else killAllOtherCopies
+
+-- Keybindings
+myKeys :: [(String, X ())]
+myKeys =
+    [ ("M-r", spawn "xmonad --recompile && xmonad --restart && notify-send 'XMonad restarted'")
+
+    -- Apps
+    , ("M-<Return>", spawn myTerminal)
+    , ("M-C-m",      spawn $ myTerminal ++ " -e ncmpcpp")
+    , ("M-e",        spawn myFileManager)
+
+    -- Scratchpads
+    , ("M-s", namedScratchpadAction myScratchpads "term")
+    , ("M-q", namedScratchpadAction myScratchpads "calc")
+    , ("M-a", namedScratchpadAction myScratchpads "pavu")
+    , ("M-m", namedScratchpadAction myScratchpads "music")
+
+    -- Launchers
+    , ("M-p",          spawn "rofi-pass")
+    , ("M-<Space>",    shellPrompt myXPConfig)
+
+    -- Misc
+    , ("M-y", spawn "color-picker")
+    , ("M-u", spawn "toggle-keymap")
+
+    -- Media
+    , ("<XF86AudioMute>",        spawn "amixer set Master toggle")
+    , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
+    , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
+    , ("M-C-t",                  spawn "mpc toggle")
+    , ("M-C-p",                  spawn "mpc prev")
+    , ("M-C-n",                  spawn "mpc next")
+
+    -- Focus
+    , ("M-j",   windows W.focusUp)                                         -- Move focus to the next window
+    , ("M-k",   windows W.focusDown)                                       -- Move focus to the prev window
+    , ("M-S-j", windows W.swapDown)                                        -- Swap focused window with next window
+    , ("M-S-k", windows W.swapUp)                                          -- Swap focused window with prev window
+    -- , ("M-m",    windows W.focusMaster)                                 -- Move focus to the master window
+
+    -- Move windows
+    , ("M-<Backspace>", promote)                                           -- Moves focused window to master
+    , ("M-S-<Tab>",     rotSlavesDown)                                     -- Rotate all windows except master and keep focus in place
+    , ("M-C-<Tab>",     rotAllDown)                                        -- Rotate all the windows in the current stack
+    , ("M-t",           withFocused $ windows . W.sink)                    -- Push floating window to tile
+
+    -- Control windows
+    , ("M-w", kill1)                                                       -- Kill the currently focused window
+    , ("M-o", toggleGlobal)                                                -- Copy a window to other workspaces or remove it if already present
+
+    -- Resizing
+    , ("M-h", sendMessage Expand)                                          -- Shrink horiz window width
+    , ("M-l", sendMessage Shrink)                                          -- Expand horiz window width
+
+    -- Screen handling
+    , ("M-,",     prevScreen)                                              -- Move focus to previous screen
+    , ("M-.",     nextScreen)                                              -- Move focus to next screen
+    , ("M-S-,",   shiftNextScreen)                                         -- Move focused window to previous screen
+    , ("M-S-.",   shiftPrevScreen)                                         -- Move focused window to next screen
+    , ("M-<Tab>", toggleWS)                                                -- Move to last workspace
+
+    -- Layouts
+    , ("M-z", sendMessage NextLayout)                                      -- Switch to next layout
+    , ("M-i", sendMessage (IncMasterN 1))                                  -- Increase number of clients in master pane
+    , ("M-d", sendMessage (IncMasterN (-1)))                               -- Decrease number of clients in master pane
+    , ("M-f", sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts)  -- Toggles fullscreen
+
+    -- WORKSPACE CONTROL
+    -- , ("M-n", addWorkspacePrompt myXPConfig)                                             -- Decrease number of windows
+    -- , ("-S-d", removeWorkspace)                                                         -- Decrease number of windows
+    {- , ("M-'", selectWorkspace myXPConfig)                                                -- Decrease number of windows
+    , ("M-S-'", withWorkspace myXPConfig (windows . W.shift) ) -}
+    -- , ("M-u", renameWorkspace)
+    ]
+
+-- Default settings
+myFont :: String
+myFont = "xft:JetBrains Mono:Medium:size=11"
+
+myModMask :: KeyMask
+myModMask = mod1Mask
+
+myTerminal :: String
+myTerminal = "alacritty"
+
+myFileManager :: String
+myFileManager = "pcmanfm"
+
+myBorderWidth :: Dimension
+myBorderWidth = 1
+
+myNormColor :: String
+myNormColor = gray
+
+myFocusColor :: String
+myFocusColor  = magenta
+
+black :: String
+black = "#0a0d10"
+
+white :: String
+white = "#e6e8ee"
+
+red :: String
+red = "#ff5555"
+
+green :: String
+green = "#55ff55"
+
+magenta :: String
+magenta = "#bd93f9"
+
+cyan :: String
+cyan = "#55ffff"
+
+gray :: String
+gray = "#434c5e"
