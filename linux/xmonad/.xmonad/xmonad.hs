@@ -27,12 +27,13 @@ import XMonad.Hooks.InsertPosition (insertPosition, Position(End), Focus(Newer))
 -- Layouts
 import XMonad.Layout.ThreeColumns (ThreeCol(ThreeColMid))
 import XMonad.Layout.Reflect (reflectHoriz)
+-- import XMonad.Layout.IndependentScreens (countScreens)
 
 -- Layouts modifiers
 import XMonad.Layout.LayoutModifier (ModifiedLayout)
 import XMonad.Layout.MultiToggle (mkToggle, EOT(EOT), (??))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL))
-import XMonad.Layout.NoBorders (smartBorders)
+import XMonad.Layout.NoBorders (Ambiguity(Screen), smartBorders, lessBorders)
 import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Layout.Spacing
 import XMonad.Layout.MultiToggle (Toggle(Toggle))
@@ -41,6 +42,8 @@ import XMonad.Layout.MultiToggle (Toggle(Toggle))
 import XMonad.Prompt
 import XMonad.Prompt.FuzzyMatch (fuzzyMatch)
 import XMonad.Prompt.Shell (shellPrompt)
+import XMonad.Prompt.Pass (passPrompt, passGeneratePrompt)
+
 
 -- Utilities
 import XMonad.Util.EZConfig (additionalKeysP)
@@ -56,7 +59,7 @@ main = do
     -- n <- countScreens
     xmproc <- spawnPipe "xmobar"
     xmonad $ ewmh def
-        { manageHook = myManageHook
+        { manageHook         = myManageHook
         , handleEventHook    = docksEventHook
         , modMask            = myModMask
         , terminal           = myTerminal
@@ -129,6 +132,7 @@ mySpacing w = spacingRaw True (Border w w w w) True (Border w w w w) True
 myLayoutHook =
     avoidStruts $
     smartBorders $
+    lessBorders Screen $
     mkToggle (NBFULL ?? EOT) $
     tall ||| columns ||| full
   where
@@ -218,8 +222,9 @@ myKeys =
     , ("M-m", namedScratchpadAction myScratchpads "music")
 
     -- Launchers
-    , ("M-p",          spawn "rofi-pass")
-    , ("M-<Space>",    shellPrompt myXPConfig)
+    , ("M-p",         shellPrompt myXPConfig)
+    , ("M-<Space>",   passPrompt myXPConfig)
+    , ("M-S-<Space>", passGeneratePrompt myXPConfig)
 
     -- Misc
     , ("M-y", spawn "color-picker")
@@ -234,37 +239,37 @@ myKeys =
     , ("M-C-n",                  spawn "mpc next")
 
     -- Focus
-    , ("M-j",   windows W.focusUp)                                         -- Move focus to the next window
-    , ("M-k",   windows W.focusDown)                                       -- Move focus to the prev window
-    , ("M-S-j", windows W.swapDown)                                        -- Swap focused window with next window
-    , ("M-S-k", windows W.swapUp)                                          -- Swap focused window with prev window
-    -- , ("M-m",    windows W.focusMaster)                                 -- Move focus to the master window
+    , ("M-j",   windows W.focusUp)                                      -- Move focus to the next window
+    , ("M-k",   windows W.focusDown)                                    -- Move focus to the prev window
+    , ("M-S-j", windows W.swapDown)                                     -- Swap focused window with next window
+    , ("M-S-k", windows W.swapUp)                                       -- Swap focused window with prev window
+    -- , ("M-m",    windows W.focusMaster)                              -- Move focus to the master window
 
     -- Move windows
-    , ("M-<Backspace>", promote)                                           -- Moves focused window to master
-    , ("M-S-<Tab>",     rotSlavesDown)                                     -- Rotate all windows except master and keep focus in place
-    , ("M-C-<Tab>",     rotAllDown)                                        -- Rotate all the windows in the current stack
-    , ("M-t",           withFocused $ windows . W.sink)                    -- Push floating window to tile
+    , ("M-<Backspace>", promote)                                        -- Moves focused window to master
+    , ("M-S-<Tab>",     rotSlavesDown)                                  -- Rotate all windows except master and keep focus in place
+    , ("M-C-<Tab>",     rotAllDown)                                     -- Rotate all the windows in the current stack
+    , ("M-t",           withFocused $ windows . W.sink)                 -- Push floating window to tile
 
     -- Control windows
-    , ("M-w", kill1)                                                       -- Kill the currently focused window
-    , ("M-o", toggleGlobal)                                                -- Copy a window to other workspaces or remove it if already present
+    , ("M-w", kill1)                                                    -- Kill the currently focused window
+    , ("M-o", toggleGlobal)                                             -- Copy a window to other workspaces or remove it if already present
 
     -- Resizing
-    , ("M-h", sendMessage Expand)                                          -- Shrink horiz window width
-    , ("M-l", sendMessage Shrink)                                          -- Expand horiz window width
+    , ("M-h", sendMessage Expand)                                       -- Shrink horiz window width
+    , ("M-l", sendMessage Shrink)                                       -- Expand horiz window width
 
     -- Screen handling
-    , ("M-,",     prevScreen)                                              -- Move focus to previous screen
-    , ("M-.",     nextScreen)                                              -- Move focus to next screen
-    , ("M-S-,",   shiftNextScreen)                                         -- Move focused window to previous screen
-    , ("M-S-.",   shiftPrevScreen)                                         -- Move focused window to next screen
-    , ("M-<Tab>", toggleWS)                                                -- Move to last workspace
+    , ("M-,",     prevScreen)                                           -- Move focus to previous screen
+    , ("M-.",     nextScreen)                                           -- Move focus to next screen
+    , ("M-S-,",   shiftNextScreen)                                      -- Move focused window to previous screen
+    , ("M-S-.",   shiftPrevScreen)                                      -- Move focused window to next screen
+    , ("M-<Tab>", toggleWS)                                             -- Move to last workspace
 
     -- Layouts
-    , ("M-z", sendMessage NextLayout)                                      -- Switch to next layout
-    , ("M-i", sendMessage (IncMasterN 1))                                  -- Increase number of clients in master pane
-    , ("M-d", sendMessage (IncMasterN (-1)))                               -- Decrease number of clients in master pane
+    , ("M-z", sendMessage NextLayout)                                   -- Switch to next layout
+    , ("M-i", sendMessage (IncMasterN 1))                               -- Increase number of clients in master pane
+    , ("M-d", sendMessage (IncMasterN (-1)))                            -- Decrease number of clients in master pane
     , ("M-f", sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts)  -- Toggles fullscreen
 
     -- WORKSPACE CONTROL
