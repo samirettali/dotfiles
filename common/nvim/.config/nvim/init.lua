@@ -10,6 +10,7 @@ require 'samir.utils.remaps'
 
 -- Load settings
 require 'samir.defaults'
+require 'samir.highlights'
 require 'samir.lsp'
 require 'samir.lspkind'
 
@@ -38,6 +39,10 @@ require 'samir.treesitter'
 require 'samir.trouble'
 require 'samir.vimgo'
 require 'samir.vsnip'
+require 'samir.dashboard'
+require 'samir.vista'
 
 -- Vimscript stuff
 require 'samir.vimscript'
+
+require('package-info').setup()

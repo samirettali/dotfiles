@@ -19,7 +19,11 @@ return require('packer').startup(function()
   use {'rhysd/committia.vim'}                  -- Better commit editing
   use {'tpope/vim-fugitive'}                   -- Git wrapper
   use {'f-person/git-blame.nvim'}              -- Show git blame
-  use {'lewis6991/gitsigns.nvim'}              -- Show git diff in the gutter (requires plenary)
+  use {'lewis6991/gitsigns.nvim',              -- Show git diff in the gutter (requires plenary)
+    requires = {{
+      'nvim-lua/plenary.nvim'
+    }}
+  }
 
   -- Coding
   use {'windwp/nvim-autopairs'}                -- Autopair brackets and other symbols
@@ -31,19 +35,16 @@ return require('packer').startup(function()
   use {'omnisharp/omnisharp-vim'}
 
   -- Syntax highlighting
-  use {'pantharshit00/vim-prisma'}             -- Prisma syntax
-  use {'plasticboy/vim-markdown'}              -- Markdown
-  use {'jparise/vim-graphql'}                  -- GraphQL syntax
-  use {'dart-lang/dart-vim-plugin'}            -- Dart syntax
+  use {'pantharshit00/vim-prisma'}
+  use {'plasticboy/vim-markdown'}
+  use {'jparise/vim-graphql'}
+  use {'dart-lang/dart-vim-plugin'}
   use {'TovarishFin/vim-solidity'}
-  -- use {'HerringtonDarkholme/yats.vim'}
-  --[[ use {'othree/html5.vim'}
-  use {'othree/yajs.vim'} ]]
 
   -- LSP and related
-  use {'hrsh7th/nvim-compe'}                   -- Auto completion
   use {'neovim/nvim-lspconfig'}                -- LSP
-  use {'glepnir/lspsaga.nvim'}                 -- LSP functions
+  use {'glepnir/lspsaga.nvim'}                 -- LSP utilities
+  use {'hrsh7th/nvim-compe'}                   -- Auto completion
   use {'nvim-treesitter/nvim-treesitter',
     branch = '0.5-compat',
     run = ':TSUpdate'
@@ -77,16 +78,15 @@ return require('packer').startup(function()
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                 -- Status line
   use {'mbbill/undotree'}                      -- Show a tree of undo history
-  use {'mhinz/vim-startify'}                      -- Show a tree of undo history
-  -- use {'dstein64/nvim-scrollview'}
+  use {'glepnir/dashboard-nvim'}
   use {'lukas-reineke/indent-blankline.nvim'}  -- Show indent line
+  use {'simrat39/symbols-outline.nvim'}
   use {'kyazdani42/nvim-tree.lua',             -- Tree navigation
     requires = {{
       'kyazdani42/nvim-web-devicons'
     }}
   }
   use {'yardnsm/vim-import-cost', run = 'yarn install' }
-  use {'p00f/nvim-ts-rainbow'}
 
   -- Objects
   use {'tpope/vim-surround'}                   -- Add surround object for editing
@@ -116,11 +116,12 @@ return require('packer').startup(function()
 
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim
+  use {'vuki656/package-info.nvim'}
 
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
   use {'drewtempelmeyer/palenight.vim'}
   use {'ChristianChiarulli/nvcode-color-schemes.vim'}
   use {'siduck76/nvim-base16.lua'}
-  use {'simrat39/symbols-outline.nvim'}
+  use {'projekt0n/github-nvim-theme'}
 end)

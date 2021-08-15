@@ -62,13 +62,15 @@ cmd "hi clear CursorLine"
 fg("cursorlinenr", white)
 
 -- git signs ---
-fg_bg("DiffAdd", nord_blue, "none")
-fg_bg("DiffChange", grey_fg, "none")
-fg_bg("DiffModified", nord_blue, "none")
+fg_bg("DiffAdd", green, black)
+fg_bg("DiffChange", grey_fg, black)
+fg_bg("DiffModified", nord_blue, black)
+fg_bg("DiffDelete", red, black)
 
 -- NvimTree
 fg("NvimTreeFolderIcon", blue)
 fg("NvimTreeFolderName", blue)
+fg("NvimTreeGitDirty", red)
 fg("NvimTreeOpenedFolderName", blue)
 fg("NvimTreeEmptyFolderName", blue)
 fg("NvimTreeIndentMarker", one_bg2)
@@ -76,7 +78,7 @@ fg("NvimTreeVertSplit", darker_black)
 bg("NvimTreeVertSplit", darker_black)
 fg("NvimTreeEndOfBuffer", darker_black)
 
-fg("NvimTreeRootFolder", darker_black)
+cmd("hi NvimTreeRootFolder gui=underline guifg=" .. purple)
 bg("NvimTreeNormal", darker_black)
 fg_bg("NvimTreeStatuslineNc", darker_black, darker_black)
 fg_bg("NvimTreeWindowPicker", red, black2)
@@ -113,8 +115,9 @@ fg("DashboardFooter", grey_fg)
 -- packer's floating window
 
 bg("NormalFloat", black2)
-bg("FloatBorder", black2)
 fg("FloatBorder", black2)
+
+-- bg("OUTLINE", darker_black)
 
 -- set bg color for nvim
 -- bg("Normal", black)
