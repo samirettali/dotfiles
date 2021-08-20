@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+ 
+battery=$(cat /sys/class/power_supply/BAT0/capacity)
+if [ "$battery" = 100 ]; then
+  icon=""
+elif [ "$battery" -gt "70" ]; then
+	icon=""
+elif [ "$battery" -gt "50" ]; then
+	icon=""
+elif [ "$battery" -gt "30" ]; then
+	icon=""
+else
+	icon=""
+fi
+ 
+printf "%s %s%%\\n" "$icon" "$battery"

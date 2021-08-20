@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+temp=$(sensors | grep 'Core [0-9]:' | awk '{print $3}' | grep -Eo '[0-9]+\.[0-9]' | awk '{s+=$1}END{print s/NR}' RS=" ")
+
+if [ "$temp" -gt "70" ]; then
+  icon=""
+elif [ "$temp" -gt "50" ]; then
+  icon=""
+elif [ "$temp" -gt "30" ]; then
+  icon=""
+else
+  icon=""
+fi
+
+printf "%s %s%%\\n" "$icon" "$temp"

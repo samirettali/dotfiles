@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+vol=$(pulsemixer --get-volume | awk '{print $1}')
+
+if [ "$(pulsemixer --get-mute)" = "1" ]; then
+  icon="ﱝ"
+elif [ "$vol" -gt "70" ]; then
+  icon=""
+elif [ "$vol" -lt "30" ]; then
+  icon="奄"
+else
+  icon="墳"
+fi
+
+printf "%s %s%%\\n" "$icon" "$vol"
