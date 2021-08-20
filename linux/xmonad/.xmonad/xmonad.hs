@@ -11,9 +11,13 @@ import XMonad.Actions.CycleWS (nextScreen, prevScreen, toggleWS, shiftNextScreen
 import XMonad.Actions.Promote (promote)
 import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
 import XMonad.Actions.CopyWindow (copyToAll, wsContainingCopies)
+import XMonad.Actions.WorkspaceNames (renameWorkspace, workspaceNamesPP)
+import XMonad.Actions.DynamicWorkspaces (selectWorkspace, addWorkspacePrompt, removeWorkspace, withWorkspace, renameWorkspaceByName)
+import XMonad.Actions.FloatKeys (keysMoveWindow, keysResizeWindow)
 
 -- Data
 import Data.Monoid (All, Endo)
+import Data.Map (member)
 
 -- Hooks
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
@@ -27,12 +31,11 @@ import XMonad.Hooks.InsertPosition (insertPosition, Position(End), Focus(Newer))
 -- Layouts
 import XMonad.Layout.ThreeColumns (ThreeCol(ThreeColMid))
 import XMonad.Layout.Reflect (reflectHoriz)
--- import XMonad.Layout.IndependentScreens (countScreens)
 
 -- Layouts modifiers
 import XMonad.Layout.LayoutModifier (ModifiedLayout)
 import XMonad.Layout.MultiToggle (mkToggle, EOT(EOT), (??))
-import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL))
+import XMonad.Layout.MultiToggle.Instances (StdTransformers(FULL))
 import XMonad.Layout.NoBorders (Ambiguity(Screen), smartBorders, lessBorders)
 import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Layout.Spacing
@@ -43,7 +46,7 @@ import XMonad.Prompt
 import XMonad.Prompt.FuzzyMatch (fuzzyMatch)
 import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Prompt.Pass (passPrompt, passGeneratePrompt)
-
+import XMonad.Prompt.Window (WindowPrompt(Goto, Bring), windowPrompt, wsWindows, allWindows)
 
 -- Utilities
 import XMonad.Util.EZConfig (additionalKeysP)
@@ -52,11 +55,11 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 import XMonad.Util.NamedScratchpad (NamedScratchpad(NS), namedScratchpadManageHook, namedScratchpadAction)
 import XMonad.Util.Cursor (setDefaultCursor)
 
+-- TODO runOrRaisePrompt
 -- TODO trayer for each screen
 -- TODO launch xmobar on all displays
 main :: IO ()
 main = do
-    -- n <- countScreens
     xmproc <- spawnPipe "xmobar"
     xmonad $ ewmh def
         { manageHook         = myManageHook
@@ -74,7 +77,7 @@ main = do
         } `additionalKeysP` myKeys
 
 myLogHook :: Handle -> X ()
-myLogHook proc = workspaceHistoryHook <+> dynamicLogWithPP xmobarPP
+myLogHook proc = workspaceNamesPP xmobarPP
     { ppOutput = hPutStrLn proc
     , ppCurrent = xmobarColor white ""
     , ppVisible = xmobarColor gray ""
@@ -84,13 +87,13 @@ myLogHook proc = workspaceHistoryHook <+> dynamicLogWithPP xmobarPP
     , ppLayout = xmobarColor white ""
     , ppSep =  "<fc=#555555> :: </fc>"
     , ppOrder  = \(ws:l:t:ex) -> ws : l : t : ex
-    }
+    } >>= dynamicLogWithPP >> workspaceHistoryHook
 
 myStartupHook :: X ()
 myStartupHook = do
     spawnOnce "eval $(ssh-agent) &"
     spawnOnce "~/.bin/setup_display"
-    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 0 --tint 0x000000  --height 22 &"
+    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 0 --tint 0x0a0d10  --height 22 &"
     spawnOnce "picom --experimental-backends --backend glx -b"
     spawnOnce "flameshot &"
     spawnOnce "dunst &"
@@ -100,7 +103,7 @@ myStartupHook = do
     spawnOnce "xset r rate 200 60 &"
     spawnOnce "sleep 1 && ~/.fehbg"
     spawnOnce "amixer set Master 0%"
-    spawnOnce "mpd &"
+    spawnOnce "pkill mpd; mpd &"
     setWMName "LG3D"
     setDefaultCursor xC_left_ptr
 
@@ -109,10 +112,10 @@ myXPConfig = def
     { font                = myFont
     , bgColor             = black
     , fgColor             = white
-    , bgHLight            = black
-    , fgHLight            = magenta
+    , bgHLight            = white
+    , fgHLight            = black
     , borderColor         = magenta
-    , promptBorderWidth   = myBorderWidth
+    , promptBorderWidth   = 0
     , position            = CenteredAt { xpCenterY = 0.3, xpWidth = 0.3 }
     , height              = 40
     , historySize         = 256
@@ -133,20 +136,16 @@ myLayoutHook =
     avoidStruts $
     smartBorders $
     lessBorders Screen $
-    mkToggle (NBFULL ?? EOT) $
-    tall ||| columns ||| full
+    mkToggle (FULL ?? EOT) $
+    tall ||| columns
   where
     tall = renamed [Replace "tall"]
         $ mySpacing 8
         $ reflectHoriz
         $ Tall 1 (1/20) (1/2)
 
-    full = renamed [Replace "full"]
-      $ Full
-
     columns = renamed [Replace "cols"]
         $ mySpacing 8
-        $ reflectHoriz
         $ ThreeColMid 1 (1/20) (3/5)
 
 -- Workspaces
@@ -160,6 +159,7 @@ myScratchpads =
     , NS "calc" spawnCalc findCalc doCenterFloat
     , NS "pavu" spawnPavu findPavu doCenterFloat
     , NS "music" spawnMusic findMusic doCenterFloat
+    , NS "files" spawnFileManager findFileManager doCenterFloat
     ]
   where
     spawnTerm  = myTerminal ++ " -t scratchpad -e tmux new -A -s scratchpad"
@@ -174,13 +174,16 @@ myScratchpads =
     spawnMusic  = myTerminal ++ " -t ncmpcpp -e ncmpcpp"
     findMusic   = title =? "ncmpcpp"
 
+    spawnFileManager  = myFileManager
+    findFileManager   = className =? "Pcmanfm"
+
 -- Manage hook
 myManageHook :: ManageHook
 myManageHook = manageApps
     <+> manageDocks
     <+> namedScratchpadManageHook myScratchpads
   where
-    tileEnd = insertPosition End Newer
+    -- tileEnd = insertPosition End Newer
     manageApps :: XMonad.Query (Endo WindowSet)
     manageApps = composeAll . concat $
         [ [ className =? "brave"           --> doShift (myWorkspaces !! 0) ]
@@ -190,11 +193,11 @@ myManageHook = manageApps
         , [ className =? "discord"         --> doShift (myWorkspaces !! 8) ]
         , [ className =? c --> doCenterFloat | c <- myFloatsC ]
         , [ title =?     t --> doFloat <+> doF copyToAll | t <- myStickyFloats ]
-        -- , [ isFullscreen --> doFullFloat ]
-        , [ pure True --> tileEnd ]
+        , [ isFullscreen --> doFullFloat ]
+        -- , [ pure True --> tileEnd ]
         ]
       where
-        myFloatsC = ["Pcmanfm", "Xarchiver", "KeePassXC", "Lxappearance"]
+        myFloatsC = ["Pcmanfm", "Xarchiver", "KeePassXC", "Lxappearance", "nm-connection-editor"]
         myStickyFloats = ["Picture in picture"]
 
 -- Custom functions
@@ -205,21 +208,34 @@ toggleGlobal = do
     then windows copyToAll
     else killAllOtherCopies
 
+centerWindow :: Window -> X ()
+centerWindow win = do
+    (_, W.RationalRect x y w h) <- floatLocation win
+    windows $ W.float win (W.RationalRect ((1 - w) / 2) ((1 - h) / 2) w h)
+    return ()
+
+-- toggleFloat :: Window -> X()
+toggleFloat w = windows (\s -> if member w (W.floating s)
+    then W.sink w s
+    else (W.float w (W.RationalRect (1/3) (1/4) (1/3) (1/2)) s))
+
 -- Keybindings
 myKeys :: [(String, X ())]
 myKeys =
-    [ ("M-r", spawn "xmonad --recompile && xmonad --restart && notify-send 'XMonad restarted'")
+    [ ("M-S-r", spawn "xmonad --recompile && xmonad --restart && notify-send 'XMonad restarted'")
 
     -- Apps
     , ("M-<Return>", spawn myTerminal)
-    , ("M-C-m",      spawn $ myTerminal ++ " -e ncmpcpp")
-    , ("M-e",        spawn myFileManager)
 
     -- Scratchpads
     , ("M-s", namedScratchpadAction myScratchpads "term")
     , ("M-q", namedScratchpadAction myScratchpads "calc")
-    , ("M-a", namedScratchpadAction myScratchpads "pavu")
+    , ("M-v", namedScratchpadAction myScratchpads "pavu")
     , ("M-m", namedScratchpadAction myScratchpads "music")
+    , ("M-e", namedScratchpadAction myScratchpads "files")
+
+    , ("M-g", windowPrompt myXPConfig Goto allWindows)
+    , ("M-b", windowPrompt myXPConfig Bring allWindows)
 
     -- Launchers
     , ("M-p",         shellPrompt myXPConfig)
@@ -227,8 +243,9 @@ myKeys =
     , ("M-S-<Space>", passGeneratePrompt myXPConfig)
 
     -- Misc
-    , ("M-y", spawn "color-picker")
-    , ("M-u", spawn "toggle-keymap")
+    , ("M-y",   spawn "color-picker")
+    , ("M-u",   spawn "toggle-keymap")
+    , ("M-S-l", spawn "xset s activate")
 
     -- Media
     , ("<XF86AudioMute>",        spawn "amixer set Master toggle")
@@ -249,10 +266,19 @@ myKeys =
     , ("M-<Backspace>", promote)                                        -- Moves focused window to master
     , ("M-S-<Tab>",     rotSlavesDown)                                  -- Rotate all windows except master and keep focus in place
     , ("M-C-<Tab>",     rotAllDown)                                     -- Rotate all the windows in the current stack
-    , ("M-t",           withFocused $ windows . W.sink)                 -- Push floating window to tile
+    , ("M-c",           withFocused centerWindow)                       -- Center window TODO: center only if floating
+    , ("M-f",           withFocused toggleFloat)                        -- Push floating window to tile
+    , ("M-<Left>", withFocused (keysMoveWindow (-windowStep, 0)))
+    , ("M-<Down>", withFocused (keysMoveWindow (0, windowStep)))
+    , ("M-<Right>", withFocused (keysMoveWindow ((windowStep), 0)))
+    , ("M-<Up>", withFocused (keysMoveWindow (0, -windowStep)))
+    , ("M-S-<Left>", withFocused (keysResizeWindow (-windowStep, 0) (0, 0)))
+    , ("M-S-<Down>", withFocused (keysResizeWindow (0, windowStep) (0, 0)))
+    , ("M-S-<Right>", withFocused (keysResizeWindow ((windowStep), 0) (0, 0)))
+    , ("M-S-<Up>", withFocused (keysResizeWindow (0, -windowStep) (0, 0)))
 
     -- Control windows
-    , ("M-w", kill1)                                                    -- Kill the currently focused window
+    , ("M-S-c", kill1)                                                    -- Kill the currently focused window
     , ("M-o", toggleGlobal)                                             -- Copy a window to other workspaces or remove it if already present
 
     -- Resizing
@@ -268,19 +294,19 @@ myKeys =
 
     -- Layouts
     , ("M-z", sendMessage NextLayout)                                   -- Switch to next layout
-    , ("M-i", sendMessage (IncMasterN 1))                               -- Increase number of clients in master pane
-    , ("M-d", sendMessage (IncMasterN (-1)))                            -- Decrease number of clients in master pane
-    , ("M-f", sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts)  -- Toggles fullscreen
+    {- , ("M-i", sendMessage (IncMasterN 1))                               -- Increase number of clients in master pane
+    , ("M-d", sendMessage (IncMasterN (-1)))                            -- Decrease number of clients in master pane -}
+    , ("M-S-f", sendMessage (Toggle FULL) >> sendMessage ToggleStruts)-- Toggles fullscreen
 
-    -- WORKSPACE CONTROL
-    -- , ("M-n", addWorkspacePrompt myXPConfig)                                             -- Decrease number of windows
-    -- , ("-S-d", removeWorkspace)                                                         -- Decrease number of windows
-    {- , ("M-'", selectWorkspace myXPConfig)                                                -- Decrease number of windows
-    , ("M-S-'", withWorkspace myXPConfig (windows . W.shift) ) -}
-    -- , ("M-u", renameWorkspace)
+    -- Workspaces handling
+    , ("M-a", addWorkspacePrompt myXPConfig)                            -- Create a workspace
+    , ("M-d", removeWorkspace)                                          -- Delete a workspace
+    , ("M-w", selectWorkspace myXPConfig)                               -- Go to a workspace
+    , ("M-r", renameWorkspace myXPConfig)                               -- Rename a workspace
+    , ("M-S-s", withWorkspace myXPConfig (windows . W.shift) )          -- Shift current window to a workspace
     ]
 
--- Default settings
+-- Variables
 myFont :: String
 myFont = "xft:JetBrains Mono:Medium:size=11"
 
@@ -294,13 +320,13 @@ myFileManager :: String
 myFileManager = "pcmanfm"
 
 myBorderWidth :: Dimension
-myBorderWidth = 1
+myBorderWidth = 2
 
 myNormColor :: String
 myNormColor = gray
 
 myFocusColor :: String
-myFocusColor  = magenta
+myFocusColor  = red
 
 black :: String
 black = "#0a0d10"
@@ -315,10 +341,13 @@ green :: String
 green = "#55ff55"
 
 magenta :: String
-magenta = "#bd93f9"
+magenta = "#ff55ff"
 
 cyan :: String
 cyan = "#55ffff"
 
 gray :: String
-gray = "#434c5e"
+gray = "#555555"
+
+windowStep :: Dimension
+windowStep = 50
