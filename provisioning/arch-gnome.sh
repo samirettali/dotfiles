@@ -10,6 +10,11 @@ aur() {
   paru -S --noconfirm "${@}"
 }
 
+setup_time() {
+  sudo timedatectl set-ntp true
+  sudo timedatectl set-timezone Europe/Rome
+}
+
 sudo pacman -Syu --noconfirm
 
 # Install AUR helper
@@ -22,9 +27,12 @@ install alacritty entr
 install chrome-gnome-shell
 
 # Shell stuff
-install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp rsync taskell mpv
+install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp rsync taskell mpv sshfs
 install ranger ueberzug gpg-tui
 aur lazydocker tmuxinator git-quick-stats
+
+isntall wireshark-qt
+sudo usermod -aG wireshark samir
 
 install base-devel syncthing docker openssh man sudo adobe-source-code-pro-fonts python wireguard-tools nvidia nvidia-prime > /dev/null
 
@@ -43,12 +51,12 @@ install qemu virt-manager firewalld
 install usbutils
 
 # Keyboard customization
-install interception-tools interception-caps2esc
-aur interception-dual-function-keys
+install interception-tools interception-caps2esc interception-dual-function-keys
 
 # Compilers
 install go rustup
-paru -s nerd-fonts-jetbrains-mono brave-bin neovim-nightly-bin espanso-bin
+install noto-fonts-emoji
+aur nerd-fonts-jetbrains-mono brave-bin neovim-nightly-bin espanso-bin
 
 install discord keepassxc flameshot
 install docker docker-compose
@@ -90,17 +98,15 @@ yarn global add @openapitools/openapi-generator-cli
 # xps
 install nvidia nvidia-prime
 
-install xorg-server xorg-xinit xsecurelock xss-lock xf86-video-intel nvidia nvidia-prime dunst feh zathura zathura-pdf-poppler
+install xorg-server xorg-xinit xsecurelock xss-lock xf86-video-intel nvidia nvidia-prime dunst feh zathura zathura-pdf-mupdf xorg-xev xorg-xprop xorg-xinput xorg-xbacklight
 
-install lxappearance pavucontrol pulsemixer
-
-install xorg-xev xorg-xprop xorg-xinput xorg-xbacklight
+install lxappearance pavucontrol
 
 install pcmanfm ffmpegthumbnailer
 
 install hsetroot xarchiver
 
-install xmonad xmonad-contrib xmobar trayer
+install xmonad xmonad-contrib xmobar trayer xmonad-log xininfo-git
 
 aur spotify spotify-tui
 
@@ -124,3 +130,5 @@ mkdir -p ~/.local/share/nvim/swap
 # Name the command as you like it, e.g. flameshot. And in the command insert /usr/bin/flameshot gui.
 # Then click "Set Shortcut.." and press Prt Sc. This will show as "print".
 gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '[]'
+
+xdg-settings set default-url-scheme-handler magnet qBittorrent.desktop
