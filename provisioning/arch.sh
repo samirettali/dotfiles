@@ -27,7 +27,7 @@ install alacritty entr
 install chrome-gnome-shell
 
 # Shell stuff
-install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp rsync taskell mpv sshfs bat
+install zsh wget jq tree git htop tmux fzf lazygit fd ncdu ripgrep scc tig wget moreutils man openbsd-netcat tree-sitter pass pass-otp rsync taskell mpv sshfs bat z
 install ranger ueberzug gpg-tui
 aur lazydocker tmuxinator git-quick-stats
 

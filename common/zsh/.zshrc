@@ -130,6 +130,9 @@ bindkey '^ ' autosuggest-accept
 # Highlight plugin
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Load z
+[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
+
 # Autostart X on VT1
 if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
   exec startx
