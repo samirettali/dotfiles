@@ -33,8 +33,8 @@ map('n', '<Leader>o', ':only<CR>', { silent = true })
 -- Load current buffer
 map('n', '<Leader>l', ':luafile %<CR>', { silent = true })
 
--- Sync plugins
-map('n', '<Leader>ps', ':PackerSync<CR>', { silent = true })
+-- Reload configs and sync plugins
+map('n', '<Leader>l', ':luafile ~/.config/nvim/init.lua<CR> | :PackerSync<CR>', { silent = true })
 
 -- Remove trailing whitespace
 map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
@@ -47,6 +47,9 @@ map('n', '<Leader>k', 'gcip', { noremap = false })
 map('v', '<C-c>', '"+y')
 
 map('n', '<C-i>', '<C-a>', { noremap = false })
+
+-- Join with above line
+map('n', 'K', 'kJ')
 
 -- Keep lines centered
 map('n', 'n', 'nzzzv')

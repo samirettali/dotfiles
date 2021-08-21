@@ -8,9 +8,6 @@ saga.init_lsp_saga {
 vim.g.completion_trigger_on_delete = 1
 vim.g.lsp_document_highlight_enabled = 1
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
 local function custom_attach(client)
   map('n', 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>')
   map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>')
@@ -37,6 +34,21 @@ local function custom_attach(client)
 
   vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 
+  local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
+
+  if filetype == 'rust' then
+    vim.cmd [[autocmd BufWritePre <buffer> :lua format_rust()]]
+    vim.cmd [[autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost <buffer> :lua require"lsp_extensions".inlay_hints{ prefix = ' » ', highlight = "Comment", enabled = {"TypeHint","ChainingHint", "ParameterHint"}}]]
+  elseif filetype == 'go' then
+    vim.cmd [[autocmd BufWritePre <buffer> lua goimports(1000)]]
+
+    -- gopls requires a require to list workspace arguments.
+    vim.cmd [[autocmd BufEnter,BufNewFile,BufRead <buffer> map <buffer> <leader>fs <cmd>lua require('telescope.builtin').lsp_workspace_symbols { query = vim.fn.input("Query: ") }<cr>]]
+  end
+
+  -- Show diagnostic on hover
+  vim.cmd [[autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })]]
+
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec([[
@@ -52,23 +64,10 @@ local function custom_attach(client)
   end
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = true,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-  }
-)
-
-vim.fn.sign_define("LspDiagnosticsSignError",
-    {text = "", texthl = "LspDiagnosticsSignError"})
-vim.fn.sign_define("LspDiagnosticsSignWarning",
-    {text = "", texthl = "LspDiagnosticsSignWarning"})
-vim.fn.sign_define("LspDiagnosticsSignInformation",
-    {text = "i", texthl = "LspDiagnosticsSignInformation"})
-vim.fn.sign_define("LspDiagnosticsSignHint",
-    {text = "!", texthl = "LspDiagnosticsSignHint"})
+vim.fn.sign_define("LspDiagnosticsSignError", {text = "", texthl = "LspDiagnosticsSignError"})
+vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", texthl = "LspDiagnosticsSignWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "i", texthl = "LspDiagnosticsSignInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint", {text = "!", texthl = "LspDiagnosticsSignHint"})
 
 
 vim.api.nvim_exec([[
@@ -78,64 +77,48 @@ vim.api.nvim_exec([[
   autocmd BufWritePre *.js lua vim.lsp.buf.formatting()
   autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting()
 
-  autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
-  autocmd BufWritePre *.go lua goimports(1000)
-
-  autocmd BufWritePre *.css lua vim.lsp.buf.formatting()
-  autocmd BufWritePre *.less lua vim.lsp.buf.formatting()
-  autocmd BufWritePre *.scss lua vim.lsp.buf.formatting()
-  autocmd BufWritePre *.rs lua vim.lsp.buf.formatting()
   autocmd BufWritePre *.py lua vim.lsp.buf.formatting()
 ]], false)
 
-local servers = {
-  bashls = { filetypes = { 'bash' } },
-  hls = { filetypes = { 'haskell' } },
-  tsserver = {
-    filetypes = {
-      'javascript',
-      'javascriptreact',
-      'javascript.jsx',
-      'typescript',
-      'typescriptreact',
-      'typescript.tsx'
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+capabilities.textDocument.codeAction = {
+    dynamicRegistration = true,
+    codeActionLiteralSupport = {
+        codeActionKind = {
+            valueSet = (function()
+                local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+                table.sort(res)
+                return res
+            end)()
+        }
     }
-  },
-  html = { filetypes = { 'html' } },
-  -- gopls = { filetypes = { 'go', 'gomod' } },
-  rls = { filetypes = { 'rust' } },
-  cssls = { filetypes = { 'css' } },
-  pylsp = { filetypes = { 'python' } },
-  sqls = { filetypes = { 'sql' } },
-  clangd = { filetypes = { 'c', 'cpp', 'objc', 'objcpp' } },
-  java_language_server = { filetypes = { 'java' }}
 }
 
 vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
 
-for lsp, opts in pairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = custom_attach,
-    filetypes = opts.filetypes,
-    capabilities = capabilities,
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  require('lsp_extensions.workspace.diagnostic').handler, {
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
   }
-end
+)
 
--- vim.g.OmniSharp_server_use_mono = 1
-
-local pid = vim.fn.getpid()
-lspconfig.omnisharp.setup{
-    cmd = { '/usr/bin/omnisharp', "--languageserver" , "--hostPID", tostring(pid) },
-    -- root_dir = lspconfig.util.root_pattern(".csproj", ".sln"),
-    on_attach = custom_attach
-}
-
-lspconfig.gopls.setup{
-  cmd = {'gopls'},
-  filetypes = { 'go', 'gomod' },
-  -- for postfix snippets and analyzers
-  capabilities = capabilities,
-  settings = {
+local servers = {
+  bashls = {},
+  hls = {},
+  tsserver = {},
+  html = {},
+  cssls = {},
+  pylsp = {},
+  sqls = {},
+  clangd = {},
+  java_language_server = {},
+  gopls = {
     gopls = {
       experimentalPostfixCompletions = true,
       analyses = {
@@ -145,15 +128,52 @@ lspconfig.gopls.setup{
       staticcheck = true,
     },
   },
-  init_options = {
-      -- usePlaceHolders = true,
-      completeUnimported = true,
-  },
-  on_attach = custom_attach,
+  rust_analyzer = {
+    ["rust-analyzer"] = {
+      assist = {
+        importGranularity = "module",
+        importPrefix = "by_self",
+      },
+      cargo = {
+        loadOutDirsFromCheck = true
+      },
+      procMacro = {
+        enable = true
+      },
+      checkOnSave = {
+        command = "clippy",
+      },
+      flags = {
+        debounce_text_changes = 200,
+      },
+    }
+  }
 }
 
-function goimports(timeoutms)
-  local context = { source = { organizeImports = true } }
+for lsp, settings in pairs(servers) do
+  lspconfig[lsp].setup {
+    on_attach = custom_attach,
+    -- filetypes = opts.filetypes,
+    capabilities = capabilities,
+    settings = settings,
+    flags = {
+      debounce_text_changes = 200,
+    },
+  }
+end
+
+local pid = vim.fn.getpid()
+lspconfig.omnisharp.setup{
+    cmd = { '/usr/bin/omnisharp', "--languageserver" , "--hostPID", tostring(pid) },
+    -- root_dir = lspconfig.util.root_pattern(".csproj", ".sln"),
+    on_attach = custom_attach,
+    flags = {
+      debounce_text_changes = 200,
+    },
+}
+
+--[[ function goimports(timeout_ms)
+  local context = { only = { "source.organizeImports" } }
   vim.validate { context = { context, "t", true } }
 
   local params = vim.lsp.util.make_range_params()
@@ -180,4 +200,27 @@ function goimports(timeoutms)
   else
     vim.lsp.buf.execute_command(action)
   end
+end ]]
+
+function goimports(wait_ms)
+  local params = vim.lsp.util.make_range_params()
+  params.context = {only = {"source.organizeImports"}}
+  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+  for _, res in pairs(result or {}) do
+    for _, r in pairs(res.result or {}) do
+      if r.edit then
+        vim.lsp.util.apply_workspace_edit(r.edit)
+      else
+        vim.lsp.buf.execute_command(r.command)
+      end
+    end
+  end
+
+  vim.lsp.buf.formatting()
+end
+
+function format_rust()
+  local lineno = vim.api.nvim_win_get_cursor(0)
+  vim.lsp.buf.formatting_sync(nil, 1000)
+  vim.api.nvim_win_set_cursor(0, lineno)
 end

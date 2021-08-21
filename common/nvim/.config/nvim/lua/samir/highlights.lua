@@ -62,9 +62,9 @@ cmd "hi clear CursorLine"
 fg("cursorlinenr", white)
 
 -- git signs ---
-fg_bg("DiffAdd", green, black)
-fg_bg("DiffChange", grey_fg, black)
-fg_bg("DiffModified", nord_blue, black)
+fg_bg("DiffAdd", green, "none")
+fg_bg("DiffChange", grey_fg, "none")
+fg_bg("DiffModified", nord_blue, "none")
 fg_bg("DiffDelete", red, black)
 
 -- NvimTree
@@ -114,8 +114,8 @@ fg("DashboardFooter", grey_fg)
 
 -- packer's floating window
 
-bg("NormalFloat", black2)
-fg("FloatBorder", black2)
+bg("NormalFloat", "NONE")
+fg("FloatBorder", blue)
 
 -- bg("OUTLINE", darker_black)
 

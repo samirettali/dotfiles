@@ -27,7 +27,9 @@ opt('w', 'wrap', true)                     -- Wrap visually long lines
 opt('w', 'cursorline', true)               -- Highlight current line
 opt('w', 'colorcolumn', '81')              -- Highlight 81st column
 opt('w', 'foldmethod', 'expr')             -- Set fold method
+opt('w', 'signcolumn', 'yes')              -- Keep sign column always opened
 
+opt('o', 'updatetime', 300)
 opt('o', 'hidden', true)                   -- Enable modified buffers in background
 opt('o', 'ignorecase', true)               -- Ignore case
 opt('o', 'smartcase', true)                -- Don't ignore case with capitals
@@ -66,8 +68,20 @@ vim.api.nvim_exec([[
 
 vim.g.palenight_color_overrides = { black = { gui = '#000000', cterm = '0', cterm16 = '0' } }
 
+local function get_random_theme()
+  themes = {}
+  for dir in io.popen([[ls /home/samir/.config/nvim/lua/samir/themes]]):lines() do
+    theme = dir:gsub(".lua", "")
+    table.insert(themes, theme)
+  end
+  math.randomseed(os.time())
+  index = math.random(0, table.getn(themes))
+  return themes[index]
+end
+
+--[[ vim.g.nvchad_theme = get_random_theme()
 vim.g.nvchad_theme = "onedark"
 local base16 = require 'base16'
-base16(base16.themes(vim.g.nvchad_theme), true)
+base16(base16.themes(vim.g.nvchad_theme), true) ]]
 
--- vim.g.colors_name = 'moonfly'
+vim.g.colors_name = 'moonfly'

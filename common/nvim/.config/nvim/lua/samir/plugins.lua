@@ -43,7 +43,9 @@ return require('packer').startup(function()
 
   -- LSP and related
   use {'neovim/nvim-lspconfig'}                -- LSP
+  use {'nvim-lua/lsp_extensions.nvim'}
   use {'glepnir/lspsaga.nvim'}                 -- LSP utilities
+  use {'jose-elias-alvarez/null-ls.nvim'}
   use {'hrsh7th/nvim-compe'}                   -- Auto completion
   use {'nvim-treesitter/nvim-treesitter',
     branch = '0.5-compat',
@@ -51,7 +53,6 @@ return require('packer').startup(function()
   }
   use {'nvim-treesitter/playground'}
   use {'onsails/lspkind-nvim'}
-  use {'sbdchd/neoformat'}
   use {'folke/trouble.nvim',
        requires = "kyazdani42/nvim-web-devicons",
        config = function() require("trouble").setup {} end
@@ -77,16 +78,32 @@ return require('packer').startup(function()
   -- UI components
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                 -- Status line
+  -- use {'glepnir/galaxyline.nvim'}
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'glepnir/dashboard-nvim'}
   use {'lukas-reineke/indent-blankline.nvim'}  -- Show indent line
   use {'simrat39/symbols-outline.nvim'}
+  --[[ use {
+    "projekt0n/circles.nvim",
+    requires = {{"kyazdani42/nvim-web-devicons"}, {"kyazdani42/nvim-tree.lua", opt = true}},
+    config = function()
+      require("circles").setup({
+        icons = {
+          empty = "",
+          filled = "",
+          lsp_prefix = ""
+        },
+        -- override lsp_diagnostic virtual-text icon with `icons.lsp_prefix`
+        lsp = true
+      })
+    end
+  } ]]
+
   use {'kyazdani42/nvim-tree.lua',             -- Tree navigation
     requires = {{
       'kyazdani42/nvim-web-devicons'
     }}
-  }
-  use {'yardnsm/vim-import-cost', run = 'yarn install' }
+  }  use {'yardnsm/vim-import-cost', run = 'yarn install' }
 
   -- Objects
   use {'tpope/vim-surround'}                   -- Add surround object for editing
@@ -114,14 +131,15 @@ return require('packer').startup(function()
   use {'ojroques/vim-oscyank'}                 -- Copy in OS clipboard in SSH
   use {'tpope/vim-obsession'}                  -- Continuously save session
 
-  -- Other
-  use {'jez/vim-superman'}                     -- Use vman to read man inside vim
-  use {'vuki656/package-info.nvim'}
-
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
   use {'drewtempelmeyer/palenight.vim'}
   use {'ChristianChiarulli/nvcode-color-schemes.vim'}
   use {'siduck76/nvim-base16.lua'}
   use {'projekt0n/github-nvim-theme'}
+
+  -- Other
+  use {'jez/vim-superman'}                     -- Use vman to read man inside vim
+  use {'vuki656/package-info.nvim'}
+  use {'nvim-telescope/telescope-symbols.nvim'}
 end)
