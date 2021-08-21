@@ -11,6 +11,8 @@ alias qrd='pngpaste - | zbarimg -q --raw - | tee | pbcopy'
 alias tms='tmuxinator start'
 alias python='python3'
 alias lg='lazygit'
+alias pacorph='pacman -Qtdq | sudo pacman -Rns -'
+alias cat='bat'
 
 # Git
 alias ga='git add'
