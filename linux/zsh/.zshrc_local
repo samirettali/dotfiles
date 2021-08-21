@@ -1,6 +1,7 @@
 alias ls='ls --color -h --group-directories-first'
 alias open='xdg-open'
 alias f='fdfind'
+alias pacorph='pacman -Qtdq | sudo pacman -Rns -'
 
 if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
   source /usr/share/fzf/key-bindings.zsh
