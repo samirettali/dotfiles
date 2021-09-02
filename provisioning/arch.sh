@@ -53,8 +53,11 @@ install usbutils
 # Keyboard customization
 install interception-tools interception-caps2esc interception-dual-function-keys
 
-# Compilers
-install go rustup
+# Rust
+install go rustup rust-analyzer
+rustup toolchain install stable
+rustup component add rls rust-analysis rust-src clippy
+
 install noto-fonts-emoji
 aur nerd-fonts-jetbrains-mono brave-bin neovim-nightly-bin espanso-bin
 
@@ -117,9 +120,6 @@ sudo systemctl enable --now udevmon
 sudo systemctl enable --now docker
 sudo systemctl enable --now systemd-timesyncd
 espanso start
-
-rustup toolchain install stable
-rustup component add rls rust-analysis rust-src
 
 # Create neovim folders
 mkdir -p ~/.local/share/nvim/undo
