@@ -91,7 +91,6 @@ myLogHook proc = workspaceNamesPP xmobarPP
 
 myStartupHook :: X ()
 myStartupHook = do
-    spawnOnce "eval $(ssh-agent) &"
     spawnOnce "~/.bin/setup_display"
     spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 0 --tint 0x0a0d10  --height 22 &"
     spawnOnce "picom --experimental-backends --backend glx -b"

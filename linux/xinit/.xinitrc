@@ -42,4 +42,4 @@ start_dwm() {
 }
 
 # start_dwm
-exec xmonad
+exec ssh-agent xmonad
