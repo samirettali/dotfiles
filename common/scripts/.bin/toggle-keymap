@@ -1,1 +1,2 @@
+#!/usr/bin/env bash
 setxkbmap -query | grep -q 'us' && setxkbmap it || setxkbmap us
