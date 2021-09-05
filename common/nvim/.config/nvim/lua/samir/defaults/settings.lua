@@ -1,86 +1,66 @@
 local cmd = vim.cmd
-local scopes = { o = vim.o, b = vim.bo, w = vim.wo }
+local opt = vim.opt
 
 local indentation = 2
 local home = os.getenv("HOME")
 
-local function opt(scope, key, value)
-  scopes[scope][key] = value
-  if scope ~= 'o' then
-    scopes['o'][key] = value
-  end
-end
+opt.expandtab = true                -- Insert spaces instead of tabs
+opt.tabstop = indentation           -- Tab size
+opt.shiftwidth = indentation        -- Number of spaces to use for auto indenting
+opt.smartindent = true
+opt.ignorecase = true               -- Ignore case
+opt.smartcase = true                -- Don't ignore case with capitals
+opt.smarttab = true
+opt.softtabstop = indentation
+opt.autoindent = true               -- Automatically indent new lines
 
-opt('b', 'expandtab', true)                -- Insert spaces instead of tabs
-opt('b', 'tabstop', indentation)           -- Tab size
-opt('b', 'shiftwidth', indentation)        -- Number of spaces to use for auto indenting
-opt('b', 'smartindent', true)
-opt('b', 'softtabstop', indentation)
-opt('b', 'autoindent', true)
-opt('b', 'synmaxcol', 200)                 -- Highlight up to the 200th column
-opt('b', 'undofile', true)                 -- Use undo files
+opt.synmaxcol = 200                 -- Highlight up to the 200th column
+
+opt.undofile = true                 -- Use undo files
 -- opt('b', 'spelllang', 'it,en_us')
+-- opt.iskeyword = opt.iskeyword - { '_' }     -- Treat _ as a word separator
 
-opt('w', 'number', true)                   -- Show line numbers
-opt('w', 'relativenumber', true)           -- Show relative line numbers
-opt('w', 'wrap', true)                     -- Wrap visually long lines
-opt('w', 'cursorline', true)               -- Highlight current line
-opt('w', 'colorcolumn', '81')              -- Highlight 81st column
-opt('w', 'foldmethod', 'expr')             -- Set fold method
-opt('w', 'signcolumn', 'yes')              -- Keep sign column always opened
 
-opt('o', 'updatetime', 300)
-opt('o', 'hidden', true)                   -- Enable modified buffers in background
-opt('o', 'ignorecase', true)               -- Ignore case
-opt('o', 'smartcase', true)                -- Don't ignore case with capitals
-opt('o', 'smarttab', true)
-opt('o', 'joinspaces', false)              -- No double spaces with join after a dot
-opt('o', 'scrolloff', 12)                  -- Lines of context
-opt('o', 'sidescrolloff', 8)               -- Columns of context
-opt('o', 'shiftround', true)               -- Round indent
-opt('o', 'splitbelow', true)               -- Put new windows below current
-opt('o', 'splitright', true)               -- Put new windows right of current
-opt('o', 'foldlevelstart', 20)             -- Set initial fold level
-opt('o', 'termguicolors', true)            -- True color support
-opt('o', 'wildmode', 'longest:full,full')  -- Command-line completion mode
-opt('o', 'showmatch', true)                -- Temporarily jump to matching parentheresis when inserting one
-opt('o', 'confirm', true)                  -- Ask for some operations like quitting an unsaved file instead of failing
-opt('o', 'lazyredraw', true)               -- Disable redrawing while running macros
-opt('o', 'inccommand', 'split')            -- Show result of substitution as you type
-opt('o', 'mouse', 'nv')                    -- Enable mouse in normal and visual mode
-opt('o', 'showbreak', '↳ ')                -- Show character at visually wrapped lines
-opt('o', 'listchars', 'tab:»·,trail:·,nbsp:~,eol:¬') -- Characters to visualize instead of whitespaces
-opt('o', 'completeopt', 'menuone,noselect')
-opt('o', 'undodir', home .. '/.local/share/nvim/undo')
-opt('o', 'directory', home .. '/.local/share/nvim/swap')
-opt('o', 'backupdir', home .. '/.local/share/nvim/tmp')
+opt.number = true                   -- Show line numbers
+opt.relativenumber = true           -- Show relative line numbers
+opt.wrap = true                     -- Wrap visually long lines
+opt.cursorline = true               -- Highlight current line
+opt.colorcolumn = '81'              -- Highlight 81st column
+opt.foldmethod = 'expr'             -- Set fold method
+opt.signcolumn = 'yes'              -- Keep sign column always opened
+
+opt.updatetime = 300
+opt.hidden = true                   -- Enable modified buffers in background
+opt.joinspaces = false              -- No double spaces with join after a dot
+opt.scrolloff = 12                  -- Lines of context
+opt.sidescrolloff = 8               -- Columns of context
+opt.shiftround = true               -- Round indent
+opt.splitbelow = true               -- Put new windows below current
+opt.splitright = true               -- Put new windows right of current
+opt.foldlevelstart = 20             -- Set initial fold level
+opt.termguicolors = true            -- True color support
+opt.wildmode = 'longest:full,full'  -- Command-line completion mode
+opt.showmatch = true                -- Temporarily jump to matching parentheresis when inserting one
+opt.confirm = true                  -- Ask for some operations like quitting an unsaved file instead of failing
+opt.lazyredraw = true               -- Disable redrawing while running macros
+opt.inccommand = 'split'            -- Show result of substitution as you type
+opt.mouse = 'nv'                    -- Enable mouse in normal and visual mode
+opt.showbreak = '↳ '                -- Show character at visually wrapped lines
+opt.listchars = 'tab:»·,trail:·,nbsp:~,eol:¬' -- Characters to visualize instead of whitespaces
+opt.completeopt = 'menuone,noselect'
+opt.undodir = home .. '/.local/share/nvim/undo'
+opt.directory = home .. '/.local/share/nvim/swap'
+opt.backupdir = home .. '/.local/share/nvim/tmp'
+opt.shortmess = opt.shortmess + 'c'
 
 cmd(':command! W w')
 cmd(':command! Q q')
 cmd(':command! WQ wq')
 cmd(':command! Wq wq')
 
-vim.cmd [[set shortmess+=c]]
+vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
 
-vim.api.nvim_exec([[
-  set foldexpr=nvim_treesitter#foldexpr()
-]], false)
-
-vim.g.palenight_color_overrides = { black = { gui = '#000000', cterm = '0', cterm16 = '0' } }
-
-local function get_random_theme()
-  themes = {}
-  for dir in io.popen([[ls /home/samir/.config/nvim/lua/samir/themes]]):lines() do
-    theme = dir:gsub(".lua", "")
-    table.insert(themes, theme)
-  end
-  math.randomseed(os.time())
-  index = math.random(0, table.getn(themes))
-  return themes[index]
-end
-
---[[ vim.g.nvchad_theme = get_random_theme()
-vim.g.nvchad_theme = "onedark"
+--[[ vim.g.nvchad_theme = "uwu"
 local base16 = require 'base16'
 base16(base16.themes(vim.g.nvchad_theme), true) ]]
 

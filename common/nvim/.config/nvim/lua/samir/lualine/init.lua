@@ -1,4 +1,25 @@
 local lualine = require('lualine')
+local gps = require('nvim-gps')
+
+gps.setup({
+	icons = {
+		["class-name"] = ' ',      -- Classes and class-like objects
+		["function-name"] = ' ',   -- Functions
+		["method-name"] = ' '      -- Methods (functions inside class-like objects)
+	},
+	languages = {                    -- You can disable any language individually here
+		["c"] = true,
+		["cpp"] = true,
+		["go"] = true,
+		["java"] = true,
+		["javascript"] = true,
+		["lua"] = true,
+		["python"] = true,
+		["rust"] = true,
+	},
+	separator = ' > ',
+})
+
 
 local colors = {
   black = "#1c1c1c",
@@ -41,6 +62,14 @@ local diagnostic_component =  {
   color_info = colors.cyan
 }
 
+local function gps_location()
+	if gps.is_available() then
+		return gps.get_location()
+	else
+		return ""
+	end
+end
+
 local config = {
   options = {
     theme = {
@@ -73,7 +102,7 @@ local config = {
   sections = {
     lualine_a = { { 'mode', upper = true } },
     lualine_b = { 'filename', obsession },
-    lualine_c = { diff_component, diagnostic_component },
+    lualine_c = { diff_component, gps_location, diagnostic_component },
     lualine_x = { 'progress' },
     lualine_y = { 'location'  },
     lualine_z = { { 'branch', icon = '' } },
@@ -93,3 +122,4 @@ local function obsession()
 end
 
 lualine.setup(config)
+

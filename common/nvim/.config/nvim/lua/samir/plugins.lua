@@ -78,6 +78,9 @@ return require('packer').startup(function()
   -- UI components
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
   use {'hoob3rt/lualine.nvim'}                 -- Status line
+  use {'SmiteshP/nvim-gps',
+       requires = "nvim-treesitter/nvim-treesitter"
+  }
   -- use {'glepnir/galaxyline.nvim'}
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'glepnir/dashboard-nvim'}
@@ -103,7 +106,9 @@ return require('packer').startup(function()
     requires = {{
       'kyazdani42/nvim-web-devicons'
     }}
-  }  use {'yardnsm/vim-import-cost', run = 'yarn install' }
+  }
+  use {'yardnsm/vim-import-cost', run = 'yarn install' }
+  use {'sindrets/diffview.nvim'}
 
   -- Objects
   use {'tpope/vim-surround'}                   -- Add surround object for editing
@@ -133,13 +138,15 @@ return require('packer').startup(function()
 
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
-  use {'drewtempelmeyer/palenight.vim'}
-  use {'ChristianChiarulli/nvcode-color-schemes.vim'}
   use {'siduck76/nvim-base16.lua'}
-  use {'projekt0n/github-nvim-theme'}
+  use {'Mangeshrex/uwu.vim'}
 
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim
   use {'vuki656/package-info.nvim'}
   use {'nvim-telescope/telescope-symbols.nvim'}
+  use {'nvim-treesitter/nvim-treesitter-textobjects'}
+  use {'jupyter-vim/jupyter-vim'}
+
 end)
+
