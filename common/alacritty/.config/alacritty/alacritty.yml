@@ -12,11 +12,10 @@ font:
   bold_italic:
     style: Medium Italic
 
-  use_thin_strokes: true
-  size: 11.5
+  use_thin_strokes: false
+  size: 12
   offset:
     x: -1
-    y: -1
 
 draw_bold_text_with_bright_colors: true
 
