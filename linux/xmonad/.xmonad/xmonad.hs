@@ -2,6 +2,9 @@
 import XMonad
 import System.IO (hPutStrLn)
 import System.Exit (exitSuccess)
+import System.Environment (getEnv)
+import System.FilePath.Posix (takeBaseName)
+import System.Directory (getDirectoryContents)
 import qualified XMonad.StackSet as W
 import GHC.IO.Handle.Types (Handle)
 
@@ -18,6 +21,7 @@ import XMonad.Actions.FloatKeys (keysMoveWindow, keysResizeWindow)
 -- Data
 import Data.Monoid (All, Endo)
 import Data.Map (member)
+import Data.List.Split (splitOn)
 
 -- Hooks
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
@@ -145,6 +149,7 @@ myLayoutHook =
 
     columns = renamed [Replace "cols"]
         $ mySpacing 8
+        $ reflectHoriz
         $ ThreeColMid 1 (1/20) (3/5)
 
 -- Workspaces
@@ -186,17 +191,18 @@ myManageHook = manageApps
     manageApps :: XMonad.Query (Endo WindowSet)
     manageApps = composeAll . concat $
         [ [ className =? "brave"           --> doShift (myWorkspaces !! 0) ]
-        , [ className =? "Code"            --> doShift (myWorkspaces !! 1) ]
         , [ className =? "jetbrains-rider" --> doShift (myWorkspaces !! 1) ]
         , [ className =? "Slack"           --> doShift (myWorkspaces !! 8) ]
         , [ className =? "discord"         --> doShift (myWorkspaces !! 8) ]
         , [ className =? c --> doCenterFloat | c <- myFloatsC ]
+        , [ title =?     t --> doCenterFloat | t <- myFloatsT ]
         , [ title =?     t --> doFloat <+> doF copyToAll | t <- myStickyFloats ]
         , [ isFullscreen --> doFullFloat ]
         -- , [ pure True --> tileEnd ]
         ]
       where
-        myFloatsC = ["Pcmanfm", "Xarchiver", "KeePassXC", "Lxappearance", "nm-connection-editor"]
+        myFloatsC = ["Pcmanfm", "Xarchiver", "KeePassXC", "Lxappearance", "nm-connection-editor", "feh"]
+        myFloatsT = ["Crypto Wallets Notification"]
         myStickyFloats = ["Picture in picture"]
 
 -- Custom functions
@@ -213,10 +219,32 @@ centerWindow win = do
     windows $ W.float win (W.RationalRect ((1 - w) / 2) ((1 - h) / 2) w h)
     return ()
 
--- toggleFloat :: Window -> X()
+toggleFloat :: Window -> X()
 toggleFloat w = windows (\s -> if member w (W.floating s)
     then W.sink w s
     else (W.float w (W.RationalRect (1/3) (1/4) (1/3) (1/2)) s))
+
+data Script = Script
+
+instance XPrompt Script where
+  showXPrompt       Script = "Script: "
+  commandToComplete   _ c  = c
+  nextCompletion      _    = getNextCompletion
+
+scriptsPrompt :: XPConfig -> X ()
+scriptsPrompt c = do
+  scripts <- io getScripts
+  mkXPrompt Script c (mkComplFunFromList scripts) selectScript
+
+selectScript :: String -> X ()
+selectScript s = spawn $ "notify-send " ++ s
+
+getScripts :: IO [String]
+getScripts = do
+  user <- getEnv "USER"
+  entries <- getDirectoryContents $ "/home/" ++ user ++ "dev/scripts"
+  -- return entries
+  return $ map takeBaseName entries
 
 -- Keybindings
 myKeys :: [(String, X ())]
@@ -238,6 +266,7 @@ myKeys =
 
     -- Launchers
     , ("M-p",         shellPrompt myXPConfig)
+    , ("M-n",         scriptsPrompt myXPConfig)
     , ("M-<Space>",   passPrompt myXPConfig)
     , ("M-S-<Space>", passGeneratePrompt myXPConfig)
 
@@ -255,8 +284,8 @@ myKeys =
     , ("M-C-n",                  spawn "mpc next")
 
     -- Focus
-    , ("M-j",   windows W.focusUp)                                      -- Move focus to the next window
-    , ("M-k",   windows W.focusDown)                                    -- Move focus to the prev window
+    , ("M-j",   windows W.focusDown)                                    -- Move focus to the next window
+    , ("M-k",   windows W.focusUp)                                      -- Move focus to the prev window
     , ("M-S-j", windows W.swapDown)                                     -- Swap focused window with next window
     , ("M-S-k", windows W.swapUp)                                       -- Swap focused window with prev window
     -- , ("M-m",    windows W.focusMaster)                              -- Move focus to the master window
@@ -277,7 +306,7 @@ myKeys =
     , ("M-S-<Up>", withFocused (keysResizeWindow (0, -windowStep) (0, 0)))
 
     -- Control windows
-    , ("M-S-c", kill1)                                                    -- Kill the currently focused window
+    , ("M-S-c", kill1)                                                  -- Kill the currently focused window
     , ("M-o", toggleGlobal)                                             -- Copy a window to other workspaces or remove it if already present
 
     -- Resizing
@@ -293,8 +322,6 @@ myKeys =
 
     -- Layouts
     , ("M-z", sendMessage NextLayout)                                   -- Switch to next layout
-    {- , ("M-i", sendMessage (IncMasterN 1))                               -- Increase number of clients in master pane
-    , ("M-d", sendMessage (IncMasterN (-1)))                            -- Decrease number of clients in master pane -}
     , ("M-S-f", sendMessage (Toggle FULL) >> sendMessage ToggleStruts)-- Toggles fullscreen
 
     -- Workspaces handling
