@@ -148,6 +148,8 @@ return require('packer').startup(function()
   use {'vuki656/package-info.nvim'}
   use {'nvim-telescope/telescope-symbols.nvim'}
   use {'nvim-treesitter/nvim-treesitter-textobjects'}
-  use {'jupyter-vim/jupyter-vim'}
-
+  use 'mfussenegger/nvim-dap'
+  use {'theHamsta/nvim-dap-virtual-text'}
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
 end)
+

@@ -29,7 +29,7 @@ opt.colorcolumn = '81'              -- Highlight 81st column
 opt.foldmethod = 'expr'             -- Set fold method
 opt.signcolumn = 'yes'              -- Keep sign column always opened
 
-opt.updatetime = 300
+opt.updatetime = 100
 opt.hidden = true                   -- Enable modified buffers in background
 opt.joinspaces = false              -- No double spaces with join after a dot
 opt.scrolloff = 12                  -- Lines of context
