@@ -1,8 +1,3 @@
-if vim.g.vscode then
-  print("VSCode detected, loading custom settings")
-  return
-end
-
 -- Load plugins
 require 'samir.plugins'
 
@@ -10,7 +5,7 @@ require 'samir.utils.remaps'
 
 -- Load settings
 require 'samir.defaults'
--- require 'samir.colors'
+require('samir.colors').init()
 require 'samir.lsp'
 require 'samir.lspkind'
 
@@ -19,13 +14,15 @@ require 'samir.autopairs'
 require 'samir.barbar'
 require 'samir.camelcasemotion'
 require 'samir.colorizer'
+require 'samir.comment'
 require 'samir.compe'
+require 'samir.feline'
+require 'samir.gitblame'
 require 'samir.gitsigns'
 require 'samir.go'
 require 'samir.highlightedundo'
 require 'samir.illuminate'
 require 'samir.indentline'
-require 'samir.lualine'
 require 'samir.matchtag'
 require 'samir.oscyank'
 require 'samir.ripgrep'
@@ -36,12 +33,11 @@ require 'samir.splitline'
 require 'samir.telescope'
 require 'samir.tree'
 require 'samir.treesitter'
+require 'samir.treesitter-textobjects'
 require 'samir.trouble'
 require 'samir.vimgo'
-require 'samir.vsnip'
 require 'samir.vista'
-require 'samir.treesitter-textobjects'
-require 'samir.gitblame'
+require 'samir.vsnip'
 
 -- Vimscript stuff
 require 'samir.vimscript'

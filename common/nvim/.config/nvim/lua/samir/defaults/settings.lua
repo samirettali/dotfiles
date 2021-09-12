@@ -60,8 +60,4 @@ cmd(':command! Wq wq')
 
 vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
 
---[[ vim.g.nvchad_theme = "uwu"
-local base16 = require 'base16'
-base16(base16.themes(vim.g.nvchad_theme), true) ]]
-
-vim.g.colors_name = 'moonfly'
+-- vim.g.colors_name = 'moonfly'

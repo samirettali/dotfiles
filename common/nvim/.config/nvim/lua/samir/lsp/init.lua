@@ -32,6 +32,7 @@ local function custom_attach(client)
   map('n', '[e', '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<CR>')
   map('n', ']e', '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<CR>')
 
+
   vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 
   local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
@@ -118,6 +119,11 @@ local servers = {
   sqls = {},
   clangd = {},
   java_language_server = {},
+  solang = {
+      filetypes = { "solidity" },
+      -- root_dir = lspconfig.util.root_pattern(".git")
+      root_dir = '.'
+  },
   gopls = {
     gopls = {
       experimentalPostfixCompletions = true,

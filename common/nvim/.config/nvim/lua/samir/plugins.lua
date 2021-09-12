@@ -10,8 +10,6 @@ else
   vim.cmd [[packadd packer.nvim]]
 end
 
-vim.g.solarized_termcolors=256
-
 return require('packer').startup(function()
   use {'wbthomason/packer.nvim', opt = true}
 
@@ -27,7 +25,8 @@ return require('packer').startup(function()
 
   -- Coding
   use {'windwp/nvim-autopairs'}                -- Autopair brackets and other symbols
-  use {'b3nj5m1n/kommentary'}                  -- Commenting plugin
+  use {'terrortylor/nvim-comment'}             -- Commenting plugin
+  use {'JoosepAlviste/nvim-ts-context-commentstring'}
   use {'liuchengxu/vista.vim'}                 -- Show a panel to browse tags
   use {'alvan/vim-closetag'}                   -- Automatically close HTML tag
   -- use {'AndrewRadev/tagalong.vim'}             -- Automatically rename matching HTML tag
@@ -43,6 +42,7 @@ return require('packer').startup(function()
 
   -- LSP and related
   use {'neovim/nvim-lspconfig'}                -- LSP
+  -- use {'nvim-lua/lsp_extensions.nvim', commit = 'a1f12b8df1d3d8e46a7010615d2a335cd06814f2'}
   use {'nvim-lua/lsp_extensions.nvim'}
   use {'glepnir/lspsaga.nvim'}                 -- LSP utilities
   use {'jose-elias-alvarez/null-ls.nvim'}
@@ -77,13 +77,12 @@ return require('packer').startup(function()
 
   -- UI components
   use {'romgrk/barbar.nvim'}                   -- Buffers bar
-  use {'hoob3rt/lualine.nvim'}                 -- Status line
+  use {'famiu/feline.nvim'}                 -- Status line
   use {'SmiteshP/nvim-gps',
        requires = "nvim-treesitter/nvim-treesitter"
   }
   -- use {'glepnir/galaxyline.nvim'}
   use {'mbbill/undotree'}                      -- Show a tree of undo history
-  use {'glepnir/dashboard-nvim'}
   use {'lukas-reineke/indent-blankline.nvim'}  -- Show indent line
   use {'simrat39/symbols-outline.nvim'}
   --[[ use {
@@ -138,8 +137,11 @@ return require('packer').startup(function()
 
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
-  use {'siduck76/nvim-base16.lua'}
-  use {'Mangeshrex/uwu.vim'}
+  use {'NvChad/nvim-base16.lua',
+    config = function()
+      require('samir.colors').init()
+    end
+  }
 
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim
@@ -149,4 +151,3 @@ return require('packer').startup(function()
   use {'jupyter-vim/jupyter-vim'}
 
 end)
-
