@@ -51,7 +51,7 @@ map('n', '<C-i>', '<C-a>', { noremap = false })
 -- Join with above line
 map('n', 'K', 'kJ')
 
--- Keep lines centered
+-- Keep lines centered when searching
 map('n', 'n', 'nzzzv')
 map('n', 'N', 'nzzzv')
 map('n', 'J', 'mzJ`z')
@@ -66,3 +66,7 @@ map('i', '[', '[<C-g>u')
 map('i', ']', ']<C-g>u')
 map('i', '{', '{<C-g>u')
 map('i', '{', '}<C-g>u')
+
+-- Shift selected lines
+map('v', 'J', ":m '>+1<cr>gv=gv")
+map('v', 'K', ":m '<-2<cr>gv=gv")
