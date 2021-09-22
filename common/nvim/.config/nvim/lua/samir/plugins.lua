@@ -81,6 +81,7 @@ return require('packer').startup(function()
   use {'SmiteshP/nvim-gps',
        requires = "nvim-treesitter/nvim-treesitter"
   }
+  use {'MunifTanjim/nui.nvim'}
   -- use {'glepnir/galaxyline.nvim'}
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'lukas-reineke/indent-blankline.nvim'}  -- Show indent line
@@ -137,11 +138,7 @@ return require('packer').startup(function()
 
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
-  use {'NvChad/nvim-base16.lua',
-    config = function()
-      require('samir.colors').init()
-    end
-  }
+  use {'NvChad/nvim-base16.lua'}
 
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim

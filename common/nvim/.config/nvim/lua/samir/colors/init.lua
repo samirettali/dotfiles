@@ -3,7 +3,7 @@ local M = {}
 -- if theme given, load given theme if given, otherwise nvchad_theme
 M.init = function(theme)
    if not theme then
-      theme = "javacafe"
+      theme = "onedark"
    end
 
    -- set the global theme, used at various places like theme switcher, highlights
@@ -27,7 +27,7 @@ end
 -- returns a table of colors for givem or current theme
 M.get = function(theme)
    if not theme then
-      theme = "javacafe"
+      theme = "onedark"
    end
 
    return require("hl_themes." .. theme)
