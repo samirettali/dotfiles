@@ -25,7 +25,8 @@ opt.number = true                   -- Show line numbers
 opt.relativenumber = true           -- Show relative line numbers
 opt.wrap = true                     -- Wrap visually long lines
 opt.cursorline = true               -- Highlight current line
-opt.colorcolumn = '81'              -- Highlight 81st column
+-- opt.colorcolumn = '81'              -- Highlight 81st column
+vim.cmd [[let &colorcolumn=join(range(81,999),",")]]
 opt.foldmethod = 'expr'             -- Set fold method
 opt.signcolumn = 'yes'              -- Keep sign column always opened
 

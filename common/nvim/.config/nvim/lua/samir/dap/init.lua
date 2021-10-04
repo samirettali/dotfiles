@@ -79,7 +79,7 @@ require("dapui").setup({
     repl = "r",
   },
   sidebar = {
-    open_on_start = true,
+    -- open_on_start = true,
     -- You can change the order of elements in the sidebar
     elements = {
       -- Provide as ID strings or tables with "id" and "size" keys
@@ -95,7 +95,7 @@ require("dapui").setup({
     position = "left", -- Can be "left", "right", "top", "bottom"
   },
   tray = {
-    open_on_start = true,
+    -- open_on_start = true,
     elements = { "repl" },
     size = 10,
     position = "bottom", -- Can be "left", "right", "top", "bottom"
@@ -119,6 +119,6 @@ vim.api.nvim_command([[
   nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
   nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
   nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-  nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
-  nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+  " nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+  " nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
 ]])

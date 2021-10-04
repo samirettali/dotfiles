@@ -105,8 +105,17 @@ return require('packer').startup(function()
   use {'kyazdani42/nvim-tree.lua',             -- Tree navigation
     requires = {{
       'kyazdani42/nvim-web-devicons'
-    }}
+    }},
+    config = function()
+      require('nvim-tree').setup {
+        nvim_tree_auto_open = false,
+        nvim_tree_auto_close = true,
+        nvim_tree_follow = true,
+        nvim_tree_tab_open = false,
+      }
+    end
   }
+    setup = 
   use {'yardnsm/vim-import-cost', run = 'yarn install' }
   use {'sindrets/diffview.nvim'}
 
