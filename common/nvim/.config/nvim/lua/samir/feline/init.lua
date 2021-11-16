@@ -355,19 +355,21 @@ components.active[3][9] = {
 }
 
 components.active[3][10] = {
-   provider = function()
-      local current_line = vim.fn.line "."
-      local total_line = vim.fn.line "$"
-
-      if current_line == 1 then
-         return " Top "
-      elseif current_line == vim.fn.line "$" then
-         return " Bot "
-      end
-      local result, _ = math.modf((current_line / total_line) * 100)
-      return " " .. result .. "%% "
-   end,
-
+    provider = 'position',
+    left_sep = ' ',
+--    provider = function()
+--       local current_line = vim.fn.line "."
+--       local total_line = vim.fn.line "$"
+-- 
+--       if current_line == 1 then
+--          return " Top "
+--       elseif current_line == vim.fn.line "$" then
+--          return " Bot "
+--       end
+--       local result, _ = math.modf((current_line / total_line) * 100)
+--       return " " .. result .. "%% "
+--    end,
+-- 
    hl = {
       fg = colors.green,
       bg = colors.one_bg,

@@ -131,14 +131,6 @@ mc() {
   mkdir "${1}" && cd "${1}"
 }
 
-vim() {
-  if [[ "${#}" -eq 0 && -f "Session.vim" ]]; then
-    nvim -S Session.vim
-  else
-    nvim "${@}"
-  fi
-}
-
 loadenv() {
   if [[ -f .env ]]; then
     export $(cat .env | sed 's/#.*//g' | xargs)

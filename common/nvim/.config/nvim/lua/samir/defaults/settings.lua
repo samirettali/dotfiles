@@ -1,7 +1,7 @@
 local cmd = vim.cmd
 local opt = vim.opt
 
-local indentation = 2
+local indentation = 4
 local home = os.getenv("HOME")
 
 opt.expandtab = true                -- Insert spaces instead of tabs
@@ -25,8 +25,7 @@ opt.number = true                   -- Show line numbers
 opt.relativenumber = true           -- Show relative line numbers
 opt.wrap = true                     -- Wrap visually long lines
 opt.cursorline = true               -- Highlight current line
--- opt.colorcolumn = '81'              -- Highlight 81st column
-vim.cmd [[let &colorcolumn=join(range(81,999),",")]]
+opt.colorcolumn = '81'              -- Highlight 81st column
 opt.foldmethod = 'expr'             -- Set fold method
 opt.signcolumn = 'yes'              -- Keep sign column always opened
 
@@ -60,5 +59,6 @@ cmd(':command! WQ wq')
 cmd(':command! Wq wq')
 
 vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
+-- vim.cmd [[colorscheme moonfly]]
 
 -- vim.g.colors_name = 'moonfly'

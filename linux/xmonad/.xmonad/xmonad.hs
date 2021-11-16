@@ -140,7 +140,7 @@ myLayoutHook =
     smartBorders $
     lessBorders Screen $
     mkToggle (FULL ?? EOT) $
-    tall ||| columns
+    tall ||| columns ||| full
   where
     tall = renamed [Replace "tall"]
         $ mySpacing 8
@@ -151,6 +151,9 @@ myLayoutHook =
         $ mySpacing 8
         $ reflectHoriz
         $ ThreeColMid 1 (1/20) (3/5)
+
+    full = renamed [Replace "full"]
+        $ Full
 
 -- Workspaces
 myWorkspaces :: [String]
@@ -190,10 +193,11 @@ myManageHook = manageApps
     -- tileEnd = insertPosition End Newer
     manageApps :: XMonad.Query (Endo WindowSet)
     manageApps = composeAll . concat $
-        [ [ className =? "brave"           --> doShift (myWorkspaces !! 0) ]
-        , [ className =? "jetbrains-rider" --> doShift (myWorkspaces !! 1) ]
-        , [ className =? "Slack"           --> doShift (myWorkspaces !! 8) ]
-        , [ className =? "discord"         --> doShift (myWorkspaces !! 8) ]
+        [ [ className =? "brave"              --> doShift (myWorkspaces !! 0) ]
+        , [ className =? "postman"            --> doShift (myWorkspaces !! 3) ]
+        , [ className =? "jetbrains-datagrip" --> doShift (myWorkspaces !! 4) ]
+        , [ className =? "Slack"              --> doShift (myWorkspaces !! 8) ]
+        , [ className =? "discord"            --> doShift (myWorkspaces !! 8) ]
         , [ className =? c --> doCenterFloat | c <- myFloatsC ]
         , [ title =?     t --> doCenterFloat | t <- myFloatsT ]
         , [ title =?     t --> doFloat <+> doF copyToAll | t <- myStickyFloats ]
@@ -202,7 +206,7 @@ myManageHook = manageApps
         ]
       where
         myFloatsC = ["Pcmanfm", "Xarchiver", "KeePassXC", "Lxappearance", "nm-connection-editor", "feh"]
-        myFloatsT = ["Crypto Wallets Notification"]
+        myFloatsT = ["Crypto Wallets Notification", "MetaMask Notification", "Ghidra: NO ACTIVE PROJECT"]
         myStickyFloats = ["Picture in picture"]
 
 -- Custom functions

@@ -49,7 +49,7 @@ map('v', '<C-c>', '"+y')
 map('n', '<C-i>', '<C-a>', { noremap = false })
 
 -- Join with above line
-map('n', 'K', 'kJ')
+-- map('n', 'K', 'kJ')
 
 -- Keep lines centered when searching
 map('n', 'n', 'nzzzv')

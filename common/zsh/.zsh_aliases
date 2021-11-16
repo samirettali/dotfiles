@@ -12,6 +12,7 @@ alias tms='tmuxinator start'
 alias python='python3'
 alias lg='lazygit'
 alias cat='bat'
+alias vim='nvim'
 
 # Git
 alias ga='git add'

@@ -42,11 +42,16 @@ return require('packer').startup(function()
 
   -- LSP and related
   use {'neovim/nvim-lspconfig'}                -- LSP
-  -- use {'nvim-lua/lsp_extensions.nvim', commit = 'a1f12b8df1d3d8e46a7010615d2a335cd06814f2'}
   use {'nvim-lua/lsp_extensions.nvim'}
-  use {'glepnir/lspsaga.nvim'}                 -- LSP utilities
   use {'jose-elias-alvarez/null-ls.nvim'}
-  use {'hrsh7th/nvim-compe'}                   -- Auto completion
+
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/cmp-vsnip'
+  use {'hrsh7th/nvim-cmp'}                     -- Auto completion
+
   use {'nvim-treesitter/nvim-treesitter',
     branch = '0.5-compat',
     run = ':TSUpdate'
@@ -76,7 +81,7 @@ return require('packer').startup(function()
   use {'nvim-telescope/telescope-fzy-native.nvim'}
 
   -- UI components
-  use {'romgrk/barbar.nvim'}                   -- Buffers bar
+  use {'romgrk/barbar.nvim'}                -- Buffers bar
   use {'famiu/feline.nvim'}                 -- Status line
   use {'SmiteshP/nvim-gps',
        requires = "nvim-treesitter/nvim-treesitter"
@@ -143,7 +148,7 @@ return require('packer').startup(function()
   use {'farmergreg/vim-lastplace'}             -- Restore cursor position when reopening files
   use {'samirettali/shebang.nvim'}             -- Automatic shebang for new files
   use {'ojroques/vim-oscyank'}                 -- Copy in OS clipboard in SSH
-  use {'tpope/vim-obsession'}                  -- Continuously save session
+  use {'rmagatti/auto-session'}                -- Continuously save session
 
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
@@ -156,6 +161,12 @@ return require('packer').startup(function()
   use {'nvim-treesitter/nvim-treesitter-textobjects'}
   use 'mfussenegger/nvim-dap'
   use {'theHamsta/nvim-dap-virtual-text'}
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  use {'rcarriga/nvim-dap-ui',
+    requires = {"mfussenegger/nvim-dap"}
+  }
+  use {'github/copilot.vim'}
+  use {'rmagatti/goto-preview'}
+  use 'catppuccin/nvim'
+
 end)
 

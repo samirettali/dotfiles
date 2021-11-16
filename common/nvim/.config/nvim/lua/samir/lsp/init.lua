@@ -1,16 +1,18 @@
 local lspconfig = require('lspconfig')
-local saga = require('lspsaga')
-
-saga.init_lsp_saga {
-  max_preview_lines = 10,
-}
+local lsp = vim.lsp
+local handlers = lsp.handlers
 
 vim.g.completion_trigger_on_delete = 1
 vim.g.lsp_document_highlight_enabled = 1
 
+-- Hover doc popup
+local pop_opts = { border = "rounded", max_width = 80 }
+handlers["textDocument/hover"] = lsp.with(handlers.hover, pop_opts)
+handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, pop_opts)
+
 local function custom_attach(client)
-  map('n', 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>')
-  map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>')
+  -- require('completion').on_attach(client)
+
   map('n', 'gR',         '<cmd>lua require("telescope.builtin").lsp_references()<CR>')
   map('n', 'dn',         '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
   map('n', 'dp',         '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
@@ -22,16 +24,15 @@ local function custom_attach(client)
   map('n', '<Leader>ao', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
   map('n', '<Leader>fe', '<cmd>lua require("telescope.functions").show_diagnostics()<CR>')
 
-  map('n', 'cd', '<cmd>lua require("lspsaga.diagnostic").show_line_diagnostics()<CR>')
-  map('n', 'ga', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>')
-  map('n', 'gs', '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>')
-  map('n', 'rn', '<cmd>lua require("lspsaga.rename").rename()<CR>')
-  map('n', 'gr', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', { silent = true })
-  map('n', 'gd', '<cmd>lua require("lspsaga.provider").preview_definition()<CR>')
-  map('n', 'K',  '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>')
-  map('n', '[e', '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()<CR>')
-  map('n', ']e', '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<CR>')
+  map('n', 'cd',         '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+  map('n', 'ga',         '<cmd>lua vim.lsp.buf.code_action()<CR>')
+  map('n', 'rn',         '<cmd>lua vim.lsp.buf.rename()<CR>')
 
+  map('n', 'K',          '<cmd>lua vim.lsp.buf.hover()<CR>')
+  map('n', 'gd',         '<cmd>lua vim.lsp.buf.definition()<CR>')
+  map('n', 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>')
+  map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>')
+  map('n', 'gs',         '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 
   vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 
@@ -58,7 +59,7 @@ local function custom_attach(client)
       hi LspReferenceWrite cterm=bold ctermbg=DarkMagenta guibg=LightYellow
       augroup lsp_document_highlight
         autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        " autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
     ]], false)
@@ -121,8 +122,7 @@ local servers = {
   java_language_server = {},
   solang = {
       filetypes = { "solidity" },
-      -- root_dir = lspconfig.util.root_pattern(".git")
-      root_dir = '.'
+      root_dir = lspconfig.util.root_pattern(".git")
   },
   gopls = {
     gopls = {

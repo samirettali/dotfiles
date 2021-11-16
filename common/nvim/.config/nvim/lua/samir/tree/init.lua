@@ -1,8 +1,8 @@
 vim.g.nvim_tree_allow_resize = 1
 vim.g.nvim_tree_git_hl = 1
 vim.g.nvim_tree_indent_markers = 1
-vim.g.nvim_tree_hide_dotfiles = 1
-vim.g.nvim_tree_ignore = { '.git', 'node_modules', '.cache' }
+-- vim.g.nvim_tree_hide_dotfiles = 1
+-- vim.g.nvim_tree_ignore = { '.git', 'node_modules', '.cache' }
 vim.g.nvim_tree_root_folder_modifier = ':~'
 vim.g.nvim_tree_side = 'left'
 vim.g.nvim_tree_highlight_opened_files = 1
