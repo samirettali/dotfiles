@@ -85,6 +85,10 @@ pip3 install 'python-language-server[all]'
 go get github.com/lighttiger2505/sqls
 GO111MODULE=on go get golang.org/x/tools/gopls@latest
 
+# Go tools
+go get github.com/orijtech/structslop/cmd/structslop
+go install github.com/strang1ato/nhi@latest
+
 # Ethereum
 aur truffle ganache-bin
 
@@ -109,9 +113,12 @@ install pcmanfm ffmpegthumbnailer
 
 install hsetroot xarchiver
 
-install xmonad xmonad-contrib xmobar trayer xmonad-log xininfo-git
+install xmonad xmonad-contrib xmobar trayer haskell-split xininfo-git
+aur xmonad-log
 
 aur spotify spotify-tui
+
+aur burpsuite
 
 # Enable services
 sudo systemctl enable --now udevmon
