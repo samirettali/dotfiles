@@ -169,36 +169,28 @@ components.active[1][7] = {
 
 components.active[1][8] = {
    provider = "diagnostic_errors",
-   enabled = function()
-      return lsp.diagnostics_exist "Error"
-   end,
+   enabled = lsp.diagnostics_exist(vim.diagnostic.severity.ERROR),
    hl = { fg = colors.red },
    icon = "  ",
 }
 
 components.active[1][9] = {
    provider = "diagnostic_warnings",
-   enabled = function()
-      return lsp.diagnostics_exist "Warning"
-   end,
+   enabled = lsp.diagnostics_exist(vim.diagnostic.severity.WARN),
    hl = { fg = colors.yellow },
    icon = "  ",
 }
 
 components.active[1][10] = {
    provider = "diagnostic_hints",
-   enabled = function()
-      return lsp.diagnostics_exist "Hint"
-   end,
+   enabled = lsp.diagnostics_exist(vim.diagnostic.severity.HINT),
    hl = { fg = colors.grey_fg2 },
    icon = "  ",
 }
 
 components.active[1][11] = {
    provider = "diagnostic_info",
-   enabled = function()
-      return lsp.diagnostics_exist "Information"
-   end,
+   enabled = lsp.diagnostics_exist(vim.diagnostic.severity.INFO),
    hl = { fg = colors.green },
    icon = "  ",
 }
