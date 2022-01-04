@@ -88,9 +88,11 @@ GO111MODULE=on go get golang.org/x/tools/gopls@latest
 # Go tools
 go get github.com/orijtech/structslop/cmd/structslop
 go install github.com/strang1ato/nhi@latest
+go get -u github.com/tomnomnom/gron
 
 # Ethereum
 aur truffle ganache-bin
+install solidity
 
 # Themes
 aur tela-icon-theme whitesur-gtk-theme-git
@@ -105,7 +107,7 @@ yarn global add @openapitools/openapi-generator-cli
 # xps
 install nvidia nvidia-prime
 
-install xorg-server xorg-xinit xsecurelock xss-lock xf86-video-intel nvidia nvidia-prime dunst feh zathura zathura-pdf-mupdf xorg-xev xorg-xprop xorg-xinput xorg-xbacklight
+install xorg-server xorg-xinit xsecurelock xss-lock xf86-video-intel nvidia nvidia-prime dunst feh zathura zathura-pdf-mupdf xorg-xev xorg-xprop xorg-xinput xorg-xbacklight xf86-input-synaptics
 
 install lxappearance pavucontrol
 
@@ -139,3 +141,24 @@ mkdir -p ~/.local/share/nvim/swap
 gsettings set org.gnome.settings-daemon.plugins.media-keys screenshot '[]'
 
 xdg-settings set default-url-scheme-handler magnet qBittorrent.desktop
+
+setup_swap() {
+    sudo btrfs sub create /@swap
+    sudo mkdir /swap
+    sudo mount -o subvol=@swap /dev/sda1 /swap
+    sudo touch /swap/swapfile
+    sudo chmod 600 /swap/swapfile
+
+    sudo chattr +C /swap/swapfile
+    btrfs property set ./swapfile compression none
+
+    sudo dd if=/dev/zero of=/swap/swapfile bs=1M count=4096
+    sudo mkswap /swap/swapfile
+    sudo swapon /swap/swapfile
+
+    # Add to /etc/fstab
+    # UUID=XXXXXXXXXXXXXXX /swap btrfs subvol=@swap 0 0
+    # /swap/swapfile none swap sw 0 0
+
+    sudo systemctl enable --now systemd-oomd.service
+}
