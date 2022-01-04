@@ -4,12 +4,12 @@ compinit
 source ~/.zsh_aliases
 source ~/.zsh_functions
 source ~/.zsh_env
+
 [ -f "${HOME}/.zshrc_local" ] && source "${HOME}/.zshrc_local"
 [ -f "${HOME}/.zsh_work" ] && source "${HOME}/.zsh_work"
 
 # Use vim bindings (of course)
 bindkey -v
-
 # Immediately write commands into history file and load it as soon as it changes
 setopt SHARE_HISTORY
 
@@ -143,3 +143,4 @@ zle -N edit-command-line
 bindkey '^x^x' edit-command-line
 
 fpath+=~/.zfunc
+eval "$(pyenv init -)"
