@@ -27,7 +27,7 @@ import Data.List.Split (splitOn)
 import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
 import XMonad.Hooks.EwmhDesktops (ewmh)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
-import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat, isDialog)
+import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat, isDialog, composeOne)
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Hooks.WorkspaceHistory (workspaceHistoryHook)
 import XMonad.Hooks.InsertPosition (insertPosition, Position(End), Focus(Newer))
@@ -169,7 +169,7 @@ myScratchpads =
     , NS "files" spawnFileManager findFileManager doCenterFloat
     ]
   where
-    spawnTerm  = myTerminal ++ " -t scratchpad -e tmux new -A -s scratchpad"
+    spawnTerm  = myTerminal ++ " -t scratchpad"
     findTerm   = title =? "scratchpad"
 
     spawnCalc  = "qalculate-gtk"
@@ -202,6 +202,7 @@ myManageHook = manageApps
         , [ title =?     t --> doCenterFloat | t <- myFloatsT ]
         , [ title =?     t --> doFloat <+> doF copyToAll | t <- myStickyFloats ]
         , [ isFullscreen --> doFullFloat ]
+        , [ isDialog --> doCenterFloat ]
         -- , [ pure True --> tileEnd ]
         ]
       where
