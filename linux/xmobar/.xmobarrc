@@ -21,7 +21,7 @@ Config {
     -- Layout
     , sepChar = "%"
     , alignSep = "}{"
-    , template = " %UnsafeStdinReader% }{ <fc=#55ff55>%crypto%</fc><fc=#555555> | </fc><fc=#b5d5ff>  %kbd%</fc><fc=#555555> | </fc><fc=#55ff55>%cpu%</fc><fc=#555555> | </fc><fc=#ff55ff>%temperature%</fc><fc=#555555> | </fc><fc=#ff5555>%memory%</fc><fc=#555555> | </fc><fc=#5555ff>%battery%</fc><fc=#555555> | </fc><fc=#55ffff>%volume%</fc><fc=#555555> | </fc><fc=#ffff55>%date%</fc><fc=#555555> | </fc><fc=#ff5555>%time%</fc>%trayerpad% "
+    , template = " %UnsafeStdinReader% }{ <fc=#b5d5ff>  %kbd%</fc><fc=#555555> | </fc><fc=#55ff55>%cpu%</fc><fc=#555555> | </fc><fc=#ff55ff>%temperature%</fc><fc=#555555> | </fc><fc=#ff5555>%memory%</fc><fc=#555555> | </fc><fc=#5555ff>%battery%</fc><fc=#555555> | </fc><fc=#55ffff>%volume%</fc><fc=#555555> | </fc><fc=#ffff55>%date%</fc><fc=#555555> | </fc><fc=#ff5555>%time%</fc>%trayerpad% "
 
 
     -- Plugins
@@ -37,7 +37,6 @@ Config {
         -- , Run Volume  "default" "Master" [
                        -- "--template", "VOL: <volume>%"
                       -- ] 10
-        , Run Com "/home/samir/.bin/crypto.sh" [] "crypto" 100
         , Run Com "/home/samir/.bin/temperature" [] "temperature" 10
         , Run Com "/home/samir/.bin/battery" [] "battery" 10
         , Run Com "/home/samir/.bin/volume" [] "volume" 10
