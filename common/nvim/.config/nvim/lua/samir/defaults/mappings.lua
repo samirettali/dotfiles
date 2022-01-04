@@ -11,7 +11,7 @@ map('v', '>', '>gv')
 map('n', 'Q', '@q')
 map('v', 'Q', ':norm @q<CR>') -- TODO needed?
 
--- Select text inserted during last insert mode usage
+-- Select last changed text
 map ('n', 'gV', '`[v`]')
 
 -- Splits

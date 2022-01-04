@@ -43,7 +43,7 @@ opt.wildmode = 'longest:full,full'  -- Command-line completion mode
 opt.showmatch = true                -- Temporarily jump to matching parentheresis when inserting one
 opt.confirm = true                  -- Ask for some operations like quitting an unsaved file instead of failing
 opt.lazyredraw = true               -- Disable redrawing while running macros
-opt.inccommand = 'split'            -- Show result of substitution as you type
+opt.inccommand = 'nosplit'          -- Show result of substitution as you type
 opt.mouse = 'nv'                    -- Enable mouse in normal and visual mode
 opt.showbreak = '↳ '                -- Show character at visually wrapped lines
 opt.listchars = 'tab:»·,trail:·,nbsp:~,eol:¬' -- Characters to visualize instead of whitespaces
@@ -58,7 +58,6 @@ cmd(':command! Q q')
 cmd(':command! WQ wq')
 cmd(':command! Wq wq')
 
-vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
--- vim.cmd [[colorscheme moonfly]]
+cmd('set foldexpr=nvim_treesitter#foldexpr()')
 
--- vim.g.colors_name = 'moonfly'
+cmd('colorscheme moonfly')

@@ -5,7 +5,6 @@ require 'samir.utils.remaps'
 
 -- Load settings
 require 'samir.defaults'
-require('samir.colors').init()
 require 'samir.lsp'
 require 'samir.lspkind'
 
@@ -13,9 +12,9 @@ require 'samir.lspkind'
 require 'samir.autopairs'
 require 'samir.barbar'
 require 'samir.camelcasemotion'
+require 'samir.cmp'
 require 'samir.colorizer'
 require 'samir.comment'
-require 'samir.cmp'
 require 'samir.dap'
 require 'samir.feline'
 require 'samir.gitblame'
@@ -42,5 +41,3 @@ require 'samir.vsnip'
 
 -- Vimscript stuff
 require 'samir.vimscript'
-
-require('package-info').setup()

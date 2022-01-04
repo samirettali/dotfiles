@@ -14,17 +14,17 @@ local function custom_attach(client)
   -- require('completion').on_attach(client)
 
   map('n', 'gR',         '<cmd>lua require("telescope.builtin").lsp_references()<CR>')
-  map('n', 'dn',         '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-  map('n', 'dp',         '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-  map('n', 'ds',         '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+  map('n', 'dn',         '<cmd>lua vim.diagnostic.goto_next()<CR>')
+  map('n', 'dp',         '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+  map('n', 'ds',         '<cmd>lua vim.diagnostic.get()<CR>')
   map('n', '<Leader>gw', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
   map('n', '<Leader>gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
   map('n', '<Leader>=',  '<cmd>lua vim.lsp.buf.formatting()<CR>')
   map('n', 'gu',         '<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
   map('n', '<Leader>ao', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
-  map('n', '<Leader>fe', '<cmd>lua require("telescope.functions").show_diagnostics()<CR>')
+  map('n', '<Leader>fe', '<cmd>lua require("telescope.functions").diagnostics()<CR>')
 
-  map('n', 'cd',         '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+  map('n', 'cd',         '<cmd>lua vim.diagnostic.get()<CR>')
   map('n', 'ga',         '<cmd>lua vim.lsp.buf.code_action()<CR>')
   map('n', 'rn',         '<cmd>lua vim.lsp.buf.rename()<CR>')
 
@@ -40,7 +40,7 @@ local function custom_attach(client)
 
   if filetype == 'rust' then
     vim.cmd [[autocmd BufWritePre <buffer> :lua format_rust()]]
-    vim.cmd [[autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost <buffer> :lua require"lsp_extensions".inlay_hints{ prefix = ' » ', highlight = "Comment", enabled = {"TypeHint","ChainingHint", "ParameterHint"}}]]
+    -- vim.cmd [[autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost <buffer> :lua require"lsp_extensions".inlay_hints{ prefix = ' » ', highlight = "Comment", enabled = {"TypeHint","ChainingHint", "ParameterHint"}}]]
   elseif filetype == 'go' then
     vim.cmd [[autocmd BufWritePre <buffer> lua goimports(1000)]]
 
@@ -49,7 +49,8 @@ local function custom_attach(client)
   end
 
   -- Show diagnostic on hover
-  vim.cmd [[autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })]]
+  -- vim.cmd [[autocmd CursorHold <buffer> lua vim.diagnostics.get({ focusable = false })]]
+  vim.cmd [[autocmd CursorHold <buffer> lua vim.diagnostic.get()]]
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
@@ -101,14 +102,14 @@ capabilities.textDocument.codeAction = {
 
 vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  require('lsp_extensions.workspace.diagnostic').handler, {
-    virtual_text = true,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-  }
-)
+-- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+--   require('lsp_extensions.workspace.diagnostic').handler, {
+--     virtual_text = true,
+--     signs = true,
+--     underline = true,
+--     update_in_insert = false,
+--   }
+-- )
 
 local servers = {
   bashls = {},

@@ -29,7 +29,6 @@ return require('packer').startup(function()
   use {'JoosepAlviste/nvim-ts-context-commentstring'}
   use {'liuchengxu/vista.vim'}                 -- Show a panel to browse tags
   use {'alvan/vim-closetag'}                   -- Automatically close HTML tag
-  -- use {'AndrewRadev/tagalong.vim'}             -- Automatically rename matching HTML tag
   use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
   use {'omnisharp/omnisharp-vim'}
 
@@ -42,7 +41,6 @@ return require('packer').startup(function()
 
   -- LSP and related
   use {'neovim/nvim-lspconfig'}                -- LSP
-  use {'nvim-lua/lsp_extensions.nvim'}
   use {'jose-elias-alvarez/null-ls.nvim'}
 
   use 'hrsh7th/cmp-nvim-lsp'
@@ -83,44 +81,13 @@ return require('packer').startup(function()
   -- UI components
   use {'romgrk/barbar.nvim'}                -- Buffers bar
   use {'famiu/feline.nvim'}                 -- Status line
-  use {'SmiteshP/nvim-gps',
-       requires = "nvim-treesitter/nvim-treesitter"
-  }
+  use {'SmiteshP/nvim-gps', requires = "nvim-treesitter/nvim-treesitter" }
   use {'MunifTanjim/nui.nvim'}
-  -- use {'glepnir/galaxyline.nvim'}
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'lukas-reineke/indent-blankline.nvim'}  -- Show indent line
   use {'simrat39/symbols-outline.nvim'}
-  --[[ use {
-    "projekt0n/circles.nvim",
-    requires = {{"kyazdani42/nvim-web-devicons"}, {"kyazdani42/nvim-tree.lua", opt = true}},
-    config = function()
-      require("circles").setup({
-        icons = {
-          empty = "",
-          filled = "",
-          lsp_prefix = ""
-        },
-        -- override lsp_diagnostic virtual-text icon with `icons.lsp_prefix`
-        lsp = true
-      })
-    end
-  } ]]
+  use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons'}
 
-  use {'kyazdani42/nvim-tree.lua',             -- Tree navigation
-    requires = {{
-      'kyazdani42/nvim-web-devicons'
-    }},
-    config = function()
-      require('nvim-tree').setup {
-        nvim_tree_auto_open = false,
-        nvim_tree_auto_close = true,
-        nvim_tree_follow = true,
-        nvim_tree_tab_open = false,
-      }
-    end
-  }
-    setup = 
   use {'yardnsm/vim-import-cost', run = 'yarn install' }
   use {'sindrets/diffview.nvim'}
 
@@ -148,7 +115,7 @@ return require('packer').startup(function()
   use {'farmergreg/vim-lastplace'}             -- Restore cursor position when reopening files
   use {'samirettali/shebang.nvim'}             -- Automatic shebang for new files
   use {'ojroques/vim-oscyank'}                 -- Copy in OS clipboard in SSH
-  use {'rmagatti/auto-session'}                -- Continuously save session
+  -- use {'rmagatti/auto-session'}             -- Continuously save session
 
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}
@@ -156,7 +123,6 @@ return require('packer').startup(function()
 
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim
-  use {'vuki656/package-info.nvim'}
   use {'nvim-telescope/telescope-symbols.nvim'}
   use {'nvim-treesitter/nvim-treesitter-textobjects'}
   use 'mfussenegger/nvim-dap'
@@ -166,7 +132,5 @@ return require('packer').startup(function()
   }
   use {'github/copilot.vim'}
   use {'rmagatti/goto-preview'}
-  use 'catppuccin/nvim'
-
 end)
 
