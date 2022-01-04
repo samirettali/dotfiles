@@ -42,4 +42,8 @@ start_dwm() {
 }
 
 # start_dwm
-exec ssh-agent xmonad
+exec dbus-launch ssh-agent xmonad
+
+source /etc/X11/xinit/xinitrc.d/50-systemd-user.sh
+eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+export SSH_AUTH_SOCK
