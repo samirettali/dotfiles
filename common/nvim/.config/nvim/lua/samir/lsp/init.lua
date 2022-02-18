@@ -121,13 +121,8 @@ local servers = {
   sqls = {},
   clangd = {},
   java_language_server = {},
-  solang = {
-      filetypes = { "solidity" },
-      root_dir = lspconfig.util.root_pattern(".git")
-  },
   gopls = {
     gopls = {
-      experimentalPostfixCompletions = true,
       analyses = {
         unusedparams = true,
         shadow = true,

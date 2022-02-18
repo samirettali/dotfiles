@@ -43,17 +43,14 @@ return require('packer').startup(function()
   use {'neovim/nvim-lspconfig'}                -- LSP
   use {'jose-elias-alvarez/null-ls.nvim'}
 
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/cmp-vsnip'
   use {'hrsh7th/nvim-cmp'}                     -- Auto completion
+  use {'hrsh7th/cmp-nvim-lsp'}
+  use {'hrsh7th/cmp-buffer'}
+  use {'hrsh7th/cmp-path'}
+  use {'hrsh7th/cmp-cmdline'}
+  use {'hrsh7th/cmp-vsnip'}
 
-  use {'nvim-treesitter/nvim-treesitter',
-    branch = '0.5-compat',
-    run = ':TSUpdate'
-  }
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'nvim-treesitter/playground'}
   use {'onsails/lspkind-nvim'}
   use {'folke/trouble.nvim',
@@ -80,8 +77,10 @@ return require('packer').startup(function()
 
   -- UI components
   use {'romgrk/barbar.nvim'}                -- Buffers bar
-  use {'famiu/feline.nvim'}                 -- Status line
-  use {'SmiteshP/nvim-gps', requires = "nvim-treesitter/nvim-treesitter" }
+  use {'nvim-lualine/lualine.nvim'}         -- Status line
+  use {'SmiteshP/nvim-gps',                 -- GPS
+    requires = "nvim-treesitter/nvim-treesitter"
+  }
   use {'MunifTanjim/nui.nvim'}
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'lukas-reineke/indent-blankline.nvim'}  -- Show indent line
@@ -121,15 +120,17 @@ return require('packer').startup(function()
   use {'bluz71/vim-moonfly-colors'}
   use {'NvChad/nvim-base16.lua'}
 
+  -- Debugging
+  -- use 'mfussenegger/nvim-dap'
+  -- use {'theHamsta/nvim-dap-virtual-text'}
+  -- use {'rcarriga/nvim-dap-ui',
+    -- requires = {"mfussenegger/nvim-dap"}
+  -- }
+
   -- Other
   use {'jez/vim-superman'}                     -- Use vman to read man inside vim
   use {'nvim-telescope/telescope-symbols.nvim'}
   use {'nvim-treesitter/nvim-treesitter-textobjects'}
-  use 'mfussenegger/nvim-dap'
-  use {'theHamsta/nvim-dap-virtual-text'}
-  use {'rcarriga/nvim-dap-ui',
-    requires = {"mfussenegger/nvim-dap"}
-  }
   use {'github/copilot.vim'}
   use {'rmagatti/goto-preview'}
 end)
