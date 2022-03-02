@@ -20,7 +20,6 @@ gps.setup({
   separator = ' > ',
 })
 
-
 -- local colors = {
 --   black = "#1c1c1c",
 --   lightGray = "#b2b2b2",
@@ -70,15 +69,20 @@ local function gps_location()
   end
 end
 
+-- local function obsession()
+--    return vim.api.nvim_eval('ObsessionStatus("$", "S")')
+-- end
+
 local config = {
   options = {
     theme = 'moonfly',
-    -- section_separators = '',
-    -- component_separators = '',
+    section_separators = '',
+    component_separators = '',
   },
   sections = {
     lualine_a = { { 'mode', upper = true } },
-    lualine_b = { obsession, diff_component },
+    -- lualine_b = { obsession, diff_component },
+    lualine_b = { diff_component },
     lualine_c = { gps_location, diagnostic_component },
     lualine_x = { 'filename' },
     lualine_y = { 'location'  },
@@ -93,10 +97,6 @@ local config = {
     lualine_z = {   }
   },
 }
-
-local function obsession()
-   return vim.api.nvim_eval('ObsessionStatus("$", "S")')
-end
 
 lualine.setup(config)
 
