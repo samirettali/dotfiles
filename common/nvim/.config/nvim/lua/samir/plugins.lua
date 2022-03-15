@@ -77,7 +77,7 @@ return require('packer').startup(function()
 
   -- UI components
   use {'romgrk/barbar.nvim'}                -- Buffers bar
-  use {'nvim-lualine/lualine.nvim'}         -- Status line
+  use {'famiu/feline.nvim'}                 -- Status line
   use {'SmiteshP/nvim-gps',                 -- GPS
     requires = "nvim-treesitter/nvim-treesitter"
   }

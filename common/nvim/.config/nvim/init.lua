@@ -6,7 +6,6 @@ require 'samir.utils.remaps'
 -- Load settings
 require 'samir.defaults'
 require 'samir.lsp'
--- require 'samir.lspkind'
 
 -- Load plugins settings
 require 'samir.autopairs'
@@ -15,13 +14,13 @@ require 'samir.camelcasemotion'
 require 'samir.cmp'
 require 'samir.colorizer'
 require 'samir.comment'
+require 'samir.feline'
 require 'samir.gitblame'
 require 'samir.gitsigns'
 require 'samir.go'
 require 'samir.highlightedundo'
 require 'samir.illuminate'
 require 'samir.indentline'
-require 'samir.lualine'
 require 'samir.matchtag'
 require 'samir.oscyank'
 require 'samir.ripgrep'
@@ -43,4 +42,4 @@ require 'samir.vimscript'
 
 -- Disabled
 -- require 'samir.dap'
--- require 'samir.feline'
+-- require 'samir.lspkind'
