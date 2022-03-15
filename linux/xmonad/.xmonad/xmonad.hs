@@ -203,11 +203,11 @@ myManageHook = manageApps
         , [ title =?     t --> doFloat <+> doF copyToAll | t <- myStickyFloats ]
         , [ isFullscreen --> doFullFloat ]
         , [ isDialog --> doCenterFloat ]
-        -- , [ pure True --> tileEnd ]
+        , [ (stringProperty "WM_WINDOW_ROLE") =? "pop-up"  --> doFloat ]
         ]
       where
         myFloatsC = ["Pcmanfm", "Xarchiver", "KeePassXC", "Lxappearance", "nm-connection-editor", "feh"]
-        myFloatsT = ["Crypto Wallets Notification", "MetaMask Notification", "Ghidra: NO ACTIVE PROJECT"]
+        myFloatsT = ["Ghidra: NO ACTIVE PROJECT"]
         myStickyFloats = ["Picture in picture"]
 
 -- Custom functions
