@@ -53,6 +53,9 @@ opt.directory = home .. '/.local/share/nvim/swap'
 opt.backupdir = home .. '/.local/share/nvim/tmp'
 opt.shortmess = opt.shortmess + 'c'
 
+opt.laststatus = 3                            -- Global statusline
+vim.cmd [[highlight WinSeparator guibg=None]] -- Fix for the global statusline
+
 cmd(':command! W w')
 cmd(':command! Q q')
 cmd(':command! WQ wq')
