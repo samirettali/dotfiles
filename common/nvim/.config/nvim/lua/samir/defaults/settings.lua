@@ -63,4 +63,4 @@ cmd(':command! Wq wq')
 
 cmd('set foldexpr=nvim_treesitter#foldexpr()')
 
-cmd('colorscheme moonfly')
+-- cmd('colorscheme moonfly')
