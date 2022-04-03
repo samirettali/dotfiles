@@ -122,6 +122,21 @@ fg_bg("NvimTreeStatuslineNc", darker_black, darker_black)
 fg_bg("NvimTreeVertSplit", darker_black, darker_black)
 fg_bg("NvimTreeWindowPicker", red, black2)
 
+-- Neotree
+fg("NeoTreeEmptyFolderName", folder_bg)
+fg("NeoTreeEndOfBuffer", darker_black)
+fg("NeoTreeFolderIcon", folder_bg)
+fg("NeoTreeFolderName", folder_bg)
+fg("NeoTreeGitDirty", red)
+fg("NeoTreeIndentMarker", one_bg2)
+bg("NeoTreeNormal", darker_black)
+bg("NeoTreeNormalNC", darker_black)
+fg("NeoTreeOpenedFolderName", folder_bg)
+fg("NeoTreeRootFolder", red .. " gui=underline") -- enable underline for root folder in nvim tree
+fg_bg("NeoTreeStatuslineNc", darker_black, darker_black)
+fg_bg("NeoTreeVertSplit", darker_black, darker_black)
+fg_bg("NeoTreeWindowPicker", red, black2)
+
 -- Telescope
 fg_bg("TelescopeBorder", darker_black, darker_black)
 fg_bg("TelescopePromptBorder", black2, black2)
