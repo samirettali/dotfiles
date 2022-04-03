@@ -1,16 +1,16 @@
 #!/bin/bash
 
-if [[ ! -z $(xrandr | grep '^DP1 connected') ]]; then
+if [[ ! -z $(xrandr | grep '^DP-1 connected') ]]; then
   echo "$(date) - home"
   # LG 34
   xrandr --dpi 96\
-    --output eDP1 --off \
-    --output DP1 --primary --mode 3440x1440 --pos 0x0 --rotate normal \
+    --output eDP-1 --off \
+    --output DP-1 --primary --mode 3440x1440 --pos 0x0 --rotate normal \
     --output DP2 --off \
     --output HDMI1 --off \
     --output HDMI2 --off \
     --output VIRTUAL1 --off
-  xrdb -merge "${HOME}/.Xresources-alt"
+  xrdb -load "${HOME}/.Xresources-alt"
 elif [[ ! -z $(xrandr | grep '^DP2 connected') ]]; then
   # Work
   echo "$(date) - work"
@@ -21,17 +21,17 @@ elif [[ ! -z $(xrandr | grep '^DP2 connected') ]]; then
     --output HDMI1 --mode 1920x1080 --pos 0x0 --rotate normal \
     --output HDMI2 --off \
     --output VIRTUAL1 --off
-  xrdb -merge "${HOME}/.Xresources-alt"
+  xrdb -load "${HOME}/.Xresources-alt"
 else
   echo "$(date) - laptop"
   # laptop only
   # export QT_SCALE_FACTOR=2
   xrandr --dpi 220 \
-    --output eDP1 --primary --mode 3840x2160 --pos 0x0 --rotate normal \
-    --output DP1 --off \
+    --output eDP-1 --primary --mode 3840x2160 --pos 0x0 --rotate normal --dpi 220 \
+    --output DP-1 --off \
     --output DP2 --off \
     --output HDMI1 --off \
     --output HDMI2 --off \
     --output VIRTUAL1 --off
-  xrdb -merge "${HOME}/.Xresources"
+  xrdb -load "${HOME}/.Xresources"
 fi
