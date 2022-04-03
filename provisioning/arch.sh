@@ -121,6 +121,7 @@ aur xmonad-log
 aur spotify spotify-tui
 
 aur burpsuite
+aur visidata tidy-viewer
 
 # Enable services
 sudo systemctl enable --now udevmon
