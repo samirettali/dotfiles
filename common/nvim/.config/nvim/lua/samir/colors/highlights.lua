@@ -1,8 +1,10 @@
 local cmd = vim.cmd
 
--- local override = require("core.utils").load_config().ui.hl_override
 local colors = require("samir.colors").get()
--- local ui = require("core.utils").load_config().ui
+local ui = {
+    italic_comments = true,
+    transparency = false,
+}
 
 local black = colors.black
 local black2 = colors.black2
@@ -39,11 +41,11 @@ local fg_bg = function(group, fgcol, bgcol)
 end
 
 -- Comments
--- if ui.italic_comments then
---    fg("Comment", grey_fg .. " gui=italic")
--- else
-fg("Comment", grey_fg)
--- end
+if ui.italic_comments then
+   fg("Comment", grey_fg .. " gui=italic")
+else
+   fg("Comment", grey_fg)
+end
 
 -- Disable cursor line
 cmd "hi clear CursorLine"
@@ -76,12 +78,12 @@ fg("LineNr", grey)
 fg("NvimInternalError", red)
 fg("VertSplit", one_bg2)
 
--- if ui.transparency then
---    bg("Normal", "NONE")
---    bg("Folded", "NONE")
---    fg("Folded", "NONE")
---    fg("Comment", grey)
--- end
+if ui.transparency then
+   bg("Normal", "NONE")
+   bg("Folded", "NONE")
+   fg("Folded", "NONE")
+   fg("Comment", grey)
+end
 
 -- [[ Plugin Highlights
 
@@ -172,25 +174,22 @@ for i, color in ipairs(section_title_colors) do
 end
 
 -- Disable some highlight in nvim tree if transparency enabled
--- if ui.transparency then
---    bg("NormalFloat", "NONE")
---    bg("NvimTreeNormal", "NONE")
---    bg("NvimTreeNormalNC", "NONE")
---    bg("NvimTreeStatusLineNC", "NONE")
---    fg_bg("NvimTreeVertSplit", grey, "NONE")
--- 
---    -- telescope
---    bg("TelescopeBorder", "NONE")
---    bg("TelescopePrompt", "NONE")
---    bg("TelescopeResults", "NONE")
---    bg("TelescopePromptBorder", "NONE")
---    bg("TelescopePromptNormal", "NONE")
---    bg("TelescopeNormal", "NONE")
---    bg("TelescopePromptPrefix", "NONE")
---    fg("TelescopeBorder", one_bg)
---    fg_bg("TelescopeResultsTitle", black, blue)
--- end
+if ui.transparency then
+   bg("NormalFloat", "NONE")
+   bg("NvimTreeNormal", "NONE")
+   bg("NvimTreeNormalNC", "NONE")
+   bg("NvimTreeStatusLineNC", "NONE")
+   fg_bg("NvimTreeVertSplit", grey, "NONE")
 
--- if #override ~= 0 then
---    require(override)
--- end
+   -- telescope
+   bg("TelescopeBorder", "NONE")
+   bg("TelescopePrompt", "NONE")
+   bg("TelescopeResults", "NONE")
+   bg("TelescopePromptBorder", "NONE")
+   bg("TelescopePromptNormal", "NONE")
+   bg("TelescopeNormal", "NONE")
+   bg("TelescopePromptPrefix", "NONE")
+   fg("TelescopeBorder", one_bg)
+   fg_bg("TelescopeResultsTitle", black, blue)
+end
+
