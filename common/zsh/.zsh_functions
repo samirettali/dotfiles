@@ -108,7 +108,7 @@ gobench() {
 }
 
 gocheck() {
-    go vet .
+    go vet ./...
     errcheck .
     golangci-lint run
     goconst ./...
