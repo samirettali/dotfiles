@@ -53,6 +53,9 @@ opt.directory = home .. '/.local/share/nvim/swap'
 opt.backupdir = home .. '/.local/share/nvim/tmp'
 opt.shortmess = opt.shortmess + 'c'
 
+opt.laststatus = 3                            -- Global statusline
+vim.cmd [[highlight WinSeparator guibg=None guifg=#20272e]] -- Fix for the global statusline
+
 cmd(':command! W w')
 cmd(':command! Q q')
 cmd(':command! WQ wq')
@@ -60,4 +63,4 @@ cmd(':command! Wq wq')
 
 cmd('set foldexpr=nvim_treesitter#foldexpr()')
 
-cmd('colorscheme moonfly')
+-- cmd('colorscheme moonfly')

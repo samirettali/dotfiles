@@ -77,7 +77,7 @@ return require('packer').startup(function()
 
   -- UI components
   use {'romgrk/barbar.nvim'}                -- Buffers bar
-  use {'nvim-lualine/lualine.nvim'}         -- Status line
+  use {'famiu/feline.nvim'}                 -- Status line
   use {'SmiteshP/nvim-gps',                 -- GPS
     requires = "nvim-treesitter/nvim-treesitter"
   }
@@ -85,7 +85,8 @@ return require('packer').startup(function()
   use {'mbbill/undotree'}                      -- Show a tree of undo history
   use {'lukas-reineke/indent-blankline.nvim'}  -- Show indent line
   use {'simrat39/symbols-outline.nvim'}
-  use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons'}
+  -- use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons'}
+  use {'nvim-neo-tree/neo-tree.nvim', requires = 'kyazdani42/nvim-web-devicons'}
 
   use {'yardnsm/vim-import-cost', run = 'yarn install' }
   use {'sindrets/diffview.nvim'}
@@ -114,7 +115,7 @@ return require('packer').startup(function()
   use {'farmergreg/vim-lastplace'}             -- Restore cursor position when reopening files
   use {'samirettali/shebang.nvim'}             -- Automatic shebang for new files
   use {'ojroques/vim-oscyank'}                 -- Copy in OS clipboard in SSH
-  -- use {'rmagatti/auto-session'}             -- Continuously save session
+  use {'rmagatti/auto-session'}             -- Continuously save session
 
   -- Colorscheme
   use {'bluz71/vim-moonfly-colors'}

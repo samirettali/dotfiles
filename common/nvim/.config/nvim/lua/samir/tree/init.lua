@@ -97,5 +97,5 @@ require'nvim-tree'.setup {
   }
 }
 
-map('n', '<C-t>', ":lua require'samir.tree-mappings'.toggle()<CR>", { silent = true })
+map('n', '<C-t>', ":NvimTreeToggle<CR>", { silent = true })
 map('n', '<Leader>n', ':NvimTreeFindFile<CR>')
