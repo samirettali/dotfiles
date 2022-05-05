@@ -1,3 +1,7 @@
+local utils = require "core.utils"
+
+local map = utils.map
+
 vim.g.mapleader = ' '
 
 -- Yank entire line except newline
