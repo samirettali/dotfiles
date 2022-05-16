@@ -2,6 +2,7 @@ local lspconfig = require('lspconfig')
 local lsp = vim.lsp
 local handlers = lsp.handlers
 local util = lspconfig.util
+local map = vim.api.nvim_set_keymap
 
 vim.g.completion_trigger_on_delete = 1
 vim.g.lsp_document_highlight_enabled = 1

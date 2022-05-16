@@ -20,19 +20,6 @@ gps.setup({
   separator = ' > ',
 })
 
--- local colors = {
---   black = "#1c1c1c",
---   lightGray = "#b2b2b2",
---   blue = "#74b2ff",
---   magenta = "#d183e8",
---   darkGrey = "#373c40",
---   red = "#ff5189",
---   white = "#eeeeee",
---   green = "#36c692",
---   yellow = '#bfbf97',
---   orange = '#f09479'
--- }
-
 local conditions = {
   buffer_not_empty = function() return vim.fn.empty(vim.fn.expand('%:t')) ~= 1 end,
   hide_in_width = function() return vim.fn.winwidth(0) > 80 end,

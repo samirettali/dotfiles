@@ -1,6 +1,10 @@
+local telescope = require('telescope')
 local actions = require('telescope.actions')
+local utils = require "core.utils"
 
-require('telescope').setup{
+local map = utils.map
+
+local options = {
   defaults = {
     file_sorter = require('telescope.sorters').get_fzy_sorter,
 
@@ -8,10 +12,10 @@ require('telescope').setup{
     grep_previewr   = require('telescope.previewers').vim_buffer_vimgrep.new,
     qflist_previewr = require('telescope.previewers').vim_buffer_qflist.new,
 
-    selection_strategy = "reset",
-    sorting_strategy = "descending",
-    layout_strategy = "horizontal",
-    file_ignore_patterns = {"node_modules", "docker", "%.mmdb", "vendor"},
+    selection_strategy = 'reset',
+    sorting_strategy = 'descending',
+    layout_strategy = 'horizontal',
+    file_ignore_patterns = {'node_modules', 'docker', '%.mmdb', 'vendor'},
   },
   extensions = {
     fzy_native = {
@@ -21,7 +25,8 @@ require('telescope').setup{
   }
 }
 
-require('telescope').load_extension('fzy_native')
+telescope.setup{options}
+telescope.load_extension('fzy_native')
 
 map('n', '<C-f>', '<Cmd>Telescope find_files<CR>')
 map('n', '<C-q>', '<Cmd>Telescope lsp_workspace_diagnostics<CR>')

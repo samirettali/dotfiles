@@ -68,9 +68,10 @@ map('i', '!', '!<C-g>u')
 map('i', '?', '?<C-g>u')
 map('i', '[', '[<C-g>u')
 map('i', ']', ']<C-g>u')
-map('i', '{', '{<C-g>u')
-map('i', '{', '}<C-g>u')
+-- map('i', '{', '{<C-g>u')
+-- map('i', '{', '}<C-g>u')
 
 -- Shift selected lines
 map('v', 'J', ":m '>+1<cr>gv=gv")
 map('v', 'K', ":m '<-2<cr>gv=gv")
+

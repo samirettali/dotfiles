@@ -55,7 +55,7 @@ opt.completeopt = 'menuone,noselect'
 opt.undodir = home .. '/.local/share/nvim/undo'
 opt.directory = home .. '/.local/share/nvim/swap'
 opt.backupdir = home .. '/.local/share/nvim/tmp'
-opt.shortmess:append 'csI'
+opt.shortmess:append 'c'
 
 opt.confirm = true                  -- Ask for some operations like quitting an unsaved file instead of failing
 opt.laststatus = 3                  -- Global statusline
@@ -112,4 +112,3 @@ end)
 
 -- load user options if the file exists
 require("core.utils").load_config().options.user()
-

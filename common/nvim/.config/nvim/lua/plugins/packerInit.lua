@@ -45,4 +45,3 @@ packer.init {
 }
 
 return packer
-

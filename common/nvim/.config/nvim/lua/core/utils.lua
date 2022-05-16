@@ -1,4 +1,3 @@
-#!/usr/bin/env lua
 local M = {}
 
 M.close_buffer = function(force)
@@ -25,6 +24,7 @@ end
 
 M.load_config = function()
    local conf = require "core.default_config"
+   local ignore_modes = { "mode_opts" }
 
    -- attempt to load and merge a user config
    local chadrc_exists = vim.fn.filereadable(vim.fn.stdpath "config" .. "/lua/custom/chadrc.lua") == 1
@@ -32,6 +32,8 @@ M.load_config = function()
       -- merge user config if it exists and is a table; otherwise display an error
       local user_config = require "custom.chadrc"
       if type(user_config) == "table" then
+         conf.mappings = conf.mappings and M.prune_key_map(conf.mappings, user_config.mappings, ignore_modes) or {}
+         user_config.mappings = user_config.mappings and M.prune_key_map(user_config.mappings, "rm_disabled", ignore_modes) or {}
          conf = vim.tbl_deep_extend("force", conf, user_config)
       else
          error "User config (chadrc.lua) *must* return a table!"
@@ -39,6 +41,60 @@ M.load_config = function()
    end
 
    return conf
+end
+
+-- reduces a given keymap to a table of modes each containing a list of key maps
+M.reduce_key_map = function(key_map, ignore_modes)
+   local prune_keys = {}
+   for _, modes in pairs(key_map) do
+      for mode, mappings in pairs(modes) do
+         if not vim.tbl_contains(ignore_modes, mode) then
+            prune_keys[mode] = prune_keys[mode] and prune_keys[mode] or {}
+            prune_keys[mode] = vim.list_extend(prune_keys[mode], vim.tbl_keys(mappings))
+         end
+      end
+   end
+   return prune_keys
+end
+
+-- remove disabled mappings from a given key map
+M.remove_disabled_mappings = function(key_map)
+   local clean_map = {}
+   if type(key_map) == "table" then
+      for k, v in pairs(key_map) do
+         if v ~= nil and v ~= "" then clean_map[k] = v end
+      end
+   else
+      return key_map
+   end
+   return clean_map
+end
+
+-- prune keys from a key map table by matching against another key map table
+M.prune_key_map = function(key_map, prune_map, ignore_modes)
+   if not prune_map then return key_map end
+   if not key_map then return prune_map end
+   local prune_keys = type(prune_map) == "table" and M.reduce_key_map(prune_map, ignore_modes)
+       or { n = {}, v = {}, i = {}, t = {} }
+
+   -- for ext, modes in pairs(key_map) do
+   --    for mode, mappings in pairs(modes) do
+   --       if not vim.tbl_contains(ignore_modes, mode) then
+   --          if prune_keys[mode] then
+   --             -- filter mappings table so that only keys that are not in user_mappings are left
+   --             local filtered_mappings = {}
+   --             for k, v in pairs(mappings) do
+   --                if not vim.tbl_contains(prune_keys[mode], k) then
+   --                   filtered_mappings[k] = M.remove_disabled_mappings(v)
+   --                end
+   --             end
+   --             key_map[ext][mode] = filtered_mappings
+   --          end
+   --       end
+   --    end
+   -- end
+
+   return key_map
 end
 
 M.map = function(mode, keys, command, opt)
@@ -58,6 +114,27 @@ M.map = function(mode, keys, command, opt)
    vim.keymap.set(mode, keys, command, opt)
 end
 
+-- For those who disabled whichkey
+M.no_WhichKey_map = function()
+   local mappings = M.load_config().mappings
+   local ignore_modes = { "mode_opts" }
+
+   for _, value in pairs(mappings) do
+      for mode, keymap in pairs(value) do
+         if not vim.tbl_contains(ignore_modes, mode) then
+            for keybind, cmd in pairs(keymap) do
+               -- disabled keys will not have cmd set
+               if cmd ~= "" then
+                  M.map(mode, keybind, cmd[1])
+               end
+            end
+         end
+      end
+   end
+
+   require("plugins.configs.others").misc_mappings()
+end
+
 -- load plugin after entering vim ui
 M.packer_lazy_load = function(plugin, timer)
    if plugin then
@@ -70,20 +147,20 @@ end
 
 -- remove plugins defined in chadrc
 M.remove_default_plugins = function(plugins)
-   local removals = require("core.utils").load_config().plugins.remove or {}
+   local removals = M.load_config().plugins.remove or {}
+
    if not vim.tbl_isempty(removals) then
       for _, plugin in pairs(removals) do
          plugins[plugin] = nil
       end
    end
+
    return plugins
 end
 
 -- merge default/user plugin tables
-
 M.plugin_list = function(default_plugins)
-   local user_plugins = require("core.utils").load_config().plugins.user
-   local plug_override = require("core.default_config").plugins.override
+   local user_plugins = M.load_config().plugins.user
 
    -- merge default + user plugin table
    default_plugins = vim.tbl_deep_extend("force", default_plugins, user_plugins)
@@ -94,14 +171,13 @@ M.plugin_list = function(default_plugins)
       default_plugins[key][1] = key
 
       final_table[#final_table + 1] = default_plugins[key]
-      plug_override[#plug_override + 1] = default_plugins[key]
    end
 
    return final_table
 end
 
 M.load_override = function(default_table, plugin_name)
-   local user_table = require("core.utils").load_config().plugins.override[plugin_name]
+   local user_table = M.load_config().plugins.override[plugin_name]
 
    if type(user_table) == "table" then
       default_table = vim.tbl_deep_extend("force", default_table, user_table)
@@ -113,4 +189,3 @@ M.load_override = function(default_table, plugin_name)
 end
 
 return M
-
