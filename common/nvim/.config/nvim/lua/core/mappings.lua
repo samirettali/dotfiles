@@ -1,5 +1,4 @@
-local utils = require "core.utils"
-
+local utils = require('core.utils')
 local map = utils.map
 
 vim.g.mapleader = ' '
@@ -68,10 +67,32 @@ map('i', '!', '!<C-g>u')
 map('i', '?', '?<C-g>u')
 map('i', '[', '[<C-g>u')
 map('i', ']', ']<C-g>u')
--- map('i', '{', '{<C-g>u')
--- map('i', '{', '}<C-g>u')
 
 -- Shift selected lines
-map('v', 'J', ":m '>+1<cr>gv=gv")
-map('v', 'K', ":m '<-2<cr>gv=gv")
+map('v', 'J', [[:m '>+1<cr>gv=gv]])
+map('v', 'K', [[:m '<-2<cr>gv=gv]])
+
+map('n', 'gR',         '<cmd>lua require("telescope.builtin").lsp_references()<CR>')
+map('n', 'dn',         '<cmd>lua vim.diagnostic.goto_next()<CR>')
+map('n', 'dp',         '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+map('n', 'ds',         '<cmd>lua vim.diagnostic.get()<CR>')
+map('n', '<Leader>gw', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+map('n', '<Leader>gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+map('n', '<Leader>=',  '<cmd>lua vim.lsp.buf.formatting()<CR>')
+map('n', 'gu',         '<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
+map('n', '<Leader>ao', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
+map('n', '<Leader>fe', '<cmd>lua require("telescope.functions").diagnostics()<CR>')
+
+map('n', 'cd',         '<cmd>lua vim.diagnostic.get()<CR>')
+map('n', 'ga',         '<cmd>lua vim.lsp.buf.code_action()<CR>')
+map('n', 'rn',         '<cmd>lua vim.lsp.buf.rename()<CR>')
+
+map('n', 'K',          '<cmd>lua vim.lsp.buf.hover()<CR>')
+map('n', 'gd',         '<cmd>lua vim.lsp.buf.definition()<CR>')
+map('n', 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>')
+map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>')
+map('n', 'gs',         '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+
+map("", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+map("", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 

@@ -26,14 +26,18 @@ local plugins = {
   -- Coding
   ['windwp/nvim-autopairs'] = {                  -- Autopair brackets and other symbols
       config = function()
-          require('plugins.configs.lsp')
+          require('plugins.configs.autopairs')
       end,
   },
-  ['terrortylor/nvim-comment'] = {             -- Commenting plugin
+
+   ["numToStr/Comment.nvim"] = {
+      module = "Comment",
+      keys = { "gc", "gb" },
       config = function()
-          require('plugins.configs.comment')
+         require('plugins.configs.comment')
       end,
-  },
+   },
+
   ['JoosepAlviste/nvim-ts-context-commentstring'] = {},
   ['liuchengxu/vista.vim'] = {},                 -- Show a panel to browse tags
   ['alvan/vim-closetag'] = {},                   -- Automatically close HTML tag
@@ -53,21 +57,59 @@ local plugins = {
   ['neovim/nvim-lspconfig'] = {                -- LSP
       module = 'lspconfig',
       config = function()
-          -- require('plugins.configs.lsp')
+          require('plugins.configs.lsp')
       end,
   },
+
+     ["ray-x/lsp_signature.nvim"] = {
+      after = "nvim-lspconfig",
+      config = function()
+         require("plugins.configs.lspsignature")
+      end,
+   },
+
+
   ['jose-elias-alvarez/null-ls.nvim'] = {},
 
+  ["rafamadriz/friendly-snippets"] = {
+      module = "cmp_nvim_lsp",
+      event = "InsertEnter",
+  },
+
   ['hrsh7th/nvim-cmp'] = {                     -- Auto completion
+        after = "friendly-snippets",
       config = function()
           require('plugins.configs.cmp')
       end,
   },
-  ['hrsh7th/cmp-nvim-lsp'] = {},
-  ['hrsh7th/cmp-buffer'] = {},
-  ['hrsh7th/cmp-path'] = {},
-  ['hrsh7th/cmp-cmdline'] = {},
-  ['hrsh7th/cmp-vsnip'] = {},
+
+  -- Snippets integration
+  ['L3MON4D3/LuaSnip'] = {
+    config = function()
+        require('plugins.configs.luasnip')
+    end,
+  },
+
+   ["saadparwaiz1/cmp_luasnip"] = {
+      after = "LuaSnip",
+   },
+
+   ["hrsh7th/cmp-nvim-lua"] = {
+      after = "cmp_luasnip",
+   },
+
+   ["hrsh7th/cmp-nvim-lsp"] = {
+      after = "cmp-nvim-lua",
+   },
+
+   ["hrsh7th/cmp-buffer"] = {
+      after = "cmp-nvim-lsp",
+   },
+
+   ["hrsh7th/cmp-path"] = {
+      after = "cmp-buffer",
+   },
+
 
   ['nvim-treesitter/nvim-treesitter'] = {
       run = ':TSUpdate',
@@ -88,15 +130,9 @@ local plugins = {
   ['RishabhRD/popfix'] = {},
   ['RishabhRD/nvim-lsputils'] = {},
 
-  -- Snippets integration
-  ['L3MON4D3/LuaSnip'] = {
-    config = function()
-        require('plugins.configs.luasnip')
-    end,
-  },
-
   -- Fuzzy file finder
   ['nvim-telescope/telescope.nvim'] = {
+    cmd = "Telescope",
     config = function()
         require('plugins.configs.telescope')
     end,
@@ -105,7 +141,6 @@ local plugins = {
       'nvim-lua/plenary.nvim',
     }},
   },
-  ['nvim-telescope/telescope-fzy-native.nvim'] = {},
 
   -- UI components
   -- ['nanozuki/tabby.nvim'] = {               -- Buffers bar
@@ -130,7 +165,9 @@ local plugins = {
   },
   ['MunifTanjim/nui.nvim'] = {},
   ['mbbill/undotree'] = {},                      -- Show a tree of undo history
-  ['lukas-reineke/indent-blankline.nvim'] = {},  -- Show indent line
+  ['lukas-reineke/indent-blankline.nvim'] = {
+    require('plugins.configs.indentline')
+  },
   ['simrat39/symbols-outline.nvim'] = {},
   ['nvim-neo-tree/neo-tree.nvim'] = {
     requires = 'kyazdani42/nvim-web-devicons',
@@ -158,11 +195,6 @@ local plugins = {
   ['machakann/vim-swap'] = {},                   -- Swap delimited items
   ['romainl/vim-cool'] = {},                     -- Disable search highlighting on mode change
   ['tpope/vim-repeat'] = {},                     -- Repeat plugin mappings with .
-  ['norcalli/nvim-colorizer.lua'] = {            -- Show colors
-      config = function()
-          require('plugins.configs.colorizer')
-      end,
-  },
   ['justinmk/vim-sneak'] = {},                   -- Adds a motion
   ['christoomey/vim-sort-motion'] = {},          -- Add sort motion
   ['tpope/vim-eunuch'] = {},                     -- Adds UNIX commands
@@ -172,7 +204,7 @@ local plugins = {
   ['farmergreg/vim-lastplace'] = {},             -- Restore cursor position when reopening files
   ['samirettali/shebang.nvim'] = {},             -- Automatic shebang for new files
   ['ojroques/vim-oscyank'] = {},                 -- Copy in OS clipboard in SSH
-  ['rmagatti/auto-session'] = {},             -- Continuously save session
+  -- ['rmagatti/auto-session'] = {},             -- Continuously save session
 
   -- Colorscheme
   ['bluz71/vim-moonfly-colors'] = {},

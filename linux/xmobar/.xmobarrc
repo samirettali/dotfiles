@@ -43,7 +43,6 @@ Config {
         , Run Com "/home/samir/.bin/padding-icon.sh" ["panel"] "trayerpad" 10
         , Run Kbd [("us", "US"), ("it", "IT")]
         , Run MultiCoreTemp ["-t", "TEMP: <avg>°C", "--"] 50
-        , Run MPD ["-t", "<state>: <artist> - <title>"] 3
 
         , Run UnsafeStdinReader
     ]

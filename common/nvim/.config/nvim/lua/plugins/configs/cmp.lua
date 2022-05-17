@@ -17,17 +17,32 @@ local function border(hl_name)
    }
 end
 
-
-local cmp_window = require "cmp.utils.window"
+local cmp_window = require 'cmp.utils.window'
 
 function cmp_window:has_scrollbar()
    return false
 end
 
 local options = {
+   window = {
+      completion = {
+         border = border 'CmpBorder',
+      },
+      documentation = {
+         border = border 'CmpDocBorder',
+      },
+   },
    snippet = {
       expand = function(args)
-         require("luasnip").lsp_expand(args.body)
+         require('luasnip').lsp_expand(args.body)
+      end,
+   },
+   formatting = {
+      format = function(_, vim_item)
+         local icons = require 'plugins.configs.lspkind_icons'
+         vim_item.kind = string.format('%s %s', icons[vim_item.kind], vim_item.kind)
+
+         return vim_item
       end,
    },
    mapping = {
@@ -77,22 +92,6 @@ local options = {
        "s",
     }),
    },
-   window = {
-      completion = {
-         border = border "CmpBorder",
-      },
-      documentation = {
-         border = border "CmpDocBorder",
-      },
-   },
-   formatting = {
-      format = function(_, vim_item)
-         local icons = require "plugins.configs.lspkind_icons"
-         vim_item.kind = string.format("%s %s", icons[vim_item.kind], vim_item.kind)
-
-         return vim_item
-      end,
-   },
    sources = {
       { name = "nvim_lsp" },
       { name = "luasnip" },
@@ -101,10 +100,6 @@ local options = {
       { name = "path" },
    },
 }
-
--- check for any override
--- TODO
--- options = nvchad.load_override(options, "hrsh7th/nvim-cmp")
 
 cmp.setup(options)
 

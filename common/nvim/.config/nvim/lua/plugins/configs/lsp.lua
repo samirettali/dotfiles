@@ -1,72 +1,78 @@
-local lspconfig = require('lspconfig')
+local present, lspconfig = pcall(require, 'lspconfig')
+
+if not present then
+    return
+end
+
+local utils = require('core.utils')
 local lsp = vim.lsp
-local handlers = lsp.handlers
 local util = lspconfig.util
-local map = vim.api.nvim_set_keymap
+
+-- Borders for LspInfo winodw
+local win = require "lspconfig.ui.windows"
+local _default_opts = win.default_opts
+
+win.default_opts = function(options)
+   local opts = _default_opts(options)
+   opts.border = "single"
+   return opts
+end
+
+local lsp_handlers = function()
+   local function lspSymbol(name, icon)
+      local hl = "DiagnosticSign" .. name
+      vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
+   end
+
+   lspSymbol("Error", "")
+   lspSymbol("Info", "")
+   lspSymbol("Hint", "")
+   lspSymbol("Warn", "")
+
+   vim.diagnostic.config {
+      virtual_text = {
+         prefix = "",
+      },
+      signs = true,
+      underline = true,
+      update_in_insert = false,
+   }
+
+   -- local pop_opts = { border = "rounded", max_width = 80 }
+
+   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = "single",
+   })
+   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+      border = "single",
+   })
+
+   -- suppress error messages from lang servers
+   vim.notify = function(msg, log_level)
+      if msg:match "exit code" then
+         return
+      end
+      if log_level == vim.log.levels.ERROR then
+         vim.api.nvim_err_writeln(msg)
+      else
+         vim.api.nvim_echo({ { msg } }, true, {})
+      end
+   end
+end
+
+lsp_handlers()
 
 vim.g.completion_trigger_on_delete = 1
 vim.g.lsp_document_highlight_enabled = 1
 
--- Hover doc popup
-local pop_opts = { border = "rounded", max_width = 80 }
-handlers["textDocument/hover"] = lsp.with(handlers.hover, pop_opts)
-handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, pop_opts)
-
-local function custom_attach(client)
-  -- require('completion').on_attach(client)
-
-  map('n', 'gR',         '<cmd>lua require("telescope.builtin").lsp_references()<CR>')
-  map('n', 'dn',         '<cmd>lua vim.diagnostic.goto_next()<CR>')
-  map('n', 'dp',         '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-  map('n', 'ds',         '<cmd>lua vim.diagnostic.get()<CR>')
-  map('n', '<Leader>gw', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-  map('n', '<Leader>gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
-  map('n', '<Leader>=',  '<cmd>lua vim.lsp.buf.formatting()<CR>')
-  map('n', 'gu',         '<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
-  map('n', '<Leader>ao', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
-  map('n', '<Leader>fe', '<cmd>lua require("telescope.functions").diagnostics()<CR>')
-
-  map('n', 'cd',         '<cmd>lua vim.diagnostic.get()<CR>')
-  map('n', 'ga',         '<cmd>lua vim.lsp.buf.code_action()<CR>')
-  map('n', 'rn',         '<cmd>lua vim.lsp.buf.rename()<CR>')
-
-  map('n', 'K',          '<cmd>lua vim.lsp.buf.hover()<CR>')
-  map('n', 'gd',         '<cmd>lua vim.lsp.buf.definition()<CR>')
-  map('n', 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>')
-  map('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>')
-  map('n', 'gs',         '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-
+local function custom_attach(client, _)
   vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 
-  local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
-
-  if filetype == 'rust' then
-    vim.cmd [[autocmd BufWritePre <buffer> :lua format_rust()]]
-    -- vim.cmd [[autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost <buffer> :lua require"lsp_extensions".inlay_hints{ prefix = ' » ', highlight = "Comment", enabled = {"TypeHint","ChainingHint", "ParameterHint"}}]]
-  elseif filetype == 'go' then
-    vim.cmd [[autocmd BufWritePre <buffer> lua goimports(1000)]]
-
-    -- gopls requires a require to list workspace arguments.
-    vim.cmd [[autocmd BufEnter,BufNewFile,BufRead <buffer> map <buffer> <leader>fs <cmd>lua require('telescope.builtin').lsp_workspace_symbols { query = vim.fn.input("Query: ") }<cr>]]
-  end
-
   -- Show diagnostic on hover
-  -- vim.cmd [[autocmd CursorHold <buffer> lua vim.diagnostics.get({ focusable = false })]]
   vim.cmd [[autocmd CursorHold <buffer> lua vim.diagnostic.get()]]
 
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=DarkMagenta guibg=LightYellow
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        " autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  end
+  client.server_capabilities.document_formatting = false
+  client.server_capabilities.document_range_formatting = false
 end
 
 vim.fn.sign_define("LspDiagnosticsSignError", {text = "", texthl = "LspDiagnosticsSignError"})
@@ -74,21 +80,27 @@ vim.fn.sign_define("LspDiagnosticsSignWarning", {text = "", texthl = "LspDiag
 vim.fn.sign_define("LspDiagnosticsSignInformation", {text = "i", texthl = "LspDiagnosticsSignInformation"})
 vim.fn.sign_define("LspDiagnosticsSignHint", {text = "!", texthl = "LspDiagnosticsSignHint"})
 
+-- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-vim.api.nvim_exec([[
-  autocmd BufWritePre *.ts lua vim.lsp.buf.formatting()
-  autocmd BufWritePre *.tsx lua vim.lsp.buf.formatting()
+capabilities.textDocument.completion.completionItem = {
+   documentationFormat = { "markdown", "plaintext" },
+   snippetSupport = true,
+   preselectSupport = true,
+   insertReplaceSupport = true,
+   labelDetailsSupport = true,
+   deprecatedSupport = true,
+   commitCharactersSupport = true,
+   tagSupport = { valueSet = { 1 } },
+   resolveSupport = {
+      properties = {
+         "documentation",
+         "detail",
+         "additionalTextEdits",
+      },
+   },
 
-  autocmd BufWritePre *.js lua vim.lsp.buf.formatting()
-  autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting()
-
-  autocmd BufWritePre *.py lua vim.lsp.buf.formatting()
-]], false)
-
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
+}
 capabilities.textDocument.codeAction = {
     dynamicRegistration = true,
     codeActionLiteralSupport = {
@@ -210,3 +222,26 @@ function format_rust()
   vim.lsp.buf.formatting_sync(nil, 1000)
   vim.api.nvim_win_set_cursor(0, lineno)
 end
+
+lspconfig.sumneko_lua.setup {
+   on_attach = custom_attach,
+   capabilities = capabilities,
+
+   settings = {
+      Lua = {
+         diagnostics = {
+            globals = { "vim", "nvchad" },
+         },
+         workspace = {
+            library = {
+               [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+               [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+            },
+            maxPreload = 100000,
+            preloadFileSize = 10000,
+         },
+      },
+   },
+}
+
+
