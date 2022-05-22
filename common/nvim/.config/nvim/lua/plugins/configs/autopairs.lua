@@ -5,8 +5,6 @@ if not present1 and present2 then
     return
 end
 
-print('loaded autopairs')
-
 autopairs.setup {
     fast_wrap = {},
     disable_filetype = { "TelescopePrompt", "vim" },

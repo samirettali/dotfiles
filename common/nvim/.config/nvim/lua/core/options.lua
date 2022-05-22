@@ -23,16 +23,16 @@ opt.autoindent = true               -- Automatically indent new lines
 opt.synmaxcol = 200                 -- Highlight up to the 200th column
 
 opt.undofile = true                 -- Use undo files
--- opt('b', 'spelllang', 'it,en_us')
--- opt.iskeyword = opt.iskeyword - { '_' }     -- Treat _ as a word separator
+-- opt("b", "spelllang", "it,en_us")
+-- opt.iskeyword = opt.iskeyword - { "_" }     -- Treat _ as a word separator
 
 
 opt.number = true                   -- Show line numbers
 opt.relativenumber = true           -- Show relative line numbers
 opt.wrap = true                     -- Wrap visually long lines
-opt.colorcolumn = '81'              -- Highlight 81st column
-opt.foldmethod = 'expr'             -- Set fold method
-opt.signcolumn = 'yes'              -- Keep sign column always opened
+opt.colorcolumn = "81"              -- Highlight 81st column
+opt.foldmethod = "expr"             -- Set fold method
+opt.signcolumn = "yes"              -- Keep sign column always opened
 
 opt.updatetime = 250
 opt.hidden = true                   -- Enable having modified buffers in background
@@ -44,18 +44,18 @@ opt.splitbelow = true               -- Put new windows below current
 opt.splitright = true               -- Put new windows right of current
 opt.foldlevelstart = 20             -- Set initial fold level
 opt.termguicolors = true            -- True color support
-opt.wildmode = 'longest:full,full'  -- Command-line completion mode
+opt.wildmode = "longest:full,full"  -- Command-line completion mode
 opt.showmatch = true                -- Temporarily jump to matching parentheresis when inserting one
 opt.lazyredraw = true               -- Disable redrawing while running macros
-opt.inccommand = 'nosplit'          -- Show result of substitution as you type
-opt.mouse = 'nv'                    -- Enable mouse in normal and visual mode
-opt.showbreak = '↳ '                -- Show character at visually wrapped lines
-opt.listchars = 'tab:»·,trail:·,nbsp:~,eol:¬' -- Characters to visualize instead of whitespaces
-opt.completeopt = 'menuone,noselect'
-opt.undodir = home .. '/.local/share/nvim/undo'
-opt.directory = home .. '/.local/share/nvim/swap'
-opt.backupdir = home .. '/.local/share/nvim/tmp'
-opt.shortmess:append 'c'
+opt.inccommand = "nosplit"          -- Show result of substitution as you type
+opt.mouse = "nv"                    -- Enable mouse in normal and visual mode
+opt.showbreak = "↳ "                -- Show character at visually wrapped lines
+opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize instead of whitespaces
+opt.completeopt = "menuone,noselect"
+opt.undodir = home .. "/.local/share/nvim/undo"
+opt.directory = home .. "/.local/share/nvim/swap"
+opt.backupdir = home .. "/.local/share/nvim/tmp"
+opt.shortmess:append "c"
 
 opt.confirm = true                  -- Ask for some operations like quitting an unsaved file instead of failing
 opt.laststatus = 3                  -- Global statusline
@@ -70,14 +70,14 @@ opt.timeoutlen = 400
 
 vim.cmd [[highlight WinSeparator guibg=None guifg=#20272e]] -- Fix for the global statusline
 
-cmd(':command! W w')
-cmd(':command! Q q')
-cmd(':command! WQ wq')
-cmd(':command! Wq wq')
+cmd(":command! W w")
+cmd(":command! Q q")
+cmd(":command! WQ wq")
+cmd(":command! Wq wq")
 
-cmd('set foldexpr=nvim_treesitter#foldexpr()')
+cmd("set foldexpr=nvim_treesitter#foldexpr()")
 
-cmd('colorscheme moonfly')
+cmd("colorscheme moonfly")
 
 -- disable some builtin vim plugins
 local default_plugins = {
@@ -109,6 +109,3 @@ vim.schedule(function()
    vim.opt.shadafile = vim.fn.expand "$HOME" .. "/.local/share/nvim/shada/main.shada"
    vim.cmd [[ silent! rsh ]]
 end)
-
--- load user options if the file exists
-require("core.utils").load_config().options.user()

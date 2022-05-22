@@ -1,1 +1,0 @@
--- map('v', '<C-c>', ':OSCYank<CR>')

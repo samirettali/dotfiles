@@ -1,6 +1,0 @@
-map("n", "<leader>xx", "<cmd>LspTroubleToggle<cr>", { silent = true })
-map("n", "<leader>xw", "<cmd>LspTroubleToggle lsp_workspace_diagnostics<cr>", { silent = true })
-map("n", "<leader>xd", "<cmd>LspTroubleToggle lsp_document_diagnostics<cr>", { silent = true })
-map("n", "<leader>xq", "<cmd>LspTroubleToggle quickfix<cr>", { silent = true })
-map("n", "<leader>xl", "<cmd>LspTroubleToggle loclist<cr>", { silent = true })
-map("n", "<leader>xr", "<cmd>LspTroubleToggle lsp_references<cr>", { silent = true })

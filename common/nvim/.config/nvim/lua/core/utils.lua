@@ -24,22 +24,6 @@ end
 
 M.load_config = function()
    local conf = require "core.default_config"
-   local ignore_modes = { "mode_opts" }
-
-   -- attempt to load and merge a user config
-   local chadrc_exists = vim.fn.filereadable(vim.fn.stdpath "config" .. "/lua/custom/chadrc.lua") == 1
-   if chadrc_exists then
-      -- merge user config if it exists and is a table; otherwise display an error
-      local user_config = require "custom.chadrc"
-      if type(user_config) == "table" then
-         conf.mappings = conf.mappings and M.prune_key_map(conf.mappings, user_config.mappings, ignore_modes) or {}
-         user_config.mappings = user_config.mappings and M.prune_key_map(user_config.mappings, "rm_disabled", ignore_modes) or {}
-         conf = vim.tbl_deep_extend("force", conf, user_config)
-      else
-         error "User config (chadrc.lua) *must* return a table!"
-      end
-   end
-
    return conf
 end
 
@@ -147,7 +131,26 @@ end
 
 -- remove plugins defined in chadrc
 M.remove_default_plugins = function(plugins)
-   local removals = M.load_config().plugins.remove or {}
+    local removals = {
+        "2html_plugin",
+        "getscript",
+        "getscriptPlugin",
+        "gzip",
+        "logipat",
+        "netrw",
+        "netrwPlugin",
+        "netrwSettings",
+        "netrwFileHandlers",
+        "matchit",
+        "tar",
+        "tarPlugin",
+        "rrhelper",
+        "spellfile_plugin",
+        "vimball",
+        "vimballPlugin",
+        "zip",
+        "zipPlugin",
+    }
 
    if not vim.tbl_isempty(removals) then
       for _, plugin in pairs(removals) do
@@ -160,10 +163,7 @@ end
 
 -- merge default/user plugin tables
 M.plugin_list = function(default_plugins)
-   local user_plugins = M.load_config().plugins.user
-
-   -- merge default + user plugin table
-   default_plugins = vim.tbl_deep_extend("force", default_plugins, user_plugins)
+   default_plugins = vim.tbl_deep_extend("force", default_plugins, {})
 
    local final_table = {}
 

@@ -1,5 +1,10 @@
-#!/usr/bin/env lua
-require'nvim-treesitter.configs'.setup {
+local present, teto = pcall(require, "nvim-treesitter.configs")
+
+if not present then
+    return false
+end
+
+local options = {
   textobjects = {
     select = {
       enable = true,
@@ -25,3 +30,5 @@ require'nvim-treesitter.configs'.setup {
     },
   },
 }
+
+teto.setup(options)

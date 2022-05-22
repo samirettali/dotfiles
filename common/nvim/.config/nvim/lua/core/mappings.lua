@@ -3,6 +3,11 @@ local map = utils.map
 
 vim.g.mapleader = ' '
 
+-- Core mappings
+-- Switch buffers
+-- map("n", "<C-n>", "<Cmd>bn<CR>", { noremap = true })
+-- map("n", "<C-p>", "<Cmd>bp<CR>", { noremap = true })
+
 -- Yank entire line except newline
 map('n', 'Y', 'y$')
 
@@ -47,7 +52,7 @@ map('v', '<Leader>p', '"_dP"', { noremap = true })
 
 map('n', '<Leader>k', 'gcip', { noremap = false })
 
-map('v', '<C-c>', '"+y')
+-- map('v', '<C-c>', '"+y')
 
 map('n', '<C-i>', '<C-a>', { noremap = false })
 
@@ -96,3 +101,48 @@ map('n', 'gs',         '<cmd>lua vim.lsp.buf.signature_help()<CR>')
 map("", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
 map("", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 
+-- Close buffer
+map("n", "<C-w>", ":bd<CR>")
+
+-- Plugins
+-- Telescope
+map("n", "<C-f>", "<Cmd>Telescope find_files<CR>")
+map("n", "<C-q>", "<Cmd>Telescope lsp_workspace_diagnostics<CR>")
+map("n", "<C-s>", "<Cmd>Telescope lsp_document_symbols<CR>")
+-- map("n", "<C-w>", "<Cmd>Telescope lsp_workspace_symbols<CR>")
+map("n", "<C-b>", "<Cmd>Telescope buffers<CR>")
+map("n", "<C-g>", "<Cmd>Telescope live_grep<CR>")
+
+map("n", "<Leader>fR", "<Cmd>lua require('telescope.builtin')['lsp_references']()<CR>", { noremap = true, silent = true })
+map("n", "<Leader>fS", "<Cmd>lua require('telescope.builtin')['lsp_document_symbols']()<CR>", { noremap = true, silent = true })
+map("n", "<Leader>fs", "<Cmd>lua require('telescope.builtin')['lsp_workspace_symbols']()<CR>", { noremap = true, silent = true })
+map("n", "<Leader>fd", "<Cmd>lua require('telescope.builtin')['lsp_workspace_diagnostics']()<CR>", { noremap = true, silent = true })
+
+-- Load current buffer into Neovim
+map("n", "<Leader><Leader>x", "<Cmd>source %<CR>", { noremap = true })
+
+-- Scalpel
+map("n", "<Leader>s", "<Plug>(Scalpel)", { noremap = false })
+
+-- Trouble
+map("n", "<leader>xx", "<Cmd>LspTroubleToggle<cr>", { silent = true })
+map("n", "<leader>xw", "<Cmd>LspTroubleToggle lsp_workspace_diagnostics<cr>", { silent = true })
+map("n", "<leader>xd", "<Cmd>LspTroubleToggle lsp_document_diagnostics<cr>", { silent = true })
+map("n", "<leader>xq", "<Cmd>LspTroubleToggle quickfix<cr>", { silent = true })
+map("n", "<leader>xl", "<Cmd>LspTroubleToggle loclist<cr>", { silent = true })
+map("n", "<leader>xr", "<Cmd>LspTroubleToggle lsp_references<cr>", { silent = true })
+
+-- Splitline
+map("n", "S", "<Cmd>SplitLine<CR>", { noremap = true })
+
+-- OSCYank
+map("v", "<C-c>", ":OSCYank<CR>")
+
+-- nvim-tree
+map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>")
+
+-- nvim-cokeline
+map("n", "<C-p>",     "<Plug>(cokeline-focus-prev)",  { silent = true })
+map("n", "<C-n>",     "<Plug>(cokeline-focus-next)",  { silent = true })
+map("n", "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
+map("n", "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })

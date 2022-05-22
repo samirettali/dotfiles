@@ -15,7 +15,6 @@ local options = {
         "lspinfo",
         "TelescopePrompt",
         "TelescopeResults",
-        "nvchad_cheatsheet",
         "lsp-installer",
         "",
     },

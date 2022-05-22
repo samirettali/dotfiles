@@ -47,7 +47,7 @@ local components = {
     style = function(_)
       return
         (mappings.is_picking_focus() or mappings.is_picking_close())
-        and 'italic,bold'
+        and 'bold'
          or nil
     end,
     truncation = { priority = 1 }
@@ -65,7 +65,7 @@ local components = {
       return buffer.unique_prefix
     end,
     fg = comments_fg,
-    style = 'italic',
+    style = 'NONE',
     truncation = {
       priority = 3,
       direction = 'left',
@@ -164,8 +164,3 @@ require('cokeline').setup({
   --   components = {..},
   -- },
 })
-
-vim.api.nvim_set_keymap('n', '<C-p>',     '<Plug>(cokeline-focus-prev)',  { silent = true })
-vim.api.nvim_set_keymap('n', '<C-n>',     '<Plug>(cokeline-focus-next)',  { silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>p', '<Plug>(cokeline-switch-prev)', { silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>n', '<Plug>(cokeline-switch-next)', { silent = true })

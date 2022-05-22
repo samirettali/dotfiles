@@ -7,40 +7,35 @@ end
 local gps = require('nvim-gps')
 local lsp = require('feline.providers.lsp')
 
-local colors = {
+local color_type = "fg"
 
-   white = "#D9D7D6",
+local get_hex = require('cokeline/utils').get_hex
+
+local colors = {
+   white = get_hex("MoonflyWhite", color_type),
    darker_black = "#000a0e",
-   black = "#061115", --  nvim bg
-   black2 = "#0d181c",
-   one_bg = "#131e22",
+   black = "#061115",
+
+   one_bg = get_hex("MoonflyGrey236", color_type),
+   lightbg = get_hex("MoonflyGrey237", color_type),
+   lightbg2 = get_hex("MoonflyGrey236", color_type),
+
    one_bg2 = "#1c272b",
-   one_bg3 = "#242f33",
-   grey = "#313c40",
-   grey_fg = "#3b464a",
    grey_fg2 = "#455054",
-   light_grey = "#4f5a5e",
-   red = "#DF5B61",
-   baby_pink = "#EE6A70",
-   pink = "#F16269",
-   line = "#152024", -- for lines like vertsplit
-   green = "#78B892",
-   vibrant_green = "#8CD7AA",
-   nord_blue = "#5A84BC",
-   blue = "#6791C9",
-   yellow = "#ecd28b",
-   sun = "#f6dc95",
-   purple = "#C488EC",
-   dark_purple = "#BC83E3",
-   teal = "#7ACFE4",
-   orange = "#E89982",
-   cyan = "#67AFC1",
-   statusline_bg = "#0A1519",
-   lightbg = "#1a2529",
-   lightbg2 = "#111C20",
-   pmenu_bg = "#78B892",
-   folder_bg = "#6791C9",
+   red = get_hex("MoonflyRed", color_type),
+   pink = get_hex("MoonflyViolet", color_type),
+   green = get_hex("MoonflyEmerald", color_type), -- moonfly
+   nord_blue = get_hex("MoonflySky", color_type),
+   blue = get_hex("MoonflyBlue", color_type),
+   yellow = get_hex("MoonflyYellow", color_type),
+   purple = get_hex("MoonflyPurple", color_type),
+   dark_purple = get_hex("MoonflyCranberry", color_type),
+   teal = get_hex("MoonflyTurquoise", color_type),
+   orange = get_hex("MoonflyOrange", color_type),
+   cyan = get_hex("MoonflyRed", color_type),
+   statusline_bg = get_hex("CursorLine", 'bg'), -- moonfly
 }
+
 
 local options = {
    colors = colors,
@@ -108,7 +103,7 @@ options.icon_styles = {
    },
 }
 
-options.separator_style = options.icon_styles['default']
+options.separator_style = options.icon_styles['slant']
 
 options.main_icon = {
    provider = options.separator_style.main_icon,

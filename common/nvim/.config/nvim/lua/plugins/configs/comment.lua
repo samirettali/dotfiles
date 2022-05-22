@@ -72,6 +72,6 @@ local options ={
     ---Post-hook, called after commenting is done
     ---@type fun(ctx: Ctx)
     post_hook = nil,
-} 
+}
 
 nvim_comment.setup(options)
