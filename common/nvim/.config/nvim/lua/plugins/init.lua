@@ -1,7 +1,3 @@
-local plugin_settings = require("core.utils").load_config().plugins
--- local present, packer = pcall(require, "plugins.packerInit")
-
-
 local present, packer = pcall(require, "packer")
 local bootstrap = false
 
@@ -62,12 +58,15 @@ local plugins = {
   -- Git
   ["rhysd/committia.vim"] = {},                  -- Better commit editing
   ["tpope/vim-fugitive"] = {},                   -- Git wrapper
-  ["f-person/git-blame.nvim"] = {
+  ["f-person/git-blame.nvim"] = {                -- Show git blame
       config = function()
           require("plugins.configs.gitblame")
       end
 
-  },              -- Show git blame
+  },
+  ["rhysd/git-messenger.vim"] = {
+      keys = "<Plug>(git-messenger)",
+  },
   ["lewis6991/gitsigns.nvim"] = {                -- Show git diff in the gutter (requires plenary)
       requires = "nvim-lua/plenary.nvim",
       config = function()
@@ -187,7 +186,7 @@ local plugins = {
 
   ["nvim-treesitter/nvim-treesitter-textobjects"] = {
       config = function()
-          require("plugins.configs.treesittertextobject")
+          require("plugins.configs.treesittertextobjects")
       end,
   },
 
@@ -212,10 +211,11 @@ local plugins = {
   },
 
   -- UI components
-  ["noib3/nvim-cokeline"] = {
+  ["akinsho/bufferline.nvim"] = {
       requires = "kyazdani42/nvim-web-devicons", -- If you want devicons
+      tag = "v2.*",
       config = function()
-          require("plugins.configs.cokeline")
+          require("plugins.configs.bufferline")
       end,
   },
   ["nvim-lualine/lualine.nvim"] = {                 -- Status line

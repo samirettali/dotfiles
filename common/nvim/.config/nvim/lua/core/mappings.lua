@@ -4,10 +4,6 @@ local map = utils.map
 vim.g.mapleader = ' '
 
 -- Core mappings
--- Switch buffers
--- map("n", "<C-n>", "<Cmd>bn<CR>", { noremap = true })
--- map("n", "<C-p>", "<Cmd>bp<CR>", { noremap = true })
-
 -- Yank entire line except newline
 map('n', 'Y', 'y$')
 
@@ -48,7 +44,7 @@ map('n', '<Leader>l', ':luafile ~/.config/nvim/init.lua<CR> | :PackerSync<CR>', 
 map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
 
 -- Paste replace visual selection without copying it
-map('v', '<Leader>p', '"_dP"', { noremap = true })
+    map('v', '<Leader>p', '"_dP"', { noremap = true })
 
 map('n', '<Leader>k', 'gcip', { noremap = false })
 
@@ -142,7 +138,7 @@ map("v", "<C-c>", ":OSCYank<CR>")
 map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>")
 
 -- nvim-cokeline
-map("n", "<C-p>",     "<Plug>(cokeline-focus-prev)",  { silent = true })
-map("n", "<C-n>",     "<Plug>(cokeline-focus-next)",  { silent = true })
-map("n", "<Leader>p", "<Plug>(cokeline-switch-prev)", { silent = true })
-map("n", "<Leader>n", "<Plug>(cokeline-switch-next)", { silent = true })
+map("n", "<C-p>",     "<Cmd>BufferLineCyclePrev<CR>",  { silent = true })
+map("n", "<C-n>",     "<Cmd>BufferLineCycleNext<CR>",  { silent = true })
+map("n", "<Leader>p", "<Cmd>BufferLineMovePrev<CR>", { silent = true })
+map("n", "<Leader>n", "<Cmd>BufferLineMoveNext<CR>", { silent = true })
