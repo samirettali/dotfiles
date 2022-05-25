@@ -4,29 +4,20 @@ if present then
     impatient.enable_profile()
 end
 
-local core_modules = {
-   'options',
-   'autocmds',
-   'mappings',
+local modules = {
+   "core.options",
+   "core.autocmds",
+   "core.mappings",
+   "plugins"
 }
 
-for _, module in ipairs(core_modules) do
-   local ok, err = pcall(require, 'core.' .. module)
+for _, module in ipairs(modules) do
+   local ok, err = pcall(require, module)
    if not ok then
-      error('Error loading ' .. module .. '\n\n' .. err)
+      error("Error loading " .. module .. "\n\n" .. err)
    end
 end
 
--- check if custom init.lua file exists
-if vim.fn.filereadable(vim.fn.stdpath "config" .. "/lua/custom/init.lua") == 1 then
-   -- try to call custom init, if not successful, show error
-   local ok, err = pcall(require, "custom")
-
-   if not ok then
-      vim.notify("Error loading custom/init.lua\n\n" .. err)
-   end
-
-   return
+function P(object)
+    print(vim.inspect(object))
 end
-
-error('dasdaws')

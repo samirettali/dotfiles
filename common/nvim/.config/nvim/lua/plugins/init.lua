@@ -218,19 +218,17 @@ local plugins = {
           require("plugins.configs.bufferline")
       end,
   },
+  ["SmiteshP/nvim-gps"] = {                 -- GPS
+    requires = "nvim-treesitter/nvim-treesitter",
+    config = function()
+        require("plugins.configs.gps")
+    end,
+  },
   ["nvim-lualine/lualine.nvim"] = {                 -- Status line
+    after = "nvim-gps",
     config = function()
         require("plugins.configs.lualine")
     end,
-  },
-  -- ["famiu/feline.nvim"] = {                 -- Status line
-  --   after = "nvim-web-devicons",
-  --   config = function()
-  --       require("plugins.configs.feline")
-  --   end,
-  -- },
-  ["SmiteshP/nvim-gps"] = {                 -- GPS
-    requires = "nvim-treesitter/nvim-treesitter"
   },
   ["MunifTanjim/nui.nvim"] = {},
   ["mbbill/undotree"] = {},                      -- Show a tree of undo history
@@ -267,10 +265,24 @@ local plugins = {
   ["farmergreg/vim-lastplace"] = {},             -- Restore cursor position when reopening files
   ["samirettali/shebang.nvim"] = {},             -- Automatic shebang for new files
   ["ojroques/vim-oscyank"] = {},                 -- Copy in OS clipboard in SSH
-  -- ["rmagatti/auto-session"] = {},             -- Continuously save session
+  ["rmagatti/auto-session"] = {
+      config = function()
+          require("plugins.configs.autosession")
+      end,
+  },             -- Continuously save session
 
   -- Colorscheme
   ["bluz71/vim-moonfly-colors"] = {},
+  -- ["NvChad/base46"] = {
+  --   after = "plenary.nvim",
+  --     config = function()
+  --        local ok, base46 = pcall(require, "base46")
+  --
+  --        if ok then
+  --           base46.load_theme()
+  --        end
+  --     end,
+  -- },
   ["kyazdani42/nvim-web-devicons"] = {
         config = function()
             require("plugins.configs.icons")
@@ -305,6 +317,7 @@ plugins = require("core.utils").plugin_list(plugins)
 
 return packer.startup(function(use)
     for _, v in pairs(plugins) do
+        -- TODO test return value
         use(v)
     end
 

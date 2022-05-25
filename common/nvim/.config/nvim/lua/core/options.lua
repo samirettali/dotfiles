@@ -3,6 +3,8 @@ local cmd = vim.cmd
 local opt = vim.opt
 local g = vim.g
 
+-- vim.g.nvchad_theme = "radium"
+
 local indentation = 4
 local home = os.getenv("HOME")
 
