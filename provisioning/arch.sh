@@ -83,6 +83,7 @@ yarn global add expo-cli typescript-language-server vscode-css-languageserver-bi
   vscode-html-languageserver-bin eslint_d
 pip3 install 'python-language-server[all]'
 go get github.com/lighttiger2505/sqls
+install lua-language-server
 GO111MODULE=on go get golang.org/x/tools/gopls@latest
 
 # Go tools
