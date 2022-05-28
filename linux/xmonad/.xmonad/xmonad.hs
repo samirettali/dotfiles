@@ -121,7 +121,7 @@ myXPConfig = def
     , promptBorderWidth   = 0
     , position            = CenteredAt { xpCenterY = 0.3, xpWidth = 0.3 }
     , height              = 40
-    , historySize         = 256
+    , historySize         = 0
     , historyFilter       = id
     , defaultText         = []
     , autoComplete        = Just 1
