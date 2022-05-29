@@ -31,12 +31,17 @@ local diff_component = {
 
 local diagnostic_component =  {
   "diagnostics",
-  sources = { "nvim_lsp" },
+  sources = { "nvim_diagnostic", "nvim_lsp" },
+  sections = { "error", "warn", "info", "hint" },
   symbols = {
       error = " ",
       warn = " ",
-      info = " "
+      info = " ",
+      hint = "H ",
   },
+  colored = true,
+  update_in_insert = false,
+  always_visible = false,
 }
 
 local gps_component = {
@@ -58,7 +63,7 @@ local gps_component = {
 
 local options = {
   options = {
-    theme = "base16",
+    theme = "auto",
     icons_enabled = true,
     -- component_separators = { left = "", right = ""},
     component_separators = { left = "", right = "" },
