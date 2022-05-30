@@ -3,92 +3,110 @@ if not present then
     return
 end
 
-local conditions = {
-  buffer_not_empty = function() return vim.fn.empty(vim.fn.expand("%:t")) ~= 1 end,
-  hide_in_width = function() return vim.fn.winwidth(0) > 80 end,
-  check_git_workspace = function()
-    local filepath = vim.fn.expand("%:p:h")
-    local gitdir = vim.fn.finddir(".git", filepath .. ";")
-    return gitdir and #gitdir > 0 and #gitdir < #filepath
-  end
-}
+local gps_present, gps = pcall(require, "nvim-gps")
+if not gps_present then
+    return
+end
 
-local diff_component = {
-  "diff",
-  symbols = {
-      added = "+",
-      modified = "~",
-      removed = "-"
-  },
-  colored = true,
-  diff_color = {
-    added    = "DiffAdd",    -- Changes the diff"s added color
-    modified = "DiffChange", -- Changes the diff"s modified color
-    removed  = "DiffDelete", -- Changes the diff"s removed color you
-  },
-  condition = conditions.hide_in_width
-}
+vim.cmd("au User LspProgressUpdate let &ro = &ro")
 
-local diagnostic_component =  {
-  "diagnostics",
-  sources = { "nvim_diagnostic", "nvim_lsp" },
-  sections = { "error", "warn", "info", "hint" },
-  symbols = {
-      error = " ",
-      warn = " ",
-      info = " ",
-      hint = "H ",
-  },
-  colored = true,
-  update_in_insert = false,
-  always_visible = false,
-}
+local function lsp_progress(_, is_active)
+    if not is_active then
+        return
+    end
+    local messages = vim.lsp.util.get_progress_messages()
 
-local gps_component = {
-    fmt = function()
-        local gps = require("nvim-gps")
-        return gps.get_location()
-    end,
-    cond = function()
-        local present, gps = pcall(require, "nvim-gps")
-        if not present then
-            return false
+    if #messages == 0 then
+        return ""
+    end
+
+    local status = {}
+
+    for _, msg in pairs(messages) do
+        local title = ""
+        if msg.title then
+            title = msg.title
         end
+        table.insert(status, (msg.percentage or 0) .. "%% " .. title)
+    end
+    local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+    local ms = vim.loop.hrtime() / 1000000
+    local frame = math.floor(ms / 120) % #spinners
+    return table.concat(status, "  ") .. " " .. spinners[frame + 1]
+end
 
-        if not gps.is_available() then
-            return false
-        end
-    end,
+local colors = {
+    color0 = '#1c1c1c',
+    color1 = '#ff5189',
+    color2 = '#c6c6c6',
+    color3 = '#303030',
+    color4 = '#1c1c1c',
+    color6 = '#9e9e9e',
+    color7 = '#80a0ff',
+    color8 = '#ae81ff',
+}
+
+local theme = {
+    replace = {
+        a = { fg = colors.color0, bg = colors.color1, gui = 'bold' },
+        b = { fg = colors.color2, bg = colors.color3 },
+    },
+    inactive = {
+        a = { fg = colors.color6, bg = colors.color3, gui = 'bold' },
+        b = { fg = colors.color6, bg = colors.color3 },
+        c = { fg = colors.color6, bg = colors.color4 },
+    },
+    normal = {
+        a = { fg = colors.color0, bg = colors.color7, gui = 'bold' },
+        b = { fg = colors.color2, bg = colors.color3 },
+        c = { fg = colors.color2, bg = colors.color4 },
+    },
+    visual = {
+        a = { fg = colors.color0, bg = colors.color8, gui = 'bold' },
+        b = { fg = colors.color2, bg = colors.color3 },
+    },
+    insert = {
+        a = { fg = colors.color0, bg = colors.color2, gui = 'bold' },
+        b = { fg = colors.color2, bg = colors.color3 },
+    },
 }
 
 local options = {
-  options = {
-    theme = "auto",
-    icons_enabled = true,
-    -- component_separators = { left = "", right = ""},
-    component_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
-    disabled_filetypes = {},
-    always_divide_middle = true,
-    globalstatus = true,
-  },
-  sections = {
-    lualine_a = { "mode" },
-    -- lualine_b = { diff_component },
-    lualine_b = { "branch", "diff", diagnostic_component },
-    lualine_c = { "filename", gps_component },
-    lualine_x = { "encoding", "fileformat", "filetype" },
-    lualine_y = { "progress"  },
-    lualine_z = { "location" },
-  },
-  inactive_sections = {
-    lualine_a = {  },
-    lualine_b = {  },
-    lualine_c = { "filename" },
-    lualine_x = { "location" },
-    lualine_y = {  },
-    lualine_z = {  }
-  },
+    options = {
+        theme = theme,
+        section_separators = { left = "", right = "" },
+        component_separators = { left = "", right = "" },
+        icons_enabled = true,
+        globalstatus = true,
+        -- component_separators = { left = "", right = "" },
+        -- component_separators = { left = "", right = "" },
+        -- section_separators = { left = "", right = "" },
+    },
+    sections = {
+        lualine_a = { "mode" },
+        lualine_b = {
+            { "branch" },
+        },
+        lualine_c = {
+            { "diagnostics", sources = { "nvim_diagnostic" } },
+            -- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+            { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
+            -- { gps.get_location, cond = gps.is_available },
+        },
+        lualine_x = { lsp_progress },
+        lualine_y = {
+            { "progress" },
+        },
+        lualine_z = { "location" },
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { "filename" },
+        lualine_x = { "location" },
+        lualine_y = {},
+        lualine_z = {}
+    },
 }
 
 lualine.setup(options)
