@@ -84,7 +84,8 @@ vim.g.tokyonight_sidebars = { "qf", "vista_kind", "packer", "Trouble", "NvimTree
 vim.g.tokyonight_dark_sidebar = true
 vim.g.tokyonight_dark_float = true
 
-cmd("colorscheme moonfly")
+vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+cmd("colorscheme catppuccin")
 
 -- disable some builtin vim plugins
 local default_plugins = {

@@ -6,8 +6,8 @@ end
 
 local options = {
   icons = {
-    ["class-name"] = " ",
-    ["function-name"] = "λ ",
+    ["class-name"] = "ﴯ ",
+    ["function-name"] = " ",
     ["method-name"] = " "
   },
   languages = {

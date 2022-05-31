@@ -44,7 +44,7 @@ map('n', '<Leader>l', ':luafile ~/.config/nvim/init.lua<CR> | :PackerSync<CR>', 
 map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
 
 -- Paste replace visual selection without copying it
-    map('v', '<Leader>p', '"_dP"', { noremap = true })
+map('v', '<Leader>p', '"_dP"', { noremap = true })
 
 map('n', '<Leader>k', 'gcip', { noremap = false })
 
@@ -116,6 +116,7 @@ map("n", "<Leader>fd", "<Cmd>lua require('telescope.builtin')['lsp_workspace_dia
 
 -- Load current buffer into Neovim
 map("n", "<Leader><Leader>x", "<Cmd>source %<CR>", { noremap = true })
+map("n", "<Leader><Leader>p", "<Cmd>PackerSync<CR>", { noremap = true })
 
 -- Scalpel
 map("n", "<Leader>s", "<Plug>(Scalpel)", { noremap = false })
@@ -137,7 +138,7 @@ map("v", "<C-c>", ":OSCYank<CR>")
 -- nvim-tree
 map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>")
 
--- nvim-cokeline
+-- BufferLine
 map("n", "<C-p>",     "<Cmd>BufferLineCyclePrev<CR>",  { silent = true })
 map("n", "<C-n>",     "<Cmd>BufferLineCycleNext<CR>",  { silent = true })
 map("n", "<Leader>p", "<Cmd>BufferLineMovePrev<CR>", { silent = true })

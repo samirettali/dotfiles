@@ -74,13 +74,10 @@ local theme = {
 local options = {
     options = {
         theme = theme,
-        section_separators = { left = "", right = "" },
-        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
+        component_separators = "",
         icons_enabled = true,
         globalstatus = true,
-        -- component_separators = { left = "", right = "" },
-        -- component_separators = { left = "", right = "" },
-        -- section_separators = { left = "", right = "" },
     },
     sections = {
         lualine_a = { "mode" },
@@ -91,11 +88,11 @@ local options = {
             { "diagnostics", sources = { "nvim_diagnostic" } },
             -- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
-            -- { gps.get_location, cond = gps.is_available },
         },
         lualine_x = { lsp_progress },
         lualine_y = {
-            { "progress" },
+            -- { "progress" },
+            { gps.get_location, cond = gps.is_available },
         },
         lualine_z = { "location" },
     },
