@@ -16,7 +16,8 @@ local options = {
         -- NOTE: this plugin is designed with this icon in mind,
         -- and so changing this is NOT recommended, this is intended
         -- as an escape hatch for people who cannot bear it for whatever reason
-        indicator_icon = '▎',
+        -- indicator_icon = '▎',
+        indicator_icon = '',
         buffer_close_icon = '',
         modified_icon = '●',
         close_icon = '',
@@ -34,11 +35,24 @@ local options = {
         end,
         max_name_length = 18,
         max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
-        tab_size = 0,
+        tab_size = 30,
         diagnostics = "nvim_lsp",
         diagnostics_update_in_insert = false,
         diagnostics_indicator = function(count, level, diagnostics_dict, context)
-            return "(" .. count .. ")"
+            local parts = {}
+                P(context)
+            for key, value in pairs(context) do
+                if key == diagnostics_dict[vim.diagnostic.severity.ERROR] then
+                    table.insert(parts, " ")
+                elseif key == diagnostics_dict[vim.diagnostic.severity.WARN] then
+                    table.insert(parts, "  ")
+                elseif key == diagnostics_dict[vim.diagnostic.severity.INFO] then
+                    table.insert(parts, "  ")
+                elseif key == diagnostics_dict[vim.diagnostic.severity.HINT] then
+                    table.insert(parts, "  ")
+                end
+            end
+            return table.concat(parts, " ")
         end,
         -- NOTE: this will be called a lot so don't do any heavy processing here
         custom_filter = function(buf_number, buf_numbers)

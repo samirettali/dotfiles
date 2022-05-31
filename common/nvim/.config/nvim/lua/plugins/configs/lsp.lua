@@ -50,6 +50,7 @@ local lsp_handlers = function()
         if msg:match "exit code" then
             return
         end
+
         if log_level == vim.log.levels.ERROR then
             vim.api.nvim_err_writeln(msg)
         else
@@ -76,7 +77,7 @@ local function custom_attach(client, _)
     -- Auto format
     vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function()
-            vim.lsp.buf.formatting_sync()
+            vim.lsp.buf.format()
         end,
     })
 

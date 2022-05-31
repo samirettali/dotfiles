@@ -177,13 +177,6 @@ options.icon_styles = {
 }
 
 options.separator_style = options.icon_styles["slant"]
-local function vi_mode_hl()
-    return vimode_colors[vim.fn.mode()] or "FlnViBlack"
-end
-
-local function vi_sep_hl()
-    return vimode_sep[vim.fn.mode()] or "FlnBlack"
-end
 
 local comps = {
     vimode = {

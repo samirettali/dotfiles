@@ -143,4 +143,8 @@ zle -N edit-command-line
 bindkey '^x^x' edit-command-line
 
 fpath+=~/.zfunc
-eval "$(pyenv init -)"
+
+if command -v pyenv &> /dev/null
+then
+    eval "$(pyenv init -)"
+fi
