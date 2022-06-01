@@ -71,3 +71,9 @@ autocmd("FileType", {
         vim.opt_local.spell = true
     end,
 })
+
+-- autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
+--   callback = function()
+--     require("core.winbar").get_winbar()
+--   end,
+-- })

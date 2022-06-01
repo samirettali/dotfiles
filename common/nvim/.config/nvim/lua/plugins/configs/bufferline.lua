@@ -35,12 +35,12 @@ local options = {
         end,
         max_name_length = 18,
         max_prefix_length = 15, -- prefix used when a buffer is de-duplicated
-        tab_size = 30,
+        tab_size = 0,
         diagnostics = "nvim_lsp",
         diagnostics_update_in_insert = false,
         diagnostics_indicator = function(count, level, diagnostics_dict, context)
             local parts = {}
-                P(context)
+                -- P(context)
             for key, value in pairs(context) do
                 if key == diagnostics_dict[vim.diagnostic.severity.ERROR] then
                     table.insert(parts, " ")

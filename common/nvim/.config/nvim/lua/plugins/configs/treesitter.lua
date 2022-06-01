@@ -1,5 +1,11 @@
-require('nvim-treesitter.configs').setup {
-  ensure_installed = 'all',
+local present, treesitter = pcall(require, 'nvim-treesitter.configs')
+
+if not present then
+    return false
+end
+
+local options = {
+  ensure_installed = { "lua", "rust", "go" },
   matchup = {
     enable = true,
   },
@@ -7,6 +13,9 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
   autotag = {
+    enable = true,
+  },
+  indent = {
     enable = true,
   },
   incremental_selection = {
@@ -22,3 +31,5 @@ require('nvim-treesitter.configs').setup {
     enable = true
   },
 }
+
+treesitter.setup(options)

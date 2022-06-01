@@ -28,11 +28,10 @@ opt.undofile = true -- Use undo files
 -- opt("b", "spelllang", "it,en_us")
 -- opt.iskeyword = opt.iskeyword - { "_" }     -- Treat _ as a word separator
 
-
 opt.number = true -- Show line numbers
 opt.relativenumber = true -- Show relative line numbers
 opt.wrap = true -- Wrap visually long lines
-opt.colorcolumn = "81" -- Highlight 81st column
+-- opt.colorcolumn = "81" -- Highlight 81st column
 opt.foldmethod = "expr" -- Set fold method
 opt.signcolumn = "yes" -- Keep sign column always opened
 
@@ -65,6 +64,8 @@ opt.title = true -- Allow neovim to set the window title
 opt.cmdheight = 1 -- Command line height
 opt.cursorline = true -- Highlight current line
 
+opt.showmode = false
+
 -- disable tilde on end of buffer: https://github.com/neovim/neovim/pull/8546#issuecomment-643643758
 opt.fillchars = { eob = " " }
 
@@ -85,7 +86,7 @@ vim.g.tokyonight_dark_sidebar = true
 vim.g.tokyonight_dark_float = true
 
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-cmd("colorscheme catppuccin")
+cmd("colorscheme moonfly")
 
 -- disable some builtin vim plugins
 local default_plugins = {

@@ -256,4 +256,17 @@ M.get_current_ufn = function()
     return M.get_unique_filename(current_name, names)
 end
 
+M.isempty = function(s)
+  return s == nil or s == ""
+end
+
+M.get_buf_option = function(opt)
+  local status_ok, buf_option = pcall(vim.api.nvim_buf_get_option, 0, opt)
+  if not status_ok then
+    return nil
+  else
+    return buf_option
+  end
+end
+
 return M

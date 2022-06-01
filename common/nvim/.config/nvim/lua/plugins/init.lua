@@ -62,13 +62,17 @@ local plugins = {
     -- Git
     ["rhysd/committia.vim"] = {}, -- Better commit editing
     ["tpope/vim-fugitive"] = {}, -- Git wrapper
-    ["f-person/git-blame.nvim"] = { -- Show git blame
-        config = function()
-            require("plugins.configs.gitblame")
-        end,
-    },
+    -- ["f-person/git-blame.nvim"] = { -- Show git blame
+    --     config = function()
+    --         require("plugins.configs.gitblame")
+    --     end,
+    -- },
     ["rhysd/git-messenger.vim"] = {
         keys = "<Plug>(git-messenger)",
+        config = function()
+            -- TODO
+            vim.g.git_messenger_include_diff = "current"
+        end,
     },
     ["lewis6991/gitsigns.nvim"] = { -- Show git diff in the gutter (requires plenary)
         requires = "nvim-lua/plenary.nvim",
@@ -244,6 +248,12 @@ local plugins = {
         requires = "kyazdani42/nvim-web-devicons",
         config = function()
             require("plugins.configs.nvimtree")
+        end,
+    },
+
+    ["code-biscuits/nvim-biscuits"] = {
+        config = function()
+            require("plugins.configs.biscuits")
         end,
     },
     -- Objects

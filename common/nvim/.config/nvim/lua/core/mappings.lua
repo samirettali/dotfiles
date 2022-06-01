@@ -23,22 +23,22 @@ map('n', '\\', ':vsplit<CR>')
 map('n', '-', ':split<CR>')
 
 -- Duplicate paragraph
-map('n', '<Leader>d', 'yap<S-}>p', { silent = true })
+map('n', '<Leader>d', 'yap<S-}>p')
 
 -- Go back to last selected file
 map('n', '<Leader><Leader>', '<C-^>')
 
 -- Toggle listchars
-map('n', '<Leader>i', ':set list!<CR>', { silent = true })
+map('n', '<Leader>i', ':set list!<CR>')
 
 -- Keep only the current window
-map('n', '<Leader>o', ':only<CR>', { silent = true })
+map('n', '<Leader>o', ':only<CR>')
 
 -- Load current buffer
-map('n', '<Leader>l', ':luafile %<CR>', { silent = true })
+map('n', '<Leader>l', ':luafile %<CR>')
 
 -- Reload configs and sync plugins
-map('n', '<Leader>l', ':luafile ~/.config/nvim/init.lua<CR> | :PackerSync<CR>', { silent = true })
+map('n', '<Leader>l', ':luafile ~/.config/nvim/init.lua<CR> | :PackerSync<CR>')
 
 -- Remove trailing whitespace
 map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
@@ -47,8 +47,6 @@ map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
 map('v', '<Leader>p', '"_dP"', { noremap = true })
 
 map('n', '<Leader>k', 'gcip', { noremap = false })
-
--- map('v', '<C-c>', '"+y')
 
 map('n', '<C-i>', '<C-a>', { noremap = false })
 
@@ -122,12 +120,12 @@ map("n", "<Leader><Leader>p", "<Cmd>PackerSync<CR>", { noremap = true })
 map("n", "<Leader>s", "<Plug>(Scalpel)", { noremap = false })
 
 -- Trouble
-map("n", "<leader>xx", "<Cmd>LspTroubleToggle<cr>", { silent = true })
-map("n", "<leader>xw", "<Cmd>LspTroubleToggle lsp_workspace_diagnostics<cr>", { silent = true })
-map("n", "<leader>xd", "<Cmd>LspTroubleToggle lsp_document_diagnostics<cr>", { silent = true })
-map("n", "<leader>xq", "<Cmd>LspTroubleToggle quickfix<cr>", { silent = true })
-map("n", "<leader>xl", "<Cmd>LspTroubleToggle loclist<cr>", { silent = true })
-map("n", "<leader>xr", "<Cmd>LspTroubleToggle lsp_references<cr>", { silent = true })
+map("n", "<leader>xx", "<Cmd>LspTroubleToggle<cr>")
+map("n", "<leader>xw", "<Cmd>LspTroubleToggle lsp_workspace_diagnostics<cr>")
+map("n", "<leader>xd", "<Cmd>LspTroubleToggle lsp_document_diagnostics<cr>")
+map("n", "<leader>xq", "<Cmd>LspTroubleToggle quickfix<cr>")
+map("n", "<leader>xl", "<Cmd>LspTroubleToggle loclist<cr>")
+map("n", "<leader>xr", "<Cmd>LspTroubleToggle lsp_references<cr>")
 
 -- Splitline
 map("n", "S", "<Cmd>SplitLine<CR>", { noremap = true })
@@ -139,7 +137,9 @@ map("v", "<C-c>", ":OSCYank<CR>")
 map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>")
 
 -- BufferLine
-map("n", "<C-p>", "<Cmd>BufferLineCyclePrev<CR>", { silent = true })
-map("n", "<C-n>", "<Cmd>BufferLineCycleNext<CR>", { silent = true })
-map("n", "<Leader>p", "<Cmd>BufferLineMovePrev<CR>", { silent = true })
-map("n", "<Leader>n", "<Cmd>BufferLineMoveNext<CR>", { silent = true })
+map("n", "<C-p>", "<Cmd>BufferLineCyclePrev<CR>")
+map("n", "<C-n>", "<Cmd>BufferLineCycleNext<CR>")
+map("n", "<Leader>p", "<Cmd>BufferLineMovePrev<CR>")
+map("n", "<Leader>n", "<Cmd>BufferLineMoveNext<CR>")
+
+map("n", "<Leader>gm", "<Plug>(git-messenger)")
