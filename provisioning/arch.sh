@@ -165,3 +165,5 @@ setup_swap() {
 
     sudo systemctl enable --now systemd-oomd.service
 }
+
+mkdir -p ~/.xmonad

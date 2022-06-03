@@ -70,6 +70,8 @@ map('i', ']', ']<C-g>u')
 -- Shift selected lines
 map('v', 'J', [[:m '>+1<cr>gv=gv]])
 map('v', 'K', [[:m '<-2<cr>gv=gv]])
+-- map("n", "<A-j>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true })
+-- map("n", "<A-k>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true })
 
 map('n', 'gR', '<cmd>lua require("telescope.builtin").lsp_references()<CR>')
 map('n', 'dn', '<cmd>lua vim.diagnostic.goto_next()<CR>')

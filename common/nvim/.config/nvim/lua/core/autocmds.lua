@@ -1,5 +1,6 @@
 #!/usr/bin/env lua
 local autocmd = vim.api.nvim_create_autocmd
+local map = require("core.utils").map
 
 autocmd("VimResized", {
     pattern = "*",
@@ -22,7 +23,7 @@ autocmd("VimResized", {
 
 -- Set spell checking for text and markdown files
 autocmd("BufEnter", {
-    pattern = { "text", "markdown" },
+    pattern = { "text", "markdown", "gitcommit" },
     callback = function()
         vim.api.nvim_win_set_option(0, "spell", true)
     end,
@@ -71,6 +72,21 @@ autocmd("FileType", {
         vim.opt_local.spell = true
     end,
 })
+
+autocmd("FileType", {
+    pattern = { "qf", "help", "man", "lspinfo" },
+    callback = function()
+        map("n", "q", ":close<CR>")
+    end,
+})
+
+-- TODO
+-- autocmd("FileType", {
+--     pattern = { "qf" },
+--     callback = function()
+--         vim.opt.buflisted = false
+--     end,
+-- })
 
 -- autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
 --   callback = function()
