@@ -5,26 +5,29 @@ if not present then
 end
 
 local options = {
-  default_config = {
-    max_length = 12,
-    min_distance = 5,
-    prefix_string = " 📎 "
-  },
-  language_config = {
-    gopls = {
-      prefix_string = " 🌐 "
+    show_on_start = true,
+    cursor_line_only = false,
+    toggle_keybind = "<Leader>cb",
+    default_config = {
+        max_length = 12,
+        min_distance = 5,
+        prefix_string = " 📎 "
     },
-    html = {
-      prefix_string = " 🌐 "
-    },
-    javascript = {
-      prefix_string = " ✨ ",
-      max_length = 80
-    },
-    python = {
-      disabled = true
+    language_config = {
+        go = {
+            prefix_string = " 🌐 "
+        },
+        html = {
+            prefix_string = " 🌐 "
+        },
+        javascript = {
+            prefix_string = " ✨ ",
+            max_length = 80
+        },
+        python = {
+            disabled = true
+        }
     }
-  }
 }
 
 biscuits.setup(options)

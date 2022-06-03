@@ -1,21 +1,28 @@
-local present, impatient = pcall(require, 'impatient')
+local notify_present, notify = pcall(require, "notify")
+if not notify_present then
+    return false
+end
 
-if present then
+vim.notify = notify
+
+local impatient_present, impatient = pcall(require, 'impatient')
+
+if impatient_present then
     impatient.enable_profile()
 end
 
 local modules = {
-   "core.options",
-   "core.autocmds",
-   "core.mappings",
-   "plugins"
+    "core.options",
+    "core.autocmds",
+    "core.mappings",
+    "plugins"
 }
 
 for _, module in ipairs(modules) do
-   local ok, err = pcall(require, module)
-   if not ok then
-      error("Error loading " .. module .. "\n\n" .. err)
-   end
+    local ok, err = pcall(require, module)
+    if not ok then
+        error("Error loading " .. module .. "\n\n" .. err)
+    end
 end
 
 function P(object)

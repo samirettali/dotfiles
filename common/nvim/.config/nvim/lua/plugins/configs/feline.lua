@@ -1,45 +1,11 @@
 local present, feline = pcall(require, "feline")
 
 if not present then
-    return
+    return false
 end
 
 local lsp = require("feline.providers.lsp")
 local vi_mode_utils = require 'feline.providers.vi_mode'
-local utils = require("core.utils")
-
--- local colors = {
---     bg = utils.get_hex("bg"),
---     fg = "#ffffff",
---     yellow = utils.get_hex("yellow"),
---     cyan = utils.get_hex("yellow"),
---     darkblue = "#528bff",
---     green = utils.get_hex("green"),
---     orange = utils.get_hex("yellow"),
---     violet = utils.get_hex("yellow"),
---     magenta = utils.get_hex("yellow"),
---     blue = utils.get_hex("yellow"),
---     red = utils.get_hex("yellow"),
--- }
-
--- local colors = {
---     alt = "#1c1c1c",
---     bg = "#303030",
---     black = "#323437",
---     blue = "#80a0ff",
---     cyan = "#79dac8",
---     err = "#EC5F67",
---     fg = "#c6c6c6",
---     green = "#8cc85f",
---     hint = "#5E81AC",
---     info = "#81A1C1",
---     magenta = "#d183e8",
---     red = "#ff5454",
---     warn = "#EBCB8B",
---     white = "#c6c6c6",
---     yellow = "#e3c78a"
--- }
-
 
 local colors = require("core.colors").colors
 
@@ -82,32 +48,12 @@ local vimode_colors = {
     t = "FlnViBlue",
 }
 
-local vimode_sep = {
-    n = "FlnCyan",
-    no = "FlnCyan",
-    i = "FlnStatusBg",
-    v = "FlnMagenta",
-    V = "FlnMagenta",
-    [""] = "FlnMagenta",
-    R = "FlnRed",
-    Rv = "FlnRed",
-    r = "FlnBlue",
-    rm = "FlnBlue",
-    s = "FlnMagenta",
-    S = "FlnMagenta",
-    [""] = "FelnMagenta",
-    c = "FlnYellow",
-    ["!"] = "FlnBlue",
-    t = "FlnBlue",
-}
-
 -- local chad_mode_hl = function()
 --     return {
 --         fg = vimode_colors[vim.fn.mode()][2],
 --         bg = colors.bg,
 --     }
 -- end
-
 
 local options = {
     lsp = lsp,

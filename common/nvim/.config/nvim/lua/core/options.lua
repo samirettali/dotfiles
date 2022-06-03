@@ -3,8 +3,6 @@ local cmd = vim.cmd
 local opt = vim.opt
 local g = vim.g
 
--- vim.g.nvchad_theme = "radium"
-
 local indentation = 4
 local home = os.getenv("HOME")
 
@@ -86,7 +84,7 @@ vim.g.tokyonight_dark_sidebar = true
 vim.g.tokyonight_dark_float = true
 
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-cmd("colorscheme moonfly")
+cmd("colorscheme catppuccin")
 
 -- disable some builtin vim plugins
 local default_plugins = {

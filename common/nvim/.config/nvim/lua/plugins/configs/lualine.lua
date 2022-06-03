@@ -73,7 +73,7 @@ local theme = {
 
 local options = {
     options = {
-        theme = theme,
+        theme = "auto",
         section_separators = { left = "", right = "" },
         component_separators = "",
         icons_enabled = true,

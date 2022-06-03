@@ -27,10 +27,12 @@ if not present then
     end
 end
 
-local require_config = function(name)
-    local result = require("plugins.configs." .. name)
+function require_config(name)
+    local path = "plugins.configs." .. name
+    local result, _ = pcall(require, path)
+
     if not result then
-        print("plugin config for " .. name .. "not found")
+        vim.notify("plugin config for " .. name .. "not found", vim.lsp.log_levels.WARN)
     end
 end
 
@@ -77,29 +79,28 @@ local plugins = {
     ["lewis6991/gitsigns.nvim"] = { -- Show git diff in the gutter (requires plenary)
         requires = "nvim-lua/plenary.nvim",
         config = function()
-            require("plugins.configs.gitsigns")
+            require_config("gitsigns")
         end,
     },
-
     -- Coding
     ["windwp/nvim-autopairs"] = { -- Autopair brackets and other symbols
         after = "nvim-cmp",
         config = function()
-            require("plugins.configs.autopairs")
+            require_config("autopairs")
         end,
     },
 
     ["numToStr/Comment.nvim"] = {
         keys = { "gc", "gb" },
         config = function()
-            require("plugins.configs.comment")
+            require_config("comment")
         end,
     },
 
     ["JoosepAlviste/nvim-ts-context-commentstring"] = {},
     ["liuchengxu/vista.vim"] = { -- Show a panel to browse tags
         config = function()
-            require("plugins.configs.vista")
+            require_config("vista")
         end,
     },
     ["alvan/vim-closetag"] = {}, -- Automatically close HTML tag
@@ -118,14 +119,14 @@ local plugins = {
     -- LSP and related
     ["neovim/nvim-lspconfig"] = { -- LSP
         config = function()
-            require("plugins.configs.lsp")
+            require_config("lsp")
         end,
     },
 
     ["ray-x/lsp_signature.nvim"] = {
         after = "nvim-lspconfig",
         config = function()
-            require("plugins.configs.lspsignature")
+            require_config("lspsignature")
         end,
     },
 
@@ -135,7 +136,7 @@ local plugins = {
     ["onsails/lspkind-nvim"] = {
         opt = false,
         config = function()
-            require("plugins.configs.lspkind")
+            require_config("lspkind")
         end,
     },
 
@@ -147,7 +148,7 @@ local plugins = {
     ["hrsh7th/nvim-cmp"] = { -- Auto completion
         after = "friendly-snippets",
         config = function()
-            require("plugins.configs.cmp")
+            require_config("cmp")
         end,
     },
 
@@ -156,7 +157,7 @@ local plugins = {
         requires = "friendly-snippets",
         after = "nvim-cmp",
         config = function()
-            require("plugins.configs.luasnip")
+            require_config("luasnip")
         end,
     },
 
@@ -185,13 +186,13 @@ local plugins = {
     ["nvim-treesitter/nvim-treesitter"] = {
         run = ":TSUpdate",
         config = function()
-            require("plugins.configs.treesitter")
+            require_config("treesitter")
         end,
     },
 
     -- ["nvim-treesitter/nvim-treesitter-textobjects"] = {
     --     config = function()
-    --         require("plugins.configs.treesittertextobjects")
+    --         require_config("treesittertextobjects")
     --     end,
     -- },
 
@@ -207,8 +208,15 @@ local plugins = {
     ["nvim-telescope/telescope.nvim"] = {
         requires = "nvim-lua/plenary.nvim",
         config = function()
-            require("plugins.configs.telescope")
+            require_config("telescope")
         end,
+    },
+
+    ["nvim-telescope/telescope-file-browser.nvim"] = {
+        -- after = "telescope",
+        -- config = function()
+        --     require("telescope").load_extension "file_browser"
+        -- end,
     },
 
     -- UI components
@@ -216,46 +224,52 @@ local plugins = {
         requires = "kyazdani42/nvim-web-devicons", -- If you want devicons
         tag = "v2.*",
         config = function()
-            require("plugins.configs.bufferline")
+            require_config("bufferline")
         end,
     },
     ["SmiteshP/nvim-gps"] = { -- GPS
         requires = "nvim-treesitter/nvim-treesitter",
         config = function()
-            require("plugins.configs.gps")
+            require_config("gps")
         end,
     },
     ["nvim-lualine/lualine.nvim"] = { -- Status line
         after = "nvim-gps",
         config = function()
-            require("plugins.configs.lualine")
+            require_config("lualine")
         end,
     },
     -- ["feline-nvim/feline.nvim"] = {
     --     config = function()
-    --         require("plugins.configs.feline")
+    --         require_config("feline")
     --     end,
     -- },
     ["MunifTanjim/nui.nvim"] = {},
     ["mbbill/undotree"] = {}, -- Show a tree of undo history
     ["lukas-reineke/indent-blankline.nvim"] = {
         config = function()
-            require("plugins.configs.indentline")
+            require_config("indentline")
         end,
     },
     ["simrat39/symbols-outline.nvim"] = {},
     ["kyazdani42/nvim-tree.lua"] = {
         requires = "kyazdani42/nvim-web-devicons",
         config = function()
-            require("plugins.configs.nvimtree")
+            require_config("nvimtree")
         end,
     },
 
     ["code-biscuits/nvim-biscuits"] = {
         config = function()
-            require("plugins.configs.biscuits")
+            require_config("biscuits")
         end,
     },
+
+    ["rcarriga/nvim-notify"] = {
+        config = function()
+        end,
+    },
+
     -- Objects
     ["tpope/vim-surround"] = {}, -- Add surround object for editing
     ["wellle/targets.vim"] = {}, -- Add more targets for commands
@@ -277,105 +291,25 @@ local plugins = {
     ["farmergreg/vim-lastplace"] = {}, -- Restore cursor position when reopening files
     ["samirettali/shebang.nvim"] = {}, -- Automatic shebang for new files
     ["ojroques/vim-oscyank"] = {}, -- Copy in OS clipboard in SSH
-    -- ["rmagatti/auto-session"] = {
-    --     config = function()
-    --         require("plugins.configs.autosession")
-    --     end,
-    -- },             -- Continuously save session
+    ["rmagatti/auto-session"] = {
+        config = function()
+            require("plugins.configs.autosession")
+        end,
+    }, -- Continuously save session
 
     -- Colorscheme
+    ["folke/tokyonight.nvim"] = {},
     ["bluz71/vim-moonfly-colors"] = {},
     ["catppuccin/nvim"] = {
         as = "catppuccin",
         config = function()
-            local catppuccin = require("catppuccin")
-            local options = {
-                transparent_background = false,
-                term_colors = false,
-                styles = {
-                    comments = "italic",
-                    conditionals = "italic",
-                    loops = "NONE",
-                    functions = "NONE",
-                    keywords = "NONE",
-                    strings = "NONE",
-                    variables = "NONE",
-                    numbers = "NONE",
-                    booleans = "NONE",
-                    properties = "NONE",
-                    types = "NONE",
-                    operators = "NONE",
-                },
-                integrations = {
-                    treesitter = true,
-                    native_lsp = {
-                        enabled = true,
-                        virtual_text = {
-                            errors = "italic",
-                            hints = "italic",
-                            warnings = "italic",
-                            information = "italic",
-                        },
-                        underlines = {
-                            errors = "underline",
-                            hints = "underline",
-                            warnings = "underline",
-                            information = "underline",
-                        },
-                    },
-                    lsp_trouble = false,
-                    cmp = true,
-                    lsp_saga = false,
-                    gitgutter = false,
-                    gitsigns = true,
-                    telescope = true,
-                    nvimtree = {
-                        enabled = true,
-                        show_root = false,
-                        transparent_panel = false,
-                    },
-                    neotree = {
-                        enabled = false,
-                        show_root = false,
-                        transparent_panel = false,
-                    },
-                    which_key = false,
-                    indent_blankline = {
-                        enabled = true,
-                        colored_indent_levels = false,
-                    },
-                    dashboard = true,
-                    neogit = false,
-                    vim_sneak = false,
-                    fern = false,
-                    barbar = false,
-                    bufferline = true,
-                    markdown = true,
-                    lightspeed = false,
-                    ts_rainbow = false,
-                    hop = false,
-                    notify = true,
-                    telekasten = true,
-                    symbols_outline = true,
-                }
-            }
-            catppuccin.setup(options)
+            require_config("catppuccin")
         end,
     },
     ["norcalli/nvim-colorizer.lua"] = {},
-    -- ["NvChad/base46"] = {
-    --   after = "plenary.nvim",
-    --     config = function()
-    --        local ok, base46 = pcall(require, "base46")
-    --
-    --        if ok then
-    --           base46.load_theme()
-    --        end
-    --     end,
-    -- },
     ["kyazdani42/nvim-web-devicons"] = {
         config = function()
-            require("plugins.configs.icons")
+            require_config("icons")
         end,
     },
 
@@ -395,7 +329,7 @@ local plugins = {
     ["github/copilot.vim"] = {},
     ["rmagatti/goto-preview"] = {
         config = function()
-            require("plugins.configs.goto-preview")
+            require_config("goto-preview")
         end,
     },
     ["lewis6991/impatient.nvim"] = {},

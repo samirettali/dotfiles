@@ -40,7 +40,6 @@ local options = {
         diagnostics_update_in_insert = false,
         diagnostics_indicator = function(count, level, diagnostics_dict, context)
             local parts = {}
-                -- P(context)
             for key, value in pairs(context) do
                 if key == diagnostics_dict[vim.diagnostic.severity.ERROR] then
                     table.insert(parts, " ")
@@ -56,32 +55,30 @@ local options = {
         end,
         -- NOTE: this will be called a lot so don't do any heavy processing here
         custom_filter = function(buf_number, buf_numbers)
-            -- filter out filetypes you don't want to see
-            if vim.bo[buf_number].filetype ~= "<i-dont-want-to-see-this>" then
-                return true
-            end
-            -- filter out by buffer name
-            if vim.fn.bufname(buf_number) ~= "<buffer-name-I-dont-want>" then
-                return true
-            end
-            -- filter out based on arbitrary rules
-            -- e.g. filter out vim wiki buffer from tabline in your work repo
-            if vim.fn.getcwd() == "<work-repo>" and vim.bo[buf_number].filetype ~= "wiki" then
-                return true
-            end
-            -- filter out by it's index number in list (don't show first buffer)
-            if buf_numbers[1] ~= buf_number then
-                return true
-            end
+            -- -- filter out filetypes you don't want to see
+            -- if vim.bo[buf_number].filetype ~= "<i-dont-want-to-see-this>" then
+            --     return true
+            -- end
+            -- -- filter out by buffer name
+            -- if vim.fn.bufname(buf_number) ~= "<buffer-name-I-dont-want>" then
+            --     return true
+            -- end
+            -- -- filter out based on arbitrary rules
+            -- -- e.g. filter out vim wiki buffer from tabline in your work repo
+            -- if vim.fn.getcwd() == "<work-repo>" and vim.bo[buf_number].filetype ~= "wiki" then
+            --     return true
+            -- end
+            -- -- filter out by it's index number in list (don't show first buffer)
+            -- if buf_numbers[1] ~= buf_number then
+            --     return true
+            -- end
         end,
-        offsets = {
-            {
-                filetype = "NvimTree",
-                text = nil,
-                highlight = "Directory",
-                text_align = "left"
-            },
-        },
+        offsets = { {
+            filetype = "NvimTree",
+            text = nil,
+            highlight = "Directory",
+            text_align = "left"
+        } },
         color_icons = true, -- whether or not to add the filetype icon highlights
         show_buffer_icons = true, -- disable filetype icons for buffers
         show_buffer_close_icons = false,
@@ -93,8 +90,8 @@ local options = {
         -- [focused and unfocused]. eg: { '|', '|' }
         -- separator_style = "slant" | "thick" | "thin" | { 'any', 'any' },
         separator_style = "slant",
-        enforce_regular_tabs = false,
-        always_show_bufferline = true,
+        enforce_regular_tabs = true,
+        always_show_bufferline = false,
         sort_by = "id",
         -- sort_by = 'insert_after_current' |'insert_at_end' | 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
         --   -- add custom logic
