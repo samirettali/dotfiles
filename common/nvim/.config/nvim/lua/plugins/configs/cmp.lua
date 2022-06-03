@@ -90,6 +90,7 @@ local options = {
         { name = "nvim_lsp" },
         { name = "path" },
         { name = "luasnip" },
+        { name = "cmdline" },
         { name = "buffer", keyword_length = 5 },
     },
     experimental = { -- TODO

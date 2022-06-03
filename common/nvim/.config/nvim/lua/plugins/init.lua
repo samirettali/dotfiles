@@ -170,6 +170,9 @@ local plugins = {
     ["hrsh7th/cmp-path"] = {
         after = "cmp-buffer",
     },
+    ["hrsh7th/cmp-cmdline"] = {
+        after = "nvim-cmp",
+    },
 
     ["kristijanhusak/vim-dadbod-completion"] = {},
 
