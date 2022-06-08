@@ -11,6 +11,7 @@ alias qrd='pngpaste - | zbarimg -q --raw - | tee | pbcopy'
 alias tms='tmuxinator start'
 alias python='python3'
 alias lg='lazygit'
+alias ld='lazydocker'
 alias cat='bat'
 alias vim='nvim'
 
@@ -36,3 +37,8 @@ alias gt='gotest ./...'
 # Youtube
 alias ytdl='youtube-dl -R infinite -f bestvideo+bestaudio --output "%(title)s.%(ext)s"'
 alias ytmp3='youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audio-quality 0 -w --output "%(title)s.%(ext)s"'
+
+alias sstart="sudo systemctl start"
+alias sstop="sudo systemctl stop"
+alias sstatus="sudo systemctl status"
+alias srestart="sudo systemctl restart"

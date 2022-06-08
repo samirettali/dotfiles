@@ -213,11 +213,16 @@ local plugins = {
     },
 
     -- UI components
-    ["akinsho/bufferline.nvim"] = {
-        requires = "kyazdani42/nvim-web-devicons", -- If you want devicons
-        tag = "v2.*",
+    -- ["akinsho/bufferline.nvim"] = {
+    --     requires = "kyazdani42/nvim-web-devicons", -- If you want devicons
+    --     tag = "v2.*",
+    --     config = function()
+    --         require_config("bufferline")
+    --     end,
+    -- },
+    ["romgrk/barbar.nvim"] = {
+        requires = {'kyazdani42/nvim-web-devicons'},
         config = function()
-            require_config("bufferline")
         end,
     },
     ["SmiteshP/nvim-gps"] = { -- GPS
@@ -231,6 +236,11 @@ local plugins = {
         config = function()
             require_config("lualine")
         end,
+    },
+    ["j-hui/fidget.nvim"] = {
+        config = function()
+            require("fidget").setup()
+        end
     },
     -- ["feline-nvim/feline.nvim"] = {
     --     config = function()
@@ -293,6 +303,16 @@ local plugins = {
     -- Colorscheme
     ["folke/tokyonight.nvim"] = {},
     ["bluz71/vim-moonfly-colors"] = {},
+    ["NvChad/base46"]= {
+      after = "plenary.nvim",
+      -- config = function()
+      --    local ok, base46 = pcall(require, "base46")
+      --
+      --    if ok then
+      --       base46.load_theme()
+      --    end
+      -- end,
+    },
     ["catppuccin/nvim"] = {
         as = "catppuccin",
         config = function()

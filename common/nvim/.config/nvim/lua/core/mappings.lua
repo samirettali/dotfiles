@@ -139,9 +139,9 @@ map("v", "<C-c>", ":OSCYank<CR>")
 map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>")
 
 -- BufferLine
-map("n", "<C-p>", "<Cmd>BufferLineCyclePrev<CR>")
-map("n", "<C-n>", "<Cmd>BufferLineCycleNext<CR>")
-map("n", "<Leader>p", "<Cmd>BufferLineMovePrev<CR>")
-map("n", "<Leader>n", "<Cmd>BufferLineMoveNext<CR>")
+map("n", "<C-p>", ":BufferPrevious<CR>", { silent = true })
+map("n", "<C-n>", ":BufferNext<CR>", { silent = true })
+map("n", "<Leader>p", ":BufferMovePrevious<CR>", { silent = true })
+map("n", "<Leader>n", ":BufferMoveNext<CR>", { silent = true })
 
 map("n", "<Leader>gm", "<Plug>(git-messenger)")

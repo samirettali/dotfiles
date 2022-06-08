@@ -82,16 +82,16 @@ local options = {
     sections = {
         lualine_a = { "branch" },
         lualine_b = {
-            { "diagnostics", sources = { "nvim_diagnostic" } }
-        },
-        lualine_c = {
             -- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
             { gps.get_location, cond = gps.is_available },
         },
-        lualine_x = { "lsp_progress" },
+        lualine_c = {},
+        lualine_x = {},
         lualine_y = {},
-        lualine_z = { "branch" },
+        lualine_z = {
+            { "diagnostics", sources = { "nvim_diagnostic" } }
+        },
     },
     inactive_sections = {
         lualine_a = {},

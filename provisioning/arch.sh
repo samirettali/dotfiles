@@ -24,7 +24,7 @@ cd paru
 makepkg -si
 
 install alacritty entr
-aur wezterm
+aur wezterm direnv
 install chrome-gnome-shell
 
 # Shell stuff
@@ -81,7 +81,7 @@ install nodejs npm yarn
 
 # Language servers
 yarn global add expo-cli typescript-language-server vscode-css-languageserver-bin \
-  vscode-html-languageserver-bin eslint_d
+  vscode-html-languageserver-bin eslint_d yaml-language-server
 pip3 install 'python-language-server[all]'
 go get github.com/lighttiger2505/sqls
 install lua-language-server haskell-language-server

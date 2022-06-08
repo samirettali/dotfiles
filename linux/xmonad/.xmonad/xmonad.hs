@@ -6,6 +6,7 @@ import System.Environment (getEnv)
 import System.FilePath.Posix (takeBaseName)
 import System.Directory (getDirectoryContents)
 import qualified XMonad.StackSet as W
+import qualified XMonad.Util.Hacks as Hacks
 import GHC.IO.Handle.Types (Handle)
 
 -- Actions
@@ -21,10 +22,10 @@ import XMonad.Actions.FloatKeys (keysMoveWindow, keysResizeWindow)
 -- Data
 import Data.Monoid (All, Endo)
 import Data.Map (member)
-import Data.List.Split (splitOn)
+-- import Data.List.Split (splitOn)
 
 -- Hooks
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..), defaultPP)
 import XMonad.Hooks.EwmhDesktops (ewmh)
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, doCenterFloat, isDialog, composeOne)
@@ -44,6 +45,7 @@ import XMonad.Layout.NoBorders (Ambiguity(Screen), smartBorders, lessBorders)
 import XMonad.Layout.Renamed (renamed, Rename(Replace))
 import XMonad.Layout.Spacing
 import XMonad.Layout.MultiToggle (Toggle(Toggle))
+import XMonad.Layout.IndependentScreens (countScreens)
 
 -- Prompt
 import XMonad.Prompt
@@ -61,13 +63,13 @@ import XMonad.Util.Cursor (setDefaultCursor)
 
 -- TODO runOrRaisePrompt
 -- TODO trayer for each screen
--- TODO launch xmobar on all displays
 main :: IO ()
 main = do
-    xmproc <- spawnPipe "xmobar"
+    n <- countScreens
+    xmprocs <- mapM spawnPipe [ "xmobar -x " ++ show i | i <- [0..n-1] ]
     xmonad $ ewmh def
         { manageHook         = myManageHook
-        , handleEventHook    = docksEventHook
+        , handleEventHook    = docksEventHook def <> Hacks.windowedFullscreenFixEventHook
         , modMask            = myModMask
         , terminal           = myTerminal
         , startupHook        = myStartupHook
@@ -77,21 +79,21 @@ main = do
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
         , focusFollowsMouse  = True
-        , logHook            = myLogHook xmproc
+        , logHook            = myLogHook xmprocs
         } `additionalKeysP` myKeys
 
-myLogHook :: Handle -> X ()
-myLogHook proc = workspaceNamesPP xmobarPP
+myLogHook :: [Handle] -> X ()
+myLogHook procs = mapM_ (\proc -> workspaceNamesPP xmobarPP
     { ppOutput = hPutStrLn proc
-    , ppCurrent = xmobarColor white ""
-    , ppVisible = xmobarColor gray ""
+    , ppCurrent = xmobarColor white "" . wrap "[" "]"
+    , ppVisible = xmobarColor gray "" . wrap "<" ">"
     , ppHidden = xmobarColor gray ""
     , ppUrgent = xmobarColor red "" . wrap "!" "!"
     , ppTitle = xmobarColor green "" . shorten 100
     , ppLayout = xmobarColor white ""
     , ppSep =  "<fc=#555555> :: </fc>"
     , ppOrder  = \(ws:l:t:ex) -> ws : l : t : ex
-    } >>= dynamicLogWithPP >> workspaceHistoryHook
+    } >>= dynamicLogWithPP >> workspaceHistoryHook) procs
 
 myStartupHook :: X ()
 myStartupHook = do

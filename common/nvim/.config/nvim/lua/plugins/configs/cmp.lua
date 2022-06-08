@@ -91,7 +91,7 @@ local options = {
         { name = "path" },
         { name = "luasnip" },
         { name = "cmdline" },
-        { name = "buffer", keyword_length = 5 },
+        { name = "buffer", keyword_length = 3 },
     },
     experimental = { -- TODO
         native_menu = false,
