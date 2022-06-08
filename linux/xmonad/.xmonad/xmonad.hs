@@ -1,18 +1,3 @@
-import XMonad
-import System.IO (hPutStrLn)
-import System.Exit (exitSuccess)
-import System.Environment (getEnv)
-import System.FilePath.Posix (takeBaseName)
-import System.Directory (getDirectoryContents)
-import qualified XMonad.StackSet as W
-import GHC.IO.Handle.Types (Handle)
-
--- Actions
-
--- Data
-import Data.Monoid (All, Endo)
-import Data.Map (member)
-
 import Data.Map (member)
 import Data.Monoid (All, Endo)
 import GHC.IO.Handle.Types (Handle)
@@ -29,17 +14,14 @@ import XMonad.Actions.FloatKeys (keysMoveWindow, keysResizeWindow)
 import XMonad.Actions.Promote (promote)
 import XMonad.Actions.RotSlaves (rotAllDown, rotSlavesDown)
 import XMonad.Actions.WorkspaceNames (renameWorkspace, workspaceNamesPP)
--- Hooks
-import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..), defaultPP, PP (..), dynamicLogWithPP, shorten, wrap, xmobarColor, xmobarPP)
+import XMonad.Hooks.DynamicLog (PP (..), defaultPP, dynamicLogWithPP, shorten, wrap, xmobarColor, xmobarPP)
 import XMonad.Hooks.EwmhDesktops (ewmh)
 import XMonad.Hooks.InsertPosition (Focus (Newer), Position (End), insertPosition)
 import XMonad.Hooks.ManageDocks (ToggleStruts (..), avoidStruts, docksEventHook, manageDocks)
 import XMonad.Hooks.ManageHelpers (composeOne, doCenterFloat, doFullFloat, isDialog, isFullscreen)
 import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Hooks.WorkspaceHistory (workspaceHistoryHook)
--- Layouts
-
--- Layouts modifiers
+import XMonad.Layout.IndependentScreens (countScreens)
 import XMonad.Layout.LayoutModifier (ModifiedLayout)
 import XMonad.Layout.MultiToggle (EOT (EOT), Toggle (Toggle), mkToggle, (??))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers (FULL))
@@ -47,18 +29,13 @@ import XMonad.Layout.NoBorders (Ambiguity (Screen), lessBorders, smartBorders)
 import XMonad.Layout.Reflect (reflectHoriz)
 import XMonad.Layout.Renamed (Rename (Replace), renamed)
 import XMonad.Layout.Spacing
-import XMonad.Layout.MultiToggle (Toggle(Toggle))
-import XMonad.Layout.IndependentScreens (countScreens)
 import XMonad.Layout.ThreeColumns (ThreeCol (ThreeColMid))
--- Prompt
 import XMonad.Prompt
 import XMonad.Prompt.FuzzyMatch (fuzzyMatch)
 import XMonad.Prompt.Pass (passGeneratePrompt, passPrompt)
 import XMonad.Prompt.Shell (shellPrompt)
 import XMonad.Prompt.Window (WindowPrompt (Bring, Goto), allWindows, windowPrompt, wsWindows)
 import qualified XMonad.StackSet as W
--- Utilities
-
 import XMonad.Util.Cursor (setDefaultCursor)
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.NamedScratchpad (NamedScratchpad (NS), namedScratchpadAction, namedScratchpadManageHook)
@@ -69,35 +46,45 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 -- TODO trayer for each screen
 main :: IO ()
 main = do
-    n <- countScreens
-    xmprocs <- mapM spawnPipe [ "xmobar -x " ++ show i | i <- [0..n-1] ]
-    xmonad $ ewmh def
-        { manageHook         = myManageHook
-        , handleEventHook    = docksEventHook
-        , modMask            = myModMask
-        , terminal           = myTerminal
-        , startupHook        = myStartupHook
-        , layoutHook         = myLayoutHook
-        , workspaces         = myWorkspaces
-        , borderWidth        = myBorderWidth
-        , normalBorderColor  = myNormColor
-        , focusedBorderColor = myFocusColor
-        , focusFollowsMouse  = True
-        , logHook            = myLogHook xmprocs
-        } `additionalKeysP` myKeys
+  n <- countScreens
+  xmprocs <- mapM spawnPipe ["xmobar -x " ++ show i | i <- [0 .. n - 1]]
+  xmonad $
+    ewmh
+      def
+        { manageHook = myManageHook,
+          handleEventHook = docksEventHook,
+          modMask = myModMask,
+          terminal = myTerminal,
+          startupHook = myStartupHook,
+          layoutHook = myLayoutHook,
+          workspaces = myWorkspaces,
+          borderWidth = myBorderWidth,
+          normalBorderColor = myNormColor,
+          focusedBorderColor = myFocusColor,
+          focusFollowsMouse = True,
+          logHook = myLogHook xmprocs
+        }
+      `additionalKeysP` myKeys
 
 myLogHook :: [Handle] -> X ()
-myLogHook procs = mapM_ (\proc -> workspaceNamesPP xmobarPP
-    { ppOutput = hPutStrLn proc
-    , ppCurrent = xmobarColor white "" . wrap "[" "]"
-    , ppVisible = xmobarColor gray "" . wrap "<" ">"
-    , ppHidden = xmobarColor gray ""
-    , ppUrgent = xmobarColor red "" . wrap "!" "!"
-    , ppTitle = xmobarColor green "" . shorten 100
-    , ppLayout = xmobarColor white ""
-    , ppSep =  "<fc=#555555> :: </fc>"
-    , ppOrder  = \(ws:l:t:ex) -> ws : l : t : ex
-    } >>= dynamicLogWithPP >> workspaceHistoryHook) procs
+myLogHook =
+  mapM_
+    ( \proc ->
+        workspaceNamesPP
+          xmobarPP
+            { ppOutput = hPutStrLn proc,
+              ppCurrent = xmobarColor white "" . wrap "[" "]",
+              ppVisible = xmobarColor gray "" . wrap "<" ">",
+              ppHidden = xmobarColor gray "",
+              ppUrgent = xmobarColor red "" . wrap "!" "!",
+              ppTitle = xmobarColor green "" . shorten 100,
+              ppLayout = xmobarColor white "",
+              ppSep = "<fc=#555555> :: </fc>",
+              ppOrder = \(ws : l : t : ex) -> ws : l : t : ex
+            }
+          >>= dynamicLogWithPP
+          >> workspaceHistoryHook
+    )
 
 myStartupHook :: X ()
 myStartupHook = do
@@ -162,8 +149,7 @@ myLayoutHook =
             ThreeColMid 1 (1 / 20) (3 / 5)
 
     full =
-      renamed [Replace "full"] $
-        Full
+      renamed [Replace "full"] Full
 
 -- Workspaces
 myWorkspaces :: [String]
@@ -205,8 +191,7 @@ myManageHook =
     manageApps :: XMonad.Query (Endo WindowSet)
     manageApps =
       composeAll . concat $
-        [ [className =? "brave" --> doShift (myWorkspaces !! 0)],
-          [className =? "postman" --> doShift (myWorkspaces !! 3)],
+        [ [className =? "postman" --> doShift (myWorkspaces !! 3)],
           [className =? "jetbrains-datagrip" --> doShift (myWorkspaces !! 4)],
           [className =? "Slack" --> doShift (myWorkspaces !! 8)],
           [className =? "discord" --> doShift (myWorkspaces !! 8)],
@@ -215,7 +200,7 @@ myManageHook =
           [title =? t --> doFloat <+> doF copyToAll | t <- myStickyFloats],
           [isFullscreen --> doFullFloat],
           [isDialog --> doCenterFloat],
-          [(stringProperty "WM_WINDOW_ROLE") =? "pop-up" --> doFloat]
+          [stringProperty "WM_WINDOW_ROLE" =? "pop-up" --> doFloat]
         ]
       where
         myFloatsC = ["Pcmanfm", "Xarchiver", "KeePassXC", "Lxappearance", "nm-connection-editor", "feh"]
@@ -242,7 +227,7 @@ toggleFloat w =
     ( \s ->
         if member w (W.floating s)
           then W.sink w s
-          else (W.float w (W.RationalRect (1 / 3) (1 / 4) (1 / 3) (1 / 2)) s)
+          else W.float w (W.RationalRect (1 / 3) (1 / 4) (1 / 3) (1 / 2)) s
     )
 
 data Script = Script
@@ -312,11 +297,11 @@ myKeys =
     ("M-f", withFocused toggleFloat), -- Push floating window to tile
     ("M-<Left>", withFocused (keysMoveWindow (-windowStep, 0))),
     ("M-<Down>", withFocused (keysMoveWindow (0, windowStep))),
-    ("M-<Right>", withFocused (keysMoveWindow ((windowStep), 0))),
+    ("M-<Right>", withFocused (keysMoveWindow (windowStep, 0))),
     ("M-<Up>", withFocused (keysMoveWindow (0, -windowStep))),
     ("M-S-<Left>", withFocused (keysResizeWindow (-windowStep, 0) (0, 0))),
     ("M-S-<Down>", withFocused (keysResizeWindow (0, windowStep) (0, 0))),
-    ("M-S-<Right>", withFocused (keysResizeWindow ((windowStep), 0) (0, 0))),
+    ("M-S-<Right>", withFocused (keysResizeWindow (windowStep, 0) (0, 0))),
     ("M-S-<Up>", withFocused (keysResizeWindow (0, -windowStep) (0, 0))),
     -- Control windows
     ("M-S-c", kill1), -- Kill the currently focused window
