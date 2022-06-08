@@ -34,6 +34,9 @@ for folder in "${folders[@]}"; do
   fi
 done
 
+export ENCORE_INSTALL="/home/samir/.encore"
+export PATH="$ENCORE_INSTALL/bin:$PATH"
+
 files=(
     "${HOME}/.cargo/env"
     "${HOME}/.work_env"

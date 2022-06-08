@@ -294,11 +294,11 @@ local plugins = {
     ["farmergreg/vim-lastplace"] = {}, -- Restore cursor position when reopening files
     ["samirettali/shebang.nvim"] = {}, -- Automatic shebang for new files
     ["ojroques/vim-oscyank"] = {}, -- Copy in OS clipboard in SSH
-    ["rmagatti/auto-session"] = {
-        config = function()
-            require("plugins.configs.autosession")
-        end,
-    }, -- Continuously save session
+    -- ["rmagatti/auto-session"] = {
+    --     config = function()
+    --         require("plugins.configs.autosession")
+    --     end,
+    -- }, -- Continuously save session
 
     -- Colorscheme
     ["folke/tokyonight.nvim"] = {},
