@@ -165,8 +165,8 @@ myScratchpads =
     NS "files" spawnFileManager findFileManager doCenterFloat
   ]
   where
-    spawnTerm = myTerminal ++ " start --class scratchpad"
-    findTerm = className =? "scratchpad"
+    spawnTerm = myTerminal ++ " -t scratchpad"
+    findTerm = title =? "scratchpad"
 
     spawnCalc = "qalculate-gtk"
     findCalc = className =? "Qalculate-gtk"
@@ -338,7 +338,7 @@ myModMask :: KeyMask
 myModMask = mod1Mask
 
 myTerminal :: String
-myTerminal = "wezterm"
+myTerminal = "alacritty"
 
 myFileManager :: String
 myFileManager = "pcmanfm"

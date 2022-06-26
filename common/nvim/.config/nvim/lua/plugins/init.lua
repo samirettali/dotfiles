@@ -72,6 +72,7 @@ local plugins = {
             require_config("gitsigns")
         end,
     },
+    ["akinsho/git-conflict.nvim"] = {},
     -- Coding
     ["windwp/nvim-autopairs"] = { -- Autopair brackets and other symbols
         after = "nvim-cmp",
@@ -221,7 +222,7 @@ local plugins = {
     --     end,
     -- },
     ["romgrk/barbar.nvim"] = {
-        requires = {'kyazdani42/nvim-web-devicons'},
+        requires = { 'kyazdani42/nvim-web-devicons' },
         config = function()
         end,
     },
@@ -241,6 +242,11 @@ local plugins = {
         config = function()
             require("fidget").setup()
         end
+    },
+    ["stevearc/dressing.nvim"] = {
+        config = function()
+            require_config("dressing")
+        end,
     },
     -- ["feline-nvim/feline.nvim"] = {
     --     config = function()
@@ -301,17 +307,16 @@ local plugins = {
     -- }, -- Continuously save session
 
     -- Colorscheme
-    ["folke/tokyonight.nvim"] = {},
     ["bluz71/vim-moonfly-colors"] = {},
-    ["NvChad/base46"]= {
-      after = "plenary.nvim",
-      -- config = function()
-      --    local ok, base46 = pcall(require, "base46")
-      --
-      --    if ok then
-      --       base46.load_theme()
-      --    end
-      -- end,
+    ["NvChad/base46"] = {
+        after = "plenary.nvim",
+        -- config = function()
+        --    local ok, base46 = pcall(require, "base46")
+        --
+        --    if ok then
+        --       base46.load_theme()
+        --    end
+        -- end,
     },
     ["catppuccin/nvim"] = {
         as = "catppuccin",

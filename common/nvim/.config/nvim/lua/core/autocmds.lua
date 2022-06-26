@@ -88,8 +88,8 @@ autocmd("FileType", {
 --     end,
 -- })
 
--- autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
---   callback = function()
---     require("core.winbar").get_winbar()
---   end,
--- })
+autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
+    callback = function()
+        require("core.winbar").get_winbar()
+    end,
+})

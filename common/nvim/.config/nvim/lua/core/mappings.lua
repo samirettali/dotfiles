@@ -73,26 +73,29 @@ map('v', 'K', [[:m '<-2<cr>gv=gv]])
 -- map("n", "<A-j>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true })
 -- map("n", "<A-k>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true })
 
-map('n', 'gR', '<cmd>lua require("telescope.builtin").lsp_references()<CR>')
-map('n', 'dn', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-map('n', 'dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-map('n', 'ds', '<cmd>lua vim.diagnostic.get()<CR>')
-map('n', '<Leader>gw', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
-map('n', '<Leader>gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
-map('n', '<Leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>')
-map('n', 'gu', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>')
-map('n', '<Leader>ao', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>')
-map('n', '<Leader>fe', '<cmd>lua require("telescope.functions").diagnostics()<CR>')
+map('n', 'gR', function()
+    require("telescope.builtin").lsp_references()
+end)
 
-map('n', 'cd', '<cmd>lua vim.diagnostic.get()<CR>')
-map('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-map('n', 'rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+map('n', 'dn', function() vim.diagnostic.goto_next() end)
+map('n', 'dp', function() vim.diagnostic.goto_prev() end)
+map('n', 'ds', function() vim.diagnostic.get() end)
+map('n', '<Leader>gw', function() vim.lsp.buf.document_symbol() end)
+map('n', '<Leader>gW', function() vim.lsp.buf.workspace_symbol() end)
+map('n', '<Leader>=', function() vim.lsp.buf.formatting() end)
+map('n', 'gu', function() vim.lsp.buf.incoming_calls() end)
+map('n', '<Leader>ao', function() vim.lsp.buf.outgoing_calls() end)
+map('n', '<Leader>fe', function() require("telescope.functions").diagnostics() end)
 
-map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
-map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-map('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+map('n', 'cd', function() vim.diagnostic.get() end)
+map('n', 'ga', function() vim.lsp.buf.code_action() end)
+map('n', 'rn', function() vim.lsp.buf.rename() end)
+
+map('n', 'K', function() vim.lsp.buf.hover() end)
+map('n', 'gd', function() vim.lsp.buf.definition() end)
+map('n', 'gD', function() vim.lsp.buf.declaration() end)
+map('n', 'gi', function() vim.lsp.buf.implementation() end)
+map('n', 'gs', function() vim.lsp.buf.signature_help() end)
 
 map("", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
 map("", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
@@ -110,9 +113,12 @@ map("n", "<C-b>", "<Cmd>Telescope buffers<CR>")
 map("n", "<C-g>", "<Cmd>Telescope live_grep<CR>")
 
 map("n", "<Leader>fR", "<Cmd>lua require('telescope.builtin')['lsp_references']()<CR>", { noremap = true, silent = true })
-map("n", "<Leader>fS", "<Cmd>lua require('telescope.builtin')['lsp_document_symbols']()<CR>", { noremap = true, silent = true })
-map("n", "<Leader>fs", "<Cmd>lua require('telescope.builtin')['lsp_workspace_symbols']()<CR>", { noremap = true, silent = true })
-map("n", "<Leader>fd", "<Cmd>lua require('telescope.builtin')['lsp_workspace_diagnostics']()<CR>", { noremap = true, silent = true })
+map("n", "<Leader>fS", "<Cmd>lua require('telescope.builtin')['lsp_document_symbols']()<CR>",
+    { noremap = true, silent = true })
+map("n", "<Leader>fs", "<Cmd>lua require('telescope.builtin')['lsp_workspace_symbols']()<CR>",
+    { noremap = true, silent = true })
+map("n", "<Leader>fd", "<Cmd>lua require('telescope.builtin')['lsp_workspace_diagnostics']()<CR>",
+    { noremap = true, silent = true })
 
 -- Load current buffer into Neovim
 map("n", "<Leader><Leader>x", "<Cmd>source %<CR>", { noremap = true })
@@ -133,7 +139,8 @@ map("n", "<leader>xr", "<Cmd>LspTroubleToggle lsp_references<cr>")
 map("n", "S", "<Cmd>SplitLine<CR>", { noremap = true })
 
 -- OSCYank
-map("v", "<C-c>", ":OSCYank<CR>")
+-- map("v", "<C-c>", ":OSCYank<CR>")
+map("v", "<C-c>", '"+y')
 
 -- nvim-tree
 map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>")

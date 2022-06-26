@@ -80,13 +80,12 @@ local options = {
         globalstatus = true,
     },
     sections = {
-        lualine_a = { "branch" },
-        lualine_b = {
+        lualine_a = { 'mode' },
+        lualine_b = { "branch" },
+        lualine_c = {
             -- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
-            { gps.get_location, cond = gps.is_available },
         },
-        lualine_c = {},
         lualine_x = {},
         lualine_y = {},
         lualine_z = {

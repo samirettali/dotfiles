@@ -59,7 +59,8 @@ opt.shortmess:append "c"
 opt.confirm = true -- Ask for some operations like quitting an unsaved file instead of failing
 opt.laststatus = 3 -- Global statusline
 opt.title = true -- Allow neovim to set the window title
-opt.cmdheight = 1 -- Command line height
+-- Command line height
+opt.cmdheight = 0
 opt.cursorline = true -- Highlight current line
 
 opt.showmode = false
@@ -78,13 +79,8 @@ cmd(":command! Wq wq")
 
 cmd("set foldexpr=nvim_treesitter#foldexpr()")
 
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_sidebars = { "qf", "vista_kind", "packer", "Trouble", "NvimTree" }
-vim.g.tokyonight_dark_sidebar = true
-vim.g.tokyonight_dark_float = true
-
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-cmd("colorscheme moonfly")
+cmd("colorscheme catppuccin")
 
 -- disable some builtin vim plugins
 local default_plugins = {
