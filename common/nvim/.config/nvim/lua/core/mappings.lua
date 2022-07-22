@@ -97,8 +97,8 @@ map('n', 'gD', function() vim.lsp.buf.declaration() end)
 map('n', 'gi', function() vim.lsp.buf.implementation() end)
 map('n', 'gs', function() vim.lsp.buf.signature_help() end)
 
-map("", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
-map("", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
+-- map("", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
+-- map("", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 
 -- Close buffer
 map("n", "<C-q>", ":bd<CR>")

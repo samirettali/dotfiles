@@ -72,7 +72,11 @@ local plugins = {
             require_config("gitsigns")
         end,
     },
-    ["akinsho/git-conflict.nvim"] = {},
+    ["akinsho/git-conflict.nvim"] = {
+        config = function()
+            require('git-conflict').setup()
+        end,
+    },
     -- Coding
     ["windwp/nvim-autopairs"] = { -- Autopair brackets and other symbols
         after = "nvim-cmp",
