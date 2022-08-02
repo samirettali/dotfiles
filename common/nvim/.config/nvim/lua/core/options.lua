@@ -80,7 +80,7 @@ cmd(":command! Wq wq")
 cmd("set foldexpr=nvim_treesitter#foldexpr()")
 
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-cmd("colorscheme catppuccin")
+cmd("colorscheme vscode")
 
 -- disable some builtin vim plugins
 local default_plugins = {

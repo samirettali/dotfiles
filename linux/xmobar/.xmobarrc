@@ -5,13 +5,13 @@ Config {
       font     = "xft:JetBrainsMono Nerd Font:weight=Medium:size=10,xft:Noto Color Emoji:size=10"
     , bgColor  = "#0a0d10"
     , fgColor  = "#e6e8ee"
-    , position = TopSize C 100 30
+    , position = TopH 30
     , border = BottomB
     , borderColor = "#181a23"
     , borderWidth = 2
 
     -- Behaviour
-    , lowerOnStart     = True    -- send to bottom of window stack on start
+    , lowerOnStart     = False   -- send to bottom of window stack on start
     , hideOnStart      = False   -- start with window unmapped (hidden)
     , allDesktops      = True    -- show on all desktops
     , overrideRedirect = True    -- set the Override Redirect flag (Xlib)

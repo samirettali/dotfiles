@@ -308,6 +308,23 @@ local plugins = {
 
     -- Colorscheme
     ["bluz71/vim-moonfly-colors"] = {},
+    ["Mofiqul/vscode.nvim"] = {
+        config = function()
+            local theme, present = pcall(require, "vscode")
+
+            if not present then
+                return false
+            end
+
+            local config = {
+                transparent = false,
+                italic_comments = true,
+                disable_nvimtree_bg = true,
+            }
+
+            theme.setup(config)
+        end,
+    },
     ["NvChad/base46"] = {
         after = "plenary.nvim",
         -- config = function()
