@@ -152,3 +152,7 @@ map("n", "<Leader>p", ":BufferMovePrevious<CR>", { silent = true })
 map("n", "<Leader>n", ":BufferMoveNext<CR>", { silent = true })
 
 map("n", "<Leader>gm", "<Plug>(git-messenger)")
+
+map("n", "g<", "<Cmd>ISwapNodeWithLeft<CR>")
+map("n", "g>", "<Cmd>ISwapNodeWithRight<CR>")
+map("n", "gs", "<Cmd>ISwap<CR>")

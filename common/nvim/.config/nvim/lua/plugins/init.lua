@@ -22,7 +22,7 @@ function require_config(name)
     local result, _ = pcall(require, path)
 
     if not result then
-        vim.notify("plugin config for " .. name .. "not found", vim.lsp.log_levels.WARN)
+        vim.notify("plugin config for " .. name .. " not found", vim.lsp.log_levels.WARN)
     end
 end
 
@@ -76,6 +76,11 @@ local plugins = {
         config = function()
             require('git-conflict').setup()
         end,
+    },
+    ["glepnir/mcc.nvim"] = {
+        config = function()
+            require_config("mcc")
+        end
     },
     -- Coding
     ["windwp/nvim-autopairs"] = { -- Autopair brackets and other symbols
@@ -218,17 +223,10 @@ local plugins = {
     },
 
     -- UI components
-    -- ["akinsho/bufferline.nvim"] = {
-    --     requires = "kyazdani42/nvim-web-devicons", -- If you want devicons
-    --     tag = "v2.*",
-    --     config = function()
-    --         require_config("bufferline")
-    --     end,
-    -- },
-    ["romgrk/barbar.nvim"] = {
-        requires = { 'kyazdani42/nvim-web-devicons' },
+    ["nanozuki/tabby.nvim"] = {
         config = function()
-        end,
+            require_config("tabby")
+        end
     },
     ["SmiteshP/nvim-gps"] = { -- GPS
         requires = "nvim-treesitter/nvim-treesitter",
@@ -293,7 +291,7 @@ local plugins = {
     ["christoomey/vim-tmux-navigator"] = {}, -- Tmux splits integration
     ["drzel/vim-split-line"] = {}, -- Split line at cursor
     ["wincent/scalpel"] = {}, -- Replace word under cursor
-    ["machakann/vim-swap"] = {}, -- Swap delimited items
+    ["mizlan/iswap.nvim"] = {}, -- Swap delimited items
     ["romainl/vim-cool"] = {}, -- Disable search highlighting on mode change
     ["tpope/vim-repeat"] = {}, -- Repeat plugin mappings with .
     -- ["christoomey/vim-sort-motion"] = {},          -- Add sort motion
@@ -304,24 +302,28 @@ local plugins = {
     ["farmergreg/vim-lastplace"] = {}, -- Restore cursor position when reopening files
     ["samirettali/shebang.nvim"] = {}, -- Automatic shebang for new files
     ["ojroques/vim-oscyank"] = {}, -- Copy in OS clipboard in SSH
-    -- ["rmagatti/auto-session"] = {
+    -- ["phaazon/hop.nvim"] = {
     --     config = function()
-    --         require("plugins.configs.autosession")
-    --     end,
-    -- }, -- Continuously save session
+    --     end
+    -- }
+    ["rmagatti/auto-session"] = {
+        config = function()
+            require("plugins.configs.autosession")
+        end,
+    }, -- Continuously save session
 
     -- Colorscheme
     ["bluz71/vim-moonfly-colors"] = {},
-    ["NvChad/base46"] = {
-        after = "plenary.nvim",
-        -- config = function()
-        --    local ok, base46 = pcall(require, "base46")
-        --
-        --    if ok then
-        --       base46.load_theme()
-        --    end
-        -- end,
-    },
+    -- ["NvChad/base46"] = {
+    --     after = "plenary.nvim",
+    --     config = function()
+    --        local ok, base46 = pcall(require, "base46")
+    --     
+    --        if ok then
+    --           base46.load_theme()
+    --        end
+    --     end,
+    -- },
     ["catppuccin/nvim"] = {
         as = "catppuccin",
         config = function()
@@ -348,13 +350,15 @@ local plugins = {
 
     -- Other
     ["nvim-telescope/telescope-symbols.nvim"] = {},
-    ["github/copilot.vim"] = {},
+    -- ["github/copilot.vim"] = {},
     ["rmagatti/goto-preview"] = {
         config = function()
             require_config("goto-preview")
         end,
     },
     ["lewis6991/impatient.nvim"] = {},
+    ["nanotee/sqls.nvim"] = {
+    }
 }
 
 -- merge user plugin table & default plugin table

@@ -269,4 +269,8 @@ M.get_buf_option = function(opt)
   end
 end
 
+M.command = function(cmd)
+    return vim.fn.system(cmd)
+end
+
 return M

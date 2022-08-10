@@ -7,8 +7,8 @@ local indentation = 4
 local home = os.getenv("HOME")
 
 -- use filetype.lua instead of filetype.vim
-g.did_load_filetypes = 0
-g.do_filetype_lua = 1
+-- g.did_load_filetypes = 0
+-- g.do_filetype_lua = 1
 
 opt.expandtab = true -- Insert spaces instead of tabs
 opt.tabstop = indentation -- Tab size
