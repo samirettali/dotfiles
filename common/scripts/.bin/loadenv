@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ -f "${1}" ]; then
+    export $(echo $(cat "${1}" | sed 's/#.*//g'| xargs) | envsubst)
+    length=$(wc -l < "${1}")
+    echo "Loaded ${length} variables"
+fi
