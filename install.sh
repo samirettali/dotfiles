@@ -18,7 +18,7 @@ print_message() {
 }
 
 # Change directory to script location
-cd $(dirname $0)
+cd "$(dirname $0)"
 
 OS=$(uname)
 modules=()
