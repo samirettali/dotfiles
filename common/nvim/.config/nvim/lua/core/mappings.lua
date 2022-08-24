@@ -29,7 +29,7 @@ map('n', '<Leader>d', 'yap<S-}>p')
 map('n', '<Leader><Leader>', '<C-^>')
 
 -- Toggle listchars
-map('n', '<Leader>i', ':set list!<CR>')
+map('n', '<Leader>l', ':set list!<CR>')
 
 -- Keep only the current window
 map('n', '<Leader>o', ':only<CR>')
@@ -42,7 +42,8 @@ map('v', '<Leader>p', '"_dP"', { noremap = true })
 
 map('n', '<Leader>k', 'gcip', { noremap = false })
 
--- map('n', '<C-i>', '<C-a>', { noremap = false })
+-- Increment number under cursor
+map('n', '<Leader>i', '<C-a>', { noremap = false })
 
 -- Join with above line
 -- map('n', 'K', 'kJ')
