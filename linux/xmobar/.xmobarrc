@@ -2,7 +2,7 @@
 
 Config {
      -- Appearance
-      font     = "xft:JetBrainsMono Nerd Font:weight=Medium:size=10,xft:Noto Color Emoji:size=10"
+      font     = "xft:JetBrainsMono Nerd Font:weight=Regular:size=10,xft:Noto Color Emoji:size=9"
     , bgColor  = "#0a0d10"
     , fgColor  = "#e6e8ee"
     , position = TopH 30

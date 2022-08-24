@@ -7,8 +7,8 @@ local indentation = 4
 local home = os.getenv("HOME")
 
 -- use filetype.lua instead of filetype.vim
-g.did_load_filetypes = 0
-g.do_filetype_lua = 1
+-- g.did_load_filetypes = 0
+-- g.do_filetype_lua = 1
 
 opt.expandtab = true -- Insert spaces instead of tabs
 opt.tabstop = indentation -- Tab size
@@ -59,8 +59,7 @@ opt.shortmess:append "c"
 opt.confirm = true -- Ask for some operations like quitting an unsaved file instead of failing
 opt.laststatus = 3 -- Global statusline
 opt.title = true -- Allow neovim to set the window title
--- Command line height
-opt.cmdheight = 0
+opt.cmdheight = 0 -- Command line height
 opt.cursorline = true -- Highlight current line
 
 opt.showmode = false
@@ -80,7 +79,8 @@ cmd(":command! Wq wq")
 cmd("set foldexpr=nvim_treesitter#foldexpr()")
 
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-cmd("colorscheme vscode")
+vim.g.tokyonight_style = "night"
+cmd("colorscheme moonfly")
 
 -- disable some builtin vim plugins
 local default_plugins = {

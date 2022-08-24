@@ -257,16 +257,31 @@ M.get_current_ufn = function()
 end
 
 M.isempty = function(s)
-  return s == nil or s == ""
+    return s == nil or s == ""
 end
 
 M.get_buf_option = function(opt)
-  local status_ok, buf_option = pcall(vim.api.nvim_buf_get_option, 0, opt)
-  if not status_ok then
-    return nil
-  else
-    return buf_option
-  end
+    local status_ok, buf_option = pcall(vim.api.nvim_buf_get_option, 0, opt)
+    if not status_ok then
+        return nil
+    else
+        return buf_option
+    end
+end
+
+M.command = function(cmd)
+    return vim.fn.system(cmd)
+end
+
+M.reload_config = function()
+    for name, _ in pairs(package.loaded) do
+        if name:match('^core') and not name:match('nvim-tree') then
+            package.loaded[name] = nil
+        end
+    end
+
+    dofile(vim.env.MYVIMRC)
+    vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
 end
 
 return M

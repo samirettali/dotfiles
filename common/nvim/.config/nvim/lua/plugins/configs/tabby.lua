@@ -1,11 +1,18 @@
-local tabby = require('tabby')
-local options = {
-    tabline = require('tabby.presets').active_tab_with_wins,
+local present, tabby = pcall(require, "tabby")
+
+if not present then
+    return false
+end
+
+local config = {
+    tabline = require("tabby.presets").active_wins_at_tail,
 }
 
-tabby.setup(options)
+tabby.setup(config)
 
-vim.api.nvim_set_keymap("n", "<C-n>", ":bn<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-p>", ":bp<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>tn", ":tabn<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<leader>tp", ":tabp<CR>", { noremap = true })
+local map = require("core.utils").map
+
+map("n", "<C-n>", ":bn<CR>")
+map("n", "<C-p>", ":bp<CR>")
+map("n", "<Leader>tn", ":tabn<CR>")
+map("n", "<Leader>tp", ":tabp<CR>")

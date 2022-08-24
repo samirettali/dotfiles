@@ -19,10 +19,10 @@ local packer = require("packer")
 
 function require_config(name)
     local path = "plugins.configs." .. name
-    local result, _ = pcall(require, path)
+    local result, err = pcall(require, path)
 
     if not result then
-        vim.notify("plugin config for " .. name .. "not found", vim.lsp.log_levels.WARN)
+        vim.notify("could not load config for " .. name .. "\n" .. err, vim.lsp.log_levels.ERROR)
     end
 end
 
@@ -72,7 +72,16 @@ local plugins = {
             require_config("gitsigns")
         end,
     },
-    ["akinsho/git-conflict.nvim"] = {},
+    ["akinsho/git-conflict.nvim"] = {
+        config = function()
+            require('git-conflict').setup()
+        end,
+    },
+    ["glepnir/mcc.nvim"] = {
+        config = function()
+            require_config("mcc")
+        end
+    },
     -- Coding
     ["windwp/nvim-autopairs"] = { -- Autopair brackets and other symbols
         after = "nvim-cmp",
@@ -129,6 +138,13 @@ local plugins = {
         config = function()
             require_config("lspkind")
         end,
+    },
+
+    ["glepnir/lspsaga.nvim"] = {
+        branch = "main",
+        config = function()
+            -- require_config("saga")
+        end
     },
 
     ["rafamadriz/friendly-snippets"] = {
@@ -214,17 +230,10 @@ local plugins = {
     },
 
     -- UI components
-    -- ["akinsho/bufferline.nvim"] = {
-    --     requires = "kyazdani42/nvim-web-devicons", -- If you want devicons
-    --     tag = "v2.*",
-    --     config = function()
-    --         require_config("bufferline")
-    --     end,
-    -- },
-    ["romgrk/barbar.nvim"] = {
-        requires = { 'kyazdani42/nvim-web-devicons' },
+    ["nanozuki/tabby.nvim"] = {
         config = function()
-        end,
+            require_config("tabby")
+        end
     },
     ["SmiteshP/nvim-gps"] = { -- GPS
         requires = "nvim-treesitter/nvim-treesitter",
@@ -232,12 +241,12 @@ local plugins = {
             require_config("gps")
         end,
     },
-    ["nvim-lualine/lualine.nvim"] = { -- Status line
-        after = "nvim-gps",
-        config = function()
-            require_config("lualine")
-        end,
-    },
+    -- ["nvim-lualine/lualine.nvim"] = { -- Status line
+    --     after = "nvim-gps",
+    --     config = function()
+    --         require_config("lualine")
+    --     end,
+    -- },
     ["j-hui/fidget.nvim"] = {
         config = function()
             require("fidget").setup()
@@ -248,11 +257,11 @@ local plugins = {
             require_config("dressing")
         end,
     },
-    -- ["feline-nvim/feline.nvim"] = {
-    --     config = function()
-    --         require_config("feline")
-    --     end,
-    -- },
+    ["feline-nvim/feline.nvim"] = {
+        config = function()
+            require_config("feline")
+        end,
+    },
     ["MunifTanjim/nui.nvim"] = {},
     ["mbbill/undotree"] = {}, -- Show a tree of undo history
     ["lukas-reineke/indent-blankline.nvim"] = {
@@ -289,7 +298,7 @@ local plugins = {
     ["christoomey/vim-tmux-navigator"] = {}, -- Tmux splits integration
     ["drzel/vim-split-line"] = {}, -- Split line at cursor
     ["wincent/scalpel"] = {}, -- Replace word under cursor
-    ["machakann/vim-swap"] = {}, -- Swap delimited items
+    ["mizlan/iswap.nvim"] = {}, -- Swap delimited items
     ["romainl/vim-cool"] = {}, -- Disable search highlighting on mode change
     ["tpope/vim-repeat"] = {}, -- Repeat plugin mappings with .
     -- ["christoomey/vim-sort-motion"] = {},          -- Add sort motion
@@ -300,6 +309,13 @@ local plugins = {
     ["farmergreg/vim-lastplace"] = {}, -- Restore cursor position when reopening files
     ["samirettali/shebang.nvim"] = {}, -- Automatic shebang for new files
     ["ojroques/vim-oscyank"] = {}, -- Copy in OS clipboard in SSH
+    ["phaazon/hop.nvim"] = {
+        branch = "v2", -- optional but strongly recommended
+        config = function()
+            require_config("hop")
+        end
+    },
+
     -- ["rmagatti/auto-session"] = {
     --     config = function()
     --         require("plugins.configs.autosession")
@@ -308,23 +324,6 @@ local plugins = {
 
     -- Colorscheme
     ["bluz71/vim-moonfly-colors"] = {},
-    ["Mofiqul/vscode.nvim"] = {
-        config = function()
-            local theme, present = pcall(require, "vscode")
-
-            if not present then
-                return false
-            end
-
-            local config = {
-                transparent = false,
-                italic_comments = true,
-                disable_nvimtree_bg = true,
-            }
-
-            theme.setup(config)
-        end,
-    },
     ["NvChad/base46"] = {
         after = "plenary.nvim",
         -- config = function()
@@ -361,13 +360,50 @@ local plugins = {
 
     -- Other
     ["nvim-telescope/telescope-symbols.nvim"] = {},
-    ["github/copilot.vim"] = {},
+    -- ["github/copilot.vim"] = {},
     ["rmagatti/goto-preview"] = {
         config = function()
             require_config("goto-preview")
         end,
     },
     ["lewis6991/impatient.nvim"] = {},
+    ["nanotee/sqls.nvim"] = {
+    },
+    -- ["lcheylus/overlength.nvim"] = {
+    --     config = function()
+    --         require('overlength').setup({
+    --             -- Overlength highlighting enabled by default
+    --             enabled = true,
+
+    --             -- Colors for highlight by specifying a ctermbg and bg
+    --             ctermbg = 'darkgrey',
+    --             bg = '#8B0000',
+
+    --             -- Mode to use textwidth local options
+    --             -- 0: Don't use textwidth at all, always use config.default_overlength.
+    --             -- 1: Use `textwidth, unless it's 0, then use config.default_overlength.
+    --             -- 2: Always use textwidth. There will be no highlighting where
+    --             --    textwidth == 0, unless added explicitly
+    --             textwidth_mode = 2,
+    --             -- Default overlength with no filetype
+    --             default_overlength = 80,
+    --             -- How many spaces past your overlength to start highlighting
+    --             grace_length = 1,
+    --             -- Highlight only the column or until the end of the line
+    --             highlight_to_eol = true,
+
+    --             -- List of filetypes to disable overlength highlighting
+    --             disable_ft = { 'qf', 'help', 'man', 'packer', 'NvimTree', 'Telescope', 'WhichKey' },
+    --         })
+    --     end
+    -- }
+    --
+    -- ["ggandor/leap.nvim"] = {
+    --     requires = "tpope/vim-repeat",
+    --     config = function()
+    --         require('leap').set_default_keymaps()
+    --     end
+    -- }
 }
 
 -- merge user plugin table & default plugin table

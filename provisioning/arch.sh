@@ -167,3 +167,5 @@ setup_swap() {
 }
 
 mkdir -p ~/.xmonad
+
+aur plumber
