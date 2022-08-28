@@ -1,6 +1,7 @@
 #!/usr/bin/env lua
 local autocmd = vim.api.nvim_create_autocmd
-local map = require("core.utils").map
+local utils = require("core.utils")
+local map = utils.map
 
 autocmd("VimResized", {
     pattern = "*",
@@ -91,5 +92,12 @@ autocmd("FileType", {
 autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
     callback = function()
         require("core.winbar").get_winbar()
+    end,
+})
+
+autocmd("BufWritePost", {
+    pattern = "*.lua",
+    callback = function()
+        dofile(vim.fn.expand('%'))
     end,
 })
