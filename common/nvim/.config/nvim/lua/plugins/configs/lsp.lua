@@ -147,6 +147,7 @@ local servers = {
     hls = {},
     tsserver = {},
     html = {},
+    yamlls = {},
     cssls = {},
     pylsp = {},
     sqls = {},
