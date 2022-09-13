@@ -3,10 +3,10 @@ local wezterm = require("wezterm")
 local M = {}
 
 M.color_scheme = "Builtin Dark"
-M.font_size = 12
+M.font_size = 10
 M.adjust_window_size_when_changing_font_size = false
 
-M.freetype_load_flags = "NO_HINTING" -- DEFAULT | NO_HINTING | NO_BITMAP | FORCE_AUTOHINT | MONOCHROME | NO_AUTOHINT
+M.freetype_load_flags = "MONOCHROME" -- DEFAULT | NO_HINTING | NO_BITMAP | FORCE_AUTOHINT | MONOCHROME | NO_AUTOHINT
 -- M.freetype_load_target = "Normal"
 
 M.enable_tab_bar = false
@@ -18,7 +18,7 @@ M.window_padding = {
     bottom = 0,
 }
 
-local font = wezterm.font("JetBrainsMono Nerd Font")
+local font = wezterm.font("Inconsolata Nerd Font Mono")
 
 M.bold_brightens_ansi_colors = true
 
