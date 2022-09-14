@@ -14,6 +14,7 @@ alias lg='lazygit'
 alias ld='lazydocker'
 alias cat='bat'
 alias vim='nvim'
+alias c="tee | xsel -ib"
 
 # Git
 alias ga='git add'
