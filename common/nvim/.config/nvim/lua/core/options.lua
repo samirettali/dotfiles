@@ -80,7 +80,7 @@ cmd("set foldexpr=nvim_treesitter#foldexpr()")
 
 vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
 vim.g.tokyonight_style = "night"
-cmd("colorscheme catppuccin")
+cmd("colorscheme moonfly")
 
 -- disable some builtin vim plugins
 local default_plugins = {

@@ -1,274 +1,233 @@
-local ctp_feline = require('catppuccin.groups.integrations.feline')
+local line_ok, feline = pcall(require, "feline")
+if not line_ok then
+	return
+end
 
-ctp_feline.setup()
+local one_monokai = {
+	fg = "#abb2bf",
+	bg = "#1e2024",
+	green = "#98c379",
+	yellow = "#e5c07b",
+	purple = "#c678dd",
+	orange = "#d19a66",
+	peanut = "#f6d5a4",
+	red = "#e06c75",
+	aqua = "#61afef",
+	darkblue = "#282c34",
+	dark_red = "#f75f5f",
+}
 
-require("feline").setup({
-    components = ctp_feline.get(),
+local vi_mode_colors = {
+	NORMAL = "green",
+	OP = "green",
+	INSERT = "yellow",
+	VISUAL = "purple",
+	LINES = "orange",
+	BLOCK = "dark_red",
+	REPLACE = "red",
+	COMMAND = "aqua",
+}
+
+local c = {
+	vim_mode = {
+		provider = {
+			name = "vi_mode",
+			opts = {
+				show_mode_name = true,
+				-- padding = "center", -- Uncomment for extra padding.
+			},
+		},
+		hl = function()
+			return {
+				fg = require("feline.providers.vi_mode").get_mode_color(),
+				bg = "darkblue",
+				style = "bold",
+				name = "NeovimModeHLColor",
+			}
+		end,
+		left_sep = "block",
+		right_sep = "block",
+	},
+	gitBranch = {
+		provider = "git_branch",
+		hl = {
+			fg = "peanut",
+			bg = "darkblue",
+			style = "bold",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	gitDiffAdded = {
+		provider = "git_diff_added",
+		hl = {
+			fg = "green",
+			bg = "darkblue",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	gitDiffRemoved = {
+		provider = "git_diff_removed",
+		hl = {
+			fg = "red",
+			bg = "darkblue",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	gitDiffChanged = {
+		provider = "git_diff_changed",
+		hl = {
+			fg = "fg",
+			bg = "darkblue",
+		},
+		left_sep = "block",
+		right_sep = "right_filled",
+	},
+	separator = {
+		provider = "",
+	},
+	fileinfo = {
+		provider = {
+			name = "file_info",
+			opts = {
+				type = "relative-short",
+			},
+		},
+		hl = {
+			style = "bold",
+		},
+		left_sep = " ",
+		right_sep = " ",
+	},
+	diagnostic_errors = {
+		provider = "diagnostic_errors",
+		hl = {
+			fg = "red",
+		},
+	},
+	diagnostic_warnings = {
+		provider = "diagnostic_warnings",
+		hl = {
+			fg = "yellow",
+		},
+	},
+	diagnostic_hints = {
+		provider = "diagnostic_hints",
+		hl = {
+			fg = "aqua",
+		},
+	},
+	diagnostic_info = {
+		provider = "diagnostic_info",
+	},
+	lsp_client_names = {
+		provider = "lsp_client_names",
+		hl = {
+			fg = "purple",
+			bg = "darkblue",
+			style = "bold",
+		},
+		left_sep = "left_filled",
+		right_sep = "block",
+	},
+	file_type = {
+		provider = {
+			name = "file_type",
+			opts = {
+				filetype_icon = true,
+				case = "titlecase",
+			},
+		},
+		hl = {
+			fg = "red",
+			bg = "darkblue",
+			style = "bold",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	file_encoding = {
+		provider = "file_encoding",
+		hl = {
+			fg = "orange",
+			bg = "darkblue",
+			style = "italic",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	position = {
+		provider = "position",
+		hl = {
+			fg = "green",
+			bg = "darkblue",
+			style = "bold",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	line_percentage = {
+		provider = "line_percentage",
+		hl = {
+			fg = "aqua",
+			bg = "darkblue",
+			style = "bold",
+		},
+		left_sep = "block",
+		right_sep = "block",
+	},
+	scroll_bar = {
+		provider = "scroll_bar",
+		hl = {
+			fg = "yellow",
+			style = "bold",
+		},
+	},
+}
+
+local left = {
+	c.vim_mode,
+	c.gitBranch,
+	c.gitDiffAdded,
+  c.gitDiffRemoved,
+	c.gitDiffChanged,
+	c.separator,
+}
+
+local middle = {
+	c.fileinfo,
+	c.diagnostic_errors,
+	c.diagnostic_warnings,
+	c.diagnostic_info,
+	c.diagnostic_hints,
+}
+
+local right = {
+	c.lsp_client_names,
+	c.file_type,
+	c.file_encoding,
+	c.position,
+	c.line_percentage,
+	c.scroll_bar,
+}
+
+local components = {
+	active = {
+		left,
+		middle,
+		right,
+	},
+	inactive = {
+		left,
+		middle,
+		right,
+	},
+}
+
+feline.setup({
+	components = components,
+	theme = one_monokai,
+	vi_mode_colors = vi_mode_colors,
 })
--- local vi_mode = require('feline.providers.vi_mode')
--- local git = require('feline.providers.git')
--- local lsp = require('feline.providers.lsp')
--- local gps = require('nvim-gps')
-
--- gps.setup()
---
--- local components = { active = {}, inactive = {} }
---
--- -- Active statusline
--- components.active[1] = {
---     {
---         provider = 'vi_mode',
---         icon = '',
---         -- hl = function()
---         --     return {
---         --         fg = "fg",
---         --         style = 'bold'
---         --     }
---         -- end,
---         left_sep = {
---             {
---                 str = ' ',
---                 -- hl = { bg = 'darkgreen' }
---             }
---         },
---         right_sep = {
---             {
---                 str = ' ',
---                 hl = { bg = 'gray' }
---             },
---             {
---                 str = 'slant_right_2',
---                 hl = { fg = 'gray' }
---             },
---             -- '  '
---         },
---     },
---     {
---         hl = function()
---             return {
---                 fg = vi_mode.get_mode_color(),
---                 bg = '#1e1e2e',
---                 style = 'bold'
---             }
---         end,
---         provider = 'git_branch',
---         left_sep = 'slant_left',
---         right_sep = 'slant_right_2'
---     },
---     {
---         hl = function()
---             return {
---                 fg = vi_mode.get_mode_color(),
---                 bg = 'gray',
---                 style = 'bold'
---             }
---         end,
---         enabled = function()
---             return vim.bo.filetype ~= ''
---         end,
---         provider = {
---             name = 'file_type',
---             opts = {
---                 case = 'titlecase',
---                 filetype_icon = true,
---                 colored_icon = false
---             }
---         },
---         left_sep = ' ',
---         right_sep = '  '
---     },
---     {
---         enabled = function()
---             return gps.is_available()
---         end,
---         provider = function()
---             return gps.get_location()
---         end,
---         hl = {
---             fg = 'white',
---         },
---     }
--- }
---
--- components.active[2] = {
---     {
---         provider = {
---             name = 'file_info',
---             opts = {
---                 type = 'unique',
---                 colored_icon = false
---             }
---         },
---         right_sep = '  '
---     },
---     {
---         provider = {
---             name = 'position',
---             opts = {
---                 format = 'Ln {line}, Col {col}'
---             }
---         },
---         right_sep = ' '
---     },
---     {
---         provider = 'git_diff_added',
---     },
---     {
---         provider = 'git_diff_changed',
---     },
---     {
---         provider = 'git_diff_removed',
---     },
---     {
---         enabled = function()
---             return git.git_info_exists()
---         end,
---         right_sep = { str = ' ', always_visible = true }
---     },
---     {
---         provider = 'diagnostic_errors',
---     },
---     {
---         provider = 'diagnostic_warnings',
---     },
---     {
---         provider = 'diagnostic_hints',
---     },
---     {
---         provider = 'diagnostic_info',
---     },
---     {
---         enabled = function()
---             return lsp.diagnostics_exist()
---         end,
---         right_sep = { str = ' ', always_visible = true }
---     }
--- }
---
--- components.inactive[1] = {
---     {
---         enabled = function()
---             return vim.bo.filetype ~= ''
---         end,
---         provider = {
---             name = 'file_type',
---             opts = {
---                 case = 'titlecase',
---                 filetype_icon = true,
---                 colored_icon = false
---             }
---         },
---         left_sep = ' ',
---         right_sep = '  '
---     },
---     {
---         provider = 'vi_mode',
---         icon = '',
---         hl = function()
---             return {
---                 fg = vi_mode.get_mode_color(),
---                 bg = 'gray',
---                 style = 'bold'
---             }
---         end,
---         left_sep = {
---             {
---                 str = 'left_filled',
---                 hl = { fg = 'gray' }
---             },
---             {
---                 str = ' ',
---                 hl = { bg = 'gray' }
---             }
---         },
---         right_sep = {
---             {
---                 str = ' ',
---                 hl = { bg = 'gray' }
---             },
---             {
---                 str = 'right_filled',
---                 hl = { fg = 'gray' }
---             },
---         },
---     },
--- }
---
--- components.inactive[2] = {
---     {
---         provider = {
---             name = 'position',
---             opts = {
---                 format = 'Ln {line}, Col {col}'
---             }
---         },
---         right_sep = ' '
---     }
--- }
---
--- -- Setup feline.nvim
--- require('feline').setup {
---     components = components,
---     theme = {
---         bg = '#1F1F23',
---         black = '#1B1B1B',
---         skyblue = '#50B0F0',
---         cyan = '#009090',
---         fg = '#D0D0D0',
---         green = '#60A040',
---         oceanblue = '#0066cc',
---         magenta = '#C26BDB',
---         orange = '#FF9000',
---         red = '#D10000',
---         violet = '#9E93E8',
---         white = '#FFFFFF',
---         yellow = '#E1E120',
---     },
---     force_inactive = {
---         filetypes = {
---             '^NvimTree$',
---             '^packer$',
---             '^startify$',
---             '^fugitive$',
---             '^fugitiveblame$',
---             '^qf$',
---             '^help$',
---         },
---         buftypes = {
---             '^terminal$',
---             '^nofile$'
---         },
---     },
--- }
---
--- local winbar_components = {
---     active = {
---         {
---             {
---                 provider = 'file_info',
---                 hl = {
---                     fg = 'skyblue',
---                     bg = 'NONE',
---                     style = 'bold',
---                 },
---             },
---         },
---     },
---     inactive = {
---         {
---             {
---                 provider = 'file_info',
---                 hl = {
---                     fg = 'white',
---                     bg = 'NONE',
---                     style = 'bold',
---                 },
---             },
---         },
---     },
--- }
---
---
--- require('feline').winbar.setup {
---     components = winbar_components,
--- }
