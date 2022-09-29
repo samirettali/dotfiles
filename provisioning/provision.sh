@@ -48,7 +48,7 @@ provision_macos() {
 
   # Initialize some software
   rustup-init
-  espanso register
+  espanso service register
   espanso start
 
   # Configure npm

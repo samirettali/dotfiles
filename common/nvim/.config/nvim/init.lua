@@ -1,9 +1,7 @@
 local notify_present, notify = pcall(require, "notify")
-if not notify_present then
-    return false
+if notify_present then
+    vim.notify = notify
 end
-
-vim.notify = notify
 
 local impatient_present, impatient = pcall(require, 'impatient')
 
