@@ -19,3 +19,4 @@ t() {
         tmux new -A -s "$1"
     fi
 }
+. "$HOME/.cargo/env"
