@@ -169,5 +169,6 @@ setup_swap() {
 mkdir -p ~/.xmonad
 
 aur plumber
+aur jqp
 
 aur iredis
