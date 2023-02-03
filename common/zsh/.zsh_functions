@@ -114,10 +114,11 @@ gocheck() {
     goconst ./...
 }
 
-ntr() {
-    # TODO add -d
-      find . -path "./.git" -prune -o -path './node_modules' -prune -o -type f -print | entr -csr \"${@}\"
+r () {
+        input="$*"
+        find . -path "./.git" -prune -o -path './node_modules' -prune -o -path "**/bin" -prune -o -path "**/obj" -prune -o -type f -print | entr -csr "${input}"
 }
+
 
 j() {
     javac "${1}" && java "${1%.java}" && rm "${1%.java}.class"
@@ -133,9 +134,11 @@ mc() {
 
 loadenv() {
   if [[ -f .env ]]; then
-    export $(cat .env | sed 's/#.*//g' | xargs)
-    echo "Loaded"
+    export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
+    length=$(wc -l < .env)
+    echo "Loaded ${length} variables"
   fi
+
 }
 
 randombg() {

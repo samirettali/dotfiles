@@ -8,6 +8,9 @@ source ~/.zsh_env
 [ -f "${HOME}/.zshrc_local" ] && source "${HOME}/.zshrc_local"
 [ -f "${HOME}/.zsh_work" ] && source "${HOME}/.zsh_work"
 
+source ~/.zsh/key-bindings.zsh
+source ~/.zsh/completion.zsh
+
 # Use vim bindings (of course)
 bindkey -v
 # Immediately write commands into history file and load it as soon as it changes
@@ -153,3 +156,7 @@ if command -v direnv &> /dev/null
 then
     eval "$(direnv hook zsh)"
 fi
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
