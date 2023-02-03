@@ -98,6 +98,20 @@ M.map = function(mode, keys, command, opt)
     vim.keymap.set(mode, keys, command, opt)
 end
 
+M.telescope_map = function(key, f)
+    local map_key = vim.api.nvim_replace_termcodes(key .. f, true, true, true)
+
+    local mode = "n"
+    local rhs = string.format("<Cmd>lua require('telescope.builtin')['%s']()<CR>", f, map_key)
+
+    local map_options = {
+        noremap = true,
+        silent = true,
+    }
+
+    vim.api.nvim_set_keymap(mode, key, rhs, map_options)
+end
+
 -- For those who disabled whichkey
 M.no_WhichKey_map = function()
     local mappings = M.load_config().mappings

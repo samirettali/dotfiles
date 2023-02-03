@@ -20,7 +20,7 @@ opt.smarttab = true
 opt.softtabstop = indentation
 opt.autoindent = true -- Automatically indent new lines
 
-opt.synmaxcol = 200 -- Highlight up to the 200th column
+-- opt.synmaxcol = 200 -- Highlight up to the 200th column
 
 opt.undofile = true -- Use undo files
 -- opt("b", "spelllang", "it,en_us")
@@ -33,6 +33,7 @@ opt.wrap = true -- Wrap visually long lines
 opt.foldmethod = "expr" -- Set fold method
 opt.signcolumn = "yes" -- Keep sign column always opened
 
+opt.background = "dark"
 opt.updatetime = 250
 opt.hidden = true -- Enable having modified buffers in background
 opt.joinspaces = false -- No double spaces with join after a dot
@@ -59,13 +60,18 @@ opt.shortmess:append "c"
 opt.confirm = true -- Ask for some operations like quitting an unsaved file instead of failing
 opt.laststatus = 3 -- Global statusline
 opt.title = true -- Allow neovim to set the window title
-opt.cmdheight = 0 -- Command line height
+-- opt.cmdheight = 0 -- Command line height
 opt.cursorline = true -- Highlight current line
 
 opt.showmode = false
 
 -- disable tilde on end of buffer: https://github.com/neovim/neovim/pull/8546#issuecomment-643643758
-opt.fillchars = { eob = " " }
+opt.fillchars = {
+    eob = " ",
+    vert = "│",
+    fold = "┈",
+    diff = "┈",
+}
 
 opt.timeoutlen = 400
 
@@ -78,9 +84,13 @@ cmd(":command! Wq wq")
 
 cmd("set foldexpr=nvim_treesitter#foldexpr()")
 
-vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-vim.g.tokyonight_style = "night"
-cmd("colorscheme moonfly")
+vim.cmd [[
+	try
+		colorscheme moonfly
+	catch /^Vim\%((\a\+)\)\=:E185/
+		colorscheme default
+	endtry
+]]
 
 -- disable some builtin vim plugins
 local default_plugins = {

@@ -85,13 +85,13 @@ local options = {
     -- Completion sources. Ordering matters.
     -- Additional parameters: [priority, max_item_count]
     sources = {
-        { name = "gh_issues" },
+        -- { name = "gh_issues" },
         { name = "nvim_lua" },
         { name = "nvim_lsp" },
-        { name = "path" },
-        { name = "luasnip" },
-        { name = "cmdline" },
-        { name = "buffer", keyword_length = 3 },
+        -- { name = "path" },
+        -- { name = "luasnip" },
+        -- { name = "cmdline" },
+        -- { name = "buffer", keyword_length = 3 },
     },
     experimental = { -- TODO
         native_menu = false,
@@ -107,17 +107,3 @@ vim.cmd [[
 ]]
 
 cmp.setup(options)
-
--- cmp.setup.cmdline("/", {
---     sources = {
---         { name = "buffer" }
---     }
--- })
---
--- cmp.setup.cmdline(":", {
---     sources = cmp.config.sources({
---         { name = "path" }
---     }, {
---         { name = "cmdline" }
---     })
--- })

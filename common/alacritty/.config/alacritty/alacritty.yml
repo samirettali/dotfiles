@@ -1,6 +1,6 @@
 font:
   normal:
-    family: JetBrainsMono Nerd Font
+    family: JetBrainsMono Nerd Font Mono
     style: Regular
 
   italic:
@@ -12,8 +12,7 @@ font:
   bold_italic:
     style: Medium Italic
 
-  use_thin_strokes: true
-  size: 11
+  size: 16
 
 draw_bold_text_with_bright_colors: true
 

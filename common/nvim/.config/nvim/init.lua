@@ -13,11 +13,13 @@ function P(object)
     print(vim.inspect(object))
 end
 
-function load_modules()
+local function load_modules()
     local modules = {
         "core.options",
         "core.autocmds",
         "core.mappings",
+        "core.winbar",
+        "core.statuscol",
         "plugins"
     }
 

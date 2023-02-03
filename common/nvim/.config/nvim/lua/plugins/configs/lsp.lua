@@ -160,6 +160,7 @@ local servers = {
                 shadow = true,
             },
             staticcheck = true,
+            gofumpt = true,
         },
     },
     rust_analyzer = {
@@ -192,6 +193,10 @@ local servers = {
                 "solidity"
             },
             root_dir = util.root_pattern(".git"),
+        }
+    },
+    csharp_ls = {
+        csharp_ls = {
         }
     }
 }
