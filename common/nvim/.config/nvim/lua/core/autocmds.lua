@@ -1,4 +1,5 @@
 #!/usr/bin/env lua
+
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require("core.utils")
 local map = utils.map
@@ -22,37 +23,13 @@ autocmd("VimResized", {
     end,
 })
 
--- Set spell checking for text and markdown files
-autocmd("BufEnter", {
-    pattern = { "text", "markdown", "gitcommit" },
-    callback = function()
-        vim.api.nvim_win_set_option(0, "spell", true)
-    end,
-})
-
--- TODO
--- vim.cmd([[
---   augroup packer_user_config
---     autocmd!
---     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
---   augroup end
--- ]])
-
--- open nvim with a dir while still lazy loading nvimtree
--- autocmd("BufEnter", {
---    callback = function()
---       if vim.api.nvim_buf_get_option(0, "buftype") ~= "terminal" then
---          vim.cmd "lcd %:p:h"
---       end
---    end,
--- })
-
 -- Use relative & absolute line numbers in 'n' & 'i' modes respectively
 autocmd("InsertEnter", {
     callback = function()
         vim.opt.relativenumber = false
     end,
 })
+
 autocmd("InsertLeave", {
     callback = function()
         vim.opt.relativenumber = true
@@ -95,9 +72,13 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWriteP
     end,
 })
 
-autocmd("BufWritePost", {
-    pattern = "*.lua",
+-- Fix moonfly colorscheme winbar highlights
+local custom_highlight = vim.api.nvim_create_augroup("CustomHighlight", {})
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "moonfly",
     callback = function()
-        dofile(vim.fn.expand('%'))
+        vim.api.nvim_set_hl(0, "WinBar", { bg = "#080808", bold = true })
+        vim.api.nvim_set_hl(0, "WinBarNC", { bg = "#080808", bold = true })
     end,
+    group = custom_highlight,
 })
