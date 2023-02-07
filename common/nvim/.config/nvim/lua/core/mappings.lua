@@ -51,7 +51,7 @@ map('n', '<Leader>i', '<C-a>', { noremap = false })
 
 -- Keep lines centered when searching
 map('n', 'n', 'nzzzv')
-map('n', 'N', 'nzzzv')
+map('n', 'N', 'Nzzzv')
 map('n', 'J', 'mzJ`z')
 map('n', '<C-j>', ':cnext<CR>zzzv')
 
@@ -111,10 +111,6 @@ telescope_map("<Leader>fS", "lsp_document_symbols")
 telescope_map("<Leader>fs", "lsp_workspace_symbols")
 telescope_map("<Leader>fd", "lsp_workspace_diagnostics")
 
--- Load current buffer into Neovim
-map("n", "rl", "<Cmd>source %<CR>", { noremap = true })
-map("n", "<Leader><Leader>p", "<Cmd>PackerSync<CR>", { noremap = true })
-
 -- Scalpel
 map("n", "<Leader>s", "<Plug>(Scalpel)", { noremap = false })
 
@@ -136,11 +132,9 @@ map("v", "<C-c>", '"+y')
 -- -- nvim-tree
 map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>")
 
--- BufferLine
+-- buffer moving
 map("n", "<C-p>", ":bp<CR>", { silent = true })
 map("n", "<C-n>", ":bn<CR>", { silent = true })
-map("n", "<Leader>p", ":BufferMovePrevious<CR>", { silent = true })
-map("n", "<Leader>n", ":BufferMoveNext<CR>", { silent = true })
 
 map("n", "<Leader>gm", "<Plug>(git-messenger)")
 
