@@ -102,7 +102,7 @@ map("n", "<C-q>", ":bd<CR>")
 map("n", "<C-f>", "<Cmd>Telescope find_files hidden=false<CR>")
 -- map("n", "<C-q>", "<Cmd>Telescope lsp_workspace_diagnostics<CR>")
 map("n", "<C-s>", "<Cmd>Telescope lsp_document_symbols<CR>")
--- map("n", "<C-w>", "<Cmd>Telescope lsp_workspace_symbols<CR>")
+map("n", "<C-w>", "<Cmd>Telescope lsp_dynamic_workspace_symbols<CR>")
 map("n", "<C-b>", "<Cmd>Telescope buffers<CR>")
 map("n", "<C-g>", "<Cmd>Telescope live_grep<CR>")
 
