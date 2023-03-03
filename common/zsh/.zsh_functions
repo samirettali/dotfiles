@@ -146,3 +146,8 @@ randombg() {
   echo "${color}"
   hsetroot -solid "${color}"
 }
+
+take() {
+    mkdir -p "${1}"
+    cd "${1}"
+}
