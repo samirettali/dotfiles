@@ -14,7 +14,13 @@ local options = {
         prefix_string = "⌃ "
     },
     language_config = {
+        lua = {
+            disabled = false,
+        },
         go = {
+            disabled = false,
+        },
+        rust = {
             disabled = false,
         },
     }

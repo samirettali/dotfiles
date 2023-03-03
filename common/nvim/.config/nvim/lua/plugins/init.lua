@@ -1,12 +1,4 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system(
-        { "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", -- latest stable release
-            lazypath })
-end
-vim.opt.rtp:prepend(lazypath)
-
-function require_config(name)
+local function require_config(name)
     local path = "plugins.configs." .. name
     local result, err = pcall(require, path)
 
@@ -46,9 +38,10 @@ local plugins = {
         "akinsho/git-conflict.nvim",
 
         config = function()
-            require('git-conflict').setup()
+            require("git-conflict").setup()
         end
-    }, -- Coding
+    },
+    -- Coding
     {
         -- Autopair brackets and other symbols
         "windwp/nvim-autopairs",
@@ -126,64 +119,55 @@ local plugins = {
     },
     {
         "saadparwaiz1/cmp_luasnip",
-
-        -- after = "LuaSnip"
     },
     {
         "hrsh7th/cmp-nvim-lua",
-
-        -- after = "cmp_luasnip"
     },
     {
         "hrsh7th/cmp-nvim-lsp",
-
-        -- after = "cmp-nvim-lua"
     },
     {
         "hrsh7th/cmp-buffer",
-
-        -- after = "cmp-nvim-lsp"
     },
     {
         "hrsh7th/cmp-path",
-
-        -- after = "cmp-buffer"
     },
     {
         "hrsh7th/cmp-cmdline",
-
-        -- after = "nvim-cmp"
     },
     {
         "nvim-treesitter/nvim-treesitter",
-
         run = ":TSUpdate",
         dependencies = "nvim-lua/plenary.nvim",
         config = function()
             require_config("treesitter")
         end
-    }, -- ["nvim-treesitter/nvim-treesitter-textobjects"] = {
+    },
+    -- {
+    -- "nvim-treesitter/nvim-treesitter-textobjects"
     --     config = function()
     --         require_config("treesittertextobjects")
     --     end,
     -- },
     {
         "folke/trouble.nvim",
-
         dependencies = "kyazdani42/nvim-web-devicons"
     },
     {
         "RishabhRD/nvim-lsputils",
-
         dependencies = "RishabhRD/popfix"
-    }, -- Fuzzy file finder
+    },
     {
+        -- Fuzzy file finder
         "nvim-telescope/telescope.nvim",
-
         dependencies = "nvim-lua/plenary.nvim",
         config = function()
             require_config("telescope")
         end
+    },
+    {
+        "nvim-telescope/telescope-file-browser.nvim",
+        dependencies = "kyazdani42/nvim-web-devicons",
     },
     {
         -- GPS
@@ -196,119 +180,253 @@ local plugins = {
     { "mbbill/undotree" }, -- Show a tree of undo history
     {
         "lukas-reineke/indent-blankline.nvim",
-
         config = function()
             require_config("indentline")
         end
     },
     {
         "kyazdani42/nvim-tree.lua",
-
         dependencies = "kyazdani42/nvim-web-devicons",
         config = function()
             require_config("nvimtree")
         end
     },
     {
-        "romgrk/barbar.nvim",
-
-        dependencies = "kyazdani42/nvim-web-devicons",
-        config = function()
-            require_config('barbar')
-        end
-    },
-    {
-        "feline-nvim/feline.nvim",
+        "freddiehaddad/feline.nvim",
+        dependencies = { "AlexvZyl/nordic.nvim" },
         config = function()
             require_config("feline")
         end,
     },
     {
-        "nvim-lualine/lualine.nvim",
-
-        dependencies = {
-            'kyazdani42/nvim-web-devicons',
-        },
-        config = function()
-            require_config('lualine')
-        end
-    },
-    {
+        -- Annotations on closing tag, bracket, parenthesis etc.
         "code-biscuits/nvim-biscuits",
-
         config = function()
             require_config("biscuits")
-        end
-    }, -- Objects
-    { "tpope/vim-surround" }, -- Add surround object for editing
-    { "wellle/targets.vim" }, -- Add more targets for commands
-    -- Improving functionalities
-    { "chrisbra/Recover.vim" }, -- Show diff of a recovered or swap file
-    { "junegunn/vim-easy-align" }, -- Align stuff based on a symbol
-    { "christoomey/vim-tmux-navigator" }, -- Tmux splits integration
-    { "drzel/vim-split-line" }, -- Split line at cursor
-    { "wincent/scalpel" }, -- Replace word under cursor
-    { "mizlan/iswap.nvim" }, -- Swap delimited items
-    { "romainl/vim-cool" }, -- Disable search highlighting on mode change
-    { "tpope/vim-repeat" }, -- Repeat plugin mappings with .
-    -- ["christoomey/vim-sort-motion"] = {},          -- Add sort motion
-    { "tpope/vim-eunuch" }, -- Adds UNIX commands
-    { "machakann/vim-highlightedundo" }, -- Highlights undo region
-    { "tommcdo/vim-exchange" }, -- Exchange two objects
-    { "tommcdo/vim-nowchangethat" }, -- Reapply previous change to a different object
-    { "farmergreg/vim-lastplace" }, -- Restore cursor position when reopening files
-    { "samirettali/shebang.nvim" }, -- Automatic shebang for new files
-    { "ojroques/vim-oscyank" }, -- Copy in OS clipboard in SSH
+        end,
+    },
+    -- Objects
     {
+        -- Add surround object for editing
+        "tpope/vim-surround"
+    },
+    {
+        -- Add more targets for commands
+        "wellle/targets.vim"
+    },
+    -- Improving functionalities
+    {
+        -- Show diff of a recovered or swap file
+        "chrisbra/Recover.vim"
+    },
+    {
+        -- Align stuff based on a symbol
+        "junegunn/vim-easy-align"
+    },
+    {
+        -- Tmux splits integration
+        "christoomey/vim-tmux-navigator"
+    },
+    {
+        -- Split line at cursor
+        "drzel/vim-split-line"
+    },
+    {
+        -- Replace word under cursor
+        "wincent/scalpel"
+    },
+    {
+        -- Swap delimited items
+        "mizlan/iswap.nvim"
+    },
+    {
+        -- Disable search highlighting on mode change
+        "romainl/vim-cool"
+    },
+    {
+        -- Repeat plugin mappings with .
+        "tpope/vim-repeat"
+    },
+    {
+        -- Add sort motion
+        "sQVe/sort.nvim"
+    },
+    {
+        -- Adds UNIX commands
+        "tpope/vim-eunuch"
+    },
+    {
+        -- Highlights undo region
+        "machakann/vim-highlightedundo"
+    },
+    {
+        -- Exchange two objects
+        "tommcdo/vim-exchange"
+    },
+    {
+        -- Reapply previous change to a different object
+        "tommcdo/vim-nowchangethat"
+    },
+    {
+        -- Restore cursor position when reopening files
+        "farmergreg/vim-lastplace"
+    },
+    {
+        -- Automatic shebang for new files
+        "samirettali/shebang.nvim"
+    },
+    {
+        -- Copy in OS clipboard in SSH
+        "ojroques/vim-oscyank"
+    },
+    {
+        -- Hex editing
         "RaafatTurki/hex.nvim",
-
         config = function()
             require("hex").setup()
         end
     },
     -- {
+    --     "nanozuki/tabby.nvim",
+    --     config = function()
+    --         require_config("tabby")
+    --     end,
+    -- },
+    -- {
     --     "rmagatti/auto-session"
     --     config = function()
     --         require_config("autosession")
     --     end,
-    -- }, -- Continuously save session
-    -- Theme stuff
-    { "bluz71/vim-moonfly-colors" },
-    { "Yazeed1s/oh-lucy.nvim" },
-    { "Mofiqul/vscode.nvim" },
+    -- },
+    {
+        "bluz71/vim-moonfly-colors",
+        config = function()
+            require_config("moonfly")
+            vim.cmd [[colorscheme moonfly]]
+        end,
+    },
+    { "Yazeed1s/minimal.nvim" },
+    { "projekt0n/github-nvim-theme" },
+    { "Yazeed1s/oh-lucy.nvim",
+        -- config = function()
+        --     vim.cmd [[colorscheme oh-lucy]]
+        -- end,
+    },
+    { "Mofiqul/vscode.nvim",
+        -- config = function()
+        --     vim.cmd [[colorscheme vscode]]pl
+        -- end,
+    },
+    { "EdenEast/nightfox.nvim" },
+    { "catppuccin/nvim" },
+    { "sainnhe/sonokai" },
+    {
+        "AlexvZyl/nordic.nvim",
+        config = function()
+            -- require 'nordic'.setup {
+            --     -- Enable bold keywords.
+            --     bold_keywords = false,
+            --     -- Enable italic comments.
+            --     italic_comments = true,
+            --     -- Enable general editor background transparency.
+            --     transparent_bg = false,
+            --     -- Reduce the overall amount of blue in the theme (diverges from base Nord).
+            --     -- This just adjusts some colors to make the theme a bit nicer (imo).  Setting this
+            --     -- to false keeps the original Nord colors.
+            --     reduced_blue = true,
+            --     -- Override the styling of any highlight group.
+            --     override = {},
+            --     cursorline = {
+            --         -- Enable bold font in cursorline.
+            --         bold = false,
+            --         -- Avialable styles: 'dark', 'light'.
+            --         theme = 'light',
+            --     },
+            --     noice = {
+            --         -- Available styles: `classic`, `flat`.
+            --         style = 'flat'
+            --     },
+            --     telescope = {
+            --         -- Available styles: `classic`, `flat`.
+            --         style = 'flat',
+            --     },
+            -- }
+            -- require 'nordic'.load()
+        end,
+    },
     { "norcalli/nvim-colorizer.lua" },
+    { "sindrets/diffview.nvim",     dependencies = { "nvim-lua/plenary.nvim" } },
     {
         "kyazdani42/nvim-web-devicons",
-
         config = function()
             require_config("icons")
         end
     },
     {
         "rmagatti/goto-preview",
-
         config = function()
             require_config("goto-preview")
         end
     },
-    { "lewis6991/impatient.nvim" }
+    { "lewis6991/impatient.nvim" },
+    {
+        "atusy/tsnode-marker.nvim",
+        lazy = true,
+        init = function()
+            local function is_def(node)
+                return vim.tbl_contains({
+                    "func_literal",
+                    "function_declaration",
+                    "function_definition",
+                    "method_declaration",
+                    "method_definition",
+                }, node:type())
+            end
+
+            vim.api.nvim_create_autocmd("FileType", {
+                group = vim.api.nvim_create_augroup("tsnode-marker-markdown", {}),
+                pattern = { "go", "lua" },
+                callback = function(ctx)
+                    require("tsnode-marker").set_automark(ctx.buf, {
+                        hl_group = "CursorLine", -- highlight group
+                        target = function(_, node)
+                            if not is_def(node) then
+                                return false
+                            end
+                            local parent = node:parent()
+                            while parent do
+                                if is_def(parent) then
+                                    return true
+                                end
+                                parent = parent:parent()
+                            end
+                            return false
+                        end,
+                    })
+                end,
+            })
+        end,
+    },
+    {
+        "Tummetott/reticle.nvim",
+        config = function()
+            require('reticle').setup {
+                -- add options here if you want to overwrite defaults
+            }
+        end
+    }
 }
 
 -- glepnir/mutchar.nvim
 
-require("lazy").setup(plugins)
+local opts = {
+    defaults = {
+        lazy = false,
+    },
+    change_detection = {
+        enabled = true,
+        notify = true,
+    }
+}
 
--- merge user plugin table & default plugin table
-plugins = require("core.utils").remove_default_plugins(plugins)
-plugins = require("core.utils").plugin_list(plugins)
-
--- return packer.startup(function(use)
---     for _, v in pairs(plugins) do
---         -- TODO test return value
---         use(v)
---     end
---
---     if bootstrap then
---         packer.sync()
---     end
--- end)
+require("lazy").setup(plugins, opts)

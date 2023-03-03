@@ -15,12 +15,12 @@ M.winbar_filetype_exclude = {
     "Outline",
     "spectre_panel",
     "toggleterm",
-    "__vista__",
+    "vista_kind",
     "NEO-TREE"
 }
 
-local get_filename = function()
-    local filename = vim.fn.expand "%:t"
+local function get_filename()
+    local filename = vim.fn.expand "%:~:."
     local extension = vim.fn.expand "%:e"
 
     if not utils.isempty(filename) then
@@ -38,11 +38,13 @@ local get_filename = function()
             file_icon_color = ""
         end
 
-        return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#LineNr#" .. filename .. "%*"
+        return " " ..
+            "%#" ..
+            hl_group .. "#" .. file_icon .. "%*" .. "%#LineNr#" .. "%{&modified?'  ':' '}" .. filename .. "%*"
     end
 end
 
-local get_gps = function()
+local function get_gps()
     local status_gps_ok, gps = pcall(require, "nvim-gps")
     if not status_gps_ok then
         return ""

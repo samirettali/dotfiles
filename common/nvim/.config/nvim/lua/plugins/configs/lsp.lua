@@ -64,7 +64,7 @@ lsp_handlers()
 vim.g.completion_trigger_on_delete = 1
 vim.g.lsp_document_highlight_enabled = 1
 
-local function custom_attach(client, _)
+local function custom_attach(client, bufnr)
     vim.cmd("setlocal omnifunc=v:lua.vim.lsp.omnifunc")
 
     -- Show diagnostic on hover
@@ -90,6 +90,23 @@ local function custom_attach(client, _)
 
     client.server_capabilities.document_formatting = true
     client.server_capabilities.document_range_formatting = true
+
+    if client.server_capabilities.documentHighlightProvider then
+        vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+        vim.api.nvim_clear_autocmds { buffer = bufnr, group = "lsp_document_highlight" }
+        vim.api.nvim_create_autocmd("CursorHold", {
+            callback = vim.lsp.buf.document_highlight,
+            buffer = bufnr,
+            group = "lsp_document_highlight",
+            desc = "Document Highlight",
+        })
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            callback = vim.lsp.buf.clear_references,
+            buffer = bufnr,
+            group = "lsp_document_highlight",
+            desc = "Clear All the References",
+        })
+    end
 end
 
 vim.fn.sign_define("LspDiagnosticsSignError", { text = "", texthl = "LspDiagnosticsSignError" })
@@ -116,7 +133,6 @@ capabilities.textDocument.completion.completionItem = {
             "additionalTextEdits",
         },
     },
-
 }
 capabilities.textDocument.codeAction = {
     dynamicRegistration = true,
@@ -163,26 +179,6 @@ local servers = {
             gofumpt = true,
         },
     },
-    rust_analyzer = {
-        ["rust-analyzer"] = {
-            assist = {
-                importGranularity = "module",
-                importPrefix = "by_self",
-            },
-            cargo = {
-                loadOutDirsFromCheck = true
-            },
-            procMacro = {
-                enable = true
-            },
-            checkOnSave = {
-                command = "clippy",
-            },
-            flags = {
-                debounce_text_changes = 200,
-            },
-        }
-    },
     solc = {
         solc = {
             cmd = {
@@ -213,14 +209,36 @@ for lsp, settings in pairs(servers) do
     }
 end
 
-local pid = vim.fn.getpid()
-lspconfig.omnisharp.setup {
-    cmd = { "/usr/bin/omnisharp", "--languageserver", "--hostPID", tostring(pid) },
-    root_dir = util.root_pattern(".csproj", ".sln"),
+lspconfig.rust_analyzer.setup {
+    capabilities = capabilities,
     on_attach = custom_attach,
-    flags = {
-        debounce_text_changes = 200,
+    cmd = {
+        "rustup", "run", "stable", "rust-analyzer",
     },
+    settings = {
+        assist = {
+            importGranularity = "module",
+            importPrefix = "by_self",
+        },
+        cargo = {
+            loadOutDirsFromCheck = true
+        },
+        procMacro = {
+            enable = true
+        },
+        checkOnSave = {
+            command = "clippy",
+        },
+        flags = {
+            debounce_text_changes = 200,
+        },
+    },
+}
+
+lspconfig.csharp_ls.setup {
+    cmd = { "csharp-ls" },
+    on_attach = custom_attach,
+    filetypes = { "cs" },
 }
 
 function OrgImports(wait_ms)
@@ -238,28 +256,27 @@ function OrgImports(wait_ms)
     end
 end
 
--- function format_rust()
---     local lineno = vim.api.nvim_win_get_cursor(0)
---     vim.lsp.buf.formatting_sync(nil, 1000)
---     vim.api.nvim_win_set_cursor(0, lineno)
--- end
---
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
     on_attach = custom_attach,
     capabilities = capabilities,
 
     settings = {
         Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+            },
             diagnostics = {
-                globals = { "vim" }, -- TODO
+                -- Get the language server to recognize the `vim` global
+                globals = { 'vim' },
             },
             workspace = {
-                library = {
-                    [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-                    [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-                },
-                maxPreload = 100000,
-                preloadFileSize = 10000,
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
             },
         },
     },

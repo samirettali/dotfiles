@@ -23,17 +23,20 @@ function cmp_window:has_scrollbar()
     return false
 end
 
-local lspkind = require("lspkind")
+local kind_present, lspkind = pcall(require, "lspkind")
+if not kind_present then
+    return false
+end
 
 local options = {
-    -- window = {
-    --     completion = { border = border "CmpBorder", },
-    --     documentation = { border = border "CmpDocBorder", },
-    -- },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
     snippet = {
         expand = function(args)
-            local present, luasnip = pcall(require, "luasnip")
-            if not present then
+            local snip_present, luasnip = pcall(require, "luasnip")
+            if not snip_present then
                 print("cmp: luasnip not found")
             end
 
@@ -42,23 +45,7 @@ local options = {
     },
     formatting = {
         format = lspkind.cmp_format({
-            mode = 'symbol_text', -- show only symbol annotations
-            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            menu = ({
-                buffer = "[buf]",
-                nvim_lsp = "[lsp]",
-                luasnip = "[snip]",
-                path = "[path]",
-                nvim_lua = "[lua]",
-                gh_issues = "[issues]",
-            }),
-            --
-            -- -- The function below will be called before any actual modifications from lspkind
-            -- -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-            -- -- before = function (entry, vim_item)
-            -- --  ...
-            -- --   return vim_item
-            -- -- end
+            maxwidth = 50,
         }),
     },
     mapping = {
@@ -82,13 +69,11 @@ local options = {
         }),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
-    -- Completion sources. Ordering matters.
-    -- Additional parameters: [priority, max_item_count]
     sources = {
         -- { name = "gh_issues" },
         { name = "nvim_lua" },
         { name = "nvim_lsp" },
-        -- { name = "path" },
+        { name = "path" },
         -- { name = "luasnip" },
         -- { name = "cmdline" },
         -- { name = "buffer", keyword_length = 3 },
@@ -99,11 +84,11 @@ local options = {
     }
 }
 
-vim.cmd [[
-    augroup DadbodSql
-    au!
-    autocmd FileType sql,mysql,plsql lua require('cmp').setup_buffer { sources = { { name = 'vim-dadbod-completion' } } }
-    augroup END
-]]
+-- vim.cmd [[
+--     augroup DadbodSql
+--     au!
+--     autocmd FileType sql,mysql,plsql lua require('cmp').setup_buffer { sources = { { name = 'vim-dadbod-completion' } } }
+--     augroup END
+-- ]]
 
 cmp.setup(options)

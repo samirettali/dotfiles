@@ -17,6 +17,22 @@ local diag_signs_icons = {
     DiagnosticSignOk = " "
 }
 
+local excludes = {
+    "help",
+    "startify",
+    "dashboard",
+    "packer",
+    "neogitstatus",
+    "NvimTree",
+    "Trouble",
+    "alpha",
+    "lir",
+    "Outline",
+    "spectre_panel",
+    "toggleterm",
+    "vista_kind",
+    "NEO-TREE"
+}
 
 local function get_sign_name(cur_sign)
     if (cur_sign == nil) then
