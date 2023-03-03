@@ -43,3 +43,12 @@ alias sstart="sudo systemctl start"
 alias sstop="sudo systemctl stop"
 alias sstatus="sudo systemctl status"
 alias srestart="sudo systemctl restart"
+
+alias jj="pbpaste | jq -r | pbcopy"
+alias jjj="pbpaste | jq -r"
+alias c="clear"
+alias d="docker"
+
+alias trim="awk '{\$1=\$1;print}'"
+alias s="source ~/.zshrc"
+alias rm="trash"
