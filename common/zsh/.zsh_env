@@ -25,6 +25,7 @@ folders=(
     "${HOME}/.yarn/bin"
     "${HOME}/.cargo/bin"
     "${HOME}/.dotnet"
+    "${HOME}/.dotnet/tools"
     "${HOME}/.local/share/nvim/site/pack/packer/start/vim-superman/bin"
 )
 
@@ -48,3 +49,12 @@ for file in "${files[@]}"; do
         source "${file}"
     fi
 done
+
+export LANG="en_US.UTF-8"
+export LC_COLLATE="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export LC_MESSAGES="en_US.UTF-8"
+export LC_MONETARY="en_US.UTF-8"
+export LC_NUMERIC="en_US.UTF-8"
+export LC_TIME="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
