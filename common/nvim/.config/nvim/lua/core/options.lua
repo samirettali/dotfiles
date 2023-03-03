@@ -31,6 +31,8 @@ opt.relativenumber = true -- Show relative line numbers
 opt.wrap = true -- Wrap visually long lines
 -- opt.colorcolumn = "81" -- Highlight 81st column
 opt.foldmethod = "expr" -- Set fold method
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+
 opt.signcolumn = "yes" -- Keep sign column always opened
 
 opt.background = "dark"
@@ -56,21 +58,28 @@ opt.undodir = home .. "/.local/share/nvim/undo"
 opt.directory = home .. "/.local/share/nvim/swap"
 opt.backupdir = home .. "/.local/share/nvim/tmp"
 opt.shortmess:append "c"
+opt.shortmess:append "o" -- Don't print anything when writing a file
 
 opt.confirm = true -- Ask for some operations like quitting an unsaved file instead of failing
 opt.laststatus = 3 -- Global statusline
 opt.title = true -- Allow neovim to set the window title
--- opt.cmdheight = 0 -- Command line height
+opt.cmdheight = 0 -- Command line height (0 hides it)
 opt.cursorline = true -- Highlight current line
 
 opt.showmode = false
 
 -- disable tilde on end of buffer: https://github.com/neovim/neovim/pull/8546#issuecomment-643643758
-opt.fillchars = {
+vim.opt.fillchars = {
+    horiz = '━',
+    horizup = '┻',
+    horizdown = '┳',
+    vert = '┃',
+    vertleft = '┫',
+    vertright = '┣',
+    verthoriz = '╋',
     eob = " ",
-    vert = "│",
-    fold = "┈",
-    diff = "┈",
+    -- fold = "┈",
+    -- diff = "┈",
 }
 
 opt.timeoutlen = 400
@@ -82,15 +91,6 @@ cmd(":command! Q q")
 cmd(":command! WQ wq")
 cmd(":command! Wq wq")
 
-cmd("set foldexpr=nvim_treesitter#foldexpr()")
-
-vim.cmd [[
-	try
-		colorscheme moonfly
-	catch /^Vim\%((\a\+)\)\=:E185/
-		colorscheme default
-	endtry
-]]
 
 -- disable some builtin vim plugins
 local default_plugins = {
@@ -98,7 +98,7 @@ local default_plugins = {
     "getscript",
     "getscriptPlugin",
     "gzip",
-    "logipat",
+    "logiPat",
     "netrw",
     "netrwPlugin",
     "netrwSettings",
@@ -112,6 +112,7 @@ local default_plugins = {
     "vimballPlugin",
     "zip",
     "zipPlugin",
+    "matchparen",
 }
 
 for _, plugin in pairs(default_plugins) do
