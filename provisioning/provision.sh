@@ -16,13 +16,17 @@ provision_macos() {
 
   brew install git stow tmux fzf restic yarn ripgrep pass \
     pass-otp fd ncdu federico-terzi/espanso pipenv youtube-dl entr scc \
-    git-flow ncmpcpp mpd mpc ranger dos2unix watch
+    git-flow ncmpcpp mpd mpc ranger dos2unix watch tmuxinator
+
+  brew install csvq
+  brew install trash
 
   brew install --cask alacritty keepassxc brave-browser rectangle typora \
   font-sauce-code-pro-nerd-font karabiner-elements maccy cleanshot iina \
     homebrew/cask-drivers/logitech-options alfred iina firefox transmission
 
   # Git terminal clients
+  brew install jesseduffield/lazygit/lazygit
   brew install lazygit tig
 
   # Compilers
@@ -35,6 +39,9 @@ provision_macos() {
   # Ethereum development
   brew install truffle
   brew install --cask ganache ipfs
+
+  # Linters
+  brew install hadolint golangci-lint
 
   # CTF tools
   brew install --cask sonic-visualizer
@@ -62,6 +69,7 @@ provision_macos() {
   rustup component add rls rust-analysis rust-src
   pip3 install 'python-language-server[all]'
   GO111MODULE=on go get golang.org/x/tools/gopls@latest
+  dotnet tool install --global csharp-ls
 
   # Set hostname
   sudo scutil --set HostName "${HOSTNAME}"
