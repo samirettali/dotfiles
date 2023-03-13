@@ -34,7 +34,6 @@ local function load_modules()
         "core.autocmds",
         "core.mappings",
         "core.winbar",
-        "core.statuscol",
         "plugins"
     }
 

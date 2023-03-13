@@ -36,9 +36,8 @@ local plugins = {
     },
     {
         "akinsho/git-conflict.nvim",
-
         config = function()
-            require("git-conflict").setup()
+            require("git-conflict").setup({})
         end
     },
     -- Coding
@@ -94,6 +93,20 @@ local plugins = {
         config = function()
             -- require_config("saga")
         end
+    },
+    {
+        "VidocqH/lsp-lens.nvim",
+        config = function()
+            require 'lsp-lens'.setup({
+                enable = true,
+                include_declaration = false, -- Reference include declaration
+                sections = { -- Enable / Disable specific request
+                    definition = false,
+                    references = true,
+                    implementation = true,
+                },
+            })
+        end,
     },
     {
         "rafamadriz/friendly-snippets",
@@ -193,10 +206,9 @@ local plugins = {
     },
     {
         "freddiehaddad/feline.nvim",
-        dependencies = { "AlexvZyl/nordic.nvim" },
         config = function()
             require_config("feline")
-        end,
+        end
     },
     {
         -- Annotations on closing tag, bracket, parenthesis etc.
@@ -287,12 +299,6 @@ local plugins = {
         end
     },
     -- {
-    --     "nanozuki/tabby.nvim",
-    --     config = function()
-    --         require_config("tabby")
-    --     end,
-    -- },
-    -- {
     --     "rmagatti/auto-session"
     --     config = function()
     --         require_config("autosession")
@@ -301,57 +307,17 @@ local plugins = {
     {
         "bluz71/vim-moonfly-colors",
         config = function()
-            require_config("moonfly")
-            vim.cmd [[colorscheme moonfly]]
-        end,
+            vim.cmd [[ colorscheme moonfly ]]
+        end
     },
-    { "Yazeed1s/minimal.nvim" },
-    { "projekt0n/github-nvim-theme" },
-    { "Yazeed1s/oh-lucy.nvim",
-        -- config = function()
-        --     vim.cmd [[colorscheme oh-lucy]]
-        -- end,
+    {
+        "olimorris/onedarkpro.nvim",
     },
-    { "Mofiqul/vscode.nvim",
-        -- config = function()
-        --     vim.cmd [[colorscheme vscode]]pl
-        -- end,
-    },
-    { "EdenEast/nightfox.nvim" },
-    { "catppuccin/nvim" },
-    { "sainnhe/sonokai" },
+    { "Mofiqul/vscode.nvim" },
     {
         "AlexvZyl/nordic.nvim",
         config = function()
-            -- require 'nordic'.setup {
-            --     -- Enable bold keywords.
-            --     bold_keywords = false,
-            --     -- Enable italic comments.
-            --     italic_comments = true,
-            --     -- Enable general editor background transparency.
-            --     transparent_bg = false,
-            --     -- Reduce the overall amount of blue in the theme (diverges from base Nord).
-            --     -- This just adjusts some colors to make the theme a bit nicer (imo).  Setting this
-            --     -- to false keeps the original Nord colors.
-            --     reduced_blue = true,
-            --     -- Override the styling of any highlight group.
-            --     override = {},
-            --     cursorline = {
-            --         -- Enable bold font in cursorline.
-            --         bold = false,
-            --         -- Avialable styles: 'dark', 'light'.
-            --         theme = 'light',
-            --     },
-            --     noice = {
-            --         -- Available styles: `classic`, `flat`.
-            --         style = 'flat'
-            --     },
-            --     telescope = {
-            --         -- Available styles: `classic`, `flat`.
-            --         style = 'flat',
-            --     },
-            -- }
-            -- require 'nordic'.load()
+            -- require_config("nordic")
         end,
     },
     { "norcalli/nvim-colorizer.lua" },
@@ -370,50 +336,40 @@ local plugins = {
     },
     { "lewis6991/impatient.nvim" },
     {
-        "atusy/tsnode-marker.nvim",
-        lazy = true,
-        init = function()
-            local function is_def(node)
-                return vim.tbl_contains({
-                    "func_literal",
-                    "function_declaration",
-                    "function_definition",
-                    "method_declaration",
-                    "method_definition",
-                }, node:type())
-            end
-
-            vim.api.nvim_create_autocmd("FileType", {
-                group = vim.api.nvim_create_augroup("tsnode-marker-markdown", {}),
-                pattern = { "go", "lua" },
-                callback = function(ctx)
-                    require("tsnode-marker").set_automark(ctx.buf, {
-                        hl_group = "CursorLine", -- highlight group
-                        target = function(_, node)
-                            if not is_def(node) then
-                                return false
-                            end
-                            local parent = node:parent()
-                            while parent do
-                                if is_def(parent) then
-                                    return true
-                                end
-                                parent = parent:parent()
-                            end
-                            return false
-                        end,
-                    })
-                end,
-            })
-        end,
-    },
-    {
         "Tummetott/reticle.nvim",
         config = function()
             require('reticle').setup {
                 -- add options here if you want to overwrite defaults
             }
         end
+    },
+    {
+        "mfussenegger/nvim-dap",
+        config = function()
+            require_config("dap")
+        end
+    },
+    {
+        "theHamsta/nvim-dap-virtual-text",
+        dependencies = "mfussenegger/nvim-dap"
+    },
+    {
+        "rcarriga/nvim-dap-ui",
+        dependencies = "mfussenegger/nvim-dap",
+        config = function()
+            require_config("dapui")
+        end
+    },
+    {
+        "luukvbaal/statuscol.nvim",
+        config = function() require("statuscol").setup() end
+    },
+    {
+        "Eandrju/cellular-automaton.nvim"
+    },
+    {
+        "laytan/cloak.nvim",
+        config = function() require_config("cloak") end
     }
 }
 
