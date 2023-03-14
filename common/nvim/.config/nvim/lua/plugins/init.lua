@@ -370,6 +370,9 @@ local plugins = {
     {
         "laytan/cloak.nvim",
         config = function() require_config("cloak") end
+    },
+    {
+        "hashicorp/terraform-ls"
     }
 }
 

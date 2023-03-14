@@ -241,6 +241,8 @@ lspconfig.csharp_ls.setup {
     filetypes = { "cs" },
 }
 
+lspconfig.terraformls.setup {}
+
 function OrgImports(wait_ms)
     vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
     -- local params = vim.lsp.util.make_range_params()
