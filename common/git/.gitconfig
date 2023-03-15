@@ -2,6 +2,12 @@
 	email = ettali.samir@gmail.com
 	name = "Samir Ettali"
 
+[includeIf "gitdir:~/dev"]
+    path = ~/.work.gitconfig
+
+[includeIf "gitdir:~/go/src/github.com/YoungAgency"]
+    path = ~/.work.gitconfig
+
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore_global
