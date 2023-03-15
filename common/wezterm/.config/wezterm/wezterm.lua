@@ -2,8 +2,8 @@ local wezterm = require("wezterm")
 
 local M = {}
 
-M.color_scheme = "Builtin Dark"
-M.font_size = 16
+M.color_scheme = "Wez"
+M.font_size = 15
 M.adjust_window_size_when_changing_font_size = false
 
 M.enable_tab_bar = false
@@ -16,6 +16,9 @@ M.window_padding = {
 }
 
 M.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Medium", italic = false })
+
+M.custom_block_glyphs = false
+M.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 M.bold_brightens_ansi_colors = true
 
