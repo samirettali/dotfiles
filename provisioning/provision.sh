@@ -63,6 +63,7 @@ provision_macos() {
   npm config set prefix "${HOME}/.npm-global"
 
   # Install language servers for Neovim
+  brew install hashicorp/tap/terraform-ls
   brew install rust-analyzer
   yarn global add expo-cli typescript-language-server vscode-css-languageserver-bin \
     vscode-html-languageserver-bin eslint_d
