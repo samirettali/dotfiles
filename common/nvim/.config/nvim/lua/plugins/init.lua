@@ -382,6 +382,12 @@ local plugins = {
     },
     {
         "hashicorp/terraform-ls"
+    },
+    {
+        "stevearc/dressing.nvim",
+        config = function()
+            require_config("dressing")
+        end
     }
 }
 
