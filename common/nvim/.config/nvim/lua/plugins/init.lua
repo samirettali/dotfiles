@@ -28,7 +28,6 @@ local plugins = {
     },
     {
         "lewis6991/gitsigns.nvim",
-        -- Show git diff in the gutter (requires plenary)
         dependencies = "nvim-lua/plenary.nvim",
         config = function()
             require_config("gitsigns")
@@ -38,6 +37,12 @@ local plugins = {
         "akinsho/git-conflict.nvim",
         config = function()
             require("git-conflict").setup({})
+        end
+    },
+    {
+        "f-person/git-blame.nvim",
+        config = function()
+            require_config("gitblame")
         end
     },
     -- Coding
