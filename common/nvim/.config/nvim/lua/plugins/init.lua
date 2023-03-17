@@ -114,12 +114,6 @@ local plugins = {
         end,
     },
     {
-        "ErichDonGubler/lsp_lines.nvim",
-        config = function()
-            require("lsp_lines").setup()
-        end,
-    },
-    {
         "rafamadriz/friendly-snippets",
 
         module = "cmp_nvim_lsp",
