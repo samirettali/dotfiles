@@ -68,8 +68,7 @@ opt.cursorline = true -- Highlight current line
 
 opt.showmode = false
 
--- disable tilde on end of buffer: https://github.com/neovim/neovim/pull/8546#issuecomment-643643758
-vim.opt.fillchars = {
+opt.fillchars = {
     horiz = '━',
     horizup = '┻',
     horizdown = '┳',
@@ -83,6 +82,8 @@ vim.opt.fillchars = {
 }
 
 opt.timeoutlen = 400
+
+g.gitblame_enabled = 0
 
 -- vim.cmd [[highlight WinSeparator guibg=None guifg=#20272e]] -- Fix for the global statusline
 
