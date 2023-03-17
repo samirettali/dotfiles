@@ -317,6 +317,9 @@ local plugins = {
         end
     },
     {
+        "Yazeed1s/oh-lucy.nvim"
+    },
+    {
         "olimorris/onedarkpro.nvim",
     },
     { "Mofiqul/vscode.nvim" },
