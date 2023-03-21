@@ -66,6 +66,16 @@ local function get_gps()
     end
 end
 
+local function get_blame()
+    local present, blame = pcall(require, "gitblame")
+
+    if present and blame.is_blame_text_available() then
+        return blame.get_current_blame_text()
+    end
+
+    return ""
+end
+
 local excludes = function()
     if vim.tbl_contains(M.winbar_filetype_exclude, vim.bo.filetype) then
         vim.opt_local.winbar = nil
@@ -74,7 +84,6 @@ local excludes = function()
     return false
 end
 
--- TODO: add git blame
 M.get_winbar = function()
     if excludes() then
         return
@@ -88,10 +97,14 @@ M.get_winbar = function()
         if not utils.isempty(gps_value) then
             gps_added = true
         end
+
+        local blame_value = get_blame()
+        if not utils.isempty(blame_value) then
+            value = value .. "%=" .. blame_value
+        end
     end
 
     if not utils.isempty(value) and utils.get_buf_option "mod" then
-        -- local mod = "%#LineNr#" .. require("user.icons").ui.Circle .. "%*"
         local mod = "%#LineNr#" .. "%*"
         if gps_added then
             value = value .. " " .. mod
