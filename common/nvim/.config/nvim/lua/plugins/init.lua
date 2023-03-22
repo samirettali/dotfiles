@@ -3,8 +3,26 @@ local function require_config(name)
     local result, err = pcall(require, path)
 
     if not result then
-        -- vim.notify("could not load config for " .. name .. "\n" .. err, vim.lsp.log_levels.ERROR)
-        print("could not load config for " .. name .. "\n" .. err)
+        vim.notify("could not load config for " .. name .. "\n" .. err, vim.lsp.log_levels.ERROR)
+    end
+end
+
+local function setup_plugin(name)
+    return function()
+        local present, plugin = pcall(require, name)
+        if not present then
+            return false
+        end
+
+        if plugin["setup"] ~= nil then
+            plugin.setup {}
+        elseif plugin["init"] ~= nil then
+            plugin.init {}
+        else
+            return false
+        end
+
+        return true
     end
 end
 
@@ -79,17 +97,12 @@ local plugins = {
     {
         -- Show function signature as you type
         "ray-x/lsp_signature.nvim",
-        -- after = "nvim-lspconfig",
-        config = function()
-            require_config("lspsignature")
-        end
+        config = setup_plugin("lsp_signature"),
     },
     {
         "onsails/lspkind-nvim",
         opt = false,
-        config = function()
-            require_config("lspkind")
-        end
+        config = setup_plugin("lspkind"),
     },
     {
         "glepnir/lspsaga.nvim",
@@ -386,6 +399,15 @@ local plugins = {
         "stevearc/dressing.nvim",
         config = function()
             require_config("dressing")
+        end
+    },
+    {
+        "rmagatti/auto-session",
+        config = function()
+            require("auto-session").setup {
+                log_level = "error",
+                auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+            }
         end
     }
 }
