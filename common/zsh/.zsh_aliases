@@ -12,8 +12,6 @@ alias tms='tmuxinator start'
 alias python='python3'
 alias lg='lazygit'
 alias ld='lazydocker'
-alias cat='bat'
-alias vim='nvim'
 alias c="tee | xsel -ib"
 
 # Git
