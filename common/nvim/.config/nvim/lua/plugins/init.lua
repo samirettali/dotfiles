@@ -329,13 +329,14 @@ local plugins = {
     {
         "bluz71/vim-moonfly-colors",
         config = function()
-            -- vim.cmd [[ colorscheme moonfly ]]
+            require_config("moonfly")
+            vim.cmd [[ colorscheme moonfly ]]
         end
     },
     {
         "Yazeed1s/minimal.nvim",
         config = function()
-            vim.cmd [[ colorscheme minimal ]]
+            -- vim.cmd [[ colorscheme minimal ]]
         end,
     },
     {
