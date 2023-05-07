@@ -13,6 +13,7 @@ alias python='python3'
 alias lg='lazygit'
 alias ld='lazydocker'
 alias c="tee | xsel -ib"
+alias vim="nvim"
 
 # Git
 alias ga='git add'
