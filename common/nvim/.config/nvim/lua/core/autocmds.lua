@@ -92,9 +92,15 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         vim.api.nvim_set_hl(0, "WinBar", { fg = colors.comment, bold = true })
         vim.api.nvim_set_hl(0, "WinBarNC", { fg = colors.comment, bold = true })
         vim.api.nvim_set_hl(0, "SignColumn", { bg = colors.bg })
-        vim.api.nvim_set_hl(0, "LineNr", { bg = colors.bg, fg = colors.comment })
         vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = colors.comment })
-        -- vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "#272932", fg = "#4D5264" })
+        vim.api.nvim_set_hl(0, "LineNr", { bg = colors.bg, fg = colors.line_fg })
+        vim.api.nvim_set_hl(0, "CursorLineNr", { bg = colors.bg, fg = colors.fg })
+        vim.api.nvim_set_hl(0, "GitSignsUntracked", { bg = colors.red, fg = colors.bg })
+        vim.api.nvim_set_hl(0, "StatusColumnSeparator", { bg = colors.bg, fg = colors.line_fg })
+
+        vim.api.nvim_set_hl(0, "GitSignsAdd", { bg = colors.bg, fg = colors.green })
+        vim.api.nvim_set_hl(0, "GitSignsDelete", { bg = colors.bg, fg = colors.red_key_w })
+        vim.api.nvim_set_hl(0, "GitSignsChange", { bg = colors.bg, fg = colors.diff_change })
     end,
     group = minimal_highlights,
 })

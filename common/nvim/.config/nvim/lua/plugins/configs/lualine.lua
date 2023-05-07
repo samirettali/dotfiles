@@ -5,6 +5,7 @@ end
 
 local colors = require("minimal.colors")
 local utils = require("core.utils")
+local icons = require("core.icons")
 
 colors = {
     bg       = colors.black,
@@ -121,7 +122,7 @@ end
 ins_left {
     -- mode component
     "mode",
-    icon = "▊",
+    icon = icons.ui.block,
     color = function()
         local mode_color = {
             n = colors.red,
@@ -157,7 +158,7 @@ ins_left {
 
 ins_left {
     "filename",
-    icon = "",
+    icon = icons.file.file,
     cond = function()
         return conditions.buffer_not_empty() and not utils.is_plugin_filetype()
     end,
@@ -179,6 +180,13 @@ ins_left {
     --     newfile = '[New]',     -- Text to show for newly created file before first write
     -- }
 }
+
+-- ins_left {
+--     function()
+--         return require("auto-session.lib").current_session_name()
+--     end,
+-- }
+
 
 -- ins_left {
 --     'diff',
@@ -222,7 +230,6 @@ ins_left {
 -- }
 
 
-
 ins_right {
     "diagnostics",
     sources = { "nvim_diagnostic" },
@@ -254,7 +261,7 @@ ins_right {
         end
         return msg
     end,
-    icon = "",
+    icon = icons.ui.lsp,
     color = { fg = colors.violet, gui = "bold" },
 }
 

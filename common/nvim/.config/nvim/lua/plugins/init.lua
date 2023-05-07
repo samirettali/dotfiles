@@ -1,3 +1,5 @@
+local utils = require("core.utils")
+
 local function require_config(name)
     local path = "plugins.configs." .. name
     local result, err = pcall(require, path)
@@ -7,52 +9,24 @@ local function require_config(name)
     end
 end
 
-local function setup_plugin(name)
-    return function()
-        local present, plugin = pcall(require, name)
-        if not present then
-            return false
-        end
-
-        if plugin["setup"] ~= nil then
-            plugin.setup {}
-        elseif plugin["init"] ~= nil then
-            plugin.init {}
-        else
-            return false
-        end
-
-        return true
-    end
-end
-
-local ufo_handler = function(virtText, lnum, endLnum, width, truncate)
-    local newVirtText = {}
-    local suffix = ("  %d "):format(endLnum - lnum)
-    local sufWidth = vim.fn.strdisplaywidth(suffix)
-    local targetWidth = width - sufWidth
-    local curWidth = 0
-    for _, chunk in ipairs(virtText) do
-        local chunkText = chunk[1]
-        local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-        if targetWidth > curWidth + chunkWidth then
-            table.insert(newVirtText, chunk)
-        else
-            chunkText = truncate(chunkText, targetWidth - curWidth)
-            local hlGroup = chunk[2]
-            table.insert(newVirtText, { chunkText, hlGroup })
-            chunkWidth = vim.fn.strdisplaywidth(chunkText)
-            -- str width returned from truncate() may less than 2nd argument, need padding
-            if curWidth + chunkWidth < targetWidth then
-                suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
-            end
-            break
-        end
-        curWidth = curWidth + chunkWidth
-    end
-    table.insert(newVirtText, { suffix, "MoreMsg" })
-    return newVirtText
-end
+-- local function setup_plugin(name)
+--     return function()
+--         local present, plugin = pcall(require, name)
+--         if not present then
+--             return false
+--         end
+--
+--         if plugin["setup"] ~= nil then
+--             plugin.setup {}
+--         elseif plugin["init"] ~= nil then
+--             plugin.init {}
+--         else
+--             return false
+--         end
+--
+--         return true
+--     end
+-- end
 
 local plugins = {
     -- Git
@@ -72,13 +46,6 @@ local plugins = {
             vim.g.git_messenger_include_diff = "current"
         end
     },
-    -- {
-    --     "lewis6991/gitsigns.nvim",
-    --     dependencies = "nvim-lua/plenary.nvim",
-    --     config = function()
-    --         require_config("gitsigns")
-    --     end
-    -- },
     -- {
     --     "akinsho/git-conflict.nvim",
     --     config = function()
@@ -130,16 +97,16 @@ local plugins = {
     {
         -- Show function signature as you type
         "ray-x/lsp_signature.nvim",
-        config = setup_plugin("lsp_signature"),
+        config = function() require_config("lspsignature") end,
     },
     {
         "onsails/lspkind-nvim",
         opt = false,
-        config = setup_plugin("lspkind"),
+        config = function() require_config("lspkind") end,
     },
     {
         "Fildo7525/pretty_hover",
-        config = setup_plugin('prettyhover'),
+        config = function() require_config('prettyhover') end,
     },
     -- {
     --     "glepnir/lspsaga.nvim",
@@ -422,68 +389,11 @@ local plugins = {
         end
     },
     -- {
-    -- "luukvbaal/statuscol.nvim",
-    --     config = setup_plugin("statuscol"),
+    --     "rcarriga/nvim-notify",
+    --     config = function()
+    --         vim.notify = require("notify")
+    --     end,
     -- },
-    -- return {
-    {
-        "kevinhwang91/nvim-ufo",
-        dependencies = {
-            "kevinhwang91/promise-async",
-            "neovim/nvim-lspconfig",
-            {
-                "luukvbaal/statuscol.nvim",
-                config = function()
-                    print("ok statuscol")
-                    local builtin = require "statuscol.builtin"
-                    require("statuscol").setup {
-                        relculright = true,
-                        segments = {
-                            { text = { builtin.foldfunc },      click = "v:lua.ScFa" },
-                            { text = { "%s" },                  click = "v:lua.ScSa" },
-                            { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
-                        },
-                    }
-                end,
-            },
-        },
-        --stylua: ignore
-        keys = {
-            { "zc" },
-            { "zo" },
-            { "zC" },
-            { "zO" },
-            { "za" },
-            { "zA" },
-            { "zr", function() require("ufo").openFoldsExceptKinds() end, desc = "Open Folds Except Kinds", },
-            { "zR", function() require("ufo").openAllFolds() end,         desc = "Open All Folds", },
-            { "zM", function() require("ufo").closeAllFolds() end,        desc = "Close All Folds", },
-            { "zm", function() require("ufo").closeFoldsWith() end,       desc = "Close Folds With", },
-            {
-                "zp",
-                function()
-                    local winid = require('ufo').peekFoldedLinesUnderCursor()
-                    if not winid then
-                        vim.lsp.buf.hover()
-                    end
-                end,
-                desc = "Peek Fold",
-            },
-        },
-        opts = {
-            fold_virt_text_handler = ufo_handler,
-        },
-        config = function(_, opts)
-            print("ok ufo")
-            require("ufo").setup(opts)
-        end,
-    },
-    {
-        "rcarriga/nvim-notify",
-        config = function()
-            vim.notify = require("notify")
-        end,
-    },
     {
         "Eandrju/cellular-automaton.nvim"
     },
@@ -559,25 +469,40 @@ local plugins = {
             })
         end,
     },
-    {
-        "projekt0n/circles.nvim",
-        config = function()
-            require("circles").setup()
-        end,
-    },
-    { "AhmedAbdulrahman/aylin.vim" }
+    -- {
+    --     "projekt0n/circles.nvim",
+    --     config = function()
+    --         require("circles").setup()
+    --     end,
+    -- },
 }
 
 -- glepnir/mutchar.nvim
 
-local opts = {
+-- require("lazy").setup(plugins, opts)
+require("lazy").setup {
+    spec = {
+        plugins,
+        { import = "plugins.ui" },
+        { import = "plugins.extras.pde" },
+    },
     defaults = {
         lazy = false,
     },
     change_detection = {
         enabled = true,
         notify = true,
-    }
+    },
+    rtp = {
+        disabled_plugins = {
+          "gzip",
+          "matchit",
+          "matchparen",
+          "netrwPlugin",
+          "tarPlugin",
+          "tohtml",
+          "tutor",
+          "zipPlugin",
+        },
+    },
 }
-
-require("lazy").setup(plugins, opts)

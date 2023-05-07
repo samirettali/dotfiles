@@ -89,11 +89,22 @@ end
 
 lsp_handlers()
 
+local function capabilities()
+    local caps = vim.lsp.protocol.make_client_capabilities()
+    return caps
+    -- caps.textDocument.foldingRange = {
+    --     dynamicRegistration = false,
+    --     lineFoldingOnly = true,
+    -- }
+    -- return require("cmp_nvim_lsp").default_capabilities(caps)
+end
+
 vim.g.completion_trigger_on_delete = 1
 vim.g.lsp_document_highlight_enabled = 1
 
 local function custom_attach(client, bufnr)
     local caps = client.server_capabilities
+    local caps = capabilities()
 
     -- Show diagnostic on hover
     vim.api.nvim_create_autocmd("CursorHold", {
@@ -242,7 +253,6 @@ vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "i", texthl = "LspD
 vim.fn.sign_define("LspDiagnosticsSignHint", { text = "!", texthl = "LspDiagnosticsSignHint" })
 
 -- local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- capabilities.textDocument.completion.completionItem = {
 --     documentationFormat = { "markdown", "plaintext" },
@@ -321,7 +331,7 @@ lspconfig.sqls.setup {
         sqls.on_attach(client, bufnr)
         map('n', 'qq', ':SqlsExecuteQuery<CR>', { buffer = bufnr })
     end,
-    capabilities = capabilities,
+    capabilities = capabilities(),
     settings = {
         sqls = {
             connections = {
@@ -337,14 +347,14 @@ lspconfig.sqls.setup {
 
 lspconfig.golangci_lint_ls.setup {
     on_attach = custom_attach,
-    capabilities = capabilities,
+    capabilities = capabilities(),
     command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json",
         "--issues-exit-code=1" },
 }
 
 lspconfig.gopls.setup {
     on_attach = custom_attach,
-    capabilities = capabilities,
+    capabilities = capabilities(),
     settings = {
         gopls = {
             hints = {
@@ -379,7 +389,7 @@ for lsp, settings in pairs(servers) do
     lspconfig[lsp].setup {
         on_attach = custom_attach,
         -- filetypes = opts.filetypes,
-        capabilities = capabilities,
+        capabilities = capabilities(),
         settings = settings,
         flags = {
             debounce_text_changes = 200,
@@ -388,7 +398,7 @@ for lsp, settings in pairs(servers) do
 end
 
 lspconfig.rust_analyzer.setup {
-    capabilities = capabilities,
+    capabilities = capabilities(),
     on_attach = custom_attach,
     cmd = {
         "rustup", "run", "stable", "rust-analyzer",
@@ -423,7 +433,7 @@ lspconfig.terraformls.setup {}
 
 lspconfig.lua_ls.setup {
     on_attach = custom_attach,
-    capabilities = capabilities,
+    capabilities = capabilities(),
 
     settings = {
         Lua = {
