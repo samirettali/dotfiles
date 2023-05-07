@@ -229,4 +229,28 @@ M.reload_config = function()
     vim.notify("Nvim configuration reloaded!", vim.log.levels.INFO)
 end
 
+M.plugin_filetypes = {
+    "help",
+    "startify",
+    "dashboard",
+    "packer",
+    "neogitstatus",
+    "NvimTree",
+    "Trouble",
+    "alpha",
+    "lir",
+    "Outline",
+    "spectre_panel",
+    "toggleterm",
+    "vista_kind",
+    "NEO-TREE"
+}
+
+M.is_plugin_filetype = function()
+    if vim.tbl_contains(M.plugin_filetypes, vim.bo.filetype) then
+        return true
+    end
+    return false
+end
+
 return M

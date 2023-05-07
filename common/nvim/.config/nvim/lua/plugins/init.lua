@@ -26,6 +26,34 @@ local function setup_plugin(name)
     end
 end
 
+local ufo_handler = function(virtText, lnum, endLnum, width, truncate)
+    local newVirtText = {}
+    local suffix = ("  %d "):format(endLnum - lnum)
+    local sufWidth = vim.fn.strdisplaywidth(suffix)
+    local targetWidth = width - sufWidth
+    local curWidth = 0
+    for _, chunk in ipairs(virtText) do
+        local chunkText = chunk[1]
+        local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+        if targetWidth > curWidth + chunkWidth then
+            table.insert(newVirtText, chunk)
+        else
+            chunkText = truncate(chunkText, targetWidth - curWidth)
+            local hlGroup = chunk[2]
+            table.insert(newVirtText, { chunkText, hlGroup })
+            chunkWidth = vim.fn.strdisplaywidth(chunkText)
+            -- str width returned from truncate() may less than 2nd argument, need padding
+            if curWidth + chunkWidth < targetWidth then
+                suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+            end
+            break
+        end
+        curWidth = curWidth + chunkWidth
+    end
+    table.insert(newVirtText, { suffix, "MoreMsg" })
+    return newVirtText
+end
+
 local plugins = {
     -- Git
     {
@@ -44,19 +72,19 @@ local plugins = {
             vim.g.git_messenger_include_diff = "current"
         end
     },
-    {
-        "lewis6991/gitsigns.nvim",
-        dependencies = "nvim-lua/plenary.nvim",
-        config = function()
-            require_config("gitsigns")
-        end
-    },
-    {
-        "akinsho/git-conflict.nvim",
-        config = function()
-            require("git-conflict").setup({})
-        end
-    },
+    -- {
+    --     "lewis6991/gitsigns.nvim",
+    --     dependencies = "nvim-lua/plenary.nvim",
+    --     config = function()
+    --         require_config("gitsigns")
+    --     end
+    -- },
+    -- {
+    --     "akinsho/git-conflict.nvim",
+    --     config = function()
+    --         require("git-conflict").setup({})
+    --     end
+    -- },
     {
         "f-person/git-blame.nvim",
         config = function()
@@ -80,6 +108,12 @@ local plugins = {
         end
     },
     {
+        "simrat39/symbols-outline.nvim",
+        config = function()
+            require("symbols-outline").setup()
+        end,
+    },
+    {
         -- Show a panel to browse tags
         "liuchengxu/vista.vim",
         config = function()
@@ -88,7 +122,6 @@ local plugins = {
     }, -- LSP and related
     {
         "neovim/nvim-lspconfig",
-
         dependencies = "nvim-lua/plenary.nvim",
         config = function()
             require_config("lsp")
@@ -105,30 +138,34 @@ local plugins = {
         config = setup_plugin("lspkind"),
     },
     {
-        "glepnir/lspsaga.nvim",
+        "Fildo7525/pretty_hover",
+        config = setup_plugin('prettyhover'),
+    },
+    -- {
+    --     "glepnir/lspsaga.nvim",
 
-        branch = "main",
-        config = function()
-            -- require_config("saga")
-        end
-    },
-    {
-        "VidocqH/lsp-lens.nvim",
-        config = function()
-            require 'lsp-lens'.setup({
-                enable = true,
-                include_declaration = false, -- Reference include declaration
-                sections = { -- Enable / Disable specific request
-                    definition = false,
-                    references = true,
-                    implementation = true,
-                },
-            })
-        end,
-    },
+    --     branch = "main",
+    --     config = function()
+    --         -- require_config("saga")
+    --     end
+    -- },
+    -- {
+    --     "VidocqH/lsp-lens.nvim",
+    --     config = function()
+    --         require 'lsp-lens'.setup({
+    --             enable = true,
+    --             include_declaration = false, -- Reference include declaration
+    --             sections = {
+    --                 -- Enable / Disable specific request
+    --                 definition = false,
+    --                 references = true,
+    --                 implementation = true,
+    --             },
+    --         })
+    --     end,
+    -- },
     {
         "rafamadriz/friendly-snippets",
-
         module = "cmp_nvim_lsp",
         event = "InsertEnter"
     },
@@ -202,10 +239,10 @@ local plugins = {
     },
     {
         -- GPS
-        "SmiteshP/nvim-gps",
-        dependencies = "nvim-treesitter/nvim-treesitter",
+        "SmiteshP/nvim-navic",
+        dependencies = "neovim/nvim-lspconfig",
         config = function()
-            require_config("gps")
+            require_config("navic")
         end
     },
     { "mbbill/undotree" }, -- Show a tree of undo history
@@ -223,10 +260,10 @@ local plugins = {
         end
     },
     {
-        "freddiehaddad/feline.nvim",
+        "nvim-lualine/lualine.nvim",
         config = function()
-            require_config("feline")
-        end
+            require_config("lualine")
+        end,
     },
     {
         -- Annotations on closing tag, bracket, parenthesis etc.
@@ -325,14 +362,17 @@ local plugins = {
     {
         "bluz71/vim-moonfly-colors",
         config = function()
-            vim.cmd [[ colorscheme moonfly ]]
+            -- vim.cmd [[ colorscheme moonfly ]]
         end
     },
     {
-        "Yazeed1s/oh-lucy.nvim"
+        "Yazeed1s/minimal.nvim",
+        config = function()
+            vim.cmd [[ colorscheme minimal ]]
+        end,
     },
     {
-        "olimorris/onedarkpro.nvim",
+        "Yazeed1s/oh-lucy.nvim"
     },
     { "Mofiqul/vscode.nvim" },
     {
@@ -381,9 +421,68 @@ local plugins = {
             require_config("dapui")
         end
     },
+    -- {
+    -- "luukvbaal/statuscol.nvim",
+    --     config = setup_plugin("statuscol"),
+    -- },
+    -- return {
     {
-        "luukvbaal/statuscol.nvim",
-        config = function() require("statuscol").setup() end
+        "kevinhwang91/nvim-ufo",
+        dependencies = {
+            "kevinhwang91/promise-async",
+            "neovim/nvim-lspconfig",
+            {
+                "luukvbaal/statuscol.nvim",
+                config = function()
+                    print("ok statuscol")
+                    local builtin = require "statuscol.builtin"
+                    require("statuscol").setup {
+                        relculright = true,
+                        segments = {
+                            { text = { builtin.foldfunc },      click = "v:lua.ScFa" },
+                            { text = { "%s" },                  click = "v:lua.ScSa" },
+                            { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+                        },
+                    }
+                end,
+            },
+        },
+        --stylua: ignore
+        keys = {
+            { "zc" },
+            { "zo" },
+            { "zC" },
+            { "zO" },
+            { "za" },
+            { "zA" },
+            { "zr", function() require("ufo").openFoldsExceptKinds() end, desc = "Open Folds Except Kinds", },
+            { "zR", function() require("ufo").openAllFolds() end,         desc = "Open All Folds", },
+            { "zM", function() require("ufo").closeAllFolds() end,        desc = "Close All Folds", },
+            { "zm", function() require("ufo").closeFoldsWith() end,       desc = "Close Folds With", },
+            {
+                "zp",
+                function()
+                    local winid = require('ufo').peekFoldedLinesUnderCursor()
+                    if not winid then
+                        vim.lsp.buf.hover()
+                    end
+                end,
+                desc = "Peek Fold",
+            },
+        },
+        opts = {
+            fold_virt_text_handler = ufo_handler,
+        },
+        config = function(_, opts)
+            print("ok ufo")
+            require("ufo").setup(opts)
+        end,
+    },
+    {
+        "rcarriga/nvim-notify",
+        config = function()
+            vim.notify = require("notify")
+        end,
     },
     {
         "Eandrju/cellular-automaton.nvim"
@@ -409,7 +508,64 @@ local plugins = {
                 auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
             }
         end
-    }
+    },
+    {
+        "kdheepak/lazygit.nvim",
+        config = function()
+            vim.keymap.set("n", "<Leader>gg", ":LazyGit<CR>")
+        end
+    },
+    -- {
+    --     "chrisgrieser/nvim-spider",
+    --     lazy = false,
+    --     config = function()
+    --         -- Keymaps
+    --         vim.keymap.set({ "n", "o", "x" }, "w", function() require("spider").motion("w") end, { desc = "Spider-w" })
+    --         vim.keymap.set({ "n", "o", "x" }, "e", function() require("spider").motion("e") end, { desc = "Spider-e" })
+    --         vim.keymap.set({ "n", "o", "x" }, "b", function() require("spider").motion("b") end, { desc = "Spider-b" })
+    --         vim.keymap.set({ "n", "o", "x" }, "ge", function() require("spider").motion("ge") end, { desc = "Spider-ge" })
+    --     end,
+    -- },
+    {
+        "stevearc/overseer.nvim",
+        config = function()
+            require('overseer').setup()
+        end
+    },
+    {
+        "nanotee/sqls.nvim"
+    },
+    {
+        "toppair/peek.nvim",
+        build = 'deno task --quiet build:fast',
+        config = function()
+            -- default config:
+            require('peek').setup({
+                auto_load = true,        -- whether to automatically load preview when
+                -- entering another markdown buffer
+                close_on_bdelete = true, -- close preview window on buffer delete
+                syntax = true,           -- enable syntax highlighting, affects performance
+                theme = 'dark',          -- 'dark' or 'light'
+                update_on_change = true,
+                app = 'webview',         -- 'webview', 'browser', string or a table of strings
+                -- explained below
+
+                filetype = { 'markdown' }, -- list of filetypes to recognize as markdown
+                -- relevant if update_on_change is true
+                throttle_at = 200000,      -- start throttling when file exceeds this
+                -- amount of bytes in size
+                throttle_time = 'auto',    -- minimum amount of time in milliseconds
+                -- that has to pass before starting new render
+            })
+        end,
+    },
+    {
+        "projekt0n/circles.nvim",
+        config = function()
+            require("circles").setup()
+        end,
+    },
+    { "AhmedAbdulrahman/aylin.vim" }
 }
 
 -- glepnir/mutchar.nvim

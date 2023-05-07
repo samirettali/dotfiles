@@ -15,13 +15,13 @@ local options = {
             "--column",
             "--smart-case",
         },
-
         border = {},
         borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
         color_devicons = true,
         entry_prefix = "  ",
-        file_ignore_patterns = { "node_modules", "docker", "%.mmdb", "vendor" },
+        file_ignore_patterns = { "node_modules", "docker", "*.mmdb", "vendor",
+            ".git", "gen", ".cache", "*.pdf", "*.zip", "*.dll" },
         file_previewer = require("telescope.previewers").vim_buffer_cat.new,
         file_sorter = require("telescope.sorters").get_fuzzy_file,
         generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
@@ -76,5 +76,4 @@ local options = {
 }
 
 telescope.setup(options)
-
 telescope.load_extension("file_browser")

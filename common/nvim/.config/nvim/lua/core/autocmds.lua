@@ -73,12 +73,28 @@ autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWriteP
 })
 
 -- Fix moonfly colorscheme winbar highlights
-local custom_highlight = vim.api.nvim_create_augroup("CustomHighlight", {})
+local moonfly_highlights = vim.api.nvim_create_augroup("MoonflyHighlight", {})
 vim.api.nvim_create_autocmd("ColorScheme", {
     pattern = "moonfly",
     callback = function()
         vim.api.nvim_set_hl(0, "WinBar", { bg = "#080808", bold = true })
         vim.api.nvim_set_hl(0, "WinBarNC", { bg = "#080808", bold = true })
     end,
-    group = custom_highlight,
+    group = moonfly_highlights,
+})
+
+local minimal_highlights = vim.api.nvim_create_augroup("MinimalHighlights", {})
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "minimal",
+    callback = function()
+        local colors = require("minimal.colors")
+
+        vim.api.nvim_set_hl(0, "WinBar", { fg = colors.comment, bold = true })
+        vim.api.nvim_set_hl(0, "WinBarNC", { fg = colors.comment, bold = true })
+        vim.api.nvim_set_hl(0, "SignColumn", { bg = colors.bg })
+        vim.api.nvim_set_hl(0, "LineNr", { bg = colors.bg, fg = colors.comment })
+        vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = colors.comment })
+        -- vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "#272932", fg = "#4D5264" })
+    end,
+    group = minimal_highlights,
 })

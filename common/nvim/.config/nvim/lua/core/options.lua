@@ -10,12 +10,12 @@ local home = os.getenv("HOME")
 -- g.did_load_filetypes = 0
 -- g.do_filetype_lua = 1
 
-opt.expandtab = true -- Insert spaces instead of tabs
-opt.tabstop = indentation -- Tab size
+opt.expandtab = true         -- Insert spaces instead of tabs
+opt.tabstop = indentation    -- Tab size
 opt.shiftwidth = indentation -- Number of spaces to use for auto indenting
 opt.smartindent = true
-opt.ignorecase = true -- Ignore case
-opt.smartcase = true -- Don't ignore case with capitals
+opt.ignorecase = true        -- Ignore case
+opt.smartcase = true         -- Don't ignore case with capitals
 opt.smarttab = true
 opt.softtabstop = indentation
 opt.autoindent = true -- Automatically indent new lines
@@ -26,32 +26,32 @@ opt.undofile = true -- Use undo files
 -- opt("b", "spelllang", "it,en_us")
 -- opt.iskeyword = opt.iskeyword - { "_" }     -- Treat _ as a word separator
 
-opt.number = true -- Show line numbers
+opt.number = true         -- Show line numbers
 opt.relativenumber = true -- Show relative line numbers
-opt.wrap = true -- Wrap visually long lines
+opt.wrap = true           -- Wrap visually long lines
 -- opt.colorcolumn = "81" -- Highlight 81st column
-opt.foldmethod = "expr" -- Set fold method
+opt.foldmethod = "expr"   -- Set fold method
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 opt.signcolumn = "yes" -- Keep sign column always opened
 
 opt.background = "dark"
 opt.updatetime = 250
-opt.hidden = true -- Enable having modified buffers in background
-opt.joinspaces = false -- No double spaces with join after a dot
-opt.scrolloff = 12 -- Lines of context
-opt.sidescrolloff = 8 -- Columns of context
-opt.shiftround = true -- Round indent
-opt.splitbelow = true -- Put new windows below current
-opt.splitright = true -- Put new windows right of current
-opt.foldlevelstart = 20 -- Set initial fold level
-opt.termguicolors = true -- True color support
-opt.wildmode = "longest:full,full" -- Command-line completion mode
-opt.showmatch = true -- Temporarily jump to matching parentheresis when inserting one
-opt.lazyredraw = true -- Disable redrawing while running macros
-opt.inccommand = "nosplit" -- Show result of substitution as you type
-opt.mouse = "nv" -- Enable mouse in normal and visual mode
-opt.showbreak = "↳ " -- Show character at visually wrapped lines
+opt.hidden = true                             -- Enable having modified buffers in background
+opt.joinspaces = false                        -- No double spaces with join after a dot
+opt.scrolloff = 12                            -- Lines of context
+opt.sidescrolloff = 8                         -- Columns of context
+opt.shiftround = true                         -- Round indent
+opt.splitbelow = true                         -- Put new windows below current
+opt.splitright = true                         -- Put new windows right of current
+opt.foldlevelstart = 20                       -- Set initial fold level
+opt.termguicolors = true                      -- True color support
+opt.wildmode = "longest:full,full"            -- Command-line completion mode
+opt.showmatch = true                          -- Temporarily jump to matching parentheresis when inserting one
+opt.lazyredraw = true                         -- Disable redrawing while running macros
+opt.inccommand = "nosplit"                    -- Show result of substitution as you type
+opt.mouse = "nv"                              -- Enable mouse in normal and visual mode
+opt.showbreak = "↳ "                        -- Show character at visually wrapped lines
 opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize instead of whitespaces
 opt.completeopt = "menuone,noselect"
 opt.undodir = home .. "/.local/share/nvim/undo"
@@ -60,11 +60,11 @@ opt.backupdir = home .. "/.local/share/nvim/tmp"
 opt.shortmess:append "c"
 opt.shortmess:append "o" -- Don't print anything when writing a file
 
-opt.confirm = true -- Ask for some operations like quitting an unsaved file instead of failing
-opt.laststatus = 3 -- Global statusline
-opt.title = true -- Allow neovim to set the window title
-opt.cmdheight = 0 -- Command line height (0 hides it)
-opt.cursorline = true -- Highlight current line
+opt.confirm = true       -- Ask for some operations like quitting an unsaved file instead of failing
+opt.laststatus = 3       -- Global statusline
+opt.title = true         -- Allow neovim to set the window title
+opt.cmdheight = 0        -- Command line height (0 hides it)
+opt.cursorline = true    -- Highlight current line
 
 opt.showmode = false
 
@@ -84,6 +84,7 @@ opt.fillchars = {
 opt.timeoutlen = 400
 
 g.gitblame_enabled = 0
+g.editorconfig = true
 
 -- vim.cmd [[highlight WinSeparator guibg=None guifg=#20272e]] -- Fix for the global statusline
 

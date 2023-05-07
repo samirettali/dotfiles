@@ -66,33 +66,10 @@ map('i', ']', ']<C-g>u')
 -- Shift selected lines
 map('v', 'J', [[:m '>+1<cr>gv=gv]])
 map('v', 'K', [[:m '<-2<cr>gv=gv]])
--- map("n", "<A-j>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true })
--- map("n", "<A-k>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true })
 
 map('n', 'gR', function()
-    require("telescope.builtin").lsp_references()
+  require("telescope.builtin").lsp_references()
 end)
-
--- map('n', 'ds', vim.diagnostic.get)
--- map('n', 'dn', vim.diagnostic.goto_next)
--- map('n', 'dp', vim.diagnostic.goto_prev)
--- map('n', 'dp', vim.diagnostic.goto_prev)
---
-map('n', 'gd', vim.lsp.buf.definition)
-map('n', 'gD', vim.lsp.buf.declaration)
-map('n', 'gT', vim.lsp.buf.type_definition)
-map('n', 'K', vim.lsp.buf.hover)
-map('n', 'ga', vim.lsp.buf.code_action)
-map('n', 'gr', vim.lsp.buf.rename)
-
-map('n', 'gs', vim.lsp.buf.document_symbol)
-map('n', 'gS', vim.lsp.buf.workspace_symbol)
-map('n', 'gi', vim.lsp.buf.incoming_calls)
--- map('n', '<Leader>ao', vim.lsp.buf.outgoing_calls)
--- map('n', '<Leader>fe', function() require("telescope.functions").diagnostics() end)
-
--- map("", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
--- map("", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
 
 -- Close buffer
 map("n", "<C-q>", ":bd<CR>")
@@ -141,3 +118,5 @@ map("n", "<Leader>gm", "<Plug>(git-messenger)")
 map("n", "g<", "<Cmd>ISwapNodeWithLeft<CR>")
 map("n", "g>", "<Cmd>ISwapNodeWithRight<CR>")
 map("n", "gs", "<Cmd>ISwap<CR>")
+
+map("n", "<C-s>", ":w ++p<CR>")

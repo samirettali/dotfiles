@@ -1,380 +1,286 @@
 local present, lualine = pcall(require, "lualine")
 if not present then
-    return
+    return false
 end
 
-local gps_present, gps = pcall(require, "nvim-gps")
-if not gps_present then
-    return
-end
+local colors = require("minimal.colors")
+local utils = require("core.utils")
 
--- local function lsp_progress(_, is_active)
---     if not is_active then
---         return
---     end
---     local messages = vim.lsp.util.get_progress_messages()
---
---     if #messages == 0 then
---         return ""
---     end
---
---     local status = {}
---
---     for _, msg in pairs(messages) do
---         local title = ""
---         if msg.title then
---             title = msg.title
---         end
---         table.insert(status, (msg.percentage or 0) .. "%% " .. title)
---     end
---     local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
---     local ms = vim.loop.hrtime() / 1000000
---     local frame = math.floor(ms / 120) % #spinners
---     return table.concat(status, "  ") .. " " .. spinners[frame + 1]
--- end
-
-local colors = {
-    color0 = '#1c1c1c',
-    color1 = '#ff5189',
-    color2 = '#c6c6c6',
-    color3 = '#303030',
-    color4 = '#181818',
-    color6 = '#9e9e9e',
-    color7 = '#80a0ff',
-    color8 = '#ae81ff',
+colors = {
+    bg       = colors.black,
+    fg       = colors.fg,
+    yellow   = colors.yellow,
+    cyan     = colors.diff_text,
+    darkblue = colors.black1,
+    green    = colors.green,
+    orange   = colors.orange_wr,
+    violet   = colors.orange,
+    magenta  = colors.pink,
+    blue     = colors.blue_type,
+    red      = colors.red_key_w,
 }
 
 local theme = {
-    replace = {
-        a = { fg = colors.color0, bg = colors.color1, gui = 'bold' },
-        b = { fg = colors.color2, bg = colors.color3 },
-    },
-    inactive = {
-        a = { fg = colors.color6, bg = colors.color3, gui = 'bold' },
-        b = { fg = colors.color6, bg = colors.color3 },
-        c = { fg = colors.color6, bg = colors.color4 },
-    },
-    normal = {
-        a = { fg = colors.color0, bg = colors.color7, gui = 'bold' },
-        b = { fg = colors.color2, bg = colors.color3 },
-        c = { fg = colors.color2, bg = colors.color4 },
-    },
-    visual = {
-        a = { fg = colors.color0, bg = colors.color8, gui = 'bold' },
-        b = { fg = colors.color2, bg = colors.color3 },
-    },
-    insert = {
-        a = { fg = colors.color0, bg = colors.color2, gui = 'bold' },
-        b = { fg = colors.color2, bg = colors.color3 },
-    },
+    -- replace = {
+    --     a = { fg = colors.color0, bg = theme.bg, gui = 'bold' },
+    --     b = { fg = colors.color2, bg = theme.bg },
+    -- },
+    -- inactive = {
+    --     a = { fg = colors.color6, bg = theme.bg, gui = 'bold' },
+    --     b = { fg = colors.color6, bg = theme.bg },
+    --     c = { fg = colors.color6, bg = theme.bg },
+    -- },
+    -- normal = {
+    --     a = { fg = colors.color0, bg = theme.bg, gui = 'bold' },
+    --     b = { fg = colors.color2, bg = theme.bg },
+    --     c = { fg = colors.color2, bg = theme.bg },
+    -- },
+    -- visual = {
+    --     a = { fg = colors.color0, bg = theme.bg, gui = 'bold' },
+    --     b = { fg = colors.color2, bg = theme.bg },
+    -- },
+    -- insert = {
+    --     a = { fg = colors.color0, bg = theme.bg, gui = 'bold' },
+    --     b = { fg = colors.color2, bg = theme.bg },
+    -- },
+    normal = { c = { fg = colors.fg, bg = colors.bg } },
+    inactive = { c = { fg = colors.fg, bg = colors.bg } },
 }
+
+local conditions = {
+    buffer_not_empty = function()
+        return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
+    end,
+    hide_in_width = function()
+        return vim.fn.winwidth(0) > 80
+    end,
+    check_git_workspace = function()
+        local filepath = vim.fn.expand("%:p:h")
+        local gitdir = vim.fn.finddir(".git", filepath .. ";")
+        return gitdir and #gitdir > 0 and #gitdir < #filepath
+    end,
+}
+
 
 local options = {
     options = {
-        theme = "auto",
-        section_separators = { left = "", right = "" },
-        component_separators = "",
+        theme = theme,
         icons_enabled = true,
         globalstatus = true,
+        always_divide_middle = true,
+        component_separators = "",
+        section_separators = "",
+        disabled_filetypes = {
+            statusline = {},
+            winbar = {}
+        },
+        ignore_focus = {},
+        refresh = {
+            statusline = 1000,
+            tabline = 1000,
+            winbar = 1000
+        },
     },
     sections = {
-        lualine_a = { 'mode' },
-        lualine_b = { "branch" },
-        lualine_c = {
-            -- { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
-        },
-        lualine_x = {},
+        lualine_a = {},
+        lualine_b = {},
         lualine_y = {},
-        lualine_z = {
-            { "diagnostics", sources = { "nvim_diagnostic" } }
-        },
+        lualine_z = {},
+        lualine_c = {},
+        lualine_x = {},
     },
     inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { "filename" },
-        lualine_x = { "location" },
         lualine_y = {},
-        lualine_z = {}
+        lualine_z = {},
+        lualine_c = {},
+        lualine_x = {},
     },
 }
 
-lualine.setup(options)
---
--- -- Using Lualine as the statusline.
 
--- Show git status.
--- local function diff_source()
---     local gitsigns = vim.b.gitsigns_status_dict
---     if gitsigns then
---         return {
---             added = gitsigns.added,
---             modified = gitsigns.changed,
---             removed = gitsigns.removed
---         }
---     end
--- end
---
--- -- Get the current buffer's filetype.
--- local function get_current_filetype()
---     return vim.api.nvim_buf_get_option(0, 'filetype')
--- end
---
--- -- Get the current buffer's type.
--- local function get_current_buftype()
---     return vim.api.nvim_buf_get_option(0, 'buftype')
--- end
---
--- -- Get the buffer's filename.
--- local function get_current_filename()
---     local bufname = vim.api.nvim_buf_get_name(0)
---     return bufname ~= '' and vim.fn.fnamemodify(bufname, ':t') or '[No Name]'
--- end
---
--- -- Gets the current buffer's filename with the filetype icon supplied
--- -- by devicons.
--- local M = require('lualine.components.filetype'):extend()
--- Icon_hl_cache = {}
--- local lualine_require = require('lualine_require')
--- local modules = lualine_require.lazy_require {
---     highlight = 'lualine.highlight',
---     utils = 'lualine.utils.utils',
+-- Inserts a component in lualine_c at left section
+local function ins_left(component)
+    table.insert(options.sections.lualine_c, component)
+end
+
+-- Inserts a component in lualine_x at right section
+local function ins_right(component)
+    table.insert(options.sections.lualine_x, component)
+end
+
+-- ins_left {
+--     function()
+--         return "▊"
+--     end,
+--     color = { fg = colors.blue },      -- Sets highlighting of component
+--     padding = { left = 0, right = 1 }, -- We don't need space before this
 -- }
---
--- -- Return the current buffer's filetype icon with highlighting.
--- function M:get_current_filetype_icon()
---
---     -- Get setup.
---     local icon, icon_highlight_group
---     local _, devicons = pcall(require, 'nvim-web-devicons')
---     local f_name, f_extension = vim.fn.expand('%:t'), vim.fn.expand('%:e')
---     f_extension = f_extension ~= '' and f_extension or vim.bo.filetype
---     icon, icon_highlight_group = devicons.get_icon(f_name, f_extension)
---
---     -- Fallback settings.
---     if icon == nil and icon_highlight_group == nil then
---         icon = ''
---         icon_highlight_group = 'DevIconDefault'
---     end
---
---     -- Set colors.
---     local highlight_color = modules.utils.extract_highlight_colors(icon_highlight_group, 'fg')
---     if highlight_color then
---         local default_highlight = self:get_default_hl()
---         local icon_highlight = Icon_hl_cache[highlight_color]
---         if not icon_highlight or not modules.highlight.highlight_exists(icon_highlight.name .. '_normal') then
---             icon_highlight = self:create_hl({ fg = highlight_color }, icon_highlight_group)
---             Icon_hl_cache[highlight_color] = icon_highlight
---         end
---         icon = self:format_hl(icon_highlight) .. icon .. default_highlight
---     end
---
---     -- Return the formatted string.
---     return icon
---
--- end
---
--- -- Return the current buffer's filename with the filetype icon.
--- function M:get_current_filename_with_icon()
---
---     -- Get icon and filename.
---     local icon = M.get_current_filetype_icon(self)
---     local f_name = get_current_filename()
---
---     -- Add readonly icon.
---     local readonly = vim.api.nvim_buf_get_option(0, 'readonly')
---     local modifiable = vim.api.nvim_buf_get_option(0, 'modifiable')
---     local nofile = get_current_buftype() == 'nofile'
---     if readonly or nofile or not modifiable then
---         f_name = f_name .. ' '
---     end
---
---     -- Return the formatted string.
---     return icon .. ' ' .. f_name .. ' '
---
--- end
---
--- -- Get the lsp of the current buffer, when using native lsp.
--- local function get_native_lsp()
---     local buf_ft = get_current_filetype()
---     local clients = vim.lsp.get_active_clients()
---     if next(clients) == nil then
---         return 'None'
---     end
---     for _, client in ipairs(clients) do
---         local filetypes = client.config.filetypes
---         if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
---             return client.name
---         end
---     end
---     return 'None'
--- end
---
--- -- Get the status of the compiler, if applicable.
--- local function get_compiler_status()
---     local filetype = get_current_filetype()
---     if filetype == 'tex' then
---         return ''
---     end
---     return ''
--- end
---
--- -- Display the difference in commits between local and head.
--- local Job = require 'plenary.job'
--- local function get_git_compare()
---
---     -- Get the path of the current directory.
---     local curr_dir = vim.api.nvim_buf_get_name(0):match("(.*" .. '/' .. ")")
---
---     -- Run job to get git.
---     local result = Job:new({
---         command = 'git',
---         cwd = curr_dir,
---         args = { 'rev-list', '--left-right', '--count', 'HEAD...@{upstream}' },
---     }):sync(100)[1]
---
---     -- Process the result.
---     if type(result) ~= 'string' then return '' end
---     local ok, ahead, behind = pcall(string.match, result, "(%d+)%s*(%d+)")
---     if not ok then return '' end
---
---     -- No file, so no git.
---     if get_current_buftype() == 'nofile' then
---         return ''
---     end
---
---     -- Format for lualine.
---     return ' ' .. behind .. '  ' .. ahead
---
--- end
---
--- -- Required to properly set the colors.
--- local c = require 'nordic.colors'
---
--- require 'lualine'.setup {
---     sections = {
---         lualine_a = {
---             {
---                 'mode',
---                 icon = { ' ' },
---             },
---         },
---         lualine_b = {
---             {
---                 M.get_current_filename_with_icon
---             },
---         },
---         lualine_c = {
---             {
---                 'branch',
---                 icon = {
---                     '',
---                     color = { fg = c.orange.bright, gui = 'bold' },
---                 },
---                 separator = ' ',
---             },
---             {
---                 get_git_compare,
---                 separator = ' ',
---                 icon = {
---                     ' ',
---                     color = { fg = c.orange.bright, gui = 'bold' },
---                 }
---             },
---             {
---                 'diff',
---                 colored = true,
---                 source = diff_source,
---                 symbols = {
---                     added = ' ',
---                     modified = ' ',
---                     removed = ' '
---                 },
---                 diff_color = {
---                     added = { fg = c.git.add, gui = 'bold' },
---                     modified = { fg = c.git.change, gui = 'bold' },
---                     removed = { fg = c.git.delete, gui = 'bold' },
---                 }
---                 -- icon = {
---                 -- ' ',
---                 -- color = { fg = get_color('Orange', 'fg') },
---                 -- }
---             },
---         },
---         lualine_x = {
---             {
---                 'diagnostics',
---                 sources = { 'nvim_diagnostic' },
---                 separator = '',
---                 symbols = {
---                     error = ' ',
---                     warn = ' ',
---                     info = ' ',
---                     hint = ' ',
---                 },
---                 diagnostics_color = {
---                     error = { fg = c.error, gui = 'bold' },
---                     warn = { fg = c.warn, gui = 'bold' },
---                     info = { fg = c.info, gui = 'bold' },
---                     hint = { fg = c.hint, gui = 'bold' },
---                 },
---                 colored = true,
---             },
---         },
---         lualine_y = {
---             -- {
---             --     get_compiler_status,
---             --     icon = {
---             --         ' ,',
---             --         align = 'left',
---             --         color = {
---             --             fg = c.orange.bright,
---             --             gui = 'bold'
---             --         }
---             --     },
---             --     separator = ''
---             -- },
---             -- {
---             --     get_native_lsp,
---             --     icon = {
---             --         '  ',
---             --         align = 'left',
---             --         color = {
---             --             fg = c.orange.bright,
---             --             gui = 'bold'
---             --         }
---             --     }
---             -- },
---         },
---         lualine_z = {
---             {
---                 'location',
---                 icon = {
---                     '',
---                     align = 'left',
---                     color = { fg = c.black },
---                 }
---             },
---             {
---                 'progress',
---                 icon = {
---                     '',
---                     align = 'left',
---                     color = { fg = c.black },
---                 }
---             }
---         },
+
+ins_left {
+    -- mode component
+    "mode",
+    icon = "▊",
+    color = function()
+        local mode_color = {
+            n = colors.red,
+            i = colors.green,
+            v = colors.blue,
+            [""] = colors.blue,
+            V = colors.blue,
+            c = colors.magenta,
+            no = colors.red,
+            s = colors.orange,
+            S = colors.orange,
+            [""] = colors.orange,
+            ic = colors.yellow,
+            R = colors.violet,
+            Rv = colors.violet,
+            cv = colors.red,
+            ce = colors.red,
+            r = colors.cyan,
+            rm = colors.cyan,
+            ["r?"] = colors.cyan,
+            ["!"] = colors.red,
+            t = colors.red,
+        }
+        return { fg = mode_color[vim.fn.mode()] }
+    end,
+    padding = { right = 1 },
+}
+
+ins_left {
+    "branch",
+    color = { fg = colors.green, gui = "bold" },
+}
+
+ins_left {
+    "filename",
+    icon = "",
+    cond = function()
+        return conditions.buffer_not_empty() and not utils.is_plugin_filetype()
+    end,
+    color = { fg = colors.magenta, gui = "bold" },
+    file_status = true,     -- Displays file status (readonly status, modified status)
+    newfile_status = false, -- Display new file status (new file means no write after created)
+    path = 1,               -- 0: Just the filename
+    -- 1: Relative path
+    -- 2: Absolute path
+    -- 3: Absolute path, with tilde as the home directory
+    -- 4: Filename and parent dir, with tilde as the home directory
+
+    shorting_target = 40, -- Shortens path to leave 40 spaces in the window
+    -- for other components. (terrible name, any suggestions?)
+    -- symbols = {
+    --     modified = '[+]',      -- Text to show when the file is modified.
+    --     readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+    --     unnamed = '[No Name]', -- Text to show for unnamed buffers.
+    --     newfile = '[New]',     -- Text to show for newly created file before first write
+    -- }
+}
+
+-- ins_left {
+--     'diff',
+--     -- Is it me or the symbol for modified us really weird
+--     symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
+--     diff_color = {
+--         added = { fg = colors.green },
+--         modified = { fg = colors.orange },
+--         removed = { fg = colors.red },
 --     },
---     options = {
---         disabled_filetypes = { "dashboard" },
---         globalstatus = true,
---         section_separators = { left = ' ', right = ' ' },
---         component_separators = { left = '', right = '' },
---         theme = "nordic",
---     },
---     extensions = {
---         "toggleterm",
---         "nvim-tree"
---     }
+--     cond = conditions.hide_in_width,
 -- }
+
+-- Insert mid section. You can make any number of sections in neovim :)
+-- for lualine it's any number greater then 2
+ins_left {
+    function()
+        return "%="
+    end,
+}
+
+-- -- Add components to right sections
+-- ins_right {
+--     'o:encoding',       -- option component same as &encoding in viml
+--     fmt = string.upper, -- I'm not sure why it's upper case either ;)
+--     cond = conditions.hide_in_width,
+--     color = { fg = colors.green, gui = 'bold' },
+-- }
+
+-- ins_right {
+--     'fileformat',
+--     fmt = string.upper,
+--     icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+--     color = { fg = colors.green, gui = 'bold' },
+-- }
+
+-- ins_right {
+--     -- filesize component
+--     'filesize',
+--     cond = conditions.buffer_not_empty,
+-- }
+
+
+
+ins_right {
+    "diagnostics",
+    sources = { "nvim_diagnostic" },
+    symbols = { error = " ", warn = " ", info = " " },
+    diagnostics_color = {
+        color_error = { fg = colors.red },
+        color_warn = { fg = colors.yellow },
+        color_info = { fg = colors.cyan },
+    },
+}
+
+ins_right {
+    function()
+        local msg = ""
+        local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+        local clients = vim.lsp.get_active_clients()
+        if next(clients) == nil then
+            return msg
+        end
+        for _, client in ipairs(clients) do
+            local filetypes = client.config.filetypes
+            if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                if msg == "" then
+                    msg = client.name
+                else
+                    msg = msg .. ", " .. client.name
+                end
+            end
+        end
+        return msg
+    end,
+    icon = "",
+    color = { fg = colors.violet, gui = "bold" },
+}
+
+-- ins_right {
+--     'filetype',
+--     color = { fg = colors.blue, gui = 'bold' }
+-- }
+
+
+-- ins_right {
+--     "location",
+--     color = { fg = colors.orange, gui = "bold" }
+-- }
+
+-- ins_right {
+--     "progress",
+--     color = { fg = colors.green, gui = 'bold' }
+-- }
+
+
+-- ins_right {
+--     function()
+--         return "▊"
+--     end,
+--     color = { fg = colors.violet },
+--     padding = { left = 1 },
+-- }
+
+lualine.setup(options)

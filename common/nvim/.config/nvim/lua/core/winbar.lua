@@ -2,23 +2,6 @@ local utils = require("core.utils")
 
 local M = {}
 
-M.winbar_filetype_exclude = {
-    "help",
-    "startify",
-    "dashboard",
-    "packer",
-    "neogitstatus",
-    "NvimTree",
-    "Trouble",
-    "alpha",
-    "lir",
-    "Outline",
-    "spectre_panel",
-    "toggleterm",
-    "vista_kind",
-    "NEO-TREE"
-}
-
 local function get_filename()
     local filename = vim.fn.expand "%:~:."
     local extension = vim.fn.expand "%:e"
@@ -40,22 +23,22 @@ local function get_filename()
 
         return " " ..
             "%#" ..
-            hl_group .. "#" .. file_icon .. "%*" .. "%#LineNr#" .. "%{&modified?'  ':' '}" .. filename .. "%*"
+            hl_group .. "#" .. file_icon .. "%*" .. "%{&modified?'  ':' '}" .. filename .. "%*"
     end
 end
 
 local function get_gps()
-    local status_gps_ok, gps = pcall(require, "nvim-gps")
-    if not status_gps_ok then
+    local navic_present, navic = pcall(require, "nvim-navic")
+    if not navic_present then
         return ""
     end
 
-    local status_ok, gps_location = pcall(gps.get_location, {})
+    local status_ok, gps_location = pcall(navic.get_location, {})
     if not status_ok then
         return ""
     end
 
-    if not gps.is_available() or gps_location == "error" then
+    if not navic.is_available() or gps_location == "error" then
         return ""
     end
 
@@ -77,7 +60,7 @@ local function get_blame()
 end
 
 local excludes = function()
-    if vim.tbl_contains(M.winbar_filetype_exclude, vim.bo.filetype) then
+    if utils.is_plugin_filetype() then
         vim.opt_local.winbar = nil
         return true
     end
