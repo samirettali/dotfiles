@@ -23,6 +23,9 @@ local options = {
         rust = {
             disabled = false,
         },
+        help = {
+            disabled = true,
+        }
     }
 }
 

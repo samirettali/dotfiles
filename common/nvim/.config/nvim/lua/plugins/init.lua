@@ -9,25 +9,6 @@ local function require_config(name)
     end
 end
 
--- local function setup_plugin(name)
---     return function()
---         local present, plugin = pcall(require, name)
---         if not present then
---             return false
---         end
---
---         if plugin["setup"] ~= nil then
---             plugin.setup {}
---         elseif plugin["init"] ~= nil then
---             plugin.init {}
---         else
---             return false
---         end
---
---         return true
---     end
--- end
-
 local plugins = {
     -- Git
     {
@@ -60,14 +41,6 @@ local plugins = {
     },
     -- Coding
     {
-        -- Autopair brackets and other symbols
-        "windwp/nvim-autopairs",
-        -- after = "nvim-cmp",
-        config = function()
-            require_config("autopairs")
-        end
-    },
-    {
         "numToStr/Comment.nvim",
         keys = { "gc", "gb" },
         config = function()
@@ -79,96 +52,6 @@ local plugins = {
         config = function()
             require("symbols-outline").setup()
         end,
-    },
-    {
-        -- Show a panel to browse tags
-        "liuchengxu/vista.vim",
-        config = function()
-            require_config("vista")
-        end
-    }, -- LSP and related
-    {
-        "neovim/nvim-lspconfig",
-        dependencies = "nvim-lua/plenary.nvim",
-        config = function()
-            require_config("lsp")
-        end
-    },
-    {
-        -- Show function signature as you type
-        "ray-x/lsp_signature.nvim",
-        config = function() require_config("lspsignature") end,
-    },
-    {
-        "onsails/lspkind-nvim",
-        opt = false,
-        config = function() require_config("lspkind") end,
-    },
-    {
-        "Fildo7525/pretty_hover",
-        config = function() require_config('prettyhover') end,
-    },
-    -- {
-    --     "glepnir/lspsaga.nvim",
-
-    --     branch = "main",
-    --     config = function()
-    --         -- require_config("saga")
-    --     end
-    -- },
-    -- {
-    --     "VidocqH/lsp-lens.nvim",
-    --     config = function()
-    --         require 'lsp-lens'.setup({
-    --             enable = true,
-    --             include_declaration = false, -- Reference include declaration
-    --             sections = {
-    --                 -- Enable / Disable specific request
-    --                 definition = false,
-    --                 references = true,
-    --                 implementation = true,
-    --             },
-    --         })
-    --     end,
-    -- },
-    {
-        "rafamadriz/friendly-snippets",
-        module = "cmp_nvim_lsp",
-        event = "InsertEnter"
-    },
-    {
-        -- Auto completion
-        "hrsh7th/nvim-cmp",
-        -- after = "friendly-snippets",
-        config = function()
-            require_config("cmp")
-        end
-    }, -- Snippets integration
-    {
-        "L3MON4D3/LuaSnip",
-        dependencies = "friendly-snippets",
-        -- after = "nvim-cmp",
-        config = function()
-            require_config("luasnip")
-        end
-    },
-    {
-        "saadparwaiz1/cmp_luasnip",
-    },
-    {
-        "hrsh7th/cmp-nvim-lua",
-    },
-    {
-        "hrsh7th/cmp-nvim-lsp",
-    },
-    {
-        "hrsh7th/cmp-buffer",
-    },
-    {
-        "hrsh7th/cmp-path",
-    },
-    {
-        "hrsh7th/cmp-cmdline",
     },
     {
         "nvim-treesitter/nvim-treesitter",
@@ -205,32 +88,24 @@ local plugins = {
         dependencies = "kyazdani42/nvim-web-devicons",
     },
     {
-        -- GPS
-        "SmiteshP/nvim-navic",
-        dependencies = "neovim/nvim-lspconfig",
-        config = function()
-            require_config("navic")
-        end
+        "aaronhallaert/advanced-git-search.nvim",
+        dependencies = {
+            -- to show diff splits and open commits in browser
+            "tpope/vim-fugitive",
+            -- to open commits in browser with fugitive
+            "tpope/vim-rhubarb",
+            -- OPTIONAL: to replace the diff from fugitive with diffview.nvim
+            -- (fugitive is still needed to open in browser)
+            -- "sindrets/diffview.nvim",
+        },
     },
     { "mbbill/undotree" }, -- Show a tree of undo history
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        config = function()
-            require_config("indentline")
-        end
-    },
     {
         "kyazdani42/nvim-tree.lua",
         dependencies = "kyazdani42/nvim-web-devicons",
         config = function()
             require_config("nvimtree")
         end
-    },
-    {
-        "nvim-lualine/lualine.nvim",
-        config = function()
-            require_config("lualine")
-        end,
     },
     {
         -- Annotations on closing tag, bracket, parenthesis etc.
@@ -254,13 +129,28 @@ local plugins = {
         "chrisbra/Recover.vim"
     },
     {
-        -- Align stuff based on a symbol
-        "junegunn/vim-easy-align"
+        "numToStr/Navigator.nvim",
+        config = function()
+            require('Navigator').setup()
+            vim.keymap.set({ 'n', 't' }, '<C-h>', '<CMD>NavigatorLeft<CR>')
+            vim.keymap.set({ 'n', 't' }, '<C-l>', '<CMD>NavigatorRight<CR>')
+            vim.keymap.set({ 'n', 't' }, '<C-k>', '<CMD>NavigatorUp<CR>')
+            vim.keymap.set({ 'n', 't' }, '<C-j>', '<CMD>NavigatorDown<CR>')
+            vim.keymap.set({ 'n', 't' }, '<C-p>', '<CMD>NavigatorPrevious<CR>')
+        end
     },
-    {
-        -- Tmux splits integration
-        "christoomey/vim-tmux-navigator"
-    },
+    -- {
+    --     -- Tmux splits integration
+    --     "christoomey/vim-tmux-navigator"
+    -- },
+    -- {
+    --     "Lilja/zellij.nvim",
+    --     config = function()
+    --         require('zellij').setup {
+    --             vimTmuxNavigatorKeybinds = true, -- Will set keybinds like <C-h> to left
+    --         }
+    --     end
+    -- },
     {
         -- Split line at cursor
         "drzel/vim-split-line"
@@ -307,7 +197,7 @@ local plugins = {
     },
     {
         -- Automatic shebang for new files
-        "samirettali/shebang.nvim"
+        "Susensio/magic-bang.nvim"
     },
     {
         -- Copy in OS clipboard in SSH
@@ -326,29 +216,25 @@ local plugins = {
     --         require_config("autosession")
     --     end,
     -- },
-    {
-        "bluz71/vim-moonfly-colors",
-        config = function()
-            require_config("moonfly")
-            vim.cmd [[ colorscheme moonfly ]]
-        end
-    },
-    {
-        "Yazeed1s/minimal.nvim",
-        config = function()
-            -- vim.cmd [[ colorscheme minimal ]]
-        end,
-    },
-    {
-        "Yazeed1s/oh-lucy.nvim"
-    },
-    { "Mofiqul/vscode.nvim" },
-    {
-        "AlexvZyl/nordic.nvim",
-        config = function()
-            -- require_config("nordic")
-        end,
-    },
+    -- {
+    --     "luukvbaal/statuscol.nvim",
+    --     config = function()
+    --         -- local builtin = require("statuscol.builtin")
+    --         -- require("statuscol").setup({
+    --         --     relculright = true,
+    --         --     segments = {
+    --         --         {
+    --         --             sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
+    --         --             click = "v:lua.ScSa"
+    --         --         },
+    --         --         { text = { builtin.lnumfunc }, click = "v:lua.ScLa", },
+    --         --         { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+    --         --     }
+    --         -- })
+    --         -- vim.opt.numberwidth = 3
+    --         -- vim.opt.statuscolumn = "%s%=%l%= %{% foldlevel(v:lnum) ? '%C' : '|' %}"
+    --     end,
+    -- },
     { "norcalli/nvim-colorizer.lua" },
     { "sindrets/diffview.nvim",     dependencies = { "nvim-lua/plenary.nvim" } },
     {
@@ -371,32 +257,6 @@ local plugins = {
                 -- add options here if you want to overwrite defaults
             }
         end
-    },
-    {
-        "mfussenegger/nvim-dap",
-        config = function()
-            require_config("dap")
-        end
-    },
-    {
-        "theHamsta/nvim-dap-virtual-text",
-        dependencies = "mfussenegger/nvim-dap"
-    },
-    {
-        "rcarriga/nvim-dap-ui",
-        dependencies = "mfussenegger/nvim-dap",
-        config = function()
-            require_config("dapui")
-        end
-    },
-    -- {
-    --     "rcarriga/nvim-notify",
-    --     config = function()
-    --         vim.notify = require("notify")
-    --     end,
-    -- },
-    {
-        "Eandrju/cellular-automaton.nvim"
     },
     {
         "laytan/cloak.nvim",
@@ -426,17 +286,6 @@ local plugins = {
             vim.keymap.set("n", "<Leader>gg", ":LazyGit<CR>")
         end
     },
-    -- {
-    --     "chrisgrieser/nvim-spider",
-    --     lazy = false,
-    --     config = function()
-    --         -- Keymaps
-    --         vim.keymap.set({ "n", "o", "x" }, "w", function() require("spider").motion("w") end, { desc = "Spider-w" })
-    --         vim.keymap.set({ "n", "o", "x" }, "e", function() require("spider").motion("e") end, { desc = "Spider-e" })
-    --         vim.keymap.set({ "n", "o", "x" }, "b", function() require("spider").motion("b") end, { desc = "Spider-b" })
-    --         vim.keymap.set({ "n", "o", "x" }, "ge", function() require("spider").motion("ge") end, { desc = "Spider-ge" })
-    --     end,
-    -- },
     {
         "stevearc/overseer.nvim",
         config = function()
@@ -470,22 +319,38 @@ local plugins = {
             })
         end,
     },
-    -- {
-    --     "projekt0n/circles.nvim",
-    --     config = function()
-    --         require("circles").setup()
-    --     end,
-    -- },
+    {
+        "projekt0n/circles.nvim",
+        config = function()
+            require("circles").setup()
+        end,
+    },
+    {
+        "nathom/filetype.nvim",
+        config = function()
+            require("filetype").setup {
+                overrides = {
+                    extensions = {
+                        tf = "terraform",
+                        tfvars = "terraform",
+                        tfstate = "json",
+                    },
+                },
+            }
+        end,
+    }
 }
 
 -- glepnir/mutchar.nvim
 
--- require("lazy").setup(plugins, opts)
 require("lazy").setup {
     spec = {
         plugins,
         { import = "plugins.ui" },
+        { import = "plugins.lsp" },
         { import = "plugins.extras.pde" },
+        { import = "plugins.dap" },
+        { import = "plugins.themes" },
     },
     defaults = {
         lazy = false,
@@ -496,14 +361,27 @@ require("lazy").setup {
     },
     rtp = {
         disabled_plugins = {
-          "gzip",
-          "matchit",
-          "matchparen",
-          "netrwPlugin",
-          "tarPlugin",
-          "tohtml",
-          "tutor",
-          "zipPlugin",
+            "2html_plugin",
+            "getscript",
+            "getscriptPlugin",
+            "gzip",
+            "logiPat",
+            "matchit",
+            "matchparen",
+            "netrw",
+            "netrwFileHandlers",
+            "netrwPlugin",
+            "netrwSettings",
+            "rrhelper",
+            "spellfile_plugin",
+            "tar",
+            "tarPlugin",
+            "tohtml",
+            "tutor",
+            "vimball",
+            "vimballPlugin",
+            "zip",
+            "zipPlugin",
         },
     },
 }

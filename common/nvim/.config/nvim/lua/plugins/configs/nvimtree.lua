@@ -4,6 +4,8 @@ if not present then
     return false
 end
 
+local icons = require("core.icons")
+
 local options = {
     auto_reload_on_write = true,
     update_focused_file = {
@@ -16,18 +18,20 @@ local options = {
             git_placement = "after",
             glyphs = {
                 git = {
-                    unstaged = "✗",
-                    staged = "✓",
+                    unstaged = "?",
+                    staged = "+",
                     unmerged = "",
-                    renamed = "➜",
-                    untracked = "★",
-                    deleted = "",
-                    ignored = "◌",
+                    renamed = "->",
+                    untracked = icons.git.untracked,
+                    deleted = "x",
+                    ignored = "-",
                 },
 
             }
         },
     },
 }
+
+require("nvim-tree.view").View.winopts.signcolumn = 'no'
 
 nvimtree.setup(options)

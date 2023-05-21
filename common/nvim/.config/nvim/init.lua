@@ -28,7 +28,7 @@ local function load_modules()
         "core.options",
         "core.autocmds",
         "core.mappings",
-        "core.winbar",
+        "core.statuscolumn",
         "plugins"
     }
 

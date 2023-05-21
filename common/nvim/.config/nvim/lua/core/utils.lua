@@ -86,6 +86,8 @@ M.map = function(mode, keys, command, opt)
 
     if opt then
         options = vim.tbl_extend("force", options, opt)
+    else
+        opt = options
     end
 
     if type(keys) == "table" then
@@ -110,27 +112,6 @@ M.telescope_map = function(key, f)
     }
 
     vim.api.nvim_set_keymap(mode, key, rhs, map_options)
-end
-
--- For those who disabled whichkey
-M.no_WhichKey_map = function()
-    local mappings = M.load_config().mappings
-    local ignore_modes = { "mode_opts" }
-
-    for _, value in pairs(mappings) do
-        for mode, keymap in pairs(value) do
-            if not vim.tbl_contains(ignore_modes, mode) then
-                for keybind, cmd in pairs(keymap) do
-                    -- disabled keys will not have cmd set
-                    if cmd ~= "" then
-                        M.map(mode, keybind, cmd[1])
-                    end
-                end
-            end
-        end
-    end
-
-    require("plugins.configs.others").misc_mappings()
 end
 
 M.get_hex = function(hlgroup_name, attr)
@@ -252,5 +233,16 @@ M.is_plugin_filetype = function()
     end
     return false
 end
+
+M.has_value = function(tab, val)
+    for _, value in ipairs(tab) do
+        -- We grab the first index of our sub-table instead
+        if value == val then
+            return true
+        end
+    end
+    return false
+end
+
 
 return M

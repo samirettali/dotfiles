@@ -36,18 +36,28 @@ map('n', '<Leader>l', ':set list!<CR>')
 map('n', '<Leader>o', ':only<CR>')
 
 -- Remove trailing whitespace
-map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
+-- map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
 
--- Paste replace visual selection without copying it
-map('v', '<Leader>p', '"_dP"', { noremap = true })
+map('v', '<Leader>p', '"_dP"', {
+    remap = false,
+    desc = "Paste replace visual selection without copying it"
+})
 
-map('n', '<Leader>k', 'gcip', { noremap = false })
+map('n', '<Leader>k', 'gcip', { remap = true })
 
 -- Increment number under cursor
-map('n', '<Leader>i', '<C-a>', { noremap = false })
+map('n', '<Leader>i', '<C-a>', { remap = true })
 
 -- Join with above line
 -- map('n', 'K', 'kJ')
+
+-- Map ; to : in normal and visual mode
+map("n", ";", ":")
+map("v", ";", ":")
+
+-- Paste last yanked text
+map("n", ",p", '"0p')
+map("v", ",P", '"0P')
 
 -- Keep lines centered when searching
 map('n', 'n', 'nzzzv')
@@ -63,12 +73,8 @@ map('i', '?', '?<C-g>u')
 map('i', '[', '[<C-g>u')
 map('i', ']', ']<C-g>u')
 
--- Shift selected lines
-map('v', 'J', [[:m '>+1<cr>gv=gv]])
-map('v', 'K', [[:m '<-2<cr>gv=gv]])
-
 map('n', 'gR', function()
-  require("telescope.builtin").lsp_references()
+    require("telescope.builtin").lsp_references()
 end)
 
 -- Close buffer
@@ -89,7 +95,7 @@ telescope_map("<Leader>fs", "lsp_workspace_symbols")
 telescope_map("<Leader>fd", "lsp_workspace_diagnostics")
 
 -- Scalpel
-map("n", "<Leader>s", "<Plug>(Scalpel)", { noremap = false })
+map("n", "<Leader>s", "<Plug>(Scalpel)", { remap = false })
 
 -- Trouble
 map("n", "<leader>xx", "<Cmd>LspTroubleToggle<cr>")
@@ -100,7 +106,7 @@ map("n", "<leader>xl", "<Cmd>LspTroubleToggle loclist<cr>")
 map("n", "<leader>xr", "<Cmd>LspTroubleToggle lsp_references<cr>")
 
 -- Splitline
-map("n", "S", "<Cmd>SplitLine<CR>", { noremap = true })
+map("n", "S", "<Cmd>SplitLine<CR>", { remap = true })
 
 -- OSCYank
 -- map("v", "<C-c>", ":OSCYank<CR>")
@@ -119,4 +125,4 @@ map("n", "g<", "<Cmd>ISwapNodeWithLeft<CR>")
 map("n", "g>", "<Cmd>ISwapNodeWithRight<CR>")
 map("n", "gs", "<Cmd>ISwap<CR>")
 
-map("n", "<C-s>", ":w ++p<CR>")
+map("n", "<BS>", ":w ++p<CR>")
