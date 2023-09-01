@@ -737,18 +737,7 @@ local function config()
     lspconfig.rust_analyzer.setup {
         capabilities = updated_capabilities,
         on_attach = custom_attach,
-        cmd = { "rustup", "run", "stable", "rust-analyzer" },
         settings = {
-            assist = {
-                importGranularity = "module",
-                importPrefix = "by_self"
-            },
-            cargo = {
-                loadOutDirsFromCheck = true
-            },
-            procMacro = {
-                enable = true
-            },
             checkOnSave = {
                 command = "clippy"
             },

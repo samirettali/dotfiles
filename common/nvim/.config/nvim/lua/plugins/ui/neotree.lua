@@ -66,17 +66,6 @@ return {
                 cursorline = false,
                 hide_root_folder = false,
                 signcolumn = 'no',
-                mappings = {
-                    list = {
-                        -- Allow moving out of the explorer.
-                        { key = '<C-i>', action = 'toggle_file_info' },
-                        { key = '<C-k>', action = '' },
-                        { key = '[', action = 'dir_up' },
-                        { key = ']', action = 'cd' },
-                        { key = '<Tab>', action = 'edit' },
-                        { key = 'o', action = 'system_open' },
-                    },
-                },
                 width = { max = 41, min = 40, padding = 1 },
             }
 

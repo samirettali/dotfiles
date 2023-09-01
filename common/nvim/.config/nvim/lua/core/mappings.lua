@@ -126,3 +126,5 @@ map("n", "g>", "<Cmd>ISwapNodeWithRight<CR>")
 map("n", "gs", "<Cmd>ISwap<CR>")
 
 map("n", "<BS>", ":w ++p<CR>")
+
+map("n", "<Space>", "dw")
