@@ -1,3 +1,4 @@
+local utils = require "core.utils"
 if _G.StatusColumn then
     return
 end
@@ -25,8 +26,12 @@ _G.StatusColumn = {
 
     display = {
         line = function()
-            -- TODO hybrid line numbers for current buffer
             local lnum = tostring(vim.v.lnum)
+
+            -- TODO fix
+            if vim.api.nvim_get_mode().mode == "i" then
+                return lnum
+            end
 
             if vim.v.wrap then
                 return " " .. string.rep(" ", #lnum)
@@ -109,15 +114,36 @@ _G.StatusColumn = {
 
     set_window = function(value)
         vim.defer_fn(function()
-            vim.api.nvim_win_set_option(vim.api.nvim_get_current_win(), "statuscolumn", value)
+            if not utils.is_plugin_filetype() then
+                vim.api.nvim_win_set_option(vim.api.nvim_get_current_win(), "statuscolumn", "")
+            else
+                vim.api.nvim_win_set_option(vim.api.nvim_get_current_win(), "statuscolumn", value)
+            end
         end, 1)
     end
 }
 
-vim.opt.statuscolumn = StatusColumn.build({
-    StatusColumn.sections.sign_column,
-    StatusColumn.sections.line_number,
-    StatusColumn.sections.spacing,
-    StatusColumn.sections.folds,
-    StatusColumn.sections.padding
+vim.opt.statuscolumn = ""
+
+local function callback()
+	if utils.is_plugin_filetype() then
+        vim.opt_local.signcolumn = "no"
+		vim.opt_local.statuscolumn = ""
+        return
+    end
+
+    vim.opt_local.signcolumn = "yes"
+    vim.opt_local.numberwidth = 3
+    vim.opt_local.statuscolumn = StatusColumn.build({
+        StatusColumn.sections.sign_column,
+        StatusColumn.sections.line_number,
+        StatusColumn.sections.spacing,
+        StatusColumn.sections.folds,
+        StatusColumn.sections.padding
+    })
+end
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	callback = callback,
+	-- group = custom_events,
 })

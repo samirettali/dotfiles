@@ -100,13 +100,13 @@ local plugins = {
         },
     },
     { "mbbill/undotree" }, -- Show a tree of undo history
-    {
-        "kyazdani42/nvim-tree.lua",
-        dependencies = "kyazdani42/nvim-web-devicons",
-        config = function()
-            require_config("nvimtree")
-        end
-    },
+    -- {
+    --     "kyazdani42/nvim-tree.lua",
+    --     dependencies = "kyazdani42/nvim-web-devicons",
+    --     config = function()
+    --         require_config("nvimtree")
+    --     end
+    -- },
     {
         -- Annotations on closing tag, bracket, parenthesis etc.
         "code-biscuits/nvim-biscuits",
@@ -136,7 +136,7 @@ local plugins = {
             vim.keymap.set({ 'n', 't' }, '<C-l>', '<CMD>NavigatorRight<CR>')
             vim.keymap.set({ 'n', 't' }, '<C-k>', '<CMD>NavigatorUp<CR>')
             vim.keymap.set({ 'n', 't' }, '<C-j>', '<CMD>NavigatorDown<CR>')
-            vim.keymap.set({ 'n', 't' }, '<C-p>', '<CMD>NavigatorPrevious<CR>')
+            -- vim.keymap.set({ 'n', 't' }, '<C-p>', '<CMD>NavigatorPrevious<CR>')
         end
     },
     -- {
@@ -210,31 +210,6 @@ local plugins = {
             require("hex").setup()
         end
     },
-    -- {
-    --     "rmagatti/auto-session"
-    --     config = function()
-    --         require_config("autosession")
-    --     end,
-    -- },
-    -- {
-    --     "luukvbaal/statuscol.nvim",
-    --     config = function()
-    --         -- local builtin = require("statuscol.builtin")
-    --         -- require("statuscol").setup({
-    --         --     relculright = true,
-    --         --     segments = {
-    --         --         {
-    --         --             sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
-    --         --             click = "v:lua.ScSa"
-    --         --         },
-    --         --         { text = { builtin.lnumfunc }, click = "v:lua.ScLa", },
-    --         --         { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-    --         --     }
-    --         -- })
-    --         -- vim.opt.numberwidth = 3
-    --         -- vim.opt.statuscolumn = "%s%=%l%= %{% foldlevel(v:lnum) ? '%C' : '|' %}"
-    --     end,
-    -- },
     { "norcalli/nvim-colorizer.lua" },
     { "sindrets/diffview.nvim",     dependencies = { "nvim-lua/plenary.nvim" } },
     {
@@ -337,6 +312,11 @@ local plugins = {
                     },
                 },
             }
+        end,
+    },
+    {
+        "SmiteshP/nvim-navic",
+        config = function()
         end,
     }
 }

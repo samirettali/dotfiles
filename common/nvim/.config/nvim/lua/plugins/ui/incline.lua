@@ -1,11 +1,18 @@
 local function get_diagnostic_label(props)
-    local severities = { "ERROR", "WARN", "INFO", "HINT" }
+    local icons = {
+        Error = "",
+        Warn = "",
+        Info = "",
+        Hint = "",
+    }
 
     local label = {}
-    for _, severity in pairs(severities) do
-        local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[severity] })
+    for severity, icon in pairs(icons) do
+        local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
         if n > 0 then
-            table.insert(label, { n .. " ", group = "DiagnosticSign" .. severity })
+            local fg = "#" ..
+                string.format("%06x", vim.api.nvim_get_hl_by_name("DiagnosticSign" .. severity, true)["foreground"])
+            table.insert(label, { icon .. " " .. n .. " ", guifg = fg })
         end
     end
     return label
@@ -42,15 +49,16 @@ local function config()
             wintypes = "special"
         },
         render = function(props)
-            -- TODO if not focused, also diagnostic colors should be dimmed
             local bufname = vim.api.nvim_buf_get_name(props.buf)
-            -- TODO handle different relative path
-            local filename = vim.fn.fnamemodify(bufname, ":.")
+            local filename = vim.fn.fnamemodify(bufname, ":t")
             local diagnostics = get_diagnostic_label(props)
             local modified = vim.api.nvim_buf_get_option(props.buf, "modified") and "bold,italic" or "None"
+            local filetype_icon, color = require("nvim-web-devicons").get_icon_color(filename)
 
             local buffer = {
-                { filename, gui = modified },
+                { filetype_icon, guifg = color },
+                { " " },
+                { filename,      gui = modified },
             }
 
             if #diagnostics > 0 then
@@ -59,42 +67,7 @@ local function config()
             for _, buffer_ in ipairs(buffer) do
                 table.insert(diagnostics, buffer_)
             end
-
-            local palette = require("fleet-theme.palette").palette
-            local colors = {
-                bg = palette.darker,
-                black = palette.background,
-                fg = palette.light,
-                fg_dimmed = palette.dark,
-            }
-
-            local origin_diag = #diagnostics;
-
-            table.insert(diagnostics, 1, { "", guifg = colors.bg, guibg = colors.black })
-            table.insert(diagnostics, 2, " ")
-            table.insert(diagnostics, 3, { guifg = colors.fg, guibg = colors.black })
-            if origin_diag > 1 then
-                table.insert({ " " }, { guifg = colors.fg, guibg = colors.black })
-            end
-            table.insert(diagnostics, { "", guifg = colors.bg, guibg = colors.black })
-
-            if props.focused == true then
-                return {
-                    {
-                        diagnostics,
-                        guibg = colors.bg,
-                        guifg = colors.fg
-                    }
-                }
-            else
-                return {
-                    {
-                        diagnostics,
-                        guibg = colors.bg,
-                        guifg = colors.fg_dimmed,
-                    }
-                }
-            end
+            return diagnostics
         end,
         window = {
             margin = {
@@ -105,7 +78,7 @@ local function config()
                 signcolumn = "no",
                 wrap = false
             },
-            padding = 0,
+            padding = 1,
             -- padding_char = " ",
             placement = {
                 horizontal = "right",
@@ -130,8 +103,8 @@ local function config()
 end
 
 return {
-    {
-        "b0o/incline.nvim",
-        config = config,
-    }
+    -- {
+    --     "b0o/incline.nvim",
+    --     config = config,
+    -- }
 }

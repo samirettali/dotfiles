@@ -224,7 +224,7 @@ M.plugin_filetypes = {
     "spectre_panel",
     "toggleterm",
     "vista_kind",
-    "NEO-TREE"
+    "neo-tree"
 }
 
 M.is_plugin_filetype = function()

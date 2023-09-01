@@ -29,7 +29,12 @@ return {
                 formatting = {
                     format = lspkind.cmp_format({
                         maxwidth = 50
-                    })
+                    }),
+                    fields = {
+                        cmp.ItemField.Kind,
+                        cmp.ItemField.Abbr,
+                        cmp.ItemField.Menu,
+                    },
                 },
                 mapping = {
                     -- ["<C-d>"] = cmp.mapping.scroll_docs(-4), -- TODO cosi o come sotto

@@ -1,37 +1,38 @@
-local present, nvimtree = pcall(require, "nvim-tree")
-
-if not present then
-    return false
-end
-
-local icons = require("core.icons")
-
-local options = {
-    auto_reload_on_write = true,
-    update_focused_file = {
-        enable = true,
-    },
-    renderer = {
-        root_folder_label = false,
-        icons = {
-            webdev_colors = true,
-            git_placement = "after",
-            glyphs = {
-                git = {
-                    unstaged = "?",
-                    staged = "+",
-                    unmerged = "",
-                    renamed = "->",
-                    untracked = icons.git.untracked,
-                    deleted = "x",
-                    ignored = "-",
-                },
-
-            }
-        },
-    },
-}
-
-require("nvim-tree.view").View.winopts.signcolumn = 'no'
-
-nvimtree.setup(options)
+-- local present, nvimtree = pcall(require, "nvim-tree")
+--
+-- if not present then
+--     return false
+-- end
+--
+-- local icons = require("core.icons")
+--
+-- local options = {
+--     auto_reload_on_write = true,
+--     update_focused_file = {
+--         enable = true,
+--     },
+--     renderer = {
+--         root_folder_label = false,
+--         icons = {
+--             webdev_colors = true,
+--             git_placement = "after",
+--             glyphs = {
+--                 git = {
+--                     unstaged = "?",
+--                     staged = "+",
+--                     unmerged = "",
+--                     renamed = "->",
+--                     untracked = icons.git.untracked,
+--                     deleted = "x",
+--                     ignored = "-",
+--                 },
+--
+--             }
+--         },
+--     },
+-- }
+--
+-- require("nvim-tree.view").View.winopts.signcolumn = 'no'
+--
+-- nvimtree.setup {}
+-- nvimtree.setup(options)

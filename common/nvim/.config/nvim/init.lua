@@ -27,6 +27,7 @@ local function load_modules()
     local modules = {
         "core.options",
         "core.autocmds",
+        "core.winbar",
         "core.mappings",
         "core.statuscolumn",
         "plugins"

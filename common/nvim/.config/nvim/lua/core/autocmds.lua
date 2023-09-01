@@ -29,7 +29,7 @@ autocmd("VimResized", {
 --         vim.opt.relativenumber = false
 --     end,
 -- })
---
+
 -- autocmd("InsertLeave", {
 --     callback = function()
 --         vim.opt.relativenumber = true
@@ -66,11 +66,11 @@ autocmd("FileType", {
 --     end,
 -- })
 
--- autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
---     callback = function()
---         require("core.winbar").get_winbar()
---     end,
--- })
+autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
+    callback = function()
+        require("core.winbar").get_winbar()
+    end,
+})
 
 -- Fix moonfly colorscheme winbar highlights
 local moonfly_highlights = vim.api.nvim_create_augroup("MoonflyHighlight", {})
@@ -81,6 +81,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         vim.api.nvim_set_hl(0, "WinBar", { bg = palette.black, fg = palette.grey241, bold = true })
         vim.api.nvim_set_hl(0, "WinBarNC", { bg = palette.black, fg = palette.grey241, bold = true })
         vim.api.nvim_set_hl(0, "FoldColumn", { bg = palette.black, fg = palette.grey241 })
+        vim.api.nvim_set_hl(0, "InclineNormal", { bg = palette.black, fg = palette.white })
+        vim.api.nvim_set_hl(0, "InclineNormalNC", { bg = palette.black, fg = palette.grey241 })
+        vim.api.nvim_set_hl(0, "CursorLineNr", { bg = palette.black, fg = palette.blue })
+        vim.api.nvim_set_hl(0, "CursorLine", { bg = palette.grey234 })
     end,
     group = moonfly_highlights,
 })

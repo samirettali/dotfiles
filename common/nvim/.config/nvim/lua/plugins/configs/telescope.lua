@@ -88,5 +88,5 @@ local options = {
 }
 
 telescope.setup(options)
-telescope.load_extension("file_browser")
+-- telescope.load_extension("file_browser")
 telescope.load_extension("advanced_git_search")

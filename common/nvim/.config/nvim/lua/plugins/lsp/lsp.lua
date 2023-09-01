@@ -1,3 +1,235 @@
+-- local function OrgImports(wait_ms)
+--     local params = vim.lsp.util.make_range_params()
+--     params.context = {
+--         only = { "source.organizeImports" }
+--     }
+--     -- P(params)
+--     local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+--     -- P(result)
+--     for cid, res in pairs(result or {}) do
+--         for _, r in pairs(res.result or {}) do
+--             if r.edit then
+--                 local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+--
+--                 vim.lsp.util.apply_workspace_edit(r.edit, enc)
+--             else
+--                 vim.lsp.buf.execute_command(r.command)
+--             end
+--         end
+--     end
+-- end
+--
+-- local function custom_attach(client, bufnr)
+--     local severity_levels = {
+--         vim.diagnostic.severity.ERROR,
+--         vim.diagnostic.severity.WARN,
+--         vim.diagnostic.severity.INFO,
+--         vim.diagnostic.severity.HINT,
+--     }
+--
+--     local get_highest_error_severity = function()
+--         for _, level in ipairs(severity_levels) do
+--             local diags = vim.diagnostic.get(0, { severity = { min = level } })
+--             if #diags > 0 then
+--                 return level, diags
+--             end
+--         end
+--     end
+--
+--     local opts = { buffer = bufnr, remap = false }
+--     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+--
+--     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+--     vim.keymap.set("n", "gT", function() vim.lsp.buf.type_definition() end, opts)
+--     vim.keymap.set("n", "ga", function() vim.lsp.buf.code_action() end, opts)
+--     vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
+--
+--     vim.keymap.set("n", "gI", function() vim.lsp.buf.incoming_calls() end, opts)
+--     vim.keymap.set("n", "gI", function() vim.lsp.buf.outgoing_calls() end, opts)
+--
+--     vim.keymap.set("n", "gs", function() vim.lsp.buf.document_symbol() end, opts)
+--     vim.keymap.set("n", "gS", function() vim.lsp.buf.workspace_symbol() end, opts)
+--     vim.keymap.set("n", "gr", function() vim.lsp.buf.rename() end, opts)
+--
+--     vim.keymap.set("n", "ds", function() vim.diagnostic.get() end, opts)
+--     vim.keymap.set("n", "<leader>sl", function() vim.diagnostic.open_float() end, opts) -- TODO opt scope = "line"
+--     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
+--     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+--
+--     vim.keymap.set('n', '[d', function() vim.diagnostic.goto_next {
+--         severity = get_highest_error_severity(),
+--         wrap = true,
+--         float = true,
+--     } end, opts)
+--
+--     vim.keymap.set('n', ']d', function() vim.diagnostic.goto_prev {
+--         severity = get_highest_error_severity(),
+--         wrap = true,
+--         float = true,
+--     } end, opts)
+--
+--     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+--     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+--
+--     vim.api.nvim_create_autocmd("BufWritePre", {
+--         callback = function()
+--             -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true, async = false }
+--             print("calling format")
+--             OrgImports(1000)
+--             vim.lsp.buf.format {
+--                 async = false
+--             }
+--             print("called format")
+--         end
+--     })
+--     print("done")
+-- end
+--
+--
+-- return {
+--     {
+--         'VonHeikemen/lsp-zero.nvim',
+--         branch = 'v2.x',
+--         dependencies = {
+--             -- LSP Support
+--             { 'neovim/nvim-lspconfig' }, -- Required
+--             {
+--                 -- Optional
+--                 'williamboman/mason.nvim',
+--                 build = function()
+--                     pcall(vim.cmd, 'MasonUpdate')
+--                 end,
+--             },
+--             { 'williamboman/mason-lspconfig.nvim' }, -- Optional
+--
+--             -- Autocompletion
+--             { 'hrsh7th/nvim-cmp' },     -- Required
+--             { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+--             { "hrsh7th/cmp-nvim-lua" },
+--             { "hrsh7th/cmp-buffer" },
+--             { "hrsh7th/cmp-path" },
+--             { 'L3MON4D3/LuaSnip' },     -- Required
+--             { 'simrat39/rust-tools.nvim' },
+--             "onsails/lspkind-nvim",
+--         },
+--         config = function()
+--             local lsp = require('lsp-zero').preset({
+--                 name = 'minimal',
+--                 set_lsp_keymaps = true,
+--                 manage_nvim_cmp = true,
+--                 suggest_lsp_servers = false,
+--             })
+--
+--             lsp.set_sign_icons({
+--                 error = '✘',
+--                 warn = '▲',
+--                 hint = '⚑',
+--                 info = '»'
+--             })
+--
+--             vim.diagnostic.config({
+--                 virtual_text = true
+--             })
+--
+--             lsp.ensure_installed({
+--                 'tsserver',
+--                 'rust_analyzer',
+--                 'gopls',
+--             })
+--
+--             lsp.skip_server_setup({'rust_analyzer'})
+--
+--             lsp.setup()
+--
+--             lsp.setup_servers({
+--                 'gopls',
+--                 'lua_ls',
+--                 opts = {
+--                     single_file_support = false,
+--                     on_attach = custom_attach,
+--                 }
+--             })
+--
+--             lsp.nvim_workspace()
+--
+--             lsp.setup()
+--
+--             local rust_lsp = lsp.build_options('rust_analyzer', {
+--                 single_file_support = false,
+--                 on_attach = function(client, bufnr)
+--                     custom_attach(client, bufnr)
+--                 end
+--             })
+--
+--             require('rust-tools').setup({server = rust_lsp})
+--
+--             local cmp = require('cmp')
+--             local cmp_select = { behavior = cmp.SelectBehavior.Select }
+--             local cmp_mappings = lsp.defaults.cmp_mappings({
+--                 ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+--                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+--                 ['<CR>'] = cmp.mapping.confirm({ select = true }),
+--                 ["<C-Space>"] = cmp.mapping.complete(),
+--             })
+--
+--             cmp.setup({
+--                 window = {
+--                     completion = cmp.config.window.bordered(),
+--                     documentation = cmp.config.window.bordered(),
+--                 },
+--                 mapping = cmp_mappings,
+--                 formatting = {
+--                     fields = {
+--                         cmp.ItemField.Kind,
+--                         cmp.ItemField.Abbr,
+--                         cmp.ItemField.Menu,
+--                     },
+--                     format = require('lspkind').cmp_format({
+--                         mode = 'symbol',
+--                         maxwidth = 50,
+--                         ellipsis_char = '...',
+--                     })
+--                 },
+--                 sources = {
+--                     {name = 'path'},
+--                     {name = 'nvim_lsp'},
+--                     {name = 'buffer', keyword_length = 3},
+--                     {name = 'luasnip', keyword_length = 2},
+--                 }
+--
+--             })
+--         end,
+--     },
+--     {
+--         -- Autopair brackets and other symbols
+--         "windwp/nvim-autopairs",
+--         -- after = "nvim-cmp",
+--         config = function()
+--             local present1, autopairs = pcall(require, "nvim-autopairs")
+--             local present2, cmp = pcall(require, "cmp")
+--
+--             if not present1 and present2 then
+--                 return
+--             end
+--
+--             autopairs.setup {
+--                 fast_wrap = {},
+--                 disable_filetype = { "TelescopePrompt", "vim" },
+--             }
+--
+--             local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+--
+--             cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+--         end
+--     },
+--     {
+--         "ray-x/lsp_signature.nvim",
+--         config = function()
+--             require("lsp_signature").setup {}
+--         end,
+--     },
+-- }
+
 local function config()
     local present, lspconfig = pcall(require, "lspconfig")
 
@@ -81,6 +313,8 @@ local function config()
                     local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
 
                     vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                else
+                    vim.lsp.buf.execute_command(r.command)
                 end
             end
         end
@@ -127,6 +361,41 @@ local function config()
         if caps.definitionProvider then
             vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
         end
+
+        if client.server_capabilities.documentSymbolProvider then
+            local navic_present, navic = pcall(require, "nvim-navic")
+            if navic_present then
+                navic.attach(client, bufnr)
+            end
+        end
+
+        -- if caps.codeActionProvider ~= nil and utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") and caps.documentFormattingProvider then
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            callback = function()
+                -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true, async = false }
+                OrgImports(1000)
+                vim.lsp.buf.format {
+                    async = false
+                }
+            end
+        })
+        -- elseif caps.documentFormattingProvider then
+        --     vim.api.nvim_create_autocmd("BufWritePre", {
+        --         callback = function()
+        --             vim.lsp.buf.format {
+        --                 async = false
+        --             }
+        --         end
+        --     })
+        -- elseif caps.codeActionProvider ~= nil and
+        --     utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") then
+        --     vim.api.nvim_create_autocmd("BufWritePre", {
+        --         callback = function()
+        --             OrgImports(1000)
+        --             -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
+        --         end
+        --     })
+        -- end
 
         if caps.codeActionProvider ~= nil and utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") and caps.documentFormattingProvider then
             vim.api.nvim_create_autocmd("BufWritePre", {
@@ -227,7 +496,6 @@ local function config()
                     -- In go code, I do not like to see any mocks for impls
                     if ft == "go" then
                         local new_result = vim.tbl_filter(function(v)
-                            print(v.uri)
                             return not string.find(v.uri, "mock_")
                         end, result)
 
@@ -262,8 +530,6 @@ local function config()
                 end
             end
         end
-
-
 
         -- map('n', '<Leader>ds', vim.diagnostic.get)
         -- map('n', '<Leader>sl', vim.diagnostic.open_float {
@@ -371,26 +637,26 @@ local function config()
         }
     }
 
-    lspconfig.sqls.setup {
-        on_attach = function(client, bufnr)
-            -- custom_attach(client, bufnr)
-            local sqls = require('sqls')
-            sqls.on_attach(client, bufnr)
-            map('n', 'qq', ':SqlsExecuteQuery<CR>', {
-                buffer = bufnr
-            })
-        end,
-        capabilities = updated_capabilities,
-        settings = {
-            sqls = {
-                connections = { {
-                    driver = 'mssql',
-                    dataSourceName =
-                    'Data Source=localhost; Initial Catalog=test_v2; User ID=sa; Password=Winter2019; Max Pool size=1000; Connection Timeout=30'
-                } }
-            }
-        }
-    }
+    -- lspconfig.sqls.setup {
+    --     on_attach = function(client, bufnr)
+    --         -- custom_attach(client, bufnr)
+    --         local sqls = require('sqls')
+    --         sqls.on_attach(client, bufnr)
+    --         map('n', 'qq', ':SqlsExecuteQuery<CR>', {
+    --             buffer = bufnr
+    --         })
+    --     end,
+    --     capabilities = updated_capabilities,
+    --     settings = {
+    --         sqls = {
+    --             connections = { {
+    --                 driver = 'mssql',
+    --                 dataSourceName =
+    --                 'Data Source=localhost; Initial Catalog=test_v2; User ID=sa; Password=Winter2019; Max Pool size=1000; Connection Timeout=30'
+    --             } }
+    --         }
+    --     }
+    -- }
 
     lspconfig.golangci_lint_ls.setup {
         on_attach = custom_attach,
@@ -431,6 +697,12 @@ local function config()
         }
     }
 
+    lspconfig.tsserver.setup {
+        on_attach = custom_attach,
+        capabilities = updated_capabilities,
+        filetypes = { "typescriptreact", "typescript" },
+    }
+
     for lsp, settings in pairs(servers) do
         lspconfig[lsp].setup {
             on_attach = custom_attach,
@@ -443,43 +715,48 @@ local function config()
         }
     end
 
-    local rt = require("rust-tools")
-
-    rt.setup({
-        server = {
-            capabilities = updated_capabilities,
-            on_attach = custom_attach,
-            -- on_attach = function(_, bufnr)
-            --     -- Hover actions
-            --     vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-            --     -- Code action groups
-            --     vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-            -- end,
-        },
-    })
-    -- lspconfig.rust_analyzer.setup {
-    --     capabilities = updated_capabilities,
-    --     on_attach = custom_attach,
-    --     cmd = { "rustup", "run", "stable", "rust-analyzer" },
-    --     settings = {
-    --         assist = {
-    --             importGranularity = "module",
-    --             importPrefix = "by_self"
+    -- local rt = require("rust-tools")
+    --
+    -- rt.setup({
+    --     server = {
+    --         capabilities = updated_capabilities,
+    --         on_attach = custom_attach,
+    --         settings = {
+    --             cargo = {
+    --                 autoReload = true,
+    --             },
     --         },
-    --         cargo = {
-    --             loadOutDirsFromCheck = true
-    --         },
-    --         procMacro = {
-    --             enable = true
-    --         },
-    --         checkOnSave = {
-    --             command = "clippy"
-    --         },
-    --         flags = {
-    --             debounce_text_changes = 200
-    --         }
-    --     }
-    -- }
+    --         -- on_attach = function(_, bufnr)
+    --         --     -- Hover actions
+    --         --     vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+    --         --     -- Code action groups
+    --         --     vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    --         -- end,
+    --     },
+    -- })
+    lspconfig.rust_analyzer.setup {
+        capabilities = updated_capabilities,
+        on_attach = custom_attach,
+        cmd = { "rustup", "run", "stable", "rust-analyzer" },
+        settings = {
+            assist = {
+                importGranularity = "module",
+                importPrefix = "by_self"
+            },
+            cargo = {
+                loadOutDirsFromCheck = true
+            },
+            procMacro = {
+                enable = true
+            },
+            checkOnSave = {
+                command = "clippy"
+            },
+            flags = {
+                debounce_text_changes = 200
+            }
+        }
+    }
 
     lspconfig.csharp_ls.setup {
         cmd = { "csharp-ls" },
@@ -516,6 +793,7 @@ local function config()
     }
 end
 
+
 return {
     {
         "neovim/nvim-lspconfig",
@@ -551,7 +829,7 @@ return {
             local lspkind = require "lspkind"
 
             local options = {
-                mode = 'symbol_text',
+                mode = 'symbol',
                 preset = 'default',
             }
 
