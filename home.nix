@@ -44,7 +44,9 @@
     ".config/waybar/config".source = dotfiles/waybar/config;
     ".config/waybar/style.css".source = dotfiles/waybar/style.css;
     ".config/foot/foot.ini".source = dotfiles/foot.ini;
-    ".tmux.conf" = dotfiles/tmux.conf;
+    ".tmux.conf".source = dotfiles/tmux.conf;
+    ".ripgreprc".source = dotfiles/ripgreprc;
+    ".config/mpv" = { source = dotfiles/mpv; recursive = true; };
     ".config/nvim" = { source = dotfiles/nvim; recursive = true; };
   };
 
@@ -144,4 +146,20 @@
     cargo-watch
     trunk
   ];
+
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+    desktop = "${config.home.homeDirectory}/desk";
+    documents = "${config.home.homeDirectory}/docs";
+    download = "${config.home.homeDirectory}/down";
+    music = "${config.home.homeDirectory}/music";
+    pictures = "${config.home.homeDirectory}/pics";
+    publicShare = "${config.home.homeDirectory}/share";
+    templates = "${config.home.homeDirectory}/templates";
+    videos = "${config.home.homeDirectory}/vids";
+    extraConfig = {
+        XDG_MISC_DIR = "${config.home.homeDirectory}/misc";
+    };
+  };
 }
