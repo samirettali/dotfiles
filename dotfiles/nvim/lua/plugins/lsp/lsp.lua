@@ -136,33 +136,33 @@ local function config()
             end
         end
 
-        -- if caps.codeActionProvider ~= nil and utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") and caps.documentFormattingProvider then
-        --     vim.api.nvim_create_autocmd("BufWritePre", {
-        --         callback = function()
-        --             -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true, async = false }
-        --             OrgImports(1000)
-        --             vim.lsp.buf.format {
-        --                 async = true
-        --             }
-        --         end
-        --     })
-        -- elseif caps.documentFormattingProvider then
-        --     vim.api.nvim_create_autocmd("BufWritePre", {
-        --         callback = function()
-        --             vim.lsp.buf.format {
-        --                 async = true
-        --             }
-        --         end
-        --     })
-        -- elseif caps.codeActionProvider ~= nil and
-        --     utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") then
-        --     vim.api.nvim_create_autocmd("BufWritePre", {
-        --         callback = function()
-        --             OrgImports(1000)
-        --             -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
-        --         end
-        --     })
-        -- end
+        if caps.codeActionProvider ~= nil and utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") and caps.documentFormattingProvider then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                callback = function()
+                    -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true, async = false }
+                    OrgImports(1000)
+                    vim.lsp.buf.format {
+                        async = true
+                    }
+                end
+            })
+        elseif caps.documentFormattingProvider then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                callback = function()
+                    vim.lsp.buf.format {
+                        async = true
+                    }
+                end
+            })
+        elseif caps.codeActionProvider ~= nil and
+            utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                callback = function()
+                    OrgImports(1000)
+                    -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
+                end
+            })
+        end
 
         -- if caps.documentHighlightProvider then
         --     vim.api.nvim_create_augroup("lsp_document_highlight", {

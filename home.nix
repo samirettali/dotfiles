@@ -12,8 +12,6 @@
   # (pkgs.writeShellScriptBin "my-hello" ''
   # '')
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
   home.file = {
     ".config/wezterm/wezterm.lua".source = dotfiles/wezterm.lua;
     ".Xresources".source = dotfiles/Xresources;
@@ -24,6 +22,7 @@
     ".config/waybar/config".source = dotfiles/waybar/config;
     ".config/waybar/style.css".source = dotfiles/waybar/style.css;
     ".config/foot/foot.ini".source = dotfiles/foot.ini;
+    ".config/nvim" = { source = dotfiles/nvim; recursive = true; };
 
     # You can also set the file content immediately.
     ".tmux.conf".text = ''
