@@ -1,22 +1,5 @@
 {
   "nodes": {
-    "dwl-source": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1692772335,
-        "narHash": "sha256-BkzGng/h8wzGbQf4OEufzKqoE7DDks9qWdjCh6UCYP0=",
-        "owner": "djpohly",
-        "repo": "dwl",
-        "rev": "c1d8b77f7fb4f082b7eb43474a788e9b5fe04e29",
-        "type": "github"
-      },
-      "original": {
-        "owner": "djpohly",
-        "repo": "dwl",
-        "rev": "c1d8b77f7fb4f082b7eb43474a788e9b5fe04e29",
-        "type": "github"
-      }
-    },
     "fenix-overlay": {
       "inputs": {
         "nixpkgs": "nixpkgs",
@@ -339,7 +322,6 @@
     },
     "root": {
       "inputs": {
-        "dwl-source": "dwl-source",
         "fenix-overlay": "fenix-overlay",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",

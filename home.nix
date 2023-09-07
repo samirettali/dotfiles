@@ -1,4 +1,4 @@
-{ config, pkgs, lib, dwl-source, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -194,8 +194,6 @@ bind-key s choose-session'';
     wbg
     wdisplays
 
-    dwl
-    somebar
     foot
 
     # desktop apps
@@ -278,26 +276,6 @@ bind-key s choose-session'';
     rust-analyzer-nightly
     cargo-watch
     trunk
-  ];
-
-  nixpkgs.overlays = [
-    (
-      final: prev:
-        {
-          dwl = prev.dwl.override { conf = ./dwl-config.h; };
-        }
-    )
-      (self: super: {
-      dwl = super.dwl.overrideAttrs (oldAttrs: rec {
-        src = dwl-source;
-        patches = [
-          ./dwl-patches/vanitygaps.patch
-          ./dwl-patches/column.patch
-          # ./dwl-patches/masteronright.patch
-          # ./dwl-patches/autostart.patch
-        ];
-      });
-    })
   ];
 
   home.sessionVariables = {
