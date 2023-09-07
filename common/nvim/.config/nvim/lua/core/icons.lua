@@ -94,7 +94,7 @@ local icons = {
         unmerged = " "
     },
     diagnostics = {
-        error = " ",
+        error = "",
         warn = "",
         hint = " ",
         info = " ",

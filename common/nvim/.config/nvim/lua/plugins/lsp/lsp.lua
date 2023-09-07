@@ -1,235 +1,3 @@
--- local function OrgImports(wait_ms)
---     local params = vim.lsp.util.make_range_params()
---     params.context = {
---         only = { "source.organizeImports" }
---     }
---     -- P(params)
---     local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
---     -- P(result)
---     for cid, res in pairs(result or {}) do
---         for _, r in pairs(res.result or {}) do
---             if r.edit then
---                 local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
---
---                 vim.lsp.util.apply_workspace_edit(r.edit, enc)
---             else
---                 vim.lsp.buf.execute_command(r.command)
---             end
---         end
---     end
--- end
---
--- local function custom_attach(client, bufnr)
---     local severity_levels = {
---         vim.diagnostic.severity.ERROR,
---         vim.diagnostic.severity.WARN,
---         vim.diagnostic.severity.INFO,
---         vim.diagnostic.severity.HINT,
---     }
---
---     local get_highest_error_severity = function()
---         for _, level in ipairs(severity_levels) do
---             local diags = vim.diagnostic.get(0, { severity = { min = level } })
---             if #diags > 0 then
---                 return level, diags
---             end
---         end
---     end
---
---     local opts = { buffer = bufnr, remap = false }
---     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
---
---     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
---     vim.keymap.set("n", "gT", function() vim.lsp.buf.type_definition() end, opts)
---     vim.keymap.set("n", "ga", function() vim.lsp.buf.code_action() end, opts)
---     vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
---
---     vim.keymap.set("n", "gI", function() vim.lsp.buf.incoming_calls() end, opts)
---     vim.keymap.set("n", "gI", function() vim.lsp.buf.outgoing_calls() end, opts)
---
---     vim.keymap.set("n", "gs", function() vim.lsp.buf.document_symbol() end, opts)
---     vim.keymap.set("n", "gS", function() vim.lsp.buf.workspace_symbol() end, opts)
---     vim.keymap.set("n", "gr", function() vim.lsp.buf.rename() end, opts)
---
---     vim.keymap.set("n", "ds", function() vim.diagnostic.get() end, opts)
---     vim.keymap.set("n", "<leader>sl", function() vim.diagnostic.open_float() end, opts) -- TODO opt scope = "line"
---     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
---     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
---
---     vim.keymap.set('n', '[d', function() vim.diagnostic.goto_next {
---         severity = get_highest_error_severity(),
---         wrap = true,
---         float = true,
---     } end, opts)
---
---     vim.keymap.set('n', ']d', function() vim.diagnostic.goto_prev {
---         severity = get_highest_error_severity(),
---         wrap = true,
---         float = true,
---     } end, opts)
---
---     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
---     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
---
---     vim.api.nvim_create_autocmd("BufWritePre", {
---         callback = function()
---             -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true, async = false }
---             print("calling format")
---             OrgImports(1000)
---             vim.lsp.buf.format {
---                 async = false
---             }
---             print("called format")
---         end
---     })
---     print("done")
--- end
---
---
--- return {
---     {
---         'VonHeikemen/lsp-zero.nvim',
---         branch = 'v2.x',
---         dependencies = {
---             -- LSP Support
---             { 'neovim/nvim-lspconfig' }, -- Required
---             {
---                 -- Optional
---                 'williamboman/mason.nvim',
---                 build = function()
---                     pcall(vim.cmd, 'MasonUpdate')
---                 end,
---             },
---             { 'williamboman/mason-lspconfig.nvim' }, -- Optional
---
---             -- Autocompletion
---             { 'hrsh7th/nvim-cmp' },     -- Required
---             { 'hrsh7th/cmp-nvim-lsp' }, -- Required
---             { "hrsh7th/cmp-nvim-lua" },
---             { "hrsh7th/cmp-buffer" },
---             { "hrsh7th/cmp-path" },
---             { 'L3MON4D3/LuaSnip' },     -- Required
---             { 'simrat39/rust-tools.nvim' },
---             "onsails/lspkind-nvim",
---         },
---         config = function()
---             local lsp = require('lsp-zero').preset({
---                 name = 'minimal',
---                 set_lsp_keymaps = true,
---                 manage_nvim_cmp = true,
---                 suggest_lsp_servers = false,
---             })
---
---             lsp.set_sign_icons({
---                 error = '✘',
---                 warn = '▲',
---                 hint = '⚑',
---                 info = '»'
---             })
---
---             vim.diagnostic.config({
---                 virtual_text = true
---             })
---
---             lsp.ensure_installed({
---                 'tsserver',
---                 'rust_analyzer',
---                 'gopls',
---             })
---
---             lsp.skip_server_setup({'rust_analyzer'})
---
---             lsp.setup()
---
---             lsp.setup_servers({
---                 'gopls',
---                 'lua_ls',
---                 opts = {
---                     single_file_support = false,
---                     on_attach = custom_attach,
---                 }
---             })
---
---             lsp.nvim_workspace()
---
---             lsp.setup()
---
---             local rust_lsp = lsp.build_options('rust_analyzer', {
---                 single_file_support = false,
---                 on_attach = function(client, bufnr)
---                     custom_attach(client, bufnr)
---                 end
---             })
---
---             require('rust-tools').setup({server = rust_lsp})
---
---             local cmp = require('cmp')
---             local cmp_select = { behavior = cmp.SelectBehavior.Select }
---             local cmp_mappings = lsp.defaults.cmp_mappings({
---                 ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
---                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
---                 ['<CR>'] = cmp.mapping.confirm({ select = true }),
---                 ["<C-Space>"] = cmp.mapping.complete(),
---             })
---
---             cmp.setup({
---                 window = {
---                     completion = cmp.config.window.bordered(),
---                     documentation = cmp.config.window.bordered(),
---                 },
---                 mapping = cmp_mappings,
---                 formatting = {
---                     fields = {
---                         cmp.ItemField.Kind,
---                         cmp.ItemField.Abbr,
---                         cmp.ItemField.Menu,
---                     },
---                     format = require('lspkind').cmp_format({
---                         mode = 'symbol',
---                         maxwidth = 50,
---                         ellipsis_char = '...',
---                     })
---                 },
---                 sources = {
---                     {name = 'path'},
---                     {name = 'nvim_lsp'},
---                     {name = 'buffer', keyword_length = 3},
---                     {name = 'luasnip', keyword_length = 2},
---                 }
---
---             })
---         end,
---     },
---     {
---         -- Autopair brackets and other symbols
---         "windwp/nvim-autopairs",
---         -- after = "nvim-cmp",
---         config = function()
---             local present1, autopairs = pcall(require, "nvim-autopairs")
---             local present2, cmp = pcall(require, "cmp")
---
---             if not present1 and present2 then
---                 return
---             end
---
---             autopairs.setup {
---                 fast_wrap = {},
---                 disable_filetype = { "TelescopePrompt", "vim" },
---             }
---
---             local cmp_autopairs = require "nvim-autopairs.completion.cmp"
---
---             cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
---         end
---     },
---     {
---         "ray-x/lsp_signature.nvim",
---         config = function()
---             require("lsp_signature").setup {}
---         end,
---     },
--- }
-
 local function config()
     local present, lspconfig = pcall(require, "lspconfig")
 
@@ -237,69 +5,67 @@ local function config()
         return false
     end
 
-    local util = lspconfig.util
+    -- local util = lspconfig.util
 
     -- Borders for LspInfo winodw
-    local win = require "lspconfig.ui.windows"
-    local _default_opts = win.default_opts
+    -- local win = require "lspconfig.ui.windows"
+    -- local _default_opts = win.default_opts
 
     local utils = require("core.utils")
     local map = utils.map
 
-    win.default_opts = function(options)
-        local opts = _default_opts(options)
-        opts.border = "single"
-        return opts
-    end
+    -- win.default_opts = function(options)
+    --     local opts = _default_opts(options)
+    --     opts.border = "single"
+    --     return opts
+    -- end
 
-    local lsp_handlers = function()
-        local function lspSymbol(name, icon)
-            local hl = "DiagnosticSign" .. name
-            vim.fn.sign_define(hl, {
-                text = icon,
-                numhl = hl,
-                texthl = hl
-            })
-        end
-        local icons = require("core.icons")
+    -- local lsp_handlers = function()
+    --     local function lspSymbol(name, icon)
+    --         local hl = "DiagnosticSign" .. name
+    --         vim.fn.sign_define(hl, {
+    --             text = icon,
+    --             numhl = hl,
+    --             texthl = hl
+    --         })
+    --     end
+    -- local icons = require("core.icons")
 
-        lspSymbol("Error", icons.diagnostics.error)
-        lspSymbol("Info", icons.diagnostics.info)
-        lspSymbol("Hint", icons.diagnostics.hint)
-        lspSymbol("Warn", icons.diagnostics.warn)
+    -- lspSymbol("Error", icons.diagnostics.error)
+    -- lspSymbol("Info", icons.diagnostics.info)
+    -- lspSymbol("Hint", icons.diagnostics.hint)
+    -- lspSymbol("Warn", icons.diagnostics.warn)
 
+    -- vim.diagnostic.config {
+    --     virtual_text = {
+    --         prefix = ""
+    --     },
+    --     signs = false,
+    --     underline = true,
+    --     update_in_insert = false
+    -- }
 
-        vim.diagnostic.config {
-            virtual_text = {
-                prefix = ""
-            },
-            signs = false,
-            underline = true,
-            update_in_insert = false
-        }
+    -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    --     border = "single"
+    -- })
 
-        -- local pop_opts = { border = "rounded", max_width = 80 }
+    -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    --     border = "single"
+    -- })
 
-        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-            border = "single"
-        })
-        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-            border = "single"
-        })
-
-        -- suppress error messages from lang servers
-        vim.notify = function(msg, log_level)
-            if msg:match "exit code" then
-                return
-            end
-
-            if log_level == vim.log.levels.ERROR then
-                vim.api.nvim_err_writeln(msg)
-            else
-                vim.api.nvim_echo({ { msg } }, true, {})
-            end
-        end
-    end
+    -- suppress error messages from lang servers
+    -- vim.notify = function(msg, log_level)
+    --     if msg:match "exit code" then
+    --         return
+    --     end
+    --
+    --     if log_level == vim.log.levels.ERROR then
+    --         vim.api.nvim_err_writeln(msg)
+    --     else
+    --         vim.api.nvim_echo({ { msg } }, true, {})
+    --     end
+    -- end
+    -- end
 
     local function OrgImports(wait_ms)
         local params = vim.lsp.util.make_range_params()
@@ -320,9 +86,10 @@ local function config()
         end
     end
 
-    lsp_handlers()
+    -- lsp_handlers()
 
-    local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
+    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
     -- local function capabilities()
     --     local caps = vim.lsp.protocol.make_client_capabilities()
     --     return caps
@@ -340,11 +107,11 @@ local function config()
         local caps = client.server_capabilities
 
         -- Show diagnostic on hover
-        vim.api.nvim_create_autocmd("CursorHold", {
-            callback = function()
-                vim.diagnostic.get()
-            end
-        })
+        -- vim.api.nvim_create_autocmd("CursorHold", {
+        --     callback = function()
+        --         vim.diagnostic.get()
+        --     end
+        -- })
 
         vim.api.nvim_create_autocmd("LspDetach", {
             callback = function(_)
@@ -370,20 +137,20 @@ local function config()
         end
 
         -- if caps.codeActionProvider ~= nil and utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") and caps.documentFormattingProvider then
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            callback = function()
-                -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true, async = false }
-                OrgImports(1000)
-                vim.lsp.buf.format {
-                    async = false
-                }
-            end
-        })
+        --     vim.api.nvim_create_autocmd("BufWritePre", {
+        --         callback = function()
+        --             -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true, async = false }
+        --             OrgImports(1000)
+        --             vim.lsp.buf.format {
+        --                 async = true
+        --             }
+        --         end
+        --     })
         -- elseif caps.documentFormattingProvider then
         --     vim.api.nvim_create_autocmd("BufWritePre", {
         --         callback = function()
         --             vim.lsp.buf.format {
-        --                 async = false
+        --                 async = true
         --             }
         --         end
         --     })
@@ -397,55 +164,27 @@ local function config()
         --     })
         -- end
 
-        if caps.codeActionProvider ~= nil and utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") and caps.documentFormattingProvider then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                callback = function()
-                    -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true, async = false }
-                    OrgImports(1000)
-                    vim.lsp.buf.format {
-                        async = false
-                    }
-                end
-            })
-        elseif caps.documentFormattingProvider then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                callback = function()
-                    vim.lsp.buf.format {
-                        async = false
-                    }
-                end
-            })
-        elseif caps.codeActionProvider ~= nil and
-            utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") then
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                callback = function()
-                    OrgImports(1000)
-                    -- vim.lsp.buf.code_action { context = { only = { 'source.organizeImports' } }, apply = true }
-                end
-            })
-        end
-
-        if caps.documentHighlightProvider then
-            vim.api.nvim_create_augroup("lsp_document_highlight", {
-                clear = true
-            })
-            vim.api.nvim_clear_autocmds {
-                buffer = bufnr,
-                group = "lsp_document_highlight"
-            }
-            vim.api.nvim_create_autocmd("CursorHold", {
-                callback = vim.lsp.buf.document_highlight,
-                buffer = bufnr,
-                group = "lsp_document_highlight",
-                desc = "Document Highlight"
-            })
-            vim.api.nvim_create_autocmd("CursorMoved", {
-                callback = vim.lsp.buf.clear_references,
-                buffer = bufnr,
-                group = "lsp_document_highlight",
-                desc = "Clear All the References"
-            })
-        end
+        -- if caps.documentHighlightProvider then
+        --     vim.api.nvim_create_augroup("lsp_document_highlight", {
+        --         clear = true
+        --     })
+        --     vim.api.nvim_clear_autocmds {
+        --         buffer = bufnr,
+        --         group = "lsp_document_highlight"
+        --     }
+        --     vim.api.nvim_create_autocmd("CursorHold", {
+        --         callback = vim.lsp.buf.document_highlight,
+        --         buffer = bufnr,
+        --         group = "lsp_document_highlight",
+        --         desc = "Document Highlight"
+        --     })
+        --     vim.api.nvim_create_autocmd("CursorMoved", {
+        --         callback = vim.lsp.buf.clear_references,
+        --         buffer = bufnr,
+        --         group = "lsp_document_highlight",
+        --         desc = "Clear All the References"
+        --     })
+        -- end
 
         local opts = {
             buffer = bufnr
@@ -490,8 +229,7 @@ local function config()
                         return
                     end
 
-                    local bufnr = ctx.bufnr
-                    local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+                    local ft = vim.api.nvim_buf_get_option(ctx.bufnr, "filetype")
 
                     -- In go code, I do not like to see any mocks for impls
                     if ft == "go" then
@@ -522,31 +260,31 @@ local function config()
             vim.diagnostic.severity.HINT,
         }
 
-        local get_highest_error_severity = function()
-            for _, level in ipairs(severity_levels) do
-                local diags = vim.diagnostic.get(0, { severity = { min = level } })
-                if #diags > 0 then
-                    return level, diags
-                end
-            end
-        end
+        -- local get_highest_error_severity = function()
+        --     for _, level in ipairs(severity_levels) do
+        --         local diags = vim.diagnostic.get(0, { severity = { min = level } })
+        --         if #diags > 0 then
+        --             return level, diags
+        --         end
+        --     end
+        -- end
 
         -- map('n', '<Leader>ds', vim.diagnostic.get)
         -- map('n', '<Leader>sl', vim.diagnostic.open_float {
         --     scope = "line",
         -- })
 
-        -- map('n', '<Leader>dn', vim.diagnostic.goto_next {
-        --     severity = get_highest_error_severity(),
-        --     wrap = true,
-        --     float = true,
-        -- })
+        map('n', ']d', vim.diagnostic.goto_next {
+            -- severity = get_highest_error_severity(),
+            wrap = true,
+            float = true,
+        })
 
-        -- map('n', '<Leader>dp', vim.diagnostic.goto_prev {
-        --     severity = get_highest_error_severity(),
-        --     wrap = true,
-        --     float = true,
-        -- })
+        map('n', '[d', vim.diagnostic.goto_prev {
+            -- severity = get_highest_error_severity(),
+            wrap = true,
+            float = true,
+        })
 
         -- map('n', '<Leader>fe', function() require("telescope.functions").diagnostics() end)
 
@@ -554,22 +292,22 @@ local function config()
         -- client.server_capabilities.document_range_formatting = true
     end
 
-    vim.fn.sign_define("LspDiagnosticsSignError", {
-        text = "",
-        texthl = "LspDiagnosticsSignError"
-    })
-    vim.fn.sign_define("LspDiagnosticsSignWarning", {
-        text = "",
-        texthl = "LspDiagnosticsSignWarning"
-    })
-    vim.fn.sign_define("LspDiagnosticsSignInformation", {
-        text = "i",
-        texthl = "LspDiagnosticsSignInformation"
-    })
-    vim.fn.sign_define("LspDiagnosticsSignHint", {
-        text = "!",
-        texthl = "LspDiagnosticsSignHint"
-    })
+    -- vim.fn.sign_define("LspDiagnosticsSignError", {
+    --     text = "",
+    --     texthl = "LspDiagnosticsSignError"
+    -- })
+    -- vim.fn.sign_define("LspDiagnosticsSignWarning", {
+    --     text = "",
+    --     texthl = "LspDiagnosticsSignWarning"
+    -- })
+    -- vim.fn.sign_define("LspDiagnosticsSignInformation", {
+    --     text = "i",
+    --     texthl = "LspDiagnosticsSignInformation"
+    -- })
+    -- vim.fn.sign_define("LspDiagnosticsSignHint", {
+    --     text = "!",
+    --     texthl = "LspDiagnosticsSignHint"
+    -- })
 
     -- local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -604,7 +342,7 @@ local function config()
     --     }
     -- }
 
-    vim.lsp.handlers["textDocument/declaration"] = require "lsputil.locations".declaration_handler
+    -- vim.lsp.handlers["textDocument/declaration"] = require "lsputil.locations".declaration_handler
 
     -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     --   require("lsp_extensions.workspace.diagnostic").handler, {
@@ -615,59 +353,39 @@ local function config()
     --   }
     -- )
 
-    local servers = {
-        bashls = {},
-        -- hls = {},
-        -- tsserver = {},
-        -- html = {},
-        -- yamlls = {},
-        -- cssls = {},
-        pylsp = {},
-        -- clangd = {},
-        -- java_language_server = {},
-        -- solc = {
-        --     solc = {
-        --         cmd = { "solc", "--lsp" },
-        --         filetypes = { "solidity" },
-        --         root_dir = util.root_pattern(".git")
-        --     }
-        -- },
-        csharp_ls = {
-            csharp_ls = {}
-        }
+    -- local servers = {
+    --     bashls = {},
+    --     pylsp = {},
+    --     zls = {},
+    -- }
+    local border = {
+        { "🭽", "FloatBorder" },
+        { "▔", "FloatBorder" },
+        { "🭾", "FloatBorder" },
+        { "▕", "FloatBorder" },
+        { "🭿", "FloatBorder" },
+        { "▁", "FloatBorder" },
+        { "🭼", "FloatBorder" },
+        { "▏", "FloatBorder" },
     }
 
-    -- lspconfig.sqls.setup {
-    --     on_attach = function(client, bufnr)
-    --         -- custom_attach(client, bufnr)
-    --         local sqls = require('sqls')
-    --         sqls.on_attach(client, bufnr)
-    --         map('n', 'qq', ':SqlsExecuteQuery<CR>', {
-    --             buffer = bufnr
-    --         })
-    --     end,
-    --     capabilities = updated_capabilities,
-    --     settings = {
-    --         sqls = {
-    --             connections = { {
-    --                 driver = 'mssql',
-    --                 dataSourceName =
-    --                 'Data Source=localhost; Initial Catalog=test_v2; User ID=sa; Password=Winter2019; Max Pool size=1000; Connection Timeout=30'
-    --             } }
-    --         }
-    --     }
-    -- }
+    local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or border
+        return orig_util_open_floating_preview(contents, syntax, opts, ...)
+    end
 
     lspconfig.golangci_lint_ls.setup {
         on_attach = custom_attach,
-        capabilities = updated_capabilities,
+        capabilities = capabilities,
         command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json",
             "--issues-exit-code=1" }
     }
 
     lspconfig.gopls.setup {
         on_attach = custom_attach,
-        capabilities = updated_capabilities,
+        capabilities = capabilities,
         settings = {
             gopls = {
                 hints = {
@@ -699,43 +417,24 @@ local function config()
 
     lspconfig.tsserver.setup {
         on_attach = custom_attach,
-        capabilities = updated_capabilities,
+        capabilities = capabilities,
         filetypes = { "typescriptreact", "typescript" },
     }
 
-    for lsp, settings in pairs(servers) do
-        lspconfig[lsp].setup {
-            on_attach = custom_attach,
-            -- filetypes = opts.filetypes,
-            capabilities = updated_capabilities,
-            settings = settings,
-            flags = {
-                debounce_text_changes = 200
-            }
-        }
-    end
-
-    -- local rt = require("rust-tools")
-    --
-    -- rt.setup({
-    --     server = {
-    --         capabilities = updated_capabilities,
+    -- for lsp, settings in pairs(servers) do
+    --     lspconfig[lsp].setup {
     --         on_attach = custom_attach,
-    --         settings = {
-    --             cargo = {
-    --                 autoReload = true,
-    --             },
-    --         },
-    --         -- on_attach = function(_, bufnr)
-    --         --     -- Hover actions
-    --         --     vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-    --         --     -- Code action groups
-    --         --     vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    --         -- end,
-    --     },
-    -- })
+    --         -- filetypes = opts.filetypes,
+    --         capabilities = capabilities,
+    --         settings = settings,
+    --         flags = {
+    --             debounce_text_changes = 200
+    --         }
+    --     }
+    -- end
+
     lspconfig.rust_analyzer.setup {
-        capabilities = updated_capabilities,
+        capabilities = capabilities,
         on_attach = custom_attach,
         settings = {
             checkOnSave = {
@@ -747,17 +446,9 @@ local function config()
         }
     }
 
-    lspconfig.csharp_ls.setup {
-        cmd = { "csharp-ls" },
-        on_attach = custom_attach,
-        filetypes = { "cs" }
-    }
-
-    -- lspconfig.terraformls.setup {}
-
     lspconfig.lua_ls.setup {
         on_attach = custom_attach,
-        capabilities = updated_capabilities,
+        capabilities = capabilities,
 
         settings = {
             Lua = {
@@ -847,39 +538,12 @@ return {
             cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end
     },
-    {
-        "simrat39/rust-tools.nvim",
-        dependencies = {
-            "neovim/nvim-lspconfig",
-        },
-        config = function()
-        end,
-    },
-    {
-        "nvim-neotest/neotest",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-            "antoinemadec/FixCursorHold.nvim",
-            "rouge8/neotest-rust",
-            "nvim-neotest/neotest-vim-test",
-            "nvim-neotest/neotest-go",
-        },
-        config = function()
-            require("neotest").setup({
-                status = {
-                    enabled = true,
-                    signs = true,
-                    virtual_text = false,
-                },
-                adapters = {
-                    require("neotest-rust"),
-                    require("neotest-go"),
-                    require("neotest-vim-test")({
-                        ignore_file_types = { "python", "vim", "lua" },
-                    }),
-                },
-            })
-        end,
-    }
+    -- {
+    --     "simrat39/rust-tools.nvim",
+    --     dependencies = {
+    --         "neovim/nvim-lspconfig",
+    --     },
+    --     config = function()
+    --     end,
+    -- },
 }

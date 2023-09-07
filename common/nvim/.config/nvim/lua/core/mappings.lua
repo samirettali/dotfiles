@@ -3,6 +3,7 @@ local map = utils.map
 local telescope_map = utils.telescope_map
 
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 -- Core mappings
 -- Yank entire line except newline
@@ -108,23 +109,22 @@ map("n", "<leader>xr", "<Cmd>LspTroubleToggle lsp_references<cr>")
 -- Splitline
 map("n", "S", "<Cmd>SplitLine<CR>", { remap = true })
 
--- OSCYank
--- map("v", "<C-c>", ":OSCYank<CR>")
-map("v", "<C-c>", '"+y')
-
--- -- nvim-tree
-map("n", "<C-t>", "<cmd>NvimTreeToggle<CR>")
-
 -- buffer moving
 map("n", "<C-p>", ":bp<CR>", { silent = true })
 map("n", "<C-n>", ":bn<CR>", { silent = true })
 
 map("n", "<Leader>gm", "<Plug>(git-messenger)")
 
-map("n", "g<", "<Cmd>ISwapNodeWithLeft<CR>")
-map("n", "g>", "<Cmd>ISwapNodeWithRight<CR>")
-map("n", "gs", "<Cmd>ISwap<CR>")
+-- map("n", "g<", "<Cmd>ISwapNodeWithLeft<CR>")
+-- map("n", "g>", "<Cmd>ISwapNodeWithRight<CR>")
+-- map("n", "gs", "<Cmd>ISwap<CR>")
 
 map("n", "<BS>", ":w ++p<CR>")
 
-map("n", "<Space>", "dw")
+-- Switch to last focused buffer
+map("n", "<Tab>", "<C-^>")
+
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+
+-- TODO
+-- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })

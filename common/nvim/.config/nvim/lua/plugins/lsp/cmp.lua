@@ -2,7 +2,6 @@ return {
     {
         -- Auto completion
         "hrsh7th/nvim-cmp",
-        -- after = "friendly-snippets",
         dependencies = {
             "onsails/lspkind-nvim",
         },
@@ -21,11 +20,6 @@ return {
                     completion = cmp.config.window.bordered(),
                     documentation = cmp.config.window.bordered()
                 },
-                snippet = {
-                    expand = function(args)
-                        require("luasnip").lsp_expand(args.body)
-                    end
-                },
                 formatting = {
                     format = lspkind.cmp_format({
                         maxwidth = 50
@@ -42,7 +36,7 @@ return {
                     -- ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
                     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-                    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+                    -- ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 
                     ["<C-y>"] = cmp.mapping.confirm {
                         behavior = cmp.ConfirmBehavior.Insert,
@@ -67,10 +61,8 @@ return {
                     { name = "nvim_lua" },
                     { name = "nvim_lsp" },
                     { name = "path" },
-                    -- { name = "gh_issues" },
-                    { name = "luasnip" },
-                    -- { name = "cmdline" },
-                    -- { name = "buffer", keyword_length = 3 },
+                    { name = "cmdline" },
+                    { name = "buffer",  keyword_length = 3 },
                 },
                 experimental = {
                     -- TODO
@@ -81,32 +73,9 @@ return {
             cmp.setup(options)
         end
     },
-    -- {
-    --     "rafamadriz/friendly-snippets",
-    --     module = "cmp_nvim_lsp",
-    --     event = "InsertEnter"
-    -- },
     { "hrsh7th/cmp-nvim-lua" },
     { "hrsh7th/cmp-nvim-lsp" },
     { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-path" },
     { "hrsh7th/cmp-cmdline" },
-    {
-        "L3MON4D3/LuaSnip",
-        -- dependencies = "friendly-snippets",
-        -- after = "nvim-cmp",
-        config = function()
-            local luasnip = require "luasnip"
-
-            luasnip.config.set_config {
-                history = true,
-                updateevents = "TextChanged,TextChangedI",
-            }
-
-            require("luasnip.loaders.from_vscode").lazy_load()
-        end
-    },
-    {
-        "saadparwaiz1/cmp_luasnip",
-    },
 }

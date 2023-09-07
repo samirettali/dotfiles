@@ -244,5 +244,24 @@ M.has_value = function(tab, val)
     return false
 end
 
+-- Get the current buffer's filetype.
+M.get_current_filetype = function() return vim.api.nvim_buf_get_option(0, 'filetype') end
+
+-- Get the current buffer's type.
+M.get_current_buftype = function() return vim.api.nvim_buf_get_option(0, 'buftype') end
+
+M.get_parent_folder = function()
+    local current_buffer = vim.api.nvim_get_current_buf()
+    local current_file = vim.api.nvim_buf_get_name(current_buffer)
+    local parent = vim.fn.fnamemodify(current_file, ':h:t')
+    if parent == '.' then return '' end
+    return parent .. '/'
+end
+
+M.get_current_filename = function()
+    local bufname = vim.api.nvim_buf_get_name(0)
+    local filename = bufname ~= '' and vim.fn.fnamemodify(bufname, ':t') or ''
+    return M.get_parent_folder() .. filename
+end
 
 return M

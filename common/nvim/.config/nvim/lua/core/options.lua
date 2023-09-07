@@ -14,8 +14,11 @@ opt.expandtab = true         -- Insert spaces instead of tabs
 opt.tabstop = indentation    -- Tab size
 opt.shiftwidth = indentation -- Number of spaces to use for auto indenting
 opt.smartindent = true
-opt.ignorecase = true        -- Ignore case
-opt.smartcase = true         -- Don't ignore case with capitals
+
+-- Case insensitive search unless \C or capital in search
+opt.ignorecase = true -- Ignore case
+opt.smartcase = true  -- Don't ignore case with capitals
+
 opt.smarttab = true
 opt.softtabstop = indentation
 opt.autoindent = true -- Automatically indent new lines
@@ -33,39 +36,52 @@ opt.wrap = true           -- Wrap visually long lines
 opt.foldmethod = "expr"   -- Set fold method
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 
-opt.signcolumn = "yes" -- Keep sign column always opened
+-- Keep sign column always opened
+opt.signcolumn = "yes"
 
 opt.background = "dark"
+
+-- Decrease update time
 opt.updatetime = 250
-opt.hidden = true                             -- Enable having modified buffers in background
-opt.joinspaces = false                        -- No double spaces with join after a dot
-opt.scrolloff = 12                            -- Lines of context
-opt.sidescrolloff = 8                         -- Columns of context
-opt.shiftround = true                         -- Round indent
-opt.splitbelow = true                         -- Put new windows below current
-opt.splitright = true                         -- Put new windows right of current
-opt.foldlevelstart = 20                       -- Set initial fold level
-opt.termguicolors = true                      -- True color support
-opt.wildmode = "longest:full,full"            -- Command-line completion mode
-opt.showmatch = true                          -- Temporarily jump to matching parentheresis when inserting one
-opt.lazyredraw = true                         -- Disable redrawing while running macros
-opt.inccommand = "nosplit"                    -- Show result of substitution as you type
-opt.mouse = "nv"                              -- Enable mouse in normal and visual mode
-opt.showbreak = "↳ "                        -- Show character at visually wrapped lines
+opt.timeoutlen = 400
+
+opt.hidden = true       -- Enable having modified buffers in background
+opt.joinspaces = false  -- No double spaces with join after a dot
+opt.scrolloff = 12      -- Lines of context
+opt.sidescrolloff = 8   -- Columns of context
+opt.shiftround = true   -- Round indent
+opt.splitbelow = true   -- Put new windows below current
+opt.splitright = true   -- Put new windows right of current
+opt.foldlevelstart = 20 -- Set initial fold level
+
+-- True color support
+opt.termguicolors = true
+
+opt.wildmode = "longest:full,full" -- Command-line completion mode
+opt.showmatch = true -- Temporarily jump to matching parentheresis when inserting one
+opt.lazyredraw = true -- Disable redrawing while running macros
+opt.inccommand = "nosplit" -- Show result of substitution as you type
+opt.mouse = "a" -- Enable mouse in all modes
+opt.showbreak = "↳ " -- Show character at visually wrapped lines
+opt.breakindent = true
 opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize instead of whitespaces
+
 opt.completeopt = "menuone,noselect"
+
 opt.undodir = home .. "/.local/share/nvim/undo"
 opt.directory = home .. "/.local/share/nvim/swap"
 opt.backupdir = home .. "/.local/share/nvim/tmp"
 opt.shortmess:append "c"
 opt.shortmess:append "o" -- Don't print anything when writing a file
 
-opt.confirm = true       -- Ask for some operations like quitting an unsaved file instead of failing
-opt.laststatus = 3       -- Global statusline
-opt.title = true         -- Allow neovim to set the window title
-opt.cmdheight = 0        -- Command line height (0 hides it)
-opt.cursorline = true    -- Highlight current line
-opt.showtabline = 0      -- Hide tabline
+opt.clipboard = "unnamedplus"
+
+opt.confirm = true    -- Ask for some operations like quitting an unsaved file instead of failing
+opt.laststatus = 3    -- Global statusline
+opt.title = true      -- Allow neovim to set the window title
+opt.cmdheight = 1     -- Command line height
+opt.cursorline = true -- Highlight current line
+opt.showtabline = 0   -- Hide tabline
 
 opt.showmode = false
 
@@ -87,8 +103,6 @@ opt.fillchars = {
     foldsep = " ",
     foldclose = ""
 }
-
-opt.timeoutlen = 400
 
 g.gitblame_enabled = 0
 g.editorconfig = true

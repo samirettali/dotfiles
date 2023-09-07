@@ -37,11 +37,15 @@ autocmd("VimResized", {
 -- })
 
 -- Highlight yanked text
-autocmd("TextYankPost", {
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
-        vim.highlight.on_yank { higroup = "IncSearch", timeout = 400 }
+        vim.highlight.on_yank()
     end,
+    group = highlight_group,
+    pattern = '*',
 })
+
 
 -- Enable spellchecking in markdown, text and gitcommit files
 autocmd("FileType", {
@@ -66,11 +70,11 @@ autocmd("FileType", {
 --     end,
 -- })
 
-autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
-    callback = function()
-        require("core.winbar").get_winbar()
-    end,
-})
+--autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
+--    callback = function()
+--        require("core.winbar").get_winbar()
+--    end,
+-- })
 
 -- Fix moonfly colorscheme winbar highlights
 local moonfly_highlights = vim.api.nvim_create_augroup("MoonflyHighlight", {})
@@ -171,4 +175,21 @@ vim.api.nvim_create_autocmd("ColorScheme", {
             { fg = colors.blue, bg = 'NONE', bold = true })
     end,
     group = fleet_highlights,
+})
+
+-- vim.api.nvim_exec([[
+--   augroup Statusline
+--   au!
+--   au WinEnter,BufEnter * setlocal statusline=%!v:lua.Statusline.active()
+--   au WinLeave,BufLeave * setlocal statusline=%!v:lua.Statusline.inactive()
+--   au WinEnter,BufEnter,FileType NvimTree setlocal statusline=%!v:lua.Statusline.short()
+--   augroup END
+-- ]], false)
+
+local user = vim.api.nvim_create_augroup("user", {})
+vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+    group = user,
+    desc = 'return cursor to where it was last time closing the file',
+    pattern = '*',
+    command = 'silent! normal! g`"zv',
 })

@@ -16,10 +16,6 @@ local plugins = {
         "rhysd/committia.vim"
     },
     {
-        -- Git wrapper
-        "tpope/vim-fugitive"
-    },
-    {
         "rhysd/git-messenger.vim",
         keys = "<Plug>(git-messenger)",
         config = function()
@@ -27,32 +23,20 @@ local plugins = {
             vim.g.git_messenger_include_diff = "current"
         end
     },
-    -- {
-    --     "akinsho/git-conflict.nvim",
-    --     config = function()
-    --         require("git-conflict").setup({})
-    --     end
-    -- },
-    {
-        "f-person/git-blame.nvim",
-        config = function()
-            require_config("gitblame")
-        end
-    },
     -- Coding
     {
-        "numToStr/Comment.nvim",
-        keys = { "gc", "gb" },
+        'numToStr/Comment.nvim',
+        lazy = false,
         config = function()
-            require_config("comment")
+            require("Comment").setup()
         end
     },
-    {
-        "simrat39/symbols-outline.nvim",
-        config = function()
-            require("symbols-outline").setup()
-        end,
-    },
+    -- {
+    --     "simrat39/symbols-outline.nvim",
+    --     config = function()
+    --         require("symbols-outline").setup()
+    --     end,
+    -- },
     {
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate",
@@ -67,14 +51,14 @@ local plugins = {
     --         require_config("treesittertextobjects")
     --     end,
     -- },
-    {
-        "folke/trouble.nvim",
-        dependencies = "kyazdani42/nvim-web-devicons"
-    },
-    {
-        "RishabhRD/nvim-lsputils",
-        dependencies = "RishabhRD/popfix"
-    },
+    -- {
+    --     "folke/trouble.nvim",
+    --     dependencies = "kyazdani42/nvim-web-devicons"
+    -- },
+    -- {
+    --     "RishabhRD/nvim-lsputils",
+    --     dependencies = "RishabhRD/popfix"
+    -- },
     {
         -- Fuzzy file finder
         "nvim-telescope/telescope.nvim",
@@ -83,22 +67,22 @@ local plugins = {
             require_config("telescope")
         end
     },
-    {
-        "nvim-telescope/telescope-file-browser.nvim",
-        dependencies = "kyazdani42/nvim-web-devicons",
-    },
-    {
-        "aaronhallaert/advanced-git-search.nvim",
-        dependencies = {
-            -- to show diff splits and open commits in browser
-            "tpope/vim-fugitive",
-            -- to open commits in browser with fugitive
-            "tpope/vim-rhubarb",
-            -- OPTIONAL: to replace the diff from fugitive with diffview.nvim
-            -- (fugitive is still needed to open in browser)
-            -- "sindrets/diffview.nvim",
-        },
-    },
+    -- {
+    --     "nvim-telescope/telescope-file-browser.nvim",
+    --     dependencies = "kyazdani42/nvim-web-devicons",
+    -- },
+    -- {
+    --     "aaronhallaert/advanced-git-search.nvim",
+    --     dependencies = {
+    --         -- to show diff splits and open commits in browser
+    --         "tpope/vim-fugitive",
+    --         -- to open commits in browser with fugitive
+    --         "tpope/vim-rhubarb",
+    --         -- OPTIONAL: to replace the diff from fugitive with diffview.nvim
+    --         -- (fugitive is still needed to open in browser)
+    --         -- "sindrets/diffview.nvim",
+    --     },
+    -- },
     { "mbbill/undotree" }, -- Show a tree of undo history
     -- {
     --     "kyazdani42/nvim-tree.lua",
@@ -119,15 +103,15 @@ local plugins = {
         -- Add surround object for editing
         "tpope/vim-surround"
     },
-    {
-        -- Add more targets for commands
-        "wellle/targets.vim"
-    },
+    -- {
+    --     -- Add more targets for commands
+    --     "wellle/targets.vim"
+    -- },
     -- Improving functionalities
-    {
-        -- Show diff of a recovered or swap file
-        "chrisbra/Recover.vim"
-    },
+    -- {
+    --     -- Show diff of a recovered or swap file
+    --     "chrisbra/Recover.vim"
+    -- },
     {
         "numToStr/Navigator.nvim",
         config = function()
@@ -151,174 +135,125 @@ local plugins = {
     --         }
     --     end
     -- },
-    {
-        -- Split line at cursor
-        "drzel/vim-split-line"
-    },
+    -- {
+    --     -- Split line at cursor
+    --     "drzel/vim-split-line"
+    -- },
     {
         -- Replace word under cursor
         "wincent/scalpel"
     },
-    {
-        -- Swap delimited items
-        "mizlan/iswap.nvim"
-    },
-    {
-        -- Disable search highlighting on mode change
-        "romainl/vim-cool"
-    },
+    -- {
+    --     -- Swap delimited items
+    --     "mizlan/iswap.nvim"
+    -- },
+    -- {
+    --     -- Disable search highlighting on mode change
+    --     "romainl/vim-cool"
+    -- },
     {
         -- Repeat plugin mappings with .
         "tpope/vim-repeat"
     },
-    {
-        -- Add sort motion
-        "sQVe/sort.nvim"
-    },
-    {
-        -- Adds UNIX commands
-        "tpope/vim-eunuch"
-    },
-    {
-        -- Highlights undo region
-        "machakann/vim-highlightedundo"
-    },
+    -- {
+    --     -- Add sort motion
+    --     "sQVe/sort.nvim"
+    -- },
+    -- {
+    --     -- Adds UNIX commands
+    --     "tpope/vim-eunuch"
+    -- },
+    -- {
+    --     -- Highlights undo region
+    --     "machakann/vim-highlightedundo"
+    -- },
     {
         -- Exchange two objects
         "tommcdo/vim-exchange"
     },
-    {
-        -- Reapply previous change to a different object
-        "tommcdo/vim-nowchangethat"
-    },
-    {
-        -- Restore cursor position when reopening files
-        "farmergreg/vim-lastplace"
-    },
-    {
-        -- Automatic shebang for new files
-        "Susensio/magic-bang.nvim"
-    },
-    {
-        -- Copy in OS clipboard in SSH
-        "ojroques/vim-oscyank"
-    },
-    {
-        -- Hex editing
-        "RaafatTurki/hex.nvim",
-        config = function()
-            require("hex").setup()
-        end
-    },
+    -- {
+    --     -- Reapply previous change to a different object
+    --     "tommcdo/vim-nowchangethat"
+    -- },
+    -- {
+    --     -- Restore cursor position when reopening files
+    --     "farmergreg/vim-lastplace"
+    -- },
+    -- {
+    --     -- Automatic shebang for new files
+    --     "Susensio/magic-bang.nvim"
+    -- },
+    -- {
+    --     -- Copy in OS clipboard in SSH
+    --     "ojroques/vim-oscyank"
+    -- },
     { "norcalli/nvim-colorizer.lua" },
-    { "sindrets/diffview.nvim",     dependencies = { "nvim-lua/plenary.nvim" } },
-    {
-        "kyazdani42/nvim-web-devicons",
-        config = function()
-            require_config("icons")
-        end
-    },
-    {
-        "rmagatti/goto-preview",
-        config = function()
-            require_config("goto-preview")
-        end
-    },
-    { "lewis6991/impatient.nvim" },
-    {
-        "Tummetott/reticle.nvim",
-        config = function()
-            require('reticle').setup {
-                -- add options here if you want to overwrite defaults
-            }
-        end
-    },
+    -- { "sindrets/diffview.nvim",     dependencies = { "nvim-lua/plenary.nvim" } },
+    -- {
+    --     "kyazdani42/nvim-web-devicons",
+    --     config = function()
+    --         require_config("icons")
+    --     end
+    -- },
+    -- {
+    --     "rmagatti/goto-preview",
+    --     config = function()
+    -- require('goto-preview').setup {
+    --     width = 120; -- Width of the floating window
+    --     height = 15; -- Height of the floating window
+    --     default_mappings = true; -- Bind default mappings
+    --     debug = false; -- Print debug information
+    --     opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
+    --     post_open_hook = nil -- A function taking two arguments, a buffer and a window to be ran as a hook.
+    -- }
+    --     end
+    -- },
+    -- { "lewis6991/impatient.nvim" },
     {
         "laytan/cloak.nvim",
         config = function() require_config("cloak") end
     },
+    -- {
+    --     "stevearc/dressing.nvim",
+    --     config = function()
+    --         require_config("dressing")
+    --     end
+    -- },
+    "Yazeed1s/minimal.nvim",
     {
-        "hashicorp/terraform-ls"
-    },
-    {
-        "stevearc/dressing.nvim",
+        "bluz71/vim-moonfly-colors",
+        priority = 1000,
         config = function()
-            require_config("dressing")
+            vim.g.moonflyWinSeparator = 2
+            vim.g.moonflyCursorColor = true
+            vim.g.moonflyItalics = false
+            vim.g.moonflyUnderlineMatchParen = true
+            -- vim.cmd [[ colorscheme moonfly ]]
         end
     },
     {
-        "rmagatti/auto-session",
+        "felipeagc/fleet-theme-nvim",
         config = function()
-            require("auto-session").setup {
-                log_level = "error",
-                auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
-            }
+            vim.cmd [[ colorscheme fleet ]]
         end
     },
-    {
-        "kdheepak/lazygit.nvim",
-        config = function()
-            vim.keymap.set("n", "<Leader>gg", ":LazyGit<CR>")
-        end
-    },
-    {
-        "stevearc/overseer.nvim",
-        config = function()
-            require('overseer').setup()
-        end
-    },
-    {
-        "nanotee/sqls.nvim"
-    },
-    {
-        "toppair/peek.nvim",
-        build = 'deno task --quiet build:fast',
-        config = function()
-            -- default config:
-            require('peek').setup({
-                auto_load = true,        -- whether to automatically load preview when
-                -- entering another markdown buffer
-                close_on_bdelete = true, -- close preview window on buffer delete
-                syntax = true,           -- enable syntax highlighting, affects performance
-                theme = 'dark',          -- 'dark' or 'light'
-                update_on_change = true,
-                app = 'webview',         -- 'webview', 'browser', string or a table of strings
-                -- explained below
-
-                filetype = { 'markdown' }, -- list of filetypes to recognize as markdown
-                -- relevant if update_on_change is true
-                throttle_at = 200000,      -- start throttling when file exceeds this
-                -- amount of bytes in size
-                throttle_time = 'auto',    -- minimum amount of time in milliseconds
-                -- that has to pass before starting new render
-            })
-        end,
-    },
-    {
-        "projekt0n/circles.nvim",
-        config = function()
-            require("circles").setup()
-        end,
-    },
-    {
-        "nathom/filetype.nvim",
-        config = function()
-            require("filetype").setup {
-                overrides = {
-                    extensions = {
-                        tf = "terraform",
-                        tfvars = "terraform",
-                        tfstate = "json",
-                    },
-                },
-            }
-        end,
-    },
-    {
-        "SmiteshP/nvim-navic",
-        config = function()
-        end,
-    }
+    -- {
+    --     "nathom/filetype.nvim",
+    --     config = function()
+    --         require("filetype").setup {
+    --             overrides = {
+    --                 extensions = {
+    --                     tf = "terraform",
+    --                     tfvars = "terraform",
+    --                     tfstate = "json",
+    --                 },
+    --             },
+    --         }
+    --     end,
+    -- },
+    -- {
+    --     "SmiteshP/nvim-navic",
+    -- }
 }
 
 -- glepnir/mutchar.nvim
@@ -326,11 +261,7 @@ local plugins = {
 require("lazy").setup {
     spec = {
         plugins,
-        { import = "plugins.ui" },
         { import = "plugins.lsp" },
-        { import = "plugins.extras.pde" },
-        { import = "plugins.dap" },
-        { import = "plugins.themes" },
     },
     defaults = {
         lazy = false,
