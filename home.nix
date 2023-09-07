@@ -23,6 +23,7 @@
     ".ideavimrc".source = dotfiles/ideavimrc;
     ".config/waybar/config".source = dotfiles/waybar/config;
     ".config/waybar/style.css".source = dotfiles/waybar/style.css;
+    ".config/foot/foot.ini".source = dotfiles/foot.ini;
 
     # You can also set the file content immediately.
     ".tmux.conf".text = ''
