@@ -29,6 +29,19 @@
 
   services = {
     mpris-proxy.enable = true;
+    mako = {
+      enable = true;
+      anchor = "top-right";
+      borderRadius = 0;
+      borderSize = 2;
+      defaultTimeout = 5000;
+      font = "JetBrainsMono Nerd Font";
+      layer = "top";
+      # iconPath = "${pkgs.whitesur-icon-theme}/share/icons/WhiteSur-dark";
+
+      groupBy = "app-name";
+      format = "<b>%s</b>\\n<b><span size='small' color='#6f6f6f'>%a</span></b>\\n\\n<span size='small'>%b</span>";
+    };
   };
 
   # (pkgs.writeShellScriptBin "my-hello" ''
@@ -46,13 +59,15 @@
     ".config/foot/foot.ini".source = dotfiles/foot.ini;
     ".tmux.conf".source = dotfiles/tmux.conf;
     ".ripgreprc".source = dotfiles/ripgreprc;
+    ".config/kanshi/config".source = dotfiles/kanshi_config;
+    ".config/bc".source = dotfiles/bc;
     ".config/mpv" = { source = dotfiles/mpv; recursive = true; };
     ".config/nvim" = { source = dotfiles/nvim; recursive = true; };
+    "${config.home.homeDirectory}" = { source = dotfiles/linux; recursive = true; };
   };
 
   home.packages = with pkgs; [
     swayfx
-    mako
     waybar
     grim
     slurp

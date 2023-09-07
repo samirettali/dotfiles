@@ -1,0 +1,8 @@
+profile docked {
+    output DP-1 enable scale 1
+    output eDP-1 disable
+}
+
+profile mobile {
+    output eDP-1 enable scale 2
+}
