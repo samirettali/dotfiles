@@ -10,31 +10,170 @@
   ];
 
   # (pkgs.writeShellScriptBin "my-hello" ''
-  #   echo "Hello, ${config.home.username}!"
   # '')
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  # home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+  home.file = {
+    ".config/wezterm/wezterm.lua".source = dotfiles/wezterm.lua;
+    ".Xresources".source = dotfiles/Xresources;
+    ".config/sway/config".source = dotfiles/sway_config;
+    ".ackrc".source = dotfiles/ackrc;
+    ".config/alacritty/alacritty.yml".source = dotfiles/alacritty.yml;
+    ".ideavimrc".source = dotfiles/ideavimrc;
+    ".config/waybar/config".source = dotfiles/waybar/config;
+    ".config/waybar/style.css".source = dotfiles/waybar/style.css;
 
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  # };
+    # You can also set the file content immediately.
+    ".tmux.conf".text = ''
+# Remap prefix from 'C-b' to 'C-a'
+unbind C-b
+set-option -g prefix C-a
+
+# Mantain path in new splits/panes
+unbind c
+bind c new-window -c '#{pane_current_path}'
+
+# Horizontal splitting
+unbind '"'
+bind - split-window -v -c '#{pane_current_path}'
+bind _ split-window -fv -c '#{pane_current_path}'
+
+# Verical splitting
+unbind %
+bind \\ split-window -h -c '#{pane_current_path}'
+bind | split-window -fh -c '#{pane_current_path}'
+
+# Move windows
+bind-key -r '<' swap-window -d -t '{previous}'
+bind-key -r '>' swap-window -d -t '{next}'
+
+# Resize panes
+bind -r H resize-pane -L "5"
+bind -r J resize-pane -D "5"
+bind -r K resize-pane -U "5"
+bind -r L resize-pane -R "5"
+
+bind l next-layout
+
+bind r source-file ~/.tmux.conf
+
+# clear buffer
+bind s clear-history
+
+# change tmux root to current directory
+unbind .
+bind . attach -c "#{pane_current_path}"
+
+unbind m
+bind m command-prompt "move-window -t '%%'"
+
+bind C-a last-window
+
+# execute last command in last selected split
+bind b select-pane -t 2 \; send-keys Up C-m \; last-pane
+bind y select-window -t 2 \; send-keys Up C-m \;
+
+# vim visual mode and copy
+bind -T copy-mode-vi 'v' send -X begin-selection
+bind -T copy-mode-vi 'y' send -X copy-selection-and-cancel
+
+# move panes windows: <prefix> s, <prefix> j
+bind j command-prompt -p "join pane from:"  "join-pane -s '%%'"
+bind S command-prompt -p "send pane to:"  "join-pane -t '%%'"
+
+bind Enter break-pane
+bind Space command-prompt "joinp -t:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
+
+# settings
+set set-clipboard on
+set -g base-index 1
+set -s escape-time 0
+set -g default-terminal "xterm-256color"
+set -ga terminal-overrides ",xterm-256color:Tc"
+setw -g pane-base-index 1
+setw -g mode-keys vi
+set -g renumber-windows on
+set-option -g allow-rename off
+set-option -g set-titles on
+set-option -g set-titles-string "#{session_name} - #{host}"
+set-option -g default-shell ${pkgs.zsh}/bin/zsh
+set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
+
+# Settings from tmux-sensible
+set -g history-limit 50000
+set -g display-time 4000
+set -g mouse on
+# set -g default-command "reattach-to-user-namespace -l $SHELL" # test if needed
+set -g focus-events on
+setw -g aggressive-resize on
+
+# Disable prefix with F12 to use nested tmux inside ssh session
+bind -T root F12  \
+  set prefix None \;\
+  set key-table off \;\
+  set status-right "OFF" \;\
+  if -F '#{pane_in_mode}' 'send-keys -X cancel' \;\
+  refresh-client -S \;\
+
+bind -T off F12 \
+  set -u prefix \;\
+  set -u status-right \;\
+  set -u key-table \;\
+  refresh-client -S
+
+# Theme
+# setw -g window-active-style fg=white,bg=black
+# setw -g window-style fg=white,bg=black
+
+set -g status-justify left
+set -g status-style "bg=colour234 bold"
+
+set -g status-left "#S "
+set -g status-left-style "fg=red"
+set -g status-left-length 20
+
+set -g status-right "$USER@#H"
+set -g status-right-style "fg=green"
+# set -g status-right-length 20
+
+#  set -g window-status-style "fg=black"
+set -g window-status-format " #I:#W "
+set -g window-status-style "fg=#858585"
+set -g window-status-current-style "fg=yellow"
+set -g window-status-current-format " #I:#W "
+set -g window-status-separator " "
+
+set -g pane-active-border-style "bold fg=#858585"
+set -g pane-border-style "fg=colour234"
+
+# Remember to check every now and then the repo if something changed.
+# Only way to get rid of TPM.
+is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
+bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
+bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
+bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
+tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
+if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
+    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
+if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
+    "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
+
+bind-key -T copy-mode-vi 'C-h' select-pane -L
+bind-key -T copy-mode-vi 'C-j' select-pane -D
+bind-key -T copy-mode-vi 'C-k' select-pane -U
+bind-key -T copy-mode-vi 'C-l' select-pane -R
+bind-key -T copy-mode-vi 'C-\' select-pane -l
+
+bind-key s choose-session'';
+  };
 
   home.stateVersion = "23.11";
   home.username = "samir";
   home.homeDirectory = "/home/samir";
-
-  # nixpkgs.overlays = [
-    # (import "${fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz"}/overlay.nix")
-  # ];
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "ngrok"
@@ -43,43 +182,40 @@
   ];
 
   home.packages = with pkgs; [
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
-    spotify
-    # libnotify
     swayfx
     mako
     waybar
-    # swaylock
     grim
     slurp
     kanshi
     wl-clipboard
     cliphist
     bemenu
-    # wlprop
-    tigervnc
-    dwl
     wbg
-    somebar
-    foot
     wdisplays
 
+    dwl
+    somebar
+    foot
+
     # desktop apps
-    alacritty
-    firefox-wayland
+    wezterm
     keepassxc
     vscode
-    kitty
-    wezterm
+    spotify
 
-    # neovim
+    firefox-wayland
+    mpv
+    zathura
+    cinnamon.nemo
+    ffmpegthumbnailer
+    webp-pixbuf-loader
+    pavucontrol
+    sxiv
+
     neovim-nightly
 
+    # cli tools
     direnv
     unixtools.xxd
     fzf
@@ -99,34 +235,21 @@
     iredis
     pgcli
     ncdu
+    ngrok
 
     pkgs.tree-sitter
     pkgs.networkmanagerapplet
 
-    mpv
-    zathura
-    cinnamon.nemo
-    ffmpegthumbnailer
-    # xfce.tumbler
-    webp-pixbuf-loader
-    pavucontrol
-    sxiv
-
     pamixer
-    trashy
+    trash-cli
     p7zip
     unzip
-
-    ngrok
 
     docker-compose
 
     lua-language-server
-    nodePackages.vscode-langservers-extracted
     nixd
 
-    # python3
-    # pipenv
     nodejs
 
     go
@@ -138,14 +261,6 @@
 
     zig
     zls
-
-    # ocaml
-    ocaml
-    # ocamlPackages.findlib
-    ocamlPackages.utop
-    ocamlPackages.ocamlformat
-    dune_3
-    nodePackages.ocaml-language-server
 
     dnsx
     httpx
@@ -183,23 +298,7 @@
         ];
       });
     })
-    # (import (builtins.fetchTarball {
-    #   url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    # }))
   ];
-
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
 
   home.sessionVariables = {
     EDITOR = "nvim";

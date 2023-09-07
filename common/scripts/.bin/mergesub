@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# Merges the subtitle file with the video file
-
-if [[ "$1" && "$2" && "$3" ]]; then
-    ffmpeg -i "$1" -i "$2" -c copy -c:s mov_text "$3"
-else
-    echo "Usage: ./mergesub src.mkv sub.srt dest.mkv"
-fi
