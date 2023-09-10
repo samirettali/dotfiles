@@ -78,7 +78,7 @@ _G.StatusColumn = {
         },
         line_number = {
             -- [[%=%{v:lua.StatusColumn.display.line()}]]
-            [[%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}]]
+            [[%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . "  " : v:lnum) : ""}]]
         },
         spacing     = {
             [[ ]]
@@ -126,9 +126,9 @@ _G.StatusColumn = {
 vim.opt.statuscolumn = ""
 
 local function callback()
-	if utils.is_plugin_filetype() then
+    if utils.is_plugin_filetype() then
         vim.opt_local.signcolumn = "no"
-		vim.opt_local.statuscolumn = ""
+        vim.opt_local.statuscolumn = ""
         return
     end
 
@@ -144,6 +144,6 @@ local function callback()
 end
 
 vim.api.nvim_create_autocmd("BufWinEnter", {
-	callback = callback,
-	-- group = custom_events,
+    callback = callback,
+    -- group = custom_events,
 })

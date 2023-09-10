@@ -1,121 +1,133 @@
-#!/usr/bin/env lua
-local cmd = vim.cmd
-local opt = vim.opt
-local g = vim.g
-
-local indentation = 4
 local home = os.getenv("HOME")
 
--- use filetype.lua instead of filetype.vim
--- g.did_load_filetypes = 0
--- g.do_filetype_lua = 1
 
-opt.expandtab = true         -- Insert spaces instead of tabs
-opt.tabstop = indentation    -- Tab size
-opt.shiftwidth = indentation -- Number of spaces to use for auto indenting
-opt.smartindent = true
+-- Tabs
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.expandtab = true
+
+vim.opt.smartindent = true
+vim.opt.smarttab = true
+
+vim.opt.autoindent = true
+vim.opt.cindent = true
+vim.opt.wrap = true
+
+vim.opt.breakindent = true
+vim.opt.showbreak = "↳ "
+vim.opt.linebreak = true
 
 -- Case insensitive search unless \C or capital in search
-opt.ignorecase = true -- Ignore case
-opt.smartcase = true  -- Don't ignore case with capitals
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
-opt.smarttab = true
-opt.softtabstop = indentation
-opt.autoindent = true -- Automatically indent new lines
+vim.opt.synmaxcol = 200 -- Highlight up to the 200th column
 
-opt.synmaxcol = 200   -- Highlight up to the 200th column
+vim.opt.undofile = true -- Use undo files
+-- vim.opt("b", "spelllang", "it,en_us")
+-- vim.opt.iskeyword = vim.opt.iskeyword - { "_" }     -- Treat _ as a word separator
 
-opt.undofile = true   -- Use undo files
--- opt("b", "spelllang", "it,en_us")
--- opt.iskeyword = opt.iskeyword - { "_" }     -- Treat _ as a word separator
+vim.opt.number = true         -- Show line numbers
+vim.opt.relativenumber = true -- Show relative line numbers
 
-opt.number = true         -- Show line numbers
-opt.relativenumber = true -- Show relative line numbers
-
-opt.wrap = true           -- Wrap visually long lines
-opt.foldmethod = "expr"   -- Set fold method
-opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = "expr"   -- Set fold method
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevelstart = 20   -- Set initial fold level
 
 -- Keep sign column always opened
-opt.signcolumn = "yes"
+vim.opt.signcolumn = "yes"
 
-opt.background = "dark"
+vim.opt.background = "dark"
 
 -- Decrease update time
-opt.updatetime = 250
-opt.timeoutlen = 400
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 400
 
-opt.hidden = true       -- Enable having modified buffers in background
-opt.joinspaces = false  -- No double spaces with join after a dot
-opt.scrolloff = 12      -- Lines of context
-opt.sidescrolloff = 8   -- Columns of context
-opt.shiftround = true   -- Round indent
-opt.splitbelow = true   -- Put new windows below current
-opt.splitright = true   -- Put new windows right of current
-opt.foldlevelstart = 20 -- Set initial fold level
+vim.opt.hidden = true      -- Enable having modified buffers in background
+vim.opt.joinspaces = false -- No double spaces with join after a dot
+vim.opt.scrolloff = 10     -- Lines of context
+vim.opt.sidescrolloff = 8  -- Columns of context
+vim.opt.shiftround = true  -- Round indent
+vim.opt.splitbelow = true  -- Put new windows below current
+vim.opt.splitright = true  -- Put new windows right of current
 
 -- True color support
-opt.termguicolors = true
+vim.opt.termguicolors = true
 
-opt.wildmode = "longest:full,full" -- Command-line completion mode
-opt.showmatch = true -- Temporarily jump to matching parentheresis when inserting one
-opt.lazyredraw = true -- Disable redrawing while running macros
-opt.inccommand = "nosplit" -- Show result of substitution as you type
-opt.mouse = "a" -- Enable mouse in all modes
-opt.showbreak = "↳ " -- Show character at visually wrapped lines
-opt.breakindent = true
-opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize instead of whitespaces
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
 
-opt.completeopt = "menuone,noselect"
+vim.opt.pumheight = 15            -- Maximum of 15 elements shown in command auto completion
+vim.opt.wildmode = "longest:full" -- Command-line completion mode
+vim.opt.wildoptions = "pum"
 
-opt.undodir = home .. "/.local/share/nvim/undo"
-opt.directory = home .. "/.local/share/nvim/swap"
-opt.backupdir = home .. "/.local/share/nvim/tmp"
-opt.shortmess:append "c"
-opt.shortmess:append "o" -- Don't print anything when writing a file
+vim.opt.showmatch = true       -- Temporarily jump to matching parentheresis when inserting one
+vim.opt.lazyredraw = true      -- Disable redrawing while running macros
+vim.opt.inccommand = "nosplit" -- Show result of substitution as you type
 
-opt.clipboard = "unnamedplus"
+vim.opt.mouse = "a"
 
-opt.confirm = true    -- Ask for some operations like quitting an unsaved file instead of failing
-opt.laststatus = 3    -- Global statusline
-opt.title = true      -- Allow neovim to set the window title
-opt.cmdheight = 1     -- Command line height
-opt.cursorline = true -- Highlight current line
-opt.showtabline = 0   -- Hide tabline
+vim.opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize instead of whitespaces
 
-opt.showmode = false
+vim.opt.completeopt = "menuone,noselect"
 
-opt.foldcolumn = "1"
+vim.opt.undodir = home .. "/.local/share/nvim/undo"
+vim.opt.directory = home .. "/.local/share/nvim/swap"
+vim.opt.backupdir = home .. "/.local/share/nvim/tmp"
+vim.opt.shortmess:append "c"
 
-opt.fillchars = {
-    horiz = '━',
-    horizup = '┻',
-    horizdown = '┳',
-    vert = '┃',
-    vertleft = '┫',
-    vertright = '┣',
-    verthoriz = '╋',
+vim.opt.clipboard = "unnamedplus"
+
+vim.opt.confirm = true    -- Ask for some operations like quitting an unsaved file instead of failing
+vim.opt.laststatus = 3    -- Global statusline
+vim.opt.title = true      -- Allow neovim to set the window title
+vim.opt.cmdheight = 1     -- Command line height
+vim.opt.showtabline = 0   -- Hide tabline
+
+vim.opt.cursorline = true -- Highlight current line
+
+local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
+local set_cursorline = function(event, value, pattern)
+    vim.api.nvim_create_autocmd(event, {
+        group = group,
+        pattern = pattern,
+        callback = function()
+            vim.opt_local.cursorline = value
+        end,
+    })
+end
+set_cursorline("WinLeave", false)
+set_cursorline("WinEnter", true)
+set_cursorline("FileType", false, "TelescopePrompt")
+
+vim.opt.showmode = false
+
+vim.opt.foldcolumn = "1"
+
+vim.opt.fillchars = {
+    --     horiz = "━",
+    --     horizup = "┻",
+    --     horizdown = "┳",
+    --     vert = "┃",
+    --     vertleft = "┫",
+    --     vertright = "┣",
+    --     verthoriz = "╋",
     eob = " ",
-    -- fold = "┈",
-    -- diff = "┈",
-    fold = " ",
-    foldopen = "",
-    foldsep = " ",
-    foldclose = ""
+    --     -- fold = "┈",
+    --     -- diff = "┈",
+    --     fold = " ",
+    --     foldopen = "",
+    --     foldsep = " ",
+    --     foldclose = ""
 }
 
-g.gitblame_enabled = 0
-g.editorconfig = true
+vim.cmd(":command! W w")
+vim.cmd(":command! Q q")
+vim.cmd(":command! WQ wq")
+vim.cmd(":command! Wq wq")
 
--- vim.cmd [[highlight WinSeparator guibg=None guifg=#20272e]] -- Fix for the global statusline
+-- vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }
 
-cmd(":command! W w")
-cmd(":command! Q q")
-cmd(":command! WQ wq")
-cmd(":command! Wq wq")
-
-
-vim.schedule(function()
-    vim.opt.shadafile = vim.fn.expand "$HOME" .. "/.local/share/nvim/shada/main.shada"
-    vim.cmd [[ silent! rsh ]]
-end)
+-- Custom stuff
+vim.g.inlay_hints_enabled = false

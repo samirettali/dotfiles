@@ -1,7 +1,5 @@
 local utils = require("core.utils")
 
-local M = {}
-
 local function get_filename()
     local filename = vim.fn.expand "%:~:."
     local extension = vim.fn.expand "%:e"
@@ -27,39 +25,7 @@ local function get_filename()
     end
 end
 
-local function get_gps()
-    local navic_present, navic = pcall(require, "nvim-navic")
-    if not navic_present then
-        return ""
-    end
-
-    local status_ok, gps_location = pcall(navic.get_location, {})
-    if not status_ok then
-        return ""
-    end
-
-    if not navic.is_available() or gps_location == "error" then
-        return ""
-    end
-
-    if not utils.isempty(gps_location) then
-        return "> " .. gps_location
-    else
-        return ""
-    end
-end
-
-local function get_blame()
-    local present, blame = pcall(require, "gitblame")
-
-    if present and blame.is_blame_text_available() then
-        return blame.get_current_blame_text()
-    end
-
-    return ""
-end
-
-local excludes = function()
+local function excludes()
     if utils.is_plugin_filetype() then
         vim.opt_local.winbar = nil
         return true
@@ -67,33 +33,20 @@ local excludes = function()
     return false
 end
 
-M.get_winbar = function()
+local function get_winbar()
     if excludes() then
         return
     end
-    local value = get_filename()
-
-    local gps_added = false
-    if not utils.isempty(value) then
-        local gps_value = get_gps()
-        value = value .. " " .. gps_value
-        if not utils.isempty(gps_value) then
-            gps_added = true
-        end
-
-        local blame_value = get_blame()
-        if not utils.isempty(blame_value) then
-            value = value .. "%=" .. blame_value
-        end
-    end
+    local value = table.concat {
+        "%=",
+        utils.get_current_filename(),
+        " "
+    }
 
     if not utils.isempty(value) and utils.get_buf_option "mod" then
         local mod = "%#LineNr#" .. "%*"
-        if gps_added then
-            value = value .. " " .. mod
-        else
-            value = value .. mod
-        end
+        value = value .. mod
+        -- end
     end
 
     local status_ok, _ = pcall(vim.api.nvim_set_option_value, "winbar", value, { scope = "local" })
@@ -102,4 +55,8 @@ M.get_winbar = function()
     end
 end
 
-return M
+vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
+    callback = function()
+        get_winbar()
+    end,
+})

@@ -2,6 +2,8 @@ function P(object)
     print(vim.inspect(object))
 end
 
+vim.loader.enable()
+
 local function load_modules()
     local modules = {
         "core.options",
@@ -22,18 +24,18 @@ local function load_modules()
     end
 end
 
-    local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-    if not vim.loop.fs_stat(lazypath) then
-        vim.fn.system({
-            "git",
-            "clone",
-            "--filter=blob:none",
-            "https://github.com/folke/lazy.nvim.git",
-            "--branch=stable",
-            lazypath
-        })
-    end
-    vim.opt.rtp:prepend(lazypath)
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable",
+        lazypath
+    })
+end
+vim.opt.rtp:prepend(lazypath)
 
 
 load_modules()

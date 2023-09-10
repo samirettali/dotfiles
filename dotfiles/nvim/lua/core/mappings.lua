@@ -1,56 +1,42 @@
-local utils = require('core.utils')
+local utils = require("core.utils")
 local map = utils.map
-local telescope_map = utils.telescope_map
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Core mappings
 -- Yank entire line except newline
-map('n', 'Y', 'y$')
+map("n", "Y", "y$")
 
--- Keep text selected after intentating it
-map('v', '<', '<gv')
-map('v', '>', '>gv')
+-- Keep text selected after indentating it
+map("v", "<", "<gv")
+map("v", ">", ">gv")
 
 -- Apply macros with Q
-map('n', 'Q', '@q')
-map('v', 'Q', ':norm @q<CR>') -- TODO needed?
+map("n", "Q", "@q")
+map("v", "Q", ":norm @q<CR>") -- TODO needed?
 
 -- Select last changed text
-map('n', 'gV', '`[v`]')
+map("n", "gV", "`[v`]")
 
 -- Splits
-map('n', '\\', ':vsplit<CR>')
-map('n', '-', ':split<CR>')
+map("n", "\\", ":vsplit<CR>")
+map("n", "-", ":split<CR>")
 
--- Duplicate paragraph
-map('n', '<Leader>d', 'yap<S-}>p')
+map("n", "<Leader>d", "yap<S-}>p", { desc = "Duplicate paragraph" })
 
--- Go back to last selected file
-map('n', '<Leader><Leader>', '<C-^>')
+map("n", "<Leader>l", ":set list!<CR>", { desc = "Toggle listchars" })
 
--- Toggle listchars
-map('n', '<Leader>l', ':set list!<CR>')
-
--- Keep only the current window
-map('n', '<Leader>o', ':only<CR>')
+map("n", "<Leader>o", ":only<CR>", { desc = "Make current window the only one" })
 
 -- Remove trailing whitespace
--- map('n', '<Leader>t', ':%s/\\s\\+$//e<CR>')
+-- map("n", "<Leader>t", ":%s/\\s\\+$//e<CR>")
 
-map('v', '<Leader>p', '"_dP"', {
-    remap = false,
-    desc = "Paste replace visual selection without copying it"
-})
+map("v", "<Leader>p", '"_dP"', { remap = false, desc = "Paste replace visual selection without copying it" })
 
-map('n', '<Leader>k', 'gcip', { remap = true })
-
--- Increment number under cursor
-map('n', '<Leader>i', '<C-a>', { remap = true })
-
--- Join with above line
--- map('n', 'K', 'kJ')
+-- Increment and decrement number under cursor
+vim.keymap.set("n", "<C-;>", "<C-a>")
+vim.keymap.set("n", "<C-'>", "<C-x>")
 
 -- Map ; to : in normal and visual mode
 map("n", ";", ":")
@@ -61,70 +47,40 @@ map("n", ",p", '"0p')
 map("v", ",P", '"0P')
 
 -- Keep lines centered when searching
-map('n', 'n', 'nzzzv')
-map('n', 'N', 'Nzzzv')
-map('n', 'J', 'mzJ`z')
-map('n', '<C-j>', ':cnext<CR>zzzv')
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+
+-- Mantain cursor position when joining lines
+map("n", "J", "mzJ`z")
+
+-- map("n", "<C-j>", ":cnext<CR>zzzv")
 
 -- Undo break points
-map('i', ',', ',<C-g>u')
-map('i', '.', '.<C-g>u')
-map('i', '!', '!<C-g>u')
-map('i', '?', '?<C-g>u')
-map('i', '[', '[<C-g>u')
-map('i', ']', ']<C-g>u')
+map("i", ",", ",<C-g>u")
+map("i", ".", ".<C-g>u")
+map("i", "!", "!<C-g>u")
+map("i", "?", "?<C-g>u")
+map("i", "[", "[<C-g>u")
+map("i", "]", "]<C-g>u")
 
-map('n', 'gR', function()
-    require("telescope.builtin").lsp_references()
-end)
+map("n", "<C-p>", ":bp<CR>", { silent = true, desc = "Go to previous buffer" })
+map("n", "<C-n>", ":bn<CR>", { silent = true, desc = "Go to next buffer" })
 
--- Close buffer
-map("n", "<C-q>", ":bd<CR>")
+map("n", "<BS>", ":w ++p<CR>", { desc = "Save file and create parent folders" })
 
--- Plugins
--- Telescope
-map("n", "<C-f>", "<Cmd>Telescope find_files hidden=false<CR>")
--- map("n", "<C-q>", "<Cmd>Telescope lsp_workspace_diagnostics<CR>")
-map("n", "<C-s>", "<Cmd>Telescope lsp_document_symbols<CR>")
-map("n", "<C-w>", "<Cmd>Telescope lsp_dynamic_workspace_symbols<CR>")
-map("n", "<C-b>", "<Cmd>Telescope buffers<CR>")
-map("n", "<C-g>", "<Cmd>Telescope live_grep<CR>")
+map("n", "<Tab>", "<C-^>", { desc = "Switch to last focused buffer" })
 
-telescope_map("<Leader>fR", "lsp_references")
-telescope_map("<Leader>fS", "lsp_document_symbols")
-telescope_map("<Leader>fs", "lsp_workspace_symbols")
-telescope_map("<Leader>fd", "lsp_workspace_diagnostics")
+-- Move selected lines
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
--- Scalpel
-map("n", "<Leader>s", "<Plug>(Scalpel)", { remap = false })
+vim.keymap.set({ "n", "v" }, "<space>", "<nop>", { silent = true })
 
--- Trouble
-map("n", "<leader>xx", "<Cmd>LspTroubleToggle<cr>")
-map("n", "<leader>xw", "<Cmd>LspTroubleToggle lsp_workspace_diagnostics<cr>")
-map("n", "<leader>xd", "<Cmd>LspTroubleToggle lsp_document_diagnostics<cr>")
-map("n", "<leader>xq", "<Cmd>LspTroubleToggle quickfix<cr>")
-map("n", "<leader>xl", "<Cmd>LspTroubleToggle loclist<cr>")
-map("n", "<leader>xr", "<Cmd>LspTroubleToggle lsp_references<cr>")
+-- Paste replacing selected text but without copying it
+vim.keymap.set("x", "<leader>p", [["_dP]])
 
--- Splitline
-map("n", "S", "<Cmd>SplitLine<CR>", { remap = true })
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
 
--- buffer moving
-map("n", "<C-p>", ":bp<CR>", { silent = true })
-map("n", "<C-n>", ":bn<CR>", { silent = true })
-
-map("n", "<Leader>gm", "<Plug>(git-messenger)")
-
--- map("n", "g<", "<Cmd>ISwapNodeWithLeft<CR>")
--- map("n", "g>", "<Cmd>ISwapNodeWithRight<CR>")
--- map("n", "gs", "<Cmd>ISwap<CR>")
-
-map("n", "<BS>", ":w ++p<CR>")
-
--- Switch to last focused buffer
-map("n", "<Tab>", "<C-^>")
-
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- TODO
--- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+-- Scalpel alternative
+-- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])

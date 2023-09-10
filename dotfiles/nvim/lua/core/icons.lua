@@ -82,7 +82,7 @@ local icons = {
         },
         git = "",
         add = "",
-        branch = "",
+        branch = "",
         change = "",
         conflict = "",
         delete = " ",
@@ -94,10 +94,10 @@ local icons = {
         unmerged = " "
     },
     diagnostics = {
-        error = "",
+        error = "",
         warn = "",
-        hint = " ",
-        info = " ",
+        hint = "",
+        info = "",
     },
     kinds = {
         Array = "",
