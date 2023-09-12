@@ -7,9 +7,9 @@
     package = pkgs.gitFull;
     # config.credential.helper = "libsecret";
     extraConfig = {
-      # core.editor = nvim;
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
+      pull.rebase = false;
        "url \"git://github.com/samirettali\"".insteadOf
           = "https://github.com/samirettali/";
     };
