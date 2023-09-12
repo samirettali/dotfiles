@@ -1,18 +1,16 @@
 { pkgs, ...} : {
   programs = {
-  git = {
-    enable = true;
-    userName = "Samir Ettali";
-    userEmail = "ettali.samir@gmail.com";
-    package = pkgs.gitFull;
-    # config.credential.helper = "libsecret";
-    extraConfig = {
-      init.defaultBranch = "main";
-      push.autoSetupRemote = true;
-      pull.rebase = false;
-       "url \"git://github.com/samirettali\"".insteadOf
-          = "https://github.com/samirettali/";
+    git = {
+      enable = true;
+      userName = "Samir Ettali";
+      userEmail = "ettali.samir@gmail.com";
+      package = pkgs.gitFull;
+      extraConfig = {
+        init.defaultBranch = "main";
+        push.autoSetupRemote = true;
+        pull.rebase = false;
+         "url \"git://github.com/samirettali\"".insteadOf = "https://github.com/samirettali/";
+      };
     };
-  };
   };
 }

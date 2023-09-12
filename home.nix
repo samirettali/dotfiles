@@ -1,7 +1,15 @@
-{ username, homeDirectory, stateVersion, pkgs, nixpkgs, profile, home-manager, ... }:
 {
+  username,
+  homeDirectory,
+  stateVersion,
+  pkgs,
+  nixpkgs,
+  profile,
+  home-manager,
+  ...
+}: {
   imports = [
-    ./packages.nix
+    (import ./packages.nix { inherit pkgs nixpkgs; })
     ./dotfiles.nix
     ./user/zsh.nix
     ./user/fzf.nix

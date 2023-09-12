@@ -1,8 +1,8 @@
 {
   pkgs,
+  nixpkgs,
   ...
 }: let
-
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
     destination = "/bin/dbus-sway-environment";
@@ -62,7 +62,7 @@
     pavucontrol
     sxiv
   ];
-  common-packages = with pkgs [
+  common-packages = with pkgs; [
     # desktop apps
     wezterm
     keepassxc
@@ -140,9 +140,9 @@
     # cargo-watch
     # cargo-shuttle
     # trunk
-  ]
-  in {
-    home.packages =
-      common-packages
-        ++ (lib.optionals stdenv.isLinux linux-packages)
-  }
+  ];
+in {
+  home.packages =
+    common-packages
+      ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages);
+}
