@@ -62,18 +62,16 @@
     pavucontrol
     sxiv
   ];
-  common-packages = with pkgs; [
-    # desktop apps
+
+  desktop-packages = with pkgs; [
     wezterm
     keepassxc
-    # vscode
-    # spotify
+    vscode
+    spotify
     qbittorrent
+  ];
 
-    # neovim-nightly
-    neovim
-
-    # cli tools
+  cli-packages = with pkgs; [
     direnv
     unixtools.xxd
     fzf
@@ -94,20 +92,19 @@
     iredis
     pgcli
     ncdu
-    # ngrok
+    ngrok
     mprocs
-
-    pkgs.tree-sitter
-
     trash-cli
     p7zip
     unzip
+  ];
 
+  dev-packages = with pkgs; [
+    neovim-nightly
+    pkgs.tree-sitter
     lua-language-server
     nixd
-
     nodejs
-
     go
     gopls
     golangci-lint
@@ -116,33 +113,44 @@
     gcc
     gnumake
     cmake
-
     openssl
     pkg-config
-
     zig
     zls
+    jdk17
+  ];
 
+  rust-packages = with pkgs; [
+    (fenix.combine [
+      (fenix.complete.withComponents [
+        "cargo"
+        "clippy"
+        "rust-src"
+        "rustc"
+        "rustfmt"
+      ])
+      fenix.targets.wasm32-unknown-unknown.latest.rust-std
+    ])
+    rust-analyzer-nightly
+    cargo-watch
+    cargo-shuttle
+    trunk
+    findomain
+    nmap
+    naabu
+    ffuf
+    amass
+  ];
+
+  bounty-packages = with pkgs; [
     dnsx
     httpx
-
-    # (fenix.combine [
-    #   (fenix.complete.withComponents [
-    #     "cargo"
-    #     "clippy"
-    #     "rust-src"
-    #     "rustc"
-    #     "rustfmt"
-    #   ])
-    #   fenix.targets.wasm32-unknown-unknown.latest.rust-std
-    # ])
-    # rust-analyzer-nightly
-    # cargo-watch
-    # cargo-shuttle
-    # trunk
   ];
 in {
   home.packages =
-    common-packages
+      desktop-packages
+      ++ cli-packages
+      ++ dev-packages
+      ++ rust-packages
       ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages);
 }

@@ -2,6 +2,7 @@
   home-manager,
   pkgs,
   homeDirectory,
+  nixpkgs,
   ...
 }:
 
@@ -10,7 +11,7 @@ let
 in {
   imports = [
     ./user/gtk.nix
-    (import ./sway.nix { inherit pkgs homeDirectory font; })
+    (import ./sway.nix { inherit pkgs homeDirectory font nixpkgs; })
   ];
 
   programs = {

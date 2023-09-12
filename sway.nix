@@ -2,6 +2,7 @@
   pkgs,
   homeDirectory,
   font,
+  nixpkgs,
   ...
 }: let
   modifier = "Mod4";
@@ -49,7 +50,7 @@ in {
           repeat_rate = "60";
         };
       };
-      keybindings = {
+      keybindings = nixpkgs.lib.mkOptionDefault {
         "${modifier}+Shift+c" = "kill";
         "${modifier}+Shift+r" = "reload";
         "${modifier}+Shift+q" = "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
@@ -57,7 +58,7 @@ in {
         "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
         "${modifier}+p" = "exec ${pkgs.bemenu}/bin/bemenu-run";
         "${modifier}+x" = "exec ${pkgs.cinnamon.nemo}/bin/nemo";
-        "${modifier}+y" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | wl-copy";
+        "${modifier}+y" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | ${pkgs.wl-clipboard}/bin/wl-copy";
         "Mod4+BackSpace" = "exec swaymsg input type:keyboard xkb_switch_layout next";
         "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
         "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
@@ -69,10 +70,10 @@ in {
         };
       };
       startup = [
-        { command = "nm-applet";}
-        { command = "wl-paste --watch cliphist store"; }
-        { command = "mako"; }
-        { command = "kanshi"; always = true; }
+        { command = "${pkgs.networkmanagerapplet}/bin-nm-applet";}
+        { command = "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"; }
+        { command = "${pkgs.mako}/bin/mako"; }
+        { command = "${pkgs.kanshi}/bin/mako"; always = true; }
         { command = "exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"; }
       ];
       terminal = "foot";

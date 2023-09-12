@@ -16,7 +16,7 @@
     ./user/git.nix
   ]
   ++ nixpkgs.lib.optionals pkgs.stdenv.isLinux [
-    (import ./linux.nix { inherit home-manager pkgs homeDirectory; })
+    (import ./linux.nix { inherit home-manager pkgs homeDirectory nixpkgs; })
   ];
 
   home = { inherit username homeDirectory stateVersion; };
