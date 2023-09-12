@@ -6,18 +6,6 @@
 }:
 
 let
-  dbus-sway-environment = pkgs.writeTextFile {
-    name = "dbus-sway-environment";
-    destination = "/bin/dbus-sway-environment";
-    executable = true;
-
-    text = ''
-      dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-      systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
-      systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
-    '';
-  };
-
   font = "JetBrainsMono Nerd Font";
 
 in {
@@ -31,9 +19,9 @@ in {
   # can forward the GPG agent through SSH directly without
   # having a first failed connection due to a missing
   # `/run/user/<id>/gnupg`.
-  home.activation.linger = home-manager.lib.hm.dag.entryBefore ["reloadSystemd"] ''
-    ${pkgs.systemd}/bin/loginctl enable-linger $USER
-  '';
+# home.activation.linger = home-manager.lib.hm.dag.entryBefore ["reloadSystemd"] ''
+# ${pkgs.systemd}/bin/loginctl enable-linger $USER
+# '';
 
   # programs = {
   #   keychain = {
@@ -56,40 +44,6 @@ in {
     QT_QPA_PLATFORM = "wayland";
     XDG_CURRENT_DESKTOP = "sway";
   }
-
-  home.packages = with pkgs; [
-    grim
-    slurp
-    kanshi
-    wl-clipboard
-    cliphist
-    bemenu
-    wbg
-    wdisplays
-    xorg.xrdb
-    hyprpicker
-    networkmanagerapplet
-
-    pamixer
-    trash-cli
-    p7zip
-    unzip
-
-    dbus-sway-environment
-    configure-gtk
-    xdg-utils
-
-    foot
-
-    firefox-wayland
-    mpv
-    zathura
-    cinnamon.nemo
-    ffmpegthumbnailer
-    webp-pixbuf-loader
-    pavucontrol
-    sxiv
-  ];
 
   programs =  {
     i3status-rust = {

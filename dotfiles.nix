@@ -1,7 +1,7 @@
 { ... }: {
   home.file = {
     ".config/wezterm/wezterm.lua".source = dotfiles/wezterm.lua;
-    ".Xresources".source = dotfiles/Xresources;
+    ".Xdefaults".source = dotfiles/Xdefaults;
     ".ackrc".source = dotfiles/ackrc;
     ".config/alacritty/alacritty.yml".source = dotfiles/alacritty.yml;
     ".ideavimrc".source = dotfiles/ideavimrc;

@@ -42,7 +42,6 @@
       in [
         (import ./home.nix {
           inherit username homeDirectory stateVersion pkgs nixpkgs profile home-manager;
-          # inherit username homeDirectory stateVersion pkgs nixpkgs profile home-manager;
         })
       ];
 
@@ -64,6 +63,8 @@
           stateVersion = "23.11";
         };
       };
+
+      # defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
 
       homeManagerConfiguration = {
         system,
