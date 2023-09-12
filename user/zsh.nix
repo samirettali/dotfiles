@@ -165,7 +165,7 @@ function () {
   autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^x^x' edit-command-line
-export PATH=$PATH:~/.bin
+export PATH=$PATH:~/.bin:~/go/bin
         '';
         # promptInit = "autoload -U promptinit && promptinit && prompt suse && setopt prompt_sp";
         shellAliases = {
