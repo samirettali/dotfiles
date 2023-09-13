@@ -73,7 +73,7 @@ in {
         { command = "${pkgs.networkmanagerapplet}/bin-nm-applet";}
         { command = "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"; }
         { command = "${pkgs.mako}/bin/mako"; }
-        { command = "${pkgs.kanshi}/bin/mako"; always = true; }
+        { command = "${pkgs.kanshi}/bin/kanshi"; always = true; }
         { command = "exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"; }
       ];
       terminal = "foot";
