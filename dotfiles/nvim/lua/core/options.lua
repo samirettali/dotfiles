@@ -1,6 +1,5 @@
 local home = os.getenv("HOME")
 
-
 -- Tabs
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -24,16 +23,18 @@ vim.opt.smartcase = true
 
 vim.opt.synmaxcol = 200 -- Highlight up to the 200th column
 
-vim.opt.undofile = true -- Use undo files
--- vim.opt("b", "spelllang", "it,en_us")
--- vim.opt.iskeyword = vim.opt.iskeyword - { "_" }     -- Treat _ as a word separator
+-- Use undo files
+vim.opt.undofile = true
+vim.opt.iskeyword = vim.opt.iskeyword - { "_" } -- Treat _ as a word separator
 
-vim.opt.number = true         -- Show line numbers
-vim.opt.relativenumber = true -- Show relative line numbers
+-- Show relative line numbers
+vim.opt.number = true
+vim.opt.relativenumber = true
 
-vim.opt.foldmethod = "expr"   -- Set fold method
+
+vim.opt.foldmethod = "expr" -- Set fold method
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevelstart = 20   -- Set initial fold level
+vim.opt.foldlevelstart = 20 -- Set initial fold level
 
 -- Keep sign column always opened
 vim.opt.signcolumn = "yes"
@@ -74,7 +75,8 @@ vim.opt.completeopt = "menuone,noselect"
 
 vim.opt.undodir = home .. "/.local/share/nvim/undo"
 vim.opt.directory = home .. "/.local/share/nvim/swap"
-vim.opt.backupdir = home .. "/.local/share/nvim/tmp"
+vim.opt.backup = false
+vim.opt.writebackup = false
 vim.opt.shortmess:append "c"
 
 vim.opt.clipboard = "unnamedplus"
@@ -87,6 +89,7 @@ vim.opt.showtabline = 0   -- Hide tabline
 
 vim.opt.cursorline = true -- Highlight current line
 
+-- Keep cursor line only on focused window
 local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursorline = function(event, value, pattern)
     vim.api.nvim_create_autocmd(event, {
@@ -106,28 +109,13 @@ vim.opt.showmode = false
 vim.opt.foldcolumn = "1"
 
 vim.opt.fillchars = {
-    --     horiz = "━",
-    --     horizup = "┻",
-    --     horizdown = "┳",
-    --     vert = "┃",
-    --     vertleft = "┫",
-    --     vertright = "┣",
-    --     verthoriz = "╋",
     eob = " ",
-    --     -- fold = "┈",
-    --     -- diff = "┈",
-    --     fold = " ",
-    --     foldopen = "",
-    --     foldsep = " ",
-    --     foldclose = ""
 }
 
 vim.cmd(":command! W w")
 vim.cmd(":command! Q q")
 vim.cmd(":command! WQ wq")
 vim.cmd(":command! Wq wq")
-
--- vim.opt.diffopt = { "internal", "filler", "closeoff", "hiddenoff", "algorithm:minimal" }
 
 -- Custom stuff
 vim.g.inlay_hints_enabled = false
