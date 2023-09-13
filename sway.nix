@@ -26,8 +26,9 @@ in {
       ];
       floating = {
         criteria = [
-          { class = "Pavucontrol"; }
-          { class = "nemo"; }
+          { app_id = "pavucontrol"; }
+          { app_id = "nemo"; }
+          { app_id = "floating_term"; }
           { window_role = "pop-up"; }
           { window_role = "task_dialog"; }
         ];
@@ -53,12 +54,14 @@ in {
       keybindings = nixpkgs.lib.mkOptionDefault {
         "${modifier}+Shift+c" = "kill";
         "${modifier}+Shift+r" = "reload";
-        "${modifier}+Shift+q" = "exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b 'Yes' 'i3-msg exit'";
+        "${modifier}+Shift+q" = "exec swaynag -t warning -m 'Do you want to exit?' -b 'Yes' 'swaymsg exit'";
         "${modifier}+Tab" = "workspace back_and_forth";
         "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
-        "${modifier}+p" = "exec ${pkgs.bemenu}/bin/bemenu-run";
+        "${modifier}+s" = "exec ${pkgs.foot}/bin/foot -a floating_term tmux new-session -A -s scratchpad";
+        "${modifier}+d" = "exec ${pkgs.bemenu}/bin/bemenu-run";
         "${modifier}+x" = "exec ${pkgs.cinnamon.nemo}/bin/nemo";
-        "${modifier}+y" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | ${pkgs.wl-clipboard}/bin/wl-copy";
+        "${modifier}+y" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.bemenu}/bin/bemenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
+        "${modifier}+Shift+v" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | ${pkgs.wl-clipboard}/bin/wl-copy";
         "Mod4+BackSpace" = "exec swaymsg input type:keyboard xkb_switch_layout next";
         "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
         "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
@@ -73,7 +76,7 @@ in {
         { command = "${pkgs.networkmanagerapplet}/bin-nm-applet";}
         { command = "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"; }
         { command = "${pkgs.mako}/bin/mako"; }
-        { command = "${pkgs.kanshi}/bin/kanshi"; always = true; }
+        { command = "${pkgs.kanshi}/bin/kanshi"; }
         { command = "exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"; }
       ];
       terminal = "foot";
