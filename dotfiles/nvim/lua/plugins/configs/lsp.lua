@@ -72,13 +72,6 @@ local function config()
                 vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
             end
 
-            -- Show diagnostic on hover
-            -- vim.api.nvim_create_autocmd("CursorHold", {
-            --     callback = function()
-            --         vim.diagnostic.open_float()
-            --     end
-            -- })
-
             if caps.definitionProvider then
                 vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
             end

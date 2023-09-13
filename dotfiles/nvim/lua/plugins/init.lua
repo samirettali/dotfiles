@@ -55,6 +55,9 @@ local plugins = {
     -- "stevearc/dressing.nvim" -- Better UI selectors and inputs
     -- "wellle/targets.vim" -- Add more targets for commands
     -- b0o/incline.nvim -- Floating winbar like
+    "sainnhe/sonokai",
+    "rebelot/kanagawa.nvim",
+    { 'rose-pine/neovim', name = 'rose-pine' },
 }
 
 
