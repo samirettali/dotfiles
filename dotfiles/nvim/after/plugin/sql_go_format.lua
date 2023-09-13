@@ -81,13 +81,15 @@ local format_sql = function(bufnr)
     end
 end
 
-vim.api.nvim_create_user_command("SqlMagic", function()
-    format_sql()
-end, {})
-
-vim.api.nvim_create_autocmd({ "BufWritePre", "BufWritePost" }, {
-    pattern = { "*.go" },
-    callback = function()
+if false then
+    vim.api.nvim_create_user_command("SqlMagic", function()
         format_sql()
-    end,
-})
+    end, {})
+
+    vim.api.nvim_create_autocmd({ "BufWritePre", "BufWritePost" }, {
+        pattern = { "*.go" },
+        callback = function()
+            format_sql()
+        end,
+    })
+end
