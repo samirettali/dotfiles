@@ -35,7 +35,6 @@ return {
                 sources = {
                     { name = "nvim_lua" },
                     { name = "nvim_lsp" },
-                    { name = "copilot" },
                     { name = "path" },
                     -- { name = "cmdline" },
                     -- { name = "buffer",  keyword_length = 3 },
@@ -54,18 +53,4 @@ return {
     -- { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-path" },
     -- { "hrsh7th/cmp-cmdline" },
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({})
-        end,
-    },
-    {
-        "zbirenbaum/copilot-cmp",
-        config = function()
-            require("copilot_cmp").setup()
-        end
-    }
 }

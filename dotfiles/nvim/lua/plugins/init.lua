@@ -17,8 +17,7 @@ local plugins = {
             })
         end
     },
-    "tpope/vim-surround",   -- Add surround object for editing
-    "chrisbra/Recover.vim", -- Show diff of a recovered swap file
+    "tpope/vim-surround", -- Add surround object for editing
     {
         "numToStr/Navigator.nvim",
         config = function()
@@ -50,14 +49,12 @@ local plugins = {
             vim.cmd.colorscheme("moonfly")
         end
     },
+    { "github/copilot.vim" }
     -- Notable mentions
     -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
     -- "stevearc/dressing.nvim" -- Better UI selectors and inputs
     -- "wellle/targets.vim" -- Add more targets for commands
     -- b0o/incline.nvim -- Floating winbar like
-    "sainnhe/sonokai",
-    "rebelot/kanagawa.nvim",
-    { "github/copilot.vim" }
 }
 
 
