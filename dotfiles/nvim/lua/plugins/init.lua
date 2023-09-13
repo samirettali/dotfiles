@@ -57,7 +57,7 @@ local plugins = {
     -- b0o/incline.nvim -- Floating winbar like
     "sainnhe/sonokai",
     "rebelot/kanagawa.nvim",
-    { 'rose-pine/neovim', name = 'rose-pine' },
+    { "github/copilot.vim" }
 }
 
 
