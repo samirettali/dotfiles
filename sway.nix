@@ -19,7 +19,7 @@ in {
             size = 10.0;
           };
           statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${homeDirectory}/.config/i3status-rust/config-default.toml";
-          trayOutput = "primary";
+          trayOutput = "DP-1";
           mode = "dock";
           position = "top";
         }
@@ -76,7 +76,7 @@ in {
         { command = "${pkgs.networkmanagerapplet}/bin-nm-applet";}
         { command = "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"; }
         { command = "${pkgs.mako}/bin/mako"; }
-        { command = "${pkgs.kanshi}/bin/kanshi"; }
+        { command = "pkill kanshi; ${pkgs.kanshi}/bin/kanshi"; always = true; }
         { command = "exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"; }
       ];
       terminal = "foot";
