@@ -56,8 +56,7 @@ RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%F{magenta}%B[%b]%%b%f'
 zstyle ':vcs_info:*' enable git
 
-# Prompt (Heavily inspired from Greg Hurrell)
-# https://github.com/wincent/wincent
+# Prompt
 function () {
   if [[ "$TERM_PROGRAM" == 'vscode' ]]; then
     local LVL=$(($SHLVL - 3))
@@ -81,95 +80,54 @@ function () {
     export PS1="%B%F{blue}%1~%F{yellow}%(1j.*.)%(?..!)%f%F{red}''${SUFFIX}%f%b "
   fi
 }
-          function ls () {
-            command ls --color=auto --group-directories-first $@
-          }
-          # Create new tmux session with name if passed
-          function t() {
-              if [ -z "$1" ]; then
-                  tmux
-              else
-                  tmux new -A -s "$1"
-              fi
-          }
 
-          # Throw away directory
-          function tad() {
-              local ts=$(date +%s)
-              local d="$HOME/.throw-away/$ts"
-              mkdir -p "$d"
-              (cd "$d"; zsh -c tmux)
-              rm -rf "$d"
-          }
+function ls () {
+    command ls --color=auto --group-directories-first $@
+}
 
-          # Go to git repository root
-          function gr() {
-              readonly old_pwd="$PWD"
-              while [[ 1 ]]; do
-                  cd ..
-                  if [[ "$PWD" == "/" ]]; then
-                      cd "$old_pwd"
-                      echo "No repository found, returned to $PWD"
-                      return 1
-                  fi
-                  for repo in ".git" ".hg"; do
-                      if [[ -d "$repo" ]]; then
-                          echo "Found $repo at $PWD"
-                          return 0
-                      fi
-                  done
-              done
-          }
+function loadenv() {
+    if [[ -f .env ]]; then
+        export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
+        length=$(wc -l < .env)
+        echo "Loaded $length variables"
+    fi
+}
 
-          function up() {
-            cd $(printf "%0.s../" $(seq 1 $1 ));
-          }
-
-          function loadenv() {
-            if [[ -f .env ]]; then
-              export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
-              length=$(wc -l < .env)
-              echo "Loaded $length variables"
-            fi
-
-          }
-
-          function take() {
-              mkdir -p "$1"
-              cd "$1"
-          }
+function take() {
+    mkdir -p "$1"
+    cd "$1"
+}
 	
-	## TODO do this only if gui
-	  autoload -U url-quote-magic bracketed-paste-magic
-  zle -N self-insert url-quote-magic
-  zle -N bracketed-paste bracketed-paste-magic
+## TODO do this only if gui
+autoload -U url-quote-magic bracketed-paste-magic
+zle -N self-insert url-quote-magic
+zle -N bracketed-paste bracketed-paste-magic
 
-  pasteinit() {
-      OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
-      zle -N self-insert url-quote-magic
-  }
+pasteinit() {
+    OLD_SELF_INSERT=''${''${(s.:.)widgets[self-insert]}[2,3]}
+    zle -N self-insert url-quote-magic
+}
 
-  pastefinish() {
-      zle -N self-insert $OLD_SELF_INSERT
-  }
+pastefinish() {
+    zle -N self-insert $OLD_SELF_INSERT
+}
 
-  zstyle :bracketed-paste-magic paste-init pasteinit
-  zstyle :bracketed-paste-magic paste-finish pastefinish
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
 
-  ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste accept-line)
 
-  # keybindings
-  bindkey '^F' fzf-file-widget
-  bindkey '^ ' autosuggest-accept
+# keybindings
+bindkey '^F' fzf-file-widget
+bindkey '^ ' autosuggest-accept
 
-  autoload -U edit-command-line
+autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^x^x' edit-command-line
+
 export PATH=$PATH:~/.bin:~/go/bin
         '';
-        # promptInit = "autoload -U promptinit && promptinit && prompt suse && setopt prompt_sp";
         shellAliases = {
-          tl = "tmux ls";
           qre = "qrencode -l H -t ANSI256UTF8";
           qrd = "pngpaste - | zbarimg -q --raw - | tee | pbcopy";
           lg = "lazygit";
