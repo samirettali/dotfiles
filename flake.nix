@@ -42,7 +42,6 @@
             inherit system;
             config.allowUnfree = true;
             overlays = [ inputs.neovim-nightly-overlay.overlay inputs.fenix-overlay.overlays.default ];
-            # nixpkgs.legacyPackages.${system};
         };
       in [
         (import ./home.nix {
@@ -69,8 +68,6 @@
         };
       };
 
-      # defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
-
       homeManagerConfiguration = {
         system,
         username,
@@ -92,40 +89,11 @@
         nixpkgs.lib.attrsets.mapAttrs
         (userAndHost: userAndHostConfig: homeManagerConfiguration userAndHostConfig)
         rawHomeManagerConfigurations;
+
     })
     // {
       # Re-export devenv, flake-utils, home-manager and nixpkgs as usable outputs
       inherit flake-utils home-manager nixpkgs;
     };
 
-      # neovim = inputs.neovim-nightly-overlay.overlay;
-    #   fenix = inputs.fenix-overlay.overlays.default;
-    #
-    #   pkgs = import nixpkgs {
-    #     inherit system;
-    #     config.allowUnfree = true;
-    #     overlays = [ fenix ];
-    #   };
-    #
-    #   lib = nixpkgs.lib;
-    #
-    # in {
-    #   nixosConfigurations = {
-    #     xps = lib.nixosSystem {
-    #       inherit system;
-    #
-    #       modules = [
-    #         ./system/configuration.nix
-    #       ];
-    #     };
-    #   };
-    #
-    #   defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
-    #   defaultPackage.aarch64-darwin = home-manager.defaultPackage.aarch64-darwin;
-    #   homeConfigurations."s.ettali" = home-manager.lib.homeManagerConfiguration {
-    #     inherit pkgs;
-    #
-    #     modules = [ ./home.nix ];
-    #   };
-    # };
 }
