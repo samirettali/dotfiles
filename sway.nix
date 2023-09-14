@@ -1,12 +1,13 @@
-{
-  pkgs,
-  homeDirectory,
-  font,
-  nixpkgs,
-  ...
-}: let
+{ pkgs
+, homeDirectory
+, font
+, nixpkgs
+, ...
+}:
+let
   modifier = "Mod4";
-in {
+in
+{
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
@@ -73,7 +74,7 @@ in {
         };
       };
       startup = [
-        { command = "${pkgs.networkmanagerapplet}/bin-nm-applet";}
+        { command = "${pkgs.networkmanagerapplet}/bin/nm-applet"; }
         { command = "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"; }
         { command = "${pkgs.mako}/bin/mako"; }
         { command = "pkill kanshi; ${pkgs.kanshi}/bin/kanshi"; always = true; }
@@ -95,27 +96,28 @@ in {
         default = {
           blocks = [
             {
+              block = "memory";
+              format = " MEM $mem_total_used_percents ";
+              format_alt = " MEM $mem_used_percents $buffers_percent $cached_percent ";
+            }
+            {
               block = "keyboard_layout";
               driver = "sway";
               mappings = {
-                  "English (US)" = "us";
-                  "Italian" = "it";
+                "English (US)" = "us";
+                "Italian" = "it";
               };
             }
             { block = "sound"; }
             {
-                block = "time";
-                format = " $timestamp.datetime(f:'%a %d/%m %R') ";
-                interval = 1;
+              block = "time";
+              format = " $timestamp.datetime(f:'%a %d/%m %R') ";
+              interval = 1;
             }
           ];
           settings = {
             theme = {
               theme = "plain";
-              overrides = {
-                idle_bg = "#000000";
-                idle_fg = "#ffffff";
-              };
             };
           };
         };

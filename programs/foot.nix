@@ -3,9 +3,11 @@
 }: {
   programs.foot = {
     enable = true;
-    config = {
-      font = "${font}: size=1m";
-      font = "${font}";
+    settings = {
+      main = {
+        font = "${font}:size=12";
+        term = "xterm-256color";
+      };
       cursor = {
         color = "111111 cccccc";
       };

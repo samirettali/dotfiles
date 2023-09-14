@@ -1,8 +1,8 @@
-{
-  pkgs,
-  nixpkgs,
-  ...
-}: let
+{ pkgs
+, nixpkgs
+, ...
+}:
+let
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
     destination = "/bin/dbus-sway-environment";
@@ -19,14 +19,16 @@
     name = "configure-gtk";
     destination = "/bin/configure-gtk";
     executable = true;
-    text = let
-      schema = pkgs.gsettings-desktop-schemas;
-      datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-    in ''
-      export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-      gnome_schema=org.gnome.desktop.interface
-      gsettings set $gnome_schema gtk-theme 'Dracula'
-    '';
+    text =
+      let
+        schema = pkgs.gsettings-desktop-schemas;
+        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+      in
+      ''
+        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+        gnome_schema=org.gnome.desktop.interface
+        gsettings set $gnome_schema gtk-theme 'Dracula'
+      '';
   };
 
   linux-packages = with pkgs; [
@@ -51,8 +53,6 @@
     configure-gtk
     xdg-utils
 
-    foot
-
     firefox-wayland
     mpv
     zathura
@@ -73,12 +73,13 @@
     vscode
     spotify
     qbittorrent
+    yubikey-manager
+    yubikey-personalization-gui
   ];
 
   cli-packages = with pkgs; [
     direnv
     unixtools.xxd
-    fzf
     tmux
     zellij
     entr
@@ -88,7 +89,6 @@
     lazygit
     lazydocker
     fd
-    ripgrep
     moreutils
     ranger
     tmuxinator
@@ -101,13 +101,14 @@
     trash-cli
     p7zip
     unzip
+    diskus
   ];
 
   dev-packages = with pkgs; [
     neovim-nightly
     pkgs.tree-sitter
     lua-language-server
-    nil
+    rnix-lsp
     nodejs
     go
     gopls
@@ -152,12 +153,13 @@
     dnsx
     httpx
   ];
-in {
+in
+{
   home.packages =
-      desktop-packages
-      ++ cli-packages
-      ++ dev-packages
-      ++ rust-packages
-      ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages)
-      ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages);
+    desktop-packages
+    ++ cli-packages
+    ++ dev-packages
+    ++ rust-packages
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages)
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages);
 }
