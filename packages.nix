@@ -63,6 +63,10 @@
     sxiv
   ];
 
+  mac-packages = with pkgs; [
+    darwin.apple_sdk.frameworks.SystemConfiguration
+  ];
+
   desktop-packages = with pkgs; [
     wezterm
     keepassxc
@@ -114,6 +118,7 @@
     gnumake
     cmake
     openssl
+    libiconv
     pkg-config
     zig
     zls
@@ -153,5 +158,6 @@ in {
       ++ cli-packages
       ++ dev-packages
       ++ rust-packages
-      ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages);
+      ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages)
+      ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages);
 }
