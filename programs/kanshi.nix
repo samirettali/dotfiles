@@ -23,8 +23,8 @@
       undocked = {
         outputs = [
           {
-            criteria = " eDP-1 ";
-            status = " enable ";
+            criteria = "eDP-1";
+            status = "enable";
             scale = 2.0;
           }
         ];
@@ -32,4 +32,3 @@
     };
   };
 }
-

@@ -1,6 +1,12 @@
-{ ... }: {
+{ pkgs
+, ...
+}: {
   programs.mpv = {
     enable = true;
-    scripts = [ pkgs.mpvScripts.autocrop ];
+    scripts = with pkgs.mpvScripts; [
+      autocrop
+      thumbnail
+      webtorrent-mpv-hook
+    ];
   };
 }

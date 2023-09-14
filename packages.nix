@@ -53,13 +53,12 @@ let
     xdg-utils
 
     firefox-wayland
-    mpv
     zathura
     cinnamon.nemo
     ffmpegthumbnailer
     webp-pixbuf-loader
     pavucontrol
-    sxiv
+    swayimg
   ];
 
   mac-packages = with pkgs; [
