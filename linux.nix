@@ -1,24 +1,25 @@
-{
-  home-manager,
-  pkgs,
-  homeDirectory,
-  nixpkgs,
-  ...
+{ home-manager
+, pkgs
+, homeDirectory
+, nixpkgs
+, ...
 }:
 
 let
   font = "JetBrainsMono Nerd Font";
-in {
+in
+{
   imports = [
     ./user/gtk.nix
     (import ./sway.nix { inherit pkgs homeDirectory font nixpkgs; })
+    (import ./programs/foot.nix { inherit font; })
   ];
 
   programs = {
     keychain = {
       enable = true;
       enableZshIntegration = true;
-      keys = [];
+      keys = [ ];
       inheritType = "any";
     };
     # zsh.shellAliases = {
@@ -47,6 +48,10 @@ in {
       layer = "top";
       groupBy = "app-name";
     };
+    gpg-agent = {
+      enable = true;
+      pinentryFlavor = "gtk2";
+    };
   };
 
   xdg.userDirs = {
@@ -61,7 +66,7 @@ in {
     templates = "${homeDirectory}/templates";
     videos = "${homeDirectory}/vids";
     extraConfig = {
-        XDG_MISC_DIR = "${homeDirectory}/misc";
+      XDG_MISC_DIR = "${homeDirectory}/misc";
     };
   };
 }
