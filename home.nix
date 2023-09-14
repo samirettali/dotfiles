@@ -14,6 +14,8 @@
     ./user/zsh.nix
     ./user/fzf.nix
     ./user/git.nix
+    ./dotfiles.nix
+    (import ./programs/tmux.nix { inherit pkgs homeDirectory; })
   ]
   ++ nixpkgs.lib.optionals pkgs.stdenv.isLinux [
     (import ./linux.nix { inherit home-manager pkgs homeDirectory nixpkgs; })
