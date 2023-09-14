@@ -135,6 +135,7 @@
     cargo-watch
     cargo-shuttle
     trunk
+    sqlx-cli
     findomain
     nmap
     naabu
