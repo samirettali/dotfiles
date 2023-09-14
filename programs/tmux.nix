@@ -23,7 +23,7 @@
       unbind %
       bind \\ split-window -h -c '#{pane_current_path}'
       bind | split-window -fh -c '#{pane_current_path}'
-      bind r source-file ${homeDirectory}/config/.tmux.conf \; display-message "Config reloaded.."
+      bind r source-file ${homeDirectory}/.config/tmux/tmux.conf \; display-message "Config reloaded.."
 
       # Move windows
       bind -r '<' swap-window -d -t '{previous}'
