@@ -107,7 +107,7 @@
     neovim-nightly
     pkgs.tree-sitter
     lua-language-server
-    nixd
+    nil
     nodejs
     go
     gopls

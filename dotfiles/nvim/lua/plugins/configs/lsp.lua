@@ -337,6 +337,8 @@ local function config()
             }
         }
     }
+
+    lspconfig.nil_ls.setup {}
 end
 
 
