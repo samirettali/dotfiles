@@ -2,20 +2,10 @@
 
 set -euo pipefail
 
-# Go to git repository root
+# Check if we are in arepo with git rev-parse --is-inside-work-tree
+if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+  echo "Not in a git repository"
+  exit 1
+fi
 
-readonly old_pwd="$PWD"
-while [[ 1 ]]; do
-    cd ..
-    if [[ "$PWD" == "/" ]]; then
-        cd "$old_pwd"
-        echo "No repository found, returned to $PWD"
-        exit 1
-    fi
-    for repo in ".git" ".hg"; do
-        if [[ -d "$repo" ]]; then
-            echo "Found $repo at $PWD"
-            exit 0
-        fi
-    done
-done
+cd "$(git rev-parse --show-toplevel)"
