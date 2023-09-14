@@ -135,7 +135,7 @@ autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^x^x' edit-command-line
 
-export PATH=$PATH:~/.bin:~/go/bin
+export PATH=~/.bin:$PATH:~/go/bin
         '';
         shellAliases = {
           qre = "qrencode -l H -t ANSI256UTF8";
