@@ -88,6 +88,7 @@ local function config()
             if caps.codeActionProvider ~= nil and utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") and caps.documentFormattingProvider then
                 vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
                 vim.api.nvim_create_autocmd("BufWritePre", {
+                    buffer = 0,
                     callback = function()
                         vim.lsp.buf.code_action {
                             context = {
@@ -104,6 +105,7 @@ local function config()
             elseif caps.documentFormattingProvider then
                 vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
                 vim.api.nvim_create_autocmd("BufWritePre", {
+                    buffer = 0,
                     callback = function()
                         vim.lsp.buf.format {
                             async = false
@@ -114,6 +116,7 @@ local function config()
                 utils.has_value(caps.codeActionProvider.codeActionKinds, "source.organizeImports") then
                 vim.api.nvim_clear_autocmds { buffer = 0, group = augroup_format }
                 vim.api.nvim_create_autocmd("BufWritePre", {
+                    buffer = 0,
                     callback = function()
                         vim.lsp.buf.code_action {
                             context = {
@@ -338,7 +341,7 @@ local function config()
         }
     }
 
-    lspconfig.nil_ls.setup {}
+    lspconfig.rnix.setup {}
 end
 
 
