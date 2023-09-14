@@ -81,6 +81,16 @@ function () {
   fi
 }
 
+function gr() {
+    # Check if we are in arepo with git rev-parse --is-inside-work-tree
+    if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+        echo "Not in a git repository"
+        return 1
+    fi
+
+    cd $(git rev-parse --show-toplevel)
+}
+
 function ls () {
     command ls --color=auto --group-directories-first $@
 }
