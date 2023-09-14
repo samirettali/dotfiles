@@ -11,7 +11,8 @@ in
 {
   imports = [
     ./user/gtk.nix
-    ./programs/kanshi.nix
+    ./programs/mpv.nix
+    (./programs/kanshi.nix { inherit pkgs; })
     (import ./sway.nix { inherit pkgs homeDirectory font nixpkgs; })
     (import ./programs/foot.nix { inherit font; })
   ];

@@ -1,4 +1,6 @@
-{ ... }: {
+{ pkgs
+, ...
+}: {
   services.kanshi = {
     enable = true;
     profiles = {
@@ -15,7 +17,7 @@
           }
         ];
         exec = [
-          "${pkg.sway}/bin/swaymsg workspace 1, move workspace to DP-1"
+          "${pkgs.sway}/bin/swaymsg workspace 1, move workspace to DP-1"
         ];
       };
       undocked = {
