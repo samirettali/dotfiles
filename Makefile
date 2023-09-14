@@ -1,4 +1,4 @@
-ACTIVATION_HOST ?= $(shell hostname -s)
+ACTIVATION_HOST ?= $(shell uname -s)
 
 .PHONY: switch
 switch:
