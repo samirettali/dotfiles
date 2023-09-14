@@ -1,10 +1,12 @@
-{ pkgs, homeDirectory, ... } :
-{
-    programs.tmux = {
-      enable = true;
-      aggressiveResize = true;
-      baseIndex = 1;
-      extraConfig = ''
+{ pkgs
+, homeDirectory
+, ...
+}: {
+  programs.tmux = {
+    enable = true;
+    aggressiveResize = true;
+    baseIndex = 1;
+    extraConfig = ''
       bind Enter break-pane
       bind Space command-prompt "joinp -t:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
 
@@ -68,29 +70,29 @@
       
       set -g pane-active-border-style "bold fg=#858585"
       set -g pane-border-style "fg=colour234"
-      '';
-      historyLimit = 50000;
-      keyMode = "vi";
-      mouse = true;
-      newSession = true; # TODO test this
-      plugins = with pkgs; [
-        {
-            plugin = tmuxPlugins.resurrect;
-            extraConfig = "set -g @resurrect-strategy-nvim 'session'";
-        }
-        {
-            plugin = tmuxPlugins.continuum;
-            extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '60' # minutes
-            '';
-        }
-        {
-            plugin = tmuxPlugins.vim-tmux-navigator;
-        }
-      ];
-      prefix = "C-a";
-      shell = "${pkgs.zsh}/bin/zsh";
-      terminal = "xterm-256color";
-    };
+    '';
+    historyLimit = 50000;
+    keyMode = "vi";
+    mouse = true;
+    newSession = true; # TODO test this
+    plugins = with pkgs; [
+      {
+        plugin = tmuxPlugins.resurrect;
+        extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+      }
+      {
+        plugin = tmuxPlugins.continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '60' # minutes
+        '';
+      }
+      {
+        plugin = tmuxPlugins.vim-tmux-navigator;
+      }
+    ];
+    prefix = "C-a";
+    shell = "${pkgs.zsh}/bin/zsh";
+    terminal = "xterm-256color";
+  };
 }
