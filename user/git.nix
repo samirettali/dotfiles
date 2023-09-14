@@ -11,6 +11,15 @@
         pull.rebase = false;
          "url \"git@github.com:samirettali\"".insteadOf = "https://github.com/samirettali/";
       };
+      ignores = [
+          "*.env"
+          ".env.*"
+          ".DS_Store"
+          "node_modules"
+          "/target"
+          ".idea"
+          "Session.vim"
+      ];
     };
   };
 }
