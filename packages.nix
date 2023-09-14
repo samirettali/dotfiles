@@ -34,7 +34,6 @@ let
   linux-packages = with pkgs; [
     grim
     slurp
-    kanshi
     wl-clipboard
     cliphist
     bemenu

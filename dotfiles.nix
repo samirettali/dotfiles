@@ -4,7 +4,6 @@
     ".Xdefaults".source = dotfiles/Xdefaults;
     ".config/alacritty/alacritty.yml".source = dotfiles/alacritty.yml;
     ".ideavimrc".source = dotfiles/ideavimrc;
-    ".config/kanshi/config".source = dotfiles/kanshi_config;
     ".config/bc".source = dotfiles/bc;
     ".config/mpv" = { source = dotfiles/mpv; recursive = true; };
     ".config/nvim" = { source = dotfiles/nvim; recursive = true; };
