@@ -31,7 +31,6 @@ vim.opt.iskeyword = vim.opt.iskeyword - { "_" } -- Treat _ as a word separator
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-
 vim.opt.foldmethod = "expr" -- Set fold method
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevelstart = 20 -- Set initial fold level
@@ -41,9 +40,8 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.background = "dark"
 
--- Decrease update time
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 400
+-- Fast!
+vim.opt.timeoutlen = 200
 
 vim.opt.hidden = true      -- Enable having modified buffers in background
 vim.opt.joinspaces = false -- No double spaces with join after a dot

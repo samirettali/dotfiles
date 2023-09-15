@@ -1,3 +1,4 @@
+local utils = require("core.utils")
 local plugins = {
     "rhysd/committia.vim", -- Better commit editing
     {
@@ -36,33 +37,34 @@ local plugins = {
             vim.keymap.set("n", "<Leader>s", "<Plug>(Scalpel)", { remap = false, silent = true })
         end,
     },
+    {
+        "chentoast/marks.nvim",
+        opts = { builtin_marks = { ".", "<", ">", "^" } }
+    },
+    {
+        "j-hui/fidget.nvim",
+        opts = {}
+    },
     "tpope/vim-repeat",     -- Repeat plugin mappings with .
     "tommcdo/vim-exchange", -- Exchange two objects
     "sindrets/diffview.nvim",
+    "github/copilot.vim",
+    "tpope/vim-fugitive",     -- Git wrapper
+    "stevearc/dressing.nvim", -- Better UI selectors and inputs
+    "tpope/vim-eunuch",       -- UNIX commands inside neovim
     {
-        "bluz71/vim-nightfly-colors",
-        config = function()
-            vim.g.nightflyWinSeparator = 2
-            vim.g.nightflyCursorColor = true
-            vim.g.nightflyItalics = false
-            vim.g.nightflyUnderlineMatchParen = true
-            vim.cmd.colorscheme("moonfly")
-        end
-    },
-    { "github/copilot.vim" },
-    {
-        "chentoast/marks.nvim",
-        config = function()
-            require("marks").setup()
-        end
+        "m4xshen/hardtime.nvim",
+        dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+        opts = {
+            disabled_filetypes = core.utils.plugin_filetypes,
+        }
     },
     -- Notable mentions
     -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
-    -- "stevearc/dressing.nvim" -- Better UI selectors and inputs
     -- "wellle/targets.vim" -- Add more targets for commands
-    -- b0o/incline.nvim -- Floating winbar like
+    -- "folke/todo-comments.nvim"
+    -- "ultimate-autopair.nvim"
 }
-
 
 require("lazy").setup {
     spec = {

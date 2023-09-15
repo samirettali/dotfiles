@@ -33,21 +33,26 @@ M.get_buf_option = function(opt)
 end
 
 M.plugin_filetypes = {
-    "help",
-    "startify",
-    "dashboard",
-    "packer",
-    "neogitstatus",
-    "NvimTree",
-    "Trouble",
     "alpha",
+    "dashboard",
+    "help",
+    "lazy",
     "lir",
-    "Outline",
-    "spectre_panel",
-    "toggleterm",
-    "vista_kind",
+    "mason",
+    "neogitstatus",
     "neo-tree",
-    "TelescopePrompt"
+    "netrw",
+    "NvimTree",
+    "oil",
+    "Outline",
+    "packer",
+    "qf",
+    "spectre_panel",
+    "startify",
+    "TelescopePrompt",
+    "toggleterm",
+    "Trouble",
+    "vista_kind",
 }
 
 M.is_plugin_filetype = function()

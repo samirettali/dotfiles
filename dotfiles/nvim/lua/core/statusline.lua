@@ -1,45 +1,4 @@
-local fn = vim.fn
-local api = vim.api
-local fmt = string.format
-local utils = require("core.utils")
 local icons = require("core.icons")
-
-local modes = {
-    ["n"] = "NORMAL",
-    ["no"] = "NORMAL",
-    ["v"] = "VISUAL",
-    ["V"] = "VISUAL LINE",
-    [""] = "VISUAL BLOCK",
-    ["s"] = "SELECT",
-    ["S"] = "SELECT LINE",
-    [""] = "SELECT BLOCK",
-    ["i"] = "INSERT",
-    ["ic"] = "INSERT",
-    ["R"] = "REPLACE",
-    ["Rv"] = "VISUAL REPLACE",
-    ["c"] = "COMMAND",
-    ["cv"] = "VIM EX",
-    ["ce"] = "EX",
-    ["r"] = "PROMPT",
-    ["rm"] = "MOAR",
-    ["r?"] = "CONFIRM",
-    ["!"] = "SHELL",
-    ["t"] = "TERMINAL",
-}
-
-local function ruler()
-    if utils.is_plugin_filetype() then
-        return ""
-    end
-    return "%P"
-end
-
-local function lineinfo()
-    if utils.is_plugin_filetype() then
-        return ""
-    end
-    return "%l:%c"
-end
 
 local function lsp()
     local count = {}
@@ -74,51 +33,22 @@ local function lsp()
 
     local result = errors .. warnings .. hints .. info
     if result ~= "" then
-        return " " .. result
+        return " " .. result .. "%#Statusline#"
     end
 
     return ""
 end
 
-local function mode()
-    local current_mode = vim.api.nvim_get_mode().mode
-    return string.format("%s", modes[current_mode]):upper()
-end
+function Statusline()
+    local branch = vim.fn.FugitiveHead()
 
-Statusline = {}
-
-local function git_branch()
-    local branch = vim.fn.system("git branch --show-current 2> /dev/null | tr -d '\n'")
-    if branch ~= "" then
-        return icons.git.branch .. " " .. branch
-    else
-        return ""
+    if branch and #branch > 0 then
+        branch = '%#StatuslineBGBlue#  ' .. branch .. ' %#Statusline#'
     end
+
+    local lsp = lsp()
+
+    return branch .. ' %f %m ' .. lsp .. '%=%p%% %l:%c '
 end
 
-Statusline.active = function()
-    return table.concat {
-        "%#StatuslineBGBlue# ",
-        mode(),
-        " %#Statusline# ",
-        git_branch(),
-        -- " ",
-        "%=",
-        utils.get_current_filename(),
-        "%#Statusline#",
-        lsp(),
-        "%#Statusline#",
-        "%=",
-        ruler(),
-        " ",
-        lineinfo(),
-        " "
-    }
-end
-
-vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
-    pattern = "*",
-    callback = function()
-        vim.cmd("setlocal statusline=%!v:lua.Statusline.active()")
-    end
-})
+vim.opt.statusline = [[%!luaeval("Statusline()")]]

@@ -3,20 +3,6 @@ vim.api.nvim_create_autocmd("VimResized", {
     command = "wincmd =",
 })
 
-vim.api.nvim_create_autocmd("BufUnload", {
-    buffer = 0,
-    callback = function()
-        vim.opt.laststatus = 3
-    end,
-})
-
-vim.api.nvim_create_autocmd("VimResized", {
-    buffer = 0,
-    callback = function()
-        vim.opt.laststatus = 3
-    end,
-})
-
 -- Highlight yanked text
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {

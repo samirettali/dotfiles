@@ -84,7 +84,7 @@ return {
                 })
                 vim.api.nvim_set_hl(0, "DiagnosticSignHint", {
                     bg = default_status_bg,
-                    fg = default_status_fg,
+                    fg = palette.purple,
                 })
                 vim.api.nvim_set_hl(0, "DiagnosticSignInfo", {
                     bg = default_status_bg,
