@@ -61,8 +61,8 @@ in
         "${modifier}+s" = "exec ${pkgs.foot}/bin/foot -a floating_term tmux new-session -A -s scratchpad";
         "${modifier}+d" = "exec ${pkgs.bemenu}/bin/bemenu-run";
         "${modifier}+x" = "exec ${pkgs.cinnamon.nemo}/bin/nemo";
-        "${modifier}+y" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.bemenu}/bin/bemenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
-        "${modifier}+Shift+v" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | ${pkgs.wl-clipboard}/bin/wl-copy";
+        "${modifier}+Shift+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.bemenu}/bin/bemenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
+        "${modifier}+y" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | ${pkgs.wl-clipboard}/bin/wl-copy";
         "Mod4+BackSpace" = "exec swaymsg input type:keyboard xkb_switch_layout next";
         "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
         "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
