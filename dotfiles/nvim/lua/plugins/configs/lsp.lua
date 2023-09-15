@@ -132,17 +132,19 @@ local function config()
             if caps.documentHighlightProvider then
                 vim.api.nvim_clear_autocmds {
                     group = augroup_highlight,
-                    buffer = bufnr,
+                    buffer = 0,
                 }
+
                 vim.api.nvim_create_autocmd("CursorHold", {
                     group = augroup_highlight,
                     callback = vim.lsp.buf.document_highlight,
-                    buffer = bufnr,
+                    buffer = 0,
                 })
+
                 vim.api.nvim_create_autocmd("CursorMoved", {
                     group = augroup_highlight,
                     callback = vim.lsp.buf.clear_references,
-                    buffer = bufnr,
+                    buffer = 0,
                 })
             end
 
@@ -318,16 +320,11 @@ local function config()
         settings = {
             Lua = {
                 runtime = {
-                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
                     version = 'LuaJIT'
                 },
-                diagnostics = {
-                    -- Get the language server to recognize the `vim` global
-                    globals = { 'vim' }
-                },
                 workspace = {
-                    -- Make the server aware of Neovim runtime files
-                    library = vim.api.nvim_get_runtime_file("", true)
+                    checkThirdParty = false,
+                    library = { vim.env.VIMRUNTIME }
                 },
                 telemetry = {
                     enable = false
