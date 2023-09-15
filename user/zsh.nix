@@ -159,6 +159,7 @@
         jjj = "pbpaste | jq -r";
 
         rm = "trash";
+        ":q" = "exit";
       };
       shellGlobalAliases = {
         trim = "awk '{\$1=\$1;print}'";
