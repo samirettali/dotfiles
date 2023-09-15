@@ -6,6 +6,7 @@
     enable = true;
     aggressiveResize = true;
     baseIndex = 1;
+    escapeTime = 0;
     extraConfig = ''
       bind Enter break-pane
       bind Space command-prompt "joinp -t:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
