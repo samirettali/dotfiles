@@ -49,7 +49,13 @@ local plugins = {
             vim.cmd.colorscheme("moonfly")
         end
     },
-    { "github/copilot.vim" }
+    { "github/copilot.vim" },
+    {
+        "chentoast/marks.nvim",
+        config = function()
+            require("marks").setup()
+        end
+    },
     -- Notable mentions
     -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
     -- "stevearc/dressing.nvim" -- Better UI selectors and inputs
