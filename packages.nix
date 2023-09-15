@@ -41,6 +41,7 @@ let
     wdisplays
     xorg.xrdb
     hyprpicker
+    wlprop
     networkmanagerapplet
 
     pamixer
