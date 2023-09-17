@@ -20,8 +20,8 @@ return {
                 vim.api.nvim_set_hl(0, "BiscuitColor", { bg = palette.grey234, fg = palette.grey241 })
 
 
-                local default_status_bg = palette.grey233;
-                local default_status_fg = palette.grey249;
+                local default_status_bg = palette.grey234;
+                local default_status_fg = palette.white;
                 local alt_status_bg = "#191919";
 
                 vim.api.nvim_set_hl(0, "Statusline", {
@@ -29,49 +29,19 @@ return {
                     fg = default_status_fg,
                 })
 
-                vim.api.nvim_set_hl(0, "StatuslineAlt", {
-                    bg = alt_status_bg,
-                    fg = default_status_fg,
-                })
-
-                vim.api.nvim_set_hl(0, "StatuslineDim", {
-                    bg = default_status_bg,
-                    fg = palette.grey241
-                })
-
-                vim.api.nvim_set_hl(0, "StatuslineAltDim", {
-                    bg = alt_status_bg,
-                    fg = palette.grey247
-                })
-
-                vim.api.nvim_set_hl(0, "StatuslineFilename", {
-                    bg = default_status_bg,
-                    fg = default_status_fg,
-                })
-
-                vim.api.nvim_set_hl(0, "StatuslineBlue", {
-                    bg = default_status_bg,
-                    fg = palette.blue
-                })
-                vim.api.nvim_set_hl(0, "StatuslineGreen", {
-                    bg = default_status_bg,
-                    fg = palette.emerald
-                })
-                vim.api.nvim_set_hl(0, "StatuslineYellow", {
-                    bg = default_status_bg,
-                    fg = palette.yellow
-                })
-                vim.api.nvim_set_hl(0, "StatuslineRed", {
-                    bg = default_status_bg,
-                    fg = palette.red
-                })
                 vim.api.nvim_set_hl(0, "StatuslineBGBlue", {
                     bg = palette.blue,
                     fg = default_status_bg
                 })
-                vim.api.nvim_set_hl(0, "StatuslinePurple", {
-                    bg = default_status_bg,
-                    fg = palette.purple
+
+                vim.api.nvim_set_hl(0, "StatuslineFilename", {
+                    bg = alt_status_bg,
+                    fg = default_status_fg,
+                })
+
+                vim.api.nvim_set_hl(0, "StatuslineBranch", {
+                    bg = alt_status_bg,
+                    fg = default_status_fg,
                 })
 
                 vim.api.nvim_set_hl(0, "DiagnosticSignError", {

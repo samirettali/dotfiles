@@ -1,4 +1,4 @@
-local icons = require("core.icons")
+local utils = require("core.utils")
 
 local function lsp()
     local count = {}
@@ -19,19 +19,20 @@ local function lsp()
     local info = ""
 
     if count["errors"] ~= 0 then
-        errors = "%#DiagnosticSignError#" .. icons.diagnostics.error .. " " .. count["errors"] .. " "
+        errors = "%#DiagnosticSignError#E " .. count["errors"] .. " "
     end
     if count["warnings"] ~= 0 then
-        warnings = "%#DiagnosticSignWarn#" .. icons.diagnostics.warn .. " " .. count["warnings"] .. " "
+        warnings = "%#DiagnosticSignWarn#W " .. count["warnings"] .. " "
     end
     if count["hints"] ~= 0 then
-        hints = "%#DiagnosticSignHint#" .. icons.diagnostics.hint .. " " .. count["hints"] .. " "
+        hints = "%#DiagnosticSignHint#H " .. count["hints"] .. " "
     end
     if count["info"] ~= 0 then
-        info = "%#DiagnosticSignInfo#" .. icons.diagnostics.info .. " " .. count["info"] .. " "
+        info = "%#DiagnosticSignInfoI #" .. count["info"] .. " "
     end
 
     local result = errors .. warnings .. hints .. info
+
     if result ~= "" then
         return " " .. result .. "%#Statusline#"
     end
@@ -39,16 +40,21 @@ local function lsp()
     return ""
 end
 
+local function name()
+    if utils.is_plugin_filetype() then
+        return ""
+    end
+    return " %f "
+end
+
 function Statusline()
     local branch = vim.fn.FugitiveHead()
 
     if branch and #branch > 0 then
-        branch = '%#StatuslineBGBlue#  ' .. branch .. ' %#Statusline#'
+        branch = '%#Statusline#  ' .. branch .. ' %#Statusline#'
     end
 
-    local lsp = lsp()
-
-    return branch .. ' %f %m ' .. lsp .. '%=%p%% %l:%c '
+    return '%#Statusline#' .. name() .. lsp() .. "%=" .. branch
 end
 
 vim.opt.statusline = [[%!luaeval("Statusline()")]]

@@ -74,6 +74,14 @@ return {
                         --     },
                         -- },
                     },
+                    ast_grep = {
+                        command = {
+                            "sg",
+                            "--json=stream",
+                        },                       -- must have --json=stream
+                        grep_open_files = false, -- search in opened files
+                        lang = nil,              -- string value, specify language for ast-grep `nil` for default
+                    }
                     -- advanced_git_search = {
                     --     -- fugitive or diffview
                     --     diff_plugin = "fugitive",
@@ -120,11 +128,15 @@ return {
 
             telescope.setup(options)
             telescope.load_extension("file_browser")
+            telescope.load_extension("ast_grep")
             -- telescope.load_extension("advanced_git_search")
         end
     },
     {
         "nvim-telescope/telescope-file-browser.nvim",
         dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+    },
+    {
+        "Marskey/telescope-sg"
     }
 }

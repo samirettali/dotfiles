@@ -41,7 +41,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.background = "dark"
 
 -- Fast!
-vim.opt.timeoutlen = 200
+vim.opt.timeoutlen = 400
 
 vim.opt.hidden = true      -- Enable having modified buffers in background
 vim.opt.joinspaces = false -- No double spaces with join after a dot

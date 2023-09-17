@@ -1,5 +1,6 @@
 return {
-    "nvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     config = function()
         local treesitter = require('nvim-treesitter.configs')
@@ -42,11 +43,17 @@ return {
                         ['if'] = '@function.inner',
                         ['ac'] = '@class.outer',
                         ['ic'] = '@class.inner',
+                        ['al'] = '@loop.outer',
+                        ['il'] = '@loop.inner',
+                        ['at'] = '@comment.outer',
+                        ['it'] = '@comment.inner',
+                        ['ai'] = '@conditional.outer',
+                        ['ii'] = '@conditional.inner',
                     },
                 },
                 move = {
                     enable = true,
-                    set_jumps = true, -- whether to set jumps in the jumplist
+                    set_jumps = true, -- Whether to set jumps in the jumplist
                     goto_next_start = {
                         [']m'] = '@function.outer',
                         [']]'] = '@class.outer',
@@ -67,10 +74,10 @@ return {
                 swap = {
                     enable = true,
                     swap_next = {
-                        ['<Leader>a'] = '@parameter.inner',
+                        ['g>'] = { query = '@parameter.inner', desc = "Swap parameter with next" },
                     },
                     swap_previous = {
-                        ['<Leader>A'] = '@parameter.inner',
+                        ['g<'] = { query = '@parameter.inner', desc = "Swap parameter with previous" },
                     },
                 },
             },

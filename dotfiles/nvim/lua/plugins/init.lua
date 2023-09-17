@@ -56,9 +56,22 @@ local plugins = {
         "m4xshen/hardtime.nvim",
         dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
         opts = {
-            disabled_filetypes = core.utils.plugin_filetypes,
+            disabled_filetypes = utils.plugin_filetypes,
+            disabled_keys = { "j", "k" },
         }
     },
+    {
+        "nat-418/boole.nvim",
+        config = function()
+            require('boole').setup({
+                mappings = {
+                    increment = '<C-\'>',
+                    decrement = '<C-;>'
+                },
+            })
+        end
+    },
+    { "stevearc/oil.nvim", opts = {} }
     -- Notable mentions
     -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
     -- "wellle/targets.vim" -- Add more targets for commands

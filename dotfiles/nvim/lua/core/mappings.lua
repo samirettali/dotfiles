@@ -34,10 +34,6 @@ map("n", "<Leader>o", ":only<CR>", { desc = "Make current window the only one" }
 
 map("v", "<Leader>p", '"_dP"', { remap = false, desc = "Paste replace visual selection without copying it" })
 
--- Increment and decrement number under cursor
-vim.keymap.set("n", "<C-;>", "<C-a>")
-vim.keymap.set("n", "<C-'>", "<C-x>")
-
 -- Map ; to : in normal and visual mode
 map("n", ";", ":")
 map("v", ";", ":")
@@ -49,6 +45,10 @@ map("v", ",P", '"0P')
 -- Keep lines centered when searching
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
+
+-- Center <C-o> and <C-i>
+vim.keymap.set("n", "<C-o>", "<C-o>zzzv")
+vim.keymap.set("n", "<C-i>", "<C-i>zzzv")
 
 -- Mantain cursor position when joining lines
 map("n", "J", "mzJ`z")

@@ -123,6 +123,8 @@ let
     zig
     zls
     jdk17
+    ast-grep
+    gnuplot
   ];
 
   rust-packages = with pkgs; [

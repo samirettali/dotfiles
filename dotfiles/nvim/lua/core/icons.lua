@@ -1,76 +1,12 @@
 local icons = {
-    ui = {
-        cmd = "",
-        search_up = "",
-        search_down = "",
-        filter = "",
-        icons = "",
-        help = "",
-        lua = "󰢱",
-        git = "",
-        remote = "",
-        lsp = "",
-        block = "▊",
-    },
-    debug = {
-        debug = "",
-        breakpoint = "",
-        condition = "",
-        stopped = "",
-        rejected = "",
-        log = "",
-
-        disconnect = "",
-        pause = "",
-        play = "",
-        run_last = "",
-        step_back = "",
-        step_into = "",
-        step_out = "",
-        step_over = "",
-        terminate = "",
-    },
-    file = {
-        file = "",
-        modified = "",
-        readonly = "",
-        new = "",
-    },
-    test = {
-        failed = "",
-        skipped = "",
-        running = "",
-        passed = "",
-        unknown = "",
-        running_animated = {
-            "⠋",
-            "⠙",
-            "⠹",
-            "⠸",
-            "⠼",
-            "⠴",
-            "⠦",
-            "⠧",
-            "⠇",
-            "⠏",
-        },
-    },
-    indent = {
-        collapsible = "─",
-        prefix = "├",
-        marker = "│",
-        dotted_marker = "┆",
-        last = "└",
-        collapsed = "─",
-        expanded = "┐",
-    },
-    folder = {
-        closed = "",
-        open = "",
-        empty = "ﰊ",
-        collapsed = "",
-        expanded = "",
-    },
+    lsp = "",
+    block = "▊",
+    -- file = {
+    --     file = "",
+    --     modified = "",
+    --     readonly = "",
+    --     new = "",
+    -- },
     git = {
         signs = {
             add = "┃",
@@ -94,49 +30,11 @@ local icons = {
         unmerged = " "
     },
     diagnostics = {
-        error = "",
-        warn = "",
-        hint = "",
+        error = "",
+        warn = "",
+        hint = "󱤅",
         info = "",
     },
-    kinds = {
-        Array = "",
-        Boolean = "",
-        Class = "",
-        Color = "",
-        Constant = "",
-        Constructor = "",
-        Enum = "",
-        EnumMember = "",
-        Event = "",
-        Field = "",
-        File = "",
-        Folder = "",
-        Function = "",
-        Interface = "",
-        Key = "",
-        Keyword = "",
-        Method = "",
-        Module = "",
-        Namespace = "",
-        Null = "ﳠ",
-        Number = "",
-        Object = "",
-        Operator = "",
-        Package = "",
-        Property = "",
-        Reference = "",
-        Snippet = "",
-        String = "",
-        Struct = "",
-        Text = "",
-        TypeParameter = "",
-        Unit = "",
-        Value = "",
-        Variable = "",
-        Unknown = "",
-    },
-
     borders = {
         inner = {
             all = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" },
@@ -149,25 +47,10 @@ local icons = {
         left_right = { "", "", " ", "", "", "", "", " " },
         empty = { " ", " ", " ", " ", " ", " ", " ", " " },
     },
+    file = "",
+    empty_file = ""
 }
 
--- M.border_chars_none = { '', '', '', '', '', '', '', '' }
--- M.border_chars_empty = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' }
---
--- M.border_chars_tmux = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' }
---
--- M.border_chars_inner_thick = { ' ', '▄', ' ', '▌', ' ', '▀', ' ', '▐' }
--- M.border_chars_outer_thick = { '▛', '▀', '▜', '▐', '▟', '▄', '▙', '▌' }
---
--- M.border_chars_outer_thin = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' }
--- M.border_chars_inner_thin = { ' ', '▁', ' ', '▏', ' ', '▔', ' ', '▕' }
---
--- M.top_right_corner_thin = '🭾'
--- M.top_left_corner_thin = '🭽'
---
--- M.border_chars_outer_thin_telescope = { '▔', '▕', '▁', '▏', '🭽', '🭾', '🭿', '🭼' }
--- M.border_chars_outer_thick_telescope = { '▀', '▐', '▄', '▌', '▛', '▜', '▟', '▙' }
---
 -- M.diagnostic_signs = {
 --     error = ' ',
 --     warning = ' ',
