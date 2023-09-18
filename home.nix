@@ -13,7 +13,6 @@
     ./user/zsh.nix
     ./user/fzf.nix
     ./user/git.nix
-    ./dotfiles.nix
     ./programs/ripgrep.nix
     (import ./programs/tmux.nix { inherit pkgs homeDirectory; })
   ]
