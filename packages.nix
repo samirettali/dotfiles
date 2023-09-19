@@ -77,7 +77,6 @@ let
   ];
 
   cli-packages = with pkgs; [
-    direnv
     unixtools.xxd
     tmux
     zellij
