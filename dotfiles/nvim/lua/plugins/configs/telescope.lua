@@ -113,7 +113,7 @@ return {
             vim.keymap.set("n", "<leader>gs", builtin.git_status)
             -- map("n",set "<C-q>", builtin.lsp_workspace_diagnostics)
             -- TODO
-            vim.keymap.set("n", "<C-w>", builtin.lsp_dynamic_workspace_symbols)
+            -- vim.keymap.set("n", "<C-w>", builtin.lsp_dynamic_workspace_symbols)
             -- telescope_map("<Leader>fR", builtin.lsp_references)
             -- telescope_map("<Leader>fS", "lsp_document_symbols")
             -- telescope_map("<Leader>fs", "lsp_workspace_symbols")
