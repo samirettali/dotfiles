@@ -64,6 +64,7 @@ let
 
   mac-packages = with pkgs; [
     darwin.apple_sdk.frameworks.SystemConfiguration
+    coreutils
   ];
 
   desktop-packages = with pkgs; [
