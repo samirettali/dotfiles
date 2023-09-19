@@ -60,6 +60,9 @@ let
     webp-pixbuf-loader
     pavucontrol
     swayimg
+
+    yubikey-personalization-gui
+    neovim-nightly # MacOS build is broken
   ];
 
   mac-packages = with pkgs; [
@@ -74,7 +77,6 @@ let
     spotify
     qbittorrent
     yubikey-manager
-    yubikey-personalization-gui
   ];
 
   cli-packages = with pkgs; [
@@ -104,7 +106,6 @@ let
   ];
 
   dev-packages = with pkgs; [
-    neovim-nightly
     pkgs.tree-sitter
     lua-language-server
     rnix-lsp

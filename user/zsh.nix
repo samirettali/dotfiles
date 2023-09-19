@@ -135,7 +135,7 @@
         zle -N edit-command-line
         bindkey '^x^x' edit-command-line
 
-        export PATH=~/.bin:$PATH:~/go/bin
+        export PATH=~/.bin:$PATH:~/go/bin:~/.dotnet/tools
       '';
       shellAliases = {
         qre = "qrencode -l H -t ANSI256UTF8";
