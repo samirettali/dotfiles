@@ -9,7 +9,7 @@
         init.defaultBranch = "main";
         push.autoSetupRemote = true;
         pull.rebase = false;
-         "url \"git@github.com:samirettali\"".insteadOf = "https://github.com/samirettali/";
+         "url \"git@github.com:\"".insteadOf = "https://github.com/";
       };
       ignores = [
           "*.env"
