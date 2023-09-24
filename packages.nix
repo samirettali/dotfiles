@@ -128,6 +128,7 @@ let
     gnuplot
     bun
     python312
+    docker-compose
   ];
 
   rust-packages = with pkgs; [
