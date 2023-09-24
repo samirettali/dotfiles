@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-local ts=$(date +%s)
-local d="$HOME/.throw-away/$ts"
+ts=$(date +%s)
+d="$HOME/.throw-away/$ts"
 mkdir -p "$d"
 (cd "$d"; zsh -c tmux)
 rm -rf "$d"
