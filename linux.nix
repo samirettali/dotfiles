@@ -25,9 +25,6 @@ in
       keys = [ ];
       inheritType = "any";
     };
-    # zsh.shellAliases = {
-    #   gpg = "${pkgs.gnupg}/bin/gpg --no-autostart";
-    # };
   };
 
   home.sessionVariables = {
@@ -38,7 +35,7 @@ in
     BEMENU_BACKEND = "wayland";
     QT_QPA_PLATFORM = "wayland";
     XDG_CURRENT_DESKTOP = "sway";
-    BEMENU_OPTS = "--fn 'JetBrainsMono Nerd Font' --prompt '' --nb '#000000' --nf '#ffffff' --ab '#000000' --af '#ffffff' --sb '#ffffff' --sf '#ffffff' --hb '#ffffff' --hf '#000000' --tb '#000000' --tf '#ffffff' --fb '#000000' --ff '#ffffff' --hp 10 -H 24";
+    BEMENU_OPTS = "--center --accept-single -W 0.1 --binding vim --vim-esc-exits -l 10 --fn '${font} 14' -p '' --border 2 --ignorecase --wrap --fixed-height";
   };
 
   services = {

@@ -57,13 +57,14 @@ in
         "${modifier}+Shift+r" = "reload";
         "${modifier}+Shift+q" = "exec swaynag -t warning -m 'Do you want to exit?' -b 'Yes' 'swaymsg exit'";
         "${modifier}+Tab" = "workspace back_and_forth";
+        "${modifier}+BackSpace" = "exec swaymsg input type:keyboard xkb_switch_layout next";
+        "${modifier}+t" = "layout tabbed";
         "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
-        "${modifier}+s" = "exec ${pkgs.foot}/bin/foot -a floating_term tmux new-session -A -s scratchpad";
-        "${modifier}+d" = "exec ${pkgs.bemenu}/bin/bemenu-run";
+        "${modifier}+s" = "exec scratchpad";
+        "${modifier}+d" = "exec ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu=bemenu";
         "${modifier}+x" = "exec ${pkgs.cinnamon.nemo}/bin/nemo";
         "${modifier}+Shift+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.bemenu}/bin/bemenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
         "${modifier}+y" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | ${pkgs.wl-clipboard}/bin/wl-copy";
-        "Mod4+BackSpace" = "exec swaymsg input type:keyboard xkb_switch_layout next";
         "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
         "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
       };
@@ -81,11 +82,12 @@ in
       ];
       terminal = "foot";
       window = {
-        border = 4;
+        border = 2;
         titlebar = false;
       };
       workspaceAutoBackAndForth = true;
     };
+    xwayland = true;
   };
 
   programs = {
@@ -118,6 +120,10 @@ in
           settings = {
             theme = {
               theme = "plain";
+              # overrides = {
+              #   idle_bg = "#000000";
+              #   idle_fg = "#ffffff";
+              # };
             };
           };
         };

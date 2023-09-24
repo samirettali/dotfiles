@@ -53,24 +53,28 @@
       # Theme
       set -g status-justify left
       set -g status-style "bg=colour234 bold"
-      
+
       set -g status-left "#S "
       set -g status-left-style "fg=red"
       set -g status-left-length 20
-      
+
       set -g status-right "$USER@#H"
       set -g status-right-style "fg=green"
       # set -g status-right-length 20
-      
+
       #  set -g window-status-style "fg=black"
       set -g window-status-format " #I:#W "
       set -g window-status-style "fg=#858585"
       set -g window-status-current-style "fg=yellow"
       set -g window-status-current-format " #I:#W "
       set -g window-status-separator " "
-      
+
       set -g pane-active-border-style "bold fg=#858585"
       set -g pane-border-style "fg=colour234"
+      set -g allow-passthrough on
+
+      set -ga update-environment TERM
+      set -ga update-environment TERM_PROGRAM
     '';
     historyLimit = 50000;
     keyMode = "vi";

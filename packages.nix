@@ -32,34 +32,32 @@ let
   };
 
   linux-packages = with pkgs; [
-    grim
-    slurp
-    wl-clipboard
-    cliphist
     bemenu
+    cinnamon.nemo
+    cliphist
+    configure-gtk
+    dbus-sway-environment
+    ffmpegthumbnailer
+    firefox-wayland
+    grim
+    hyprpicker
+    j4-dmenu-desktop
+    networkmanagerapplet
+    p7zip
+    pamixer
+    pavucontrol
+    slurp
+    swayimg
+    trash-cli
+    unzip
     wbg
     wdisplays
-    xorg.xrdb
-    hyprpicker
-    wlprop
-    networkmanagerapplet
-
-    pamixer
-    trash-cli
-    p7zip
-    unzip
-
-    dbus-sway-environment
-    configure-gtk
-    xdg-utils
-
-    firefox-wayland
-    zathura
-    cinnamon.nemo
-    ffmpegthumbnailer
     webp-pixbuf-loader
-    pavucontrol
-    swayimg
+    wl-clipboard
+    wlprop
+    xdg-utils
+    xorg.xrdb
+    zathura
   ];
 
   mac-packages = with pkgs; [
@@ -67,68 +65,68 @@ let
   ];
 
   desktop-packages = with pkgs; [
-    wezterm
     keepassxc
-    vscode
-    spotify
     qbittorrent
+    spotify-tui
+    vscode
+    wezterm
     yubikey-manager
     yubikey-personalization-gui
   ];
 
   cli-packages = with pkgs; [
     direnv
-    unixtools.xxd
-    tmux
-    zellij
+    diskus
     entr
-    tree
-    jq
-    htop
-    lazygit
-    lazydocker
-    fd
-    moreutils
-    ranger
-    tmuxinator
     espanso
+    fd
+    htop
     iredis
-    pgcli
+    jq
+    lazydocker
+    lazygit
+    moreutils
+    mprocs
     ncdu
     ngrok
-    mprocs
-    trash-cli
     p7zip
+    pgcli
+    tmux
+    tmuxinator
+    trash-cli
+    tree
+    ueberzugpp
+    unixtools.xxd
     unzip
-    diskus
     yazi
+    zellij
   ];
 
   dev-packages = with pkgs; [
-    neovim-nightly
-    pkgs.tree-sitter
-    lua-language-server
-    rnix-lsp
-    nodejs
-    go
-    gopls
-    golangci-lint
-    golangci-lint-langserver
-    gotools
+    ast-grep
+    bun
+    cmake
+    docker-compose
     gcc
     gnumake
-    cmake
-    openssl
+    gnuplot
+    go
+    golangci-lint
+    golangci-lint-langserver
+    gopls
+    gotools
+    jdk17
     libiconv
+    lua-language-server
+    neovim-nightly
+    nodejs
+    openssl
     pkg-config
+    pkgs.tree-sitter
+    python312
+    rnix-lsp
     zig
     zls
-    jdk17
-    ast-grep
-    gnuplot
-    bun
-    python312
-    docker-compose
   ];
 
   rust-packages = with pkgs; [
@@ -142,16 +140,16 @@ let
       ])
       fenix.targets.wasm32-unknown-unknown.latest.rust-std
     ])
-    rust-analyzer-nightly
-    cargo-watch
-    cargo-shuttle
-    trunk
-    sqlx-cli
-    findomain
-    nmap
-    naabu
-    ffuf
     amass
+    cargo-shuttle
+    cargo-watch
+    ffuf
+    findomain
+    naabu
+    nmap
+    rust-analyzer-nightly
+    sqlx-cli
+    trunk
   ];
 
   bounty-packages = with pkgs; [
