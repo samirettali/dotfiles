@@ -42,6 +42,7 @@ let
     grim
     hyprpicker
     j4-dmenu-desktop
+    neovim-nightly # MacOS build is broken
     networkmanagerapplet
     p7zip
     pamixer
@@ -57,11 +58,13 @@ let
     wlprop
     xdg-utils
     xorg.xrdb
+    yubikey-personalization-gui
     zathura
   ];
 
   mac-packages = with pkgs; [
     darwin.apple_sdk.frameworks.SystemConfiguration
+    coreutils
   ];
 
   desktop-packages = with pkgs; [
@@ -71,14 +74,15 @@ let
     vscode
     wezterm
     yubikey-manager
-    yubikey-personalization-gui
   ];
 
   cli-packages = with pkgs; [
     direnv
     diskus
+    unixtools.xxd
+    tmux
+    zellij
     entr
-    espanso
     fd
     htop
     iredis
@@ -96,16 +100,28 @@ let
     trash-cli
     tree
     ueberzugpp
-    unixtools.xxd
     unzip
     yazi
     zellij
+  ];
+
+  work-packages = with pkgs; [
+    awscli2
   ];
 
   dev-packages = with pkgs; [
     ast-grep
     bun
     cmake
+    pkgs.tree-sitter
+    lua-language-server
+    rnix-lsp
+    nodejs
+    go
+    gopls
+    golangci-lint
+    golangci-lint-langserver
+    gotools
     gcc
     gnumake
     gnuplot
@@ -113,7 +129,6 @@ let
     golangci-lint
     golangci-lint-langserver
     gopls
-    gotools
     jdk17
     libiconv
     lua-language-server
@@ -164,6 +179,8 @@ in
     ++ cli-packages
     ++ dev-packages
     ++ rust-packages
+    ++ bounty-packages
     ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages)
-    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages);
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages)
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin work-packages);
 }

@@ -63,12 +63,17 @@ M.is_plugin_filetype = function()
 end
 
 M.has_value = function(tab, val)
+    if tab == nil then
+        return false
+    end
+
     for _, value in ipairs(tab) do
         -- We grab the first index of our sub-table instead
         if value == val then
             return true
         end
     end
+
     return false
 end
 

@@ -348,6 +348,8 @@ local function config()
     }
 
     lspconfig.rnix.setup {}
+
+    lspconfig.csharp_ls.setup {}
 end
 
 
