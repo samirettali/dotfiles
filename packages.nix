@@ -133,7 +133,6 @@ let
     jdk17
     libiconv
     lua-language-server
-    neovim-nightly
     nodejs
     openssl
     pkg-config
