@@ -44,6 +44,7 @@ in
         inner = 0;
         outer = 0;
         smartBorders = "on";
+        smartGaps = true;
       };
       input = {
         "*" = {
@@ -63,7 +64,7 @@ in
         "${modifier}+s" = "exec scratchpad";
         "${modifier}+d" = "exec ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu=bemenu";
         "${modifier}+x" = "exec ${pkgs.cinnamon.nemo}/bin/nemo";
-        "${modifier}+Shift+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.bemenu}/bin/bemenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
+        "${modifier}+Shift+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.bemenu}/bin/bemenu -W 0.4 | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
         "${modifier}+y" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | ${pkgs.wl-clipboard}/bin/wl-copy";
         "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
         "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";

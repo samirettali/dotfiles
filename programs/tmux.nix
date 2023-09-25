@@ -9,7 +9,7 @@
     escapeTime = 0;
     extraConfig = ''
       bind Enter break-pane
-      bind Space command-prompt "joinp -t:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
+      bind j command-prompt "joinp -t:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
 
       # Mantain path in new splits/panes
       unbind c

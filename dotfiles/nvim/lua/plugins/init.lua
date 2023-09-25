@@ -23,6 +23,7 @@ local plugins = {
         "m4xshen/hardtime.nvim",
         dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
         opts = {
+            disable_mouse = false,
             disabled_filetypes = utils.plugin_filetypes,
             restriction_mode = "hint",
         }

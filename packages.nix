@@ -67,7 +67,7 @@ let
   desktop-packages = with pkgs; [
     keepassxc
     qbittorrent
-    spotify-tui
+    spotify
     vscode
     wezterm
     yubikey-manager
@@ -106,7 +106,6 @@ let
     ast-grep
     bun
     cmake
-    docker-compose
     gcc
     gnumake
     gnuplot
@@ -127,30 +126,32 @@ let
     rnix-lsp
     zig
     zls
-  ];
+  ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ docker-compose ]);
 
-  rust-packages = with pkgs; [
-    (fenix.combine [
-      (fenix.complete.withComponents [
-        "cargo"
-        "clippy"
-        "rust-src"
-        "rustc"
-        "rustfmt"
+  rust-packages = with pkgs;
+    [
+      (fenix.combine [
+        (fenix.complete.withComponents [
+          "cargo"
+          "clippy"
+          "rust-src"
+          "rustc"
+          "rustfmt"
+        ])
+        fenix.targets.wasm32-unknown-unknown.latest.rust-std
       ])
-      fenix.targets.wasm32-unknown-unknown.latest.rust-std
-    ])
-    amass
-    cargo-shuttle
-    cargo-watch
-    ffuf
-    findomain
-    naabu
-    nmap
-    rust-analyzer-nightly
-    sqlx-cli
-    trunk
-  ];
+      amass
+      bunyan-rs
+      cargo-shuttle
+      cargo-watch
+      ffuf
+      findomain
+      naabu
+      nmap
+      rust-analyzer-nightly
+      sqlx-cli
+      trunk
+    ];
 
   bounty-packages = with pkgs; [
     dnsx

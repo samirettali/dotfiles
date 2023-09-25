@@ -81,3 +81,6 @@ vim.keymap.set("x", "<leader>p", [["_dP]])
 
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
+
+-- FIXME: comment block and duplicate
+vim.keymap.set('v', "<Leader>D", [[y`>pgv:norm gcc<CR>`>j^]], { noremap = true, silent = true })

@@ -1,6 +1,7 @@
 return {
     {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
         config = function()
             local cmp = require "cmp"
             local cmp_window = require "cmp.utils.window"
@@ -10,6 +11,9 @@ return {
             end
 
             local options = {
+                -- completion = {
+                --     completeopt = "menu,menuone,preview,noselect",
+                -- },
                 window = {
                     completion = cmp.config.window.bordered(),
                     documentation = cmp.config.window.bordered()
@@ -28,16 +32,16 @@ return {
                         c = cmp.mapping.close()
                     }),
                     ["<CR>"] = cmp.mapping.confirm({
-                        select = true
+                        select = false -- Only confirm explicitly selected items
                     }),
-                    -- ["<C-y>"] = cmp.mapping.complete(),
+                    ["<C-y>"] = cmp.mapping.complete(),
                 },
                 sources = {
                     { name = "nvim_lua" },
                     { name = "nvim_lsp" },
                     { name = "path" },
                     -- { name = "cmdline" },
-                    -- { name = "buffer",  keyword_length = 3 },
+                    { name = "buffer",  keyword_length = 3 },
                 },
                 experimental = {
                     native_menu = false,
@@ -50,7 +54,7 @@ return {
     },
     -- { "hrsh7th/cmp-nvim-lua" },
     { "hrsh7th/cmp-nvim-lsp" },
-    -- { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-path" },
     -- { "hrsh7th/cmp-cmdline" },
 }
