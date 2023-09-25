@@ -94,6 +94,7 @@ in
       bars = {
         default = {
           blocks = [
+            { block = "battery"; }
             {
               block = "memory";
               format = " MEM $mem_total_used_percents ";

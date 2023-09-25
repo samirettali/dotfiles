@@ -103,6 +103,7 @@ let
     p7zip
     unzip
     diskus
+    yazi
   ];
 
   work-packages = with pkgs; [
@@ -130,6 +131,8 @@ let
     jdk17
     ast-grep
     gnuplot
+    bun
+    python312
   ];
 
   rust-packages = with pkgs; [

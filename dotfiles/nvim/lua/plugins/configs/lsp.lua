@@ -40,7 +40,7 @@ local function config()
     local augroup_completion = vim.api.nvim_create_augroup("lsp_completion", {})
     local augroup_highlight = vim.api.nvim_create_augroup("lsp_document_highlight", {})
 
-    vim.keymap.set("n", "<leader>xq", vim.diagnostic.setqflist, { silent = true })
+    -- vim.keymap.set("n", "<leader>xq", vim.diagnostic.setqflist, { silent = true })
 
     vim.keymap.set("n", "<Leader>ti", function()
         vim.g.lsp_hints_enabled = not vim.g.lsp_hints_enabled
