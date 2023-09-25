@@ -112,6 +112,7 @@ let
   dev-packages = with pkgs; [
     ast-grep
     bun
+    clang-tools
     cmake
     pkgs.tree-sitter
     lua-language-server
