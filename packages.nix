@@ -105,6 +105,10 @@ let
     diskus
   ];
 
+  work-packages = with pkgs; [
+    awscli2
+  ];
+
   dev-packages = with pkgs; [
     pkgs.tree-sitter
     lua-language-server
@@ -163,5 +167,6 @@ in
     ++ dev-packages
     ++ rust-packages
     ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages)
-    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages);
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages)
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin work-packages);
 }
