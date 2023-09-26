@@ -32,21 +32,17 @@ local function config()
         end, { expr = true })
 
         -- Actions
-        map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", { desc = "Stage Hunk" })
-        map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", { desc = "Reset Hunk" })
-        map("n", "<leader>ghS", gs.stage_buffer, { desc = "Stage Buffer" })
-        map("n", "<leader>ghu", gs.undo_stage_hunk, { desc = "Undo Stage Hunk" })
-        map("n", "<leader>ghR", gs.reset_buffer, { desc = "Reset Buffer" })
-        map("n", "<leader>ghp", gs.preview_hunk, { desc = "Preview Hunk" })
-        map("n", "<leader>ghb", function()
-            gs.blame_line { full = true }
-        end, { desc = "Blame Line" })
-        map("n", "<leader>gtb", gs.toggle_current_line_blame, { desc = "Toggle Line Blame" })
-        map("n", "<leader>ghd", gs.diffthis, { desc = "Diff This" })
-        map("n", "<leader>ghD", function()
-            gs.diffthis "~"
-        end, { desc = "Diff This ~" })
-        map("n", "<leader>gtd", gs.toggle_deleted, { desc = "Toggle Delete" })
+        map("n", "<leader>hs", gs.stage_hunk, { desc = "Stage Hunk" })
+        map("n", "<leader>hr", gs.reset_hunk, { desc = "Reset Hunk" })
+        map("n", "<leader>hS", gs.stage_buffer, { desc = "Stage Buffer" })
+        map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "Undo Stage Hunk" })
+        map("n", "<leader>hR", gs.reset_buffer, { desc = "Reset Buffer" })
+        map("n", "<leader>hp", gs.preview_hunk, { desc = "Preview Hunk" })
+        map("n", "<leader>hb", function() gs.blame_line { full = true } end, { desc = "Blame Line" })
+        map("n", "<leader>tb", gs.toggle_current_line_blame, { desc = "Toggle Line Blame" })
+        map("n", "<leader>hd", gs.diffthis, { desc = "Diff This" })
+        map("n", "<leader>hD", function() gs.diffthis "~" end, { desc = "Diff This ~" })
+        map("n", "<leader>td", gs.toggle_deleted, { desc = "Toggle Delete" })
 
         -- Text object
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })

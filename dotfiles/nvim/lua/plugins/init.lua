@@ -1,13 +1,6 @@
 local utils = require("core.utils")
 local plugins = {
     {
-        "rhysd/git-messenger.vim",
-        config = function()
-            vim.g.git_messenger_include_diff = "current"
-            vim.keymap.set("n", "<Leader>gm", "<Plug>(git-messenger)", { silent = true })
-        end
-    },
-    {
         "chentoast/marks.nvim",
         opts = { builtin_marks = { ".", "<", ">", "^" } }
     },
@@ -39,6 +32,7 @@ local plugins = {
     "tpope/vim-eunuch",       -- UNIX commands inside neovim
     "rhysd/committia.vim",    -- Better commit editing
     "tpope/vim-surround",     -- Add surround object for editing
+    "RRethy/nvim-base16"
     -- Notable mentions
     -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
     -- "wellle/targets.vim" -- Add more targets for commands
@@ -56,10 +50,16 @@ local plugins = {
         end
     },
     {
+        -- Replace word under cursor
+        "wincent/scalpel",
+        config = function()
+            vim.keymap.set("n", "<Leader>s", "<Plug>(Scalpel)")
+        end,
+    },
+    {
         "chentoast/marks.nvim",
         opts = { builtin_marks = { ".", "<", ">", "^" } }
     },
-    { "j-hui/fidget.nvim", opts = {} },
     {
         "m4xshen/hardtime.nvim",
         dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
@@ -77,18 +77,19 @@ local plugins = {
         },
         opts = {},
     },
-    { "stevearc/oil.nvim", opts = {} },
-    "wincent/scalpel",      -- Replace word under cursor
-    "lukas-reineke/indent-blankline.nvim",
-    "tpope/vim-repeat",     -- Repeat plugin mappings with .
-    "tommcdo/vim-exchange", -- Exchange two objects
-    "sindrets/diffview.nvim",
-    "github/copilot.vim",
-    "tpope/vim-fugitive",     -- Git wrapper
-    "stevearc/dressing.nvim", -- Better UI selectors and inputs
-    "tpope/vim-eunuch",       -- UNIX commands inside neovim
-    "rhysd/committia.vim",    -- Better commit editing
-    "tpope/vim-surround",     -- Add surround object for editing
+    { "j-hui/fidget.nvim",           opts = {} }, -- Show LSP loading status
+    { "stevearc/oil.nvim",           opts = {} }, -- File explorer
+    { "tzachar/highlight-undo.nvim", opts = {} }, -- Highlight undo and redo regions
+    "lukas-reineke/indent-blankline.nvim",        -- Show indentation lines
+    "tpope/vim-repeat",                           -- Repeat plugin mappings with .
+    "tommcdo/vim-exchange",                       -- Exchange two objects
+    "sindrets/diffview.nvim",                     -- Improve diff view
+    "github/copilot.vim",                         -- Github Copilot
+    "tpope/vim-fugitive",                         -- Git wrapper
+    "stevearc/dressing.nvim",                     -- Better UI selectors and inputs
+    "tpope/vim-eunuch",                           -- UNIX commands inside neovim
+    "rhysd/committia.vim",                        -- Better commit editing
+    "tpope/vim-surround",                         -- Add surround object for editing
     -- Notable mentions
     -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
     -- "wellle/targets.vim" -- Add more targets for commands
