@@ -5,7 +5,10 @@ set -eo pipefail
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/dev ~/git ~/go/src/github.com/samirettali -mindepth 1 -maxdepth 1 -type d -name "[!.]*" | fzf)
+    projects=$(find ~/dev ~/git ~/go/src/github.com/samirettali -mindepth 1 -maxdepth 1 -type d -name "[!.]*")
+    projects=$(printf "${HOME}/.config/home-manager\n%s" "$projects")
+
+    selected=$(echo "$projects" | fzf)
 fi
 
 if [[ -z $selected ]]; then

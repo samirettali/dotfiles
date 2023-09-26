@@ -32,7 +32,6 @@ local plugins = {
     "tpope/vim-eunuch",       -- UNIX commands inside neovim
     "rhysd/committia.vim",    -- Better commit editing
     "tpope/vim-surround",     -- Add surround object for editing
-    "RRethy/nvim-base16"
     -- Notable mentions
     -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
     -- "wellle/targets.vim" -- Add more targets for commands
