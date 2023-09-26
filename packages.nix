@@ -157,6 +157,7 @@ let
       ])
       amass
       bunyan-rs
+      cargo-nextest
       cargo-shuttle
       cargo-watch
       ffuf
