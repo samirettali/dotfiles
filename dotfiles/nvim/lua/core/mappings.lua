@@ -5,8 +5,6 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Core mappings
--- Yank entire line except newline
-map("n", "Y", "y$")
 
 -- Keep text selected after indentating it
 map("v", "<", "<gv")
@@ -25,22 +23,16 @@ map("n", "-", ":split<CR>")
 
 map("n", "<Leader>d", "yap<S-}>p", { desc = "Duplicate paragraph" })
 
-map("n", "<Leader>l", ":set list!<CR>", { desc = "Toggle listchars" })
-
-map("n", "<Leader>o", ":only<CR>", { desc = "Make current window the only one" })
+map("n", "<Leader>tl", ":set list!<CR>", { desc = "Toggle listchars" })
 
 -- Remove trailing whitespace
 -- map("n", "<Leader>t", ":%s/\\s\\+$//e<CR>")
 
 map("v", "<Leader>p", '"_dP"', { remap = false, desc = "Paste replace visual selection without copying it" })
 
--- Map ; to : in normal and visual mode
-map("n", ";", ":")
-map("v", ";", ":")
-
 -- Paste last yanked text
-map("n", ",p", '"0p')
-map("v", ",P", '"0P')
+-- map("n", ",p", '"0p')
+-- map("v", ",P", '"0P')
 
 -- Keep lines centered when searching
 map("n", "n", "nzzzv")
@@ -83,4 +75,6 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- FIXME: comment block and duplicate
-vim.keymap.set('v', "<Leader>D", [[y`>pgv:norm gcc<CR>`>j^]], { noremap = true, silent = true })
+vim.keymap.set('v', "<Leader>D", [[y`>pgv:norm gcc<CR>`>j^]], { silent = true })
+
+vim.keymap.set("n", "<C-y>", ":%y +<CR>", { noremap = false, silent = true, desc = "Copy entire buffer" })

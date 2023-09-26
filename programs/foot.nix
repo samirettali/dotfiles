@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       main = {
-        font = "${font}:size=12";
+        font = "${font}:size=10.5";
         term = "xterm-256color";
       };
       cursor = {

@@ -35,7 +35,7 @@ in
     BEMENU_BACKEND = "wayland";
     QT_QPA_PLATFORM = "wayland";
     XDG_CURRENT_DESKTOP = "sway";
-    BEMENU_OPTS = "--center --accept-single -W 0.1 --binding vim --vim-esc-exits -l 10 --fn '${font} 14' -p '' --border 2 --ignorecase --wrap --fixed-height";
+    BEMENU_OPTS = "--center --accept-single -W 0.3 --binding vim --vim-esc-exits -l 10 --fn '${font} 14' -p '' --border 2 --ignorecase --wrap --fixed-height";
   };
 
   services = {
