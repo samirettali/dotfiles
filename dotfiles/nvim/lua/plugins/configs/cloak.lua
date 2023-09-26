@@ -3,8 +3,6 @@ return {
     config = function()
         local cloak = require("cloak")
 
-        local map = require("core.utils").map
-
         local config = {
             enabled = true,
             cloak_character = '*',
@@ -19,6 +17,6 @@ return {
 
         cloak.setup(config)
 
-        map("n", "<Leader>tc", cloak.toggle)
+        vim.keymap.set("n", "<Leader>tc", cloak.toggle)
     end
 }
