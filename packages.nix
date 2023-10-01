@@ -73,7 +73,7 @@ let
     spotify
     vscode
     wezterm
-    yubikey-manager
+    yubioath-flutter
   ];
 
   cli-packages = with pkgs; [
