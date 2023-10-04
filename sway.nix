@@ -64,7 +64,7 @@ in
         "${modifier}+s" = "exec scratchpad";
         "${modifier}+d" = "exec ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu=bemenu";
         "${modifier}+x" = "exec ${pkgs.cinnamon.nemo}/bin/nemo";
-        "${modifier}+Shift+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.bemenu}/bin/bemenu -W 0.4 | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
+        "${modifier}+Shift+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.bemenu}/bin/bemenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
         "${modifier}+y" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | ${pkgs.wl-clipboard}/bin/wl-copy";
         "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
         "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
@@ -130,5 +130,15 @@ in
         };
       };
     };
+  };
+
+  home.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = "1";
+    GDK_BACKEND = "wayland";
+    CLUTTER_BACKEND = "wayland";
+    BEMENU_BACKEND = "wayland";
+    QT_QPA_PLATFORM = "wayland";
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+    XDG_CURRENT_DESKTOP = "sway";
   };
 }

@@ -37,7 +37,6 @@
       bind -r L resize-pane -R "5"
 
       bind . attach -c "#{pane_current_path}"  # Set tmux root to current directory
-      bind l next-layout
       bind b choose-tree
       bind z resize-pane -Z
 
