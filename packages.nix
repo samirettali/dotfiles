@@ -66,6 +66,7 @@ let
 
   mac-packages = with pkgs; [
     darwin.apple_sdk.frameworks.SystemConfiguration
+    darwin.apple_sdk.frameworks.CoreFoundation
     coreutils
   ];
 
@@ -158,23 +159,23 @@ let
         ])
         fenix.targets.wasm32-unknown-unknown.latest.rust-std
       ])
-      amass
       bunyan-rs
       cargo-nextest
       cargo-shuttle
       cargo-watch
-      ffuf
-      findomain
-      naabu
-      nmap
       rust-analyzer-nightly
       sqlx-cli
       trunk
     ];
 
   bounty-packages = with pkgs; [
+    amass
     dnsx
+    ffuf
+    findomain
     httpx
+    naabu
+    nmap
   ];
 in
 {
@@ -182,9 +183,6 @@ in
     desktop-packages
     ++ cli-packages
     ++ dev-packages
-    ++ rust-packages
-    ++ bounty-packages
-    ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages)
-    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages)
-    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin work-packages);
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages rust-packages bounty-packages)
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages work-packages);
 }
