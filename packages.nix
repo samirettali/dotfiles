@@ -43,7 +43,6 @@ let
     grim
     hyprpicker
     j4-dmenu-desktop
-    neovim-nightly # MacOS build is broken
     networkmanagerapplet
     p7zip
     pamixer
@@ -78,7 +77,7 @@ let
     wezterm
     yubioath-flutter
     steam
-  ];
+  ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ yubioath-flutter ]);
 
   cli-packages = with pkgs; [
     direnv
@@ -107,7 +106,7 @@ let
     unzip
     yazi
     zellij
-  ];
+  ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ neovim-nightly ]);
 
   work-packages = with pkgs; [
     awscli2
@@ -183,6 +182,6 @@ in
     desktop-packages
     ++ cli-packages
     ++ dev-packages
-    ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux linux-packages rust-packages bounty-packages)
-    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin mac-packages work-packages);
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux (linux-packages ++ rust-packages ++ bounty-packages))
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin (mac-packages ++ work-packages));
 }
