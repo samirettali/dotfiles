@@ -85,13 +85,13 @@ let
     unixtools.xxd
     tmux
     zellij
-    entr
     fd
     htop
     iredis
     jq
     lazydocker
     lazygit
+    lnav
     moreutils
     mprocs
     ncdu
@@ -104,6 +104,7 @@ let
     tree
     ueberzugpp
     unzip
+    watchexec
     yazi
     zellij
   ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ neovim-nightly ]);
