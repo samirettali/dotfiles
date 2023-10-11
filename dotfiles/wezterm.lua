@@ -3,8 +3,8 @@ local wezterm = require("wezterm")
 local M = {}
 
 M.color_scheme = "Builtin Dark"
-M.font_size = 12
-M.font = wezterm.font("JetBrainsMono Nerd Font")
+M.font_size = 14
+M.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Medium" })
 M.adjust_window_size_when_changing_font_size = false
 
 M.enable_tab_bar = false

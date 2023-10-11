@@ -15,8 +15,8 @@ vim.keymap.set("v", "Q", ":norm @q<CR>") -- TODO needed?
 vim.keymap.set("n", "gV", "`[v`]")
 
 -- Splits
--- vim.keymap.set("n", "\\", ":vsplit<CR>")
--- vim.keymap.set("n", "-", ":split<CR>")
+vim.keymap.set("n", "\\", ":vsplit<CR>")
+vim.keymap.set("n", "-", ":split<CR>")
 
 vim.keymap.set("n", "<Leader>d", "yap<S-}>p", { desc = "Duplicate paragraph" })
 

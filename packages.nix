@@ -183,6 +183,7 @@ in
     desktop-packages
     ++ cli-packages
     ++ dev-packages
-    ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux (linux-packages ++ rust-packages ++ bounty-packages))
+    ++ rust-packages
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux (linux-packages ++ bounty-packages))
     ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin (mac-packages ++ work-packages));
 }
