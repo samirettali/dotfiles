@@ -67,6 +67,7 @@ let
     darwin.apple_sdk.frameworks.SystemConfiguration
     darwin.apple_sdk.frameworks.CoreFoundation
     coreutils
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
   desktop-packages = with pkgs; [
@@ -75,9 +76,7 @@ let
     spotify
     vscode
     wezterm
-    yubioath-flutter
-    steam
-  ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ yubioath-flutter ]);
+  ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ steam yubioath-flutter ]);
 
   cli-packages = with pkgs; [
     direnv
