@@ -12,6 +12,9 @@ in
     enable = true;
     wrapperFeatures.gtk = true;
     config = {
+      assigns = {
+        "8" = [{ app_id = "org.keepassxc.KeePassXC"; }];
+      };
       bars = [
         {
           fonts = {
@@ -32,6 +35,7 @@ in
           { app_id = "floating_term"; }
           { window_role = "pop-up"; }
           { window_role = "task_dialog"; }
+          { title = "Steam - Update News"; }
         ];
       };
       focus.followMouse = true;
@@ -73,6 +77,7 @@ in
       output = {
         "*" = {
           bg = "/home/samir/pics/walls/oxomfy9gqwgb1.jpg fill";
+          max_render_time = "1";
         };
       };
       startup = [
@@ -128,6 +133,17 @@ in
             };
           };
         };
+      };
+    };
+    swaylock = {
+      enable = true;
+      settings = {
+        color = "808080";
+        font-size = 24;
+        indicator-idle-visible = false;
+        indicator-radius = 100;
+        line-color = "ffffff";
+        show-failed-attempts = true;
       };
     };
   };

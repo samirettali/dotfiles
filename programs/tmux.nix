@@ -80,17 +80,17 @@
     mouse = true;
     newSession = true; # TODO test this
     plugins = with pkgs; [
-      {
-        plugin = tmuxPlugins.resurrect;
-        extraConfig = "set -g @resurrect-strategy-nvim 'session'";
-      }
-      {
-        plugin = tmuxPlugins.continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '60' # minutes
-        '';
-      }
+      # {
+      #   plugin = tmuxPlugins.resurrect;
+      #   extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+      # }
+      # {
+      #   plugin = tmuxPlugins.continuum;
+      #   extraConfig = ''
+      #     set -g @continuum-restore 'on'
+      #     set -g @continuum-save-interval '60' # minutes
+      #   '';
+      # }
       {
         plugin = tmuxPlugins.vim-tmux-navigator;
       }

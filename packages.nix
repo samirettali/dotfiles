@@ -33,6 +33,7 @@ let
 
   linux-packages = with pkgs; [
     bemenu
+    brave
     cinnamon.nemo
     cliphist
     configure-gtk
@@ -49,6 +50,7 @@ let
     pavucontrol
     slurp
     swayimg
+    tor-browser
     trash-cli
     unzip
     wbg
@@ -74,6 +76,7 @@ let
     vscode
     wezterm
     yubioath-flutter
+    steam
   ];
 
   cli-packages = with pkgs; [

@@ -4,7 +4,7 @@
   programs.mpv = {
     enable = true;
     config = {
-      image-display-duration = 5;
+      image-display-duration = 3;
     };
     bindings =
       {
@@ -13,7 +13,6 @@
     scripts = with pkgs.mpvScripts;
       [
         autocrop
-        thumbnail
       ];
   };
 }
