@@ -81,9 +81,6 @@ let
   cli-packages = with pkgs; [
     direnv
     diskus
-    unixtools.xxd
-    tmux
-    zellij
     fd
     htop
     iredis
@@ -94,6 +91,7 @@ let
     moreutils
     mprocs
     ncdu
+    neovim-nightly
     ngrok
     p7zip
     pgcli
@@ -102,11 +100,12 @@ let
     trash-cli
     tree
     ueberzugpp
+    unixtools.xxd
     unzip
     watchexec
     yazi
     zellij
-  ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ neovim-nightly ]);
+  ];
 
   work-packages = with pkgs; [
     awscli2
@@ -183,6 +182,7 @@ in
     ++ cli-packages
     ++ dev-packages
     ++ rust-packages
-    ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux (linux-packages ++ bounty-packages))
+    ++ bounty-packages
+    ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux (linux-packages))
     ++ (nixpkgs.lib.optionals pkgs.stdenv.isDarwin (mac-packages ++ work-packages));
 }
