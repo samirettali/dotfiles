@@ -108,6 +108,37 @@
             cd "$1"
         }
 
+        function glc() {
+            local os=$(uname)
+            local commit_hash
+
+            # Check the operating system
+            case $os in
+                Linux)
+                if [ -n "$WAYLAND_DISPLAY" ]; then
+                    # Wayland
+                    commit_hash=$(git log --format=%H -n 1)
+                    echo "$commit_hash" | wl-copy
+                else
+                    # X11
+                    commit_hash=$(git log --format=%H -n 1)
+                    echo "$commit_hash" | xclip -selection clipboard
+                fi
+                ;;
+                Darwin)
+                # macOS
+                commit_hash=$(git log --format=%H -n 1)
+                echo "$commit_hash" | pbcopy
+                ;;
+                *)
+                echo "Unsupported operating system: $os"
+                return 1
+                ;;
+            esac
+
+            echo "Latest commit hash copied to clipboard: $commit_hash"
+        }
+
         ## TODO do this only if gui
         autoload -U url-quote-magic bracketed-paste-magic
         zle -N self-insert url-quote-magic
