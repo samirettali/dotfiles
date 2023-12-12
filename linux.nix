@@ -22,7 +22,7 @@ in
   ];
 
   home.sessionVariables = {
-    DEFAULT_BROWSER = "${pkgs.firefox-wayland}/bin/firefox";
+    DEFAULT_BROWSER = browser;
   };
 
   services = {

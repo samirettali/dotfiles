@@ -36,6 +36,7 @@ in
         criteria = [
           { app_id = "pavucontrol"; }
           { app_id = "nemo"; }
+          { app_id = "org.keepassxc.KeePassXC"; }
           { app_id = "floating_term"; }
           { window_role = "pop-up"; }
           { window_role = "task_dialog"; }
@@ -64,16 +65,18 @@ in
       keybindings = nixpkgs.lib.mkOptionDefault {
         "${modifier}+Shift+c" = "kill";
         "${modifier}+Shift+r" = "reload";
-        "${modifier}+Shift+q" = "exec swaynag -t warning -m 'Do you want to exit?' -b 'Yes' 'swaymsg exit'";
+        "${modifier}+t" = "layout tabbed";
+        "${modifier}+e" = null;
         "${modifier}+Tab" = "workspace back_and_forth";
         "${modifier}+BackSpace" = "exec swaymsg input type:keyboard xkb_switch_layout next";
-        "${modifier}+t" = "layout tabbed";
-        "${modifier}+Return" = "exec foot";
+        "${modifier}+Shift+q" = "exec swaynag -t warning -m 'Do you want to exit?' -b 'Yes' 'swaymsg exit'";
+
         "${modifier}+s" = "exec scratchpad";
         "${modifier}+d" = "exec j4-dmenu-desktop --dmenu=bemenu";
+        "${modifier}+p" = "exec passbemenu";
         "${modifier}+x" = "exec nemo";
-        "${modifier}+Shift+v" = "exec cliphist list | bemenu | cliphist decode | cliphist list | bemenu | cliphist decode | bin/wl-copy";
         "${modifier}+y" = "exec hyprpicker | wl-copy";
+        "${modifier}+Return" = "exec foot";
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
         "XF86AudioLowerVolume" = "exec pamixer -d 5";
       };

@@ -11,7 +11,7 @@ in
 {
 
   home.packages = with pkgs; [
-    pinentry-gtk2
+    pinentry-qt
   ];
 
   programs = {
@@ -30,7 +30,7 @@ in
   services = {
     gpg-agent = {
       enable = true;
-      pinentryFlavor = "gtk2";
+      pinentryFlavor = "qt";
       enableExtraSocket = true;
       enableScDaemon = true;
     };

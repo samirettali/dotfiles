@@ -16,9 +16,5 @@
         PASSWORD_STORE_CLIP_TIME = "10";
       };
     };
-    browserpass = {
-      enable = true;
-      browsers = [ "firefox" ];
-    };
   };
 }

@@ -14,6 +14,7 @@
     ./user/fzf.nix
     ./user/git.nix
     ./programs/ripgrep.nix
+    (import ./programs/firefox.nix { inherit pkgs; })
     (import ./programs/tmux.nix { inherit pkgs homeDirectory; })
   ]
   ++ nixpkgs.lib.optionals pkgs.stdenv.isLinux [

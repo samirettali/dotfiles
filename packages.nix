@@ -38,7 +38,6 @@ let
     configure-gtk
     dbus-sway-environment
     ffmpegthumbnailer
-    firefox-beta
     grim
     hyprpicker
     j4-dmenu-desktop
