@@ -11,21 +11,13 @@ in
 {
   imports = [
     ./user/gtk.nix
+    ./user/gpg.nix
     ./programs/mpv.nix
     (import ./programs/mpv.nix { inherit pkgs; })
     (import ./programs/kanshi.nix { inherit pkgs; })
     (import ./sway.nix { inherit pkgs homeDirectory font nixpkgs; })
     (import ./programs/foot.nix { inherit font; })
   ];
-
-  programs = {
-    keychain = {
-      enable = true;
-      enableZshIntegration = true;
-      keys = [ ];
-      inheritType = "any";
-    };
-  };
 
   home.sessionVariables = {
     DEFAULT_BROWSER = "${pkgs.firefox-wayland}/bin/firefox";
@@ -41,10 +33,6 @@ in
       font = "${font}";
       layer = "top";
       groupBy = "app-name";
-    };
-    gpg-agent = {
-      enable = true;
-      pinentryFlavor = "gtk2";
     };
   };
 
@@ -64,4 +52,3 @@ in
     };
   };
 }
-

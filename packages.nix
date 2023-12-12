@@ -82,6 +82,7 @@ let
     direnv
     diskus
     fd
+    git-crypt
     htop
     iredis
     jq

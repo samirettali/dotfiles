@@ -45,9 +45,6 @@
         exts.pass-update
       ]);
     };
-    gpg = {
-      enable = true;
-    };
     direnv = {
       enable = true;
       enableZshIntegration = true;
