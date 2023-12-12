@@ -8,6 +8,10 @@ let
   modifier = "Mod4";
 in
 {
+  home.packages = with pkgs; [
+    bemenu
+  ];
+
   wayland.windowManager.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
@@ -64,14 +68,14 @@ in
         "${modifier}+Tab" = "workspace back_and_forth";
         "${modifier}+BackSpace" = "exec swaymsg input type:keyboard xkb_switch_layout next";
         "${modifier}+t" = "layout tabbed";
-        "${modifier}+Return" = "exec ${pkgs.foot}/bin/foot";
+        "${modifier}+Return" = "exec foot";
         "${modifier}+s" = "exec scratchpad";
-        "${modifier}+d" = "exec ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu=bemenu";
-        "${modifier}+x" = "exec ${pkgs.cinnamon.nemo}/bin/nemo";
-        "${modifier}+Shift+v" = "exec ${pkgs.cliphist}/bin/cliphist list | ${pkgs.bemenu}/bin/bemenu | ${pkgs.cliphist}/bin/cliphist decode | ${pkgs.wl-clipboard}/bin/wl-copy";
-        "${modifier}+y" = "exec ${pkgs.hyprpicker}/bin/hyprpicker | ${pkgs.wl-clipboard}/bin/wl-copy";
-        "XF86AudioRaiseVolume" = "exec ${pkgs.pamixer}/bin/pamixer -i 5";
-        "XF86AudioLowerVolume" = "exec ${pkgs.pamixer}/bin/pamixer -d 5";
+        "${modifier}+d" = "exec j4-dmenu-desktop --dmenu=bemenu";
+        "${modifier}+x" = "exec nemo";
+        "${modifier}+Shift+v" = "exec cliphist list | bemenu | cliphist decode | cliphist list | bemenu | cliphist decode | bin/wl-copy";
+        "${modifier}+y" = "exec hyprpicker | wl-copy";
+        "XF86AudioRaiseVolume" = "exec pamixer -i 5";
+        "XF86AudioLowerVolume" = "exec pamixer -d 5";
       };
       modifier = "${modifier}";
       output = {
@@ -81,9 +85,9 @@ in
         };
       };
       startup = [
-        { command = "${pkgs.networkmanagerapplet}/bin/nm-applet"; }
-        { command = "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"; }
-        { command = "${pkgs.mako}/bin/mako"; }
+        { command = "nm-applet"; }
+        { command = "wl-paste --watch cliphist store"; }
+        { command = "mako"; }
         { command = "exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"; }
       ];
       terminal = "foot";
@@ -152,9 +156,11 @@ in
     MOZ_ENABLE_WAYLAND = "1";
     GDK_BACKEND = "wayland";
     CLUTTER_BACKEND = "wayland";
-    BEMENU_BACKEND = "wayland";
+    # BEMENU_BACKEND = "wayland";
     QT_QPA_PLATFORM = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     XDG_CURRENT_DESKTOP = "sway";
+    BEMENU_OPTS = "--center --accept-single -W 0.3 --binding vim --vim-esc-exits -l 10 --fn '${font} 14' -p '' --border 2 --ignorecase --wrap --fixed-height";
   };
 }
+

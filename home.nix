@@ -35,16 +35,6 @@
       };
       extraPackages = with pkgs.bat-extras; [ batgrep ];
     };
-    password-store = {
-      enable = true;
-      package = pkgs.pass.withExtensions (exts: [
-        exts.pass-audit
-        exts.pass-audit
-        exts.pass-genphrase
-        exts.pass-otp
-        exts.pass-update
-      ]);
-    };
     direnv = {
       enable = true;
       enableZshIntegration = true;

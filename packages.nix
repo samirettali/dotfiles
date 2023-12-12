@@ -32,14 +32,13 @@ let
   };
 
   linux-packages = with pkgs; [
-    bemenu
     brave
     cinnamon.nemo
     cliphist
     configure-gtk
     dbus-sway-environment
     ffmpegthumbnailer
-    firefox-wayland
+    firefox-beta
     grim
     hyprpicker
     j4-dmenu-desktop
