@@ -60,6 +60,7 @@ let
     xdg-utils
     xorg.xrdb
     yubikey-personalization-gui
+    yubikey-manager
     zathura
   ];
 

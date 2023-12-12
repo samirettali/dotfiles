@@ -10,6 +10,10 @@ let
 in
 {
 
+  home.packages = with pkgs; [
+    pinentry-gtk2
+  ];
+
   programs = {
     gpg = {
       enable = true;
@@ -24,12 +28,11 @@ in
   };
 
   services = {
-    # pcscd.enable = true;
     gpg-agent = {
       enable = true;
       pinentryFlavor = "gtk2";
       enableExtraSocket = true;
-      enableScdaemon = true;
+      enableScDaemon = true;
     };
   };
 
