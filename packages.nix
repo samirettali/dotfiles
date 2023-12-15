@@ -109,6 +109,7 @@ let
 
   work-packages = with pkgs; [
     awscli2
+    openvpn
   ];
 
   dev-packages = with pkgs; [
