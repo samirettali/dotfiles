@@ -110,6 +110,8 @@ let
   work-packages = with pkgs; [
     awscli2
     openvpn
+    python311Packages.tox
+    php
   ];
 
   dev-packages = with pkgs; [
