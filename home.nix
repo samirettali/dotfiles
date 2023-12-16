@@ -14,6 +14,7 @@
     ./user/fzf.nix
     ./user/git.nix
     ./programs/ripgrep.nix
+    ./programs/alacritty.nix
     (import ./programs/firefox.nix { inherit pkgs; })
     (import ./programs/tmux.nix { inherit pkgs homeDirectory; })
   ]
