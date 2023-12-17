@@ -5,23 +5,22 @@ local function get_filename()
     local extension = vim.fn.expand "%:e"
 
     if not utils.isempty(filename) then
-        local file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(
-            filename,
-            extension,
-            { default = true }
-        )
+        -- local file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(
+        --     filename,
+        --     extension,
+        --     { default = true }
+        -- )
+        --
+        -- local hl_group = "FileIconColor" .. extension
+        --
+        -- vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
+        -- if utils.isempty(file_icon) then
+        --     file_icon = " "
+        --     file_icon_color = ""
+        -- end
 
-        local hl_group = "FileIconColor" .. extension
-
-        vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
-        if utils.isempty(file_icon) then
-            file_icon = " "
-            file_icon_color = ""
-        end
-
-        return " " ..
-            "%#" ..
-            hl_group .. "#" .. file_icon .. "%*" .. "%{&modified?'  ':' '}" .. filename .. "%*"
+        return "%{&modified?'  ':' '}" .. filename .. "%*"
+        -- hl_group .. "#" .. file_icon .. "%*" .. "%{&modified?'  ':' '}" .. filename .. "%*"
     end
 end
 
@@ -38,9 +37,9 @@ local function get_winbar()
         return
     end
     local value = table.concat {
-        "%=",
-        utils.get_current_filename(),
-        " "
+        -- "%=",
+        -- utils.get_current_filename(),
+        get_filename(),
     }
 
     if not utils.isempty(value) and utils.get_buf_option "mod" then

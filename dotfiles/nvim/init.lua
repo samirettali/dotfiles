@@ -9,7 +9,7 @@ local function load_modules()
         "core.options",
         "core.autocmds",
         "core.statusline",
-        -- "core.winbar",
+        "core.winbar",
         "core.mappings",
         "core.statuscolumn",
         "plugins"
