@@ -75,7 +75,7 @@ let
     qbittorrent
     spotify
     wezterm
-  ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ steam yubioath-flutter ]);
+  ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ yubioath-flutter ]);
 
   cli-packages = with pkgs; [
     direnv
