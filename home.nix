@@ -47,5 +47,13 @@ in
       enable = true;
       enableZshIntegration = true;
     };
+    vscode = {
+      enable = true;
+      package = pkgs.vscode;
+      extensions = with pkgs.vscode-extensions; [
+        vscodevim.vim
+        golang.go
+      ];
+    };
   };
 }

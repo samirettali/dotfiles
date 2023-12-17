@@ -73,7 +73,6 @@ let
     keepassxc
     qbittorrent
     spotify
-    vscode
     wezterm
   ] ++ (nixpkgs.lib.optionals pkgs.stdenv.isLinux [ steam yubioath-flutter ]);
 
