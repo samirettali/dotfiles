@@ -76,6 +76,7 @@ local plugins = {
         },
         opts = {},
     },
+    { "preservim/nerdtree" },
     { "j-hui/fidget.nvim",           opts = {} }, -- Show LSP loading status
     { "stevearc/oil.nvim",           opts = {} }, -- File explorer
     { "tzachar/highlight-undo.nvim", opts = {} }, -- Highlight undo and redo regions
