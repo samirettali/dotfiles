@@ -18,7 +18,7 @@ in
     wrapperFeatures.gtk = true;
     config = {
       assigns = {
-        "8" = [{ app_id = "org.keepassxc.KeePassXC"; }];
+        # "8" = [{ app_id = "org.keepassxc.KeePassXC"; }];
       };
       bars = [
         {
@@ -67,7 +67,7 @@ in
         "${modifier}+Shift+c" = "kill";
         "${modifier}+Shift+r" = "reload";
         "${modifier}+t" = "layout tabbed";
-        "${modifier}+e" = null;
+        "${modifier}+e" = "layout splith";
         "${modifier}+Tab" = "workspace back_and_forth";
         "${modifier}+BackSpace" = "exec swaymsg input type:keyboard xkb_switch_layout next";
         "${modifier}+Shift+q" = "exec swaynag -t warning -m 'Do you want to exit?' -b 'Yes' 'swaymsg exit'";
@@ -78,6 +78,7 @@ in
         "${modifier}+x" = "exec nemo";
         "${modifier}+y" = "exec hyprpicker | wl-copy";
         "${modifier}+Return" = "exec ${terminal}";
+        "${modifier}+Shift+v" = "exec cliphist list | bemenu | cliphist decode | wl-copy";
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
         "XF86AudioLowerVolume" = "exec pamixer -d 5";
       };
