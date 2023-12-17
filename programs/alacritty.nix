@@ -7,9 +7,9 @@
       font = {
         normal = {
           family = font;
-          style = "Regular";
+          style = "Medium";
         };
-        italic = { style = "Regular"; };
+        italic = { style = "Medium"; };
         bold = { style = "Medium"; };
         bold_italic = { style = "Medium"; };
         size = 12;

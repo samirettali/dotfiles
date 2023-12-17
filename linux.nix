@@ -2,21 +2,18 @@
 , pkgs
 , homeDirectory
 , nixpkgs
+, font
+, browser
+, terminal
 , ...
-}:
-
-let
-  font = "JetBrainsMono Nerd Font";
-  browser = "firefox";
-in
-{
+}: {
   imports = [
     ./user/gtk.nix
     ./user/gpg.nix
     ./programs/mpv.nix
     (import ./programs/pass.nix { inherit pkgs nixpkgs browser; })
     (import ./programs/mpv.nix { inherit pkgs; })
-    (import ./sway.nix { inherit pkgs homeDirectory font nixpkgs; })
+    (import ./sway.nix { inherit pkgs homeDirectory font nixpkgs terminal; })
     (import ./programs/kanshi.nix { inherit pkgs; })
     (import ./programs/foot.nix { inherit font; })
   ];

@@ -6,7 +6,13 @@
 , profile
 , home-manager
 , ...
-}: {
+}:
+let
+  font = "JetBrainsMono Nerd Font";
+  terminal = "alacritty";
+  browser = "firefox";
+in
+{
   imports = [
     (import ./packages.nix { inherit pkgs nixpkgs; })
     ./dotfiles.nix
@@ -14,12 +20,12 @@
     ./user/fzf.nix
     ./user/git.nix
     ./programs/ripgrep.nix
-    ./programs/alacritty.nix
+    (import ./programs/alacritty.nix { inherit font; })
     (import ./programs/firefox.nix { inherit pkgs; })
     (import ./programs/tmux.nix { inherit pkgs homeDirectory; })
   ]
   ++ nixpkgs.lib.optionals pkgs.stdenv.isLinux [
-    (import ./linux.nix { inherit home-manager pkgs homeDirectory nixpkgs; })
+    (import ./linux.nix { inherit home-manager pkgs homeDirectory nixpkgs font browser terminal; })
   ];
 
   home = { inherit username homeDirectory stateVersion; };

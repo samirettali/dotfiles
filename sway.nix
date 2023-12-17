@@ -2,6 +2,7 @@
 , homeDirectory
 , font
 , nixpkgs
+, terminal
 , ...
 }:
 let
@@ -76,7 +77,7 @@ in
         "${modifier}+p" = "exec passbemenu";
         "${modifier}+x" = "exec nemo";
         "${modifier}+y" = "exec hyprpicker | wl-copy";
-        "${modifier}+Return" = "exec foot";
+        "${modifier}+Return" = "exec ${terminal}";
         "XF86AudioRaiseVolume" = "exec pamixer -i 5";
         "XF86AudioLowerVolume" = "exec pamixer -d 5";
       };
@@ -93,7 +94,7 @@ in
         { command = "mako"; }
         { command = "exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"; }
       ];
-      terminal = "foot";
+      terminal = terminal;
       window = {
         border = 2;
         titlebar = false;
