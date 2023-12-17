@@ -10,6 +10,7 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     fenix-overlay.url = "github:nix-community/fenix";
     flake-utils.url = "github:numtide/flake-utils";
+    nur.url = "github:nix-community/NUR";
   };
 
   outputs =
@@ -46,7 +47,11 @@
             pkgs = import nixpkgs {
               inherit system;
               config.allowUnfree = true;
-              overlays = [ inputs.neovim-nightly-overlay.overlay inputs.fenix-overlay.overlays.default ];
+              overlays = [
+                inputs.neovim-nightly-overlay.overlay
+                inputs.fenix-overlay.overlays.default
+                inputs.nur.overlay
+              ];
             };
           in
           [
@@ -99,12 +104,10 @@
           nixpkgs.lib.attrsets.mapAttrs
             (userAndHost: userAndHostConfig: homeManagerConfiguration userAndHostConfig)
             rawHomeManagerConfigurations;
-
       }
     )
     // {
       # Re-export devenv, flake-utils, home-manager and nixpkgs as usable outputs
       inherit flake-utils home-manager nixpkgs;
     };
-
 }
