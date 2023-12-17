@@ -58,7 +58,7 @@ let
     xdg-utils
     xorg.xrdb
     yubikey-personalization-gui
-    yubikey-manager
+    yubikey-manager-qt
     zathura
   ];
 
@@ -71,6 +71,7 @@ let
 
   desktop-packages = with pkgs; [
     keepassxc
+    ledger-live-desktop
     qbittorrent
     spotify
     wezterm
@@ -136,6 +137,7 @@ let
     lua-language-server
     nodejs
     openssl
+    pipenv
     pkg-config
     pkgs.tree-sitter
     python312
