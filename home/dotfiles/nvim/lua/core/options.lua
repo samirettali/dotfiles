@@ -77,8 +77,6 @@ vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.shortmess:append "c"
 
-vim.opt.clipboard = "unnamedplus"
-
 vim.opt.confirm = true    -- Ask for some operations like quitting an unsaved file instead of failing
 vim.opt.laststatus = 3    -- Global statusline
 vim.opt.title = true      -- Allow neovim to set the window title

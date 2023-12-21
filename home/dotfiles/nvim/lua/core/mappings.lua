@@ -39,6 +39,9 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "<C-o>", "<C-o>zzzv")
 vim.keymap.set("n", "<C-i>", "<C-i>zzzv")
 
+-- Copy to system clipboard
+vim.keymap.set("v", "<C-c>", [["+y]])
+
 -- Mantain cursor position when joining lines
 vim.keymap.set("n", "J", "mzJ`z")
 
