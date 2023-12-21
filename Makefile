@@ -11,3 +11,7 @@ build:
 .PHONY: install-nix
 install-nix:
 	curl -L https://nixos.org/nix/install | sh
+
+.PHONY: install-brew
+install-brew:
+	curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
