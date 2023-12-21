@@ -1,9 +1,4 @@
 { config, pkgs, lib, ... }: {
-  # xdg.portal = {
-  #   portal.enable = true;
-  #   extraPortals = [ pkgs.inputs.hyprland.xdg-desktop-portal-hyprland ];
-  #   configPackages = [ pkgs.inputs.hyprland.hyprland ];
-  # };
 
   wayland.windowManager.hyprland = {
     enable = true;

@@ -155,6 +155,12 @@
     };
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland ];
+    configPackages = [ pkgs.xdg-desktop-portal-hyprland ];
+  };
+
   services = {
     dbus.enable = true;
     blueman.enable = true;
