@@ -68,33 +68,22 @@
       exec = [
         "${pkgs.swaybg}/bin/swaybg -i /home/samir/pics/walls/3440x1440-px-classic-art-Dresden-ultrawide-1224577.jpg --mode fill"
         "${pkgs.networkmanagerapplet}/bin/nm-applet"
+      ];
+
+      exec-once = [
         "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"
       ];
 
       bind =
         let
           swaylock = "${config.programs.swaylock.package}/bin/swaylock";
-          #   playerctl = "${config.services.playerctld.package}/bin/playerctl";
-          #   playerctld = "${config.services.playerctld.package}/bin/playerctld";
-          #   makoctl = "${config.services.mako.package}/bin/makoctl";
-          #   wofi = "${config.programs.wofi.package}/bin/wofi";
-          #   pass-wofi = "${pkgs.pass-wofi.override {
-          #   pass = config.programs.password-store.package;
-          # }}/bin/pass-wofi";
-
-          # grimblast = "${pkgs.inputs.hyprwm-contrib.grimblast}/bin/grimblast";
           grimblast = "${pkgs.grimblast}/bin/grimblast";
           pactl = "${pkgs.pulseaudio}/bin/pactl";
-          # gtk-play = "${pkgs.libcanberra-gtk3}/bin/canberra-gtk-play";
-          # notify-send = "${pkgs.libnotify}/bin/notify-send";
-
-          # gtk-launch = "${pkgs.gtk3}/bin/gtk-launch";
-          # xdg-mime = "${pkgs.xdg-utils}/bin/xdg-mime";
-          # defaultApp = type: "${gtk-launch} $(${xdg-mime} query default ${type})";
-
           terminal = config.home.sessionVariables.TERMINAL;
-          fileExplorer = "nemo";
-          workspaces = [ "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
+          fileExplorer = "${pkgs.cinnamon.nemo}/bin/nemo";
+
+          # initialize workspaces for a range from 1 to 6 of string integers
+          workspaces = map (n: toString n) (lib.range 1 9);
           directions = rec {
             left = "l";
             right = "r";
@@ -131,7 +120,7 @@
           "SUPERSHIFT,l,exec,${swaylock} -S --grace 2"
         ]) ++
         (lib.optionals config.programs.password-store.enable [
-          "SUPER,p,exec,passmenu"
+          "SUPER,p,exec,passbemenu"
         ]) ++
         (map
           (n:
