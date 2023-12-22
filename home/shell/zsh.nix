@@ -1,6 +1,8 @@
-{ lib, config, pkgs, ... }:
-
-{
+{ lib
+, config
+, pkgs
+, ...
+}: {
   programs = {
     zsh = {
       enable = true;
@@ -156,28 +158,20 @@
         export PATH=~/.bin:$PATH:~/go/bin:~/.dotnet/tools
       '';
       shellAliases = {
-        qre = "qrencode -l H -t ANSI256UTF8";
-        qrd = "pngpaste - | zbarimg -q --raw - | tee | pbcopy";
         lg = "lazygit";
         ld = "lazydocker";
-        c = "tee | xsel -ib";
+
         vim = "nvim";
         fim = "nvim $(fd -t f | fzf)";
-        cat = "bat";
+
         tl = "tmux ls";
         gc = "git clone";
 
-        gl = "git log --graph --abbrev-commit --decorate --format=format:\"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)\" --all";
-        gwho = "git log --format='%aN' | sort | uniq -c | sort -nr";
-
-        ytdl = "youtube-dl -R infinite -f bestvideo+bestaudio --output \"%(title)s.%(ext)s\"";
-        ytmp3 = "youtube-dl -R infinite -i --extract-audio --audio-format mp3 --audio-quality 0 -w --output \"%(title)s.%(ext)s\"";
-
+        c = "tee | xsel -ib";
         jj = "pbpaste | jq -r | pbcopy";
         jjj = "pbpaste | jq -r";
 
         rm = "trash";
-        ":q" = "exit";
       };
       shellGlobalAliases = {
         trim = "awk '{\$1=\$1;print}'";
