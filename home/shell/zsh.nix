@@ -98,6 +98,11 @@
         }
 
         function glc() {
+            if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+                echo "Not in a git repository"
+                return 1
+            fi
+
             local os=$(uname)
             local commit_hash
 

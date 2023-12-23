@@ -85,6 +85,8 @@ vim.opt.showtabline = 0   -- Hide tabline
 
 vim.opt.cursorline = true -- Highlight current line
 
+vim.opt.clipboard = "unnamedplus"
+
 -- Keep cursor line only on focused window
 local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursorline = function(event, value, pattern)
