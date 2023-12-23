@@ -39,5 +39,7 @@
       "homebrew/services"
     ];
   };
+
+  programs.gnupg.agent.enable = true; # TODO is this needed?
 }
 

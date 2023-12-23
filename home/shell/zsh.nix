@@ -165,6 +165,7 @@
         fim = "nvim $(fd -t f | fzf)";
 
         tl = "tmux ls";
+        sl = "ls";
         gc = "git clone";
 
         c = "tee | xsel -ib";
