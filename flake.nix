@@ -17,6 +17,7 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     fenix-overlay.url = "github:nix-community/fenix";
     nur.url = "github:nix-community/NUR";
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 
   outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
