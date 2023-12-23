@@ -3,7 +3,6 @@
     keepassxc
     qbittorrent
     spotify
-    wezterm # TODO remove
   ];
 
   programs =
