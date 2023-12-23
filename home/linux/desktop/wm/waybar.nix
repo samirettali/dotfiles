@@ -1,5 +1,8 @@
-{ outputs, config, lib, pkgs, ... }:
-
+{ lib
+, config
+, pkgs
+, ...
+}:
 let
   hasSway = config.wayland.windowManager.sway.enable;
   sway = config.wayland.windowManager.sway.package;
@@ -12,15 +15,12 @@ in
   };
   programs.waybar = {
     enable = true;
-    package = pkgs.waybar.overrideAttrs (oa: {
-      mesonFlags = (oa.mesonFlags or  [ ]) ++ [ "-Dexperimental=true" ];
-    });
     systemd.enable = true;
     settings = {
       primary = {
         mode = "dock";
         layer = "top";
-        height = 30;
+        height = 32;
         margin = "0";
         position = "top";
 
@@ -49,12 +49,10 @@ in
         clock = {
           interval = 1;
           format = "{:%d/%m %H:%M:%S}";
-          tooltip-format = ''
-            <tt><big>{calendar}</big></tt>'';
         };
 
         pulseaudio = {
-          format = "{icon} {volume}%";
+          format = " {icon} {volume}%";
           format-muted = " ";
           format-icons = {
             headphone = "󰋋";
@@ -62,9 +60,8 @@ in
             portable = "";
             default = [ "" "" "" ];
           };
-          # on-click = pavucontrol;
+          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
-
         battery = {
           bat = "BAT0";
           interval = 10;
@@ -73,10 +70,13 @@ in
           format-charging = "󰂄 {capacity}%";
           onclick = "";
         };
-
         "hyprland/language" = {
-          "format-en" = "us";
-          "format-it" = "it";
+          format-en = "󰌌 us";
+          format-it = "󰌌 it";
+        };
+        tray = {
+          spacing = 10;
+          reverse-direction = true;
         };
       };
     };
@@ -90,10 +90,9 @@ in
     style =
       let
         colors = {
-          black = "000000";
-          base04 = "928374";
-          white = "bdbdbd";
-          blue = "285577";
+          black = "#000000";
+          grey = "#928374";
+          white = "#bdbdbd";
         };
       in
       ''
@@ -109,25 +108,26 @@ in
         }
 
         window#waybar {
-          background-color: #${colors.black};
-          color: #${colors.white};
+          background-color: ${colors.black};
+          color: ${colors.white};
         }
 
         #workspaces button {
-          color: #${colors.white};
+          color: ${colors.white};
           padding: 4px;
         }
         #workspaces button.hidden {
-          color: #${colors.base04};
+          color: ${colors.grey};
         }
         #workspaces button.focused,
         #workspaces button.active {
-          background-color: #${colors.white};
-          color: #${colors.black};
+          background-color: ${colors.white};
+          color: ${colors.black};
         }
       '';
   };
 }
+
 
 
 
