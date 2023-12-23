@@ -127,6 +127,7 @@
                     ./home/linux/desktop
                     ./home/packages/desktop.nix
                     ./home/packages/dev.nix
+                    ./home/packages/security.nix
                   ];
                   home.stateVersion = stateVersion;
                   home.homeDirectory = homeDirectory;
