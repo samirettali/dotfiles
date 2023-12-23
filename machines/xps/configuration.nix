@@ -56,10 +56,6 @@
     }
   ];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking = {
     hostName = "xps";
     useDHCP = lib.mkDefault true;
@@ -120,16 +116,11 @@
   environment = {
     shells = with pkgs; [ zsh ];
     systemPackages = with pkgs; [
-      killall
-      sshfs
-
       gvfs
       udisks
       apfs-fuse
 
       openresolv
-      openvpn
-      awesome
     ];
     etc."dual-function-keys.yaml".text = builtins.readFile ./dual-function-keys.yaml;
   };
@@ -164,7 +155,6 @@
   services = {
     dbus.enable = true;
     blueman.enable = true;
-    # pris-proxy.enable = true;
     openssh = {
       enable = true;
       settings = {
