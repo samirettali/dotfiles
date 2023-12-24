@@ -35,7 +35,7 @@
     LIBSEAT_BACKEND = "logind";
     GDK_BACKEND = "wayland";
     CLUTTER_BACKEND = "wayland";
-    # BEMENU_BACKEND = "wayland";
+    BEMENU_BACKEND = "wayland";
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
     BEMENU_OPTS = "--center --accept-single -W 0.3 --binding vim --vim-esc-exits -l 10 --fn 'JetBrainsMono Nerd Font 14' -p '' --border 2 --ignorecase --wrap --fixed-height";
   };
