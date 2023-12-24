@@ -38,6 +38,7 @@
           "editor.formatOnSave" = true;
           "editor.renderWhitespace" = "trailing";
           "editor.wordSeparators" = "/\\()\"'=,.;<>~!@#$%^&*|+=[]{}`?-";
+          "window.menuBarVisibility" = "toggle";
 
           "diffEditor.ignoreTrimWhitespace" = false;
 
