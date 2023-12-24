@@ -18,34 +18,6 @@ local plugins = {
         "chentoast/marks.nvim",
         opts = { builtin_marks = { ".", "<", ">", "^" } }
     },
-    {
-        "m4xshen/hardtime.nvim",
-        dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-        opts = {
-            disable_mouse = false,
-            disabled_filetypes = utils.plugin_filetypes,
-            restriction_mode = "hint",
-        }
-    },
-    {
-        "ThePrimeagen/refactoring.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-        },
-        opts = {},
-    },
-    {
-        "preservim/nerdtree",
-        config = function()
-            vim.api.nvim_set_keymap(
-                "n",
-                "<C-t>",
-                ":NERDTreeToggle<CR>",
-                { noremap = true }
-            )
-        end,
-    },
     { "j-hui/fidget.nvim",           opts = {} }, -- Show LSP loading status
     { "stevearc/oil.nvim",           opts = {} }, -- File explorer
     { "tzachar/highlight-undo.nvim", opts = {} }, -- Highlight undo and redo regions
@@ -59,12 +31,7 @@ local plugins = {
     "tpope/vim-eunuch",                           -- UNIX commands inside neovim
     "rhysd/committia.vim",                        -- Better commit editing
     "tpope/vim-surround",                         -- Add surround object for editing
-    {
-        "norcalli/nvim-colorizer.lua",
-        config = function()
-            require 'colorizer'.setup()
-        end
-    },
+    { "norcalli/nvim-colorizer.lua", opts = {} },
     -- Notable mentions
     -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
     -- "wellle/targets.vim" -- Add more targets for commands
@@ -88,9 +55,6 @@ require("lazy").setup {
         notify = true,
     },
     performance = {
-        -- cache = {
-        --     enabled = true,
-        -- },
         rtp = {
             disabled_plugins = {
                 "2html_plugin",

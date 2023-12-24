@@ -6,6 +6,7 @@ return {
         vim.g.moonflyCursorColor = true
         vim.g.moonflyItalics = false
         vim.g.moonflyUnderlineMatchParen = true
+        vim.g.moonflyNormalFloat = true
 
         local moonfly_highlights = vim.api.nvim_create_augroup("MoonflyHighlight", {})
         vim.api.nvim_create_autocmd("ColorScheme", {
@@ -19,7 +20,6 @@ return {
                 vim.api.nvim_set_hl(0, "CursorLineNr", { bg = palette.black, fg = palette.blue })
                 vim.api.nvim_set_hl(0, "BiscuitColor", { bg = palette.grey234, fg = palette.grey241 })
                 vim.api.nvim_set_hl(0, "TreesitterContext", { bg = palette.grey234 })
-
 
                 local default_status_bg = palette.grey234;
                 local default_status_fg = palette.white;
@@ -60,6 +60,27 @@ return {
                 vim.api.nvim_set_hl(0, "DiagnosticSignInfo", {
                     bg = default_status_bg,
                     fg = palette.sky
+                })
+
+                vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", {
+                    bg = palette.black,
+                    fg = palette.red
+                })
+                vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", {
+                    bg = palette.black,
+                    fg = palette.yellow
+                })
+                vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", {
+                    bg = palette.black,
+                    fg = palette.sky
+                })
+                vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", {
+                    bg = palette.black,
+                    fg = palette.white
+                })
+                vim.api.nvim_set_hl(0, "DiagnosticVirtualTextOk", {
+                    bg = palette.black,
+                    fg = palette.emerald
                 })
             end,
             group = moonfly_highlights,

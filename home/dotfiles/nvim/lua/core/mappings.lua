@@ -55,9 +55,11 @@ vim.keymap.set("i", "]", "]<C-g>u")
 vim.keymap.set("n", "<C-p>", ":bp<CR>", { silent = true, desc = "Go to previous buffer" })
 vim.keymap.set("n", "<C-n>", ":bn<CR>", { silent = true, desc = "Go to next buffer" })
 
-vim.keymap.set("n", "<BS>", ":w ++p<CR>", { desc = "Save file and create parent folders" })
+vim.keymap.set("n", "<C-t>", ":tabnew<CR>", { silent = true, desc = "Open new tab" })
+vim.keymap.set("n", "<Tab>", ":tabnext<CR>", { silent = true, desc = "Go to next tab" })
+vim.keymap.set("n", "<S-Tab>", ":tabp<CR>", { silent = true, desc = "Go to previous tab" })
 
-vim.keymap.set("n", "<Tab>", "<C-^>", { desc = "Switch to last focused buffer" })
+vim.keymap.set("n", "<BS>", ":w ++p<CR>", { desc = "Save file and create parent folders" })
 
 -- Move selected lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
