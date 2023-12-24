@@ -78,7 +78,7 @@ vim.opt.writebackup = false
 vim.opt.shortmess:append "c"
 
 vim.opt.confirm = true    -- Ask for some operations like quitting an unsaved file instead of failing
-vim.opt.laststatus = 3    -- Global statusline
+vim.opt.laststatus = 0    -- Hide status line
 vim.opt.title = true      -- Allow neovim to set the window title
 vim.opt.cmdheight = 1     -- Command line height
 vim.opt.showtabline = 0   -- Hide tabline
