@@ -13,56 +13,35 @@
       general = {
         gaps_in = 4;
         gaps_out = 8;
-        border_size = 3;
+        border_size = 1;
         cursor_inactive_timeout = 4;
-        "col.active_border" = "0xff285577";
-        "col.inactive_border" = "0xff181a23";
-      };
-      group = {
-        "col.border_active" = "0xff00ff00";
-        "col.border_inactive" = "0xffff0000";
-        groupbar = {
-          font_size = 11;
-        };
+        "col.active_border" = "0xff005577";
+        "col.inactive_border" = "0xff222222";
       };
       input = {
         kb_layout = "us,it";
-        touchpad.disable_while_typing = false;
+        touchpad.disable_while_typing = true;
         repeat_rate = 60;
         repeat_delay = 200;
       };
       dwindle.split_width_multiplier = 1.35;
       misc = {
-        vfr = true;
-        close_special_on_empty = true;
-        # Unfullscreen when opening something
-        # new_window_takes_over_fullscreen = 0;
+        new_window_takes_over_fullscreen = 2;
       };
-      layerrule = [
-        "blur,waybar"
-        "ignorezero,waybar"
-      ];
-      blurls = [
-        "waybar"
-      ];
       decoration = {
-        active_opacity = 1;
-        inactive_opacity = 1;
-        fullscreen_opacity = 1.0;
         rounding = 0;
         blur.enabled = false;
-        drop_shadow = false;
-        shadow_range = 12;
-        shadow_offset = "3 3";
-        "col.shadow" = "0x44000000";
-        "col.shadow_inactive" = "0x66000000";
+        drop_shadow = true;
+        # shadow_range = 3;
+        # shadow_offset = "3 3";
+        # "col.shadow" = "0x44000000";
+        # "col.shadow_inactive" = "0x66000000";
       };
 
       animations.enabled = false;
 
       exec = [
-        "${pkgs.swaybg}/bin/swaybg -i /home/samir/pics/walls/3440x1440-px-classic-art-Dresden-ultrawide-1224577.jpg --mode fill"
-        "${pkgs.networkmanagerapplet}/bin/nm-applet"
+        "${pkgs.swaybg}/bin/swaybg -i /home/samir/pics/walls/bg.png --mode tile"
       ];
 
       exec-once = [
@@ -110,6 +89,7 @@
           "CONTROL,Print,exec,${grimblast} --notify --freeze copy screen"
           "SUPER,Print,exec,${grimblast} --notify --freeze copy area"
           "ALT,Print,exec,${grimblast} --notify --freeze copy area"
+          "SUPERSHIFT,v,exec,cliphist list | bemenu | cliphist decode | wl-copy"
         ] ++
         (lib.optionals config.programs.swaylock.enable [
           "SUPERSHIFT,l,exec,${swaylock} -S --grace 2"
