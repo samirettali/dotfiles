@@ -78,6 +78,10 @@
           "go.showWelcome" = true;
 
           "gitlens.showWelcomeOnInstall" = false;
+
+          "vim.handleKeys" = {
+            "<C-p>" = false;
+          };
         };
       };
     };
