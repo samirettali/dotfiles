@@ -20,8 +20,11 @@
           golang.go
           vscodevim.vim
           github.copilot
+          github.copilot-chat
+          bbenoist.nix
 
           ms-dotnettools.csharp
+          # sourcegraph.cody-ai
           # ms-vsliveshare.vsliveshare # not available in inxpkgs for darwin
           # sourcegraph.cody-ai
           # amos402.scope-bar
