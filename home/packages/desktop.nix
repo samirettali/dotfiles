@@ -50,7 +50,7 @@
 
           "telemetry.telemetryLevel" = "off";
 
-          "workbench.tree.indent" = 2;
+          "workbench.tree.indent" = 24;
           "workbench.welcomePage.walkthroughs.openOnInstall" = false;
           "workbench.startupEditor" = "none";
 
