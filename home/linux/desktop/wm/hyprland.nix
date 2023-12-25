@@ -24,7 +24,10 @@
         repeat_rate = 60;
         repeat_delay = 200;
       };
-      dwindle.split_width_multiplier = 1.35;
+      dwindle = {
+        no_gaps_when_only = true;
+        split_width_multiplier = 1.35;
+      };
       misc = {
         new_window_takes_over_fullscreen = 2;
       };
