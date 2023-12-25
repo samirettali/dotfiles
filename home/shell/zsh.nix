@@ -160,6 +160,17 @@
         zle -N edit-command-line
         bindkey '^x^x' edit-command-line
 
+        function fg-bg() {
+        if [[ $#BUFFER -eq 0 ]]; then
+            fg
+        else
+            zle push-input
+        fi
+        }
+        zle -N fg-bg
+        bindkey '^Z' fg-bg
+
+
         export PATH=~/.bin:$PATH:~/go/bin:~/.dotnet/tools
       '';
       shellAliases = {
