@@ -12,7 +12,6 @@
 
   home.packages = with pkgs; [
     curl
-    direnv
     diskus
     fd
     git-crypt
@@ -53,6 +52,7 @@
     direnv = {
       enable = true;
       enableZshIntegration = true;
+      nix-direnv.enable = true;
     };
     ripgrep = {
       enable = lib.mkDefault true;
