@@ -35,18 +35,11 @@
         rounding = 0;
         blur.enabled = false;
         drop_shadow = true;
-        # shadow_range = 3;
-        # shadow_offset = "3 3";
-        # "col.shadow" = "0x44000000";
-        # "col.shadow_inactive" = "0x66000000";
       };
-
       animations.enabled = false;
-
       exec = [
         "${pkgs.swaybg}/bin/swaybg -i /home/samir/pics/walls/bg.png --mode tile"
       ];
-
       exec-once = [
         "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"
       ];
