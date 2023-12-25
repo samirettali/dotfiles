@@ -27,6 +27,7 @@
     networkmanagerapplet
     imv
     xdg-utils
+    wtype
   ];
 
   home.sessionVariables = {

@@ -51,6 +51,13 @@
           pactl = "${pkgs.pulseaudio}/bin/pactl";
           terminal = config.home.sessionVariables.TERMINAL;
           fileExplorer = "${pkgs.cinnamon.nemo}/bin/nemo";
+          bemenu = "${pkgs.bemenu}/bin/bemenu-run";
+          cliphist = "${pkgs.cliphist}/bin/cliphist";
+
+          wtype = "${pkgs.wtype}/bin/wtype";
+          wlcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
+          wlpaste = "${pkgs.wl-clipboard}/bin/wl-copy";
+
           hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
 
           workspaces = map (n: toString n) (lib.range 1 9);
@@ -66,12 +73,13 @@
           };
         in
         [
-          "SUPER,RETURN,exec,${terminal}"
-          "SUPER,d,exec,bemenu-run"
           "SUPER,TAB,workspace,previous"
           "SUPERSHIFT,q,killactive"
           "SUPERSHIFT,e,exit"
           "SUPER,f,fullscreen,1"
+
+          "SUPER,RETURN,exec,${terminal}"
+          "SUPER,d,exec,${bemenu}"
           "SUPER,x,exec,${fileExplorer}"
           "SUPER,y,exec,${hyprpicker}"
 
@@ -87,6 +95,10 @@
           "SUPER,Print,exec,${grimblast} --notify --freeze copysave area"
           "ALT,Print,exec,${grimblast} --notify --freeze copysave area"
 
+          "SUPER,c,exec,${wtype} -P XF86Copy"
+          "SUPER,x,exec,${wtype} -P XF86Cut"
+          "SUPER,v,exec,${wtype} -P XF86Paste"
+          "SUPERSHIFT,v,exec,${cliphist} list | ${bemenu} | ${cliphist} decode | ${wlcopy}"
         ] ++
         (lib.optionals config.programs.swaylock.enable [
           "SUPERSHIFT,l,exec,${swaylock} -S --grace 2"
@@ -141,3 +153,4 @@
     '';
   };
 }
+
