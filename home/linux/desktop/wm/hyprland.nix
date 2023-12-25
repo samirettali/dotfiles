@@ -51,8 +51,8 @@
           pactl = "${pkgs.pulseaudio}/bin/pactl";
           terminal = config.home.sessionVariables.TERMINAL;
           fileExplorer = "${pkgs.cinnamon.nemo}/bin/nemo";
+          hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
 
-          # initialize workspaces for a range from 1 to 6 of string integers
           workspaces = map (n: toString n) (lib.range 1 9);
           directions = rec {
             left = "l";
@@ -73,6 +73,7 @@
           "SUPERSHIFT,e,exit"
           "SUPER,f,fullscreen,1"
           "SUPER,x,exec,${fileExplorer}"
+          "SUPER,y,exec,${hyprpicker}"
 
           ",XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
           ",XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
