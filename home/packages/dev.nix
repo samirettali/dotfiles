@@ -9,11 +9,11 @@
     golangci-lint-langserver
     gotools
 
-    # cmake
-    # gcc
-    # gnumake
-    # clang-tools
-    # gnuplot
+    cmake
+    gcc
+    gnumake
+    clang-tools
+    stdenv
 
     # libiconv
     # nodejs
@@ -21,7 +21,6 @@
     # pkg-config
 
     lua-language-server
-    # docker-compose # TODO check
     nodejs
     openssl
     pipenv
@@ -29,6 +28,7 @@
     pkgs.tree-sitter
     python312
     pipenv
+    pyenv
 
     rnix-lsp
 
