@@ -81,12 +81,12 @@
           "SHIFT,XF86AudioMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
           ",XF86AudioMicMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
 
-          ",Print,exec,${grimblast} --notify --freeze copy output"
-          "SHIFT,Print,exec,${grimblast} --notify --freeze copy active"
-          "CONTROL,Print,exec,${grimblast} --notify --freeze copy screen"
-          "SUPER,Print,exec,${grimblast} --notify --freeze copy area"
-          "ALT,Print,exec,${grimblast} --notify --freeze copy area"
-          "SUPERSHIFT,v,exec,cliphist list | bemenu | cliphist decode | wl-copy"
+          ",Print,exec,${grimblast} --notify --freeze copysave output"
+          "SHIFT,Print,exec,${grimblast} --notify --freeze copysave active"
+          "CONTROL,Print,exec,${grimblast} --notify --freeze copysave screen"
+          "SUPER,Print,exec,${grimblast} --notify --freeze copysave area"
+          "ALT,Print,exec,${grimblast} --notify --freeze copysave area"
+
         ] ++
         (lib.optionals config.programs.swaylock.enable [
           "SUPERSHIFT,l,exec,${swaylock} -S --grace 2"
