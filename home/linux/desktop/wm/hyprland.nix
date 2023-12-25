@@ -15,7 +15,7 @@
         gaps_out = 8;
         border_size = 1;
         cursor_inactive_timeout = 4;
-        "col.active_border" = "0xff005577";
+        "col.active_border" = "0xffbdbdbd";
         "col.inactive_border" = "0xff222222";
       };
       input = {
