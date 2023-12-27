@@ -129,7 +129,7 @@
           "browser.disableResetPrompt" = true; # "Looks like you haven't started Librewolf in a while."
           "browser.onboarding.enabled" = false; # "New to Librewolf? Let's get started!" tour
           "browser.aboutConfig.showWarning" = false; # Warning when opening about:config
-          "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
+          "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
           "extensions.pocket.enabled" = false;
           "extensions.shield-recipe-client.enabled" = false;
           "reader.parse-on-load.enabled" = false; # "reader view"
