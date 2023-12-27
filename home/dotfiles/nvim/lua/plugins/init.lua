@@ -32,6 +32,12 @@ local plugins = {
     "rhysd/committia.vim",                        -- Better commit editing
     "tpope/vim-surround",                         -- Add surround object for editing
     { "norcalli/nvim-colorizer.lua", opts = {} },
+    {
+        "nvim-tree/nvim-tree.lua",
+        config = function()
+            vim.keymap.set("n", "<C-t>", ":NvimTreeToggle<CR>", { silent = true })
+        end
+    },
     -- Notable mentions
     -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
     -- "wellle/targets.vim" -- Add more targets for commands

@@ -55,7 +55,6 @@ vim.keymap.set("i", "]", "]<C-g>u")
 vim.keymap.set("n", "<C-p>", ":bp<CR>", { silent = true, desc = "Go to previous buffer" })
 vim.keymap.set("n", "<C-n>", ":bn<CR>", { silent = true, desc = "Go to next buffer" })
 
-vim.keymap.set("n", "<C-t>", ":tabnew<CR>", { silent = true, desc = "Open new tab" })
 vim.keymap.set("n", "<Tab>", ":tabnext<CR>", { silent = true, desc = "Go to next tab" })
 vim.keymap.set("n", "<S-Tab>", ":tabp<CR>", { silent = true, desc = "Go to previous tab" })
 
