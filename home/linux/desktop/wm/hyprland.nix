@@ -51,12 +51,12 @@
           pactl = "${pkgs.pulseaudio}/bin/pactl";
           terminal = config.home.sessionVariables.TERMINAL;
           fileExplorer = "${pkgs.cinnamon.nemo}/bin/nemo";
-          bemenu = "${pkgs.bemenu}/bin/bemenu-run";
+          bemenuRun = "${pkgs.bemenu}/bin/bemenu-run";
+          bemenu = "${pkgs.bemenu}/bin/bemenu";
           cliphist = "${pkgs.cliphist}/bin/cliphist";
 
           wtype = "${pkgs.wtype}/bin/wtype";
           wlcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
-          wlpaste = "${pkgs.wl-clipboard}/bin/wl-copy";
 
           hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
 
@@ -79,7 +79,7 @@
           "SUPER,f,fullscreen,1"
 
           "SUPER,RETURN,exec,${terminal}"
-          "SUPER,d,exec,${bemenu}"
+          "SUPER,d,exec,${bemenuRun}"
           "SUPER,x,exec,${fileExplorer}"
           "SUPER,y,exec,${hyprpicker}"
 
