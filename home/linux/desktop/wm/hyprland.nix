@@ -19,7 +19,8 @@
         "col.inactive_border" = "0xff222222";
       };
       input = {
-        kb_layout = "us,it";
+        kb_layout = "us";
+        kb_variant = ",intl";
         touchpad.disable_while_typing = true;
         repeat_rate = 60;
         repeat_delay = 200;
