@@ -49,6 +49,11 @@
           # with tiling WMs on wayland
           "privacy.webrtc.legacyGlobalIndicator" = false;
 
+          # Enable custom theming
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "layers.acceleration.force-enabled" = true;
+          "svg.context-properties.content.enabled" = true;
+
           # Actual settings
           "app.update.auto" = false;
           "browser.bookmarks.restore_default_bookmarks" = false;
