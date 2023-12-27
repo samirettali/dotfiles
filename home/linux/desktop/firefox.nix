@@ -106,6 +106,9 @@
           "privacy.purge_trackers.enabled" = true;
           "signon.rememberSignons" = false;
 
+          # Reopen previous tabs
+          "browser.startup.page" = 3;
+
           # Reduce search engine noise in the urlbar's completion window. The
           # shortcuts and suggestions will still work, but Librewolf won't clutter
           # its UI with reminders that they exist.
