@@ -32,6 +32,7 @@
           sponsorblock
           vimium
           ublock-origin
+          switchyomega
         ];
         settings = {
           # Performance settings
