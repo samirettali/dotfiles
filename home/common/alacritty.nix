@@ -3,13 +3,7 @@
     enable = true;
     settings = {
       font = {
-        normal = {
-          family = "JetBrainsMono Nerd Font";
-          style = "Medium";
-        };
-        italic = { style = "Medium"; };
-        bold = { style = "Medium"; };
-        bold_italic = { style = "Medium"; };
+        normal.family = "JetBrainsMono Nerd Font";
         size = 12;
       };
 
