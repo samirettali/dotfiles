@@ -167,7 +167,6 @@
 
     udev.extraRules = builtins.readFile ./udevRules.conf;
 
-
     interception-tools = {
       enable = true;
       plugins = [ pkgs.interception-tools-plugins.dual-function-keys ];
