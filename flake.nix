@@ -45,53 +45,55 @@
 
     in
     {
-      darwinConfigurations.work = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./machines/mbp.nix
-          ./darwin/homebrew.nix
-          ({ lib, pkgs, system, ... }: {
-            nixpkgs.config.allowUnfree = lib.mkDefault true;
-            nixpkgs.overlays = overlays;
+      darwinConfigurations = {
+        work = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./machines/mbp.nix
+            ./darwin/homebrew.nix
+            ({ lib, pkgs, system, ... }: {
+              nixpkgs.config.allowUnfree = lib.mkDefault true;
+              nixpkgs.overlays = overlays;
 
-            system.stateVersion = 4;
+              system.stateVersion = 4;
 
-            users.users."s.ettali" = {
-              home = "/Users/s.ettali";
-              shell = pkgs.zsh;
-              openssh.authorizedKeys.keys = [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJdetGPFJw+CH6wNU4BinYePWVypM42s9WI0XPodihl samir"
-              ];
-            };
-
-            nix = {
-              package = pkgs.nixFlakes;
-              settings = nixConfig { username = "s.ettali"; };
-            };
-          })
-          home-manager.darwinModule
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              # makes all inputs available in imported files for hm
-              extraSpecialArgs = { inherit inputs; };
-              users."s.ettali" = { system, ... }: with inputs; {
-                imports = [
-                  ./home
-                  ./home/mac.nix
-                  ./home/packages/work.nix
-                  ./home/packages/desktop.nix
-                  ./home/packages/dev.nix
+              users.users."s.ettali" = {
+                home = "/Users/s.ettali";
+                shell = pkgs.zsh;
+                openssh.authorizedKeys.keys = [
+                  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJdetGPFJw+CH6wNU4BinYePWVypM42s9WI0XPodihl samir"
                 ];
-                home.stateVersion = stateVersion;
-                home.homeDirectory = "/Users/s.ettali";
-                home.username = "s.ettali";
               };
-            };
-          }
-        ];
+
+              nix = {
+                package = pkgs.nixFlakes;
+                settings = nixConfig { username = "s.ettali"; };
+              };
+            })
+            home-manager.darwinModule
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                # makes all inputs available in imported files for hm
+                extraSpecialArgs = { inherit inputs; };
+                users."s.ettali" = { system, ... }: with inputs; {
+                  imports = [
+                    ./home
+                    ./home/mac.nix
+                    ./home/packages/work.nix
+                    ./home/packages/desktop.nix
+                    ./home/packages/dev.nix
+                  ];
+                  home.stateVersion = stateVersion;
+                  home.homeDirectory = "/Users/s.ettali";
+                  home.username = "s.ettali";
+                };
+              };
+            }
+          ];
+        };
       };
 
       nixosConfigurations = {
