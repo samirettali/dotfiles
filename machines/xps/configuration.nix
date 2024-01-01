@@ -84,9 +84,8 @@
     opengl.driSupport32Bit = true;
     pulseaudio.enable = true;
     pulseaudio.support32Bit = true;
+    pulseaudio.package = pkgs.pulseaudioFull;
   };
-
-  nixpkgs.config.pulseaudio = true;
 
   time.timeZone = "Europe/Rome";
 
