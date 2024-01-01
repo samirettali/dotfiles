@@ -1,4 +1,7 @@
-{ inputs, pkgs, ... }: {
+{ inputs
+, pkgs
+, ...
+}: {
   home.packages = with pkgs; [
     keepassxc
     qbittorrent
@@ -84,6 +87,15 @@
             "<C-p>" = false;
           };
         };
+      };
+      wezterm = {
+        enable = true;
+        extraConfig = ''
+          return {
+            enable_tab_bar = false;
+            color_scheme = "Builtin Dark";
+          }
+        '';
       };
     };
 }
