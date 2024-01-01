@@ -5,8 +5,33 @@ return {
     config = function()
         local treesitter = require('nvim-treesitter.configs')
         local options = {
-            ensure_installed = { "lua", "rust", "go", "sql", "c", "cpp", "python", "tsx", "javascript", "typescript",
-                "vimdoc", "vim", "query", "c_sharp" },
+            ensure_installed = {
+                "lua",
+                "rust",
+                "go",
+                "sql",
+
+                "c",
+                "cpp",
+
+                "python",
+
+                "json",
+                "toml",
+                "markdown",
+
+                "html",
+                "tsx",
+                "javascript",
+                "typescript",
+
+                "vim",
+                "vimdoc",
+
+                "query",
+
+                "c_sharp"
+            },
             matchup = {
                 enable = true,
             },
