@@ -92,7 +92,7 @@
             cd $(git rev-parse --show-toplevel)
         }
 
-        function take() {
+        function mk() {
             mkdir -p "$1"
             cd "$1"
         }
