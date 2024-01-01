@@ -20,12 +20,12 @@
     # openssl
     # pkg-config
 
-    lua-language-server
     nodejs
+    nodePackages.typescript-language-server
+
     openssl
-    pipenv
     pkg-config
-    pkgs.tree-sitter
+
     python312
     pipenv
     pyenv
