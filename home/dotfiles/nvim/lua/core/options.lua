@@ -110,7 +110,6 @@ vim.opt.fillchars = {
     eob = " ",
 }
 
-vim.cmd(":command! w w ++p")
 vim.cmd(":command! W w ++p")
 vim.cmd(":command! Q q")
 vim.cmd(":command! WQ wq")
