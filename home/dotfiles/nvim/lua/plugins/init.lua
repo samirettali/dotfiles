@@ -1,5 +1,32 @@
-local utils = require("core.utils")
 local plugins = {
+    "tpope/vim-repeat",                                   -- Repeat plugin mappings with .
+    "tommcdo/vim-exchange",                               -- Exchange two objects
+    "sindrets/diffview.nvim",                             -- Improve diff view
+    "tpope/vim-fugitive",                                 -- Git wrapper
+    "stevearc/dressing.nvim",                             -- Better UI selectors and inputs
+    "tpope/vim-eunuch",                                   -- UNIX commands inside neovim
+    "rhysd/committia.vim",                                -- Better commit editing
+    "tpope/vim-surround",                                 -- Add surround object for editing
+    { "lukas-reineke/indent-blankline.nvim", opts = {} }, -- Show indentation lines
+    { "j-hui/fidget.nvim",                   opts = {} }, -- Show LSP loading status
+    { "stevearc/oil.nvim",                   opts = {} }, -- File explorer
+    { "tzachar/highlight-undo.nvim",         opts = {} }, -- Highlight undo and redo regions
+    { "norcalli/nvim-colorizer.lua",         opts = {} },
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({})
+        end,
+    },
+    {
+        "nvim-tree/nvim-tree.lua",
+        config = function()
+            require("nvim-tree").setup()
+            vim.keymap.set("n", "<C-t>", ":NvimTreeToggle<CR>", { silent = true })
+        end,
+    },
     {
         "rhysd/git-messenger.vim",
         config = function()
@@ -18,34 +45,6 @@ local plugins = {
         "chentoast/marks.nvim",
         opts = { builtin_marks = { ".", "<", ">", "^" } }
     },
-    { "j-hui/fidget.nvim",           opts = {} }, -- Show LSP loading status
-    { "stevearc/oil.nvim",           opts = {} }, -- File explorer
-    { "tzachar/highlight-undo.nvim", opts = {} }, -- Highlight undo and redo regions
-    "lukas-reineke/indent-blankline.nvim",        -- Show indentation lines
-    "tpope/vim-repeat",                           -- Repeat plugin mappings with .
-    "tommcdo/vim-exchange",                       -- Exchange two objects
-    "sindrets/diffview.nvim",                     -- Improve diff view
-    "github/copilot.vim",                         -- Github Copilot
-    "tpope/vim-fugitive",                         -- Git wrapper
-    "stevearc/dressing.nvim",                     -- Better UI selectors and inputs
-    "tpope/vim-eunuch",                           -- UNIX commands inside neovim
-    "rhysd/committia.vim",                        -- Better commit editing
-    "tpope/vim-surround",                         -- Add surround object for editing
-    { "norcalli/nvim-colorizer.lua", opts = {} },
-    {
-        "nvim-tree/nvim-tree.lua",
-        config = function()
-            vim.keymap.set("n", "<C-t>", ":NvimTreeToggle<CR>", { silent = true })
-        end
-    },
-    -- Notable mentions
-    -- "aaronhallaert/advanced-git-search.nvim" -- Use telescope to search through git
-    -- "wellle/targets.vim" -- Add more targets for commands
-    -- "folke/todo-comments.nvim"
-    -- "ultimate-autopair.nvim"
-    -- "Wansmer/treesj"
-    -- "bennypowers/splitjoin.nvim
-    -- "aarondiel/spread.nvim
 }
 
 require("lazy").setup {
