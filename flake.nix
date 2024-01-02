@@ -82,8 +82,8 @@
                   imports = [
                     ./home
                     ./home/mac.nix
+                    ./home/packages/desktop
                     ./home/packages/work.nix
-                    ./home/packages/desktop.nix
                     ./home/packages/dev.nix
                   ];
                   home.stateVersion = stateVersion;
@@ -128,7 +128,7 @@
                     ./home
                     ./home/linux
                     ./home/linux/desktop
-                    ./home/packages/desktop.nix
+                    ./home/packages/desktop
                     ./home/packages/dev.nix
                     ./home/packages/security.nix
                   ];
