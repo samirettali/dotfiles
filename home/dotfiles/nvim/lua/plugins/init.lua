@@ -1,17 +1,22 @@
 local plugins = {
-    "tpope/vim-repeat",                                   -- Repeat plugin mappings with .
-    "tommcdo/vim-exchange",                               -- Exchange two objects
-    "sindrets/diffview.nvim",                             -- Improve diff view
-    "tpope/vim-fugitive",                                 -- Git wrapper
-    "stevearc/dressing.nvim",                             -- Better UI selectors and inputs
-    "tpope/vim-eunuch",                                   -- UNIX commands inside neovim
-    "rhysd/committia.vim",                                -- Better commit editing
-    "tpope/vim-surround",                                 -- Add surround object for editing
-    { "lukas-reineke/indent-blankline.nvim", opts = {} }, -- Show indentation lines
-    { "j-hui/fidget.nvim",                   opts = {} }, -- Show LSP loading status
-    { "stevearc/oil.nvim",                   opts = {} }, -- File explorer
-    { "tzachar/highlight-undo.nvim",         opts = {} }, -- Highlight undo and redo regions
-    { "norcalli/nvim-colorizer.lua",         opts = {} },
+    "tpope/vim-repeat",                           -- Repeat plugin mappings with .
+    "tommcdo/vim-exchange",                       -- Exchange two objects
+    "sindrets/diffview.nvim",                     -- Improve diff view
+    "tpope/vim-fugitive",                         -- Git wrapper
+    "stevearc/dressing.nvim",                     -- Better UI selectors and inputs
+    "tpope/vim-eunuch",                           -- UNIX commands inside neovim
+    "rhysd/committia.vim",                        -- Better commit editing
+    "tpope/vim-surround",                         -- Add surround object for editing
+    { "j-hui/fidget.nvim",           opts = {} }, -- Show LSP loading status
+    { "stevearc/oil.nvim",           opts = {} }, -- File explorer
+    { "tzachar/highlight-undo.nvim", opts = {} }, -- Highlight undo and redo regions
+    { "norcalli/nvim-colorizer.lua", opts = {} },
+    {
+        -- Show indentation lines
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = {},
+    },
     {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
@@ -45,6 +50,14 @@ local plugins = {
         "chentoast/marks.nvim",
         opts = { builtin_marks = { ".", "<", ">", "^" } }
     },
+    {
+        "AlexvZyl/nordic.nvim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            -- require 'nordic'.load()
+        end
+    }
 }
 
 require("lazy").setup {
