@@ -13,19 +13,19 @@ in
       enableExtensionUpdateCheck = true; # TODO can it be handled with nix?
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
-        eamodio.gitlens
-        golang.go
         vscodevim.vim
+        eamodio.gitlens
+        marketplace.amos402.scope-bar
+
         github.copilot
         github.copilot-chat
-        bbenoist.nix
+        ms-vsliveshare.vsliveshare
+        marketplace.sourcegraph.cody-ai
 
-        ms-dotnettools.csharp
-        # sourcegraph.cody-ai
-        # ms-vsliveshare.vsliveshare # not available in inxpkgs for darwin
-        # sourcegraph.cody-ai
-        # amos402.scope-bar
-      ] ++ [
+        bbenoist.nix
+        golang.go
+        rust-lang.rust-analyzer
+        # ms-dotnettools.csharp
         (marketplace.ms-dotnettools.csdevkit.overrideAttrs (super: a: { sourceRoot = "."; })) # TODO fix this
       ];
       keybindings = [ ];
