@@ -12,12 +12,6 @@ local plugins = {
     { "tzachar/highlight-undo.nvim", opts = {} }, -- Highlight undo and redo regions
     { "norcalli/nvim-colorizer.lua", opts = {} },
     {
-        -- Show indentation lines
-        "lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
-        opts = {},
-    },
-    {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
         event = "InsertEnter",
@@ -50,14 +44,6 @@ local plugins = {
         "chentoast/marks.nvim",
         opts = { builtin_marks = { ".", "<", ">", "^" } }
     },
-    {
-        "AlexvZyl/nordic.nvim",
-        lazy = false,
-        priority = 1000,
-        config = function()
-            -- require 'nordic'.load()
-        end
-    }
 }
 
 require("lazy").setup {
