@@ -8,6 +8,8 @@
     golangci-lint
     golangci-lint-langserver
     gotools
+    gotest
+    gofumpt
 
     cmake
     gcc
