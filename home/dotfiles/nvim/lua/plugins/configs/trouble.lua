@@ -3,11 +3,7 @@ return {
     config = function()
         local trouble = require("trouble")
 
-        trouble.setup {
-            icons = true,
-            auto_open = true,
-            auto_close = true,
-        }
+        trouble.setup()
 
         vim.keymap.set("n", "<leader>xx", function() trouble.open() end)
         vim.keymap.set("n", "<leader>xw", function() trouble.open("workspace_diagnostics") end)
