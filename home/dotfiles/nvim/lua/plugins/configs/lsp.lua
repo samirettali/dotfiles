@@ -61,7 +61,7 @@ local function config()
                 vim.api.nvim_create_autocmd("User", {
                     pattern = "lsp_toggle_inlays",
                     callback = function()
-                        vim.lsp.inlay_hint(bufnr, vim.g.lsp_hints_enabled)
+                        vim.lsp.inlay_hint.enable(bufnr, vim.g.lsp_hints_enabled)
                     end
                 })
             end

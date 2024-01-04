@@ -116,4 +116,4 @@ vim.cmd(":command! WQ wq")
 vim.cmd(":command! Wq wq")
 
 -- Custom stuff
-vim.g.inlay_hints_enabled = false
+vim.g.lsp_hints_enabled = false
