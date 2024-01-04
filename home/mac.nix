@@ -5,4 +5,13 @@
   };
 
   programs.gpg.enable = true;
+
+  programs = {
+    zsh = {
+      shellAliases = {
+        # ugly fix for MacOS
+        ls = "/opt/homebrew/bin/gls --color=auto --group-directories-first";
+      };
+    };
+  };
 }
