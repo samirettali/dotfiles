@@ -4,7 +4,9 @@ return {
         local trouble = require("trouble")
 
         trouble.setup {
-            icons = false,
+            icons = true,
+            auto_open = true,
+            auto_close = true,
         }
 
         vim.keymap.set("n", "<leader>xx", function() trouble.open() end)
