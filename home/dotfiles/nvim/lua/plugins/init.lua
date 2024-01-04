@@ -48,6 +48,11 @@ local plugins = {
         "chentoast/marks.nvim",
         opts = { builtin_marks = { ".", "<", ">", "^" } }
     },
+    {
+        "projekt0n/circles.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {},
+    }
 }
 
 require("lazy").setup {
