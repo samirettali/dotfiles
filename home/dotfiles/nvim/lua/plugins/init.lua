@@ -22,7 +22,11 @@ local plugins = {
     {
         "nvim-tree/nvim-tree.lua",
         config = function()
-            require("nvim-tree").setup()
+            require("nvim-tree").setup {
+                update_focused_file = {
+                    enable = true,
+                },
+            }
             vim.keymap.set("n", "<C-t>", ":NvimTreeToggle<CR>", { silent = true })
         end,
     },
