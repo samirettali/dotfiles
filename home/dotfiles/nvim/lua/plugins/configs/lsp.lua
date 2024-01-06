@@ -29,12 +29,11 @@ local function config()
             texthl = hl
         })
     end
-    local icons = require("core.icons")
 
-    lspSymbol("Error", icons.diagnostics.error)
-    lspSymbol("Info", icons.diagnostics.info)
-    lspSymbol("Hint", icons.diagnostics.hint)
-    lspSymbol("Warn", icons.diagnostics.warn)
+    lspSymbol("Error", "")
+    lspSymbol("Info", "")
+    lspSymbol("Hint", "󱤅")
+    lspSymbol("Warn", "")
 
     local augroup_lsp_user = vim.api.nvim_create_augroup("lsp_user", {})
     local augroup_completion = vim.api.nvim_create_augroup("lsp_completion", {})

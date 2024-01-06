@@ -10,7 +10,7 @@ local function lsp()
     }
 
     for k, level in pairs(levels) do
-        count[k] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
+        count[k] = vim.tbl_count(vim.diagnostic.get(nil, { severity = level }))
     end
 
     local errors = ""
@@ -47,14 +47,30 @@ local function name()
     return " %f "
 end
 
+local function get_branch_name()
+    local branch = vim.fn.system("git branch --show-current 2> /dev/null | tr -d '\n'")
+    if branch ~= "" then
+        return branch
+    else
+        return ""
+    end
+end
+
 function Statusline()
-    local branch = vim.fn.FugitiveHead()
+    local branch = get_branch_name()
 
     if branch and #branch > 0 then
         branch = '%#Statusline#  ' .. branch .. ' %#Statusline#'
     end
 
-    return '%#Statusline#' .. name() .. lsp() .. "%=" .. branch
+    return '%#Statusline#' .. branch .. " " .. "%{get(b:,'gitsigns_status','')}" .. "%=" .. lsp()
 end
 
-vim.opt.statusline = [[%!luaeval("Statusline()")]]
+-- vim.opt.statusline = [[%!luaeval("Statusline()")]]
+-- vim.opt.statusline = ""
+
+vim.cmd [[
+    " hi! link StatusLine Normal
+    " hi! link StatusLineNC Normal
+    set statusline=%{repeat('─',winwidth('.'))}
+]]

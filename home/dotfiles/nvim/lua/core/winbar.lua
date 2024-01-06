@@ -15,12 +15,18 @@ local function get_filename()
         --
         -- vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
         -- if utils.isempty(file_icon) then
-        --     file_icon = " "
+        --     file_icon = " "
         --     file_icon_color = ""
         -- end
+        --
+        local filename_hl_group = vim.bo.modified and 'FilenameModified' or 'FilenameNormal'
 
-        return "%{&modified?'  ':' '}" .. filename .. "%*"
-        -- hl_group .. "#" .. file_icon .. "%*" .. "%{&modified?'  ':' '}" .. filename .. "%*"
+        vim.api.nvim_set_hl(0, 'FilenameNormal', { italic = false })
+        vim.api.nvim_set_hl(0, 'FilenameModified', { italic = true })
+
+        -- return hl_group .. "#" .. file_icon .. "%*" .. "%{&modified?'  ':' '}" .. filename .. "%*"
+        -- return "%#" .. hl_group .. "#" .. file_icon .. "%* " .. "%#" .. filename_hl_group .. "#" .. filename .. "%*"
+        return " %#" .. filename_hl_group .. "#" .. filename .. "%*"
     end
 end
 
@@ -39,14 +45,14 @@ local function get_winbar()
     local value = table.concat {
         -- "%=",
         -- utils.get_current_filename(),
+        " ",
         get_filename(),
     }
 
-    if not utils.isempty(value) and utils.get_buf_option "mod" then
-        local mod = "%#LineNr#" .. "%*"
-        value = value .. mod
-        -- end
-    end
+    -- if not utils.isempty(value) and utils.get_buf_option "mod" then
+    --     local mod = "%#LineNr#" .. "%*"
+    --     value = value .. mod
+    -- end
 
     local status_ok, _ = pcall(vim.api.nvim_set_option_value, "winbar", value, { scope = "local" })
     if not status_ok then
@@ -54,7 +60,13 @@ local function get_winbar()
     end
 end
 
-vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
+-- vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
+--     callback = function()
+--         get_winbar()
+--     end,
+-- })
+
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
     callback = function()
         get_winbar()
     end,

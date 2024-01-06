@@ -23,26 +23,14 @@ return {
 
                 local default_status_bg = palette.grey234;
                 local default_status_fg = palette.white;
-                local alt_status_bg = "#191919";
 
                 vim.api.nvim_set_hl(0, "Statusline", {
-                    bg = default_status_bg,
-                    fg = default_status_fg,
+                    bg = palette.black,
+                    fg = palette.grey236,
                 })
-
-                vim.api.nvim_set_hl(0, "StatuslineBGBlue", {
-                    bg = palette.blue,
-                    fg = default_status_bg
-                })
-
-                vim.api.nvim_set_hl(0, "StatuslineFilename", {
-                    bg = alt_status_bg,
-                    fg = default_status_fg,
-                })
-
-                vim.api.nvim_set_hl(0, "StatuslineBranch", {
-                    bg = alt_status_bg,
-                    fg = default_status_fg,
+                vim.api.nvim_set_hl(0, "StatuslineNC", {
+                    bg = palette.black,
+                    fg = palette.grey236,
                 })
 
                 vim.api.nvim_set_hl(0, "DiagnosticSignError", {

@@ -40,7 +40,6 @@ return {
                     { name = "nvim_lua" },
                     { name = "nvim_lsp" },
                     { name = "path" },
-                    -- { name = "cmdline" },
                     { name = "buffer",  keyword_length = 3 },
                 },
                 experimental = {

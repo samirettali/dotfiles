@@ -2,23 +2,16 @@ local plugins = {
     "tpope/vim-repeat",                           -- Repeat plugin mappings with .
     "tommcdo/vim-exchange",                       -- Exchange two objects
     "sindrets/diffview.nvim",                     -- Improve diff view
-    "tpope/vim-fugitive",                         -- Git wrapper
     "stevearc/dressing.nvim",                     -- Better UI selectors and inputs
     "tpope/vim-eunuch",                           -- UNIX commands inside neovim
     "rhysd/committia.vim",                        -- Better commit editing
     "tpope/vim-surround",                         -- Add surround object for editing
+    { "github/copilot.vim" },
     { "j-hui/fidget.nvim",           opts = {} }, -- Show LSP loading status
     { "stevearc/oil.nvim",           opts = {} }, -- File explorer
     { "tzachar/highlight-undo.nvim", opts = {} }, -- Highlight undo and redo regions
-    { "norcalli/nvim-colorizer.lua", opts = {} },
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({})
-        end,
-    },
+    { "rmagatti/auto-session",       opts = {} }, -- Session manager
+    { "laytan/cloak.nvim",           opts = {} },
     {
         "nvim-tree/nvim-tree.lua",
         config = function()
@@ -38,20 +31,18 @@ local plugins = {
         end
     },
     {
-        -- Replace word under cursor
-        "wincent/scalpel",
-        config = function()
-            vim.keymap.set("n", "<Leader>s", "<Plug>(Scalpel)")
-        end,
-    },
-    {
-        "chentoast/marks.nvim",
-        opts = { builtin_marks = { ".", "<", ">", "^" } }
-    },
-    {
         "projekt0n/circles.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {},
+    },
+    {
+        "nat-418/boole.nvim",
+        opts = {
+            mappings = {
+                increment = '<C-\'>',
+                decrement = '<C-;>'
+            },
+        }
     }
 }
 
