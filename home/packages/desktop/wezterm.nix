@@ -3,7 +3,8 @@
     wezterm = {
       enable = true;
       extraConfig = ''
-        local wezterm = require "wezterm"
+        local wezterm = require("wezterm")
+
         local M = {}
 
         if wezterm.config_builder then
@@ -11,9 +12,9 @@
         end
 
         M.color_scheme = "Builtin Dark"
-        M.font_size = 15
+        M.font_size = 12
         M.adjust_window_size_when_changing_font_size = false
-        M.enable_wayland = true
+        M.enable_wayland = false
         M.enable_tab_bar = false
 
         M.window_padding = {
@@ -24,15 +25,11 @@
         }
 
         M.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular", italic = false })
-
-        M.custom_block_glyphs = false
-        M.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
-        M.freetype_load_target = "HorizontalLcd"
-
+        M.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
         M.bold_brightens_ansi_colors = true
+        M.freetype_load_flags = 'NO_HINTING'
 
         M.exit_behavior = "Close"
-
         return M
       '';
     };
