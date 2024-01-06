@@ -91,8 +91,7 @@ in
       let
         colors = {
           black = "#000000";
-          grey = "#928374";
-          white = "#bdbdbd";
+          white = "#bbbbbb";
         };
       in
       ''
@@ -115,9 +114,6 @@ in
         #workspaces button {
           color: ${colors.white};
           padding: 4px;
-        }
-        #workspaces button.hidden {
-          color: ${colors.grey};
         }
         #workspaces button.focused,
         #workspaces button.active {

@@ -17,11 +17,6 @@
     clang-tools
     stdenv
 
-    # libiconv
-    # nodejs
-    # openssl
-    # pkg-config
-
     nodejs
     nodePackages.typescript-language-server
 

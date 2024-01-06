@@ -8,7 +8,8 @@
   home = {
     sessionVariables = {
       EDITOR = "nvim";
-      TERMINAL = "alacritty";
+      TERMINAL = "wezterm";
+      TERM = "xterm-256color";
     };
   };
 

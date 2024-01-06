@@ -9,18 +9,18 @@
         "systemctl --user start hyprland-session.target"
       ];
     };
+    xwayland.enable = false;
     settings = {
       general = {
         gaps_in = 4;
         gaps_out = 8;
         border_size = 1;
         cursor_inactive_timeout = 4;
-        "col.active_border" = "0xffbdbdbd";
+        "col.active_border" = "0xffbbbbbb";
         "col.inactive_border" = "0xff222222";
       };
       input = {
-        kb_layout = "us";
-        kb_variant = ",intl";
+        kb_layout = "us,it";
         touchpad.disable_while_typing = true;
         repeat_rate = 60;
         repeat_delay = 200;
@@ -55,6 +55,7 @@
           bemenuRun = "${pkgs.bemenu}/bin/bemenu-run";
           bemenu = "${pkgs.bemenu}/bin/bemenu";
           cliphist = "${pkgs.cliphist}/bin/cliphist";
+          hyprctl = "${pkgs.hyprland}/bin/hyprctl";
 
           wtype = "${pkgs.wtype}/bin/wtype";
           wlcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
@@ -100,6 +101,7 @@
           "SUPER,x,exec,${wtype} -P XF86Cut"
           "SUPER,v,exec,${wtype} -P XF86Paste"
           "SUPERSHIFT,v,exec,${cliphist} list | ${bemenu} | ${cliphist} decode | ${wlcopy}"
+          "SUPER,q,exec,hyprctl switchxkblayout at-translated-set-2-keyboard next"
         ] ++
         (lib.optionals config.programs.swaylock.enable [
           "SUPERSHIFT,l,exec,${swaylock} -S --grace 2"
