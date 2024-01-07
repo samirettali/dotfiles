@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-if [ -z "$1" ]; then
-    tmux
-else
-    tmux new -A -s "$1"
-fi

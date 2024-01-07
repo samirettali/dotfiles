@@ -83,56 +83,6 @@
           fi
         }
 
-        function gr() {
-            if ! git rev-parse --is-inside-work-tree &>/dev/null; then
-                echo "Not in a git repository"
-                return 1
-            fi
-
-            cd $(git rev-parse --show-toplevel)
-        }
-
-        function mk() {
-            mkdir -p "$1"
-            cd "$1"
-        }
-
-        function glc() {
-            if ! git rev-parse --is-inside-work-tree &>/dev/null; then
-                echo "Not in a git repository"
-                return 1
-            fi
-
-            local os=$(uname)
-            local commit_hash
-
-            # Check the operating system
-            case $os in
-                Linux)
-                if [ -n "$WAYLAND_DISPLAY" ]; then
-                    # Wayland
-                    commit_hash=$(git log --format=%H -n 1)
-                    echo "$commit_hash" | wl-copy
-                else
-                    # X11
-                    commit_hash=$(git log --format=%H -n 1)
-                    echo "$commit_hash" | xclip -selection clipboard
-                fi
-                ;;
-                Darwin)
-                # macOS
-                commit_hash=$(git log --format=%H -n 1)
-                echo "$commit_hash" | pbcopy
-                ;;
-                *)
-                echo "Unsupported operating system: $os"
-                return 1
-                ;;
-            esac
-
-            echo "Latest commit hash copied to clipboard: $commit_hash"
-        }
-
         ## TODO do this only if gui
         autoload -U url-quote-magic bracketed-paste-magic
         zle -N self-insert url-quote-magic
@@ -170,25 +120,23 @@
         zle -N fg-bg
         bindkey '^Z' fg-bg
 
-
-        export PATH=~/.bin:$PATH:~/go/bin:~/.dotnet/tools
+        export PATH=~/.bin:$PATH:~/.dotnet/tools
       '';
       shellAliases = {
+        t = "tmux new -A -s";
+        tl = "tmux ls";
+
         lg = "lazygit";
         ld = "lazydocker";
 
         vim = "nvim";
         fim = "nvim $(fd -t f | fzf)";
 
-        tl = "tmux ls";
         sl = "ls";
         gc = "git clone";
-
-        c = "tee | xsel -ib";
-        jj = "pbpaste | jq -r | pbcopy";
-        jjj = "pbpaste | jq -r";
-
         rm = "trash";
+        # jj = "pbpaste | jq -r | pbcopy";
+        # jjj = "pbpaste | jq -r";
       };
       shellGlobalAliases = {
         trim = "awk '{\$1=\$1;print}'";
