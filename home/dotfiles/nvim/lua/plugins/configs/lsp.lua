@@ -156,39 +156,32 @@ local function config()
                 })
             end
 
-            local opts = { buffer = bufnr, remap = false }
 
-            if caps.hoverProvider then
-                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+            local default_opts = { buffer = bufnr, remap = false }
+            local function setup_lsp_mapping(mode, lhs, rhs, opts, capability)
+                opts = opts or default_opts
+                if capability then
+                    vim.keymap.set(mode, lhs, rhs, opts)
+                end
             end
 
-            if caps.definitionProvider then
-                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-            end
+            setup_lsp_mapping('n', 'K', vim.lsp.buf.hover, caps.hoverProvider)
+            setup_lsp_mapping('n', 'gd', vim.lsp.buf.definition, caps.definitionProvider)
+            setup_lsp_mapping('n', 'gD', vim.lsp.buf.declaration, caps.declarationProvider)
+            setup_lsp_mapping('n', 'gT', vim.lsp.buf.type_definition, caps.typeDefinitionProvider)
+            setup_lsp_mapping('n', 'gs', vim.lsp.buf.document_symbol, caps.documentSymbolProvider)
+            setup_lsp_mapping('n', 'gS', vim.lsp.buf.workspace_symbol, caps.workspaceSymbolProvider)
+            setup_lsp_mapping('n', 'ga', vim.lsp.buf.code_action, caps.codeActionProvider)
+            setup_lsp_mapping('n', 'gr', vim.lsp.buf.rename, caps.renameProvider)
+            setup_lsp_mapping('i', '<C-h>', vim.lsp.buf.signature_help, caps.signatureHelpProvider)
+            setup_lsp_mapping('n', 'gI', vim.lsp.buf.incoming_calls, caps.callHierarchyProvider)
+            setup_lsp_mapping('n', 'gO', vim.lsp.buf.outgoing_calls, caps.callHierarchyProvider)
+            setup_lsp_mapping('n', 'ds', vim.diagnostic.open_float, caps.diagnosticProvider)
+            setup_lsp_mapping('n', ']d', function() vim.diagnostic.goto_next({ wrap = true, float = true }) end,
+                caps.diagnosticProvider)
+            setup_lsp_mapping('n', '[d', function() vim.diagnostic.goto_prev({ wrap = true, float = true, }) end,
+                caps.diagnosticProvider)
 
-            if caps.declarationProvider then
-                vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-            end
-
-            if caps.typeDefinitionProvider then
-                vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, opts)
-            end
-
-            if caps.documentSymbolProvider then
-                vim.keymap.set('n', 'gs', vim.lsp.buf.document_symbol, opts)
-            end
-
-            if caps.workspaceSymbolProvider then
-                vim.keymap.set('n', 'gS', vim.lsp.buf.workspace_symbol, opts)
-            end
-
-            if caps.codeActionProvider ~= nil then
-                vim.keymap.set('n', 'ga', vim.lsp.buf.code_action, opts)
-            end
-
-            if caps.renameProvider then
-                vim.keymap.set('n', 'gr', vim.lsp.buf.rename, opts)
-            end
 
             if caps.implementationProvider then
                 vim.keymap.set('n', 'gi', function()
@@ -215,29 +208,8 @@ local function config()
                         vim.lsp.handlers["textDocument/implementation"](err, result, ctx, config)
                         vim.cmd [[normal! zz]]
                     end)
-                end, opts)
+                end, default_opts)
             end
-
-            if caps.callHierarchyProvider then
-                vim.keymap.set('n', 'gI', vim.lsp.buf.incoming_calls, opts)
-                vim.keymap.set('n', 'gO', vim.lsp.buf.outgoing_calls, opts)
-            end
-
-            vim.keymap.set('n', 'ds', vim.diagnostic.open_float, opts)
-
-            vim.keymap.set('n', ']d', function()
-                vim.diagnostic.goto_next {
-                    wrap = true,
-                    float = true
-                }
-            end)
-
-            vim.keymap.set('n', '[d', function()
-                vim.diagnostic.goto_prev {
-                    wrap = true,
-                    float = true,
-                }
-            end)
         end
     })
 
@@ -254,7 +226,7 @@ local function config()
         end
     })
 
-    vim.diagnostic.config {
+    vim.diagnostic.config({
         virtual_text = {
             source = "if_many",
         },
@@ -262,20 +234,20 @@ local function config()
         underline = false,
         severity_sort = true,
         update_in_insert = false
-    }
+    })
 
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    -- Fix for cmp when not using a snipper engine
+    -- Fix for cmp when not using a snippet engine
     capabilities.textDocument.completion.completionItem.snippetSupport = false
 
-    lspconfig.golangci_lint_ls.setup {
+    lspconfig.golangci_lint_ls.setup({
         capabilities = capabilities,
         command = { "golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json",
             "--issues-exit-code=1" }
-    }
+    })
 
-    lspconfig.gopls.setup {
+    lspconfig.gopls.setup({
         capabilities = capabilities,
         settings = {
             gopls = {
@@ -304,14 +276,14 @@ local function config()
                 gofumpt = true
             }
         }
-    }
+    })
 
-    lspconfig.tsserver.setup {
+    lspconfig.tsserver.setup({
         capabilities = capabilities,
         filetypes = { "typescriptreact", "typescript" }
-    }
+    })
 
-    lspconfig.rust_analyzer.setup {
+    lspconfig.rust_analyzer.setup({
         capabilities = capabilities,
         settings = {
             checkOnSave = {
@@ -321,9 +293,9 @@ local function config()
                 debounce_text_changes = 200
             }
         }
-    }
+    })
 
-    lspconfig.lua_ls.setup {
+    lspconfig.lua_ls.setup({
         capabilities = capabilities,
         settings = {
             Lua = {
@@ -344,42 +316,15 @@ local function config()
                 }
             }
         }
-    }
+    })
 
-    lspconfig.rnix.setup {}
-
-    lspconfig.csharp_ls.setup {}
-    lspconfig.clangd.setup {}
+    lspconfig.rnix.setup({})
+    lspconfig.csharp_ls.setup({})
+    lspconfig.clangd.setup({})
 end
 
 
 return {
-    {
-        "neovim/nvim-lspconfig",
-        config = config
-    },
-    {
-        "ray-x/lsp_signature.nvim",
-        config = function()
-            require("lsp_signature").setup {}
-        end
-    },
-    {
-        -- Autopair brackets and other symbols
-        "windwp/nvim-autopairs",
-        dependencies = "hrsh7th/nvim-cmp",
-        config = function()
-            local autopairs = require("nvim-autopairs")
-            local cmp = require("cmp")
-
-            autopairs.setup {
-                fast_wrap = {},
-                disable_filetype = { "TelescopePrompt", "vim" },
-            }
-
-            local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-
-            cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-        end
-    }
+    "neovim/nvim-lspconfig",
+    config = config
 }

@@ -1,5 +1,4 @@
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 
 -- Core mappings
 
@@ -58,7 +57,7 @@ vim.keymap.set("n", "<C-n>", ":bn<CR>", { silent = true, desc = "Go to next buff
 vim.keymap.set("n", "<Tab>", ":tabnext<CR>", { silent = true, desc = "Go to next tab" })
 vim.keymap.set("n", "<S-Tab>", ":tabp<CR>", { silent = true, desc = "Go to previous tab" })
 
-vim.keymap.set("n", "<BS>", ":w ++p<CR>", { desc = "Save file and create parent folders" })
+vim.keymap.set("n", "<Esc>", ":w ++p<CR>", { desc = "Save file and create parent folders" })
 
 -- Move selected lines
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

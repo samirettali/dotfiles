@@ -1,25 +1,38 @@
 local plugins = {
-    "tpope/vim-repeat",                           -- Repeat plugin mappings with .
-    "tommcdo/vim-exchange",                       -- Exchange two objects
-    "sindrets/diffview.nvim",                     -- Improve diff view
-    "stevearc/dressing.nvim",                     -- Better UI selectors and inputs
-    "tpope/vim-eunuch",                           -- UNIX commands inside neovim
-    "rhysd/committia.vim",                        -- Better commit editing
-    "tpope/vim-surround",                         -- Add surround object for editing
+    "tpope/vim-repeat",                            -- Repeat plugin mappings with .
+    "tommcdo/vim-exchange",                        -- Exchange two objects
+    "sindrets/diffview.nvim",                      -- Improve diff view
+    "stevearc/dressing.nvim",                      -- Better UI selectors and inputs
+    "tpope/vim-eunuch",                            -- UNIX commands inside neovim
+    "rhysd/committia.vim",                         -- Better commit editing
+    "tpope/vim-surround",                          -- Add surround object for editing
     { "github/copilot.vim" },
-    { "j-hui/fidget.nvim",           opts = {} }, -- Show LSP loading status
-    { "stevearc/oil.nvim",           opts = {} }, -- File explorer
-    { "tzachar/highlight-undo.nvim", opts = {} }, -- Highlight undo and redo regions
-    { "rmagatti/auto-session",       opts = {} }, -- Session manager
-    { "laytan/cloak.nvim",           opts = {} },
+    { "j-hui/fidget.nvim" },                       -- Show LSP loading status
+    { "tzachar/highlight-undo.nvim" },             -- Highlight undo and redo regions
+    { "stevearc/oil.nvim",          config = {} }, -- File explorer
+    { "rmagatti/auto-session",      config = {} }, -- Session manager
+    { "laytan/cloak.nvim",          config = {} }, -- Hide secrets in .env files
     {
         "nvim-tree/nvim-tree.lua",
         config = function()
-            require("nvim-tree").setup {
+            require("nvim-tree").setup({
+                renderer = {
+                    icons = {
+                        show = {
+                            file = false,
+                            folder = false,
+                            folder_arrow = false,
+                            git = true,
+                            modified = true,
+                            diagnostics = true,
+                            bookmarks = false,
+                        },
+                    },
+                },
                 update_focused_file = {
                     enable = true,
                 },
-            }
+            })
             vim.keymap.set("n", "<C-t>", ":NvimTreeToggle<CR>", { silent = true })
         end,
     },
@@ -31,13 +44,8 @@ local plugins = {
         end
     },
     {
-        "projekt0n/circles.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {},
-    },
-    {
         "nat-418/boole.nvim",
-        opts = {
+        config = {
             mappings = {
                 increment = '<C-\'>',
                 decrement = '<C-;>'

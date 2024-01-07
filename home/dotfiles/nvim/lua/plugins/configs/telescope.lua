@@ -101,7 +101,6 @@ return {
 
             -- Telescope
             vim.keymap.set("n", "<C-f>", builtin.find_files)
-            -- vim.keymap.set("n", "<C-b>", builtin.buffers)
             vim.keymap.set("n", "<C-g>", builtin.live_grep)
             -- vim.keymap.set("n", "<C-g>", builtin.git_files)
 
@@ -109,8 +108,12 @@ return {
                 builtin.grep_string { search = vim.fn.input("grep: ") }
             end)
 
+            vim.keymap.set("n", "<leader>pws", function()
+                local word = vim.fn.expand("<cword>")
+                builtin.grep_string { search = word }
+            end)
+
             vim.keymap.set("n", "<C-s>", builtin.lsp_document_symbols)
-            vim.keymap.set("n", "<leader>gs", builtin.git_status)
             -- map("n",set "<C-q>", builtin.lsp_workspace_diagnostics)
             -- TODO
             -- vim.keymap.set("n", "<C-w>", builtin.lsp_dynamic_workspace_symbols)
