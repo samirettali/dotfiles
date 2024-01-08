@@ -67,7 +67,6 @@ function Statusline()
 end
 
 -- vim.opt.statusline = [[%!luaeval("Statusline()")]]
--- vim.opt.statusline = ""
 
 vim.cmd [[
     " hi! link StatusLine Normal

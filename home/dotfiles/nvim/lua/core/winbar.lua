@@ -2,31 +2,9 @@ local utils = require("core.utils")
 
 local function get_filename()
     local filename = vim.fn.expand "%:~:."
-    local extension = vim.fn.expand "%:e"
 
     if not utils.isempty(filename) then
-        -- local file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(
-        --     filename,
-        --     extension,
-        --     { default = true }
-        -- )
-        --
-        -- local hl_group = "FileIconColor" .. extension
-        --
-        -- vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
-        -- if utils.isempty(file_icon) then
-        --     file_icon = " "
-        --     file_icon_color = ""
-        -- end
-        --
-        local filename_hl_group = vim.bo.modified and 'FilenameModified' or 'FilenameNormal'
-
-        vim.api.nvim_set_hl(0, 'FilenameNormal', { italic = false })
-        vim.api.nvim_set_hl(0, 'FilenameModified', { italic = true })
-
-        -- return hl_group .. "#" .. file_icon .. "%*" .. "%{&modified?'  ':' '}" .. filename .. "%*"
-        -- return "%#" .. hl_group .. "#" .. file_icon .. "%* " .. "%#" .. filename_hl_group .. "#" .. filename .. "%*"
-        return " %#" .. filename_hl_group .. "#" .. filename .. "%*"
+        return filename .. vim.bo.modified and "[+]" or ""
     end
 end
 
@@ -44,8 +22,6 @@ local function get_winbar()
     end
     local value = table.concat {
         -- "%=",
-        -- utils.get_current_filename(),
-        " ",
         get_filename(),
     }
 
@@ -60,12 +36,7 @@ local function get_winbar()
     end
 end
 
--- vim.api.nvim_create_autocmd({ "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }, {
---     callback = function()
---         get_winbar()
---     end,
--- })
-
+-- { "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }
 vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
     callback = function()
         get_winbar()

@@ -37,25 +37,27 @@ return {
             }),
             experimental = {
                 native_menu = false,
-                ghost_text = true
+                ghost_text = false
             },
-            -- formatting = {
-            --     format = lspkind.cmp_format {
-            --         with_text = true,
-            --         menu = {
-            --             buffer = "[buf]",
-            --             nvim_lsp = "[lsp]",
-            --             nvim_lua = "[api]",
-            --             path = "[path]",
-            --             luasnip = "[snip]",
-            --         },
-            --     },
-            -- },
+            formatting = {
+                format = function(entry, vim_item)
+                    -- Kind icons
+                    vim_item.kind = string.format('%s', vim_item.kind) -- This concatonates the icons with the name of the item kind
+                    -- Source
+                    vim_item.menu = ({
+                        buffer = "[buf]",
+                        nvim_lsp = "[lsp]",
+                        nvim_lua = "[lua]",
+                        path = "[path]",
+                    })[entry.source.name]
+                    return vim_item
+                end
+            },
         })
-
         cmp.setup.filetype("lua", {
             sources = cmp.config.sources({
                 { name = "nvim_lua" },
+                { name = "nvim_lsp" },
             }, {
                 { name = "buffer" },
             })

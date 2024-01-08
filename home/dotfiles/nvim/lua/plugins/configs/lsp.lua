@@ -2,38 +2,24 @@ local function config()
     local lspconfig = require("lspconfig")
     local utils = require("core.utils")
 
-    -- Set borders for floating windows
-    local border = {
-        { "╭", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╮", "FloatBorder" },
-        { "│", "FloatBorder" },
-        { "╯", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╰", "FloatBorder" },
-        { "│", "FloatBorder" },
-    }
+    -- -- Set borders for floating windows
+    -- local border = {
+    --     { "╭", "FloatBorder" },
+    --     { "─", "FloatBorder" },
+    --     { "╮", "FloatBorder" },
+    --     { "│", "FloatBorder" },
+    --     { "╯", "FloatBorder" },
+    --     { "─", "FloatBorder" },
+    --     { "╰", "FloatBorder" },
+    --     { "│", "FloatBorder" },
+    -- }
 
-    local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-        opts = opts or {}
-        opts.border = opts.border or border
-        return orig_util_open_floating_preview(contents, syntax, opts, ...)
-    end
-
-    local function lspSymbol(name, icon)
-        local hl = "DiagnosticSign" .. name
-        vim.fn.sign_define(hl, {
-            text = icon,
-            numhl = hl,
-            texthl = hl
-        })
-    end
-
-    lspSymbol("Error", "")
-    lspSymbol("Info", "")
-    lspSymbol("Hint", "󱤅")
-    lspSymbol("Warn", "")
+    -- local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+    -- function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+    --     opts = opts or {}
+    --     opts.border = opts.border or border
+    --     return orig_util_open_floating_preview(contents, syntax, opts, ...)
+    -- end
 
     local augroup_lsp_user = vim.api.nvim_create_augroup("lsp_user", {})
     local augroup_completion = vim.api.nvim_create_augroup("lsp_completion", {})
@@ -158,7 +144,7 @@ local function config()
 
 
             local default_opts = { buffer = bufnr, remap = false }
-            local function setup_lsp_mapping(mode, lhs, rhs, opts, capability)
+            local function setup_lsp_mapping(mode, lhs, rhs, capability, opts)
                 opts = opts or default_opts
                 if capability then
                     vim.keymap.set(mode, lhs, rhs, opts)
@@ -181,7 +167,6 @@ local function config()
                 caps.diagnosticProvider)
             setup_lsp_mapping('n', '[d', function() vim.diagnostic.goto_prev({ wrap = true, float = true, }) end,
                 caps.diagnosticProvider)
-
 
             if caps.implementationProvider then
                 vim.keymap.set('n', 'gi', function()

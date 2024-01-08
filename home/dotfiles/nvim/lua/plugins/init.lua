@@ -1,17 +1,16 @@
 local plugins = {
-    "tpope/vim-repeat",                            -- Repeat plugin mappings with .
-    "tommcdo/vim-exchange",                        -- Exchange two objects
-    "sindrets/diffview.nvim",                      -- Improve diff view
-    "stevearc/dressing.nvim",                      -- Better UI selectors and inputs
-    "tpope/vim-eunuch",                            -- UNIX commands inside neovim
-    "rhysd/committia.vim",                         -- Better commit editing
-    "tpope/vim-surround",                          -- Add surround object for editing
+    "tpope/vim-repeat",                              -- Repeat plugin mappings with .
+    "tommcdo/vim-exchange",                          -- Exchange two objects
+    "sindrets/diffview.nvim",                        -- Improve diff view
+    "tpope/vim-eunuch",                              -- UNIX commands inside neovim
+    "rhysd/committia.vim",                           -- Better commit editing
+    "tpope/vim-surround",                            -- Add surround object for editing
     { "github/copilot.vim" },
-    { "j-hui/fidget.nvim" },                       -- Show LSP loading status
-    { "tzachar/highlight-undo.nvim" },             -- Highlight undo and redo regions
-    { "stevearc/oil.nvim",          config = {} }, -- File explorer
-    { "rmagatti/auto-session",      config = {} }, -- Session manager
-    { "laytan/cloak.nvim",          config = {} }, -- Hide secrets in .env files
+    { "tzachar/highlight-undo.nvim" },               -- Highlight undo and redo regions
+    { "j-hui/fidget.nvim",          config = true }, -- Show LSP loading status
+    { "stevearc/oil.nvim",          config = true }, -- File explorer
+    { "rmagatti/auto-session",      config = true }, -- Session manager
+    { "laytan/cloak.nvim",          config = true }, -- Hide secrets in .env files
     {
         "nvim-tree/nvim-tree.lua",
         config = function()
@@ -19,13 +18,13 @@ local plugins = {
                 renderer = {
                     icons = {
                         show = {
-                            file = false,
-                            folder = false,
-                            folder_arrow = false,
-                            git = true,
-                            modified = true,
-                            diagnostics = true,
-                            bookmarks = false,
+                            --             file = false,
+                            --             folder = false,
+                            --             folder_arrow = false,
+                            git = false,
+                            --             modified = true,
+                            --             diagnostics = true,
+                            --             bookmarks = false,
                         },
                     },
                 },
