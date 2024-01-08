@@ -10,6 +10,7 @@
     ./mako.nix
     ./gtk.nix
     ./kanshi.nix
+    ./foot.nix
   ];
 
   home.packages = with pkgs; [
