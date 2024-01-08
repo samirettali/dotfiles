@@ -6,7 +6,6 @@
   programs = {
     zsh = {
       enable = true;
-      # TODO uncomment these when removing submodules from dotfiles repo
       enableCompletion = true;
       enableAutosuggestions = true;
       syntaxHighlighting.enable = true;

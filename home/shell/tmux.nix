@@ -68,13 +68,13 @@
       set -g pane-border-style "fg=colour234"
       set -g allow-passthrough on
 
-      set -ga update-environment TERM
-      set -ga update-environment TERM_PROGRAM
+      set -g default-terminal "tmux-256color"
+      set -ag terminal-overrides ",xterm-256color:RGB"
     '';
     historyLimit = 50000;
     keyMode = "vi";
     mouse = true;
-    newSession = true; # TODO test this
+    newSession = true;
     plugins = with pkgs; [
       # {
       #   plugin = tmuxPlugins.resurrect;
