@@ -80,7 +80,7 @@ vim.opt.title = true   -- Allow neovim to set the window title
 vim.opt.laststatus = 0
 vim.opt.cmdheight = 0
 vim.opt.showtabline = 0
-vim.opt.signcolumn = "no"
+vim.opt.signcolumn = "yes"
 
 vim.opt.cursorline = true -- Highlight current line
 
@@ -101,6 +101,13 @@ vim.opt.showmode = false
 
 vim.opt.fillchars = {
     eob = " ",
+    horiz = '━',
+    horizup = '┻',
+    horizdown = '┳',
+    vert = '┃',
+    vertleft = '┫',
+    vertright = '┣',
+    verthoriz = '╋',
 }
 
 vim.cmd(":command! W w ++p")

@@ -1,39 +1,21 @@
 local plugins = {
-    "tpope/vim-repeat",                              -- Repeat plugin mappings with .
-    "tommcdo/vim-exchange",                          -- Exchange two objects
-    "sindrets/diffview.nvim",                        -- Improve diff view
-    "tpope/vim-eunuch",                              -- UNIX commands inside neovim
-    "rhysd/committia.vim",                           -- Better commit editing
-    "tpope/vim-surround",                            -- Add surround object for editing
-    { "github/copilot.vim" },
-    { "tzachar/highlight-undo.nvim" },               -- Highlight undo and redo regions
-    { "j-hui/fidget.nvim",          config = true }, -- Show LSP loading status
-    { "stevearc/oil.nvim",          config = true }, -- File explorer
-    { "rmagatti/auto-session",      config = true }, -- Session manager
-    { "laytan/cloak.nvim",          config = true }, -- Hide secrets in .env files
+    "tpope/vim-repeat",                           -- Repeat plugin mappings with .
+    "tommcdo/vim-exchange",                       -- Exchange two objects
+    "sindrets/diffview.nvim",                     -- Improve diff view
+    "tpope/vim-eunuch",                           -- UNIX commands inside neovim
+    "rhysd/committia.vim",                        -- Better commit editing
+    "tpope/vim-surround",                         -- Add surround object for editing
+    "github/copilot.vim",                         -- Copilot
+    "SmiteshP/nvim-navic",                        -- LSP breadcrumbs
+    { "j-hui/fidget.nvim",       config = true }, -- Show LSP loading status
+    { "stevearc/oil.nvim",       config = true }, -- File explorer
+    { "laytan/cloak.nvim",       config = true }, -- Hide secrets in .env files
+    { "lewis6991/gitsigns.nvim", config = true }, -- Git signs integration
+    { "numToStr/Comment.nvim",   config = true }, -- Comment toggler
     {
-        "nvim-tree/nvim-tree.lua",
-        config = function()
-            require("nvim-tree").setup({
-                renderer = {
-                    icons = {
-                        show = {
-                            --             file = false,
-                            --             folder = false,
-                            --             folder_arrow = false,
-                            git = false,
-                            --             modified = true,
-                            --             diagnostics = true,
-                            --             bookmarks = false,
-                        },
-                    },
-                },
-                update_focused_file = {
-                    enable = true,
-                },
-            })
-            vim.keymap.set("n", "<C-t>", ":NvimTreeToggle<CR>", { silent = true })
-        end,
+        "folke/persistence.nvim",                 -- Session manager
+        config = true,
+        event = "BufReadPre"
     },
     {
         "rhysd/git-messenger.vim",
@@ -54,6 +36,10 @@ local plugins = {
 }
 
 require("lazy").setup {
+    install = {
+        missing = true,
+        colorscheme = { "moonfly", "habamax" },
+    },
     spec = {
         plugins,
         { import = "plugins.configs" },

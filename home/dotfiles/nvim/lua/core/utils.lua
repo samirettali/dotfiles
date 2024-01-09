@@ -1,6 +1,6 @@
 local M = {}
 
-M.isempty = function(s)
+M.is_empty = function(s)
     return s == nil or s == ""
 end
 

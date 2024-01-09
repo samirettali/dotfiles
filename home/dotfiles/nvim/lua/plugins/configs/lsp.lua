@@ -2,24 +2,24 @@ local function config()
     local lspconfig = require("lspconfig")
     local utils = require("core.utils")
 
-    -- -- Set borders for floating windows
-    -- local border = {
-    --     { "╭", "FloatBorder" },
-    --     { "─", "FloatBorder" },
-    --     { "╮", "FloatBorder" },
-    --     { "│", "FloatBorder" },
-    --     { "╯", "FloatBorder" },
-    --     { "─", "FloatBorder" },
-    --     { "╰", "FloatBorder" },
-    --     { "│", "FloatBorder" },
-    -- }
+    -- Set borders for floating windows
+    local border = {
+        { "╭", "FloatBorder" },
+        { "─", "FloatBorder" },
+        { "╮", "FloatBorder" },
+        { "│", "FloatBorder" },
+        { "╯", "FloatBorder" },
+        { "─", "FloatBorder" },
+        { "╰", "FloatBorder" },
+        { "│", "FloatBorder" },
+    }
 
-    -- local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-    -- function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-    --     opts = opts or {}
-    --     opts.border = opts.border or border
-    --     return orig_util_open_floating_preview(contents, syntax, opts, ...)
-    -- end
+    local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or border
+        return orig_util_open_floating_preview(contents, syntax, opts, ...)
+    end
 
     local augroup_lsp_user = vim.api.nvim_create_augroup("lsp_user", {})
     local augroup_completion = vim.api.nvim_create_augroup("lsp_completion", {})
