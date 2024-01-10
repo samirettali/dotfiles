@@ -15,7 +15,10 @@
     };
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    fenix-overlay.url = "github:nix-community/fenix";
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nur.url = "github:nix-community/NUR";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
@@ -39,7 +42,7 @@
 
       overlays = with inputs; [
         neovim-nightly-overlay.overlay
-        fenix-overlay.overlays.default
+        fenix.overlays.default
         nur.overlay
       ];
 
