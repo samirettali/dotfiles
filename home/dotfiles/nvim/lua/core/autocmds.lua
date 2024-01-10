@@ -54,3 +54,12 @@ set_cursorline("InsertLeave", true)
 set_cursorline("InsertEnter", false)
 set_cursorline("WinLeave", false)
 set_cursorline("FileType", false, "TelescopePrompt")
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    desc = "Enable spell checking for certain file types",
+    pattern = { "*.txt", "*.md" },
+    callback = function()
+        vim.opt.spell = true
+        vim.opt.spelllang = "en,it"
+    end,
+})
