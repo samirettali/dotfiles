@@ -13,6 +13,6 @@ return {
         },
     },
     keys = {
-        { "n", "<C-t>", ":NvimTreeToggle<CR>", { silent = true } },
+        { "<C-t>", ":NvimTreeToggle<CR>" },
     },
 }
