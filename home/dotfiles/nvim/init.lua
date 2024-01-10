@@ -7,6 +7,7 @@ vim.loader.enable()
 local function load_modules()
     local modules = {
         "core.options",
+        "core.abbreviations",
         "core.autocmds",
         "core.statusline",
         "core.winbar",
