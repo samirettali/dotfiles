@@ -10,5 +10,6 @@
     keepassxc
     qbittorrent
     spotify
+    discord
   ];
 }
