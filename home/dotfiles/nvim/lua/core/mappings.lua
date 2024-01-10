@@ -1,7 +1,5 @@
 vim.g.mapleader = ' '
 
--- Core mappings
-
 -- Keep text selected after indentating it
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
@@ -34,6 +32,10 @@ vim.keymap.set("v", "<Leader>p", '"_dP"', { remap = false, desc = "Paste replace
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
+-- Keep cursor centered when scrolling
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
+
 -- Center <C-o> and <C-i>
 vim.keymap.set("n", "<C-o>", "<C-o>zzzv")
 vim.keymap.set("n", "<C-i>", "<C-i>zzzv")
@@ -58,8 +60,8 @@ vim.keymap.set("n", "<Tab>", ":tabnext<CR>", { silent = true, desc = "Go to next
 vim.keymap.set("n", "<S-Tab>", ":tabp<CR>", { silent = true, desc = "Go to previous tab" })
 
 -- Move selected lines
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
 
 vim.keymap.set({ "n", "v" }, "<space>", "<nop>", { silent = true })
 
