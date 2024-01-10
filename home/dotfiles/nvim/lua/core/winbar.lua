@@ -17,7 +17,7 @@ local function get_lsp_position()
 end
 
 -- { "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost" }
-vim.api.nvim_create_autocmd({ "BufWinEnter", "CursorMoved", "CursorMovedI" }, {
+vim.api.nvim_create_autocmd({ "BufWinEnter", "CursorMoved", "CursorMovedI", "BufWritePost" }, {
     callback = function()
         if utils.is_plugin_filetype() then
             vim.opt_local.winbar = nil
