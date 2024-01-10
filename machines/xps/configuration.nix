@@ -82,9 +82,21 @@
 
     opengl.enable = true;
     opengl.driSupport32Bit = true;
-    pulseaudio.enable = true;
-    pulseaudio.support32Bit = true;
-    pulseaudio.package = pkgs.pulseaudioFull;
+  };
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    # alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+    wireplumber.enable = true;
+  };
+
+  hardware.pulseaudio = {
+    enable = false;
+    package = pkgs.pulseaudioFull;
   };
 
   time.timeZone = "Europe/Rome";
@@ -121,7 +133,10 @@
 
       openresolv
     ];
-    etc."dual-function-keys.yaml".text = builtins.readFile ./dual-function-keys.yaml;
+    etc = {
+      "pulse/default.pa".text = builtins.readFile ./pulseaudio.conf;
+      "dual-function-keys.yaml".text = builtins.readFile ./dual-function-keys.yaml;
+    };
   };
 
   programs = {
