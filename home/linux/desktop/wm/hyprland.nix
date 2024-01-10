@@ -91,11 +91,7 @@
           "SHIFT,XF86AudioMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
           ",XF86AudioMicMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
 
-          ",Print,exec,${grimblast} --notify --freeze copysave output"
-          "SHIFT,Print,exec,${grimblast} --notify --freeze copysave active"
-          "CONTROL,Print,exec,${grimblast} --notify --freeze copysave screen"
-          "SUPER,Print,exec,${grimblast} --notify --freeze copysave area"
-          "ALT,Print,exec,${grimblast} --notify --freeze copysave area"
+          ",Print,exec,screenshot"
 
           "SUPER,c,exec,${wtype} -P XF86Copy"
           "SUPER,x,exec,${wtype} -P XF86Cut"
