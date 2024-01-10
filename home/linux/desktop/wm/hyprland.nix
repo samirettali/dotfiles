@@ -9,12 +9,12 @@
         "systemctl --user start hyprland-session.target"
       ];
     };
-    xwayland.enable = false;
+    xwayland.enable = true;
     settings = {
       general = {
-        gaps_in = 4;
-        gaps_out = 8;
-        border_size = 1;
+        gaps_in = 6;
+        gaps_out = 6;
+        border_size = 2;
         cursor_inactive_timeout = 4;
         "col.active_border" = "0xffbbbbbb";
         "col.inactive_border" = "0xff222222";
