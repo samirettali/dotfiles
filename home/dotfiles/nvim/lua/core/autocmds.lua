@@ -30,6 +30,9 @@ vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
     command = 'silent! normal! g`"zv',
 })
 
+-- TODO: convert to lua
+vim.cmd [[ au BufWritePre,FileWritePre * if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif ]]
+
 -- Keep cursor line only on focused window
 local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursorline = function(event, value, pattern)
