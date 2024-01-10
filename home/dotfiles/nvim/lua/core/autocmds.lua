@@ -49,6 +49,8 @@ local set_cursorline = function(event, value, pattern)
         end,
     })
 end
-set_cursorline("WinLeave", false)
 set_cursorline("WinEnter", true)
+set_cursorline("InsertLeave", true)
+set_cursorline("InsertEnter", false)
+set_cursorline("WinLeave", false)
 set_cursorline("FileType", false, "TelescopePrompt")
