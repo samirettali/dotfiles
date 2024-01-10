@@ -1,21 +1,19 @@
--- Automatically resize windows when terminal is resized
 vim.api.nvim_create_autocmd("VimResized", {
     pattern = "*",
+    desc = "Automatically resize windows when terminal is resized",
     command = "wincmd =",
 })
 
--- Highlight yanked text
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-    group = highlight_group,
+    desc = "Highlight yanked text",
     pattern = '*',
+    group = highlight_group,
+    callback = vim.highlight.on_yank,
 })
 
--- Close help, man, quickfix, lspinfo with q
 vim.api.nvim_create_autocmd("FileType", {
+    desc = "Close help, man, quickfix, lspinfo with q",
     pattern = { "qf", "help", "man", "lspinfo" },
     callback = function()
         vim.keymap.set("n", "q", ":close<CR>")
@@ -24,9 +22,9 @@ vim.api.nvim_create_autocmd("FileType", {
 
 local user = vim.api.nvim_create_augroup("user", {})
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+    desc = "Return cursor to where it was last time closing the file",
     group = user,
-    desc = 'Return cursor to where it was last time closing the file',
-    pattern = '*',
+    pattern = "*",
     callback = function()
         local mark = vim.api.nvim_buf_get_mark(0, '"')
         local lcount = vim.api.nvim_buf_line_count(0)
@@ -36,13 +34,14 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     end,
 })
 
+-- Create parent folder if it doesnt exist when saving a file
 -- TODO: convert to lua
 vim.cmd [[ au BufWritePre,FileWritePre * if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif ]]
 
--- Keep cursor line only on focused window
 local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursorline = function(event, value, pattern)
     vim.api.nvim_create_autocmd(event, {
+        desc = "Keep cursor line only on focused window",
         group = group,
         pattern = pattern,
         callback = function()
