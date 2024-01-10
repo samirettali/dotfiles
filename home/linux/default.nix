@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./gpg.nix
+    ./desktop.nix
   ];
 
   programs = {
