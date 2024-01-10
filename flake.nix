@@ -33,11 +33,6 @@
         allowed-users = [ username ];
         experimental-features = [ "nix-command" "flakes" ];
         auto-optimise-store = true;
-        # gc = {
-        #   automatic = true;
-        #   dates = "weekly";
-        #   options = "--delete-older-than 7d";
-        # };
       };
 
       overlays = with inputs; [
@@ -118,6 +113,12 @@
               nix = {
                 package = pkgs.nixFlakes;
                 settings = nixConfig { };
+                optimise.automatic = true;
+                gc = {
+                  automatic = true;
+                  dates = "weekly";
+                  options = "--delete-older-than 7d";
+                };
               };
             })
             home-manager.nixosModule
