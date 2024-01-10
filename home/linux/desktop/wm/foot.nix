@@ -3,12 +3,11 @@
 }: {
   programs.foot = {
     enable = true;
-    config = {
-      font = "${font}: size=1m";
-      font = "${font}";
-      cursor = {
-        color = "111111 cccccc";
+    settings = {
+      main = {
+        font = "JetBrainsMono Nerd Font:size=12";
       };
+      cursor.color = "111111 cccccc";
       colors = {
         foreground = "dddddd";
         background = "000000";
