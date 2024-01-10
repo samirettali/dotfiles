@@ -23,11 +23,17 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 local user = vim.api.nvim_create_augroup("user", {})
-vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
     group = user,
     desc = 'Return cursor to where it was last time closing the file',
     pattern = '*',
-    command = 'silent! normal! g`"zv',
+    callback = function()
+        local mark = vim.api.nvim_buf_get_mark(0, '"')
+        local lcount = vim.api.nvim_buf_line_count(0)
+        if mark[1] > 0 and mark[1] <= lcount then
+            vim.api.nvim_win_set_cursor(0, mark)
+        end
+    end,
 })
 
 -- TODO: convert to lua
