@@ -11,6 +11,7 @@
   ];
 
   home.packages = with pkgs; [
+    bcc
     cointop
     curl
     diskus
