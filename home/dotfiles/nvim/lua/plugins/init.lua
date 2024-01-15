@@ -58,6 +58,14 @@ local plugins = {
             { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
         },
     },
+    {
+        "Wansmer/treesj",
+        keys = { '<space>m', '<space>j', '<space>s' },
+        dependencies = { 'nvim-treesitter/nvim-treesitter' },
+        config = function()
+            require('treesj').setup()
+        end,
+    },
 }
 
 require("lazy").setup {
