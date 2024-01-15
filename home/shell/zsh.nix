@@ -119,10 +119,23 @@
         zle -N fg-bg
         bindkey '^Z' fg-bg
 
+        tmux_session_or_attach() {
+            # Use the first argument as session name, or the current directory name if no argument is provided
+            local session_name=''${1:-$(basename "$PWD")}
+
+            # Check if the tmux session exists, and attach to it; create a new one if it doesn't exist
+            tmux has-session -t "$session_name" 2>/dev/null
+            if [ $? != 0 ]; then
+                tmux new-session -s "$session_name"
+            else
+                tmux attach-session -t "$session_name"
+            fi
+        }
+
         export PATH=~/.bin:$PATH:~/.dotnet/tools
       '';
       shellAliases = {
-        t = "tmux new -A -s $(basename $(pwd))";
+        t = "tmux new -A -s $\{1:$(basename $PWD)}";
         tl = "tmux ls";
 
         lg = "lazygit";
