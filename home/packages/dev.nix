@@ -42,6 +42,9 @@
     pyenv
 
     rnix-lsp
+
+    go-ethereum
+    nodePackages.ganache
   ];
 }
 
