@@ -33,6 +33,7 @@
 
     nodejs
     nodePackages.typescript-language-server
+    bun
 
     openssl
     pkg-config
