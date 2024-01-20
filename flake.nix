@@ -14,11 +14,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    solc = {
+      url = "github:hellwolf/solc.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    foundry.url = "github:shazow/foundry.nix/monthly";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nur.url = "github:nix-community/NUR";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
@@ -39,6 +46,8 @@
         neovim-nightly-overlay.overlay
         fenix.overlays.default
         nur.overlay
+        foundry.overlay
+        solc.overlay
       ];
 
     in
