@@ -97,7 +97,7 @@ in
       ''
         * {
           font-family: "JetBrainsMono Nerd Font";
-          font-size: 12pt;
+          font-size: 11pt;
           border-radius: 0;
           padding: 0;
         }
