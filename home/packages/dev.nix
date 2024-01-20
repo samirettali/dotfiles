@@ -5,6 +5,7 @@
     tree-sitter
     lua-language-server
 
+    delve
     go
     gopls
     golangci-lint
@@ -12,6 +13,7 @@
     gotools
     gotest
     gofumpt
+    mockgen
 
     (fenix.complete.withComponents [
       "cargo"
