@@ -27,7 +27,6 @@
         M.font = wezterm.font("JetBrainsMono Nerd Font Mono", { weight = "Regular", italic = false })
         M.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
         M.bold_brightens_ansi_colors = true
-        M.freetype_load_flags = 'NO_HINTING'
 
         M.exit_behavior = "Close"
         return M
