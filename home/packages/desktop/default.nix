@@ -3,7 +3,6 @@
 }: {
   imports = [
     ./vscode.nix
-    ./espanso.nix
     ./wezterm.nix
   ];
 
