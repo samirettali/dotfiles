@@ -16,6 +16,7 @@ in
         vscodevim.vim
         eamodio.gitlens
         marketplace.amos402.scope-bar
+        mkhl.direnv
 
         github.copilot
         github.copilot-chat
