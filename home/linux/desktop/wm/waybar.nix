@@ -80,13 +80,6 @@ in
         };
       };
     };
-    # Cheatsheet:
-    # x -> all sides
-    # x y -> vertical, horizontal
-    # x y z -> top, horizontal, bottom
-    # w x y z -> top, right, bottom, left
-    # font-family: ${config.fontProfiles.regular.family}, ${config.fontProfiles.monospace.family};
-    # style = let inherit (config.colorscheme) colors; in /* css */ ''
     style =
       let
         colors = {
@@ -123,7 +116,3 @@ in
       '';
   };
 }
-
-
-
-

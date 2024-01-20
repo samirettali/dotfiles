@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ pkgs
+, ...
+}: {
   home.sessionVariables = {
     DEFAULT_BROWSER = "firefox";
   };
@@ -23,7 +25,7 @@
           OfferToSaveLoginsDefault = false;
         };
       });
-      profiles."samir" = {
+      profiles.samir = {
         extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           clearurls
           copy-selection-as-markdown

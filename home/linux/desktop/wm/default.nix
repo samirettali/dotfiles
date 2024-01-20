@@ -4,13 +4,11 @@
 }: {
   imports = [
     ./hyprland.nix
-    ./sway.nix
     ./waybar.nix
     ./swaylock.nix
     ./mako.nix
     ./gtk.nix
     ./kanshi.nix
-    ./foot.nix
   ];
 
   home.packages = with pkgs; [

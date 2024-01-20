@@ -1,4 +1,7 @@
-{ lib, pkgs, ... }: {
+{ lib
+, pkgs
+, ...
+}: {
   programs = {
     password-store = {
       enable = true;
@@ -9,7 +12,6 @@
         exts.pass-update
       ]);
       settings = {
-        # TODO check for new settings
         PASSWORD_STORE_CLIP_TIME = "10";
       };
     };
