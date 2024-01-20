@@ -55,18 +55,7 @@ in
         # Go
         "go.formatTool" = "gofumpt";
         "go.delveConfig" = {
-          "dlvLoadConfig" = {
-            "followPointers" = true;
-            "maxVariableRecurse" = 1;
-            "maxStringLen" = 64;
-            "maxArrayValues" = 64;
-            "maxStructFields" = -1;
-          };
-          "apiVersion" = 2;
-          "showGlobalVariables" = false;
-          "debugAdapter" = "legacy";
-          "substitutePath" = [ ];
-          "maxStringLen" = 10000;
+          "showGlobalVariables" = true;
         };
         "go.lintTool" = "golangci-lint";
         "go.lintFlags" = [
