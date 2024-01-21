@@ -1,6 +1,8 @@
 { pkgs, programs, ... }: {
 
   home.packages = with pkgs; [
+    google-fonts
+    noto-fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
