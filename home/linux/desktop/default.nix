@@ -1,4 +1,6 @@
-{ ... }: {
+{ pkgs
+, ...
+}: {
   imports = [
     ./wm
     ./firefox.nix
@@ -8,4 +10,8 @@
   services = {
     mpris-proxy.enable = true;
   };
+
+  home.packages = with pkgs; [
+    ledger-live-desktop
+  ];
 }

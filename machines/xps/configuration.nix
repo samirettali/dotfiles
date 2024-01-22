@@ -179,7 +179,7 @@
     pcscd.enable = true; # Needed for yubikey OTP
     tailscale.enable = true;
 
-    udev.extraRules = builtins.readFile ./udevRules.conf;
+    udev.packages = [ pkgs.ledger-udev-rules ];
 
     interception-tools = {
       enable = true;
