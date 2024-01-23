@@ -113,7 +113,6 @@ require("lazy").setup {
                 "logiPat",
                 "man",
                 "matchit",
-                "matchparen",
                 "rrhelper",
                 "spellfile",
                 "spellfile_plugin",

@@ -37,6 +37,9 @@ return {
             },
             highlight = {
                 enable = true,
+                disable = function(_, bufnr) -- Disable in files with more than 5K
+                    return vim.api.nvim_buf_line_count(bufnr) > 5000
+                end,
             },
             autotag = {
                 enable = true,
