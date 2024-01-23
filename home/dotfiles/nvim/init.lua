@@ -12,6 +12,7 @@ local function load_modules()
         "core.statusline",
         "core.winbar",
         "core.mappings",
+        "core.largefile",
         "plugins"
     }
 
