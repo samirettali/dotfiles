@@ -43,7 +43,7 @@
     pipenv
     pyenv
 
-    rnix-lsp
+    nixd
 
     foundry-bin
     nodePackages.ganache

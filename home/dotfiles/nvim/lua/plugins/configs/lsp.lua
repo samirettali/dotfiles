@@ -305,7 +305,7 @@ local function config()
 
     -- lspconfig.solc.setup({})
 
-    lspconfig.rnix.setup({})
+    lspconfig.nixd.setup({})
     lspconfig.csharp_ls.setup({})
     lspconfig.clangd.setup({})
 end
