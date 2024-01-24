@@ -22,7 +22,6 @@
     pavucontrol
     ffmpegthumbnailer
     wl-clipboard
-    wlprop
     networkmanagerapplet
     imv
     xdg-utils

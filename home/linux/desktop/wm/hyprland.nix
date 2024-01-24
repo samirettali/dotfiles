@@ -101,7 +101,8 @@
           "SUPER,x,exec,${wtype} -P XF86Cut"
           "SUPER,v,exec,${wtype} -P XF86Paste"
           "SUPERSHIFT,v,exec,${cliphist} list | ${bemenu} | ${cliphist} decode | ${wlcopy} && ${wtype} -P XF86Paste"
-          "SUPER,q,exec,hyprctl switchxkblayout at-translated-set-2-keyboard next"
+          "SUPER,q,exec,${hyprctl} switchxkblayout at-translated-set-2-keyboard next"
+          "SUPER,w,exec,${hyprctl} activewindow | ${wlcopy}"
         ] ++
         (lib.optionals config.programs.swaylock.enable [
           "SUPERSHIFT,l,exec,${swaylock} -S --grace 2"

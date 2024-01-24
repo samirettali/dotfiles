@@ -41,7 +41,7 @@ in
         modules-right = (lib.optionals hasHyprland [
           "hyprland/language"
         ]) ++ [
-          "pulseaudio"
+          "wireplumber"
           "battery"
           "tray"
         ];
@@ -51,9 +51,9 @@ in
           format = "{:%d/%m %H:%M:%S}";
         };
 
-        pulseaudio = {
-          format = " {icon} {volume}%";
-          format-muted = " ";
+        wireplumber = {
+          format = "{icon} {volume}%";
+          format-muted = "";
           format-icons = {
             headphone = "󰋋";
             headset = "󰋎";
@@ -93,10 +93,12 @@ in
           font-size: 11pt;
           border-radius: 0;
           padding: 0;
+          margin: 0;
         }
 
-        #mode, #battery, #pulseaudio, #language, #tray {
-            padding: 0 10px;
+        #battery, #wireplumber, #language, #tray {
+            padding: 0 10;
+            margin: 0 0;
         }
 
         window#waybar {
