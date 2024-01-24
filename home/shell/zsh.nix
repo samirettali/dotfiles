@@ -132,7 +132,7 @@
             fi
         }
 
-        export PATH=~/.bin:$PATH:~/.dotnet/tools
+        export PATH=~/.bin:$PATH
       '';
       shellAliases = {
         t = "tmux_session_or_attach";

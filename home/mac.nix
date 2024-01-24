@@ -8,6 +8,9 @@
 
   programs = {
     zsh = {
+      initExtra = ''
+        export PATH=~/.dotnet/tools:$PATH
+      '';
       shellAliases = {
         # ugly fix for MacOS
         ls = "/opt/homebrew/bin/gls --color=auto --group-directories-first";
