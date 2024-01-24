@@ -135,7 +135,7 @@
         export PATH=~/.bin:$PATH:~/.dotnet/tools
       '';
       shellAliases = {
-        t = "tmux new -A -s $\{1:$(basename $PWD)}";
+        t = "tmux_session_or_attach";
         tl = "tmux ls";
 
         lg = "lazygit";
