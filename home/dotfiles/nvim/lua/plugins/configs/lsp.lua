@@ -246,15 +246,16 @@ local function config()
                     rangeVariableTypes = true
                 },
                 analyses = {
-                    unusedparams = true,
-                    shadow = true,
-                    unreachable = true,
                     assign = true,
+                    deepequalerrors = true,
                     fieldalignment = true,
                     nilness = true,
-                    useany = true,
+                    shadow = true,
+                    unreachable = true,
+                    unusedparams = true,
+                    unusedvariable = true,
                     unusedwrite = true,
-                    unusedvariable = true
+                    useany = true,
                 },
                 staticcheck = true,
                 vulncheck = "Imports",
