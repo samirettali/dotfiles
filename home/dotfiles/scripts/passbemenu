@@ -1,4 +1,4 @@
-#!/nix/store/q1c2flcykgr4wwg5a6h450hxbk4ch589-bash-5.2-p15/bin/bash
+#!/usr/bin/env bash
 set -x
 
 shopt -s nullglob globstar
