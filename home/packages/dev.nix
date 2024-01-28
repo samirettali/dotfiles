@@ -32,9 +32,10 @@
     clang-tools
     stdenv
 
-    nodejs
-    nodePackages.typescript-language-server
     bun
+    nodejs
+    yarn
+    nodePackages.typescript-language-server
 
     openssl
     pkg-config
