@@ -133,6 +133,7 @@
         }
 
         export PATH=~/.bin:$PATH
+        export PKG_CONFIG_PATH=${pkgs.openssl.dev}/lib/pkgconfig
       '';
       shellAliases = {
         t = "tmux_session_or_attach";

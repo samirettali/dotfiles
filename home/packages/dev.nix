@@ -37,7 +37,7 @@
     yarn
     nodePackages.typescript-language-server
 
-    openssl
+    openssl.dev
     pkg-config
 
     python312
