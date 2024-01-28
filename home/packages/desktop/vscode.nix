@@ -20,7 +20,6 @@ in
 
         github.copilot
         github.copilot-chat
-        ms-vsliveshare.vsliveshare
         marketplace.sourcegraph.cody-ai
 
         bbenoist.nix
@@ -28,6 +27,8 @@ in
         rust-lang.rust-analyzer
         # ms-dotnettools.csharp
         (marketplace.ms-dotnettools.csdevkit.overrideAttrs (super: a: { sourceRoot = "."; })) # TODO fix this
+
+        marketplace.juanblanco.solidity
       ];
       keybindings = [ ];
       userSettings = {
@@ -72,6 +73,15 @@ in
         "vim.handleKeys" = {
           "<C-p>" = false;
         };
+
+        "solidity.packageDefaultDependenciesContractsDirectory" = "src";
+        "solidity.packageDefaultDependenciesDirectory" = "lib";
+        "solidity.compileUsingRemoteVersion" = "v0.8.23";
+        "solidity.remappings" = [
+            "@openzeppelin/contracts/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/"
+            "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/"
+        ];
+
       };
     };
   };
