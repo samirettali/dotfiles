@@ -16,15 +16,22 @@
     gofumpt
     mockgen
 
-    (fenix.complete.withComponents [
-      "cargo"
-      "clippy"
-      "rust-src"
-      "rustc"
-      "rustfmt"
+    (fenix.combine [
+      (fenix.complete.withComponents [
+        "cargo"
+        "clippy"
+        "rustc"
+        "rust-docs"
+        "rustfmt"
+        "rust-src"
+        "rust-std"
+      ])
+      fenix.targets.wasm32-unknown-unknown.latest.rust-std
     ])
-    rust-analyzer-nightly
     cargo-watch
+    cargo-generate
+    rust-analyzer-nightly
+    wasm-pack
 
     cmake
     gcc

@@ -33,6 +33,7 @@
     tree
     unzip
     watchexec
+    cachix
   ];
 
   programs = {
