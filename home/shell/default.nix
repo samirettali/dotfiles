@@ -11,7 +11,6 @@
   ];
 
   home.packages = with pkgs; [
-    bcc
     curl
     diskus
     fd
