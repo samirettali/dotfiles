@@ -18,6 +18,7 @@
       "another-redis-desktop-manager"
       "burp-suite"
       "datagrip"
+      "rider"
       "docker"
       "iina"
       "karabiner-elements"
