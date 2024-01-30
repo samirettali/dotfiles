@@ -9,28 +9,25 @@ return {
                 "lua",
                 "rust",
                 "go",
-                "sql",
-
+                "solidity",
                 "c",
                 "cpp",
-
+                "c_sharp",
+                "sql",
                 "python",
-
-                "json",
-                "toml",
-                "markdown",
 
                 "html",
                 "tsx",
                 "javascript",
                 "typescript",
 
+                "json",
+                "toml",
+                "markdown",
+
                 "vim",
                 "vimdoc",
-
                 "query",
-
-                "c_sharp"
             },
             matchup = {
                 enable = true,
