@@ -13,6 +13,7 @@
       push.autoSetupRemote = true;
       pull.rebase = false;
       url."git@github.com:samirettali".insteadOf = "https://github.com/samirettali";
+      url."git@github.com:YoungAgency".insteadOf = "https://github.com/YoungAgency";
     };
     ignores = [
       "*.env"
