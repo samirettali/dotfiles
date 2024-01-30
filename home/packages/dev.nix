@@ -54,7 +54,6 @@
     nixd
 
     foundry-bin
-    nodePackages.ganache
     (inputs.solc.mkDefault pkgs pkgs.solc_0_8_23)
   ];
 }
