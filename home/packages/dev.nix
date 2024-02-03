@@ -51,6 +51,7 @@
     pipenv
     pyenv
 
+    nixpkgs-fmt
     nixd
 
     foundry-bin
