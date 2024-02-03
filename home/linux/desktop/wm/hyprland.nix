@@ -53,7 +53,6 @@
         let
           swaylock = "${config.programs.swaylock.package}/bin/swaylock";
           grimblast = "${pkgs.grimblast}/bin/grimblast";
-          pactl = "${pkgs.pulseaudio}/bin/pactl";
           terminal = config.home.sessionVariables.TERMINAL;
           fileExplorer = "${pkgs.cinnamon.nemo}/bin/nemo";
           bemenuRun = "${pkgs.bemenu}/bin/bemenu-run";
@@ -88,12 +87,6 @@
           "SUPER,d,exec,${bemenuRun}"
           "SUPER,x,exec,${fileExplorer}"
           "SUPER,y,exec,${hyprpicker}"
-
-          ",XF86AudioRaiseVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ +5%"
-          ",XF86AudioLowerVolume,exec,${pactl} set-sink-volume @DEFAULT_SINK@ -5%"
-          ",XF86AudioMute,exec,${pactl} set-sink-mute @DEFAULT_SINK@ toggle"
-          "SHIFT,XF86AudioMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
-          ",XF86AudioMicMute,exec,${pactl} set-source-mute @DEFAULT_SOURCE@ toggle"
 
           ",Print,exec,screenshot"
 
@@ -145,6 +138,15 @@
             "SUPERALTSHIFT,${key},movecurrentworkspacetomonitor,${direction}"
           )
           directions);
+      binde =
+        let
+          wpctl = "${pkgs.wireplumber}/bin/pwctl";
+        in
+        [
+          ",XF86AudioRaiseVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+          ",XF86AudioLowerVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          ",XF86AudioMute,exec,${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ];
       bindm = [
         "SUPER,mouse:272,movewindow"
         "SUPER,mouse:273,resizewindow"
