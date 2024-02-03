@@ -138,7 +138,7 @@
           directions);
       binde =
         let
-          wpctl = "${pkgs.wireplumber}/bin/pwctl";
+          wpctl = "${pkgs.wireplumber}/bin/wpctl";
         in
         [
           ",XF86AudioRaiseVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
