@@ -22,7 +22,7 @@ in
         github.copilot-chat
         marketplace.sourcegraph.cody-ai
 
-        bbenoist.nix
+        jnoortheen.nix-ide
         golang.go
         rust-lang.rust-analyzer
         # ms-dotnettools.csharp
