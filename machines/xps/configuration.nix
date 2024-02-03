@@ -97,11 +97,6 @@
     wireplumber.enable = true;
   };
 
-  hardware.pulseaudio = {
-    enable = false;
-    package = pkgs.pulseaudioFull;
-  };
-
   time.timeZone = "Europe/Rome";
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -137,7 +132,6 @@
       openresolv
     ];
     etc = {
-      "pulse/default.pa".text = builtins.readFile ./pulseaudio.conf;
       "dual-function-keys.yaml".text = builtins.readFile ./dual-function-keys.yaml;
     };
   };
