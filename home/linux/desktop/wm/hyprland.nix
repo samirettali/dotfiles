@@ -59,10 +59,9 @@
           bemenu = "${pkgs.bemenu}/bin/bemenu";
           cliphist = "${pkgs.cliphist}/bin/cliphist";
           hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-
+          jq = "${pkgs.jq}/bin/jq";
           wtype = "${pkgs.wtype}/bin/wtype";
           wlcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
-
           hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
 
           workspaces = map (n: toString n) (lib.range 1 9);
@@ -94,8 +93,7 @@
           "SUPER,x,exec,${wtype} -P XF86Cut"
           "SUPER,v,exec,${wtype} -P XF86Paste"
           "SUPERSHIFT,v,exec,${cliphist} list | ${bemenu} | ${cliphist} decode | ${wlcopy} && ${wtype} -P XF86Paste"
-          "SUPER,q,exec,${hyprctl} switchxkblayout at-translated-set-2-keyboard next"
-          "SUPER,w,exec,${hyprctl} activewindow | ${wlcopy}"
+          "SUPER,BACKSPACE,exec,for keyboard in $(${hyprctl} devices -j | ${jq} -r '. | .keyboards | .[] | .name'); do ${hyprctl} switchxkblayout $keyboard next > /dev/null; done"
         ] ++
         (lib.optionals config.programs.swaylock.enable [
           "SUPERSHIFT,l,exec,${swaylock} -S --grace 2"
