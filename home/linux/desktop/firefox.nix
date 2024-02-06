@@ -35,6 +35,10 @@
           vimium
           ublock-origin
           switchyomega
+
+          # not available in overyal
+          # metadock
+          # phantom-app
         ];
         settings = {
           # Performance settings
