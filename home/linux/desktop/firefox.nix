@@ -109,7 +109,7 @@
           "dom.security.https_only_mode_ever_enabled" = true;
           "dom.security.https_only_mode" = true;
           "extensions.getAddons.showPane" = false;
-          "identity.fxaccounts.enabled" = false;
+          "identity.fxaccounts.enabled" = true;
           "privacy.trackingprotection.enabled" = true;
           "privacy.firstparty.isolate" = true;
           "privacy.trackingprotection.socialtracking.enabled" = true;
