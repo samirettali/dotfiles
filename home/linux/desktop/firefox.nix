@@ -125,9 +125,9 @@
           # shortcuts and suggestions will still work, but Librewolf won't clutter
           # its UI with reminders that they exist.
           "browser.urlbar.suggest.searches" = false;
-          "browser.urlbar.shortcuts.bookmarks" = false;
-          "browser.urlbar.shortcuts.history" = false;
-          "browser.urlbar.shortcuts.tabs" = false;
+          "browser.urlbar.shortcuts.bookmarks" = true;
+          "browser.urlbar.shortcuts.history" = true;
+          "browser.urlbar.shortcuts.tabs" = true;
           "browser.urlbar.showSearchSuggestionsFirst" = false;
           "browser.urlbar.speculativeConnect.enabled" = false;
           # https://bugzilla.mozilla.org/1642623
