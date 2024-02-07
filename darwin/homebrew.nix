@@ -12,6 +12,7 @@
       "cmake"
       "coreutils"
       "terraform"
+      "amazon-ecs-cli"
     ];
     casks = [
       "alfred"
