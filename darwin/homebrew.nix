@@ -20,6 +20,7 @@
       "burp-suite"
       "datagrip"
       "rider"
+      "goland"
       "docker"
       "iina"
       "karabiner-elements"
