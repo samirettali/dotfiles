@@ -281,6 +281,8 @@ local function config()
         }
     })
 
+    lspconfig.tsserver.setup({})
+
     lspconfig.lua_ls.setup({
         capabilities = capabilities,
         settings = {
