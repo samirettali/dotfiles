@@ -15,6 +15,9 @@
     gotest
     gofumpt
     mockgen
+    protobuf
+    protoc-gen-go
+    protoc-gen-go-grpc
 
     (fenix.combine [
       (fenix.complete.withComponents [
