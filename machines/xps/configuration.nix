@@ -65,7 +65,11 @@
     enableIPv6 = false;
     networkmanager = {
       enable = true;
-      insertNameservers = [ "8.8.8.8" "8.8.4.4" ];
+      insertNameservers = [
+        "100.100.100.100"
+        "8.8.8.8"
+        "8.8.4.4"
+      ];
     };
   };
 
@@ -139,7 +143,7 @@
           sortedUnique = builtins.sort builtins.lessThan (lib.unique packages);
           formatted = builtins.concatStringsSep "\n" sortedUnique;
         in
-          formatted;
+        formatted;
     };
   };
 
