@@ -17,7 +17,9 @@ local plugins = {
         "David-Kunz/gen.nvim",                    -- Access LLMs with Ollama
         opts = {
             show_prompt = true,
-            display_mode = "split"
+            model = "deepseek-coder:7b-instruct",
+            display_mode = "split",
+            command = "curl --silent --no-buffer -X POST http://localhost:11434/api/generate -d $body",
         }
     },
     {
