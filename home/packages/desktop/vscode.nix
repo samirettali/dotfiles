@@ -78,8 +78,8 @@ in
         "solidity.packageDefaultDependenciesDirectory" = "lib";
         "solidity.compileUsingRemoteVersion" = "v0.8.23";
         "solidity.remappings" = [
-            "@openzeppelin/contracts/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/"
-            "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/"
+          "@openzeppelin/contracts/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/"
+          "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/"
         ];
 
       };
