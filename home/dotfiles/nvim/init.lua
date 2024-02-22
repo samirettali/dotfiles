@@ -13,7 +13,7 @@ local function load_modules()
         "core.winbar",
         "core.mappings",
         "core.largefile",
-        "plugins"
+        "plugins",
     }
 
     for _, module in ipairs(modules) do
@@ -33,10 +33,9 @@ if not vim.loop.fs_stat(lazypath) then
         "--filter=blob:none",
         "https://github.com/folke/lazy.nvim.git",
         "--branch=stable",
-        lazypath
+        lazypath,
     })
 end
 vim.opt.rtp:prepend(lazypath)
-
 
 load_modules()
