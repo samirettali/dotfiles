@@ -44,6 +44,14 @@
       "homebrew/services"
       "common-fate/granted"
     ];
+    system = {
+      defaults = {
+        NSGlobalDomain = {
+          InitialKeyRepeat = 15;
+          KeyRepeat = 2;
+        };
+      };
+    };
   };
 
   programs.gnupg.agent.enable = true; # TODO is this needed?
