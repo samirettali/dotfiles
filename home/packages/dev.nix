@@ -18,6 +18,7 @@
     protobuf
     protoc-gen-go
     protoc-gen-go-grpc
+    revive
 
     (fenix.combine [
       (fenix.complete.withComponents [
@@ -59,5 +60,8 @@
 
     foundry-bin
     (inputs.solc.mkDefault pkgs pkgs.solc_0_8_23)
+
+    gh
+    kcat
   ];
 }

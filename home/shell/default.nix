@@ -15,7 +15,7 @@
     diskus
     fd
     htop
-    # iredis
+    iredis
     jq
     lazydocker
     lazygit
@@ -33,6 +33,7 @@
     unzip
     watchexec
     cachix
+    graphviz
   ];
 
   programs = {
