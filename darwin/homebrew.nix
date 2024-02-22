@@ -13,6 +13,7 @@
       "coreutils"
       "terraform"
       "amazon-ecs-cli"
+      "granted"
     ];
     casks = [
       "alfred"
@@ -41,6 +42,7 @@
     taps = [
       "homebrew/bundle"
       "homebrew/services"
+      "common-fate/granted"
     ];
   };
 

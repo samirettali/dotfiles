@@ -9,11 +9,11 @@
   programs = {
     zsh = {
       initExtra = ''
-        export PATH=~/.dotnet/tools:$PATH
+        eval "$(/opt/homebrew/bin/brew shellenv)"
       '';
       shellAliases = {
-        # ugly fix for MacOS
         ls = "/opt/homebrew/bin/gls --color=auto --group-directories-first";
+        assume = "source assume";
       };
     };
   };
