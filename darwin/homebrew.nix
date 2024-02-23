@@ -44,12 +44,13 @@
       "homebrew/services"
       "common-fate/granted"
     ];
-    system = {
-      defaults = {
-        NSGlobalDomain = {
-          InitialKeyRepeat = 15;
-          KeyRepeat = 2;
-        };
+  };
+
+  system = {
+    defaults = {
+      NSGlobalDomain = {
+        InitialKeyRepeat = 15;
+        KeyRepeat = 2;
       };
     };
   };
