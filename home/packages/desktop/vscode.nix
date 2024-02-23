@@ -1,9 +1,14 @@
 { inputs
 , pkgs
+, lib
 , ...
 }:
 let
   marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
+  fontSize = lib.mkMerge [
+    (lib.mkIf pkgs.stdenv.isDarwin 13)
+    (lib.mkIf pkgs.stdenv.isLinux 12)
+  ];
 in
 {
   programs = {
@@ -33,6 +38,7 @@ in
       keybindings = [ ];
       userSettings = {
         "editor.fontFamily" = "\"JetBrainsMono Nerd Font\"";
+        "editor.fontSize" = fontSize;
         "editor.minimap.enabled" = false;
         "editor.formatOnSave" = true;
         "editor.renderWhitespace" = "trailing";
