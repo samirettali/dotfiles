@@ -25,15 +25,14 @@ in
 
         github.copilot
         github.copilot-chat
-        marketplace.sourcegraph.cody-ai
 
         jnoortheen.nix-ide
         golang.go
         rust-lang.rust-analyzer
-        # ms-dotnettools.csharp
-        (marketplace.ms-dotnettools.csdevkit.overrideAttrs (super: a: { sourceRoot = "."; })) # TODO fix this
 
         marketplace.juanblanco.solidity
+      ] ++ [
+        (lib.mkIf pkgs.stdenv.isDarwin (marketplace.ms-dotnettools.csdevkit.overrideAttrs (super: a: { sourceRoot = "."; })))
       ];
       keybindings = [ ];
       userSettings = {
