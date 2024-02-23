@@ -15,7 +15,7 @@ in
     vscode = {
       enable = true;
       package = pkgs.vscode;
-      enableExtensionUpdateCheck = true; # TODO can it be handled with nix?
+      enableExtensionUpdateCheck = true;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
         vscodevim.vim
