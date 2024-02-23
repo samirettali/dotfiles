@@ -45,8 +45,8 @@
     in
     {
       enable = true;
-      createDirectories = true;
-      desktop = null;
+      createDirectories = false;
+      desktop = "${home}/desk";
       documents = "${home}/docs";
       download = "${home}/down";
       music = "${home}/music";
