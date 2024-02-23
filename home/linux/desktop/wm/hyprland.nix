@@ -153,6 +153,7 @@
     extraConfig = ''
       windowrule=float,^(nemo)$
       windowrule=float,^(pavucontrol)$
+      windowrule=float,title:^(Picture-in-Picture)$
       windowrule=nomaximizerequest,^(mpv)$
     '';
   };
