@@ -45,8 +45,6 @@ in
         "editor.wordSeparators" = "/\\()\"'=,.;<>~!@#$%^&*|+=[]{}`?-";
         "editor.inlineSuggest.suppressSuggestions" = true;
 
-        "window.menuBarVisibility" = "toggle";
-
         "diffEditor.ignoreTrimWhitespace" = false;
 
         "files.exclude" = {
