@@ -1,4 +1,6 @@
-{ ... }: {
+{ pkgs
+, ...
+}: {
   imports = [
     ./dotfiles.nix
     ./shell
@@ -15,4 +17,8 @@
   programs = {
     home-manager.enable = true;
   };
+
+  home.packages = with pkgs; [
+    ollama
+  ];
 }
