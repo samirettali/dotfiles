@@ -1,10 +1,16 @@
-{ ... }: {
+{ lib
+, pkgs
+, ...
+}: {
   programs.alacritty = {
     enable = true;
     settings = {
       font = {
         normal.family = "JetBrainsMono Nerd Font";
-        size = 10;
+        size = lib.mkMerge [
+          (lib.mkIf pkgs.stdenv.isDarwin 14)
+          (lib.mkIf pkgs.stdenv.isLinux 10)
+        ];
       };
 
       colors = {
