@@ -3,8 +3,12 @@
 }: {
   home.packages = with pkgs; [
     awscli2
-    dotnet-sdk_8
     terraform
     csharp-ls
+
+    (with dotnetCorePackages; combinePackages [
+      sdk_6_0
+      sdk_8_0
+    ])
   ];
 }
