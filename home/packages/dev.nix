@@ -58,6 +58,9 @@
     nixpkgs-fmt
     nixd
 
+    zig
+    zls
+
     foundry-bin
     (inputs.solc.mkDefault pkgs pkgs.solc_0_8_23)
 

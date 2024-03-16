@@ -311,6 +311,8 @@ local function config()
     }
 
     lspconfig.nixd.setup({})
+    lspconfig.zls.setup({})
+
     lspconfig.csharp_ls.setup({})
     lspconfig.clangd.setup({})
 end
