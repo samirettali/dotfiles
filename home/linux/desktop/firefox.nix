@@ -37,7 +37,7 @@
           switchyomega
 
           # not available in overyal
-          # metadock
+          # metasuites
           # phantom-app
         ];
         settings = {

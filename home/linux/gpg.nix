@@ -8,6 +8,9 @@
   programs = {
     gpg = {
       enable = true;
+      scdaemonSettings = {
+        reader-port = "Yubico Yubi";
+      };
     };
 
     keychain = {
@@ -21,7 +24,7 @@
   services = {
     gpg-agent = {
       enable = true;
-      pinentryFlavor = "qt";
+      pinentryPackage = "qt";
       enableExtraSocket = true;
       enableScDaemon = true;
     };

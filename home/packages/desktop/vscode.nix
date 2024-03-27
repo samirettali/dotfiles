@@ -70,6 +70,9 @@ in
         ];
         "go.coverOnSingleTest" = true;
         "go.showWelcome" = true;
+        "gopls" = {
+          "ui.semanticTokens" = false;
+        };
 
         "gitlens.showWelcomeOnInstall" = false;
 

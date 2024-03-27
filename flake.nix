@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,7 +32,7 @@
 
   outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
     let
-      stateVersion = "23.11";
+      stateVersion = "24.05";
       user = "samir";
       homeDirectory = "/home/${user}";
 

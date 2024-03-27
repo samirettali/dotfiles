@@ -134,6 +134,8 @@
       apfs-fuse
 
       openresolv
+      protonvpn-gui
+      protonvpn-cli
     ];
     etc = {
       "dual-function-keys.yaml".text = builtins.readFile ./dual-function-keys.yaml;
@@ -200,4 +202,44 @@
       '';
     };
   };
+
+  services.samba-wsdd.enable = true; # make shares visible for windows 10 clients
+  networking.firewall.allowedTCPPorts = [
+    5357 # wsdd
+  ];
+  networking.firewall.allowedUDPPorts = [
+    3702 # wsdd
+  ];
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    securityType = "user";
+    # syncPasswordsByPam = true;
+    extraConfig = ''
+      workgroup = WORKGROUP
+      server string = xps
+      netbios name = xps
+      security = user
+      #use sendfile = yes
+      #max protocol = smb2
+      # note: localhost is the ipv6 localhost ::1
+      hosts allow = 192.168.1. 127.0.0.1 localhost
+      hosts deny = 0.0.0.0/0
+      guest account = nobody
+      map to guest = bad user
+    '';
+    shares = {
+      private = {
+        path = "/home/samir";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "samir";
+        "force group" = "users";
+      };
+    };
+  };
+
 }

@@ -14,5 +14,7 @@
   home.packages = with pkgs; [
     ledger-live-desktop
     newsflash
+    ungoogled-chromium
+    brave
   ];
 }

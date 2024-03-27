@@ -154,7 +154,7 @@
       windowrule=float,^(nemo)$
       windowrule=float,^(pavucontrol)$
       windowrule=float,title:^(Picture-in-Picture)$
-      windowrule=nomaximizerequest,^(mpv)$
+      windowrulev2=suppressevent maximize fullscreen,class:^(mpv)$
     '';
   };
 }
