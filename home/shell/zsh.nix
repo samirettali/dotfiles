@@ -148,6 +148,7 @@
         sl = "ls";
         gc = "git clone";
         rm = "trash";
+        ns = "nix-shell --run zsh -p";
         # jj = "pbpaste | jq -r | pbcopy";
         # jjj = "pbpaste | jq -r";
       };
