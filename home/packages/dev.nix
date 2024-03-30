@@ -54,6 +54,7 @@
     python312
     pipenv
     pyenv
+    nodePackages_latest.pyright
 
     nixpkgs-fmt
     nixd

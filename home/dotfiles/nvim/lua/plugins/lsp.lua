@@ -315,6 +315,7 @@ local function config()
 
     lspconfig.csharp_ls.setup({})
     lspconfig.clangd.setup({})
+    lspconfig.pyright.setup({})
 end
 
 
