@@ -34,6 +34,8 @@
     unzip
     visidata
     watchexec
+    graphviz
+    youtube-dl
   ];
 
   programs = {
