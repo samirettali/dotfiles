@@ -32,7 +32,7 @@ in
 
         marketplace.juanblanco.solidity
       ] ++ [
-        (lib.mkIf pkgs.stdenv.isDarwin (marketplace.ms-dotnettools.csdevkit.overrideAttrs (super: a: { sourceRoot = "."; })))
+        (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csdevkit)
       ];
       keybindings = [ ];
       userSettings = {
