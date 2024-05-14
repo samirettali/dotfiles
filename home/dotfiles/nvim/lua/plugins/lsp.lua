@@ -306,7 +306,9 @@ local function config()
         }
     })
 
-    -- lspconfig.solc.setup({})
+    require 'lspconfig'.solidity_ls.setup {
+        cmd = { "vscode-solidity-server", "--stdio" }
+    }
 
     lspconfig.nixd.setup({})
     lspconfig.csharp_ls.setup({})

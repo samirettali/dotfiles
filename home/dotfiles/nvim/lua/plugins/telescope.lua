@@ -22,8 +22,18 @@ return {
                     buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
                     color_devicons = true,
                     entry_prefix = "  ",
-                    file_ignore_patterns = { "node_modules", "docker", "*.mmdb", "vendor",
-                        ".git/", "^gen$", ".cache/", "*.pdf", "*.zip", "*.dll" },
+                    file_ignore_patterns = {
+                        -- "^gen$",
+                        "^node_modules/",
+                        "^vendor/",
+                        "^contracts/mocks/",
+                        "^.git/",
+                        "^.cache/",
+                        "%.mmdb",
+                        "%.pdf",
+                        "%.zip",
+                        "%.dll",
+                    },
                     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
                     file_sorter = require("telescope.sorters").get_fuzzy_file,
                     generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
@@ -102,6 +112,7 @@ return {
             -- Telescope
             vim.keymap.set("n", "<C-f>", builtin.find_files)
             vim.keymap.set("n", "<C-g>", builtin.live_grep)
+            -- vim.keymap.set("n", "<C-g>", builtin.current_buffer_fuzzy_find)
             -- vim.keymap.set("n", "<C-g>", builtin.git_files)
 
             vim.keymap.set("n", "<leader>ps", function()

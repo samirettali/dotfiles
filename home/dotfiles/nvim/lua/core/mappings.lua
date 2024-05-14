@@ -4,10 +4,6 @@ vim.g.mapleader = ' '
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
--- Apply macros with Q
-vim.keymap.set("n", "Q", "@q")
-vim.keymap.set("v", "Q", ":norm @q<CR>") -- TODO needed?
-
 -- Select last changed text
 vim.keymap.set("n", "gV", "`[v`]")
 
@@ -78,3 +74,9 @@ vim.keymap.set("n", "<Leader>y", ":%y +<CR>", { noremap = false, silent = true, 
 
 -- zoom current split
 vim.keymap.set("n", "<leader>z", "<C-w>o<C-w>|", { silent = true, desc = "Maximize current split" })
+
+-- Resize splits
+vim.keymap.set("n", "<M-,>", "<C-w>5<", { silent = true })
+vim.keymap.set("n", "<M-.>", "<C-w>5>", { silent = true })
+vim.keymap.set("n", "<M-t>", "<C-w>+", { silent = true })
+vim.keymap.set("n", "<M-s>", "<C-w>-", { silent = true })
