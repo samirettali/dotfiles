@@ -132,7 +132,7 @@
             fi
         }
 
-        export PATH=~/.bin:$PATH
+        export PATH=~/.yarn/bin/:~/.bin:$PATH
         export PKG_CONFIG_PATH=${pkgs.openssl.dev}/lib/pkgconfig
       '';
       shellAliases = {
