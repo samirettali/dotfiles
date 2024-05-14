@@ -4,8 +4,6 @@
   imports = [
     ./dotfiles.nix
     ./shell
-    ./common/alacritty.nix
-    ./common/kitty.nix
   ];
 
   home.sessionVariables = {

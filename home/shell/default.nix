@@ -32,7 +32,6 @@
     tree
     unzip
     watchexec
-    cachix
     graphviz
   ];
 
