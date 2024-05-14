@@ -13,7 +13,6 @@ local function load_modules()
         "core.winbar",
         "core.mappings",
         "core.largefile",
-        "plugins",
     }
 
     for _, module in ipairs(modules) do
@@ -39,3 +38,5 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 load_modules()
+
+require("lazy").setup({ import = "plugins", })

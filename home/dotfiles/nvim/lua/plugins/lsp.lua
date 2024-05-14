@@ -306,7 +306,7 @@ local function config()
         }
     })
 
-    lspconfig.solc.setup({})
+    -- lspconfig.solc.setup({})
 
     lspconfig.nixd.setup({})
     lspconfig.csharp_ls.setup({})
