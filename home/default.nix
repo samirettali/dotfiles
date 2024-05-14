@@ -10,6 +10,7 @@
     EDITOR = "nvim";
     TERMINAL = "kitty";
     TERM = "xterm-256color";
+    DEFAULT_BROWSER = "brave";
   };
 
   programs = {

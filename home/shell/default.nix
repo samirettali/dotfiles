@@ -15,6 +15,7 @@
     curl
     diskus
     fd
+    graphviz
     htop
     iredis
     jq
@@ -34,7 +35,6 @@
     unzip
     visidata
     watchexec
-    graphviz
     youtube-dl
   ];
 
