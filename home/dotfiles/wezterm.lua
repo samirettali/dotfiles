@@ -1,7 +1,5 @@
 local wezterm = require("wezterm");
 
----cycle through builtin dark schemes in dark mode,
----and through light schemes in light mode
 local function themeCycler(window, _)
     local allSchemes = wezterm.color.get_builtin_schemes()
     local currentMode = wezterm.gui.get_appearance()
@@ -35,21 +33,18 @@ local function themeCycler(window, _)
 end
 
 return {
+    font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular" }),
+    font_size = 13.5,
+    enable_tab_bar = false,
+    color_scheme = "Builtin Dark",
+    adjust_window_size_when_changing_font_size = false,
     window_padding = {
         left = 0,
         right = 0,
         top = 0,
         bottom = 0,
     },
-    font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Medium" }),
-    font_size = 14.5,
-    font_rules = {
-        intensity = "Half",
-    },
-    freetype_load_target = "Light",
-    enable_tab_bar = false,
-    color_scheme = "Builtin Dark",
     keys = {
-        { key = "t", mods = "ALT", action = wezterm.action_callback(themeCycler) },
-    }
+        { key = "t", mods = "CMD", action = wezterm.action_callback(themeCycler) },
+    },
 }
