@@ -9,6 +9,7 @@
     findomain
     httpx
     naabu
+    sqlmap
     nmap
   ];
 }
