@@ -24,6 +24,8 @@ vim.keymap.set("v", "<Leader>p", '"_dP"', { remap = false, desc = "Paste replace
 -- map("n", ",p", '"0p')
 -- map("v", ",P", '"0P')
 
+vim.keymap.set("v", "<C-c>", '"+y', { noremap = false, silent = true, desc = "Copy to clipboard" })
+
 -- Keep lines centered when going through search results
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
