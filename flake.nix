@@ -44,7 +44,7 @@
       };
 
       overlays = with inputs; [
-        neovim-nightly-overlay.overlay
+        neovim-nightly-overlay.overlays.default
         fenix.overlays.default
         nur.overlay
         foundry.overlay
