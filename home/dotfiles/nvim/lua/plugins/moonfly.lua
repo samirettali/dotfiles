@@ -71,6 +71,6 @@ return {
             group = moonfly_highlights,
         })
 
-        -- vim.cmd.colorscheme("moonfly")
+        vim.cmd.colorscheme("moonfly")
     end
 }

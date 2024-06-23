@@ -19,6 +19,6 @@ return {
         }
 
         nordic.setup(opts)
-        nordic.load()
+        -- nordic.load()
     end
 }
