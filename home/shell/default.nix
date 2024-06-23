@@ -1,5 +1,6 @@
 { lib
 , pkgs
+, inputs
 , ...
 }: {
   imports = [
@@ -22,20 +23,25 @@
     moreutils
     mprocs
     ncdu
-    neovim-nightly
     ngrok
     p7zip
+    graphviz
     pgcli
     ripgrep
     tmux
     trash-cli
     tree
     unzip
+    visidata
     watchexec
-    graphviz
   ];
 
   programs = {
+    neovim = {
+      enable = lib.mkDefault true;
+      package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    };
+
     direnv = {
       enable = true;
       enableZshIntegration = true;
@@ -52,6 +58,15 @@
         "--hidden"
         "--smart-case"
       ];
+    };
+    zellij = {
+      enable = lib.mkDefault true;
+      enableZshIntegration = false;
+      settings = {
+        # theme = "custom";
+        # themes.custom.fg = "#ffffff";
+
+      };
     };
   };
 }
