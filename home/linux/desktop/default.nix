@@ -16,5 +16,6 @@
     newsflash
     ungoogled-chromium
     brave
+    zed-editor
   ];
 }
