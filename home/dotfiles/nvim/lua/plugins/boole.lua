@@ -1,9 +1,11 @@
 return {
     "nat-418/boole.nvim",
-    config = {
-        mappings = {
-            increment = '<C-\'>',
-            decrement = '<C-;>'
-        },
-    }
+    setup = function()
+        require("boole").setup({
+            mappings = {
+                increment = '<C-\'>',
+                decrement = '<C-;>'
+            },
+        })
+    end
 }
