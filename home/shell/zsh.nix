@@ -62,7 +62,7 @@
           if [[ "$TERM_PROGRAM" == 'vscode' ]]; then
             local LVL=$(($SHLVL - 3))
           elif [[ -n "$TMUX" ]]; then
-            local LVL=$(($SHLVL - 2))
+            local LVL=$(($SHLVL - 1))
           else
             # Simple terminal
             local LVL=$SHLVL-2
