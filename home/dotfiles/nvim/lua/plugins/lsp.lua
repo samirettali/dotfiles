@@ -306,7 +306,7 @@ local function config()
         }
     })
 
-    require 'lspconfig'.solidity_ls.setup {
+    lspconfig.solidity_ls.setup {
         cmd = { "vscode-solidity-server", "--stdio" }
     }
 

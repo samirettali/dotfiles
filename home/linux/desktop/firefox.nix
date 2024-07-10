@@ -1,13 +1,9 @@
 { pkgs
 , ...
 }: {
-  home.sessionVariables = {
-    DEFAULT_BROWSER = "firefox";
-  };
-
   programs = {
     firefox = {
-      enable = true;
+      enable = false;
       package = with pkgs; (firefox.override {
         nativeMessagingHosts = [ passff-host ];
         extraPolicies = {

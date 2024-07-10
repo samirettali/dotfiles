@@ -12,7 +12,6 @@
       ];
     };
     extraConfig = ''
-      text_composition_strategy 1.7 0
       cursor_shape block
       map ctrl+shift+plus change_font_size all +0.5
       map ctrl+shift+minus change_font_size all -0.5

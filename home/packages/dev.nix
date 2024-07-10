@@ -54,7 +54,7 @@
     python312
     pipenv
     pyenv
-    nodePackages_latest.pyright
+    pyright
 
     nixpkgs-fmt
     nixd
@@ -63,7 +63,8 @@
     zls
 
     foundry-bin
-    (inputs.solc.mkDefault pkgs pkgs.solc_0_8_23)
+    (inputs.solc.mkDefault pkgs pkgs.solc_0_8_26)
+    nur.repos.gabr1sr.vscode-solidity-server
 
     gh
     kcat

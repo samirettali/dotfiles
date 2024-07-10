@@ -17,10 +17,9 @@ in
       package = pkgs.vscode;
       enableExtensionUpdateCheck = true;
       enableUpdateCheck = false;
-      extensions = with pkgs.vscode-extensions; [
+      extensions = (with pkgs.vscode-extensions; [
         vscodevim.vim
         eamodio.gitlens
-        marketplace.amos402.scope-bar
         mkhl.direnv
 
         github.copilot
@@ -29,10 +28,10 @@ in
         jnoortheen.nix-ide
         golang.go
         rust-lang.rust-analyzer
-
-        marketplace.juanblanco.solidity
-      ] ++ [
+      ]) ++ [
         (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csdevkit)
+        marketplace.amos402.scope-bar
+        marketplace.juanblanco.solidity
       ];
       keybindings = [ ];
       userSettings = {
@@ -87,7 +86,6 @@ in
           "@openzeppelin/contracts/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/"
           "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/"
         ];
-
       };
     };
   };

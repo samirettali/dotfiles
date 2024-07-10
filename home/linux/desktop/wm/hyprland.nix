@@ -19,7 +19,6 @@
         gaps_in = 1;
         gaps_out = 1;
         border_size = 1;
-        cursor_inactive_timeout = 4;
         "col.active_border" = "0xffbbbbbb";
         "col.inactive_border" = "0xff222222";
       };
@@ -28,6 +27,7 @@
         touchpad.disable_while_typing = true;
         repeat_rate = 60;
         repeat_delay = 200;
+        sensitivity = 1.0;
       };
       dwindle = {
         no_gaps_when_only = true;
