@@ -55,4 +55,10 @@
       templates = null;
       videos = "${home}/vids";
     };
+
+  xsession.windowManager.xmonad = {
+    enable = true;
+    enableContribAndExtras = true;
+    config = builtins.readFile ../../../dotfiles/xmonad/xmonad.hs;
+  };
 }
