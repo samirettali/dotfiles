@@ -25,7 +25,7 @@
     "diagnostics": false,
     "metrics": false
   },
-  "theme": "Gruvbox Dark Hard",
+  "theme": "Fleet Dark",
   "toolbar": {
     "quick_actions": false
   },
