@@ -24,7 +24,6 @@
   services = {
     gpg-agent = {
       enable = true;
-      pinentryPackage = "qt";
       enableExtraSocket = true;
       enableScDaemon = true;
     };

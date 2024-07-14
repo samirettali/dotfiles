@@ -3,7 +3,7 @@
 , ...
 }: {
   programs.kitty = {
-    enable = true;
+    enable = false;
     font = {
       # name = "JetBrainsMono Nerd Font";
       name = "Berkeley Mono";

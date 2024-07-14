@@ -28,6 +28,8 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nur.url = "github:nix-community/NUR";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
+    wezterm.url = "github:wez/wezterm?dir=nix";
   };
 
   outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
@@ -110,6 +112,7 @@
           specialArgs = { inherit inputs; inherit user; };
           modules = [
             ./machines/xps/configuration.nix
+            ./machines/xps/hardware-configuration.nix
             ({ lib, pkgs, system, ... }: {
               nixpkgs.config.allowUnfree = lib.mkDefault true;
               nixpkgs.overlays = overlays;

@@ -8,7 +8,7 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
-    TERMINAL = "kitty";
+    TERMINAL = "alacritty";
     TERM = "xterm-256color";
     DEFAULT_BROWSER = "brave";
   };

@@ -4,6 +4,7 @@
 }: {
   imports = [
     ./hyprland.nix
+    ./sway.nix
     ./waybar.nix
     ./swaylock.nix
     ./mako.nix
@@ -26,6 +27,7 @@
     imv
     xdg-utils
     wtype
+    xorg.xinit
   ];
 
   home.sessionVariables = {
@@ -59,6 +61,6 @@
   xsession.windowManager.xmonad = {
     enable = true;
     enableContribAndExtras = true;
-    config = builtins.readFile ../../../dotfiles/xmonad/xmonad.hs;
+    config = ../../../dotfiles/xmonad/xmonad.hs;
   };
 }

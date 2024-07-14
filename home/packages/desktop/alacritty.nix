@@ -6,11 +6,11 @@
     enable = true;
     settings = {
       font = {
-        # normal.family = "JetBrainsMono Nerd Font";
-        normal.family = "Berkeley Mono";
+        normal.family = "JetBrainsMono Nerd Font";
+        normal.style = "Medium";
         size = lib.mkMerge [
           (lib.mkIf pkgs.stdenv.isDarwin 14)
-          (lib.mkIf pkgs.stdenv.isLinux 10)
+          (lib.mkIf pkgs.stdenv.isLinux 10.5)
         ];
       };
 
