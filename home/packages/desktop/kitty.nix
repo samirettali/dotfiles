@@ -5,7 +5,8 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = "JetBrainsMono Nerd Font";
+      # name = "JetBrainsMono Nerd Font";
+      name = "Berkeley Mono";
       size = lib.mkMerge [
         (lib.mkIf pkgs.stdenv.isDarwin 14)
         (lib.mkIf pkgs.stdenv.isLinux 10)
