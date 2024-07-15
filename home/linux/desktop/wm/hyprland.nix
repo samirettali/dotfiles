@@ -16,9 +16,9 @@
     xwayland.enable = true;
     settings = {
       general = {
-        gaps_in = 1;
-        gaps_out = 1;
-        border_size = 1;
+        gaps_in = 4;
+        gaps_out = 4;
+        border_size = 2;
         "col.active_border" = "0xffbbbbbb";
         "col.inactive_border" = "0xff222222";
       };
@@ -35,6 +35,9 @@
       };
       misc = {
         new_window_takes_over_fullscreen = 2;
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
+        force_default_wallpaper = 0;
       };
       decoration = {
         rounding = 0;
@@ -46,13 +49,13 @@
         "${pkgs.swaybg}/bin/swaybg -i /home/samir/pics/walls/bg.png --mode tile"
       ];
       exec-once = [
+        "dbus-update-activation-environment --systemd --all"
         "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"
       ];
 
       bind =
         let
           swaylock = "${config.programs.swaylock.package}/bin/swaylock";
-          grimblast = "${pkgs.grimblast}/bin/grimblast";
           terminal = config.home.sessionVariables.TERMINAL;
           fileExplorer = "${pkgs.cinnamon.nemo}/bin/nemo";
           bemenuRun = "${pkgs.bemenu}/bin/bemenu-run";
@@ -152,9 +155,9 @@
       ];
     };
     extraConfig = ''
-      windowrule=float,^(nemo)$
       windowrule=float,^(pavucontrol)$
       windowrule=float,title:^(Picture-in-Picture)$
+      windowrule=workspace 8,^(Spotify)$
       windowrulev2=suppressevent maximize fullscreen,class:^(mpv)$
     '';
   };
