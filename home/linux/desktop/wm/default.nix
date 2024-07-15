@@ -57,10 +57,4 @@
       templates = null;
       videos = "${home}/vids";
     };
-
-  xsession.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
-    config = ../../../dotfiles/xmonad/xmonad.hs;
-  };
 }
