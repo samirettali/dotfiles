@@ -81,6 +81,7 @@
           "SUPERSHIFT,q,killactive"
           "SUPERSHIFT,e,exit"
           "SUPER,f,fullscreen,1"
+          "SUPERSHIFT,f,togglefloating"
 
           "SUPER,RETURN,exec,${terminal}"
           "SUPER,d,exec,${bemenuRun}"
