@@ -7,10 +7,10 @@
     settings = {
       font = {
         normal.family = "JetBrainsMono Nerd Font";
-        normal.style = "Medium";
+        normal.style = "Regular";
         size = lib.mkMerge [
           (lib.mkIf pkgs.stdenv.isDarwin 14)
-          (lib.mkIf pkgs.stdenv.isLinux 10.5)
+          (lib.mkIf pkgs.stdenv.isLinux 10)
         ];
       };
 
