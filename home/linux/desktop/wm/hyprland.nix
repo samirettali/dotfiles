@@ -16,9 +16,9 @@
     xwayland.enable = true;
     settings = {
       general = {
-        gaps_in = 4;
-        gaps_out = 4;
-        border_size = 2;
+        gaps_in = 1;
+        gaps_out = 1;
+        border_size = 1;
         "col.active_border" = "0xffbbbbbb";
         "col.inactive_border" = "0xff222222";
       };
