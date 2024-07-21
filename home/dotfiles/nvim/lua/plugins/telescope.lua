@@ -119,6 +119,8 @@ return {
                 builtin.grep_string { search = vim.fn.input("grep: ") }
             end)
 
+            vim.keymap.set("n", "<leader>pb", builtin.buffers)
+
             vim.keymap.set("n", "<leader>pws", function()
                 local word = vim.fn.expand("<cword>")
                 builtin.grep_string { search = word }
