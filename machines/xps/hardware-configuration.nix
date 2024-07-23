@@ -72,6 +72,7 @@
         DNSSEC = "yes";
         DNSOverTLS = "yes";
         DNS = [ "1.1.1.1" "1.0.0.1" ];
+        IPv6AcceptRA = false;
       };
       linkConfig.RequiredForOnline = "routable";
     };
@@ -97,6 +98,4 @@
     graphics.enable = true;
     graphics.enable32Bit = true;
   };
-
 }
-
