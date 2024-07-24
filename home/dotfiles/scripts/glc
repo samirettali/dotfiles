@@ -5,8 +5,8 @@ if ! git rev-parse --is-inside-work-tree &>/dev/null; then
     exit 1
 fi
 
-local os=$(uname)
-local commit_hash
+os=$(uname)
+commit_hash=""
 
 # Check the operating system
 case $os in

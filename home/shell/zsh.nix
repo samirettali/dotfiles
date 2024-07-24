@@ -3,14 +3,8 @@
 , ...
 }:
 let
-  copyCommand = lib.mkMerge [
-    (lib.mkIf pkgs.stdenv.isDarwin "pbcopy")
-    (lib.mkIf pkgs.stdenv.isLinux "xclip -selection clipboard")
-  ];
-  pasteCommand = lib.mkMerge [
-    (lib.mkIf pkgs.stdenv.isDarwin "pbpaste")
-    (lib.mkIf pkgs.stdenv.isLinux "xclip -o -selection clipboard")
-  ];
+  copyCommand = if pkgs.stdenv.isDarwin then "pbcopy" else "xclip -selection clipboard";
+  pasteCommand = if pkgs.stdenv.isDarwin then "pbpaste" else "xclip -o -selection clipboard";
 in
 {
   programs = {
