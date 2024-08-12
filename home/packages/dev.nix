@@ -1,5 +1,4 @@
 { pkgs
-, inputs
 , ...
 }: {
   home.packages = with pkgs; [
@@ -32,6 +31,7 @@
       ])
       fenix.targets.wasm32-unknown-unknown.latest.rust-std
     ])
+
     cargo-watch
     cargo-generate
     rust-analyzer-nightly
@@ -48,8 +48,10 @@
     yarn
     nodePackages.typescript-language-server
 
-    openssl.dev
+    # TODO: check if needed
     pkg-config
+    openssl.dev
+    libiconv
 
     python312
     pipenv
@@ -63,8 +65,11 @@
     zls
 
     foundry-bin
-    (inputs.solc.mkDefault pkgs pkgs.solc_0_8_26)
-    nur.repos.gabr1sr.vscode-solidity-server
+    # (inputs.solc.mkDefault pkgs pkgs.solc_0_8_25)
+    solc-select
+    slither-analyzer
+    go-ethereum
+    # nur.repos.gabr1sr.vscode-solidity-server
 
     gh
     kcat

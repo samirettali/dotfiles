@@ -70,8 +70,10 @@
       set -g pane-border-style "fg=colour234"
       set -g allow-passthrough on
 
-      set -g default-terminal "tmux-256color"
-      set -ag terminal-overrides ",xterm-256color:RGB"
+      # set -g default-terminal "tmux-256color"
+      # set -ag terminal-overrides ",xterm-256color:RGB"
+      set-option -ga terminal-overrides ",alacritty:Tc"
+      set -g default-terminal "alacritty"
     '';
     historyLimit = 50000;
     keyMode = "vi";

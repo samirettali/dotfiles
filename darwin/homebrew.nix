@@ -16,12 +16,11 @@
       "granted"
     ];
     casks = [
+      "phantomjs"
       "alfred"
       "another-redis-desktop-manager"
       "burp-suite"
-      "datagrip"
-      "rider"
-      "goland"
+      "redisinsight"
       "docker"
       "iina"
       "karabiner-elements"
@@ -37,24 +36,16 @@
       "shottr"
       "slack"
       "spotmenu"
+      "raycast"
       "the-unarchiver"
+      "db-browser-for-sqlite"
     ];
     taps = [
       "homebrew/bundle"
       "homebrew/services"
       "common-fate/granted"
+      "nikitabobko/tap"
     ];
   };
-
-  system = {
-    defaults = {
-      NSGlobalDomain = {
-        InitialKeyRepeat = 15;
-        KeyRepeat = 2;
-      };
-    };
-  };
-
-  programs.gnupg.agent.enable = true; # TODO is this needed?
 }
 

@@ -35,7 +35,7 @@
     unzip
     visidata
     watchexec
-    youtube-dl
+    yt-dlp
   ];
 
   programs = {
