@@ -20,7 +20,7 @@
     hyprpicker
     grimblast
     zathura
-    cinnamon.nemo
+    nemo
     cliphist
     pavucontrol
     ffmpegthumbnailer

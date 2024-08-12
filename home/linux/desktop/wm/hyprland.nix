@@ -3,7 +3,6 @@
 , lib
 , ...
 }: {
-
   wayland.windowManager.hyprland = {
     enable = true;
     systemd = {
@@ -57,7 +56,7 @@
         let
           swaylock = "${config.programs.swaylock.package}/bin/swaylock";
           terminal = config.home.sessionVariables.TERMINAL;
-          fileExplorer = "${pkgs.cinnamon.nemo}/bin/nemo";
+          fileExplorer = "${pkgs.nemo}/bin/nemo";
           bemenuRun = "${pkgs.bemenu}/bin/bemenu-run";
           bemenu = "${pkgs.bemenu}/bin/bemenu";
           cliphist = "${pkgs.cliphist}/bin/cliphist";
