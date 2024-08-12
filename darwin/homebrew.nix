@@ -11,16 +11,12 @@
       "automake"
       "cmake"
       "coreutils"
-      "terraform"
-      "amazon-ecs-cli"
-      "granted"
     ];
     casks = [
-      "phantomjs"
       "alfred"
-      "another-redis-desktop-manager"
       "burp-suite"
-      "redisinsight"
+      "cursor"
+      "db-browser-for-sqlite"
       "docker"
       "iina"
       "karabiner-elements"
@@ -29,22 +25,18 @@
       "maccy"
       "mongodb-compass"
       "openvpn-connect"
+      "phantomjs"
       "postman"
       "protonvpn"
       "rectangle"
-      "royal-tsx"
+      "redisinsight"
       "shottr"
-      "slack"
       "spotmenu"
-      "raycast"
       "the-unarchiver"
-      "db-browser-for-sqlite"
     ];
     taps = [
       "homebrew/bundle"
       "homebrew/services"
-      "common-fate/granted"
-      "nikitabobko/tap"
     ];
   };
 }

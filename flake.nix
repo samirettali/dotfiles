@@ -63,6 +63,7 @@
           modules = [
             ./machines/mbp.nix
             ./darwin/homebrew.nix
+            ./darwin/work.nix
             ({ lib, pkgs, system, ... }: {
               nixpkgs.config.allowUnfree = lib.mkDefault true;
               nixpkgs.overlays = overlays;
