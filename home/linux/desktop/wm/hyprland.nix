@@ -158,6 +158,9 @@
       windowrule=float,title:^(Picture-in-Picture)$
       windowrule=workspace 8,^(Spotify)$
       windowrulev2=suppressevent maximize fullscreen,class:^(mpv)$
+
+      windowrule=float,title:^(_crx_acmacodkjbdgmoleebolmdjonilkdbch)$
+      windowrulev2=stayfocused,title:^(_crx_acmacodkjbdgmoleebolmdjonilkdbch)$
     '';
   };
 }
