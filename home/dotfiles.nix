@@ -6,5 +6,6 @@
     ".config/karabiner" = { source = dotfiles/karabiner; recursive = true; };
     ".Xdefaults".source = dotfiles/Xdefaults;
     ".config/zed/settings.json".source = dotfiles/zed.json;
+    "revive.toml".source = dotfiles/revive.toml;
   };
 }
