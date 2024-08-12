@@ -1,5 +1,6 @@
-{ pkgs, programs, ... }: {
-
+{ pkgs
+, ...
+}: {
   home.packages = with pkgs; [
     google-fonts
     noto-fonts
