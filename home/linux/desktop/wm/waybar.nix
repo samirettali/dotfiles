@@ -110,6 +110,7 @@ in
           color: ${colors.white};
           padding: 4px;
         }
+
         #workspaces button.focused,
         #workspaces button.active {
           background-color: ${colors.white};
