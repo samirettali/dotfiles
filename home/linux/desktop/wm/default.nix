@@ -1,5 +1,6 @@
 { config
 , pkgs
+, inputs
 , ...
 }: {
   imports = [
@@ -10,6 +11,7 @@
     ./mako.nix
     ./gtk.nix
     ./kanshi.nix
+    inputs.walker.homeManagerModules.walker
   ];
 
   home.packages = with pkgs; [
@@ -27,7 +29,6 @@
     imv
     xdg-utils
     wtype
-    xorg.xinit
   ];
 
   home.sessionVariables = {
@@ -57,4 +58,10 @@
       templates = null;
       videos = "${home}/vids";
     };
+
+  programs.walker = {
+    enable = true;
+    runAsService = true;
+    config = { };
+  };
 }

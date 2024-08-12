@@ -57,6 +57,7 @@
       udisks
       apfs-fuse
       openresolv
+      openvpn
     ];
     etc = {
       "dual-function-keys.yaml".text = builtins.readFile ./dual-function-keys.yaml;
@@ -79,17 +80,6 @@
   virtualisation.docker.enable = true;
 
   security.polkit.enable = true;
-
-  # fonts = {
-  #   fontconfig = {
-  #     enable = true;
-  #     antialias = true;
-  #     cache32Bit = true;
-  #     hinting.enable = true;
-  #     hinting.autohint = true;
-  #     hinting.style = "slight";
-  #   };
-  # };
 
   xdg.portal = {
     enable = true;

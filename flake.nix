@@ -30,6 +30,7 @@
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
     wezterm.url = "github:wez/wezterm?dir=nix";
+    walker.url = "github:abenz1267/walker";
   };
 
   outputs = { self, nixpkgs, darwin, home-manager, ... }@inputs:
