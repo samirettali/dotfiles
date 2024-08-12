@@ -2,7 +2,6 @@ local group = vim.api.nvim_create_augroup("LargeFileAutocmds", {})
 local old_eventignore = vim.o.eventignore;
 local largefile_opened = false;
 
-
 vim.api.nvim_create_autocmd({ "BufReadPre" }, {
     group = group,
     callback = function(ev)
@@ -31,7 +30,6 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
         end
     end
 })
-
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     group = group,

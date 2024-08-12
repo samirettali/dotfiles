@@ -26,7 +26,6 @@
     ncdu
     ngrok
     p7zip
-    graphviz
     pgcli
     ripgrep
     tmux
