@@ -1,10 +1,9 @@
-{ ...
+{ pkgs
+, ...
 }: {
   home.sessionVariables = {
     CLICOLOR = "1";
-    DOTNET_CLI_TELEMETRY_OPTOUT = "1";
   };
-
 
   programs = {
     zsh = {
@@ -13,10 +12,16 @@
       '';
       shellAliases = {
         ls = "/opt/homebrew/bin/gls --color=auto --group-directories-first";
-        assume = "source assume";
       };
     };
 
     gpg.enable = true;
   };
+
+  home.packages = with pkgs; [
+    darwin.apple_sdk.frameworks.CoreFoundation
+    darwin.apple_sdk.frameworks.CoreServices
+    darwin.apple_sdk.frameworks.Security
+    darwin.apple_sdk.frameworks.SystemConfiguration
+  ];
 }
