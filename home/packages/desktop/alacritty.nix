@@ -1,16 +1,16 @@
 { lib
 , pkgs
+, customArgs
 , ...
 }: {
   programs.alacritty = {
     enable = true;
     settings = {
       font = {
-        normal.family = "JetBrainsMono Nerd Font";
-        normal.style = "Regular";
+        normal.family = customArgs.font.name;
         size = lib.mkMerge [
-          (lib.mkIf pkgs.stdenv.isDarwin 14)
-          (lib.mkIf pkgs.stdenv.isLinux 10)
+          (lib.mkIf pkgs.stdenv.isDarwin customArgs.font.darwinSize)
+          (lib.mkIf pkgs.stdenv.isLinux customArgs.font.linuxSize)
         ];
       };
 

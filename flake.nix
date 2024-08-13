@@ -54,6 +54,13 @@
         solc.overlay
       ];
 
+      customArgs = {
+        font = {
+          name = "JetBrainsMono Nerd Font";
+          linuxSize = 10;
+          darwinSize = 14;
+        };
+      };
     in
     {
       darwinConfigurations = {
@@ -89,7 +96,7 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 # makes all inputs available in imported files for hm
-                extraSpecialArgs = { inherit inputs; };
+                extraSpecialArgs = { inherit inputs customArgs; };
                 users."s.ettali" = { system, ... }: with inputs; {
                   imports = [
                     ./home
@@ -141,7 +148,7 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                extraSpecialArgs = { inherit inputs; };
+                extraSpecialArgs = { inherit inputs customArgs; };
                 users.${user} = { system, ... }: {
                   imports = [
                     ./home

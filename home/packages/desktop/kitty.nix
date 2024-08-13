@@ -1,15 +1,15 @@
 { lib
 , pkgs
+, customArgs
 , ...
 }: {
   programs.kitty = {
-    enable = false;
+    enable = true;
     font = {
-      # name = "JetBrainsMono Nerd Font";
-      name = "Berkeley Mono";
+      name = customArgs.font.name;
       size = lib.mkMerge [
-        (lib.mkIf pkgs.stdenv.isDarwin 14)
-        (lib.mkIf pkgs.stdenv.isLinux 10)
+        (lib.mkIf pkgs.stdenv.isDarwin customArgs.font.darwinSize)
+        (lib.mkIf pkgs.stdenv.isLinux customArgs.font.linuxSize)
       ];
     };
     extraConfig = ''
