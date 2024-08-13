@@ -7,10 +7,6 @@ vim.keymap.set("v", ">", ">gv")
 -- Select last changed text
 vim.keymap.set("n", "gV", "`[v`]")
 
--- Splits
-vim.keymap.set("n", "\\", ":vsplit<CR>")
-vim.keymap.set("n", "-", ":split<CR>")
-
 vim.keymap.set("n", "<Leader>d", "yap<S-}>p", { desc = "Duplicate paragraph" })
 
 vim.keymap.set("n", "<Leader>tl", ":set list!<CR>", { desc = "Toggle listchars" })
