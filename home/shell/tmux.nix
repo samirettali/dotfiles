@@ -26,6 +26,9 @@
       {
         plugin = tmuxPlugins.vim-tmux-navigator;
       }
+      {
+        plugin = tmuxPlugins.t-smart-tmux-session-manager;
+      }
     ];
     prefix = "C-a";
     shell = "${pkgs.zsh}/bin/zsh";

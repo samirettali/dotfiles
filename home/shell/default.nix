@@ -28,6 +28,7 @@
     p7zip
     pgcli
     ripgrep
+    sesh
     tmux
     trash-cli
     tree
@@ -68,6 +69,10 @@
         # themes.custom.fg = "#ffffff";
 
       };
+    };
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
     };
   };
 }
