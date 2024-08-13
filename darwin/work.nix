@@ -10,7 +10,6 @@
       "slack"
     ];
     taps = [
-
       "common-fate/granted"
     ];
   };
