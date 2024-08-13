@@ -35,8 +35,15 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
 })
 
 -- Create parent folder if it doesnt exist when saving a file
--- TODO: convert to lua
-vim.cmd [[ au BufWritePre,FileWritePre * if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif ]]
+vim.api.nvim_create_autocmd({"BufWritePre", "FileWritePre"}, {
+    pattern = "*",
+    callback = function()
+        local dir = vim.fn.expand("<afile>:p:h")
+        if dir:match("^%a+://") == nil then
+            vim.fn.mkdir(dir, "p")
+        end
+    end,
+})
 
 local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursorline = function(event, value, pattern)
