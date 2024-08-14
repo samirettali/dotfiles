@@ -106,9 +106,6 @@ vim.cmd(":command! Q q")
 vim.cmd(":command! WQ wq")
 vim.cmd(":command! Wq wq")
 
--- Custom stuff
-vim.g.lsp_hints_enabled = false
-
 -- Disable some built-in plugins we don't need
 vim.g.loaded_gzip = 1
 vim.g.loaded_zip = 1

@@ -27,11 +27,6 @@ local function config()
 
     -- vim.keymap.set("n", "<leader>xq", vim.diagnostic.setqflist, { silent = true })
 
-    vim.keymap.set("n", "<Leader>ti", function()
-        vim.g.lsp_hints_enabled = not vim.g.lsp_hints_enabled
-        vim.cmd [[doautocmd User lsp_toggle_inlays]]
-    end)
-
     vim.api.nvim_create_autocmd("LspAttach", {
         group = augroup_lsp_user,
         callback = function(args)
@@ -43,12 +38,9 @@ local function config()
             local bufnr = args.buf
 
             if client.server_capabilities.inlayHintProvider then
-                vim.api.nvim_create_autocmd("User", {
-                    pattern = "lsp_toggle_inlays",
-                    callback = function()
-                        vim.lsp.inlay_hint.enable(bufnr, vim.g.lsp_hints_enabled)
-                    end
-                })
+                vim.keymap.set("n", "<Leader>ti", function()
+                    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+                end)
             end
 
             local caps = client.server_capabilities
