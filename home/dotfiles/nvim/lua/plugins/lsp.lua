@@ -113,7 +113,7 @@ return {
 					setup_lsp_mapping("n", "gr", vim.lsp.buf.rename)
 				end
 
-				if client.supports_method(methods.textDocument.signature_help) then
+				if client.supports_method(methods.textDocument_signatureHelp) then
 					setup_lsp_mapping("i", "<C-h>", vim.lsp.buf.signature_help)
 				end
 
