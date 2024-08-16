@@ -2,7 +2,7 @@
 , ...
 }: {
   home.packages = with pkgs; [
-    awscli2
+    # awscli2
     terraform
     csharp-ls
     dbeaver-bin

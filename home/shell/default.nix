@@ -35,7 +35,7 @@
     trash-cli
     tree
     unzip
-    visidata
+    # visidata
     watchexec
     yt-dlp
   ];
