@@ -40,15 +40,13 @@ vim.opt.foldlevelstart = 20 -- Set initial fold level
 
 vim.opt.timeoutlen = 400
 
-vim.opt.hidden = true        -- Enable having modified buffers in background
-vim.opt.joinspaces = false   -- No double spaces with join after a dot
-vim.opt.scrolloff = 10       -- Lines of context
-vim.opt.sidescrolloff = 8    -- Columns of context
-vim.opt.shiftround = true    -- Round indent
-vim.opt.splitbelow = true    -- Put new windows below current
-vim.opt.splitright = true    -- Put new windows right of current
-
-vim.opt.termguicolors = true -- TODO this can be removed
+vim.opt.hidden = true      -- Enable having modified buffers in background
+vim.opt.joinspaces = false -- No double spaces with join after a dot
+vim.opt.scrolloff = 10     -- Lines of context
+vim.opt.sidescrolloff = 8  -- Columns of context
+vim.opt.shiftround = true  -- Round indent
+vim.opt.splitbelow = true  -- Put new windows below current
+vim.opt.splitright = true  -- Put new windows right of current
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
