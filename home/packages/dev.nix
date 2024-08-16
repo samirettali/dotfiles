@@ -1,4 +1,5 @@
 { pkgs
+, config
 , ...
 }: {
   home.packages = with pkgs; [
@@ -71,5 +72,9 @@
     slither-analyzer
     go-ethereum
     # nur.repos.gabr1sr.vscode-solidity-server
+  ];
+
+  home.sessionPath = [
+      "${config.home.homeDirectory}/.yarn/bin"
   ];
 }

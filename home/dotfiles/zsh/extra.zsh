@@ -97,5 +97,4 @@ _tmux_session_or_attach_completions() {
 # Register the completion function with the custom function
 complete -F _tmux_session_or_attach_completions tmux_session_or_attach
 
-export PATH=~/.yarn/bin/:~/.bin:$PATH
 # export PKG_CONFIG_PATH=${pkgs.openssl.dev}/lib/pkgconfig

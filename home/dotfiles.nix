@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, config, ... }: {
   home.file = lib.mkMerge [{
     ".ideavimrc".source = dotfiles/ideavimrc;
     ".config/nvim" = { source = dotfiles/nvim; recursive = true; };
@@ -20,4 +20,8 @@
   (lib.mkIf pkgs.stdenv.isDarwin {
     ".bin/display".source = dotfiles/scripts/display.sh;
   })];
+
+  home.sessionPath = [
+    "${config.home.homeDirectory}/.bin"
+  ];
 }
