@@ -15,6 +15,7 @@
       "automake"
       "cmake"
       "coreutils"
+      "displayplacer"
     ];
 
     casks = [
