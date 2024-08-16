@@ -97,7 +97,7 @@
                 useUserPackages = true;
                 # makes all inputs available in imported files for hm
                 extraSpecialArgs = { inherit inputs customArgs; };
-                users."s.ettali" = { system, ... }: with inputs; {
+                users."s.ettali" = { ... }: {
                   imports = [
                     ./home
                     ./home/mac.nix
