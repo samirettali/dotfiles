@@ -13,6 +13,7 @@
   ];
 
   home.packages = with pkgs; [
+    # visidata
     curl
     diskus
     fd
@@ -24,6 +25,7 @@
     kcat
     lazydocker
     lazygit
+    libqalculate
     moreutils
     mprocs
     ncdu
@@ -32,11 +34,11 @@
     pgcli
     ripgrep
     sesh
+    tldr
     tmux
     trash-cli
     tree
     unzip
-    # visidata
     watchexec
     yt-dlp
   ];
