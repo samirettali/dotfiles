@@ -15,10 +15,12 @@
     curl
     diskus
     fd
+    gh
     graphviz
     htop
     iredis
     jq
+    kcat
     lazydocker
     lazygit
     moreutils

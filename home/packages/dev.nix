@@ -2,8 +2,13 @@
 , ...
 }: {
   home.packages = with pkgs; [
+    ast-grep
     tree-sitter
-    lua-language-server
+
+    # TODO: check if needed
+    pkg-config
+    openssl.dev
+    libiconv
 
     delve
     go
@@ -31,7 +36,6 @@
       ])
       fenix.targets.wasm32-unknown-unknown.latest.rust-std
     ])
-
     cargo-watch
     cargo-generate
     rust-analyzer-nightly
@@ -48,10 +52,7 @@
     yarn
     nodePackages.typescript-language-server
 
-    # TODO: check if needed
-    pkg-config
-    openssl.dev
-    libiconv
+    lua-language-server
 
     python312
     pipenv
@@ -70,8 +71,5 @@
     slither-analyzer
     go-ethereum
     # nur.repos.gabr1sr.vscode-solidity-server
-
-    gh
-    kcat
   ];
 }
