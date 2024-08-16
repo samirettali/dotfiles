@@ -28,7 +28,6 @@
       "karabiner-elements"
       "ledger-live"
       # "logi-options-plus" # TODO
-      "maccy"
       "mongodb-compass"
       "openvpn-connect"
       "phantomjs"
