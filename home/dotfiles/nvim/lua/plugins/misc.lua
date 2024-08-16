@@ -4,6 +4,12 @@ return {
 	"tpope/vim-eunuch", -- UNIX commands inside neovim, disabled because it broke something
 	"tpope/vim-surround", -- Add surround object for editing
 	"github/copilot.vim", -- Copilot
+	{
+		"echasnovski/mini.ai",
+		config = function()
+			require("mini.ai").setup()
+		end,
+	},
 	{ "stevearc/dressing.nvim", config = true }, -- Floating UI selectors
 	{ "j-hui/fidget.nvim", config = true }, -- Show LSP loading status
 	{ "stevearc/oil.nvim", config = true }, -- File explorer
