@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}: {
+{pkgs, ...}: {
   programs.mpv = {
     enable = true;
     config.image-display-duration = 3;

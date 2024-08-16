@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./vscode.nix
     ./kitty.nix

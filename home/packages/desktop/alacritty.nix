@@ -1,7 +1,8 @@
-{ lib
-, pkgs
-, customArgs
-, ...
+{
+  lib,
+  pkgs,
+  customArgs,
+  ...
 }: {
   programs.alacritty = {
     enable = true;

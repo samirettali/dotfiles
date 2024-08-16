@@ -1,15 +1,16 @@
-{ config, pkgs, lib, ... }:
-
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   user = "samir";
   interface = "wlan0";
   hostname = "pi";
-in
-{
-
+in {
   boot = {
     kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
-    initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+    initrd.availableKernelModules = ["xhci_pci" "usbhid" "usb_storage"];
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;
@@ -20,7 +21,7 @@ in
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
-      options = [ "noatime" ];
+      options = ["noatime"];
     };
   };
 
@@ -28,11 +29,11 @@ in
     hostName = hostname;
     wireless = {
       enable = true;
-      interfaces = [ interface ];
+      interfaces = [interface];
     };
   };
 
-  environment.systemPackages = with pkgs; [ vim ];
+  environment.systemPackages = with pkgs; [vim];
 
   services.openssh.enable = true;
 
@@ -40,7 +41,7 @@ in
     mutableUsers = false;
     users."${user}" = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = ["wheel"];
     };
   };
 

@@ -1,11 +1,9 @@
-{ pkgs
-, ...
-}: {
+{pkgs, ...}: {
   programs = {
     firefox = {
       enable = false;
       package = with pkgs; (firefox.override {
-        nativeMessagingHosts = [ passff-host ];
+        nativeMessagingHosts = [passff-host];
         extraPolicies = {
           DisableFirefoxStudies = true;
           DisablePocket = true;

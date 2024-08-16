@@ -1,7 +1,8 @@
-{ lib
-, pkgs
-, inputs
-, ...
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
 }: {
   imports = [
     ./zsh.nix
@@ -69,7 +70,6 @@
       settings = {
         # theme = "custom";
         # themes.custom.fg = "#ffffff";
-
       };
     };
     zoxide = {

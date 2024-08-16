@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}: {
+{pkgs, ...}: {
   home.sessionVariables = {
     CLICOLOR = "1";
   };

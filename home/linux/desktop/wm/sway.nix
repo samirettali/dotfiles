@@ -1,20 +1,22 @@
-{ lib, config, pkgs, ... }:
-let
-  modifier = "Mod4";
-in
 {
-
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  modifier = "Mod4";
+in {
   wayland.windowManager.sway = {
     enable = false;
     wrapperFeatures.gtk = true;
     config = {
       assigns = {
-        "8" = [{ app_id = "spotify"; }];
+        "8" = [{app_id = "spotify";}];
       };
       bars = [
         {
           fonts = {
-            names = [ "JetBrainsMono Nerd Font" ];
+            names = ["JetBrainsMono Nerd Font"];
             style = "Regular";
             size = 10.0;
           };
@@ -25,17 +27,17 @@ in
       ];
       floating = {
         criteria = [
-          { app_id = "pavucontrol"; }
-          { app_id = "nemo"; }
-          { app_id = "org.keepassxc.KeePassXC"; }
-          { app_id = "floating_term"; }
-          { window_role = "pop-up"; }
-          { window_role = "task_dialog"; }
+          {app_id = "pavucontrol";}
+          {app_id = "nemo";}
+          {app_id = "org.keepassxc.KeePassXC";}
+          {app_id = "floating_term";}
+          {window_role = "pop-up";}
+          {window_role = "task_dialog";}
         ];
       };
       focus.followMouse = true;
       fonts = {
-        names = [ "JetBrainsMono Nerd Font" ];
+        names = ["JetBrainsMono Nerd Font"];
         style = "Regular";
         size = 10.0;
       };
@@ -79,10 +81,10 @@ in
         };
       };
       startup = [
-        { command = "nm-applet"; }
-        { command = "wl-paste --watch cliphist store"; }
-        { command = "mako"; }
-        { command = "exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK"; }
+        {command = "nm-applet";}
+        {command = "wl-paste --watch cliphist store";}
+        {command = "mako";}
+        {command = "exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK";}
       ];
       terminal = "alacritty";
       window = {
@@ -94,4 +96,3 @@ in
     xwayland = true;
   };
 }
-

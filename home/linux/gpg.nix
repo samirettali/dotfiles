@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     pinentry-qt
   ];
@@ -16,7 +14,7 @@
     keychain = {
       enable = true;
       enableZshIntegration = true;
-      keys = [ ];
+      keys = [];
       inheritType = "any";
     };
   };

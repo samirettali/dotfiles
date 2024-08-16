@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, user
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  user,
+  ...
 }: {
   boot = {
     loader = {
@@ -51,7 +52,7 @@
   };
 
   environment = {
-    shells = with pkgs; [ zsh ];
+    shells = with pkgs; [zsh];
     systemPackages = with pkgs; [
       gvfs
       udisks
@@ -61,12 +62,11 @@
     ];
     etc = {
       "dual-function-keys.yaml".text = builtins.readFile ./dual-function-keys.yaml;
-      "current-system-packages".text =
-        let
-          packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
-          sortedUnique = builtins.sort builtins.lessThan (lib.unique packages);
-          formatted = builtins.concatStringsSep "\n" sortedUnique;
-        in
+      "current-system-packages".text = let
+        packages = builtins.map (p: "${p.name}") config.environment.systemPackages;
+        sortedUnique = builtins.sort builtins.lessThan (lib.unique packages);
+        formatted = builtins.concatStringsSep "\n" sortedUnique;
+      in
         formatted;
     };
   };
@@ -83,8 +83,8 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland ];
-    configPackages = [ pkgs.xdg-desktop-portal-hyprland ];
+    extraPortals = [pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland];
+    configPackages = [pkgs.xdg-desktop-portal-hyprland];
   };
 
   services = {
@@ -100,11 +100,11 @@
     pcscd.enable = true; # Needed for yubikey OTP
     tailscale.enable = true;
 
-    udev.packages = [ pkgs.ledger-udev-rules ];
+    udev.packages = [pkgs.ledger-udev-rules];
 
     interception-tools = {
       enable = true;
-      plugins = [ pkgs.interception-tools-plugins.dual-function-keys ];
+      plugins = [pkgs.interception-tools-plugins.dual-function-keys];
       udevmonConfig = ''
         - JOB: "${pkgs.interception-tools}/bin/intercept -g $DEVNODE | ${pkgs.interception-tools-plugins.dual-function-keys}/bin/dual-function-keys -c /etc/dual-function-keys.yaml | ${pkgs.interception-tools}/bin/uinput -d $DEVNODE"
           DEVICE:

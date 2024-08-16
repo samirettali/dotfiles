@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }: {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -52,32 +53,31 @@
         "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"
       ];
 
-      bind =
-        let
-          swaylock = "${config.programs.swaylock.package}/bin/swaylock";
-          terminal = config.home.sessionVariables.TERMINAL;
-          fileExplorer = "${pkgs.nemo}/bin/nemo";
-          bemenuRun = "${pkgs.bemenu}/bin/bemenu-run";
-          bemenu = "${pkgs.bemenu}/bin/bemenu";
-          cliphist = "${pkgs.cliphist}/bin/cliphist";
-          hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-          jq = "${pkgs.jq}/bin/jq";
-          wtype = "${pkgs.wtype}/bin/wtype";
-          wlcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
-          hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
+      bind = let
+        swaylock = "${config.programs.swaylock.package}/bin/swaylock";
+        terminal = config.home.sessionVariables.TERMINAL;
+        fileExplorer = "${pkgs.nemo}/bin/nemo";
+        bemenuRun = "${pkgs.bemenu}/bin/bemenu-run";
+        bemenu = "${pkgs.bemenu}/bin/bemenu";
+        cliphist = "${pkgs.cliphist}/bin/cliphist";
+        hyprctl = "${pkgs.hyprland}/bin/hyprctl";
+        jq = "${pkgs.jq}/bin/jq";
+        wtype = "${pkgs.wtype}/bin/wtype";
+        wlcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
+        hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
 
-          workspaces = map (n: toString n) (lib.range 1 9);
-          directions = rec {
-            left = "l";
-            right = "r";
-            up = "u";
-            down = "d";
-            h = left;
-            l = right;
-            k = up;
-            j = down;
-          };
-        in
+        workspaces = map (n: toString n) (lib.range 1 9);
+        directions = rec {
+          left = "l";
+          right = "r";
+          up = "u";
+          down = "d";
+          h = left;
+          l = right;
+          k = up;
+          j = down;
+        };
+      in
         [
           "SUPER,TAB,workspace,previous"
           "SUPERSHIFT,q,killactive"
@@ -97,57 +97,55 @@
           "SUPER,v,exec,${wtype} -P XF86Paste"
           "SUPERSHIFT,v,exec,${cliphist} list | ${bemenu} | ${cliphist} decode | ${wlcopy} && ${wtype} -P XF86Paste"
           "SUPER,BACKSPACE,exec,for keyboard in $(${hyprctl} devices -j | ${jq} -r '. | .keyboards | .[] | .name'); do ${hyprctl} switchxkblayout $keyboard next > /dev/null; done"
-        ] ++
-        (lib.optionals config.programs.swaylock.enable [
+        ]
+        ++ (lib.optionals config.programs.swaylock.enable [
           "SUPERSHIFT,l,exec,${swaylock} -S --grace 2"
-        ]) ++
-        (lib.optionals config.programs.password-store.enable [
+        ])
+        ++ (lib.optionals config.programs.password-store.enable [
           "SUPER,p,exec,passbemenu"
-        ]) ++
-        (map
-          (n:
-            "SUPER,${n},workspace,${n}"
+        ])
+        ++ (map
+          (
+            n: "SUPER,${n},workspace,${n}"
           )
-          workspaces) ++
-        (map
-          (n:
-            "SUPERSHIFT,${n},movetoworkspacesilent,${n}"
+          workspaces)
+        ++ (map
+          (
+            n: "SUPERSHIFT,${n},movetoworkspacesilent,${n}"
           )
-          workspaces) ++
-        (lib.mapAttrsToList
-          (key: direction:
-            "SUPER,${key},movefocus,${direction}"
+          workspaces)
+        ++ (lib.mapAttrsToList
+          (
+            key: direction: "SUPER,${key},movefocus,${direction}"
           )
-          directions) ++
-        (lib.mapAttrsToList
-          (key: direction:
-            "SUPERSHIFT,${key},swapwindow,${direction}"
+          directions)
+        ++ (lib.mapAttrsToList
+          (
+            key: direction: "SUPERSHIFT,${key},swapwindow,${direction}"
           )
-          directions) ++
-        (lib.mapAttrsToList
-          (key: direction:
-            "SUPERCONTROL,${key},movewindoworgroup,${direction}"
+          directions)
+        ++ (lib.mapAttrsToList
+          (
+            key: direction: "SUPERCONTROL,${key},movewindoworgroup,${direction}"
           )
-          directions) ++
-        (lib.mapAttrsToList
-          (key: direction:
-            "SUPERALT,${key},focusmonitor,${direction}"
+          directions)
+        ++ (lib.mapAttrsToList
+          (
+            key: direction: "SUPERALT,${key},focusmonitor,${direction}"
           )
-          directions) ++
-        (lib.mapAttrsToList
-          (key: direction:
-            "SUPERALTSHIFT,${key},movecurrentworkspacetomonitor,${direction}"
+          directions)
+        ++ (lib.mapAttrsToList
+          (
+            key: direction: "SUPERALTSHIFT,${key},movecurrentworkspacetomonitor,${direction}"
           )
           directions);
-      binde =
-        let
-          wpctl = "${pkgs.wireplumber}/bin/wpctl";
-        in
-        [
-          ",XF86AudioRaiseVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-          ",XF86AudioLowerVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          ",XF86AudioMute,exec,${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ];
+      binde = let
+        wpctl = "${pkgs.wireplumber}/bin/wpctl";
+      in [
+        ",XF86AudioRaiseVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ",XF86AudioLowerVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ",XF86AudioMute,exec,${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ];
       bindm = [
         "SUPER,mouse:272,movewindow"
         "SUPER,mouse:273,resizewindow"

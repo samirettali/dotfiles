@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, inputs
-, ...
+{
+  config,
+  pkgs,
+  inputs,
+  ...
 }: {
   imports = [
     ./hyprland.nix
@@ -42,26 +43,24 @@
     BEMENU_OPTS = "--center --accept-single -W 0.3 --binding vim --vim-esc-exits -l 10 --fn 'JetBrainsMono Nerd Font 14' -p '' --border 2 --ignorecase --wrap --fixed-height";
   };
 
-  xdg.userDirs =
-    let
-      home = config.home.homeDirectory;
-    in
-    {
-      enable = true;
-      createDirectories = false;
-      desktop = "${home}/desk";
-      documents = "${home}/docs";
-      download = "${home}/down";
-      music = "${home}/music";
-      pictures = "${home}/pics";
-      publicShare = null;
-      templates = null;
-      videos = "${home}/vids";
-    };
+  xdg.userDirs = let
+    home = config.home.homeDirectory;
+  in {
+    enable = true;
+    createDirectories = false;
+    desktop = "${home}/desk";
+    documents = "${home}/docs";
+    download = "${home}/down";
+    music = "${home}/music";
+    pictures = "${home}/pics";
+    publicShare = null;
+    templates = null;
+    videos = "${home}/vids";
+  };
 
   programs.walker = {
     enable = true;
     runAsService = true;
-    config = { };
+    config = {};
   };
 }

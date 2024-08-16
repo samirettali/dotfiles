@@ -1,6 +1,7 @@
-{ pkgs
-, config
-, ...
+{
+  pkgs,
+  config,
+  ...
 }: {
   home.packages = with pkgs; [
     ast-grep
@@ -53,6 +54,7 @@
     yarn
     nodePackages.typescript-language-server
 
+    stylua
     lua-language-server
 
     python312
@@ -75,6 +77,6 @@
   ];
 
   home.sessionPath = [
-      "${config.home.homeDirectory}/.yarn/bin"
+    "${config.home.homeDirectory}/.yarn/bin"
   ];
 }

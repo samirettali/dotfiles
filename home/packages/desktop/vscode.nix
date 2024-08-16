@@ -1,39 +1,40 @@
-{ inputs
-, pkgs
-, lib
-, ...
-}:
-let
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: let
   marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
   fontSize = lib.mkMerge [
     (lib.mkIf pkgs.stdenv.isDarwin 13)
     (lib.mkIf pkgs.stdenv.isLinux 12)
   ];
-in
-{
+in {
   programs = {
     vscode = {
       enable = true;
       package = pkgs.vscode;
       enableExtensionUpdateCheck = true;
       enableUpdateCheck = false;
-      extensions = (with pkgs.vscode-extensions; [
-        vscodevim.vim
-        eamodio.gitlens
-        mkhl.direnv
+      extensions =
+        (with pkgs.vscode-extensions; [
+          vscodevim.vim
+          eamodio.gitlens
+          mkhl.direnv
 
-        github.copilot
-        github.copilot-chat
+          github.copilot
+          github.copilot-chat
 
-        jnoortheen.nix-ide
-        golang.go
-        rust-lang.rust-analyzer
-      ]) ++ [
-        (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csdevkit)
-        marketplace.amos402.scope-bar
-        marketplace.juanblanco.solidity
-      ];
-      keybindings = [ ];
+          jnoortheen.nix-ide
+          golang.go
+          rust-lang.rust-analyzer
+        ])
+        ++ [
+          (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csdevkit)
+          marketplace.amos402.scope-bar
+          marketplace.juanblanco.solidity
+        ];
+      keybindings = [];
       userSettings = {
         "editor.fontFamily" = "\"JetBrainsMono Nerd Font\"";
         "editor.fontSize" = fontSize;

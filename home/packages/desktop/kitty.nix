@@ -1,7 +1,8 @@
-{ lib
-, pkgs
-, customArgs
-, ...
+{
+  lib,
+  pkgs,
+  customArgs,
+  ...
 }: {
   programs.kitty = {
     enable = lib.mkDefault false;

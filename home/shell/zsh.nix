@@ -1,12 +1,17 @@
-{ lib
-, pkgs
-, ...
-}:
-let
-  copyCommand = if pkgs.stdenv.isDarwin then "pbcopy" else "xclip -selection clipboard";
-  pasteCommand = if pkgs.stdenv.isDarwin then "pbpaste" else "xclip -o -selection clipboard";
-in
 {
+  lib,
+  pkgs,
+  ...
+}: let
+  copyCommand =
+    if pkgs.stdenv.isDarwin
+    then "pbcopy"
+    else "xclip -selection clipboard";
+  pasteCommand =
+    if pkgs.stdenv.isDarwin
+    then "pbpaste"
+    else "xclip -o -selection clipboard";
+in {
   programs = {
     zsh = {
       enable = true;
@@ -59,5 +64,3 @@ in
     };
   };
 }
-
-

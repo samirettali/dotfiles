@@ -1,6 +1,4 @@
-{ config
-, ...
-}: {
+{config, ...}: {
   # TODO: use config for name and email
   programs.git = {
     enable = true;

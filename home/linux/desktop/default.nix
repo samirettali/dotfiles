@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./wm
     ./firefox.nix
@@ -25,10 +23,10 @@
     enable = true;
     # package = pkgs.ungoogled-chromium;
     extensions = [
-      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock
-      { id = "acmacodkjbdgmoleebolmdjonilkdbch"; } # rabby
-      { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # vimium
-      { id = "oboonakemofpalcgghocfoadofidjkkk"; } # keepassxc
+      {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock
+      {id = "acmacodkjbdgmoleebolmdjonilkdbch";} # rabby
+      {id = "dbepggeogbaibhgnhhndojpepiihcmeb";} # vimium
+      {id = "oboonakemofpalcgghocfoadofidjkkk";} # keepassxc
     ];
   };
 }

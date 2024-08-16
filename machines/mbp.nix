@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   programs = {
     zsh.enable = true;
     gnupg.agent.enable = true; # TODO is this needed?
@@ -6,7 +11,7 @@
 
   networking = {
     hostName = "settali";
-    knownNetworkServices = [ "Wi-Fi" ];
+    knownNetworkServices = ["Wi-Fi"];
     dns = [
       "1.1.1.1"
       "8.8.8.8"
@@ -20,7 +25,7 @@
 
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      (nerdfonts.override {fonts = ["JetBrainsMono"];})
     ];
   };
 

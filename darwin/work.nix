@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   homebrew = {
     brews = [
       "amazon-ecs-cli"

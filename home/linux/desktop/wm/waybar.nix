@@ -1,15 +1,14 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   hasSway = config.wayland.windowManager.sway.enable;
   sway = config.wayland.windowManager.sway.package;
   hasHyprland = config.wayland.windowManager.hyprland.enable;
   hyprland = config.wayland.windowManager.hyprland.package;
-in
-{
+in {
   systemd.user.services.waybar = {
     Unit.StartLimitBurst = 30;
   };
@@ -24,27 +23,32 @@ in
         margin = "0";
         position = "top";
 
-        modules-left = [
-          "custom/menu"
-        ] ++ (lib.optionals hasSway [
-          "sway/workspaces"
-          "sway/mode"
-        ]) ++ (lib.optionals hasHyprland [
-          "hyprland/workspaces"
-          "hyprland/submap"
-        ]);
+        modules-left =
+          [
+            "custom/menu"
+          ]
+          ++ (lib.optionals hasSway [
+            "sway/workspaces"
+            "sway/mode"
+          ])
+          ++ (lib.optionals hasHyprland [
+            "hyprland/workspaces"
+            "hyprland/submap"
+          ]);
 
         modules-center = [
           "clock"
         ];
 
-        modules-right = (lib.optionals hasHyprland [
-          "hyprland/language"
-        ]) ++ [
-          "wireplumber"
-          "battery"
-          "tray"
-        ];
+        modules-right =
+          (lib.optionals hasHyprland [
+            "hyprland/language"
+          ])
+          ++ [
+            "wireplumber"
+            "battery"
+            "tray"
+          ];
 
         clock = {
           interval = 1;
@@ -58,14 +62,14 @@ in
             headphone = "󰋋";
             headset = "󰋎";
             portable = "";
-            default = [ "" "" "" ];
+            default = ["" "" ""];
           };
           on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
         battery = {
           bat = "BAT0";
           interval = 10;
-          format-icons = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+          format-icons = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
           format = "{icon} {capacity}%";
           format-charging = "󰂄 {capacity}%";
           onclick = "";
@@ -80,42 +84,40 @@ in
         };
       };
     };
-    style =
-      let
-        colors = {
-          black = "#000000";
-          white = "#bbbbbb";
-        };
-      in
-      ''
-        * {
-          font-family: "JetBrainsMono Nerd Font";
-          font-size: 11pt;
-          border-radius: 0;
-          padding: 0;
-          margin: 0;
-        }
+    style = let
+      colors = {
+        black = "#000000";
+        white = "#bbbbbb";
+      };
+    in ''
+      * {
+        font-family: "JetBrainsMono Nerd Font";
+        font-size: 11pt;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+      }
 
-        #battery, #wireplumber, #language, #tray {
-            padding: 0 10;
-            margin: 0 0;
-        }
+      #battery, #wireplumber, #language, #tray {
+          padding: 0 10;
+          margin: 0 0;
+      }
 
-        window#waybar {
-          background-color: ${colors.black};
-          color: ${colors.white};
-        }
+      window#waybar {
+        background-color: ${colors.black};
+        color: ${colors.white};
+      }
 
-        #workspaces button {
-          color: ${colors.white};
-          padding: 4px;
-        }
+      #workspaces button {
+        color: ${colors.white};
+        padding: 4px;
+      }
 
-        #workspaces button.focused,
-        #workspaces button.active {
-          background-color: ${colors.white};
-          color: ${colors.black};
-        }
-      '';
+      #workspaces button.focused,
+      #workspaces button.active {
+        background-color: ${colors.white};
+        color: ${colors.black};
+      }
+    '';
   };
 }
