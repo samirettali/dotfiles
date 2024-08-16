@@ -59,7 +59,7 @@
     pyenv
     pyright
 
-    nixpkgs-fmt
+    alejandra
     nixd
 
     zig
