@@ -15,10 +15,10 @@ function () {
     if [[ "$TERM_PROGRAM" == 'vscode' ]]; then
         local LVL=$(($SHLVL - 3))
     elif [[ -n "$TMUX" ]]; then
-        local LVL=$(($SHLVL - 3))
+        local LVL=$(($SHLVL - 1))
     else
         # Simple terminal
-        local LVL=$SHLVL-2
+        local LVL=$SHLVL
     fi
 
     if [[ $EUID -eq 0 ]]; then
@@ -89,7 +89,7 @@ tmux_session_or_attach() {
 _tmux_session_or_attach_completions() {
     # Get the list of existing tmux sessions
     local sessions=$(tmux list-sessions -F "#S" 2>/dev/null)
-  
+
     # Use COMPREPLY to provide the suggestions
     COMPREPLY=($(compgen -W "$sessions" -- "${COMP_WORDS[1]}"))
 }
