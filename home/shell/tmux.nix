@@ -11,27 +11,16 @@
     keyMode = "vi";
     mouse = true;
     newSession = true;
-    plugins = with pkgs; [
-      # {
-      #   plugin = tmuxPlugins.resurrect;
-      #   extraConfig = "set -g @resurrect-strategy-nvim 'session'";
-      # }
-      # {
-      #   plugin = tmuxPlugins.continuum;
-      #   extraConfig = ''
-      #     set -g @continuum-restore 'on'
-      #     set -g @continuum-save-interval '60' # minutes
-      #   '';
-      # }
-      {
-        plugin = tmuxPlugins.vim-tmux-navigator;
-      }
-      {
-        plugin = tmuxPlugins.t-smart-tmux-session-manager;
-      }
+    plugins = with pkgs.tmuxPlugins; [
+      vim-tmux-navigator
+      t-smart-tmux-session-manager
     ];
     prefix = "C-a";
     shell = "${pkgs.zsh}/bin/zsh";
     terminal = "xterm-256color";
   };
+
+  home.sessionPath = [
+    "${pkgs.tmuxPlugins.t-smart-tmux-session-manager}/share/tmux-plugins/t-smart-tmux-session-manager/bin"
+  ];
 }
