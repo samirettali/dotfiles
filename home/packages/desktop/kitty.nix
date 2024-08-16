@@ -4,7 +4,7 @@
 , ...
 }: {
   programs.kitty = {
-    enable = true;
+    enable = lib.mkDefault false;
     font = {
       name = customArgs.font.name;
       size = lib.mkMerge [
