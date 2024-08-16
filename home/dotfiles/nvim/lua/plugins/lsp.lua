@@ -154,7 +154,8 @@ return {
 				if client == nil then
 					return
 				end
-				if client.server_capabilities.completionProvider then
+
+				if client.supports_method(methods.textDocument_completion) then
 					vim.cmd("setlocal tagfunc< omnifunc<")
 				end
 			end,
