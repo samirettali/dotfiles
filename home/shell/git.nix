@@ -1,5 +1,4 @@
 { config
-, pkgs
 , ...
 }: {
   # TODO: use config for name and email
