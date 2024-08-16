@@ -60,11 +60,11 @@ return {
 				if client.supports_method(methods.textDocument_documentSymbol) then
 					local navic_present, navic = pcall(require, "nvim-navic")
 					if navic_present then
-						navic.attach(client, args.bufnr)
+						navic.attach(client, args.buf)
 					end
 				end
 
-				local default_opts = { buffer = args.bufnr, remap = false }
+				local default_opts = { buffer = args.buf, remap = false }
 				local function setup_lsp_mapping(mode, lhs, rhs, opts)
 					if opts == nil then
 						opts = {}
@@ -140,7 +140,7 @@ return {
 				end
 
 				if client.supports_method(methods.textDocument_implementation) then
-					vim.keymap.set("n", "gi", custom_implementation_provider(args.bufnr), default_opts)
+					vim.keymap.set("n", "gi", custom_implementation_provider(args.buf), default_opts)
 				end
 			end,
 		})
