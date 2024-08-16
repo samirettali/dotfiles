@@ -40,23 +40,23 @@ vim.opt.foldlevelstart = 20 -- Set initial fold level
 
 vim.opt.timeoutlen = 400
 
-vim.opt.hidden = true      -- Enable having modified buffers in background
+vim.opt.hidden = true -- Enable having modified buffers in background
 vim.opt.joinspaces = false -- No double spaces with join after a dot
-vim.opt.scrolloff = 10     -- Lines of context
-vim.opt.sidescrolloff = 8  -- Columns of context
-vim.opt.shiftround = true  -- Round indent
-vim.opt.splitbelow = true  -- Put new windows below current
-vim.opt.splitright = true  -- Put new windows right of current
+vim.opt.scrolloff = 10 -- Lines of context
+vim.opt.sidescrolloff = 8 -- Columns of context
+vim.opt.shiftround = true -- Round indent
+vim.opt.splitbelow = true -- Put new windows below current
+vim.opt.splitright = true -- Put new windows right of current
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
-vim.opt.pumheight = 15            -- Maximum of 15 elements shown in command auto completion
+vim.opt.pumheight = 15 -- Maximum of 15 elements shown in command auto completion
 vim.opt.wildmode = "longest:full" -- Command-line completion mode
 vim.opt.wildoptions = "pum"
 
-vim.opt.showmatch = true       -- Temporarily jump to matching parentheresis when inserting one
-vim.opt.lazyredraw = true      -- Disable redrawing while running macros
+vim.opt.showmatch = true -- Temporarily jump to matching parentheresis when inserting one
+vim.opt.lazyredraw = true -- Disable redrawing while running macros
 vim.opt.inccommand = "nosplit" -- Show result of substitution as you type
 
 vim.opt.mouse = "a"
@@ -69,10 +69,10 @@ vim.opt.undodir = home .. "/.local/share/nvim/undo"
 vim.opt.directory = home .. "/.local/share/nvim/swap"
 vim.opt.backup = false
 vim.opt.writebackup = false
-vim.opt.shortmess:append "c"
+vim.opt.shortmess:append("c")
 
 vim.opt.confirm = true -- Ask for some operations like quitting an unsaved file instead of failing
-vim.opt.title = true   -- Allow neovim to set the window title
+vim.opt.title = true -- Allow neovim to set the window title
 
 -- Hide everything
 vim.opt.laststatus = 0

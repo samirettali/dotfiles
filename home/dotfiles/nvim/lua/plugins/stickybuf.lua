@@ -1,4 +1,4 @@
 return {
-    'stevearc/stickybuf.nvim',
-    opts = {},
+	"stevearc/stickybuf.nvim",
+	opts = {},
 }

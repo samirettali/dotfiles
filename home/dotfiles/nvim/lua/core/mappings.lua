@@ -1,4 +1,4 @@
-vim.g.mapleader = ' '
+vim.g.mapleader = " "
 
 -- Keep text selected after indentating it
 vim.keymap.set("v", "<", "<gv")
@@ -66,7 +66,7 @@ vim.keymap.set("x", "<leader>p", [["_dP]])
 -- vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- FIXME: comment block and duplicate
-vim.keymap.set('v', "<Leader>D", [[y`>pgv:norm gcc<CR>`>j^]], { silent = true })
+vim.keymap.set("v", "<Leader>D", [[y`>pgv:norm gcc<CR>`>j^]], { silent = true })
 
 vim.keymap.set("n", "<Leader>y", ":%y +<CR>", { noremap = false, silent = true, desc = "Copy entire buffer" })
 
