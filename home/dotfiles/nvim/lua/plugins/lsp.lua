@@ -308,7 +308,9 @@ return {
 		-- TODO: should lint be required for each usage?
 		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 			pattern = { "*.go" },
-			callback = lint.try_lint,
+			callback = function()
+				lint.try_lint()
+			end,
 		})
 	end,
 }
