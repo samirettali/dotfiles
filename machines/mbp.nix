@@ -20,7 +20,7 @@
 
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "JetBrainsMono" "Inconsolata" ]; })
+      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
   };
 
