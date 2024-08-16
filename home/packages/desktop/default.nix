@@ -1,5 +1,4 @@
 { pkgs
-, inputs
 , ...
 }: {
   imports = [
@@ -18,7 +17,6 @@
   programs = {
     wezterm = {
       enable = false;
-      package = inputs.wezterm.packages.${pkgs.system}.default;
       extraConfig = builtins.readFile ../../dotfiles/wezterm.lua;
     };
   };
