@@ -35,7 +35,6 @@ in
       };
       initExtra = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
       shellAliases = {
-        t = "tmux_session_or_attach";
         tl = "tmux ls";
 
         lg = "lazygit";
