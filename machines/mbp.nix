@@ -36,7 +36,7 @@
       finder.FXPreferredViewStyle = "Nlsv"; # List view
       NSGlobalDomain = {
         InitialKeyRepeat = 15;
-        KeyRepeat = 2;
+        KeyRepeat = 1;
         ApplePressAndHoldEnabled = false;
       };
     };
