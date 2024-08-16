@@ -1,28 +1,30 @@
 { ... }: {
   homebrew = {
     enable = true;
+
     onActivation = {
       cleanup = "zap";
       autoUpdate = true;
       upgrade = true;
     };
+
     brews = [
       "autoconf"
       "automake"
       "cmake"
       "coreutils"
     ];
+
     casks = [
-      "alfred"
       "burp-suite"
       "cursor"
-      "docker"
       "db-browser-for-sqlite"
+      "docker"
       "docker"
       "iina"
       "karabiner-elements"
       "ledger-live"
-      "logitech-options"
+      # "logi-options-plus" # TODO
       "maccy"
       "mongodb-compass"
       "openvpn-connect"
@@ -36,10 +38,10 @@
       "spotmenu"
       "the-unarchiver"
     ];
+
     taps = [
       "homebrew/bundle"
       "homebrew/services"
     ];
   };
 }
-
