@@ -40,6 +40,7 @@
     tree
     unzip
     watchexec
+    yazi
     yt-dlp
   ];
 
