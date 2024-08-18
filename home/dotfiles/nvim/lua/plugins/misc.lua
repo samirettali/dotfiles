@@ -1,23 +1,13 @@
 return {
 	"tpope/vim-repeat", -- Repeat plugin mappings with .
 	"tommcdo/vim-exchange", -- Exchange two objects
-	"tpope/vim-eunuch", -- UNIX commands inside neovim, disabled because it broke something
+	"tpope/vim-eunuch", -- UNIX commands inside neovim
 	"tpope/vim-surround", -- Add surround object for editing
-	"github/copilot.vim", -- Copilot
+	{ "echasnovski/mini.ai", config = true }, -- AI
+	{ "norcalli/nvim-colorizer.lua", config = true }, -- Highlight colors
+	{ "stevearc/oil.nvim", config = true }, -- File manager
 	{
-		"echasnovski/mini.ai",
-		config = function()
-			require("mini.ai").setup()
-		end,
-	},
-	{ "stevearc/dressing.nvim", config = true }, -- Floating UI selectors
-	{ "j-hui/fidget.nvim", config = true }, -- Show LSP loading status
-	{ "stevearc/oil.nvim", config = true }, -- File explorer
-	{
-		-- Hide secrets in .env files
-		"laytan/cloak.nvim",
-		config = function()
-			vim.keymap.set("n", "<leader>tc", "<cmd>CloakToggle<cr>", { noremap = true, silent = true })
-		end,
+		"supermaven-inc/supermaven-nvim",
+		opts = { log_level = "info" },
 	},
 }
