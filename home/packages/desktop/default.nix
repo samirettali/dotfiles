@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, lib, ...}: {
   imports = [
     ./vscode.nix
     ./kitty.nix
@@ -6,15 +6,16 @@
   ];
 
   home.packages = with pkgs; [
+    discord
     keepassxc
     qbittorrent
     spotify
-    discord
+    # zed-editor
   ];
 
   programs = {
     wezterm = {
-      enable = false;
+      enable = lib.mkDefault false;
       extraConfig = builtins.readFile ../../dotfiles/wezterm.lua;
     };
   };
