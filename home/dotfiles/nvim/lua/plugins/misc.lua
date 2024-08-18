@@ -8,6 +8,6 @@ return {
 	{ "stevearc/oil.nvim", config = true }, -- File manager
 	{
 		"supermaven-inc/supermaven-nvim",
-		opts = { log_level = "info" },
+		opts = { log_level = "off" },
 	},
 }
