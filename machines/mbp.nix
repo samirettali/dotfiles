@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   programs = {
     zsh.enable = true;
     gnupg.agent.enable = true; # TODO is this needed?
@@ -25,7 +20,9 @@
 
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override {fonts = ["JetBrainsMono"];})
+      (nerdfonts.override {
+        fonts = ["JetBrainsMono"];
+      })
     ];
   };
 
@@ -43,6 +40,12 @@
         InitialKeyRepeat = 15;
         KeyRepeat = 1;
         ApplePressAndHoldEnabled = false;
+        NSWindowShouldDragOnGesture = true;
+        NSAutomaticWindowAnimationsEnabled = false;
+        NSAutomaticInlinePredictionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
+        NSAutomaticCapitalizationEnabled = false;
       };
     };
   };
