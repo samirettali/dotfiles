@@ -33,6 +33,7 @@ return {
 		"stevearc/conform.nvim",
 		"mfussenegger/nvim-lint",
 		"SmiteshP/nvim-navic", -- LSP breadcrumbs
+		{ "j-hui/fidget.nvim", config = true }, -- Show LSP loading status
 	},
 	"neovim/nvim-lspconfig",
 	config = function()
@@ -64,79 +65,69 @@ return {
 					end
 				end
 
-				local default_opts = { buffer = args.buf, remap = false }
-				local function setup_lsp_mapping(mode, lhs, rhs, opts)
-					if opts == nil then
-						opts = {}
-					end
-
-					opts = vim.tbl_deep_extend("force", default_opts, opts)
-
-					vim.keymap.set(mode, lhs, rhs, opts)
-				end
-
 				local function toggle_lsp_hints()
 					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 				end
 
+				local default_opts = { buffer = args.buf }
 				if client.supports_method(methods.textDocument_inlayHint) then
-					setup_lsp_mapping("n", "<Leader>ti", toggle_lsp_hints)
+					vim.keymap.set("n", "<Leader>ti", toggle_lsp_hints, default_opts)
 				end
 
 				if client.supports_method(methods.textDocument_hover) then
-					setup_lsp_mapping("n", "K", vim.lsp.buf.hover)
+					vim.keymap.set("n", "K", vim.lsp.buf.hover, default_opts)
 				end
 
 				if client.supports_method(methods.textDocument_definition) then
-					setup_lsp_mapping("n", "gd", vim.lsp.buf.definition)
+					vim.keymap.set("n", "gd", vim.lsp.buf.definition, default_opts)
 				end
 				if client.supports_method(methods.textDocument_declaration) then
-					setup_lsp_mapping("n", "gD", vim.lsp.buf.declaration)
+					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, default_opts)
 				end
 				if client.supports_method(methods.textDocument_typeDefinition) then
-					setup_lsp_mapping("n", "gT", vim.lsp.buf.type_definition)
+					vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, default_opts)
 				end
 
 				if client.supports_method(methods.textDocument_documentSymbol) then
-					setup_lsp_mapping("n", "gs", vim.lsp.buf.document_symbol)
+					vim.keymap.set("n", "gs", vim.lsp.buf.document_symbol, default_opts)
 				end
 
 				if client.supports_method(methods.workspace_symbol) then
-					setup_lsp_mapping("n", "gS", vim.lsp.buf.workspace_symbol)
+					vim.keymap.set("n", "gS", vim.lsp.buf.workspace_symbol, default_opts)
 				end
 
 				if client.supports_method(methods.textDocument_codeAction) then
-					setup_lsp_mapping("n", "ga", vim.lsp.buf.code_action)
+					vim.keymap.set("n", "ga", vim.lsp.buf.code_action, default_opts)
 				end
 
 				if client.supports_method(methods.textDocument_rename) then
-					setup_lsp_mapping("n", "gr", vim.lsp.buf.rename)
+					vim.keymap.set("n", "gr", vim.lsp.buf.rename, default_opts)
 				end
 
 				if client.supports_method(methods.textDocument_signatureHelp) then
-					setup_lsp_mapping("i", "<C-h>", vim.lsp.buf.signature_help)
+					vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, default_opts)
 				end
 
 				if client.supports_method(methods.callHierarchy_incomingCalls) then
-					setup_lsp_mapping("n", "gI", vim.lsp.buf.incoming_calls)
+					vim.keymap.set("n", "gI", vim.lsp.buf.incoming_calls, default_opts)
 				end
 
 				if client.supports_method(methods.callHierarchy_outgoingCalls) then
-					setup_lsp_mapping("n", "gO", vim.lsp.buf.outgoing_calls)
+					vim.keymap.set("n", "gO", vim.lsp.buf.outgoing_calls, default_opts)
 				end
 
 				if client.supports_method(methods.textDocument_diagnostic) then
-					setup_lsp_mapping("n", "ds", vim.diagnostic.open_float)
+					vim.keymap.set("n", "ds", vim.diagnostic.open_float, default_opts)
 
 					local next_opts = { count = 1, wrap = true, float = true }
-					setup_lsp_mapping("n", "]d", function()
+					vim.keymap.set("n", "]d", function()
 						vim.diagnostic.jump(next_opts)
-					end)
+					end, default_opts)
 
 					local prev_opts = { count = -1, wrap = true, float = true }
-					setup_lsp_mapping("n", "[d", function()
+					vim.keymap.set("n", "[d", function()
 						vim.diagnostic.jump(prev_opts)
-					end)
+					end, default_opts)
 				end
 
 				if client.supports_method(methods.textDocument_implementation) then
@@ -172,19 +163,6 @@ return {
 		})
 
 		local servers = {
-			-- golangci_lint_ls = {
-			--     capabilities = capabilities,
-			--     command = {
-			--         "golangci-lint",
-			--         "run",
-			--         "--enable-all",
-			--         "--disable",
-			--         "lll",
-			--         "--out-format",
-			--         "json",
-			--         "--issues-exit-code=1",
-			--     },
-			-- },
 			gopls = {
 				settings = {
 					gopls = {
@@ -257,12 +235,10 @@ return {
 			csharp_ls = true,
 			clangd = true,
 			pyright = true,
+			bashls = true,
 		}
 
-		local capabilities = nil
-		if pcall(require, "cmp_nvim_lsp") then
-			capabilities = require("cmp_nvim_lsp").default_capabilities()
-		end
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 		for name, cfg in pairs(servers) do
 			if cfg == true then
@@ -280,12 +256,11 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				go = { "goimports", "gofumpt" },
-				rust = { "rustfmt", lsp_format = "fallback" }, -- TODO: what is lsp_format?
-				-- Use the "*" filetype to run formatters on all filetypes.
+				rust = { "rustfmt" },
+				nix = { "alejandra" },
+				bash = { "shellcheck" },
 				-- ["*"] = { "codespell" },
-				-- Use the "_" filetype to run formatters on filetypes that don't
-				-- have other formatters configured.
-				-- ["_"] = { "trim_whitespace" },
+				-- ["_"] = { "trim_whitespace" }, -- if no formatter is found, use this
 			},
 		})
 
@@ -301,7 +276,7 @@ return {
 
 		local lint = require("lint")
 		lint.linters_by_ft = {
-			go = { "revive" },
+			go = { "revive", "golangcilint" },
 		}
 
 		-- TODO: does this need an autogroup?
