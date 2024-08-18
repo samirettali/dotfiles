@@ -39,6 +39,7 @@
       "shottr"
       "spotmenu"
       "the-unarchiver"
+      "zed"
     ];
 
     taps = [

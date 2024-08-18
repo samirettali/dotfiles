@@ -13,7 +13,6 @@
     ledger-live-desktop
     newsflash
     brave
-    zed-editor
   ];
 
   # TODO:
