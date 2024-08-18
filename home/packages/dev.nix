@@ -68,6 +68,10 @@
     zig
     zls
 
+    bash-language-server
+    shellcheck
+    shfmt
+
     foundry-bin
     # (inputs.solc.mkDefault pkgs pkgs.solc_0_8_25)
     solc-select
