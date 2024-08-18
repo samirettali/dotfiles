@@ -16,18 +16,18 @@
       "cmake"
       "coreutils"
       "displayplacer"
+      "sketchybar"
     ];
 
     casks = [
+      "aerospace"
       "burp-suite"
       "cursor"
       "db-browser-for-sqlite"
       "docker"
-      "docker"
       "iina"
       "karabiner-elements"
       "ledger-live"
-      # "logi-options-plus" # TODO
       "mongodb-compass"
       "openvpn-connect"
       "phantomjs"
@@ -40,11 +40,14 @@
       "spotmenu"
       "the-unarchiver"
       "zed"
+      # "logi-options-plus" # TODO
     ];
 
     taps = [
       "homebrew/bundle"
       "homebrew/services"
+      "nikitabobko/tap"
+      "FelixKratz/formulae"
     ];
   };
 }
