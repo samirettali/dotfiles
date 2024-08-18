@@ -4,11 +4,10 @@ vim.api.nvim_create_autocmd("VimResized", {
 	command = "wincmd =",
 })
 
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight yanked text",
 	pattern = "*",
-	group = highlight_group,
+	group = vim.api.nvim_create_augroup("CustomYankHighlight", { clear = true }),
 	callback = function()
 		vim.highlight.on_yank({
 			higroup = "IncSearch",
@@ -25,10 +24,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 --     end,
 -- })
 
-local user = vim.api.nvim_create_augroup("user", {})
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
 	desc = "Return cursor to where it was last time closing the file",
-	group = user,
+	group = vim.api.nvim_create_augroup("CustomCursorPosition", { clear = true }),
 	pattern = "*",
 	callback = function()
 		local mark = vim.api.nvim_buf_get_mark(0, '"')
@@ -50,11 +48,10 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
 	end,
 })
 
-local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursorline = function(event, value, pattern)
 	vim.api.nvim_create_autocmd(event, {
 		desc = "Keep cursor line only on focused window",
-		group = group,
+		group = vim.api.nvim_create_augroup("CustomCursorLineControl", { clear = true }),
 		pattern = pattern,
 		callback = function()
 			vim.opt_local.cursorline = value
