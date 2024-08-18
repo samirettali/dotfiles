@@ -77,7 +77,6 @@ vim.opt.title = true -- Allow neovim to set the window title
 -- Hide everything
 vim.opt.laststatus = 0
 vim.opt.cmdheight = 0
-vim.opt.showtabline = 0
 vim.opt.signcolumn = "yes"
 
 vim.opt.cursorline = true -- Highlight current line
