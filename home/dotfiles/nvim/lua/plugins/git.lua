@@ -2,6 +2,19 @@ return {
 	"sindrets/diffview.nvim", -- Improve diff view
 	"rhysd/committia.vim", -- Better commit editing
 	{
+		"aaronhallaert/advanced-git-search.nvim",
+		cmd = { "AdvancedGitSearch" },
+		config = function()
+			vim.keymap.set("n", "<leader>ga", ":AdvancedGitSearch<CR>")
+			vim.keymap.set("n", "<leader>gr", ":AdvancedGitSearch diff_commit_file<CR>")
+		end,
+		dependencies = {
+			"tpope/vim-fugitive",
+			"tpope/vim-rhubarb",
+			"sindrets/diffview.nvim",
+		},
+	},
+	{
 		-- Git signs integration
 		"lewis6991/gitsigns.nvim",
 		config = function()

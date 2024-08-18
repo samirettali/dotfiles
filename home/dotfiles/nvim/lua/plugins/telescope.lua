@@ -45,11 +45,13 @@ return {
 					file_browser = {
 						theme = "ivy",
 					},
+					advanced_git_search = {},
 				},
 			}
 
 			telescope.load_extension("file_browser")
 			telescope.load_extension("ast_grep")
+			telescope.load_extension("advanced_git_search")
 
 			local builtin = require("telescope.builtin")
 
