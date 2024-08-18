@@ -4,7 +4,6 @@ return {
 	event = "InsertEnter",
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
-		-- "hrsh7th/cmp-nvim-lua",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
 		"L3MON4D3/LuaSnip",
@@ -20,10 +19,6 @@ return {
 				{ name = "path" },
 				{ name = "buffer", keyword_length = 5 },
 			}),
-			window = {
-				completion = cmp.config.window.bordered(),
-				documentation = cmp.config.window.bordered(),
-			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-n>"] = cmp.mapping.select_next_item({
 					behavior = cmp.SelectBehavior.Insert,
@@ -65,16 +60,6 @@ return {
 				end,
 			},
 		})
-
-		-- TODO: is this needed?
-		-- cmp.setup.filetype("lua", {
-		--     sources = cmp.config.sources({
-		--         { name = "nvim_lua" },
-		--         { name = "nvim_lsp" },
-		--     }, {
-		--         { name = "buffer" },
-		--     })
-		-- })
 
 		local ls = require("luasnip")
 		ls.config.set_config({
