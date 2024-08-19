@@ -20,9 +20,6 @@ vim.opt.linebreak = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
--- Highlight up to the 200th column
-vim.opt.synmaxcol = 200
-
 -- Use undo files
 vim.opt.undofile = true
 
