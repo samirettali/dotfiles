@@ -36,6 +36,7 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevelstart = 20 -- Set initial fold level
 
 vim.opt.timeoutlen = 400
+vim.opt.updatetime = 50
 
 vim.opt.joinspaces = false -- No double spaces with join after a dot
 vim.opt.scrolloff = 10 -- Lines of context
@@ -62,7 +63,6 @@ vim.opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 vim.opt.undodir = home .. "/.local/share/nvim/undo"
-vim.opt.directory = home .. "/.local/share/nvim/swap"
 vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.shortmess:append("c")
