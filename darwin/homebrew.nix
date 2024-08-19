@@ -16,6 +16,7 @@
       "cmake"
       "coreutils"
       "displayplacer"
+      "git-delta"
       "sketchybar"
     ];
 
