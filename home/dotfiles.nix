@@ -21,7 +21,6 @@
 
       ".bin/extract".source = dotfiles/scripts/extract.sh;
       ".bin/glc".source = dotfiles/scripts/glc.sh;
-      ".bin/gr".source = dotfiles/scripts/gr.sh;
       ".bin/tad".source = dotfiles/scripts/tad.sh;
     }
     (lib.mkIf pkgs.stdenv.isLinux {
