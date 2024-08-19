@@ -25,7 +25,6 @@
     jq
     kcat
     lazydocker
-    lazygit
     libqalculate
     moreutils
     mprocs

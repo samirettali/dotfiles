@@ -21,5 +21,22 @@
       ".idea"
       "Session.vim"
     ];
+
+    # TODO: this is broken in nixpkgs
+    # delta = {
+    #   enable = true;
+    # };
+  };
+
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      git = {
+        paging = {
+          colorArg = "always";
+          pager = "delta --dark --paging never";
+        };
+      };
+    };
   };
 }
