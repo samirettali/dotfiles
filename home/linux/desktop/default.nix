@@ -18,14 +18,23 @@
   # TODO:
   # - use ungoogled-chromium
   # - disable smooth scroll
+  # - add custom search engines
+  # - https://mynixos.com/search?q=%s
   programs.chromium = {
     enable = true;
     # package = pkgs.ungoogled-chromium;
     extensions = [
       {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock
-      {id = "acmacodkjbdgmoleebolmdjonilkdbch";} # rabby
       {id = "dbepggeogbaibhgnhhndojpepiihcmeb";} # vimium
       {id = "oboonakemofpalcgghocfoadofidjkkk";} # keepassxc
+      {id = "niloccemoadcdkdjlinkgdfekeahmflj";} # pocket
+      {id = "gbmdgpbipfallnflgajpaliibnhdgobh";} # json viewer
+      {id = "mnjggcdmjocbbbhaepdhchncahnbgone";} # sponsorship block
+      {id = "acmacodkjbdgmoleebolmdjonilkdbch";} # rabby
+      {id = "bfnaelmomeimhlpmgjnjophhpkkoljpa";} # phantom
+      {id = "hnfanknocfeofbddgcijnmhnfnkdnaad";} # coinbase
+      {id = "bfnaelmomeimhlpmgjnjophhpkkoljpa";} # phantom
+      {id = "dmkamcknogkgcdfhhbddcghachkejeap";} # keplr
     ];
   };
 }
