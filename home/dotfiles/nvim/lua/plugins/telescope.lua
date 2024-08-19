@@ -1,7 +1,10 @@
 return {
 	{
 		"nvim-telescope/telescope-file-browser.nvim",
-		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+			"nvim-lua/plenary.nvim",
+		},
 	},
 	{
 		"Marskey/telescope-sg",
@@ -15,7 +18,10 @@ return {
 	},
 	{
 		"nvim-telescope/telescope.nvim",
-		dependencies = "nvim-lua/plenary.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-telescope/telescope-ui-select.nvim",
+		},
 		config = function()
 			local telescope = require("telescope")
 
@@ -52,6 +58,7 @@ return {
 			telescope.load_extension("file_browser")
 			telescope.load_extension("ast_grep")
 			telescope.load_extension("advanced_git_search")
+			telescope.load_extension("ui-select")
 
 			local builtin = require("telescope.builtin")
 
@@ -71,6 +78,7 @@ return {
 			vim.keymap.set("n", "<C-s>", builtin.lsp_document_symbols)
 			vim.keymap.set("n", "gR", builtin.lsp_references)
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags)
+			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
 
 			telescope.setup(options)
 		end,
