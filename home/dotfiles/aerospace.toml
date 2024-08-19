@@ -29,7 +29,6 @@ cmd-h = [] # Disable "hide application"
 cmd-alt-h = [] # Disable "hide others"
 
 alt-shift-f = 'exec-and-forget open -a Finder.app'
-alt-slash = 'layout tiles horizontal vertical'
 
 alt-h = 'focus left'
 alt-j = 'focus down'
