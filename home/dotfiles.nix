@@ -30,6 +30,11 @@
     })
     (lib.mkIf pkgs.stdenv.isDarwin {
       ".bin/display".source = dotfiles/scripts/display.sh;
+      ".aerospace.toml".source = dotfiles/aerospace.toml;
+      ".config/sketchybar" = {
+        source = dotfiles/sketchybar;
+        recursive = true;
+      };
     })
   ];
 
