@@ -35,6 +35,8 @@ return {
 			harpoon:list():next()
 		end)
 
+		-- TODO: add replace_at mappings
+
 		local conf = require("telescope.config").values
 		local function toggle_telescope(harpoon_files)
 			local file_paths = {}
