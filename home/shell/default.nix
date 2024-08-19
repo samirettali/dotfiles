@@ -14,6 +14,7 @@
 
   home.packages = with pkgs; [
     # visidata
+    age
     curl
     diskus
     fd
@@ -33,6 +34,7 @@
     p7zip
     pgcli
     ripgrep
+    scc
     sesh
     tldr
     tmux
@@ -42,6 +44,7 @@
     watchexec
     yazi
     yt-dlp
+    yubikey-manager
   ];
 
   programs = {
