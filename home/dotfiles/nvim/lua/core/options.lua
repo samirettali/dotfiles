@@ -37,7 +37,6 @@ vim.opt.foldlevelstart = 20 -- Set initial fold level
 
 vim.opt.timeoutlen = 400
 
-vim.opt.hidden = true -- Enable having modified buffers in background
 vim.opt.joinspaces = false -- No double spaces with join after a dot
 vim.opt.scrolloff = 10 -- Lines of context
 vim.opt.sidescrolloff = 8 -- Columns of context
