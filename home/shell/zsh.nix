@@ -47,6 +47,7 @@ in {
 
         vim = "nvim";
         fim = "nvim $(fd -t f | fzf)";
+        gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
 
         sl = "ls";
         gc = "git clone";
