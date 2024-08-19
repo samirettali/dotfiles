@@ -181,7 +181,6 @@ return {
 			end,
 		})
 
-		-- TODO: is this needed?
 		local augroup_completion = vim.api.nvim_create_augroup("lsp_completion", {})
 		vim.api.nvim_create_autocmd("LspDetach", {
 			group = augroup_completion,
