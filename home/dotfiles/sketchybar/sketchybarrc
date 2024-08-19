@@ -1,0 +1,35 @@
+PADDED=false
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+ITEM_DIR="$CONFIG_DIR/items"
+FONT="JetBrainsMono Nerd Font"
+FONT_SIZE=14
+
+bar=(
+    position=top
+    height=40
+    blur_radius=80
+    color=0xa0000000
+    shadow=true
+)
+
+default=(
+    padding_left=5
+    padding_right=5
+    icon.font="${FONT}:Bold:${FONT_SIZE}"
+    label.font="${FONT}:Bold:${FONT_SIZE}"
+    icon.color=0xffffffff
+    label.color=0xffffffff
+    icon.padding_left=4
+    icon.padding_right=4
+    label.padding_left=4
+    label.padding_right=4
+)
+
+sketchybar --bar "${bar[@]}" --default "${default[@]}"
+
+source "$ITEM_DIR/spaces.sh"
+source "$ITEM_DIR/front_app.sh"
+source "$ITEM_DIR/right.sh"
+source "$ITEM_DIR/spotify.sh"
+
+sketchybar --update
