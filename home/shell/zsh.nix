@@ -40,21 +40,18 @@ in {
       };
       initExtra = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
       shellAliases = {
-        tl = "tmux ls";
-
-        lg = "lazygit";
-        ld = "lazydocker";
-
-        vim = "nvim";
+        bak = "cp -r $1 $1.bak";
         fim = "nvim $(fd -t f | fzf)";
-        gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
-
-        sl = "ls";
         gc = "git clone";
-        rm = "trash";
-        ns = "nix-shell --run zsh -p";
+        gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
         jj = "${pasteCommand} | jq -r | ${copyCommand}";
         jjj = "${pasteCommand} | jq -r";
+        ld = "lazydocker";
+        lg = "lazygit";
+        ns = "nix-shell --run zsh -p";
+        rm = "trash";
+        tl = "tmux ls";
+        vim = "nvim";
       };
       shellGlobalAliases = {
         trim = "awk '{\$1=\$1;print}'";
