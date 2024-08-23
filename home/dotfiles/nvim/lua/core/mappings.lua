@@ -5,6 +5,8 @@ vim.keymap.set("n", "<Tab>", "<C-6>", { remap = true })
 vim.keymap.set("n", "<Leader>d", "yap<S-}>p", { desc = "Duplicate paragraph" })
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste replace visual selection without copying it" })
 
+vim.keymap.set("n", "<Leader>c", "ggVGy<C-o>", { desc = "Copy entire file", silent = true })
+
 vim.keymap.set("n", "gV", "`[v`]", { desc = "Select last changed text" })
 vim.keymap.set("n", "<Leader>tl", ":set list!<CR>", { desc = "Toggle listchars" })
 
