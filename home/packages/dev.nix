@@ -12,6 +12,7 @@
     openssl.dev
     libiconv
 
+    air
     delve
     go
     gopls
@@ -71,6 +72,8 @@
     bash-language-server
     shellcheck
     shfmt
+
+    htmx-lsp
 
     foundry-bin
     # (inputs.solc.mkDefault pkgs pkgs.solc_0_8_25)
