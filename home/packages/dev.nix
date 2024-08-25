@@ -54,6 +54,10 @@
     nodejs
     yarn
     nodePackages.typescript-language-server
+    nodePackages.prettier
+    prettierd
+    nodePackages.eslint
+    eslint_d
 
     stylua
     lua-language-server

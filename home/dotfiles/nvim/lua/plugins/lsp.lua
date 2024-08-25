@@ -303,6 +303,7 @@ return {
 				rust = { "rustfmt" },
 				nix = { "alejandra" },
 				bash = { "shellcheck" },
+				javascript = { "prettierd" },
 				-- ["*"] = { "codespell" },
 				-- ["_"] = { "trim_whitespace" }, -- if no formatter is found, use this
 			},
@@ -321,12 +322,13 @@ return {
 		local lint = require("lint")
 		lint.linters_by_ft = {
 			go = { "revive", "golangcilint" },
+			javascript = { "eslint_d" },
 		}
 
 		-- TODO: does this need an autogroup?
 		-- TODO: should lint be required for each usage?
 		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-			pattern = { "*.go" },
+			pattern = { "*.go", "*.js" },
 			callback = function()
 				lint.try_lint()
 			end,
