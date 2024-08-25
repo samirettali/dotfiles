@@ -40,6 +40,7 @@ in {
       };
       initExtra = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
       shellAliases = {
+        gmt = "go mod tidy";
         bak = "cp -r $1 $1.bak";
         fim = "nvim $(fd -t f | fzf)";
         gc = "git clone";
