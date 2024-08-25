@@ -53,6 +53,7 @@ in {
         rm = "trash";
         tl = "tmux ls";
         vim = "nvim";
+        ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
       };
       shellGlobalAliases = {
         trim = "awk '{\$1=\$1;print}'";
