@@ -19,7 +19,8 @@
   # - use ungoogled-chromium
   # - disable smooth scroll
   # - add custom search engines
-  # - https://mynixos.com/search?q=%s
+  #     - @nix https://mynixos.com/search?q=%s
+  #     - @gh https://github.com/search?q=%s
   programs.chromium = {
     enable = true;
     # package = pkgs.ungoogled-chromium;
