@@ -304,6 +304,7 @@ return {
 				nix = { "alejandra" },
 				bash = { "shellcheck" },
 				javascript = { "prettierd" },
+				python = { "isort", "black" },
 				-- ["*"] = { "codespell" },
 				-- ["_"] = { "trim_whitespace" }, -- if no formatter is found, use this
 			},

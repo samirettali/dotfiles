@@ -66,6 +66,8 @@
     pipenv
     pyenv
     pyright
+    isort
+    black
 
     alejandra
     nixd
