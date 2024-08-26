@@ -97,4 +97,22 @@ _tmux_session_or_attach_completions() {
 # Register the completion function with the custom function
 complete -F _tmux_session_or_attach_completions tmux_session_or_attach
 
-# export PKG_CONFIG_PATH=${pkgs.openssl.dev}/lib/pkgconfig
+_ollama_completions()
+{
+    local cur prev models
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    models=$(ollama ls | tail -n +2 | awk {'print $1'})
+
+    case "${prev}" in
+        "ollama")
+            COMPREPLY=($(compgen -W "serve create show run pull push list ps cp rm help" -- "${cur}"))
+            ;;
+        (show|run|push|list|cp|rm)
+            COMPREPLY=($(compgen -W "${models}" -- ${cur}))
+            ;;
+    esac
+}
+
+complete -F _ollama_completions ollama
