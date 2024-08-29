@@ -7,7 +7,11 @@ return {
 	{ "norcalli/nvim-colorizer.lua", config = true }, -- Highlight colors
 	{ "stevearc/oil.nvim", config = true }, -- File manager
 	{
-		"supermaven-inc/supermaven-nvim",
-		opts = { log_level = "off" },
+		"Exafunction/codeium.vim",
+		event = "BufEnter",
 	},
+	-- {
+	-- 	"supermaven-inc/supermaven-nvim",
+	-- 	opts = { log_level = "off" },
+	-- },
 }
