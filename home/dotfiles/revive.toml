@@ -30,3 +30,5 @@ enableAllRules = true
 [rule.line-length-limit]
   arguments = [160]
 
+[rule.unhandled-error]
+  arguments = ["fmt.Println", "fmt.Printf"]
