@@ -21,6 +21,7 @@
     ];
 
     casks = [
+      "amethyst"
       "aerospace"
       "burp-suite"
       "cursor"
