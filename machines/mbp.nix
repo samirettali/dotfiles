@@ -27,6 +27,9 @@
   };
 
   system = {
+    keyboard = {
+      enableKeyMapping = true;
+    };
     defaults = {
       dock = {
         autohide = true;
@@ -41,6 +44,7 @@
         InitialKeyRepeat = 15;
         KeyRepeat = 1;
         ApplePressAndHoldEnabled = false;
+        AppleKeyboardUIMode = 3;
         NSWindowShouldDragOnGesture = true;
         NSAutomaticWindowAnimationsEnabled = false;
         NSAutomaticInlinePredictionEnabled = false;
@@ -50,4 +54,52 @@
       };
     };
   };
+
+  launchd = {
+    user = {
+      agents = {
+        ollama = {
+          command = "${pkgs.ollama}/bin/ollama serve";
+          serviceConfig = {
+            KeepAlive = true;
+            RunAtLoad = true;
+            StandardOutPath = "/tmp/ollama.log";
+            StandardErrorPath = "/tmp/ollama.error.log";
+          };
+        };
+      };
+    };
+  };
+
+  system.activationScripts.postActivation.text = ''
+    defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict
+
+    # Switch to Desktop $i (Option + $i)
+    for i in {1..9}; do
+        hotkey=$((117 + $i))
+        value=$((48 + $i))
+        /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+        /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey:enabled bool true" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+        /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey:value dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+        /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey:value:type string standard" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+        /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey:value:parameters array" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+        /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey:value:parameters: integer $value" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+        /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey:value:parameters: integer 1" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+        /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey:value:parameters: integer 524288" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    done
+
+    # Map Cmd+Shift+L to change language
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:61 dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:61:enabled bool true" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:61:value dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:61:value:type string standard" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:61:value:parameters array" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:61:value:parameters: integer 76" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:61:value:parameters: integer 37" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:61:value:parameters: integer 1179648" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+
+    # Disable Ctrl+Space for previous input source
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:60 dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:60:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+  '';
 }
