@@ -237,7 +237,7 @@ return {
 					},
 				},
 			},
-			tsserver = {
+			ts_ls = {
 				filetypes = { "typescriptreact", "typescript" },
 			},
 			rust_analyzer = {
