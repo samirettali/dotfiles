@@ -43,7 +43,7 @@
       allowed-users = [username];
       trusted-users = ["root" username];
       experimental-features = ["nix-command" "flakes"];
-      # auto-optimise-store = true;
+      auto-optimise-store = true;
     };
 
     overlays = with inputs; [
