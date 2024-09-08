@@ -15,6 +15,6 @@
 
   home.packages = with pkgs; [
     ollama
-    aider-chat
+    # aider-chat
   ];
 }
