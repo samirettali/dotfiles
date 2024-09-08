@@ -14,11 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     solc = {
       url = "github:hellwolf/solc.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -53,7 +48,6 @@
 
     overlays = with inputs; [
       neovim-nightly-overlay.overlays.default
-      fenix.overlays.default
       nur.overlay
       foundry.overlay
       solc.overlay

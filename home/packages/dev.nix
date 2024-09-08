@@ -27,22 +27,13 @@
     protoc-gen-go-grpc
     revive
 
-    (fenix.combine [
-      (fenix.complete.withComponents [
-        "cargo"
-        "clippy"
-        "rustc"
-        "rust-docs"
-        "rustfmt"
-        "rust-src"
-        "rust-std"
-      ])
-      fenix.targets.wasm32-unknown-unknown.latest.rust-std
-    ])
+    cargo
+    clippy
+    rustc
+    rustfmt
     cargo-watch
     cargo-generate
-    rust-analyzer-nightly
-    wasm-pack
+    rust-analyzer
 
     cmake
     gcc
@@ -56,8 +47,8 @@
     nodePackages.typescript-language-server
     nodePackages.prettier
     prettierd
-    nodePackages.eslint
-    eslint_d
+    # nodePackages.eslint
+    # eslint_d
 
     stylua
     lua-language-server
