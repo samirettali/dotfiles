@@ -35,6 +35,7 @@
     ripgrep
     scc
     sesh
+    sqlite
     tldr
     tmux
     trash-cli
