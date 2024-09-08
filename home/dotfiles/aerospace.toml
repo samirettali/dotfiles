@@ -1,8 +1,3 @@
-after-login-command = []
-after-startup-command = [
-    'exec-and-forget sketchybar',
-    'exec-and-forget defaults write _HIHideMenuBar 1;'
-]
 start-at-login = true
 
 exec-on-workspace-change = ['/bin/bash', '-c', 'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE' ]
@@ -21,7 +16,7 @@ inner.vertical =   8
 outer.left =       8
 outer.bottom =     8
 outer.right =      8
-outer.top = [{ monitor."^built-in retina display$" = 10 }, { monitor."LG" = 48 }, 8]
+outer.top = 8
 
 [mode.main.binding]
 alt-enter = 'exec-and-forget /etc/profiles/per-user/s.ettali/bin/alacritty' # TODO: fix this
