@@ -22,7 +22,6 @@
 
     casks = [
       "amethyst"
-      "aerospace"
       "burp-suite"
       "cursor"
       "db-browser-for-sqlite"
@@ -36,7 +35,6 @@
       "postman"
       "protonvpn"
       "raycast"
-      "rectangle"
       "redisinsight"
       "shottr"
       "spotmenu"
@@ -51,21 +49,5 @@
       "nikitabobko/tap"
       "FelixKratz/formulae"
     ];
-  };
-
-  launchd = {
-    user = {
-      agents = {
-        ollama = {
-          command = "${pkgs.ollama}/bin/ollama serve";
-          serviceConfig = {
-            KeepAlive = true;
-            RunAtLoad = true;
-            StandardOutPath = "/tmp/ollama.log";
-            StandardErrorPath = "/tmp/ollama.error.log";
-          };
-        };
-      };
-    };
   };
 }
