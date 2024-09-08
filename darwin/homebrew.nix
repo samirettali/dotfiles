@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   environment.variables.HOMEBREW_NO_ANALYTICS = "1";
 
   homebrew = {
@@ -51,5 +51,21 @@
       "nikitabobko/tap"
       "FelixKratz/formulae"
     ];
+  };
+
+  launchd = {
+    user = {
+      agents = {
+        ollama = {
+          command = "${pkgs.ollama}/bin/ollama serve";
+          serviceConfig = {
+            KeepAlive = true;
+            RunAtLoad = true;
+            StandardOutPath = "/tmp/ollama.log";
+            StandardErrorPath = "/tmp/ollama.error.log";
+          };
+        };
+      };
+    };
   };
 }
