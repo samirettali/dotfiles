@@ -35,7 +35,8 @@
         mru-spaces = false; # Don't rearrange spaces based on most recently used
       };
       finder.AppleShowAllExtensions = true;
-      finder.FXPreferredViewStyle = "Nlsv"; # List view
+      finder.FXPreferredViewStyle = "icnv";
+      finder.QuitMenuItem = true;
       NSGlobalDomain = {
         InitialKeyRepeat = 15;
         KeyRepeat = 1;
