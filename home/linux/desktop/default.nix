@@ -21,6 +21,8 @@
   # - add custom search engines
   #     - @nix https://mynixos.com/search?q=%s
   #     - @gh https://github.com/search?q=%s
+  #     - @cl https://claude.ai/new?q=%s
+  #     - @pl https://perplexity.ai/?q=%s
   programs.chromium = {
     enable = true;
     # package = pkgs.ungoogled-chromium;
