@@ -4,6 +4,7 @@
     terraform
     csharp-ls
     dbeaver-bin
+    maven
 
     (with dotnetCorePackages;
       combinePackages [
