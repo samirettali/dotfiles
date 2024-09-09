@@ -1,4 +1,4 @@
-{pkgs, lib, ...}: {
+{pkgs, ...}: {
   imports = [
     ./vscode.nix
     ./kitty.nix
@@ -12,11 +12,4 @@
     spotify
     # zed-editor
   ];
-
-  programs = {
-    wezterm = {
-      enable = lib.mkDefault false;
-      extraConfig = builtins.readFile ../../dotfiles/wezterm.lua;
-    };
-  };
 }
