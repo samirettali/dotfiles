@@ -41,6 +41,7 @@
     trash-cli
     tree
     unzip
+    viddy
     watchexec
     yazi
     yt-dlp
