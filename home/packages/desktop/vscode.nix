@@ -22,17 +22,22 @@ in {
           eamodio.gitlens
           mkhl.direnv
 
-          github.copilot
-          github.copilot-chat
+          supermaven.supermaven
 
           jnoortheen.nix-ide
           golang.go
           rust-lang.rust-analyzer
+          ms-toolsai.jupyter
+          ms-python.python
         ])
         ++ [
+          (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csharp)
           (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csdevkit)
+          (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.vscode-dotnet-runtime)
           marketplace.amos402.scope-bar
           marketplace.juanblanco.solidity
+          marketplace.continue.continue
+          marketplace.saoudrizwan.claude-dev
         ];
       keybindings = [];
       userSettings = {
@@ -58,6 +63,8 @@ in {
         "workbench.tree.indent" = 24;
         "workbench.welcomePage.walkthroughs.openOnInstall" = false;
         "workbench.startupEditor" = "none";
+
+        "github.copilot.editor.enableAutoCompletions" = false;
 
         # Go
         "go.formatTool" = "gofumpt";
