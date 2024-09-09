@@ -3,7 +3,6 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<Tab>", "<C-6>", { remap = true })
 
 vim.keymap.set("n", "<Leader>d", "yap<S-}>p", { desc = "Duplicate paragraph" })
-vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste replace visual selection without copying it" })
 
 vim.keymap.set("n", "<Leader>c", "ggVGy<C-o>", { desc = "Copy entire file", silent = true })
 
@@ -36,6 +35,14 @@ vim.keymap.set("n", "<M-,>", "<C-w>5<", { silent = true })
 vim.keymap.set("n", "<M-.>", "<C-w>5>", { silent = true })
 vim.keymap.set("n", "<M-t>", "<C-w>+", { silent = true })
 vim.keymap.set("n", "<M-s>", "<C-w>-", { silent = true })
+
+vim.keymap.set({ "n", "v" }, "dd", function()
+	if vim.api.nvim_get_current_line():match("^%s*$") then
+		vim.cmd('normal! "_dd')
+	else
+		vim.cmd("normal! dd")
+	end
+end, { desc = "Delete a line and copy it only if it's not empty", silent = true })
 
 -- Old stuff
 
