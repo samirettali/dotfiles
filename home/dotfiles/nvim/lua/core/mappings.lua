@@ -47,8 +47,8 @@ end, { desc = "Delete a line and copy it only if it's not empty", silent = true 
 -- Old stuff
 
 -- Keep text selected after indentating it
--- vim.keymap.set("v", "<", "<gv")
--- vim.keymap.set("v", ">", ">gv")
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
 
 -- Keep cursor centered when scrolling
 -- vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
