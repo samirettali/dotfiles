@@ -105,5 +105,13 @@
     # Disable Cmd+Space for Spotlight
     /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:64 dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
     /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:64:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+
+    # Disable Cmd+Shift+4 for screenshot to clipboard
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:31 dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:31:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+
+    # Disable Cmd+Shift+5 for screenshot and recording options
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:28 dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:28:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
   '';
 }
