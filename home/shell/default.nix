@@ -15,6 +15,7 @@
   home.packages = with pkgs; [
     # visidata
     age
+    bombardier
     curl
     diskus
     fd
