@@ -78,6 +78,7 @@
             nixpkgs.overlays = overlays;
 
             system.stateVersion = 4;
+            ids.uids.nixbld = 300; # TODO: fix until update to sequoia
 
             users.users."s.ettali" = {
               home = "/Users/s.ettali";
