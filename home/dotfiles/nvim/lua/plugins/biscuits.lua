@@ -5,7 +5,6 @@ return {
 			default_config = {
 				prefix_string = "^",
 				toggle_keybind = "<leader>ts",
-				show_on_start = true, -- defaults to false
 			},
 		})
 	end,
