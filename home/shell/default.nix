@@ -16,14 +16,17 @@
     # visidata
     age
     bombardier
+    broot
     curl
     diskus
     fd
+    fx
     gh
     graphviz
     htop
     iredis
     jq
+    kaf
     kcat
     lazydocker
     libqalculate
@@ -37,6 +40,7 @@
     scc
     sesh
     sqlite
+    tabview
     tldr
     tmux
     trash-cli
