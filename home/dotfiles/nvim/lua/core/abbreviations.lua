@@ -1,7 +1,5 @@
-vim.cmd([[
-    inoreabbrev dont don't
-    inoreabbrev doesnt doesn't
-    inoreabbrev btw by the way
-    inoreabbrev im I'm
-    inoreabbrev youre you're
-]])
+vim.keymap.set("ia", "dont", "don't")
+vim.keymap.set("ia", "doesnt", "doesn't")
+vim.keymap.set("ia", "btw", "by the way")
+vim.keymap.set("ia", "im", "I'm")
+vim.keymap.set("ia", "youre", "you're")
