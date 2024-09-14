@@ -36,21 +36,34 @@
         autohide-delay = 0.0;
         autohide-time-modifier = 0.0;
         mru-spaces = false; # Don't rearrange spaces based on most recently used
+        launchanim = false;
+        expose-animation-duration = 0.1;
       };
-      finder.AppleShowAllExtensions = true;
-      finder.FXPreferredViewStyle = "icnv";
-      finder.QuitMenuItem = true;
+      finder = {
+        AppleShowAllExtensions = true;
+        FXEnableExtensionChangeWarning = false;
+        FXPreferredViewStyle = "icnv";
+        QuitMenuItem = true;
+      };
       NSGlobalDomain = {
         InitialKeyRepeat = 15;
         KeyRepeat = 1;
         ApplePressAndHoldEnabled = false;
         AppleKeyboardUIMode = 3;
+        AppleShowScrollBars = "Always";
         NSWindowShouldDragOnGesture = true;
         NSAutomaticWindowAnimationsEnabled = false;
         NSAutomaticInlinePredictionEnabled = false;
         NSAutomaticPeriodSubstitutionEnabled = false;
         NSAutomaticQuoteSubstitutionEnabled = false;
         NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+        NSDocumentSaveNewDocumentsToCloud = false;
+        "com.apple.mouse.tapBehavior" = 1;
+      };
+      LaunchServices = {
+        LSQuarantine = false;
       };
     };
   };
