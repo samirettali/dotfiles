@@ -28,7 +28,6 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
     darwin,
     home-manager,
@@ -71,7 +70,6 @@
           ({
             lib,
             pkgs,
-            system,
             ...
           }: {
             nixpkgs.config.allowUnfree = lib.mkDefault true;
@@ -131,7 +129,6 @@
           ({
             lib,
             pkgs,
-            system,
             ...
           }: {
             nixpkgs.config.allowUnfree = lib.mkDefault true;
@@ -160,7 +157,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = {inherit inputs customArgs;};
-              users.${user} = {system, ...}: {
+              users.${user} = {...}: {
                 imports = [
                   ./home
                   ./home/linux
