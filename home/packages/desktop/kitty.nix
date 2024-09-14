@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   customArgs,
   ...
 }: {
@@ -8,10 +7,7 @@
     enable = lib.mkDefault false;
     font = {
       name = customArgs.font.name;
-      size = lib.mkMerge [
-        (lib.mkIf pkgs.stdenv.isDarwin customArgs.font.darwinSize)
-        (lib.mkIf pkgs.stdenv.isLinux customArgs.font.linuxSize)
-      ];
+      size = customArgs.font.size;
     };
     extraConfig = ''
       cursor_shape block

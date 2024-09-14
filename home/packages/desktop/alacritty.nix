@@ -1,18 +1,10 @@
-{
-  lib,
-  pkgs,
-  customArgs,
-  ...
-}: {
+{customArgs, ...}: {
   programs.alacritty = {
     enable = true;
     settings = {
       font = {
         normal.family = customArgs.font.name;
-        size = lib.mkMerge [
-          (lib.mkIf pkgs.stdenv.isDarwin customArgs.font.darwinSize)
-          (lib.mkIf pkgs.stdenv.isLinux customArgs.font.linuxSize)
-        ];
+        size = customArgs.font.size;
       };
       env = {
         TERM = "xterm-256color";

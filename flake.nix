@@ -51,11 +51,15 @@
       solc.overlay
     ];
 
-    customArgs = {
-      font = {
-        name = "JetBrainsMono Nerd Font";
-        linuxSize = 10;
-        darwinSize = 14;
+    mkCustomArgs = pkgs: {
+      customArgs = {
+        font = {
+          name = "JetBrainsMono Nerd Font Mono";
+          size =
+            if pkgs.stdenv.isDarwin
+            then 14
+            else 10;
+        };
       };
     };
   in {
@@ -92,12 +96,15 @@
             };
           })
           home-manager.darwinModule
-          {
+          ({pkgs, ...}: {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
               # makes all inputs available in imported files for hm
-              extraSpecialArgs = {inherit inputs customArgs;};
+              extraSpecialArgs = {
+                inherit inputs;
+                inherit (mkCustomArgs pkgs) customArgs;
+              };
               users."s.ettali" = {...}: {
                 imports = [
                   ./home
@@ -111,7 +118,7 @@
                 home.username = "s.ettali";
               };
             };
-          }
+          })
         ];
       };
     };
@@ -152,11 +159,14 @@
             };
           })
           home-manager.nixosModule
-          {
+          ({pkgs, ...}: {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = {inherit inputs customArgs;};
+              extraSpecialArgs = {
+                inherit inputs;
+                inherit (mkCustomArgs pkgs) customArgs;
+              };
               users.${user} = {...}: {
                 imports = [
                   ./home
@@ -171,7 +181,7 @@
                 home.username = user;
               };
             };
-          }
+          })
         ];
       };
     };

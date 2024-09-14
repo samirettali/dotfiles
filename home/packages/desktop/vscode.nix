@@ -2,13 +2,11 @@
   inputs,
   pkgs,
   lib,
+  customArgs,
   ...
 }: let
   marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
-  fontSize = lib.mkMerge [
-    (lib.mkIf pkgs.stdenv.isDarwin 13)
-    (lib.mkIf pkgs.stdenv.isLinux 12)
-  ];
+  fontSize = 13;
 in {
   programs = {
     vscode = {
@@ -28,7 +26,7 @@ in {
           golang.go
           rust-lang.rust-analyzer
           ms-toolsai.jupyter
-          ms-python.python
+          # ms-python.python
         ])
         ++ [
           (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csharp)
@@ -41,7 +39,7 @@ in {
         ];
       keybindings = [];
       userSettings = {
-        "editor.fontFamily" = "\"JetBrainsMono Nerd Font\"";
+        "editor.fontFamily" = customArgs.font.name;
         "editor.fontSize" = fontSize;
         "editor.minimap.enabled" = false;
         "editor.formatOnSave" = true;
