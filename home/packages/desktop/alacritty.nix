@@ -4,6 +4,8 @@
     settings = {
       font = {
         normal.family = customArgs.font.name;
+        normal.style = "Light";
+        bold.style = "Medium";
         size = customArgs.font.size;
       };
       env = {
