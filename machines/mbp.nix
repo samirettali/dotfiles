@@ -126,5 +126,9 @@
     # Disable Cmd+Shift+5 for screenshot and recording options
     /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:28 dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
     /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:28:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+
+    # Disable Cmd+M for minimize
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:77 dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:77:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
   '';
 }
