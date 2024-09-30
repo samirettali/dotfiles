@@ -6,4 +6,9 @@ return {
 	{ "echasnovski/mini.ai", config = true }, -- AI
 	{ "norcalli/nvim-colorizer.lua", config = true }, -- Highlight colors
 	{ "stevearc/oil.nvim", config = true }, -- File manager
+	{
+		"mawkler/refjump.nvim",
+		-- keys = { ']r', '[r' }, -- Uncomment to lazy load
+		opts = {},
+	},
 }
