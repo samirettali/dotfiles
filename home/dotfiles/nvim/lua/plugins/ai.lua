@@ -4,9 +4,30 @@ return {
 	-- 	event = "BufEnter",
 	-- },
 	{
-		"supermaven-inc/supermaven-nvim",
-		opts = { log_level = "off" },
+		"monkoose/neocodeium",
+		event = "VeryLazy",
+		config = function()
+			local neocodeium = require("neocodeium")
+			neocodeium.setup()
+			vim.keymap.set("i", "<Tab>", function()
+				neocodeium.accept()
+			end)
+			vim.keymap.set("i", "<C-e>", function()
+				neocodeium.cycle_or_complete()
+			end)
+			vim.keymap.set("i", "<C-y>", function()
+				neocodeium.cycle_or_complete(-1)
+			end)
+
+			vim.keymap.set("i", "<C-c>", function()
+				require("neocodeium").clear()
+			end)
+		end,
 	},
+	-- {
+	-- 	"supermaven-inc/supermaven-nvim",
+	-- 	opts = { log_level = "off" },
+	-- },
 	{
 		-- views can only be fully collapsed with the global statusline
 		-- vim.opt.laststatus = 3
