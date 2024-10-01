@@ -42,6 +42,14 @@ return {
 						n = { ["q"] = require("telescope.actions").close },
 					},
 				},
+				pickers = {
+					find_files = {
+						theme = "dropdown",
+					},
+					git_files = {
+						theme = "dropdown",
+					},
+				},
 				extensions = {
 					fzf = {
 						fuzzy = true,
@@ -49,7 +57,7 @@ return {
 						override_file_sorter = true,
 					},
 					file_browser = {
-						theme = "ivy",
+						theme = "dropdown",
 					},
 					advanced_git_search = {},
 				},
