@@ -15,6 +15,7 @@ return {
 				"c_sharp",
 				"sql",
 				"python",
+				"nix",
 
 				"html",
 				"tsx",
