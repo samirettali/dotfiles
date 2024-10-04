@@ -45,6 +45,9 @@
         FXPreferredViewStyle = "icnv";
         QuitMenuItem = true;
       };
+      ".GlobalPreferences" = {
+        "com.apple.mouse.scaling" = 3.0;
+      };
       NSGlobalDomain = {
         InitialKeyRepeat = 15;
         KeyRepeat = 1;
@@ -61,6 +64,8 @@
         NSAutomaticSpellingCorrectionEnabled = false;
         NSDocumentSaveNewDocumentsToCloud = false;
         "com.apple.mouse.tapBehavior" = 1;
+        "com.apple.swipescrolldirection" = false;
+        "com.apple.trackpad.scaling" = 3.0;
       };
       LaunchServices = {
         LSQuarantine = false;
