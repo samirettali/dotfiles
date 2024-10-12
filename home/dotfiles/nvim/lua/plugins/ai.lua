@@ -8,8 +8,14 @@ return {
 		event = "VeryLazy",
 		config = function()
 			local neocodeium = require("neocodeium")
-			neocodeium.setup()
-			vim.keymap.set("i", "<Tab>", function()
+
+			local opts = {
+				show_label = false,
+			}
+
+			neocodeium.setup(opts)
+
+			vim.keymap.set("i", "<C-f>", function()
 				neocodeium.accept()
 			end)
 			vim.keymap.set("i", "<C-e>", function()
