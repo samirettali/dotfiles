@@ -92,7 +92,16 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.opt.showmode = false
 
-vim.opt.fillchars = { eob = " " }
+vim.opt.fillchars = {
+	horiz = "━",
+	horizup = "┻",
+	horizdown = "┳",
+	vert = "┃",
+	vertleft = "┫",
+	vertright = "┣",
+	verthoriz = "╋",
+	eob = " ",
+}
 
 vim.cmd(":command! W w")
 vim.cmd(":command! Q q")
