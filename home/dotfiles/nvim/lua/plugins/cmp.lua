@@ -30,9 +30,6 @@ return {
 					i = cmp.mapping.abort(),
 					c = cmp.mapping.close(),
 				}),
-				["<CR>"] = cmp.mapping.confirm({
-					select = true,
-				}),
 				["<C-y>"] = cmp.mapping.confirm({
 					select = true,
 				}),
