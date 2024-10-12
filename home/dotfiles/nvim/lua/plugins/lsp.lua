@@ -280,6 +280,7 @@ return {
 			clangd = true,
 			pyright = true,
 			bashls = true,
+			ocamllsp = true,
 		}
 
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -305,6 +306,7 @@ return {
 				bash = { "shellcheck" },
 				javascript = { "prettierd" },
 				python = { "isort", "black" },
+				ocaml = { "ocamlformat" },
 				-- ["*"] = { "codespell" },
 				-- ["_"] = { "trim_whitespace" }, -- if no formatter is found, use this
 			},
