@@ -11,6 +11,5 @@
     keepassxc
     qbittorrent
     spotify
-    # zed-editor
   ];
 }
