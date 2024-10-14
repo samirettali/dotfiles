@@ -13,7 +13,6 @@
   ];
 
   home.packages = with pkgs; [
-    # visidata
     age
     bat
     bombardier
@@ -48,6 +47,7 @@
     tree
     unzip
     viddy
+    visidata
     watchexec
     yazi
     yt-dlp
