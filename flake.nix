@@ -79,8 +79,8 @@
             nixpkgs.config.allowUnfree = lib.mkDefault true;
             nixpkgs.overlays = overlays;
 
-            system.stateVersion = 4;
-            ids.uids.nixbld = 300; # TODO: fix until update to sequoia
+            system.stateVersion = 5;
+            ids.uids.nixbld = 350; # TODO: fix until update to sequoia
 
             users.users."s.ettali" = {
               home = "/Users/s.ettali";
