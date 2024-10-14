@@ -16,17 +16,15 @@ in {
       enableUpdateCheck = false;
       extensions =
         (with pkgs.vscode-extensions; [
-          vscodevim.vim
           eamodio.gitlens
-          mkhl.direnv
-
-          supermaven.supermaven
-
-          jnoortheen.nix-ide
           golang.go
-          rust-lang.rust-analyzer
+          jnoortheen.nix-ide
+          mkhl.direnv
+          ms-python.python
           ms-toolsai.jupyter
-          # ms-python.python
+          rust-lang.rust-analyzer
+          supermaven.supermaven
+          vscodevim.vim
         ])
         ++ [
           (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csharp)
