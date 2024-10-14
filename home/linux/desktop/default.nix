@@ -11,8 +11,8 @@
 
   home.packages = with pkgs; [
     ledger-live-desktop
-    newsflash
-    brave
+    redisinsight
+    zed-editor
   ];
 
   # TODO:
