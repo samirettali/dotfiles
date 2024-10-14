@@ -45,6 +45,7 @@ in {
         fim = "nvim $(fd -t f | fzf)";
         gc = "git clone";
         gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
+        gb = "git branch";
         jj = "${pasteCommand} | jq -r | ${copyCommand}";
         jjj = "${pasteCommand} | jq -r";
         ld = "lazydocker";
