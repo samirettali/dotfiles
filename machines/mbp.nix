@@ -26,6 +26,8 @@
     ];
   };
 
+  time.timeZone = "Europe/Rome";
+
   system = {
     keyboard = {
       enableKeyMapping = true;
@@ -44,6 +46,9 @@
         FXEnableExtensionChangeWarning = false;
         FXPreferredViewStyle = "icnv";
         QuitMenuItem = true;
+      };
+      spaces = {
+        spans-displays = false;
       };
       ".GlobalPreferences" = {
         "com.apple.mouse.scaling" = 3.0;
@@ -69,6 +74,19 @@
       };
       LaunchServices = {
         LSQuarantine = false;
+      };
+      menuExtraClock = {
+        Show24Hour = true;
+        ShowSeconds = true;
+      };
+      screensaver = {
+        askForPassword = true;
+        askForPasswordDelay = 0;
+      };
+      trackpad = {
+        Clicking = true;
+        Dragging = true;
+        TrackpadRightClick = true;
       };
     };
   };
