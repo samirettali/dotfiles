@@ -27,11 +27,9 @@
       "docker"
       "iina"
       "karabiner-elements"
-      "ledger-live"
-      "mongodb-compass"
+      "lunar"
       "openvpn-connect"
       "phantomjs"
-      "postman"
       "protonvpn"
       "raycast"
       "redisinsight"
@@ -39,7 +37,10 @@
       "spotmenu"
       "the-unarchiver"
       "zed"
+      # "ledger-live"
       # "logi-options-plus" # TODO
+      # "mongodb-compass"
+      # "postman"
     ];
 
     taps = [
