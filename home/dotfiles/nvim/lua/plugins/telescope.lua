@@ -51,8 +51,13 @@ return {
 				pickers = {
 					find_files = {
 						theme = "dropdown",
+						previewer = false,
 					},
 					git_files = {
+						theme = "dropdown",
+						previewer = false,
+					},
+					grep_files = {
 						theme = "dropdown",
 					},
 				},
@@ -64,6 +69,7 @@ return {
 					},
 					file_browser = {
 						theme = "dropdown",
+						previewer = false,
 					},
 					advanced_git_search = {},
 				},
