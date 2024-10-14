@@ -17,7 +17,6 @@
       "coreutils"
       "displayplacer"
       "git-delta"
-      "sketchybar"
     ];
 
     casks = [
