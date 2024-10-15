@@ -21,10 +21,10 @@ return {
 			}),
 			mapping = cmp.mapping.preset.insert({
 				["<C-n>"] = cmp.mapping.select_next_item({
-					behavior = cmp.SelectBehavior.Insert,
+					behavior = cmp.SelectBehavior.Select,
 				}),
 				["<C-p>"] = cmp.mapping.select_prev_item({
-					behavior = cmp.SelectBehavior.Insert,
+					behavior = cmp.SelectBehavior.Select,
 				}),
 				["<C-e>"] = cmp.mapping({
 					i = cmp.mapping.abort(),
