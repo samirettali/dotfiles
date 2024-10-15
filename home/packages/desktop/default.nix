@@ -2,6 +2,7 @@
   imports = [
     ./vscode.nix
     ./kitty.nix
+    ./wezterm.nix
     ./alacritty.nix
     ./espanso.nix
   ];
