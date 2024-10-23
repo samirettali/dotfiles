@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   copyCommand =
     if pkgs.stdenv.isDarwin
     then "pbcopy"
@@ -25,7 +21,6 @@ in {
         expireDuplicatesFirst = true;
         ignoreAllDups = true;
         ignorePatterns = [
-          # These patterns are not added to history to prevent accidental execution
           "rm *"
           "pkill *"
           "shutdown"
@@ -40,21 +35,24 @@ in {
       historySubstringSearch.enable = true;
       initExtra = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
       shellAliases = {
-        gmt = "go mod tidy";
         bak = "cp -r $1 $1.bak";
-        fim = "nvim $(fd -t f | fzf)";
-        gc = "git clone";
-        gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
+        c = "clear";
         gb = "git branch";
+        gc = "git clone";
+        gch = "git checkout";
+        gd = "git diff";
+        gdc = "git diff --cached";
+        gmt = "go mod tidy";
+        gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
         jj = "${pasteCommand} | jq -r | ${copyCommand}";
         jjj = "${pasteCommand} | jq -r";
         ld = "lazydocker";
         lg = "lazygit";
         ns = "nix-shell --run zsh -p";
+        ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
         rm = "trash";
         tl = "tmux ls";
         vim = "nvim";
-        ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
       };
       shellGlobalAliases = {
         trim = "awk '{\$1=\$1;print}'";
