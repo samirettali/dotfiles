@@ -36,8 +36,8 @@ in {
         ];
         ignoreSpace = true;
         share = true; # Share history between sessions
-        # historySubstirngSearch
       };
+      historySubstringSearch.enable = true;
       initExtra = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
       shellAliases = {
         gmt = "go mod tidy";
