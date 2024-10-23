@@ -10,7 +10,6 @@ local function load_modules()
 		"core.abbreviations",
 		"core.autocmds",
 		"core.statusline",
-		"core.winbar",
 		"core.mappings",
 		"core.largefile",
 	}

@@ -37,7 +37,6 @@ return {
 		"nvim-telescope/telescope.nvim",
 		"stevearc/conform.nvim",
 		"mfussenegger/nvim-lint",
-		"SmiteshP/nvim-navic", -- LSP breadcrumbs
 		{ "j-hui/fidget.nvim", config = true }, -- Show LSP loading status
 	},
 	"neovim/nvim-lspconfig",
@@ -61,13 +60,6 @@ return {
 
 				if client.supports_method(methods.textDocument_definition) then
 					vim.opt_local.tagfunc = "v:lua.vim.lsp.tagfunc"
-				end
-
-				if client.supports_method(methods.textDocument_documentSymbol) then
-					local navic_present, navic = pcall(require, "nvim-navic")
-					if navic_present then
-						navic.attach(client, args.buf)
-					end
 				end
 
 				local function toggle_lsp_hints()
