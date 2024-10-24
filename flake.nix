@@ -91,7 +91,7 @@
             };
 
             nix = {
-              package = pkgs.nixFlakes;
+              package = pkgs.nixVersions.stable;
               settings = nixConfig {username = "s.ettali";};
             };
           })
@@ -148,7 +148,7 @@
               isNormalUser = true;
             };
             nix = {
-              package = pkgs.nixFlakes;
+              package = pkgs.nixVersions.stable;
               settings = nixConfig {};
               optimise.automatic = true;
               gc = {
