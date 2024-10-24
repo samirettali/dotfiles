@@ -41,7 +41,7 @@
       allowed-users = [username];
       trusted-users = ["root" username];
       experimental-features = ["nix-command" "flakes"];
-      auto-optimise-store = true;
+      auto-optimise-store = false; # this breaks on macos
     };
 
     overlays = with inputs; [
