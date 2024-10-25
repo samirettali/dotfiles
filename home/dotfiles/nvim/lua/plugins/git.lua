@@ -20,7 +20,13 @@ return {
 		config = function()
 			local gitsigns = require("gitsigns")
 
-			gitsigns.setup()
+			local opts = {
+				current_line_blame_opts = {
+					delay = 100,
+				},
+			}
+
+			gitsigns.setup(opts)
 
 			vim.keymap.set("n", "]c", function()
 				if vim.wo.diff then
