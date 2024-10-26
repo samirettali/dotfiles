@@ -55,11 +55,17 @@
   ];
 
   programs = {
+    btop = {
+      enable = true;
+      settings = {
+        color_theme = "TTY";
+        vim_keys = true;
+      };
+    };
     neovim = {
       enable = lib.mkDefault true;
       package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
     };
-
     direnv = {
       enable = true;
       enableZshIntegration = true;
