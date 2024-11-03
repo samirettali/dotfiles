@@ -48,6 +48,8 @@ in {
         jjj = "${pasteCommand} | jq -r";
         ld = "lazydocker";
         lg = "lazygit";
+        la = "ls -la";
+        ll = "ls -l";
         ns = "nix-shell --run zsh -p";
         ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
         rm = "trash";
