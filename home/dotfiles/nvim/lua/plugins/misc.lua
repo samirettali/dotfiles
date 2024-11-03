@@ -4,7 +4,6 @@ return {
 	"tpope/vim-eunuch", -- UNIX commands inside neovim
 	"tpope/vim-surround", -- Add surround object for editing
 	{ "echasnovski/mini.ai", config = true }, -- AI
-	{ "norcalli/nvim-colorizer.lua", config = true }, -- Highlight colors
 	{ "stevearc/oil.nvim", config = true }, -- File manager
 	{
 		"mawkler/refjump.nvim",
@@ -17,10 +16,16 @@ return {
 		version = "*",
 		dependencies = {
 			"SmiteshP/nvim-navic",
-			"nvim-tree/nvim-web-devicons", -- optional dependency
+			"nvim-tree/nvim-web-devicons",
 		},
-		opts = {
-			-- configurations go here
-		},
+		opts = {},
+	},
+	{
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			local colorizer = require("colorizer")
+			colorizer.setup()
+			vim.keymap.set("n", "<leader>th", "<cmd>ColorizerToggle<CR>", { desc = "Toggle colorizer" })
+		end,
 	},
 }
