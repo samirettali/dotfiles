@@ -299,6 +299,7 @@ return {
 				javascript = { "prettierd" },
 				python = { "isort", "black" },
 				ocaml = { "ocamlformat" },
+				cpp = { "clang-format" },
 				-- ["*"] = { "codespell" },
 				-- ["_"] = { "trim_whitespace" }, -- if no formatter is found, use this
 			},
@@ -318,6 +319,7 @@ return {
 		lint.linters_by_ft = {
 			go = { "revive", "golangcilint" },
 			javascript = { "eslint_d" },
+			cpp = { "clang-tidy", "cppcheck", "cpplint" },
 		}
 
 		-- TODO: does this need an autogroup?

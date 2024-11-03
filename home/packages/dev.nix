@@ -40,6 +40,8 @@
     gnumake
     clang-tools
     stdenv
+    cppcheck
+    cpplint
 
     bun
     nodejs
