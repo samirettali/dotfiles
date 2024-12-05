@@ -110,8 +110,8 @@
 
     # Switch to Desktop $i (Option + $i)
     for i in {1..9}; do
-        hotkey=$((117 + $i))
-        value=$((48 + $i))
+        hotkey=$((117 + i))
+        value=$((48 + i))
         /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
         /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey:enabled bool true" ~/Library/Preferences/com.apple.symbolichotkeys.plist
         /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:$hotkey:value dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
