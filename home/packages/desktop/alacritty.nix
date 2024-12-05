@@ -4,7 +4,7 @@
     settings = {
       font = {
         normal.family = customArgs.font.name;
-        normal.style = "Light";
+        normal.style = "Regular";
         bold.style = "Medium";
         size = customArgs.font.size;
       };
