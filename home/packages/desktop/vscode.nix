@@ -42,6 +42,7 @@ in {
         "editor.minimap.enabled" = false;
         "editor.formatOnSave" = true;
         "editor.renderWhitespace" = "trailing";
+        "editor.lineNumbers" = "relative";
         "editor.wordSeparators" = "/\\()\"'=,.;<>~!@#$%^&*|+=[]{}`?-";
         "editor.inlineSuggest.suppressSuggestions" = true;
 
