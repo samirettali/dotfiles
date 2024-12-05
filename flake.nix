@@ -54,7 +54,7 @@
     mkCustomArgs = pkgs: {
       customArgs = {
         font = {
-          name = "JetBrainsMono Nerd Font Mono";
+          name = "JetBrainsMono Nerd Font";
           size =
             if pkgs.stdenv.isDarwin
             then 14
