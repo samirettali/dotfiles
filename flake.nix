@@ -24,7 +24,7 @@
     nur.url = "github:nix-community/NUR";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
-    walker.url = "github:abenz1267/walker";
+    # walker.url = "github:abenz1267/walker";
   };
 
   outputs = {
@@ -78,6 +78,13 @@
           }: {
             nixpkgs.config.allowUnfree = lib.mkDefault true;
             nixpkgs.overlays = overlays;
+            nixpkgs.config.permittedInsecurePackages = [
+              "dotnet-combined"
+              "dotnet-core-combined"
+              "dotnet-wrapped-combined"
+              "dotnet-sdk-6.0.428"
+              "dotnet-sdk-wrapped-6.0.428"
+            ];
 
             system.stateVersion = 5;
             ids.uids.nixbld = 350; # TODO: fix until update to sequoia

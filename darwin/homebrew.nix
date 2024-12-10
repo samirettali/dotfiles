@@ -17,10 +17,13 @@
       "coreutils"
       "displayplacer"
       "git-delta"
+      "stunnel"
     ];
 
     casks = [
       "amethyst"
+      "betterdisplay"
+      "bettertouchtool"
       "burp-suite"
       "cursor"
       "db-browser-for-sqlite"
@@ -37,7 +40,7 @@
       "spotmenu"
       "the-unarchiver"
       "zed"
-      # "ledger-live"
+      "ledger-live"
       # "logi-options-plus" # TODO
       # "mongodb-compass"
       # "postman"
