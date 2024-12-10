@@ -74,12 +74,14 @@
 
     htmx-lsp
 
+    jdk
+
     foundry-bin
     # (inputs.solc.mkDefault pkgs pkgs.solc_0_8_25)
     solc-select
     slither-analyzer
     go-ethereum
-    # nur.repos.gabr1sr.vscode-solidity-server
+    nur.repos.gabr1sr.vscode-solidity-server
   ];
 
   home.sessionPath = [
