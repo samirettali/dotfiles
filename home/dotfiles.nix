@@ -22,6 +22,7 @@
       ".bin/extract".source = dotfiles/scripts/extract.sh;
       ".bin/glc".source = dotfiles/scripts/glc.sh;
       ".bin/tad".source = dotfiles/scripts/tad.sh;
+      ".bin/ticker".source = dotfiles/scripts/ticker.sh;
     }
     (lib.mkIf pkgs.stdenv.isLinux {
       ".bin/passbemenu".source = dotfiles/scripts/passbemenu.sh;
