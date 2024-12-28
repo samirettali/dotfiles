@@ -15,7 +15,6 @@
   home.packages = with pkgs; [
     ledger-live-desktop
     redisinsight
-    zed-editor
     inputs.ghostty.packages."${pkgs.system}".default
   ];
 

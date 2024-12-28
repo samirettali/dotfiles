@@ -38,7 +38,6 @@
       "shottr"
       "spotmenu"
       "the-unarchiver"
-      "zed"
       "ledger-live"
       # "logi-options-plus" # TODO
       # "mongodb-compass"
