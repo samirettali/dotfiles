@@ -3,8 +3,8 @@
     aggressiveResize = true;
     enable = true;
     escapeTime = 0;
-    historyLimit = 100000;
     extraConfig = builtins.readFile ../dotfiles/tmux.conf;
+    historyLimit = 10000;
     keyMode = "vi";
     mouse = true;
     newSession = false;
