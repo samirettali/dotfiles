@@ -51,7 +51,7 @@
 
     overlays = with inputs; [
       neovim-nightly-overlay.overlays.default
-      nur.overlay
+      nur.overlays.default
       foundry.overlay
       solc.overlay
     ];
