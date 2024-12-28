@@ -18,6 +18,7 @@
       ".Xdefaults".source = dotfiles/Xdefaults;
       ".config/zed/settings.json".source = dotfiles/zed.json;
       "revive.toml".source = dotfiles/revive.toml;
+      ".config/ghostty/config".source = dotfiles/ghostty;
 
       ".bin/extract".source = dotfiles/scripts/extract.sh;
       ".bin/glc".source = dotfiles/scripts/glc.sh;

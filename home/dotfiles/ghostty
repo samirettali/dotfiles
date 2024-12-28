@@ -1,0 +1,16 @@
+bold-is-bright = true
+cursor-style-blink = false
+cursor-style = block
+font-family = "JetBrainsMono Nerd Font"
+font-size = 15
+font-style = Medium
+font-thicken = true
+gtk-titlebar = false
+mouse-hide-while-typing = true
+shell-integration-features = "no-cursor"
+theme = "Builtin Dark"
+window-padding-x = 0,0
+window-padding-y = 0,0
+
+# term = xterm-256color
+# window-decoration = true
