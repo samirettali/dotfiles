@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   # TODO: use config for name and email
   programs.git = {
     enable = true;
@@ -39,4 +43,7 @@
       };
     };
   };
+  home.packages = with pkgs; [
+    git-absorb
+  ];
 }
