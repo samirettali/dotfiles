@@ -38,13 +38,27 @@
         autohide-time-modifier = 0.0;
         mru-spaces = false; # Don't rearrange spaces based on most recently used
         launchanim = false;
-        expose-animation-duration = 0.1;
+        expose-animation-duration = 0.0;
+        show-recents = false;
+        static-only = true;
+        mineffect = "scale";
+        minimize-to-application = true;
+        scroll-to-open = true;
+        persistent-apps = [
+          "/Applications/Google Chrome.app"
+          "/Applications/Ghostty.app"
+          "~/Applications/Slack.app"
+        ];
       };
       finder = {
         AppleShowAllExtensions = true;
         FXEnableExtensionChangeWarning = false;
-        FXPreferredViewStyle = "icnv";
-        QuitMenuItem = true;
+        FXPreferredViewStyle = "Nlsv";
+        ShowPathbar = false;
+        "_FXSortFoldersFirst" = true;
+        "_FXSortFoldersFirstOnDesktop" = true;
+        CreateDesktop = true;
+        NewWindowTarget = "Home";
       };
       spaces = {
         spans-displays = false;
