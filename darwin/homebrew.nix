@@ -29,7 +29,6 @@
       "db-browser-for-sqlite"
       "docker"
       "ghostty"
-      "iina"
       "karabiner-elements"
       "lunar"
       "openvpn-connect"
