@@ -40,6 +40,7 @@
     scc
     sesh
     sqlite
+    superfile
     tabview
     tldr
     tmux
