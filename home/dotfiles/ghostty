@@ -2,6 +2,7 @@ bold-is-bright = true
 cursor-style-blink = false
 cursor-style = block
 font-family = "JetBrainsMono Nerd Font"
+font-feature = "-liga"
 font-size = 15
 font-style = Medium
 font-thicken = true
