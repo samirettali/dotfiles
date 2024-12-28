@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ./wm
     ./firefox.nix
@@ -13,6 +17,7 @@
     ledger-live-desktop
     redisinsight
     zed-editor
+    inputs.ghostty.packages."${pkgs.system}".default
   ];
 
   # TODO:

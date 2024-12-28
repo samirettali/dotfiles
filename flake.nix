@@ -19,6 +19,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
+
     foundry.url = "github:shazow/foundry.nix/monthly";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nur.url = "github:nix-community/NUR";
@@ -31,6 +35,7 @@
     nixpkgs,
     darwin,
     home-manager,
+    ghostty,
     ...
   } @ inputs: let
     stateVersion = "25.05";

@@ -28,6 +28,7 @@
       "cursor"
       "db-browser-for-sqlite"
       "docker"
+      "ghostty"
       "iina"
       "karabiner-elements"
       "lunar"
