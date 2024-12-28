@@ -1,17 +1,12 @@
 bold-is-bright = true
-cursor-style-blink = false
+confirm-close-surface = false
 cursor-style = block
-font-family = "JetBrainsMono Nerd Font"
+cursor-style-blink = false
 font-feature = "-liga"
-font-size = 15
-font-style = Medium
+font-size = 16
 font-thicken = true
 gtk-titlebar = false
-mouse-hide-while-typing = true
-shell-integration-features = "no-cursor"
+macos-titlebar-proxy-icon = hidden
+macos-titlebar-style = tabs
 theme = "Builtin Dark"
-window-padding-x = 0,0
-window-padding-y = 0,0
-
-# term = xterm-256color
-# window-decoration = true
+title = " "

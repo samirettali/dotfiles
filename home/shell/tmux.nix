@@ -3,10 +3,8 @@
     aggressiveResize = true;
     enable = true;
     escapeTime = 0;
-    # Read tmux.conf and concat default shell
-    extraConfig =
-      builtins.readFile ../dotfiles/tmux.conf;
     historyLimit = 100000;
+    extraConfig = builtins.readFile ../dotfiles/tmux.conf;
     keyMode = "vi";
     mouse = true;
     newSession = false;
