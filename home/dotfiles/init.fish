@@ -1,33 +1,12 @@
-set fish_greeting # Disable greeting
+set fish_greeting
 
-function fish_mode_prompt
-end
+set fish_color_command green
+set fish_color_valid_path normal
 
 set -g fish_key_bindings fish_vi_key_bindings
 set -g fish_key_bindings fish_hybrid_key_bindings
 
-function bind_bang
-    switch (commandline -t)[-1]
-        case "!"
-            commandline -t -- $history[1]
-            commandline -f repaint
-        case "*"
-            commandline -i !
-    end
-end
-
-function bind_dollar
-    switch (commandline -t)[-1]
-        case "!"
-            commandline -f backward-delete-char history-token-search-backward
-        case "*"
-            commandline -i '$'
-    end
-end
-
-function fish_user_key_bindings
-    bind ! bind_bang
-    bind '$' bind_dollar
+function fish_mode_prompt
 end
 
 function fish_prompt
@@ -48,5 +27,11 @@ function fish_prompt
     set_color -o red
     echo -n $symbol
 
+    set_color normal
+end
+
+function fish_right_prompt
+    set_color -o brmagenta
+    printf (fish_git_prompt "[%s]")
     set_color normal
 end
