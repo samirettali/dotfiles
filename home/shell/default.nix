@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./zsh.nix
+    ./fish.nix
     ./tmux.nix
     ./pass.nix
     ./fzf.nix

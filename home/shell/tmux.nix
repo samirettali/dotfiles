@@ -5,11 +5,7 @@
     escapeTime = 0;
     # Read tmux.conf and concat default shell
     extraConfig =
-      builtins.readFile ../dotfiles/tmux.conf
-      + ''
-        set-option -g default-shell ${pkgs.zsh}/bin/zsh
-        set-option -g default-command ${pkgs.zsh}/bin/zsh
-      '';
+      builtins.readFile ../dotfiles/tmux.conf;
     historyLimit = 100000;
     keyMode = "vi";
     mouse = true;
@@ -19,7 +15,6 @@
       t-smart-tmux-session-manager
     ];
     shortcut = "a";
-    shell = "${pkgs.zsh}/bin/zsh";
   };
 
   home.sessionPath = [

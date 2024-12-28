@@ -13,6 +13,12 @@
       };
     };
 
+    fish = {
+      shellAliases = {
+        ls = "/opt/homebrew/bin/gls --color=auto --group-directories-first";
+      };
+    };
+
     gpg.enable = true;
   };
 

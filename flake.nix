@@ -96,7 +96,7 @@
 
             users.users."s.ettali" = {
               home = "/Users/s.ettali";
-              shell = pkgs.zsh;
+              shell = pkgs.fish;
               openssh.authorizedKeys.keys = [
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJdetGPFJw+CH6wNU4BinYePWVypM42s9WI0XPodihl samir"
               ];
