@@ -36,6 +36,7 @@
     ngrok
     p7zip
     pgcli
+    plumber
     ripgrep
     scc
     sesh
