@@ -16,7 +16,6 @@
       "cmake"
       "coreutils"
       "displayplacer"
-      "git-delta"
       "stunnel"
     ];
 

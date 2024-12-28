@@ -23,9 +23,9 @@
     ];
 
     # TODO: this is broken in nixpkgs
-    # delta = {
-    #   enable = true;
-    # };
+    delta = {
+      enable = true;
+    };
   };
 
   programs.lazygit = {
