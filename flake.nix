@@ -28,7 +28,7 @@
     nur.url = "github:nix-community/NUR";
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
-    # walker.url = "github:abenz1267/walker";
+    walker.url = "github:abenz1267/walker";
   };
 
   outputs = {

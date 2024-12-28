@@ -1,7 +1,7 @@
 {
+  inputs,
   config,
   pkgs,
-  inputs,
   ...
 }: {
   imports = [
@@ -12,12 +12,11 @@
     ./mako.nix
     ./gtk.nix
     ./kanshi.nix
-    inputs.walker.homeManagerModules.walker
+    inputs.walker.homeManagerModules.default
   ];
 
   home.packages = with pkgs; [
     bemenu
-    swaybg
     hyprpicker
     grimblast
     zathura
@@ -61,6 +60,8 @@
   programs.walker = {
     enable = true;
     runAsService = true;
-    config = {};
+    config = {
+      placeholder = "Search...";
+    };
   };
 }
