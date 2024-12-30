@@ -1,6 +1,6 @@
 {customArgs, ...}: {
   programs.alacritty = {
-    enable = true;
+    enable = false;
     settings = {
       font = {
         normal.family = customArgs.font.name;
