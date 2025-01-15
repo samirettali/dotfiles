@@ -7,11 +7,6 @@
     ast-grep
     tree-sitter
 
-    # TODO: check if needed
-    pkg-config
-    openssl.dev
-    libiconv
-
     air
     delve
     go
