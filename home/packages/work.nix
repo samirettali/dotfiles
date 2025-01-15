@@ -1,19 +1,17 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    # awscli2
-    # csharp-ls
-    dbeaver-bin
+    awscli2
     maven
+    omnisharp-roslyn
     slack
     terraform
+    terraform-ls
 
     (with dotnetCorePackages;
       combinePackages [
         sdk_6_0
         sdk_8_0
       ])
-    # dotnet-sdk_8
-    # dotnet-sdk-6
   ];
 
   programs.zsh.shellAliases = {
