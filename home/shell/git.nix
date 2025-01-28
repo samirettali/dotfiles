@@ -7,7 +7,7 @@
   programs.git = {
     enable = true;
     userName = "Samir Ettali";
-    userEmail = "ettali.samir@gmail.com";
+    userEmail = config.home.sessionVariables.EMAIL;
     extraConfig = {
       core.editor = config.home.sessionVariables.EDITOR;
       init.defaultBranch = "main";

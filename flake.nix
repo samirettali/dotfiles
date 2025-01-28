@@ -128,6 +128,9 @@
                 home.stateVersion = stateVersion;
                 home.homeDirectory = "/Users/s.ettali";
                 home.username = "s.ettali";
+                home.sessionVariables = {
+                  EMAIL = "s.ettali@young.business";
+                };
               };
             };
           })
@@ -191,6 +194,9 @@
                 home.stateVersion = stateVersion;
                 home.homeDirectory = homeDirectory;
                 home.username = user;
+                home.sessionVariables = {
+                  EMAIL = "ettali.samir@gmail.com";
+                };
               };
             };
           })
