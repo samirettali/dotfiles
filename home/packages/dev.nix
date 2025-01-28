@@ -56,6 +56,7 @@
     pyright
     isort
     black
+    uv
 
     alejandra
     nixd
