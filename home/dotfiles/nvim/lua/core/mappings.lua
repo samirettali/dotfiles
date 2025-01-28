@@ -30,12 +30,6 @@ vim.keymap.set("n", "<C-n>", ":bn<CR>", { desc = "Go to next buffer", silent = t
 vim.keymap.set({ "n", "v" }, "<space>", "<nop>", { desc = "Disable space", silent = true })
 vim.keymap.set({ "n", "v" }, "<del>", "<nop>", { desc = "Disable space", silent = true })
 
--- Resize splits
-vim.keymap.set("n", "<M-,>", "<C-w>5<", { silent = true })
-vim.keymap.set("n", "<M-.>", "<C-w>5>", { silent = true })
-vim.keymap.set("n", "<M-t>", "<C-w>+", { silent = true })
-vim.keymap.set("n", "<M-s>", "<C-w>-", { silent = true })
-
 vim.keymap.set({ "n", "v" }, "dd", function()
 	if vim.api.nvim_get_current_line():match("^%s*$") then
 		vim.cmd('normal! "_dd')
