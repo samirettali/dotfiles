@@ -76,6 +76,7 @@
         ApplePressAndHoldEnabled = false;
         AppleKeyboardUIMode = 3;
         AppleShowScrollBars = "Always";
+        AppleInterfaceStyle = "Dark";
         NSWindowShouldDragOnGesture = true;
         NSAutomaticWindowAnimationsEnabled = false;
         NSAutomaticInlinePredictionEnabled = false;
