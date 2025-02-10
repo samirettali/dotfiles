@@ -14,28 +14,41 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    solc = {
-      url = "github:hellwolf/solc.nix";
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    foundry = {
+      url = "github:shazow/foundry.nix/monthly";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    foundry.url = "github:shazow/foundry.nix/monthly";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    nur.url = "github:nix-community/NUR";
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    walker.url = "github:abenz1267/walker";
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     nixpkgs,
     darwin,
     home-manager,
-    ghostty,
     ...
   } @ inputs: let
     stateVersion = "25.05";
@@ -53,7 +66,6 @@
       neovim-nightly-overlay.overlays.default
       nur.overlays.default
       foundry.overlay
-      solc.overlay
     ];
 
     mkCustomArgs = pkgs: {
