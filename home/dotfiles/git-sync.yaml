@@ -1,3 +1,4 @@
+backup_dir: {{HOME}}/git-backups
 clone_type: full
 include_wiki: true
 concurrency: 5
