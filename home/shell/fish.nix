@@ -14,17 +14,13 @@
 in {
   programs.fish = {
     enable = true;
-    interactiveShellInit =
-      builtins.readFile ../../home/dotfiles/init.fish
-      ++ ''
-        fish_add_path --global --move --path "${config.home.homeDirectory}/go/bin"
-      '';
+    interactiveShellInit = builtins.readFile ../../home/dotfiles/init.fish;
     shellAliases = {
+      assume = "source ~/assume.fish";
       bak = "cp -r $1 $1.bak";
-      c = "clear";
       gb = "git branch";
       gc = "git clone";
-      gch = "git checkout";
+      gk = "git checkout";
       gd = "git diff";
       gdc = "git diff --cached";
       gmt = "go mod tidy";
@@ -33,9 +29,7 @@ in {
       jjj = "${pasteCommand} | jq -r";
       ld = "lazydocker";
       lg = "lazygit";
-      la = "ls -la";
-      ll = "ls -l";
-      ns = "nix-shell --run zsh -p";
+      ns = "nix-shell --run fish -p";
       ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
       rm = "trash";
       tl = "tmux ls";

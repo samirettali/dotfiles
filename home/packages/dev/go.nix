@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs = {
     go = {
       enable = true;
@@ -25,5 +29,9 @@
     protoc-gen-go
     protoc-gen-go-grpc
     revive
+  ];
+
+  home.sessionPath = [
+    "${config.home.homeDirectory}/go/bin"
   ];
 }
