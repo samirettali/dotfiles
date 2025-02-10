@@ -258,7 +258,6 @@ return {
 			},
 			nixd = true,
 			zls = true,
-			csharp_ls = true,
 			clangd = true,
 			pyright = true,
 			bashls = true,
@@ -293,6 +292,7 @@ return {
 				python = { "isort", "black" },
 				ocaml = { "ocamlformat" },
 				cpp = { "clang-format" },
+				cs = { "csharpier" },
 				-- ["*"] = { "codespell" },
 				-- ["_"] = { "trim_whitespace" }, -- if no formatter is found, use this
 			},

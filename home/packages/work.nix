@@ -1,10 +1,11 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    # terraform
     awscli2
+    csharpier
     maven
     roslyn-ls
     slack
-    # terraform
     terraform-ls
 
     (with dotnetCorePackages;
