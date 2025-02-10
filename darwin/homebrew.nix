@@ -34,7 +34,6 @@
       "betterdisplay"
       "bettertouchtool"
       "burp-suite"
-      "cursor"
       "datagrip"
       "db-browser-for-sqlite"
       "docker"
