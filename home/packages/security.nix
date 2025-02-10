@@ -1,13 +1,17 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    # burpsuite
     amass
-    burpsuite
+    cent
     dnsx
     ffuf
     findomain
     httpx
     naabu
-    sqlmap
     nmap
+    nuclei
+    nuclei-templates
+    sqlmap
+    subfinder
   ];
 }
