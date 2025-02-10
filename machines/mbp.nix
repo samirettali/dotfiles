@@ -25,6 +25,10 @@
     ];
   };
 
+  environment.shells = [
+    pkgs.fish
+  ];
+
   time.timeZone = "Europe/Rome";
 
   system = {
