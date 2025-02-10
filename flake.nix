@@ -134,8 +134,9 @@
                   ./home
                   ./home/mac.nix
                   ./home/packages/desktop
+                  ./home/packages/dev
                   ./home/packages/work.nix
-                  ./home/packages/dev.nix
+                  ./home/packages/security.nix
                 ];
                 home.stateVersion = stateVersion;
                 home.homeDirectory = "/Users/s.ettali";
@@ -200,7 +201,7 @@
                   ./home/linux
                   ./home/linux/desktop
                   ./home/packages/desktop
-                  ./home/packages/dev.nix
+                  ./home/packages/dev
                   ./home/packages/security.nix
                 ];
                 home.stateVersion = stateVersion;
