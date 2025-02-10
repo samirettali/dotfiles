@@ -31,9 +31,13 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.numberwidth = 4
 
-vim.opt.foldmethod = "expr" -- Set fold method
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldlevelstart = 20 -- Set initial fold level
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldcolumn = "0"
+vim.opt.foldtext = "" -- Use syntax highlighting for the first line of the fold
+vim.opt.foldlevel = 99
+-- vim.opt.foldlevelstart = 2
+-- vim.opt.foldnestmax = 4
 
 vim.opt.timeoutlen = 400
 vim.opt.updatetime = 50

@@ -52,16 +52,38 @@ return {
 			group = augroup_lsp_user,
 			callback = function(args)
 				local client = vim.lsp.get_client_by_id(args.data.client_id)
-				if client == nil then
+
+				if not client then
 					error("LSP client not found")
 					return
 				end
 
-				if client.supports_method(methods.textDocument_completion) then
+				-- Example 1
+				--   vim.opt.foldmethod = 'expr'
+				-- if client:supports_method('textDocument/foldingRange') and vim.lsp.foldexpr then
+				--   vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+				--   vim.opt.foldtext = 'v:lua.vim.lsp.foldtext()'
+				-- elseif vim.treesitter.foldexpr then
+				--   vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+				--   vim.opt.foldtext = ''
+				-- else
+				--   vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+				--   vim.opt.foldtext = ''
+				-- end
+
+				if client:supports_method(methods.textDocument_foldingRange) then
+					local fold_opts = { scope = "local" }
+
+					vim.api.nvim_set_option_value("foldmethod", "expr", fold_opts)
+					vim.api.nvim_set_option_value("foldexpr", "v:lua.vim.lsp.foldexpr()", fold_opts)
+					vim.api.nvim_set_option_value("foldtext", "v:lua.vim.lsp.foldtext()", fold_opts)
+				end
+
+				if client:supports_method(methods.textDocument_completion) then
 					vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
 				end
 
-				if client.supports_method(methods.textDocument_definition) then
+				if client:supports_method(methods.textDocument_definition) then
 					vim.opt_local.tagfunc = "v:lua.vim.lsp.tagfunc"
 				end
 
@@ -72,15 +94,15 @@ return {
 				local telescope = require("telescope.builtin")
 
 				local default_opts = { buffer = args.buf }
-				if client.supports_method(methods.textDocument_inlayHint) then
+				if client:supports_method(methods.textDocument_inlayHint) then
 					vim.keymap.set("n", "<Leader>ti", toggle_lsp_hints, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_hover) then
+				if client:supports_method(methods.textDocument_hover) then
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_definition) then
+				if client:supports_method(methods.textDocument_definition) then
 					-- vim.keymap.set("n", "gd", telescope.lsp_definitions, default_opts) -- telescope is not working right now
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, default_opts)
 					vim.keymap.set("n", "GD", function()
@@ -88,50 +110,50 @@ return {
 					end, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_declaration) then
+				if client:supports_method(methods.textDocument_declaration) then
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, default_opts)
 				end
-				if client.supports_method(methods.textDocument_typeDefinition) then
+				if client:supports_method(methods.textDocument_typeDefinition) then
 					vim.keymap.set("n", "gT", telescope.lsp_type_definitions, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_documentSymbol) then
+				if client:supports_method(methods.textDocument_documentSymbol) then
 					vim.keymap.set("n", "gs", telescope.lsp_document_symbols, default_opts)
 				end
 
-				if client.supports_method(methods.workspace_symbol) then
+				if client:supports_method(methods.workspace_symbol) then
 					vim.keymap.set("n", "gS", telescope.lsp_dynamic_workspace_symbols, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_codeAction) then
+				if client:supports_method(methods.textDocument_codeAction) then
 					vim.keymap.set("n", "ga", vim.lsp.buf.code_action, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_rename) then
+				if client:supports_method(methods.textDocument_rename) then
 					vim.keymap.set("n", "gr", vim.lsp.buf.rename, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_references) then
+				if client:supports_method(methods.textDocument_references) then
 					vim.keymap.set("n", "gR", telescope.lsp_references)
 				end
 
-				if client.supports_method(methods.textDocument_references) then
+				if client:supports_method(methods.textDocument_references) then
 					vim.keymap.set("n", "gR", telescope.lsp_references)
 				end
 
-				if client.supports_method(methods.textDocument_signatureHelp) then
+				if client:supports_method(methods.textDocument_signatureHelp) then
 					vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, default_opts)
 				end
 
-				if client.supports_method(methods.callHierarchy_incomingCalls) then
+				if client:supports_method(methods.callHierarchy_incomingCalls) then
 					vim.keymap.set("n", "gI", telescope.lsp_incoming_calls, default_opts)
 				end
 
-				if client.supports_method(methods.callHierarchy_outgoingCalls) then
+				if client:supports_method(methods.callHierarchy_outgoingCalls) then
 					vim.keymap.set("n", "gO", telescope.lsp_outgoing_calls, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_diagnostic) then
+				if client:supports_method(methods.textDocument_diagnostic) then
 					vim.keymap.set("n", "<leader>gd", telescope.diagnostics, default_opts)
 					-- vim.keymap.set("n", "ds", vim.diagnostic.open_float, default_opts)
 
@@ -147,7 +169,7 @@ return {
 					end, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_implementation, args.buf) then
+				if client:supports_method(methods.textDocument_implementation, args.buf) then
 					vim.keymap.set("n", "gi", telescope.lsp_implementations, default_opts)
 				end
 
@@ -155,7 +177,7 @@ return {
 				-- word under your cursor when your cursor rests there for a little while.
 				--    See `:help CursorHold` for information about when this is executed
 				--
-				if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+				if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
 					local highlight_augroup = vim.api.nvim_create_augroup("CustomLspHighlight", { clear = false })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 						buffer = args.buf,
@@ -180,6 +202,15 @@ return {
 			end,
 		})
 
+		-- TODO: this is not working
+		vim.api.nvim_create_autocmd("LspNotify", {
+			callback = function(args)
+				if args.data.method == methods.textDocument_didOpen then
+					vim.lsp.foldclose("imports", vim.fn.bufwinid(args.buf))
+				end
+			end,
+		})
+
 		local augroup_completion = vim.api.nvim_create_augroup("lsp_completion", {})
 		vim.api.nvim_create_autocmd("LspDetach", {
 			group = augroup_completion,
@@ -189,7 +220,7 @@ return {
 					return
 				end
 
-				if client.supports_method(methods.textDocument_completion) then
+				if client:supports_method(methods.textDocument_completion) then
 					vim.cmd("setlocal tagfunc< omnifunc<")
 				end
 			end,
