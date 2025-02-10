@@ -28,4 +28,11 @@ return {
 			vim.keymap.set("n", "<leader>th", "<cmd>ColorizerToggle<CR>", { desc = "Toggle colorizer" })
 		end,
 	},
+	{
+		"seblj/roslyn.nvim",
+		ft = "cs",
+		opts = {
+			exe = "Microsoft.CodeAnalysis.LanguageServer",
+		},
+	},
 }
