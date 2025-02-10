@@ -2,9 +2,9 @@
   home.packages = with pkgs; [
     awscli2
     maven
-    omnisharp-roslyn
+    roslyn-ls
     slack
-    terraform
+    # terraform
     terraform-ls
 
     (with dotnetCorePackages;
