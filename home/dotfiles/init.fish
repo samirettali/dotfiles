@@ -26,13 +26,12 @@ function fish_prompt
     set -l symbol (set_color -o red) $symbol (set_color normal)
 
     # TODO: fix this
-    # set -l nix_shell_info (
-    #     if test -n "$IN_NIX_SHELL"
-    #         echo -n "<nix-shell> "
-    #     end
-    # )
+    set -l nix_shell_info
+    if test -n "$IN_NIX_SHELL"
+        set nix_shell_info "<nix-shell> "
+    end
 
-    printf (string join '' -- $ssh $pwd $symbol)
+    printf (string join '' -- $ssh $nix_shell_info $pwd $symbol)
 end
 
 function fish_right_prompt
