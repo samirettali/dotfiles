@@ -37,6 +37,7 @@ in {
         ];
       keybindings = [];
       userSettings = {
+        # TODO: enable copilot agent
         "editor.fontFamily" = customArgs.font.name;
         "editor.fontSize" = fontSize;
         "editor.minimap.enabled" = false;
