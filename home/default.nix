@@ -44,29 +44,23 @@
       # check if ~/.ollama-models-latest-pull contains a date more than 1 day old
       if [ -f ~/.ollama-models-latest-pull ] && [ $(($(date +%s) - $(date -r ~/.ollama-models-latest-pull +%s))) -lt 86400 ]; then
           echo "Not downloading ollama models"
-          exit 0
+      else
+          # TODO: early return (exit stops the flake from being built)
+          echo "Downloading ollama models"
+
+          models=(
+              deepseek-r1:8b
+              llama3.1
+              qwen2.5-coder
+          )
+
+          for model in "''${models[@]}"; do
+              echo "Downloading $model"
+              $DRY_RUN_CMD ${pkgs.ollama}/bin/ollama pull $model
+          done
+
+          date +%s > ~/.ollama-models-latest-pull
       fi
-
-      echo "Downloading ollama models"
-
-      models=(
-          deepseek-r1:8b
-          llama3.1
-          qwen2.5-coder
-      )
-
-      for model in "''${models[@]}"; do
-          echo "Downloading $model"
-          $DRY_RUN_CMD ${pkgs.ollama}/bin/ollama pull $model
-      done
-
-      date +%s > ~/.ollama-models-latest-pull
-
-    '';
-
-    installGitSync = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      echo "Installing git-sync tool..."
-      go install github.com/AkashRajpurohit/git-sync@latest
     '';
   };
 }
