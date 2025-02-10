@@ -33,10 +33,12 @@ local function custom_implementation_provider(bufnr)
 end
 
 return {
+
 	dependencies = {
 		"nvim-telescope/telescope.nvim",
 		"stevearc/conform.nvim",
 		"mfussenegger/nvim-lint",
+		"saghen/blink.cmp",
 		{ "j-hui/fidget.nvim", config = true }, -- Show LSP loading status
 	},
 	"neovim/nvim-lspconfig",
@@ -211,18 +213,18 @@ return {
 							parameterNames = true,
 							rangeVariableTypes = true,
 						},
-						analyses = {
-							assign = true,
-							deepequalerrors = true,
-							fieldalignment = true,
-							nilness = true,
-							shadow = true,
-							unreachable = true,
-							unusedparams = true,
-							unusedvariable = true,
-							unusedwrite = true,
-							useany = true,
-						},
+						-- analyses = {
+						-- 	assign = true,
+						-- 	deepequalerrors = true,
+						-- 	fieldalignment = true,
+						-- 	nilness = true,
+						-- 	shadow = true,
+						-- 	unreachable = true,
+						-- 	unusedparams = true,
+						-- 	unusedvariable = true,
+						-- 	unusedwrite = true,
+						-- 	useany = true,
+						-- },
 						staticcheck = true,
 						vulncheck = "Imports",
 						-- gofumpt = true,
@@ -273,14 +275,17 @@ return {
 			pyright = true,
 			bashls = true,
 			ocamllsp = true,
+			terraformls = true, -- TODO: activate only if terraform-ls is installed or DOTFILES_PROFILE=work
 		}
-
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 		for name, cfg in pairs(servers) do
 			if cfg == true then
 				cfg = {}
 			end
+
+			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local capabilities = require("blink.cmp").get_lsp_capabilities(cfg.capabilities)
+
 			cfg = vim.tbl_deep_extend("force", {}, {
 				capabilities = capabilities,
 			}, cfg)
