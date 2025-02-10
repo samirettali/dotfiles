@@ -1,7 +1,14 @@
-{customArgs, ...}: {
+{
+  customArgs,
+  pkgs,
+  ...
+}: {
   programs.alacritty = {
-    enable = false;
+    enable = true;
     settings = {
+      terminal = {
+        shell = "${pkgs.fish}/bin/fish";
+      };
       font = {
         normal.family = customArgs.font.name;
         normal.style = "Regular";
@@ -45,6 +52,9 @@
           background = "#b5d5ff";
           text = "#000000";
         };
+      };
+      window = {
+        level = "AlwaysOnTop";
       };
     };
   };
