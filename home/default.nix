@@ -20,6 +20,17 @@
   home.packages = with pkgs; [
     aider-chat
     ollama
+    (buildGoModule {
+      pname = "git-sync";
+      version = "latest";
+      src = fetchFromGitHub {
+        owner = "AkashRajpurohit";
+        repo = "git-sync";
+        rev = "main";
+        sha256 = "sha256-HrcvhIUwEzyULNAKiCA7zq0QQFf0Y1VSxcs8vfZR33A=";
+      };
+      vendorHash = "sha256-H191WtXDbAD9z5XCgpgcZBwFLFMnVaoWF93ZOLgyrSs=";
+    })
   ];
 
   # TODO: this does not work
