@@ -81,7 +81,11 @@ return {
 				end
 
 				if client.supports_method(methods.textDocument_definition) then
-					vim.keymap.set("n", "gd", telescope.lsp_definitions, default_opts)
+					-- vim.keymap.set("n", "gd", telescope.lsp_definitions, default_opts) -- telescope is not working right now
+					vim.keymap.set("n", "gd", vim.lsp.buf.definition, default_opts)
+					vim.keymap.set("n", "GD", function()
+						telescope.lsp_definitions({ jump_type = "vsplit" })
+					end, default_opts)
 				end
 
 				if client.supports_method(methods.textDocument_declaration) then
