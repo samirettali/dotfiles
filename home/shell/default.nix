@@ -26,6 +26,7 @@
     gh
     graphviz
     htop
+    hwatch
     iredis
     jq
     kaf
@@ -89,7 +90,6 @@
         "--smart-case"
       ];
     };
-    zellij.enable = lib.mkDefault true;
     zoxide.enable = true;
   };
 }
