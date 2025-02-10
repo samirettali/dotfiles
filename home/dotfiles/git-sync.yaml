@@ -1,0 +1,14 @@
+clone_type: full
+include_wiki: true
+concurrency: 5
+retry:
+    count: 3
+    delay: 5
+raw_git_urls: [
+  "https://github.com/tjdevries/config.nvim.git",
+  "https://github.com/adibhanna/nvim.git",
+  "https://github.com/mrnugget/dotfiles.git",
+  "https://github.com/ThePrimeagen/init.lua.git",
+  "https://github.com/wincent/wincent.git"
+]
+

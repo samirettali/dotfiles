@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  config,
+  ...
+}: let
   copyCommand =
     if pkgs.stdenv.isDarwin
     then "pbcopy"
@@ -10,7 +14,11 @@
 in {
   programs.fish = {
     enable = true;
-    interactiveShellInit = builtins.readFile ../../home/dotfiles/init.fish;
+    interactiveShellInit =
+      builtins.readFile ../../home/dotfiles/init.fish
+      ++ ''
+        fish_add_path --global --move --path "${config.home.homeDirectory}/go/bin"
+      '';
     shellAliases = {
       bak = "cp -r $1 $1.bak";
       c = "clear";

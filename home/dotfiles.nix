@@ -23,6 +23,14 @@
       ".bin/glc".source = dotfiles/scripts/glc.sh;
       ".bin/tad".source = dotfiles/scripts/tad.sh;
       ".bin/ticker".source = dotfiles/scripts/ticker.sh;
+      # ".config/git-sync/config.yaml".text = let
+      #   templ = builtins.readFile dotfiles/git-sync.yaml;
+      # in
+      #   builtins.replaceStrings
+      #   ["{{HOME}}"]
+      #   ["${config.home.homeDirectory}"]
+      #   templ;
+      ".config/git-sync/config.yaml".source = dotfiles/git-sync.yaml;
     }
     (lib.mkIf pkgs.stdenv.isLinux {
       ".bin/passbemenu".source = dotfiles/scripts/passbemenu.sh;

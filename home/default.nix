@@ -52,5 +52,10 @@
       date +%s > ~/.ollama-models-latest-pull
 
     '';
+
+    installGitSync = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      echo "Installing git-sync tool..."
+      go install github.com/AkashRajpurohit/git-sync@latest
+    '';
   };
 }
