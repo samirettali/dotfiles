@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  import = [
+  imports = [
     ./c.nix
     ./go.nix
     ./js.nix

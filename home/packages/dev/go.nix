@@ -1,15 +1,17 @@
 {pkgs, ...}: {
-  home.programs = {
+  programs = {
     go = {
       enable = true;
-      goPrivate = "github.com/YoungAgency/*"; # TODO: set only in work profile
+      goPrivate = [
+        "github.com/YoungAgency/*" # TODO: set only in work profile
+      ];
       telemetry = {
         mode = "off";
       };
     };
   };
 
-  home.pacakges = with pkgs; [
+  home.packages = with pkgs; [
     air
     delve
     gopls

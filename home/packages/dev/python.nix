@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.pacakges = with pkgs; [
+  home.packages = with pkgs; [
     python312
     pipenv
     pyenv
