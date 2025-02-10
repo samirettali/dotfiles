@@ -1,7 +1,8 @@
 local methods = vim.lsp.protocol.Methods
 
+-- TODO: this is not always working
 local function custom_implementation_provider(bufnr)
-	-- local telescope = require("telescope.builtin")
+	local telescope = require("telescope.builtin")
 
 	return function()
 		local params = vim.lsp.util.make_position_params()
@@ -25,8 +26,8 @@ local function custom_implementation_provider(bufnr)
 			end
 
 			-- TODO: use telescope
-			vim.lsp.handlers[methods.textDocument_implementation](err, result, ctx, config)
-			-- telescope.lsp_implementations(err, result, ctx, config)
+			-- vim.lsp.handlers[methods.textDocument_implementation](err, result, ctx, config)
+			telescope.lsp_implementations(err, result, ctx, config)
 			vim.cmd([[normal! zz]])
 		end)
 	end
@@ -142,8 +143,8 @@ return {
 					end, default_opts)
 				end
 
-				if client.supports_method(methods.textDocument_implementation) then
-					vim.keymap.set("n", "gi", custom_implementation_provider(args.buf), default_opts)
+				if client.supports_method(methods.textDocument_implementation, args.buf) then
+					vim.keymap.set("n", "gi", telescope.lsp_implementations, default_opts)
 				end
 
 				-- The following two autocommands are used to highlight references of the
