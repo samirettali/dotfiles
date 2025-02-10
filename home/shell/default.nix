@@ -14,6 +14,7 @@
   ];
 
   home.packages = with pkgs; [
+    # httptap
     age
     bat
     bombardier
@@ -31,6 +32,8 @@
     kcat
     lazydocker
     libqalculate
+    lla
+    lnav
     moreutils
     mprocs
     ncdu
@@ -86,17 +89,7 @@
         "--smart-case"
       ];
     };
-    zellij = {
-      enable = lib.mkDefault true;
-      enableZshIntegration = false;
-      settings = {
-        # theme = "custom";
-        # themes.custom.fg = "#ffffff";
-      };
-    };
-    zoxide = {
-      enable = true;
-      enableZshIntegration = true;
-    };
+    zellij.enable = lib.mkDefault true;
+    zoxide.enable = true;
   };
 }
