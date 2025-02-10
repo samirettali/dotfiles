@@ -40,7 +40,7 @@
     gnumake
     clang-tools
     stdenv
-    cppcheck
+    # cppcheck
     cpplint
 
     bun

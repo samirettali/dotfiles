@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    awscli2
-    csharp-ls
+    # awscli2
+    # csharp-ls
     dbeaver-bin
     maven
     slack
