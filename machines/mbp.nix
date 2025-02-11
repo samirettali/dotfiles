@@ -41,6 +41,7 @@
         autohide-delay = 0.0;
         autohide-time-modifier = 0.0;
         mru-spaces = false; # Don't rearrange spaces based on most recently used
+        expose-group-apps = true; # for aerospace
         launchanim = false;
         expose-animation-duration = 0.0;
         show-recents = false;
@@ -65,7 +66,7 @@
         NewWindowTarget = "Home";
       };
       spaces = {
-        spans-displays = false;
+        spans-displays = false; # TODO: set to true for aerospace
       };
       ".GlobalPreferences" = {
         "com.apple.mouse.scaling" = 3.0;
@@ -158,7 +159,17 @@
 
     # Disable Cmd+Space for Spotlight
     /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:64 dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
-    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:64:enabled bool false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:64:enabled bool" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c "Set :AppleSymbolicHotKeys:64:enabled false" ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    # TODO: use this
+    # /usr/libexec/PlistBuddy ~/Library/Preferences/com.apple.symbolichotkeys.plist \
+    #     -c "Delete :AppleSymbolicHotKeys:65" \
+    #     -c "Add :AppleSymbolicHotKeys:65:enabled bool false" \
+    #     -c "Add :AppleSymbolicHotKeys:65:value:parameters array" \
+    #     -c "Add :AppleSymbolicHotKeys:65:value:parameters: integer 65535" \
+    #     -c "Add :AppleSymbolicHotKeys:65:value:parameters: integer 49" \
+    #     -c "Add :AppleSymbolicHotKeys:65:value:parameters: integer 1572864" \
+    #     -c "Add :AppleSymbolicHotKeys:65:type string standard"
 
     # Disable Cmd+Shift+4 for screenshot to clipboard
     /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys:31 dict" ~/Library/Preferences/com.apple.symbolichotkeys.plist
