@@ -19,5 +19,7 @@ raw_git_urls: [
   "https://github.com/willothy/nvim-config.git",
   "https://github.com/wincent/wincent.git",
   "https://github.com/adomokos/Vim-Katas.git",
-  "https://github.com/eatonphil/linearizability-playground.git"
+  "https://github.com/eatonphil/linearizability-playground.git",
+  "https://github.com/RajaSrinivasan/assignments.git",
+  "https://github.com/prakhar1989/awesome-courses.git"
 ]
