@@ -7,6 +7,7 @@
     roslyn-ls
     slack
     terraform-ls
+    ssm-session-manager-plugin
 
     (with dotnetCorePackages;
       combinePackages [
