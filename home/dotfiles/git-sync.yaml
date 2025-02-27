@@ -10,7 +10,7 @@ raw_git_urls: [
   "https://github.com/adibhanna/nvim.git",
   "https://github.com/jackfranklin/dotfiles.git",
   "https://github.com/karpathy/micrograd.git",
-  "https://github.com/kristijanhusak/neovim-config",
+  "https://github.com/kristijanhusak/neovim-config.git",
   "https://github.com/mrnugget/dotfiles.git",
   "https://github.com/rubilmax/executooor.git",
   "https://github.com/samyk/samytools.git",
