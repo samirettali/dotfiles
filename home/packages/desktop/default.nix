@@ -25,6 +25,7 @@
     extensions = [
       "csharp"
       "fleet-themes"
+      "nix"
     ];
     userSettings = {
       auto_update = false;
