@@ -17,7 +17,7 @@
     keepassxc
     qbittorrent
     spotify
-    code-cursor
+    # code-cursor
   ];
 
   programs.zed-editor = {
