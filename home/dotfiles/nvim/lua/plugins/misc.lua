@@ -35,4 +35,5 @@ return {
 			exe = "Microsoft.CodeAnalysis.LanguageServer",
 		},
 	},
+	-- { "saecki/live-rename.nvim", },
 }

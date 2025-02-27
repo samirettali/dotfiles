@@ -82,17 +82,22 @@ vim.opt.signcolumn = "yes"
 vim.opt.cursorline = true -- Highlight current line
 
 vim.opt.clipboard = "unnamedplus"
--- vim.g.clipboard = {
---     name = 'OSC 52',
---     copy = {
---         ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
---         ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
---     },
---     paste = {
---         ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
---         ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
---     },
--- }
+
+if os.getenv("SSH_TTY") and os.getenv("SSH_CLIENT") then
+	local clipboard = require("vim.ui.clipboard.osc52")
+
+	vim.g.clipboard = {
+		name = "OSC 52",
+		copy = {
+			["+"] = clipboard.copy("+"),
+			["*"] = clipboard.copy("*"),
+		},
+		paste = {
+			["+"] = clipboard.paste("+"),
+			["*"] = clipboard.paste("*"),
+		},
+	}
+end
 
 vim.opt.showmode = false
 
