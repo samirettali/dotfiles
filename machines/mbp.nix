@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs = {
     zsh.enable = true;
     fish.enable = true;
@@ -16,7 +20,6 @@
 
   services = {
     tailscale.enable = true;
-    nix-daemon.enable = true;
   };
 
   fonts = {
@@ -36,6 +39,7 @@
       enableKeyMapping = true;
     };
     defaults = {
+      WindowManager.EnableStandardClickToShowDesktop = false;
       dock = {
         autohide = true;
         autohide-delay = 0.0;
@@ -49,6 +53,7 @@
         mineffect = "scale";
         minimize-to-application = true;
         scroll-to-open = true;
+        wvous-bl-corner = 1;
         persistent-apps = [
           "/Applications/Google Chrome.app"
           "/Applications/Ghostty.app"
@@ -78,6 +83,7 @@
         AppleKeyboardUIMode = 3;
         AppleShowScrollBars = "Always";
         AppleInterfaceStyle = "Dark";
+        _HIHideMenuBar = true;
         NSWindowShouldDragOnGesture = true;
         NSAutomaticWindowAnimationsEnabled = false;
         NSAutomaticInlinePredictionEnabled = false;
@@ -87,6 +93,7 @@
         NSAutomaticDashSubstitutionEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
         NSDocumentSaveNewDocumentsToCloud = false;
+        NSNavPanelExpandedStateForSaveMode = true;
         "com.apple.mouse.tapBehavior" = 1;
         "com.apple.swipescrolldirection" = false;
         "com.apple.trackpad.scaling" = 3.0;
