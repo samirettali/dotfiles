@@ -3,18 +3,36 @@
   pkgs,
   ...
 }: {
-  # TODO: use config for name and email
   programs.git = {
     enable = true;
-    userName = "Samir Ettali";
-    userEmail = config.home.sessionVariables.EMAIL;
+    commit.verbose = true;
     extraConfig = {
+      branch.sort = "-committerdate";
       core.editor = config.home.sessionVariables.EDITOR;
+      column.ui = "auto";
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "plain";
+        mnemonicPrefix = true;
+        renames = true;
+      };
+      fetch = {
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
+      help.autocorrect = "prompt";
       init.defaultBranch = "main";
-      push.autoSetupRemote = true;
-      pull.rebase = false;
+      pull.rebase = true;
+      push = {
+        autoSetupRemote = true;
+        default = "simple";
+      };
+      tag.sort = "version:refname";
       url."git@github.com:samirettali".insteadOf = "https://github.com/samirettali";
       url."git@github.com:YoungAgency".insteadOf = "https://github.com/YoungAgency";
+      userEmail = config.home.sessionVariables.EMAIL;
+      userName = "Samir Ettali";
     };
     ignores = [
       "*.env"
@@ -25,11 +43,12 @@
       ".idea"
       "Session.vim"
     ];
+    signing.format = "ssh";
 
     # TODO: this is broken in nixpkgs
-    delta = {
-      enable = true;
-    };
+    # delta = {
+    #   enable = true;
+    # };
   };
 
   programs.lazygit = {
@@ -38,7 +57,7 @@
       git = {
         paging = {
           colorArg = "always";
-          pager = "delta --dark --paging never";
+          # pager = "delta --dark --paging never";
         };
       };
     };
