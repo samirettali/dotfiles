@@ -76,7 +76,7 @@ return {
 
 					vim.api.nvim_set_option_value("foldmethod", "expr", fold_opts)
 					vim.api.nvim_set_option_value("foldexpr", "v:lua.vim.lsp.foldexpr()", fold_opts)
-					vim.api.nvim_set_option_value("foldtext", "v:lua.vim.lsp.foldtext()", fold_opts)
+					-- vim.api.nvim_set_option_value("foldtext", "v:lua.vim.lsp.foldtext()", fold_opts)
 				end
 
 				if client:supports_method(methods.textDocument_completion) then
@@ -98,9 +98,9 @@ return {
 					vim.keymap.set("n", "<Leader>ti", toggle_lsp_hints, default_opts)
 				end
 
-				if client:supports_method(methods.textDocument_hover) then
-					vim.keymap.set("n", "K", vim.lsp.buf.hover, default_opts)
-				end
+				-- if client:supports_method(methods.textDocument_hover) then
+				-- 	vim.keymap.set("n", "K", vim.lsp.buf.hover, default_opts)
+				-- end
 
 				if client:supports_method(methods.textDocument_definition) then
 					-- vim.keymap.set("n", "gd", telescope.lsp_definitions, default_opts) -- telescope is not working right now
@@ -153,21 +153,21 @@ return {
 					vim.keymap.set("n", "gO", telescope.lsp_outgoing_calls, default_opts)
 				end
 
-				if client:supports_method(methods.textDocument_diagnostic) then
-					vim.keymap.set("n", "<leader>gd", telescope.diagnostics, default_opts)
-					-- vim.keymap.set("n", "ds", vim.diagnostic.open_float, default_opts)
-
-					-- TODO: float is not working
-					local next_opts = { count = 1, wrap = true, float = true }
-					vim.keymap.set("n", "]d", function()
-						vim.diagnostic.jump(next_opts)
-					end, default_opts)
-
-					local prev_opts = { count = -1, wrap = true, float = true }
-					vim.keymap.set("n", "[d", function()
-						vim.diagnostic.jump(prev_opts)
-					end, default_opts)
-				end
+				-- if client:supports_method(methods.textDocument_diagnostic) then
+				-- 	vim.keymap.set("n", "<leader>gd", telescope.diagnostics, default_opts)
+				-- 	-- vim.keymap.set("n", "ds", vim.diagnostic.open_float, default_opts)
+				--
+				-- 	-- TODO: float is not working
+				-- 	local next_opts = { count = 1, wrap = true, float = true }
+				-- 	vim.keymap.set("n", "]d", function()
+				-- 		vim.diagnostic.jump(next_opts)
+				-- 	end, default_opts)
+				--
+				-- 	local prev_opts = { count = -1, wrap = true, float = true }
+				-- 	vim.keymap.set("n", "[d", function()
+				-- 		vim.diagnostic.jump(prev_opts)
+				-- 	end, default_opts)
+				-- end
 
 				if client:supports_method(methods.textDocument_implementation, args.buf) then
 					vim.keymap.set("n", "gi", telescope.lsp_implementations, default_opts)
@@ -299,6 +299,7 @@ return {
 			bashls = true,
 			ocamllsp = true,
 			terraformls = true, -- TODO: activate only if terraform-ls is installed or DOTFILES_PROFILE=work
+			jsonls = true,
 		}
 
 		for name, cfg in pairs(servers) do
