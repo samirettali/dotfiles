@@ -52,6 +52,8 @@
               deepseek-r1:8b
               llama3.1
               qwen2.5-coder
+              hf.co/smirki/UIGEN-T1-Qwen-7b
+              hf.co/SentientAGI/Dobby-Mini-Unhinged-Llama-3.1-8B_GGUF
           )
 
           for model in "''${models[@]}"; do
