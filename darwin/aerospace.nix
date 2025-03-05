@@ -5,10 +5,8 @@
     enable = true;
     settings = {
       start-at-login = false;
-      enable-normalization-flatten-containers = false; # TODO: default is true
-      enable-normalization-opposite-orientation-for-nested-containers = true;
       accordion-padding = 30;
-      automatically-unhide-macos-hidden-apps = false; # Disable cmd-h
+      automatically-unhide-macos-hidden-apps = false;
 
       exec-on-workspace-change = [
         "/bin/bash"
@@ -35,9 +33,8 @@
         ];
       };
       mode.main.binding = {
-        # alt-enter = "exec-and-forget /etc/profiles/per-user/s.ettali/bin/alacritty"; # TODO: fix this
-        # cmd-h = []; # Disable "hide application"
-        # cmd-alt-h = []; # Disable "hide others"
+        cmd-h = [];
+        cmd-alt-h = [];
         alt-shift-f = "exec-and-forget open -a Finder.app";
         alt-enter = "exec-and-forget open -a Ghostty.app";
 
@@ -51,8 +48,6 @@
         alt-shift-k = "move up";
         alt-shift-l = "move right";
 
-        alt-v = "split vertical";
-        alt-b = "split horizontal";
         alt-f = "fullscreen";
         alt-e = "layout tiles accordion";
         alt-shift-space = "layout floating tiling";
