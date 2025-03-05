@@ -15,6 +15,7 @@
   home.packages = with pkgs; [
     discord
     keepassxc
+    obsidian
     qbittorrent
     spotify
     # code-cursor
