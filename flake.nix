@@ -87,13 +87,11 @@
         modules = [
           ./machines/mbp.nix
           ./darwin/homebrew.nix
+          ./darwin/aerospace.nix
           ./darwin/work.nix
-          ({
-            lib,
-            pkgs,
-            ...
-          }: {
-            nixpkgs.config.allowUnfree = lib.mkDefault true;
+          ({pkgs, ...}: {
+            nixpkgs.config.allowUnfree = true;
+
             nixpkgs.overlays = overlays;
             nixpkgs.config.permittedInsecurePackages = [
               "dotnet-combined"
@@ -119,12 +117,11 @@
               settings = nixConfig {username = "s.ettali";};
             };
           })
-          home-manager.darwinModule
+          home-manager.darwinModules.home-manager
           ({pkgs, ...}: {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              # makes all inputs available in imported files for hm
               extraSpecialArgs = {
                 inherit inputs;
                 inherit (mkCustomArgs pkgs) customArgs;
@@ -176,6 +173,7 @@
               isNormalUser = true;
             };
             nix = {
+              enable = true;
               package = pkgs.nixVersions.stable;
               settings = nixConfig {};
               optimise.automatic = true;
