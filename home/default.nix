@@ -19,6 +19,7 @@
 
   home.packages = with pkgs; [
     aider-chat
+    nix-prefetch-github
     ollama
     (buildGoModule {
       pname = "git-sync";
