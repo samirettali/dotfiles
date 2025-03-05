@@ -14,6 +14,7 @@
 
   home.packages = with pkgs; [
     ast-grep
+    devenv
     jdk
     stdenv
     tree-sitter
