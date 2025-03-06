@@ -61,6 +61,9 @@
           # pager = "delta --dark --paging never";
         };
       };
+      gui = {
+        showBottomLine = false;
+      };
     };
   };
   home.packages = with pkgs; [
