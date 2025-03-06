@@ -14,6 +14,7 @@
 
   home.packages = with pkgs; [
     ast-grep
+    devbox
     devenv
     jdk
     stdenv
