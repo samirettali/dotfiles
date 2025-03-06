@@ -5,22 +5,25 @@
 }: {
   programs.git = {
     enable = true;
-    commit.verbose = true;
+    userEmail = config.home.sessionVariables.EMAIL;
+    userName = "Samir Ettali";
     extraConfig = {
       branch.sort = "-committerdate";
-      core.editor = config.home.sessionVariables.EDITOR;
       column.ui = "auto";
+      commit.verbose = true;
+      core.editor = config.home.sessionVariables.EDITOR;
       diff = {
         algorithm = "histogram";
         colorMoved = "plain";
         mnemonicPrefix = true;
         renames = true;
       };
-      fetch = {
-        prune = true;
-        pruneTags = true;
-        all = true;
-      };
+      # TODO: fix existing repos
+      # fetch = {
+      # prune = true;
+      # pruneTags = true;
+      # all = true;
+      # };
       help.autocorrect = "prompt";
       init.defaultBranch = "main";
       pull.rebase = true;
@@ -31,8 +34,6 @@
       tag.sort = "version:refname";
       url."git@github.com:samirettali".insteadOf = "https://github.com/samirettali";
       url."git@github.com:YoungAgency".insteadOf = "https://github.com/YoungAgency";
-      userEmail = config.home.sessionVariables.EMAIL;
-      userName = "Samir Ettali";
     };
     ignores = [
       "*.env"
