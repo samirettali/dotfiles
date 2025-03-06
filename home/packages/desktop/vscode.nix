@@ -6,35 +6,31 @@
   ...
 }: let
   marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
-  fontSize = 13;
+  fontSize = 12.5;
 in {
   programs = {
     vscode = {
       enable = true;
       package = pkgs.vscode;
-      enableExtensionUpdateCheck = true;
+      enableExtensionUpdateCheck = false;
       enableUpdateCheck = false;
-      extensions =
-        (with pkgs.vscode-extensions; [
-          eamodio.gitlens
-          golang.go
-          jnoortheen.nix-ide
-          mkhl.direnv
-          ms-python.python
-          ms-toolsai.jupyter
-          rust-lang.rust-analyzer
-          supermaven.supermaven
-          vscodevim.vim
-        ])
-        ++ [
-          (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csharp)
-          (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.csdevkit)
-          (lib.mkIf pkgs.stdenv.isDarwin marketplace.ms-dotnettools.vscode-dotnet-runtime)
-          marketplace.amos402.scope-bar
-          marketplace.juanblanco.solidity
-          marketplace.continue.continue
-          marketplace.saoudrizwan.claude-dev
-        ];
+      extensions = with pkgs.vscode-extensions; [
+        # supermaven.supermaven
+        github.copilot
+        github.copilot-chat
+        eamodio.gitlens
+        golang.go
+        jnoortheen.nix-ide
+        marketplace.amos402.scope-bar
+        marketplace.juanblanco.solidity
+        mkhl.direnv
+        ms-python.python
+        ms-toolsai.jupyter
+        rust-lang.rust-analyzer
+        vscodevim.vim
+        # marketplace.continue.continue
+        # marketplace.saoudrizwan.claude-dev
+      ];
       keybindings = [];
       userSettings = {
         # TODO: enable copilot agent
@@ -62,24 +58,27 @@ in {
         "workbench.welcomePage.walkthroughs.openOnInstall" = false;
         "workbench.startupEditor" = "none";
 
-        "github.copilot.editor.enableAutoCompletions" = false;
+        "github.copilot.editor.enableAutoCompletions" = true;
 
         # Go
         "go.formatTool" = "gofumpt";
         "go.delveConfig" = {
           "showGlobalVariables" = true;
         };
-        "go.lintTool" = "golangci-lint";
+        "go.lintTool" = "revive";
         "go.lintFlags" = [
           "--enable-all"
         ];
         "go.coverOnSingleTest" = true;
         "go.showWelcome" = true;
         "gopls" = {
+          "ui.diagnostic.analyses" = {
+            "modernize" = true;
+          };
           "ui.semanticTokens" = false;
         };
 
-        "gitlens.showWelcomeOnInstall" = false;
+        "nix.formatterPath" = "alejandra";
 
         "vim.handleKeys" = {
           "<C-p>" = false;

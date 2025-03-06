@@ -1,13 +1,20 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: let
+  marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
+in {
   home.packages = with pkgs; [
-    # terraform
     awscli2
     csharpier
     maven
     roslyn-ls
     slack
-    terraform-ls
     ssm-session-manager-plugin
+    terraform
+    terraform-ls
 
     (with dotnetCorePackages;
       combinePackages [
@@ -16,12 +23,22 @@
       ])
   ];
 
-  programs.zsh.shellAliases = {
-    assume = "source assume";
-  };
+  programs = {
+    vscode = {
+      # extensions = [
+      #   marketplace.ms-dotnettools.csharp
+      #   marketplace.ms-dotnettools.csdevkit
+      #   marketplace.ms-dotnettools.vscode-dotnet-runtime
+      # ];
+    };
 
-  programs.granted = {
-    enable = true;
+    zsh.shellAliases = {
+      assume = "source assume";
+    };
+
+    granted = {
+      enable = true;
+    };
   };
 
   home.sessionVariables = {
