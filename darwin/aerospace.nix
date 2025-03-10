@@ -36,7 +36,7 @@
         cmd-h = [];
         cmd-alt-h = [];
         alt-shift-f = "exec-and-forget open -a Finder.app";
-        alt-shift-enter = "exec-and-forget open -a Ghostty.app";
+        alt-shift-enter = "exec-and-forget open -n -a Ghostty.app";
 
         alt-h = "focus left";
         alt-j = "focus down";
