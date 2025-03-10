@@ -40,6 +40,7 @@
       "shottr"
       "spotmenu"
       "the-unarchiver"
+      "yaak"
       "zen-browser"
     ];
     taps = [
