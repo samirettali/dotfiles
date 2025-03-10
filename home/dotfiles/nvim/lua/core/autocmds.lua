@@ -69,6 +69,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	pattern = { "*.txt", "*.md" },
 	callback = function()
 		vim.opt.spell = true
-		vim.opt.spelllang = "en,it"
+		-- vim.opt.spelllang = "en,it" -- TODO: download italian dictionary
+		vim.opt.spelllang = "en"
 	end,
 })
