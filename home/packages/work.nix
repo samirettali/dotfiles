@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   inputs,
   ...
@@ -25,11 +24,12 @@ in {
 
   programs = {
     vscode = {
-      # extensions = [
-      #   marketplace.ms-dotnettools.csharp
-      #   marketplace.ms-dotnettools.csdevkit
-      #   marketplace.ms-dotnettools.vscode-dotnet-runtime
-      # ];
+      extensions = [
+        marketplace.ms-dotnettools.csdevkit
+        # TODO: check if needed
+        # marketplace.ms-dotnettools.csharp
+        # marketplace.ms-dotnettools.vscode-dotnet-runtime
+      ];
     };
 
     zsh.shellAliases = {
