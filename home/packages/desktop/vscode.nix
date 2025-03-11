@@ -1,12 +1,10 @@
 {
   inputs,
   pkgs,
-  lib,
   customArgs,
   ...
 }: let
   marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
-  fontSize = 12.5;
 in {
   programs = {
     vscode = {
@@ -15,27 +13,29 @@ in {
       enableExtensionUpdateCheck = false;
       enableUpdateCheck = false;
       extensions = with pkgs.vscode-extensions; [
-        # supermaven.supermaven
+        eamodio.gitlens
         github.copilot
         github.copilot-chat
-        eamodio.gitlens
+        github.vscode-pull-request-github
         golang.go
         jnoortheen.nix-ide
         marketplace.amos402.scope-bar
+        marketplace.franzgollhammer.jb-fleet-dark
         marketplace.juanblanco.solidity
         mkhl.direnv
-        ms-python.python
         ms-toolsai.jupyter
         rust-lang.rust-analyzer
         vscodevim.vim
         # marketplace.continue.continue
         # marketplace.saoudrizwan.claude-dev
+        # ms-python.python
+        # supermaven.supermaven
       ];
       keybindings = [];
       userSettings = {
         # TODO: enable copilot agent
         "editor.fontFamily" = customArgs.font.name;
-        "editor.fontSize" = fontSize;
+        "editor.fontSize" = customArgs.font.size;
         "editor.minimap.enabled" = false;
         "editor.formatOnSave" = true;
         "editor.renderWhitespace" = "trailing";
@@ -57,8 +57,10 @@ in {
         "workbench.tree.indent" = 24;
         "workbench.welcomePage.walkthroughs.openOnInstall" = false;
         "workbench.startupEditor" = "none";
+        "workbench.colorTheme" = "Fleet Dark";
 
         "github.copilot.editor.enableAutoCompletions" = true;
+        "github.copilot.nextEditSuggestions.enabled" = true;
 
         # Go
         "go.formatTool" = "gofumpt";
