@@ -11,6 +11,9 @@
       branch.sort = "-committerdate";
       column.ui = "auto";
       commit.verbose = true;
+      commit.gpgsign = true;
+      tag.gpgsign = true;
+      gpg.format = "ssh";
       core.editor = config.home.sessionVariables.EDITOR;
       diff = {
         algorithm = "histogram";
@@ -32,8 +35,15 @@
         default = "simple";
       };
       tag.sort = "version:refname";
-      url."git@github.com:samirettali".insteadOf = "https://github.com/samirettali";
-      url."git@github.com:YoungAgency".insteadOf = "https://github.com/YoungAgency";
+      url = {
+        "git@github.com:samirettali" = {
+          insteadOf = "https://github.com/samirettali";
+        };
+        "git@github.com:YoungAgency" = {
+          insteadOf = "https://github.com/YoungAgency";
+        };
+      };
+      user.signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
     };
     ignores = [
       "*.env"
