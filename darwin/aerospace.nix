@@ -1,4 +1,4 @@
-{config, ...}: {
+{pkgs, ...}: {
   programs.aerospace = {
     enable = true;
     userSettings = {
@@ -9,10 +9,7 @@
       exec-on-workspace-change = [
         "/bin/bash"
         "-c"
-        # "echo _WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE >> /tmp/cazooooo && echo AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE >> /tmp/cazooooo"
-        # "sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE"
-        # "echo AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE >> /tmp/cazooooo"
-        "/run/current-system/sw/bin/sketchybar --set space.$AEROSPACE_FOCUSED_WORKSPACE label.color=0xffffffff && /run/current-system/sw/bin/sketchybar --set space.$AEROSPACE_PREV_WORKSPACE label.color=0x30ffffff"
+        "${pkgs.sketchybar}/bin/sketchybar --set space.$AEROSPACE_FOCUSED_WORKSPACE label.color=0xffffffff && /run/current-system/sw/bin/sketchybar --set space.$AEROSPACE_PREV_WORKSPACE label.color=0x30ffffff"
       ];
       default-root-container-layout = "tiles"; # TODO: this is not working
       gaps = {
@@ -33,8 +30,6 @@
       mode.main.binding = {
         cmd-h = [];
         cmd-alt-h = [];
-        alt-shift-f = "exec-and-forget open -a Finder.app";
-        alt-shift-enter = "exec-and-forget open -n -a Ghostty.app";
 
         alt-h = "focus left";
         alt-j = "focus down";
