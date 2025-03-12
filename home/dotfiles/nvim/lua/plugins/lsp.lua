@@ -1,40 +1,6 @@
 local methods = vim.lsp.protocol.Methods
 
--- TODO: this is not always working
-local function custom_implementation_provider(bufnr)
-	local telescope = require("telescope.builtin")
-
-	return function()
-		local params = vim.lsp.util.make_position_params()
-
-		vim.lsp.buf_request(bufnr, methods.textDocument_implementation, params, function(err, result, ctx, config)
-			if result == nil then
-				return
-			end
-
-			local ft = vim.api.nvim_get_option_value("filetype", { buf = ctx.bufnr })
-
-			-- In go code, I do not like to see any mocks for impls
-			if ft == "go" then
-				local new_result = vim.tbl_filter(function(v)
-					return not string.find(v.uri, "mock_")
-				end, result)
-
-				if #new_result > 0 then
-					result = new_result
-				end
-			end
-
-			-- TODO: use telescope
-			-- vim.lsp.handlers[methods.textDocument_implementation](err, result, ctx, config)
-			telescope.lsp_implementations(err, result, ctx, config)
-			vim.cmd([[normal! zz]])
-		end)
-	end
-end
-
 return {
-
 	dependencies = {
 		"nvim-telescope/telescope.nvim",
 		"stevearc/conform.nvim",
@@ -98,6 +64,7 @@ return {
 					vim.keymap.set("n", "<Leader>ti", toggle_lsp_hints, default_opts)
 				end
 
+				-- TODO: cleanup and use more defaults
 				-- if client:supports_method(methods.textDocument_hover) then
 				-- 	vim.keymap.set("n", "K", vim.lsp.buf.hover, default_opts)
 				-- end
@@ -357,3 +324,36 @@ return {
 		})
 	end,
 }
+
+-- TODO: this is not always working
+-- local function custom_implementation_provider(bufnr)
+-- 	local telescope = require("telescope.builtin")
+--
+-- 	return function()
+-- 		local params = vim.lsp.util.make_position_params()
+--
+-- 		vim.lsp.buf_request(bufnr, methods.textDocument_implementation, params, function(err, result, ctx, config)
+-- 			if result == nil then
+-- 				return
+-- 			end
+--
+-- 			local ft = vim.api.nvim_get_option_value("filetype", { buf = ctx.bufnr })
+--
+-- 			-- In go code, I do not like to see any mocks for impls
+-- 			if ft == "go" then
+-- 				local new_result = vim.tbl_filter(function(v)
+-- 					return not string.find(v.uri, "mock_")
+-- 				end, result)
+--
+-- 				if #new_result > 0 then
+-- 					result = new_result
+-- 				end
+-- 			end
+--
+-- 			-- TODO: use telescope
+-- 			-- vim.lsp.handlers[methods.textDocument_implementation](err, result, ctx, config)
+-- 			telescope.lsp_implementations(err, result, ctx, config)
+-- 			vim.cmd([[normal! zz]])
+-- 		end)
+-- 	end
+-- end
