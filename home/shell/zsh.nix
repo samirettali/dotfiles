@@ -1,13 +1,4 @@
-{pkgs, ...}: let
-  copyCommand =
-    if pkgs.stdenv.isDarwin
-    then "pbcopy"
-    else "xclip -selection clipboard";
-  pasteCommand =
-    if pkgs.stdenv.isDarwin
-    then "pbpaste"
-    else "xclip -o -selection clipboard";
-in {
+{customArgs, ...}: {
   programs = {
     zsh = {
       enable = true;
@@ -30,7 +21,7 @@ in {
           "clear"
         ];
         ignoreSpace = true;
-        share = true; # Share history between sessions
+        share = true;
       };
       historySubstringSearch.enable = true;
       initExtra = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
@@ -44,8 +35,8 @@ in {
         gdc = "git diff --cached";
         gmt = "go mod tidy";
         gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
-        jj = "${pasteCommand} | jq -r | ${copyCommand}";
-        jjj = "${pasteCommand} | jq -r";
+        jj = "${customArgs.commands.paste} | jq -r | ${customArgs.commands.copy}";
+        jjj = "${customArgs.commands.paste} | jq -r";
         ld = "lazydocker";
         lg = "lazygit";
         la = "ls -la";

@@ -77,6 +77,16 @@
             then 14
             else 10;
         };
+        commands = {
+          copy =
+            if pkgs.stdenv.isDarwin
+            then "pbcopy"
+            else "xclip -selection clipboard";
+          paste =
+            if pkgs.stdenv.isDarwin
+            then "pbpaste"
+            else "xclip -o -selection clipboard";
+        };
       };
     };
   in {

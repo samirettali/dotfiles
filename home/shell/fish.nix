@@ -1,20 +1,20 @@
 {
   pkgs,
-  config,
+  customArgs,
   ...
 }: let
-  copyCommand =
+  brewCommand = ''
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  '';
+  baseInitFile = builtins.readFile ../../home/dotfiles/init.fish;
+  initFile =
     if pkgs.stdenv.isDarwin
-    then "pbcopy"
-    else "xclip -selection clipboard";
-  pasteCommand =
-    if pkgs.stdenv.isDarwin
-    then "pbpaste"
-    else "xclip -o -selection clipboard";
+    then builtins.concatStringsSep "\n" [baseInitFile brewCommand]
+    else baseInitFile;
 in {
   programs.fish = {
     enable = true;
-    interactiveShellInit = builtins.readFile ../../home/dotfiles/init.fish;
+    interactiveShellInit = initFile;
     shellAliases = {
       assume = "source ~/assume.fish";
       bak = "cp -r $1 $1.bak";
@@ -31,8 +31,8 @@ in {
       gk = "git checkout";
       gmt = "go mod tidy";
       gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
-      jj = "${pasteCommand} | jq -r | ${copyCommand}";
-      jjj = "${pasteCommand} | jq -r";
+      jj = "${customArgs.commands.paste} | jq -r | ${customArgs.commands.copy}";
+      jjj = "${customArgs.commands.paste} | jq -r";
       ld = "lazydocker";
       lg = "lazygit";
       ns = "nix-shell --run fish -p";
