@@ -70,6 +70,7 @@ vim.opt.undodir = home .. "/.local/share/nvim/undo"
 vim.opt.backup = false
 vim.opt.writebackup = false
 vim.opt.shortmess:append("c")
+vim.opt.shortmess:append("I") -- Hide intro message
 
 vim.opt.confirm = true -- Ask for some operations like quitting an unsaved file instead of failing
 vim.opt.title = true -- Allow neovim to set the window title
