@@ -114,6 +114,8 @@
               username = "s.ettali";
             };
 
+            nixpkgs = nixpkgsConfig;
+
             system.stateVersion = 6;
 
             ids.uids.nixbld = 350; # TODO: fix until update to sequoia
@@ -128,7 +130,6 @@
           })
           home-manager.darwinModules.home-manager
           ({pkgs, ...}: {
-            nixpkgs = nixpkgsConfig;
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
