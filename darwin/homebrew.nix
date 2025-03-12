@@ -1,6 +1,11 @@
 {...}: {
   environment.variables.HOMEBREW_NO_ANALYTICS = "1";
 
+  services.sketchybar.enable = true;
+
+  # TODO
+  # osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hammerspoon.app", hidden:true}' > /dev/null
+
   homebrew = {
     enable = true;
     onActivation = {
@@ -17,37 +22,34 @@
       "stunnel"
     ];
     casks = [
-      "Hyperkey"
-      "betterdisplay"
-      "bettertouchtool"
       "burp-suite"
-      "chatwise"
       "cursor"
       "datagrip"
-      "db-browser-for-sqlite"
-      "deluge"
       "docker"
-      "ghostty"
-      "karabiner-elements"
+      "ghostty@tip"
+      "hammerspoon"
       "ledger-live"
-      "lunar"
       "mongodb-compass"
       "openvpn-connect"
       "postman"
-      "protonvpn"
       "raycast"
       "redis-insight"
       "shottr"
-      "spotmenu"
+      "sloth"
       "the-unarchiver"
       "yaak"
-      "zen-browser"
+      # "betterdisplay"
+      # "bettertouchtool"
+      # "chatwise"
+      # "db-browser-for-sqlite"
+      # "lunar"
+      # "protonvpn"
+      # "spotmenu"
+      # "zen-browser"
     ];
     taps = [
       "homebrew/bundle"
       "homebrew/services"
-      "nikitabobko/tap"
-      "FelixKratz/formulae"
     ];
   };
 }

@@ -38,6 +38,10 @@
       ".config/lazydocker/config.yml".source = dotfiles/lazydocker.yml;
     })
     (lib.mkIf pkgs.stdenv.isDarwin {
+      ".hammerspoon" = {
+        source = dotfiles/hammerspoon;
+        recursive = true;
+      };
       ".config/raycast/scripts" = {
         source = dotfiles/scripts/raycast;
         recursive = true;

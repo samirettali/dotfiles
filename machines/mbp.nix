@@ -16,6 +16,7 @@
 
   services = {
     tailscale.enable = true;
+    karabiner-elements.enable = false;
   };
 
   fonts = {
@@ -33,6 +34,7 @@
   system = {
     keyboard = {
       enableKeyMapping = true;
+      remapCapsLockToControl = true;
     };
     defaults = {
       WindowManager.EnableStandardClickToShowDesktop = false;

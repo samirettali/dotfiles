@@ -1,31 +1,19 @@
 {pkgs, ...}: {
-  home.sessionVariables = {
-    CLICOLOR = "1";
-  };
-
   programs = {
+    gpg.enable = true;
     zsh = {
       initExtra = ''
         eval "$(/opt/homebrew/bin/brew shellenv)"
       '';
       shellAliases = {
-        ls = "/opt/homebrew/bin/gls --color=auto --group-directories-first";
+        ls = "${pkgs.coreutils}/bin/ls --color=auto --group-directories-first --indicator-style none";
       };
     };
 
     fish = {
       shellAliases = {
-        ls = "/opt/homebrew/bin/gls --color=auto --group-directories-first";
+        ls = "${pkgs.coreutils}/bin/ls --color=auto --group-directories-first --indicator-style none";
       };
     };
-
-    gpg.enable = true;
   };
-
-  home.packages = with pkgs; [
-    darwin.apple_sdk.frameworks.CoreFoundation
-    darwin.apple_sdk.frameworks.CoreServices
-    darwin.apple_sdk.frameworks.Security
-    darwin.apple_sdk.frameworks.SystemConfiguration
-  ];
 }
