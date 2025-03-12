@@ -44,9 +44,6 @@
         };
         user.signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
         # TODO: fix
-        # includeIf."gitdir:~/dev/dotfiles/" = {
-        #   email = "ettali.samir@gmail.com";
-        # };
         # fetch = {
         # prune = true;
         # pruneTags = true;
@@ -63,6 +60,16 @@
         "Session.vim"
       ];
       signing.format = "ssh";
+      includes = [
+        {
+          condition = "gitdir:~/dev/dotfiles/";
+          contents = {
+            user = {
+              email = "ettali.samir@gmail.com";
+            };
+          };
+        }
+      ];
     };
 
     lazygit = {
