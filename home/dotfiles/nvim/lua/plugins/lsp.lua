@@ -292,23 +292,18 @@ return {
 			solidity_ls = {
 				cmd = { "vscode-solidity-server", "--stdio" },
 			},
-			nixd = true,
-			zls = true,
-			clangd = true,
-			pyright = true,
-			bashls = true,
-			ocamllsp = true,
-			terraformls = true, -- TODO: activate only if terraform-ls is installed or DOTFILES_PROFILE=work
-			jsonls = true,
+			nixd = {},
+			zls = {},
+			clangd = {},
+			pyright = {},
+			bashls = {},
+			ocamllsp = {},
+			terraformls = {}, -- TODO: activate only if terraform-ls is installed or DOTFILES_PROFILE=work
+			jsonls = {},
 		}
 
 		for name, cfg in pairs(servers) do
-			if cfg == true then
-				cfg = {}
-			end
-
-			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			local capabilities = require("blink.cmp").get_lsp_capabilities(cfg.capabilities)
+            local capabilities = require("blink.cmp").get_lsp_capabilities(cfg.capabilities)
 
 			cfg = vim.tbl_deep_extend("force", {}, {
 				capabilities = capabilities,
