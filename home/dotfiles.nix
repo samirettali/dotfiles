@@ -38,7 +38,10 @@
       ".config/lazydocker/config.yml".source = dotfiles/lazydocker.yml;
     })
     (lib.mkIf pkgs.stdenv.isDarwin {
-      ".bin/display".source = dotfiles/scripts/display.sh;
+      ".config/raycast/scripts" = {
+        source = dotfiles/scripts/raycast;
+        recursive = true;
+      };
       ".config/sketchybar" = {
         source = dotfiles/sketchybar;
         recursive = true;
