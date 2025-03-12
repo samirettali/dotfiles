@@ -1,10 +1,8 @@
 {config, ...}: {
-  services.sketchybar.enable = config.services.aerospace.enable;
-
-  services.aerospace = {
+  programs.aerospace = {
     enable = true;
-    settings = {
-      start-at-login = false;
+    userSettings = {
+      start-at-login = true;
       accordion-padding = 30;
       automatically-unhide-macos-hidden-apps = false;
 
