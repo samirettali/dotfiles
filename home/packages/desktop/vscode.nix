@@ -1,31 +1,28 @@
 {
-  inputs,
   pkgs,
   customArgs,
   ...
-}: let
-  marketplace = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
-in {
+}: {
   programs = {
     vscode = {
       enable = true;
-      package = pkgs.vscode;
       enableExtensionUpdateCheck = false;
       enableUpdateCheck = false;
-      extensions = with pkgs.vscode-extensions; [
+      mutableExtensionsDir = false;
+      extensions = with pkgs.vscode-marketplace; [
+        amos402.scope-bar
         eamodio.gitlens
+        franzgollhammer.jb-fleet-dark
         github.copilot
         github.copilot-chat
         github.vscode-pull-request-github
         golang.go
         jnoortheen.nix-ide
-        marketplace.amos402.scope-bar
-        marketplace.franzgollhammer.jb-fleet-dark
-        marketplace.juanblanco.solidity
+        juanblanco.solidity
         mkhl.direnv
-        ms-toolsai.jupyter
         rust-lang.rust-analyzer
         vscodevim.vim
+        # ms-toolsai.jupyter
         # marketplace.continue.continue
         # marketplace.saoudrizwan.claude-dev
         # ms-python.python
@@ -42,6 +39,7 @@ in {
         "editor.lineNumbers" = "relative";
         "editor.wordSeparators" = "/\\()\"'=,.;<>~!@#$%^&*|+=[]{}`?-";
         "editor.inlineSuggest.suppressSuggestions" = true;
+        "editor.inlayHints.enabled" = "offUnlessPressed";
 
         "diffEditor.ignoreTrimWhitespace" = false;
 
@@ -58,6 +56,7 @@ in {
         "workbench.welcomePage.walkthroughs.openOnInstall" = false;
         "workbench.startupEditor" = "none";
         "workbench.colorTheme" = "Fleet Dark";
+        "workbench.sideBar.location" = "right";
 
         "github.copilot.editor.enableAutoCompletions" = true;
         "github.copilot.nextEditSuggestions.enabled" = true;
@@ -68,9 +67,9 @@ in {
           "showGlobalVariables" = true;
         };
         "go.lintTool" = "revive";
-        "go.lintFlags" = [
-          "--enable-all"
-        ];
+        # "go.lintFlags" = [
+        #   "--enable-all"
+        # ];
         "go.coverOnSingleTest" = true;
         "go.showWelcome" = true;
         "gopls" = {

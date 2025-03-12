@@ -5,19 +5,16 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     darwin = {
-      url = "github:lnl7/nix-darwin";
+      url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
+    ghostty.url = "github:ghostty-org/ghostty";
 
     foundry = {
       url = "github:shazow/foundry.nix/monthly";
@@ -49,24 +46,38 @@
     nixpkgs,
     darwin,
     home-manager,
+    nix-vscode-extensions,
     ...
   } @ inputs: let
     stateVersion = "25.05";
     user = "samir";
     homeDirectory = "/home/${user}";
 
-    nixConfig = {username ? user, ...}: {
-      allowed-users = [username];
-      trusted-users = ["root" username];
-      experimental-features = ["nix-command" "flakes"];
-      auto-optimise-store = false; # this breaks on macos
+    defaultNixConfig = {username ? user, ...}: {
+      enable = true;
+      settings = {
+        allowed-users = [username];
+        trusted-users = ["root" username];
+        experimental-features = ["nix-command" "flakes"];
+      };
     };
 
-    overlays = with inputs; [
-      neovim-nightly-overlay.overlays.default
-      nur.overlays.default
-      foundry.overlay
-    ];
+    nixpkgsConfig = {
+      config.allowUnfree = true;
+      overlays = with inputs; [
+        neovim-nightly-overlay.overlays.default
+        nur.overlays.default
+        foundry.overlay
+        nix-vscode-extensions.overlays.default
+      ];
+      config.permittedInsecurePackages = [
+        "dotnet-combined"
+        "dotnet-core-combined"
+        "dotnet-wrapped-combined"
+        "dotnet-sdk-6.0.428"
+        "dotnet-sdk-wrapped-6.0.428"
+      ];
+    };
 
     mkCustomArgs = pkgs: {
       customArgs = {
@@ -97,21 +108,14 @@
         modules = [
           ./machines/mbp.nix
           ./darwin/homebrew.nix
-          ./darwin/aerospace.nix
           ./darwin/work.nix
           ({pkgs, ...}: {
-            nixpkgs.config.allowUnfree = true;
+            nix = defaultNixConfig {
+              username = "s.ettali";
+            };
 
-            nixpkgs.overlays = overlays;
-            nixpkgs.config.permittedInsecurePackages = [
-              "dotnet-combined"
-              "dotnet-core-combined"
-              "dotnet-wrapped-combined"
-              "dotnet-sdk-6.0.428"
-              "dotnet-sdk-wrapped-6.0.428"
-            ];
+            system.stateVersion = 6;
 
-            system.stateVersion = 5;
             ids.uids.nixbld = 350; # TODO: fix until update to sequoia
 
             users.users."s.ettali" = {
@@ -121,14 +125,10 @@
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJdetGPFJw+CH6wNU4BinYePWVypM42s9WI0XPodihl samir"
               ];
             };
-
-            nix = {
-              package = pkgs.nixVersions.stable;
-              settings = nixConfig {username = "s.ettali";};
-            };
           })
           home-manager.darwinModules.home-manager
           ({pkgs, ...}: {
+            nixpkgs = nixpkgsConfig;
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
@@ -144,6 +144,7 @@
                   ./home/packages/dev
                   ./home/packages/work.nix
                   ./home/packages/security.nix
+                  ./darwin/aerospace.nix
                 ];
                 home.stateVersion = stateVersion;
                 home.homeDirectory = "/Users/s.ettali";
@@ -168,30 +169,28 @@
         modules = [
           ./machines/xps/configuration.nix
           ./machines/xps/hardware-configuration.nix
-          ({
-            lib,
-            pkgs,
-            ...
-          }: {
-            nixpkgs.config.allowUnfree = lib.mkDefault true;
-            nixpkgs.overlays = overlays;
+          ({pkgs, ...}: {
+            nix =
+              defaultNixConfig {}
+              // {
+                optimise.automatic = true;
+                package = pkgs.nixVersions.stable;
+                settings.auto-optimise-store = true;
+                gc = {
+                  automatic = true;
+                  dates = "weekly";
+                  options = "--delete-older-than 7d";
+                };
+              };
+
+            nixpkgs = nixpkgsConfig; # TODO: should this go in home-manager?
 
             system.stateVersion = "unstable";
+
             users.users.${user} = {
               home = homeDirectory;
-              shell = pkgs.zsh;
+              shell = pkgs.fish;
               isNormalUser = true;
-            };
-            nix = {
-              enable = true;
-              package = pkgs.nixVersions.stable;
-              settings = nixConfig {};
-              optimise.automatic = true;
-              gc = {
-                automatic = true;
-                dates = "weekly";
-                options = "--delete-older-than 7d";
-              };
             };
           })
           home-manager.nixosModule
