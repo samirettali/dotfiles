@@ -16,6 +16,7 @@
     golangci-lint
     golangci-lint-langserver
     gotools
+    go-tools
     gotest
     gofumpt
     mockgen
