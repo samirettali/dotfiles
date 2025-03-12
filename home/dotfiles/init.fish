@@ -75,3 +75,102 @@ function fish_right_prompt
 
     printf (string join ' ' -- $duration $stat $gp)
 end
+
+function unexpand-home-tilde
+    cat - | string replace $HOME '~'
+end
+
+function clip
+    echo -n $argv | unexpand-home-tilde | fish_clipboard_copy
+end
+
+function default --argument val default
+    if not string-empty $val
+        echo $val
+    else
+        echo $default
+    end
+end
+
+function mc --argument dir
+    mkdir -p -- $dir
+    and cd -- $dir
+end
+
+function bak --argument filename
+    cp $filename $filename.bak
+end
+
+function string-empty --argument val
+    test "$val" = ''
+end
+
+function trim-trailing-slash
+    read str
+    string replace -r '/$' '' -- $str
+end
+
+function is-symlink --argument file --argument extra
+    if not string-empty $extra
+        echo 'is-symlink: too many arguments' >&2
+        return 1
+    end
+    test -L (echo $file | trim-trailing-slash)
+end
+
+function move
+    set from $argv[1]
+    if is-symlink $from; and string match --quiet --regex --entire '/$' $from
+        echo move: `from` argument '"'$from'"' is a symlink with a trailing slash.
+        echo move: to rename a symlink, remove the trailing slash from the argument.
+        return 1
+    end
+    mv -i $argv
+end
+
+function move-last-download
+    set destination (default $argv[1] .)
+    set file_name (ls -t -A ~/Downloads/ | head -1)
+    move ~/Downloads/$file_name $destination
+    echo $file_name
+end
+
+function coln
+    awk '{print $'$argv[1]'}'
+end
+
+function row --argument index
+    sed -n "$index p"
+end
+
+function skip-lines --argument n
+    tail +(math 1 + $n)
+end
+
+function take --argument number
+    head -$number
+end
+
+function word-count
+    wc -w | string trim
+end
+
+function line-count
+    wc -l | string trim
+end
+
+function char-count
+    wc -c | string trim
+end
+
+function readpass --argument var
+    read --silent localvar
+    export $var=$localvar
+end
+
+function gcd --argument repo
+    git clone $repo
+    # split at / and take last element
+    set repo_name (string split / $repo | tail -1)
+    and cd $repo_name
+end
