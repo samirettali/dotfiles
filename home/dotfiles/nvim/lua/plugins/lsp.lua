@@ -303,7 +303,7 @@ return {
 		}
 
 		for name, cfg in pairs(servers) do
-            local capabilities = require("blink.cmp").get_lsp_capabilities(cfg.capabilities)
+			local capabilities = require("blink.cmp").get_lsp_capabilities(cfg.capabilities)
 
 			cfg = vim.tbl_deep_extend("force", {}, {
 				capabilities = capabilities,
