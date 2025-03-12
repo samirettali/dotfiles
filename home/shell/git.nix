@@ -31,6 +31,7 @@
         pull.ff = "only";
         push.autoSetupRemote = true;
         push.default = "simple";
+        rerere.enabled = true;
         tag.gpgsign = true;
         tag.sort = "version:refname";
         url = {
