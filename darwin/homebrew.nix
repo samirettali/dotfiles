@@ -14,38 +14,20 @@
       upgrade = true;
     };
     brews = [
-      "autoconf"
-      "automake"
-      "cmake"
-      "coreutils"
       "displayplacer"
-      "stunnel"
     ];
     casks = [
       "burp-suite"
       "cursor"
-      "datagrip"
       "docker"
       "ghostty@tip"
       "hammerspoon"
       "ledger-live"
-      "mongodb-compass"
-      "openvpn-connect"
-      "postman"
       "raycast"
-      "redis-insight"
       "shottr"
       "sloth"
       "the-unarchiver"
       "yaak"
-      # "betterdisplay"
-      # "bettertouchtool"
-      # "chatwise"
-      # "db-browser-for-sqlite"
-      # "lunar"
-      # "protonvpn"
-      # "spotmenu"
-      # "zen-browser"
     ];
     taps = [
       "homebrew/bundle"
