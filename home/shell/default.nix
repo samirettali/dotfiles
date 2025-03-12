@@ -25,6 +25,8 @@
     fx
     gh
     graphviz
+    hexyl
+    difftastic
     htop
     hwatch
     iredis
