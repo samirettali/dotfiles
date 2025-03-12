@@ -26,6 +26,7 @@
     extensions = [
       "csharp"
       "fleet-themes"
+      "lua"
       "nix"
     ];
     userSettings = {
