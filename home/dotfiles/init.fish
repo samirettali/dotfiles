@@ -6,6 +6,8 @@ set fish_color_valid_path normal
 set -g fish_key_bindings fish_vi_key_bindings
 set -g fish_key_bindings fish_hybrid_key_bindings
 
+bind \cz fg
+
 function fish_mode_prompt
 end
 
