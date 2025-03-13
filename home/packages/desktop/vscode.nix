@@ -16,6 +16,7 @@
           franzgollhammer.jb-fleet-dark
           github.copilot
           github.copilot-chat
+          github.vscode-github-actions
           github.vscode-pull-request-github
           golang.go
           jnoortheen.nix-ide
