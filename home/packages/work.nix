@@ -38,6 +38,7 @@ in {
           marketplace.ms-dotnettools.csdevkit
           marketplace.ms-dotnettools.csharp
           vscode-dotnet-runtime-fixed
+          marketplace.csharpier.csharpier-vscode
         ];
         userSettings = {
           "csharp.experimental.debug.hotReload" = true;
@@ -59,6 +60,9 @@ in {
           "dotnet.formatting.organizeImportsOnFormat" = true;
           "csharp.debug.expressionEvaluationOptions.showRawValues" = true;
           "omnisharp.enableDecompilationSupport" = true;
+          "[csharp]" = {
+            "editor.defaultFormatter" = "csharpier.csharpier-vscode";
+          };
         };
       };
     };
