@@ -68,6 +68,15 @@
           "workbench.startupEditor" = "none";
           "workbench.colorTheme" = "Fleet Dark";
           "workbench.sideBar.location" = "right";
+          "workbench.layoutControl.enabled" = false;
+          "workbench.statusBar.visible" = false;
+          "workbench.navigationControl.enabled" = false;
+
+          "explorer.confirmDelete" = false;
+
+          "chat.commandCenter.enabled" = false;
+
+          "window.commandCenter" = false;
 
           "github.copilot.editor.enableAutoCompletions" = true;
           "github.copilot.nextEditSuggestions.enabled" = true;
