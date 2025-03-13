@@ -81,6 +81,8 @@
           "github.copilot.editor.enableAutoCompletions" = true;
           "github.copilot.nextEditSuggestions.enabled" = true;
 
+          "git.confirmSync" = false;
+
           # Go
           "go.formatTool" = "gofumpt";
           "go.delveConfig" = {
