@@ -30,7 +30,16 @@
           # ms-python.python
           # supermaven.supermaven
         ];
-        keybindings = [];
+        keybindings = [
+          {
+            "key" = "ctrl+tab";
+            "command" = "workbench.action.nextEditor";
+          }
+          {
+            "key" = "ctrl+shift+tab";
+            "command" = "workbench.action.previousEditor";
+          }
+        ];
         userSettings = {
           # TODO: enable copilot agent
           "editor.fontFamily" = customArgs.font.name;
