@@ -17,13 +17,14 @@ in {
   home.packages = with pkgs; [
     awscli2
     csharpier
+    dotnetPackages
     maven
+    nuget
     roslyn-ls
     slack
     ssm-session-manager-plugin
     terraform
     terraform-ls
-    dotnetPackages
   ];
 
   programs = {
