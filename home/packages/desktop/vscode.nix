@@ -114,6 +114,10 @@
             "@openzeppelin/contracts/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/"
             "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/"
           ];
+          "gitlens.advanced.blame.customArguments" = [
+            "-w"
+            "-CCC"
+          ];
         };
       };
     };
