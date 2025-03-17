@@ -15,6 +15,7 @@
   });
 in {
   home.packages = with pkgs; [
+    dotnet-ef
     awscli2
     csharpier
     dotnetPackages
