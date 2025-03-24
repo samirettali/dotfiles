@@ -20,13 +20,14 @@
     bombardier
     broot
     curl
+    difftastic
     diskus
     fd
     fx
     gh
+    gh
     graphviz
     hexyl
-    difftastic
     htop
     hwatch
     iredis
