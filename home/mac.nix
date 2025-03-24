@@ -9,11 +9,5 @@
         ls = "${pkgs.coreutils}/bin/ls --color=auto --group-directories-first --indicator-style none";
       };
     };
-
-    fish = {
-      shellAliases = {
-        ls = "${pkgs.coreutils}/bin/ls --color=auto --group-directories-first --indicator-style none";
-      };
-    };
   };
 }

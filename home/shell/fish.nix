@@ -35,6 +35,7 @@ in {
       jjj = "${customArgs.commands.paste} | jq -r";
       ld = "lazydocker";
       lg = "lazygit";
+      ls = "${pkgs.coreutils}/bin/ls --color=auto --group-directories-first --indicator-style none";
       ns = "nix-shell --run fish -p";
       ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
       rm = "trash";
