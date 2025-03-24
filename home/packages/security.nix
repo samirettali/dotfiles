@@ -16,6 +16,5 @@
     nuclei-templates
     sqlmap
     subfinder
-    rlwrap # TODO: move to shell/default.nix
   ];
 }

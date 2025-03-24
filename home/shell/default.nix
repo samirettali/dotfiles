@@ -46,6 +46,7 @@
     pgcli
     plumber
     ripgrep
+    rlwrap
     scc
     sesh
     sqlite
