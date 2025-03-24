@@ -33,10 +33,7 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-ui-select.nvim",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
-			},
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -88,6 +85,7 @@ return {
 			local builtin = require("telescope.builtin")
 
 			-- Telescope
+			vim.keymap.set("n", "<leader>fh", builtin.help_tags)
 			vim.keymap.set("n", "<C-f>", builtin.find_files)
 			vim.keymap.set("n", "<C-g>", builtin.live_grep)
 			vim.keymap.set("n", "<leader>b", builtin.buffers) -- TODO: maybe remap to <leader>fb to not "consume" b as prefix
