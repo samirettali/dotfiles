@@ -32,6 +32,7 @@ in {
     shellAliases = {
       assume = "source ~/assume.fish";
       bak = "cp -r $1 $1.bak";
+      c = "cursor";
       dcd = "docker compose down";
       dci = "docker compose inspect";
       dcl = "docker compose logs";
@@ -45,18 +46,20 @@ in {
       gk = "git checkout";
       gmt = "go mod tidy";
       gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
+      ip = "dig +short myip.opendns.com @resolver1.opendns.com";
       jj = "${customArgs.commands.paste} | jq -r | ${customArgs.commands.copy}";
       jjj = "${customArgs.commands.paste} | jq -r";
       ld = "lazydocker";
       lg = "lazygit";
+      localip = "ipconfig getifaddr en0";
       ls = "${pkgs.coreutils}/bin/ls --color=auto --group-directories-first --indicator-style none";
       ns = "nix-shell --run fish -p";
       ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
       rm = "trash";
       tl = "tmux ls";
+      v = "nvim";
+      vi = "nvim";
       vim = "nvim";
-      ip = "dig +short myip.opendns.com @resolver1.opendns.com";
-      localip = "ipconfig getifaddr en0";
     };
   };
 }
