@@ -12,9 +12,23 @@
     then builtins.concatStringsSep "\n" [baseInitFile brewCommand]
     else baseInitFile;
 in {
+  home.packages = with pkgs; [
+    grc
+  ];
+
   programs.fish = {
     enable = true;
     interactiveShellInit = initFile;
+    plugins = [
+      {
+        name = "grc";
+        src = pkgs.fishPlugins.grc.src;
+      }
+      {
+        name = "done";
+        src = pkgs.fishPlugins.done.src;
+      }
+    ];
     shellAliases = {
       assume = "source ~/assume.fish";
       bak = "cp -r $1 $1.bak";
