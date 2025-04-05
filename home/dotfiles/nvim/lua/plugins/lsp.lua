@@ -3,8 +3,6 @@ local methods = vim.lsp.protocol.Methods
 return {
 	dependencies = {
 		"nvim-telescope/telescope.nvim",
-		"stevearc/conform.nvim",
-		"mfussenegger/nvim-lint",
 		"saghen/blink.cmp",
 		{ "j-hui/fidget.nvim", config = true }, -- Show LSP loading status
 	},
@@ -278,50 +276,6 @@ return {
 
 			lspconfig[name].setup(cfg)
 		end
-
-		-- Autoformatting Setup
-		require("conform").setup({
-			formatters_by_ft = {
-				lua = { "stylua" },
-				go = { "goimports", "gofumpt" },
-				rust = { "rustfmt" },
-				nix = { "alejandra" },
-				bash = { "shellcheck" },
-				javascript = { "prettierd" },
-				python = { "isort", "black" },
-				ocaml = { "ocamlformat" },
-				cpp = { "clang-format" },
-				cs = { "csharpier" },
-				-- ["*"] = { "codespell" },
-				-- ["_"] = { "trim_whitespace" }, -- if no formatter is found, use this
-			},
-		})
-
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			callback = function(args)
-				require("conform").format({
-					bufnr = args.buf,
-					lsp_fallback = true,
-					quiet = true,
-				})
-			end,
-		})
-
-		local lint = require("lint")
-		lint.linters_by_ft = {
-			go = { "revive", "golangcilint" },
-			javascript = { "eslint_d" },
-			cpp = { "clang-tidy", "cppcheck", "cpplint" },
-		}
-
-		-- TODO: does this need an autogroup?
-		-- TODO: should lint be required for each usage?
-		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-			pattern = { "*.go", "*.js" },
-			callback = function()
-				lint.try_lint()
-			end,
-		})
 	end,
 }
 

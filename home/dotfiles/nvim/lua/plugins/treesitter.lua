@@ -16,6 +16,7 @@ return {
 				"sql",
 				"python",
 				"nix",
+				"java",
 
 				"html",
 				"tsx",

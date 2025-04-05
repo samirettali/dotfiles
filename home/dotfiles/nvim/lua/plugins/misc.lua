@@ -3,7 +3,7 @@ return {
 	"tommcdo/vim-exchange", -- Exchange two objects
 	"tpope/vim-eunuch", -- UNIX commands inside neovim
 	"tpope/vim-surround", -- Add surround object for editing
-	{ "echasnovski/mini.ai", config = true }, -- AI
+	{ "echasnovski/mini.ai", config = true }, -- Extend textobjects
 	{ "stevearc/oil.nvim", config = true }, -- File manager
 	{
 		"mawkler/refjump.nvim",
@@ -35,5 +35,8 @@ return {
 			exe = "Microsoft.CodeAnalysis.LanguageServer",
 		},
 	},
-	-- { "saecki/live-rename.nvim", },
+	{
+		"j-hui/fidget.nvim", -- Show LSP loading status
+		config = true,
+	},
 }

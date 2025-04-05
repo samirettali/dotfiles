@@ -53,6 +53,7 @@ return {
 					},
 					mappings = {
 						n = { ["q"] = require("telescope.actions").close },
+						i = { ["<esc>"] = require("telescope.actions").close },
 					},
 				},
 				pickers = {
@@ -88,7 +89,7 @@ return {
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags)
 			vim.keymap.set("n", "<C-f>", builtin.find_files)
 			vim.keymap.set("n", "<C-g>", builtin.live_grep)
-			vim.keymap.set("n", "<leader>b", builtin.buffers) -- TODO: maybe remap to <leader>fb to not "consume" b as prefix
+			vim.keymap.set("n", "<leader>fb", builtin.buffers)
 
 			vim.keymap.set("n", "<leader>ps", function()
 				builtin.grep_string({ search = vim.fn.input("grep: ") })
