@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   programs.aerospace = {
     enable = true;
     userSettings = {
@@ -9,8 +9,9 @@
       exec-on-workspace-change = [
         "/bin/bash"
         "-c"
-        "${pkgs.sketchybar}/bin/sketchybar --set space.$AEROSPACE_FOCUSED_WORKSPACE label.color=0xffffffff && /run/current-system/sw/bin/sketchybar --set space.$AEROSPACE_PREV_WORKSPACE label.color=0x30ffffff"
+        "sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE"
       ];
+
       default-root-container-layout = "tiles"; # TODO: this is not working
       gaps = {
         inner.horizontal = 8;
