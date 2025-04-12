@@ -22,4 +22,6 @@ raw_git_urls: [
   "https://github.com/eatonphil/linearizability-playground.git",
   "https://github.com/RajaSrinivasan/assignments.git",
   "https://github.com/prakhar1989/awesome-courses.git"
+  "https://github.com/mikker/dotfiles.git",
+  "https://github.com/ossu/computer-science.git",
 ]
