@@ -103,6 +103,7 @@ end
 vim.opt.showmode = false
 
 vim.opt.fillchars = {
+	diff = "⣿", -- BOX DRAWINGS
 	horiz = "━",
 	horizup = "┻",
 	horizdown = "┳",
@@ -111,12 +112,19 @@ vim.opt.fillchars = {
 	vertright = "┣",
 	verthoriz = "╋",
 	eob = " ",
+	fold = "─",
+	foldopen = "▾",
+	foldsep = " ",
+	foldclose = "▸",
 }
 
 vim.cmd(":command! W w")
 vim.cmd(":command! Q q")
 vim.cmd(":command! WQ wq")
 vim.cmd(":command! Wq wq")
+
+-- TODO: this breaks telescope
+-- vim.opt.winborder = "rounded"
 
 -- Disable some built-in plugins we don't need
 vim.g.loaded_gzip = 1
