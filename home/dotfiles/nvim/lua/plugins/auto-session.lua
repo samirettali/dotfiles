@@ -1,7 +1,3 @@
-if true then
-	return {}
-end
-
 return {
 	"rmagatti/auto-session",
 	config = function()
