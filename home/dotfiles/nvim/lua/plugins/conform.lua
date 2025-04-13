@@ -12,7 +12,7 @@ return {
 			nix = { "alejandra" },
 			bash = { "shellcheck" },
 			javascript = { "prettierd" },
-			python = { "isort", "black" },
+			python = { "ruff" },
 			ocaml = { "ocamlformat" },
 			cpp = { "clang-format" },
 			cs = { "csharpier" },

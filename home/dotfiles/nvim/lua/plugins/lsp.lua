@@ -260,7 +260,8 @@ return {
 			nixd = {},
 			zls = {},
 			clangd = {},
-			pyright = {},
+			ruff = {},
+			basedpyright = {},
 			bashls = {},
 			ocamllsp = {},
 			terraformls = {}, -- TODO: activate only if terraform-ls is installed or DOTFILES_PROFILE=work
