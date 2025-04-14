@@ -11,7 +11,7 @@ local function load_modules()
 		"core.autocmds",
 		"core.statusline",
 		"core.mappings",
-		"core.largefile",
+		-- "core.largefile",
 	}
 
 	for _, module in ipairs(modules) do

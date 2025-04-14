@@ -4,8 +4,11 @@ return {
 	config = function()
 		local moonfly = require("moonfly")
 
+		vim.opt.termguicolors = true
+		vim.g.moonflyTerminalColors = true
 		vim.g.moonflyWinSeparator = 2
 		vim.g.moonflyItalics = false
+		vim.g.moonflyVirtualTextColor = true
 
 		local custom_colors = {
 			bg = "#000000",

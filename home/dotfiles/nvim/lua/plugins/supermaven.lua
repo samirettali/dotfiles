@@ -1,14 +1,15 @@
 return {
 	"supermaven-inc/supermaven-nvim",
 	opts = {
-		log_level = "info",
+		log_level = "off",
 		keymaps = {
 			accept_suggestion = "<C-f>",
 			clear_suggestion = "<C-]>",
-			accept_word = "<C-j>",
+			accept_word = "<C-[>",
 		},
-		condition = function()
-			return string.match(vim.fn.expand("%:t"), ".envrc")
-		end,
+		ignore_filetypes = {
+			[".envrc"] = true,
+			[".env"] = true,
+		},
 	},
 }
