@@ -1,11 +1,11 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    python312
+    basedpyright
     pipenv
     pyenv
     pyright
-    isort
-    black
+    python312
+    ruff
     uv
   ];
 }

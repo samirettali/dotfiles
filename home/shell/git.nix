@@ -12,6 +12,10 @@
       enable = true;
       userEmail = config.home.sessionVariables.EMAIL;
       userName = "Samir Ettali";
+      aliases = {
+        lol = "log --oneline --decorate";
+        graph = "log --graph --decorate --pretty=oneline --abbrev-commit";
+      };
       extraConfig = {
         branch.sort = "-committerdate";
         column.ui = "auto";
@@ -28,6 +32,7 @@
         help.autocorrect = "prompt";
         init.defaultBranch = "main";
         merge.confictStyle = "zdiff3";
+        merge.tool = "nvimdiff";
         pull.ff = "only";
         push.autoSetupRemote = true;
         push.default = "simple";
@@ -44,11 +49,11 @@
         };
         user.signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
         # TODO: fix
-        # fetch = {
-        # prune = true;
-        # pruneTags = true;
-        # all = true;
-        # };
+        fetch = {
+          prune = true;
+          pruneTags = true;
+          all = true;
+        };
       };
       ignores = [
         "*.env"
