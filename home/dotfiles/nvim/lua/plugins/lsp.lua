@@ -268,8 +268,8 @@ return {
 			bashls = {},
 			ocamllsp = {},
 			terraformls = {}, -- TODO: activate only if terraform-ls is installed or DOTFILES_PROFILE=work
+			jdtls = {},
 			jsonls = {},
-			java_language_server = {},
 		}
 
 		for name, cfg in pairs(servers) do

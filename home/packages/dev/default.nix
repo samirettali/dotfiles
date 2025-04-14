@@ -16,10 +16,13 @@
     ast-grep
     devbox
     devenv
-    jdk
-    java-language-server
+    jdt-language-server
     stdenv
     tree-sitter
     vscode-langservers-extracted
   ];
+
+  programs = {
+    java.enable = true;
+  };
 }
