@@ -205,6 +205,14 @@ return {
 			gopls = {
 				settings = {
 					gopls = {
+						analyses = {
+							shadow = true,
+							composites = false, -- TODO: disable for single projects
+						},
+						codelenses = {
+							test = true,
+						},
+						gofumpt = true,
 						hints = {
 							assignVariableTypes = true,
 							compositeLiteralFields = true,
@@ -216,7 +224,6 @@ return {
 						},
 						staticcheck = true,
 						vulncheck = "Imports",
-						-- gofumpt = true,
 					},
 				},
 			},
