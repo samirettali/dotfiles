@@ -17,6 +17,7 @@
     devbox
     devenv
     jdk
+    java-language-server
     stdenv
     tree-sitter
     vscode-langservers-extracted
