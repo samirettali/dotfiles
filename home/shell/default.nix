@@ -14,21 +14,22 @@
   ];
 
   home.packages = with pkgs; [
-    # httptap
     age
     bat
     bombardier
     broot
+    ctop
     curl
     difftastic
     diskus
     fd
     fx
     gh
-    gh
+    gping
     graphviz
     hexyl
     htop
+    httptap
     hwatch
     iredis
     jq
@@ -57,12 +58,20 @@
     trash-cli
     tree
     unzip
+    vegeta
     viddy
-    visidata
     watchexec
+    xan
     yazi
     yt-dlp
     yubikey-manager
+
+    visidata
+    # TODO: this is broken
+    # (python3.withPackages (ps: [
+    #   ps.llm
+    #   ps.llm-ollama
+    # ]))
   ];
 
   programs = {
@@ -73,14 +82,10 @@
         vim_keys = true;
       };
     };
+    direnv.enable = true;
     neovim = {
       enable = lib.mkDefault true;
       package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
-    };
-    direnv = {
-      enable = true;
-      enableZshIntegration = true;
-      nix-direnv.enable = true;
     };
     ripgrep = {
       enable = lib.mkDefault true;
