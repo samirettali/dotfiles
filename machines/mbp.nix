@@ -55,6 +55,7 @@
         minimize-to-application = true;
         scroll-to-open = true;
         wvous-bl-corner = 1;
+        wvous-br-corner = 1;
         persistent-apps = [
           "/Applications/Google Chrome.app"
           "/Applications/Ghostty.app"
