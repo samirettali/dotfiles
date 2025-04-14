@@ -27,7 +27,6 @@ function fish_prompt
     set -l pwd (set_color -o blue) (prompt_pwd) (set_color normal)
     set -l symbol (set_color -o red) $symbol (set_color normal)
 
-    # TODO: fix this
     set -l nix_shell_info
     if test -n "$IN_NIX_SHELL"
         set nix_shell_info "<nix-shell> "
@@ -50,7 +49,6 @@ function fish_right_prompt
 
 
     # Duration
-    # TODO: maybe show only if > 3 seconds
     set -l d $CMD_DURATION
     set -l second 1000
     set -l minute (math 60 \* $second)
@@ -175,4 +173,20 @@ function gcd --argument repo
     # split at / and take last element
     set repo_name (string split / $repo | tail -1)
     and cd $repo_name
+end
+
+function dcd
+    if string-empty $argv[1]
+        docker-compose down
+    else
+        docker-compose -f $argv[1] down
+    end
+end
+
+function dcu
+    if string-empty $argv[1]
+        docker-compose up -d
+    else
+        docker-compose -f $argv[1] up -d
+    end
 end
