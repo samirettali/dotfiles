@@ -28,9 +28,9 @@
         owner = "AkashRajpurohit";
         repo = "git-sync";
         rev = "main";
-        sha256 = "sha256-HrcvhIUwEzyULNAKiCA7zq0QQFf0Y1VSxcs8vfZR33A=";
+        sha256 = "sha256-4XTNmucVXBbWoMLXSjXWQCHkuNLVTrrsqYTTF+6D78o=";
       };
-      vendorHash = "sha256-H191WtXDbAD9z5XCgpgcZBwFLFMnVaoWF93ZOLgyrSs=";
+      vendorHash = "sha256-c7XDEw85DqvXeFLRFn8gY4aUNAz7hkkFyP4eVD8LQrg=";
     })
   ];
 
