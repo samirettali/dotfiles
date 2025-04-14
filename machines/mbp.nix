@@ -118,22 +118,6 @@
     };
   };
 
-  launchd = {
-    user = {
-      agents = {
-        ollama = {
-          command = "${pkgs.ollama}/bin/ollama serve";
-          serviceConfig = {
-            KeepAlive = true;
-            RunAtLoad = true;
-            StandardOutPath = "/tmp/ollama.log";
-            StandardErrorPath = "/tmp/ollama.error.log";
-          };
-        };
-      };
-    };
-  };
-
   system.activationScripts.postActivation.text = ''
     defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict
 
