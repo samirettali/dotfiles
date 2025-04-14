@@ -220,9 +220,6 @@ return {
 					},
 				},
 			},
-			ts_ls = {
-				filetypes = { "typescriptreact", "typescript" },
-			},
 			rust_analyzer = {
 				settings = {
 					checkOnSave = {
@@ -254,9 +251,8 @@ return {
 					},
 				},
 			},
-			solidity_ls = {
-				cmd = { "vscode-solidity-server", "--stdio" },
-			},
+			ts_ls = {},
+			solidity_ls = {},
 			nixd = {},
 			zls = {},
 			clangd = {},
