@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./dotfiles.nix
     ./shell
@@ -21,7 +17,6 @@
   home.packages = with pkgs; [
     aider-chat
     nix-prefetch-github
-    # ollama
     (buildGoModule {
       pname = "git-sync";
       version = "latest";
