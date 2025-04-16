@@ -8,6 +8,9 @@ return {
 		sources = {
 			default = { "lsp", "path", "buffer" }, -- "snippets"
 		},
+		signature = {
+			enabled = true,
+		},
 		completion = {
 			menu = {
 				draw = {
