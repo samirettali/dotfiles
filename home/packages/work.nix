@@ -40,6 +40,9 @@ in {
           marketplace.ms-dotnettools.csharp
           vscode-dotnet-runtime-fixed
           marketplace.csharpier.csharpier-vscode
+          marketplace.hashicorp.terraform
+          marketplace.ms-vsliveshare.vsliveshare
+          marketplace.jeppeandersen.vscode-kafka
         ];
         userSettings = {
           "csharp.experimental.debug.hotReload" = true;
@@ -64,6 +67,13 @@ in {
           "[csharp]" = {
             "editor.defaultFormatter" = "csharpier.csharpier-vscode";
           };
+          "csharpier.dev.useCustomPath" = true;
+          "csharpier.dev.customPath" = "${pkgs.csharpier}/bin";
+          "gopls" = {
+            "analyses" = {
+              "composites" = false;
+            };
+          };
         };
       };
     };
@@ -78,7 +88,7 @@ in {
   };
 
   home.sessionVariables = {
-    DOTNET_ROOT = "${dotnetPackages}";
+    DOTNET_ROOT = "${dotnetPackages}/share/dotnet"; # TODO: check if should add /share/dotnet/
     DOTNET_CLI_TELEMETRY_OPTOUT = "1";
     DOTNET_SYSTEM_CONSOLE_ALLOW_ANSI_COLOR_REDIRECTION = "1";
   };

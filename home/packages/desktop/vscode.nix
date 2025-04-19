@@ -1,8 +1,12 @@
 {
   pkgs,
   customArgs,
+  config,
   ...
 }: {
+  home.file."Library/Application Support/Cursor/User/settings.json".text = builtins.toJSON config.programs.vscode.profiles.default.userSettings;
+  home.file."Library/Application Support/Cursor/User/keybindings.json".text = builtins.toJSON config.programs.vscode.profiles.default.keybindings;
+
   programs = {
     vscode = {
       enable = true;
@@ -11,24 +15,25 @@
         enableExtensionUpdateCheck = false;
         enableUpdateCheck = false;
         extensions = with pkgs.vscode-marketplace; [
+          alefragnani.project-manager
           amos402.scope-bar
+          augment.vscode-augment
           eamodio.gitlens
           franzgollhammer.jb-fleet-dark
-          github.copilot
-          github.copilot-chat
           github.vscode-github-actions
           github.vscode-pull-request-github
           golang.go
           jnoortheen.nix-ide
           juanblanco.solidity
           mkhl.direnv
+          ms-python.python
+          quicktype.quicktype
           rust-lang.rust-analyzer
+          supermaven.supermaven
           vscodevim.vim
-          # ms-toolsai.jupyter
-          # marketplace.continue.continue
-          # marketplace.saoudrizwan.claude-dev
-          # ms-python.python
-          # supermaven.supermaven
+          # continue.continue
+          # saoudrizwan.claude-dev
+          # patrys.vscode-code-outline
         ];
         keybindings = [
           {
@@ -41,9 +46,8 @@
           }
         ];
         userSettings = {
-          # TODO: enable copilot agent
           "editor.fontFamily" = customArgs.font.name;
-          "editor.fontSize" = customArgs.font.size;
+          "editor.fontSize" = 13;
           "editor.minimap.enabled" = false;
           "editor.formatOnSave" = true;
           "editor.renderWhitespace" = "trailing";
@@ -66,7 +70,6 @@
           "workbench.tree.indent" = 24;
           "workbench.welcomePage.walkthroughs.openOnInstall" = false;
           "workbench.startupEditor" = "none";
-          "workbench.colorTheme" = "Fleet Dark";
           "workbench.sideBar.location" = "right";
           "workbench.layoutControl.enabled" = false;
           "workbench.statusBar.visible" = false;
@@ -83,15 +86,14 @@
 
           "git.confirmSync" = false;
 
+          "terminal.integrated.sendKeybindingsToShell" = true;
+
           # Go
           "go.formatTool" = "gofumpt";
           "go.delveConfig" = {
             "showGlobalVariables" = true;
           };
           "go.lintTool" = "revive";
-          # "go.lintFlags" = [
-          #   "--enable-all"
-          # ];
           "go.coverOnSingleTest" = true;
           "go.showWelcome" = true;
           "gopls" = {
@@ -99,6 +101,9 @@
               "modernize" = true;
             };
             "ui.semanticTokens" = false;
+            "analyses" = {
+              "shadow" = true;
+            };
           };
 
           "nix.formatterPath" = "alejandra";
