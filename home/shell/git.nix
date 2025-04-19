@@ -27,16 +27,28 @@
           colorMoved = "plain";
           mnemonicPrefix = true;
           renames = true;
+          submodule = "log";
+        };
+        fetch = {
+          prune = true;
+          pruneTags = true;
+          all = true;
         };
         gpg.format = "ssh";
         help.autocorrect = "prompt";
         init.defaultBranch = "main";
+        log.date = "iso";
         merge.confictStyle = "zdiff3";
         merge.tool = "nvimdiff";
         pull.ff = "only";
-        push.autoSetupRemote = true;
-        push.default = "simple";
+        push = {
+          autoSetupRemote = true;
+          default = "simple";
+          followtags = true;
+        };
+        rebase.missingCommitsCheck = "error";
         rerere.enabled = true;
+        status.submoduleSummary = true;
         tag.gpgsign = true;
         tag.sort = "version:refname";
         url = {
@@ -48,12 +60,6 @@
           };
         };
         user.signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
-        # TODO: fix
-        fetch = {
-          prune = true;
-          pruneTags = true;
-          all = true;
-        };
       };
       ignores = [
         "*.env"
