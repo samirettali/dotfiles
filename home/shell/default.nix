@@ -27,6 +27,7 @@
     gh
     gping
     graphviz
+    gum
     hexyl
     htop
     httptap
