@@ -45,6 +45,7 @@
         alt-f = "fullscreen";
         alt-e = "layout tiles accordion";
         alt-shift-space = "layout floating tiling";
+        alt-slash = "layout tiles horizontal vertical";
 
         alt-1 = "workspace 1";
         alt-2 = "workspace 2";
@@ -108,31 +109,44 @@
         {
           check-further-callbacks = true;
           "if" = {
-            app-id = "com.google.Chrome";
-            window-title-regex-substring = "Picture-in-picture";
-          };
-          run = ["layout floating"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = {
-            app-id = "com.apple.finder";
-          };
-          run = ["layout floating"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = {
-            app-id = "cc.ffitch.shottr";
-          };
-          run = ["layout floating"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = {
             app-id = "com.hnc.discord";
           };
           run = ["move-node-to-workspace 7"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            app-id = "com.tinyspeck.slackmacgap";
+          };
+          run = ["move-node-to-workspace 4"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            app-id = "com.postmanlabs.mac";
+          };
+          run = ["move-node-to-workspace 5"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            app-id = "com.jetbrains.datagrip";
+          };
+          run = ["move-node-to-workspace 5"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            app-id = "com.mongodb.compass";
+          };
+          run = ["move-node-to-workspace 6"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            app-id = "org.RedisLabs.RedisInsight-V2";
+          };
+          run = ["move-node-to-workspace 6"];
         }
         {
           check-further-callbacks = true;
@@ -160,6 +174,28 @@
           "if" = {
             app-id = "com.google.Chrome";
             window-title-regex-substring = "Rabby Wallet";
+          };
+          run = ["layout floating"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            app-id = "com.apple.finder";
+          };
+          run = ["layout floating"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            app-id = "cc.ffitch.shottr";
+          };
+          run = ["layout floating"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            app-id = "com.google.Chrome";
+            window-title-regex-substring = "Picture-in-picture";
           };
           run = ["layout floating"];
         }
