@@ -40,7 +40,7 @@ vim.opt.foldlevel = 99
 -- vim.opt.foldnestmax = 4
 
 vim.opt.timeoutlen = 400
-vim.opt.updatetime = 50
+vim.opt.updatetime = 250
 
 vim.opt.joinspaces = false -- No double spaces with join after a dot
 vim.opt.scrolloff = 10 -- Lines of context
