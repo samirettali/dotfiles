@@ -75,10 +75,10 @@
         source = dotfiles/scripts/raycast;
         recursive = true;
       };
-      # ".config/sketchybar" = {
-      #   source = dotfiles/sketchybar;
-      #   recursive = true;
-      # };
+      ".config/sketchybar" = {
+        source = dotfiles/sketchybar;
+        recursive = true;
+      };
       "Library/Application Support/jesseduffield/lazydocker/config.yml".source = dotfiles/lazydocker.yml;
     })
   ];

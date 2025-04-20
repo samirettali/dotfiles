@@ -1,36 +1,64 @@
-PADDED=false
-PLUGIN_DIR="$CONFIG_DIR/plugins"
-ITEM_DIR="$CONFIG_DIR/items"
-FONT="JetBrainsMono Nerd Font"
-FONT_SIZE=14
+#!/usr/bin/env bash
 
-bar=(
-    position=top
-    height=40
-    blur_radius=80
-    color=0xa0000000
-    shadow=true
-)
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+sketchybar --bar position=top height=40 notch_display_height=40 blur_radius=30 color=0x60000000
 
 default=(
     padding_left=5
     padding_right=5
-    icon.font="${FONT}:Bold:${FONT_SIZE}"
-    label.font="${FONT}:Bold:${FONT_SIZE}"
+    icon.font="JetBrainsMono Nerd Font:Bold:15.0"
+    label.font="JetBrainsMono Nerd Font:Bold:15.0"
     icon.color=0xffffffff
     label.color=0xffffffff
     icon.padding_left=4
     icon.padding_right=4
     label.padding_left=4
     label.padding_right=4
+    updates=on
+    # TODO: these options are not working
+    # font_smoothing=on
+    # shadow="on"
+    # topmost="window"
 )
 
-sketchybar --bar "${bar[@]}" --default "${default[@]}"
+sketchybar --default "${default[@]}"
 
-source "$ITEM_DIR/spaces.sh"
-source "$ITEM_DIR/front_app.sh"
-source "$ITEM_DIR/right.sh"
-source "$ITEM_DIR/spotify.sh"
-source "$ITEM_DIR/crypto.sh"
+sketchybar --add event aerospace_workspace_change
+
+for sid in $(aerospace list-workspaces --all); do
+    sketchybar --add item space."${sid}" left \
+        --subscribe "space.${sid}" aerospace_workspace_change \
+        --set "space.${sid}" \
+        drawing=off \
+        icon="${sid}" \
+        click_script="aerospace workspace ${sid}" \
+        script="$PLUGIN_DIR/aerospace.sh ${sid}"
+done
+
+
+for monitor in $(aerospace list-monitors | awk '{print $1}'); do
+    for sid in $(aerospace list-workspaces --monitor "${monitor}" --empty no); do
+        apps=$(aerospace list-windows --workspace "${sid}" | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
+
+        sketchybar --set "space.${sid}" drawing=on
+    done
+done
+
+sketchybar --add item space_separator left \
+    --set space_separator icon="" \
+    background.drawing=off \
+    script="${PLUGIN_DIR}/space_windows.sh" \
+    --subscribe space_separator aerospace_workspace_change
+
+sketchybar --add item clock right \
+    --set clock update_freq=1 script="${PLUGIN_DIR}/clock.sh" \
+    --add item volume right \
+    --set volume script="${PLUGIN_DIR}/volume.sh" \
+    --subscribe volume volume_change \
+    --add item battery right \
+    --set battery update_freq=120 script="${PLUGIN_DIR}/battery.sh" \
+    --subscribe battery system_woke power_source_change
 
 sketchybar --update
+sketchybar --hotload true
