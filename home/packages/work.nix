@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  inputs,
   ...
 }: let
   marketplace = pkgs.vscode-marketplace;
@@ -10,7 +11,9 @@
       sdk_8_0-bin
       sdk_9_0-bin
     ];
-  vscode-dotnet-runtime-fixed = marketplace.ms-dotnettools.vscode-dotnet-runtime.overrideAttrs (oldAttrs: {
+  # TODO: use marketplace when dotnet extensions are fixed
+  dotnetMarketplace = (pkgs.extend inputs.nix-vscode-extensions-pinned.overlays.default).vscode-extensions;
+  vscode-dotnet-runtime-fixed = dotnetMarketplace.ms-dotnettools.vscode-dotnet-runtime.overrideAttrs (oldAttrs: {
     postPatch = ""; # TODO: remove, the postPatch step is broken upstream
   });
 in {
@@ -36,10 +39,10 @@ in {
     vscode = {
       profiles.default = {
         extensions = [
-          marketplace.ms-dotnettools.csdevkit
-          marketplace.ms-dotnettools.csharp
           vscode-dotnet-runtime-fixed
-          marketplace.csharpier.csharpier-vscode
+          dotnetMarketplace.ms-dotnettools.csdevkit
+          dotnetMarketplace.ms-dotnettools.csharp
+          dotnetMarketplace.csharpier.csharpier-vscode
           marketplace.hashicorp.terraform
           marketplace.ms-vsliveshare.vsliveshare
           marketplace.jeppeandersen.vscode-kafka

@@ -15,7 +15,6 @@
         enableExtensionUpdateCheck = false;
         enableUpdateCheck = false;
         extensions = with pkgs.vscode-marketplace; [
-          alefragnani.project-manager
           amos402.scope-bar
           augment.vscode-augment
           eamodio.gitlens
@@ -31,9 +30,6 @@
           rust-lang.rust-analyzer
           supermaven.supermaven
           vscodevim.vim
-          # continue.continue
-          # saoudrizwan.claude-dev
-          # patrys.vscode-code-outline
         ];
         keybindings = [
           {
@@ -72,7 +68,7 @@
           "workbench.startupEditor" = "none";
           "workbench.sideBar.location" = "right";
           "workbench.layoutControl.enabled" = false;
-          "workbench.statusBar.visible" = false;
+          "workbench.statusBar.visible" = true;
           "workbench.navigationControl.enabled" = false;
 
           "explorer.confirmDelete" = false;

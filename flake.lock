@@ -183,6 +183,24 @@
         "type": "github"
       }
     },
+    "flake-utils_4": {
+      "inputs": {
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "foundry": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -302,11 +320,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745071558,
-        "narHash": "sha256-bvcatss0xodcdxXm0LUSLPd2jjrhqO3yFSu3stOfQXg=",
+        "lastModified": 1745128386,
+        "narHash": "sha256-xnNxL9lZC5Ez8AxTgHZZu8pYSNM34+5GD5jGSs8Vq4M=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9676e8a52a177d80c8a42f66566362a6d74ecf78",
+        "rev": "f98314bb064cf8f8446c44afbadaaad2505875a7",
         "type": "github"
       },
       "original": {
@@ -328,11 +346,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1745044087,
-        "narHash": "sha256-is3Axl/CPltDo8g2avq1beaeR72V+KeohzsFf4d4u/0=",
+        "lastModified": 1745140216,
+        "narHash": "sha256-AiIAmPZGrFTcs3+MPPcsZPgJPojR2jAUr0pe700itNI=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "4f94094e0b09f733f412216f24ae83d5f2dd0298",
+        "rev": "f7eecd420be30e10192f386e38d3484b409dc5c7",
         "type": "github"
       },
       "original": {
@@ -344,11 +362,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1745018600,
-        "narHash": "sha256-luXj2Tub5MJhvS+lXp4FVz0MXDB55u/BWuwbpmfGJuk=",
+        "lastModified": 1745061043,
+        "narHash": "sha256-XrXfj+zLLwqDN/pjovwuKkVCkkNS/kcV2/7rrEmT+fQ=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "c67398d31bd9a6e3908b06dc1f8b9a403c992e69",
+        "rev": "c7d8812ca785864bdbdeac72efcd611bfb6e506c",
         "type": "github"
       },
       "original": {
@@ -365,6 +383,27 @@
         ]
       },
       "locked": {
+        "lastModified": 1745114521,
+        "narHash": "sha256-P/TgmeavrpUiHCejjjsU2vOMB7cBIcHltGDSKKgi20E=",
+        "owner": "nix-community",
+        "repo": "nix-vscode-extensions",
+        "rev": "ff14820202442f847fd37862eb48a7cb254a19d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-vscode-extensions",
+        "type": "github"
+      }
+    },
+    "nix-vscode-extensions-pinned": {
+      "inputs": {
+        "flake-utils": "flake-utils_4",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
         "lastModified": 1741830545,
         "narHash": "sha256-SzbDILDATgMCYk2SxPYLCBVdT6mHtlyeYZDn2SZaIuU=",
         "owner": "nix-community",
@@ -375,6 +414,7 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
+        "rev": "28318c164b39b70a14851aed7ad0ea7f03ca417e",
         "type": "github"
       }
     },
@@ -435,11 +475,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1745081128,
-        "narHash": "sha256-0Uj0ToZnbJzphE3TKxeoexZ7BLAq54qfWm4wLLIgmC0=",
+        "lastModified": 1745153764,
+        "narHash": "sha256-4bpB+mxtHYDVhWz3dU9s8iKnKX5IQjjwuZjBcNw7QZQ=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "5c9fd6f8edb33dfcf9690ec13b140fea71a7519f",
+        "rev": "a1238353b95544ed7ad9745641d1075c2a6dcdc1",
         "type": "github"
       },
       "original": {
@@ -456,6 +496,7 @@
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-vscode-extensions": "nix-vscode-extensions",
+        "nix-vscode-extensions-pinned": "nix-vscode-extensions-pinned",
         "nixpkgs": "nixpkgs",
         "nur": "nur",
         "walker": "walker"
@@ -492,6 +533,21 @@
       }
     },
     "systems_3": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_4": {
       "locked": {
         "lastModified": 1689347949,
         "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
@@ -553,7 +609,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "systems": "systems_3"
+        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1744983111,
