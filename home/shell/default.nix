@@ -69,12 +69,6 @@
     yt-dlp
     yubikey-manager
     visidata
-
-    # TODO: this is broken
-    # (python3.withPackages (ps: [
-    #   ps.llm
-    #   ps.llm-ollama
-    # ]))
   ];
 
   programs = {
