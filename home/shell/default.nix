@@ -39,6 +39,7 @@
     kcat
     lazydocker
     libqalculate
+    lazysql
     lla
     lnav
     moreutils
@@ -67,8 +68,8 @@
     yazi
     yt-dlp
     yubikey-manager
-
     visidata
+
     # TODO: this is broken
     # (python3.withPackages (ps: [
     #   ps.llm
