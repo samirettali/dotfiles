@@ -39,4 +39,15 @@ return {
 		"j-hui/fidget.nvim", -- Show LSP loading status
 		config = true,
 	},
+	{
+		"sQVe/sort.nvim",
+		config = function()
+			require("sort").setup()
+
+			vim.cmd([[
+                nnoremap <silent> go <Cmd>Sort<CR>
+                vnoremap <silent> go <Esc><Cmd>Sort<CR>
+            ]])
+		end,
+	},
 }
