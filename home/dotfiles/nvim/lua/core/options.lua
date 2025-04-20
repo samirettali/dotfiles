@@ -80,8 +80,6 @@ vim.opt.laststatus = 0
 vim.opt.cmdheight = 0
 vim.opt.signcolumn = "yes"
 
-vim.opt.cursorline = true -- Highlight current line
-
 vim.opt.clipboard = "unnamedplus"
 
 if os.getenv("SSH_TTY") and os.getenv("SSH_CLIENT") then
