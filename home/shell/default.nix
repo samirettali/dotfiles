@@ -38,8 +38,8 @@
     kaf
     kcat
     lazydocker
-    libqalculate
     lazysql
+    libqalculate
     lla
     lnav
     moreutils
@@ -63,12 +63,13 @@
     unzip
     vegeta
     viddy
+    visidata
     watchexec
+    wuzz
     xan
     yazi
     yt-dlp
     yubikey-manager
-    visidata
   ];
 
   programs = {
