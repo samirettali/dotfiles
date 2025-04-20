@@ -167,7 +167,7 @@ return {
 			end,
 		})
 
-		-- TODO: this is not working
+		-- Close import folds automatically
 		vim.api.nvim_create_autocmd("LspNotify", {
 			callback = function(args)
 				if args.data.method == methods.textDocument_didOpen then
