@@ -6,11 +6,8 @@
   models = [
     "deepseek-r1:8b"
     "gemma3:12b"
-    "hf.co/bartowski/Qwen2.5-Coder-7B-Instruct-GGUF:Q4_K_M"
+    "hf.co/bartowski/Qwen2.5.1-Coder-7B-Instruct-GGUF:Q4_K_M"
     "hf.co/bartowski/Zyphra_ZR1-1.5B-GGUF:Q8_0"
-    "hf.co/smirki/UIGEN-T1-Qwen-7b"
-    "llama3.2:3b-instruct-q8_0"
-    "qwen2.5-coder"
   ];
 in {
   services.ollama = {
