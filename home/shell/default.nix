@@ -32,6 +32,7 @@
     htop
     httptap
     hwatch
+    ijq
     iredis
     jq
     kaf
