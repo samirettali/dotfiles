@@ -5,8 +5,6 @@
   inputs,
   ...
 }: {
-  # TODO: cleanup this mess
-
   home.packages =
     [
       (pkgs.writeShellScriptBin "glc" (builtins.readFile dotfiles/scripts/glc.sh))
@@ -39,10 +37,6 @@
   home.file = lib.mkMerge [
     {
       ".ideavimrc".source = dotfiles/ideavimrc;
-      # ".config/karabiner" = lib.mkIf pkgs.stdenv.isDarwin {
-      #   source = dotfiles/karabiner;
-      #   recursive = true;
-      # };
       ".Xdefaults".source = dotfiles/Xdefaults;
       "revive.toml".source = dotfiles/revive.toml;
       ".config/ghostty/config".source = dotfiles/ghostty;
@@ -66,11 +60,10 @@
       ".config/lazydocker/config.yml".source = dotfiles/lazydocker.yml;
     })
     (lib.mkIf pkgs.stdenv.isDarwin {
-      # TODO: add when finished
-      # ".hammerspoon" = {
-      #   source = dotfiles/hammerspoon;
-      #   recursive = true;
-      # };
+      ".hammerspoon" = {
+        source = dotfiles/hammerspoon;
+        recursive = true;
+      };
       ".config/raycast/scripts" = {
         source = dotfiles/scripts/raycast;
         recursive = true;
