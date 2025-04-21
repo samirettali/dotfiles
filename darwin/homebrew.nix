@@ -1,8 +1,7 @@
 {...}: {
   environment.variables.HOMEBREW_NO_ANALYTICS = "1";
 
-  # TODO: installing sketchybar this way doesn't work with aerospace
-  services.sketchybar.enable = false;
+  services.sketchybar.enable = true;
 
   # TODO
   # osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hammerspoon.app", hidden:true}' > /dev/null
@@ -16,7 +15,6 @@
     };
     brews = [
       "displayplacer"
-      "sketchybar"
     ];
     casks = [
       "burp-suite"
@@ -40,7 +38,6 @@
     taps = [
       "homebrew/bundle"
       "homebrew/services"
-      "FelixKratz/formulae"
     ];
   };
 }
