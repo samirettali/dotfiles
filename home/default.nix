@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   imports = [
+    ./sops.nix
     ./dotfiles.nix
     ./shell
     ./services/default.nix
@@ -17,6 +18,7 @@
   home.packages = with pkgs; [
     aider-chat
     nix-prefetch-github
+    sops
     (buildGoModule {
       pname = "git-sync";
       version = "latest";

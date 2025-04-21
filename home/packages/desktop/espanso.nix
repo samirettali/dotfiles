@@ -1,39 +1,46 @@
-{...}: {
+{config, ...}: let
+  keys = ["evm" "svm" "hot" "alt" "em" "wem" "pri"];
+  matches =
+    builtins.map (name: {
+      regex = ":(?i)${name}";
+      replace = "{{${name}}}";
+      vars = [
+        {
+          name = "${name}";
+          type = "shell";
+          params = {
+            cmd = "cat ${config.sops.secrets."espanso_matches/${name}".path}";
+          };
+        }
+      ];
+    })
+    keys;
+in {
   services.espanso = {
     enable = true;
     matches = {
       base = {
-        matches = [
-          {
-            trigger = ":wallet";
-            replace = "0xc632b0c926291da28F8496d4F33CBE1f454E6F64";
-          }
-          {
-            trigger = ":em";
-            replace = "ettali.samir@gmail.com";
-          }
-          {
-            trigger = ":wem";
-            replace = "s.ettali@young.business";
-          }
-          {
-            trigger = ":ts";
-            replace = "{{unixtime}}";
-          }
-          {
-            trigger = ":uuid";
-            replace = "{{output}}";
-            vars = [
-              {
-                name = "output";
-                type = "shell";
-                params = {
-                  cmd = "uuidgen";
-                };
-              }
-            ];
-          }
-        ];
+        matches =
+          [
+            {
+              regex = ":(?i)ts";
+              replace = "{{unixtime}}";
+            }
+            {
+              regex = ":(?i)uuid";
+              replace = "{{output}}";
+              vars = [
+                {
+                  name = "output";
+                  type = "shell";
+                  params = {
+                    cmd = "uuidgen";
+                  };
+                }
+              ];
+            }
+          ]
+          ++ matches;
       };
       global_vars = {
         global_vars = [
