@@ -2,6 +2,9 @@ vim.g.mapleader = " "
 
 vim.keymap.set("n", "<Tab>", "<C-6>", { remap = true })
 
+vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Paste without copying" })
+vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without copying" })
+
 vim.keymap.set("n", "<Leader>dp", "yip<S-}>p", { desc = "Duplicate paragraph" })
 
 vim.keymap.set("n", "<Leader>c", "ggVGy<C-o>", { desc = "Copy entire file", silent = true })
