@@ -24,16 +24,16 @@
       "ghostty@tip"
       "hammerspoon"
       "leader-key"
-      "ledger-live"
       "raycast"
       "shottr"
       "sloth"
       "the-unarchiver"
-      "yaak"
       "zen-browser"
       # "hyperkey"
+      # "ledger-live"
       # "mouseless"
       # "sol"
+      # "yaak"
     ];
     taps = [
       "homebrew/bundle"
