@@ -10,7 +10,6 @@ return {
 			go = { "goimports", "gofumpt" },
 			rust = { "rustfmt" },
 			nix = { "alejandra" },
-			bash = { "shellcheck" },
 			javascript = { "prettierd" },
 			python = { "ruff" },
 			ocaml = { "ocamlformat" },
