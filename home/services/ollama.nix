@@ -4,10 +4,12 @@
   ...
 }: let
   models = [
-    "deepseek-r1:8b"
-    "gemma3:12b"
-    "hf.co/bartowski/Qwen2.5.1-Coder-7B-Instruct-GGUF:Q4_K_M"
-    "hf.co/bartowski/Zyphra_ZR1-1.5B-GGUF:Q8_0"
+    "deepcoder"
+    "deepseek-r1"
+    "gemma3"
+    "hf.co/bartowski/Qwen2.5.1-Coder-7B-Instruct-GGUF"
+    "hf.co/bartowski/Zyphra_ZR1-1.5B-GGUF"
+    "llama3.2"
   ];
 in {
   services.ollama = {
