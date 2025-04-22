@@ -1,4 +1,7 @@
 {pkgs, ...}: {
+  home.packages = with pkgs; [
+    asitop
+  ];
   programs = {
     gpg.enable = true;
     zsh = {
