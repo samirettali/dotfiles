@@ -4,8 +4,10 @@
   config,
   ...
 }: {
-  home.file."Library/Application Support/Cursor/User/settings.json".text = builtins.toJSON config.programs.vscode.profiles.default.userSettings;
-  home.file."Library/Application Support/Cursor/User/keybindings.json".text = builtins.toJSON config.programs.vscode.profiles.default.keybindings;
+  home.file."Library/Application Support/Cursor/User/settings.json".text =
+    builtins.toJSON config.programs.vscode.profiles.default.userSettings;
+  home.file."Library/Application Support/Cursor/User/keybindings.json".text =
+    builtins.toJSON config.programs.vscode.profiles.default.keybindings;
 
   programs = {
     vscode = {
