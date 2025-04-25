@@ -24,7 +24,7 @@
         share = true;
       };
       historySubstringSearch.enable = true;
-      initExtra = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
+      initContent = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
       shellAliases = {
         bak = "cp -r $1 $1.bak";
         c = "clear";

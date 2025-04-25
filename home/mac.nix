@@ -5,7 +5,7 @@
   programs = {
     gpg.enable = true;
     zsh = {
-      initExtra = ''
+      initContent = ''
         eval "$(/opt/homebrew/bin/brew shellenv)"
       '';
       shellAliases = {
