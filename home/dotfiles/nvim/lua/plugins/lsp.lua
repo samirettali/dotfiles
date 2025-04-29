@@ -63,9 +63,9 @@ return {
 				end
 
 				-- TODO: cleanup and use more defaults
-				-- if client:supports_method(methods.textDocument_hover) then
-				-- 	vim.keymap.set("n", "K", vim.lsp.buf.hover, default_opts)
-				-- end
+				if client:supports_method(methods.textDocument_hover) then
+					vim.keymap.set("n", "K", vim.lsp.buf.hover, default_opts)
+				end
 
 				if client:supports_method(methods.textDocument_definition) then
 					-- vim.keymap.set("n", "gd", telescope.lsp_definitions, default_opts) -- telescope is not working right now
