@@ -18,7 +18,6 @@
         enableUpdateCheck = false;
         extensions = with pkgs.vscode-marketplace; [
           amos402.scope-bar
-          augment.vscode-augment
           eamodio.gitlens
           franzgollhammer.jb-fleet-dark
           github.vscode-github-actions
@@ -32,6 +31,10 @@
           rust-lang.rust-analyzer
           supermaven.supermaven
           vscodevim.vim
+          # augment.vscode-augment
+          # continue.continue
+          # google.geminicodeassist
+          # saoudrizwan.claude-dev
         ];
         keybindings = [
           {
