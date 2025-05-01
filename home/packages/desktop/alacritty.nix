@@ -4,7 +4,7 @@
   ...
 }: {
   programs.alacritty = {
-    enable = true;
+    enable = false;
     settings = {
       terminal = {
         shell = "${pkgs.fish}/bin/fish";
