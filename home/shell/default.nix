@@ -32,9 +32,9 @@
     htop
     httptap
     hwatch
-    ijq
     iredis
     jq
+    jqp
     kaf
     kcat
     lazydocker
