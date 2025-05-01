@@ -192,7 +192,7 @@
 
             nixpkgs = nixpkgsConfig; # TODO: should this go in home-manager?
 
-            system.stateVersion = "unstable";
+            system.stateVersion = "25.05";
 
             users.users.${user} = {
               home = homeDirectory;
@@ -200,7 +200,7 @@
               isNormalUser = true;
             };
           })
-          home-manager.nixosModule
+          home-manager.nixosModules.home-manager
           ({pkgs, ...}: {
             home-manager = {
               useGlobalPkgs = true;
