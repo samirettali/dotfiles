@@ -1,6 +1,11 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [
     asitop
+    docker
   ];
   programs = {
     gpg.enable = true;
@@ -13,4 +18,8 @@
       };
     };
   };
+
+  home.sessionPath = [
+    "${config.home.homeDirectory}/.orbstack/bin"
+  ];
 }

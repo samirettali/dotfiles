@@ -19,11 +19,11 @@
     casks = [
       "burp-suite"
       "cursor"
-      "docker"
       "font-sketchybar-app-font"
       "ghostty@tip"
       "hammerspoon"
       "leader-key"
+      "orbstack"
       "raycast"
       "shottr"
       "sloth"
