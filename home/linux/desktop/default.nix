@@ -13,6 +13,7 @@
   };
 
   home.packages = with pkgs; [
+    code-cursor
     ledger-live-desktop
     redisinsight
     inputs.ghostty.packages."${pkgs.system}".default

@@ -14,7 +14,5 @@
     discord
     keepassxc
     spotify
-    # code-cursor
-    # obsidian
   ];
 }
