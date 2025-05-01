@@ -70,8 +70,8 @@ in {
         "${modifier}+y" = "exec hyprpicker | wl-copy";
         "${modifier}+Return" = "exec alacritty";
         "${modifier}+Shift+v" = "exec cliphist list | bemenu | cliphist decode | wl-copy";
-        "XF86AudioRaiseVolume" = "exec pamixer -i 5";
-        "XF86AudioLowerVolume" = "exec pamixer -d 5";
+        "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+        "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
       };
       modifier = "${modifier}";
       output = {
