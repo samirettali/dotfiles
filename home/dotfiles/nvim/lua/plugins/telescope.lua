@@ -33,6 +33,7 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-telescope/telescope-ui-select.nvim",
+			"nvim-telescope/telescope-frecency.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
 		config = function()
@@ -82,12 +83,13 @@ return {
 			telescope.load_extension("advanced_git_search")
 			telescope.load_extension("fzf")
 			telescope.load_extension("ui-select")
+			telescope.load_extension("frecency")
 
 			local builtin = require("telescope.builtin")
 
 			-- Telescope
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags)
-			vim.keymap.set("n", "<C-f>", builtin.find_files)
+			vim.keymap.set("n", "<C-f>", ":Telescope frecency workspace=CWD theme=dropdown previewer=false<CR>")
 			vim.keymap.set("n", "<C-g>", builtin.live_grep)
 			vim.keymap.set("n", "<leader>fb", builtin.buffers)
 
