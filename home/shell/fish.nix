@@ -30,7 +30,7 @@ in {
       }
     ];
     shellAliases = {
-      assume = "source ~/assume.fish";
+      assume = "source ~/assume.fish"; # TODO: fix this
       bak = "cp -r $1 $1.bak";
       c = "cursor";
       dcd = "docker compose down";
@@ -46,7 +46,7 @@ in {
       gk = "git checkout";
       gmt = "go mod tidy";
       gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
-      ip = "dig +short myip.opendns.com @resolver1.opendns.com";
+      iip = "dig +short myip.opendns.com @resolver1.opendns.com";
       jj = "${customArgs.commands.paste} | jq -r | ${customArgs.commands.copy}";
       jjj = "${customArgs.commands.paste} | jq -r";
       ld = "lazydocker";
