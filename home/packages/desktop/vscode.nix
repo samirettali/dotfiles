@@ -45,7 +45,7 @@
         ];
         userSettings = {
           "editor.fontFamily" = customArgs.font.name;
-          "editor.fontSize" = 13;
+          "editor.fontSize" = 14;
           "editor.minimap.enabled" = false;
           "editor.formatOnSave" = true;
           "editor.renderWhitespace" = "trailing";
