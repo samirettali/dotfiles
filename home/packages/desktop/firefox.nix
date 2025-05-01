@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs = {
     firefox = {
-      enable = false;
+      enable = true;
       package = with pkgs; (firefox.override {
         nativeMessagingHosts = [passff-host];
         extraPolicies = {
@@ -20,19 +20,17 @@
         };
       });
       profiles.samir = {
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           clearurls
           copy-selection-as-markdown
           darkreader
-          passff
+          keepassxc-browser
+          linkding-extension
           sponsorblock
-          vimium
-          ublock-origin
           switchyomega
-
-          # not available in overyal
-          # metasuites
-          # phantom-app
+          tampermonkey
+          ublock-origin
+          vimium-c
         ];
         settings = {
           # Performance settings

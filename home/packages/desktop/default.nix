@@ -2,6 +2,7 @@
   imports = [
     ./alacritty.nix
     ./espanso.nix
+    ./firefox.nix
     ./kitty.nix
     ./mpv.nix
     ./vscode.nix
