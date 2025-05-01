@@ -52,7 +52,7 @@
   };
 
   environment = {
-    shells = with pkgs; [zsh];
+    shells = with pkgs; [fish];
     systemPackages = with pkgs; [
       gvfs
       udisks
@@ -72,7 +72,8 @@
   };
 
   programs = {
-    zsh.enable = true;
+    zsh.enable = false;
+    fish.enable = true;
     fuse.userAllowOther = true;
     dconf.enable = true;
   };

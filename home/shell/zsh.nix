@@ -1,7 +1,7 @@
 {customArgs, ...}: {
   programs = {
     zsh = {
-      enable = true;
+      enable = false;
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
