@@ -76,7 +76,7 @@ in {
       modifier = "${modifier}";
       output = {
         "*" = {
-          bg = "/home/samir/pics/walls/oxomfy9gqwgb1.jpg fill"; # TODO save image in repo
+          # bg = "/home/samir/pics/walls/widescreen/dune.jpg fill"; # TODO save image in repo
           max_render_time = "1";
         };
       };
@@ -86,7 +86,7 @@ in {
         {command = "mako";}
         {command = "exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK";}
       ];
-      terminal = "alacritty";
+      terminal = config.home.sessionVariables.TERMINAL;
       window = {
         border = 2;
         titlebar = false;

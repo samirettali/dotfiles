@@ -8,6 +8,7 @@
 
   home.sessionVariables = {
     DEFAULT_BROWSER = "chrome";
+    TERMINAL = "ghostty";
   };
 
   programs = {
