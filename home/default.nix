@@ -7,7 +7,6 @@
   ];
 
   home.sessionVariables = {
-    EDITOR = "nvim";
     DEFAULT_BROWSER = "chrome";
   };
 

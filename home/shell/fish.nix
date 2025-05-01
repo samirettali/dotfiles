@@ -57,9 +57,6 @@ in {
       ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
       rm = "trash";
       tl = "tmux ls";
-      v = "nvim";
-      vi = "nvim";
-      vim = "nvim";
     };
   };
 }

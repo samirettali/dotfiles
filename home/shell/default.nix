@@ -84,6 +84,10 @@
     neovim = {
       enable = lib.mkDefault true;
       package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      vimdiffAlias = true;
     };
     ripgrep = {
       enable = lib.mkDefault true;

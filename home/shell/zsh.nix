@@ -37,15 +37,14 @@
         gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
         jj = "${customArgs.commands.paste} | jq -r | ${customArgs.commands.copy}";
         jjj = "${customArgs.commands.paste} | jq -r";
+        la = "ls -la";
         ld = "lazydocker";
         lg = "lazygit";
-        la = "ls -la";
         ll = "ls -l";
         ns = "nix-shell --run zsh -p";
         ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
         rm = "trash";
         tl = "tmux ls";
-        vim = "nvim";
       };
       shellGlobalAliases = {
         trim = "awk '{\$1=\$1;print}'";
