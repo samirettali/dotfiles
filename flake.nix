@@ -45,11 +45,6 @@
       url = "github:nix-community/nix-vscode-extensions/28318c164b39b70a14851aed7ad0ea7f03ca417e";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    walker = {
-      url = "github:abenz1267/walker";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {

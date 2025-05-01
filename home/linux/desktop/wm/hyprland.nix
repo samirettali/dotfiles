@@ -15,6 +15,7 @@
     };
     xwayland.enable = true;
     settings = {
+      ecosystem.no_update_news = true;
       general = {
         gaps_in = 1;
         gaps_out = 1;
@@ -24,16 +25,17 @@
       };
       input = {
         kb_layout = "us,it";
-        touchpad.disable_while_typing = true;
         repeat_rate = 60;
         repeat_delay = 200;
         sensitivity = 1.0;
+        touchpad.disable_while_typing = true;
       };
       dwindle = {
         no_gaps_when_only = true;
         split_width_multiplier = 1.35;
       };
       misc = {
+        background_color = "0x00fafafa";
         new_window_takes_over_fullscreen = 2;
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
@@ -42,16 +44,16 @@
       decoration = {
         rounding = 0;
         blur.enabled = false;
-        drop_shadow = false;
       };
       animations.enabled = false;
-      exec = [
-        "${pkgs.swaybg}/bin/swaybg -i /home/samir/pics/walls/bg.png --mode tile"
-      ];
       exec-once = [
         "dbus-update-activation-environment --systemd --all"
         "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"
       ];
+      binds = {
+        workspace_back_and_forth = true;
+        allow_workspace_cycles = true;
+      };
 
       bind = let
         swaylock = "${config.programs.swaylock.package}/bin/swaylock";
@@ -80,13 +82,12 @@
       in
         [
           "SUPER,TAB,workspace,previous"
-          "SUPERSHIFT,q,killactive"
+          "SUPERSHIFT,c,killactive"
           "SUPERSHIFT,e,exit"
           "SUPER,f,fullscreen,1"
-          "SUPERSHIFT,f,togglefloating"
-
+          "SUPERSHIFT,SPACE,togglefloating"
+          "SUPER,SPACE,exec,${bemenuRun}"
           "SUPER,RETURN,exec,${terminal}"
-          "SUPER,d,exec,${bemenuRun}"
           "SUPER,x,exec,${fileExplorer}"
           "SUPER,y,exec,${hyprpicker}"
 
@@ -151,10 +152,10 @@
         "SUPER,mouse:273,resizewindow"
       ];
     };
+    # windowrule=float,^(pavucontrol)$
+    # windowrule=float,title:^(Picture-in-Picture)$
+    # windowrule=workspace 8,^(Spotify)$
     extraConfig = ''
-      windowrule=float,^(pavucontrol)$
-      windowrule=float,title:^(Picture-in-Picture)$
-      windowrule=workspace 8,^(Spotify)$
       windowrulev2=suppressevent maximize fullscreen,class:^(mpv)$
 
       windowrule=float,title:^(_crx_acmacodkjbdgmoleebolmdjonilkdbch)$

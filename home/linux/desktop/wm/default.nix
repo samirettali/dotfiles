@@ -12,7 +12,6 @@
     ./mako.nix
     ./gtk.nix
     ./kanshi.nix
-    inputs.walker.homeManagerModules.default
   ];
 
   home.packages = with pkgs; [
@@ -55,13 +54,5 @@
     publicShare = null;
     templates = null;
     videos = "${home}/vids";
-  };
-
-  programs.walker = {
-    enable = true;
-    runAsService = true;
-    config = {
-      placeholder = "Search...";
-    };
   };
 }
