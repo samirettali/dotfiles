@@ -91,7 +91,7 @@
         NSAutomaticSpellingCorrectionEnabled = false;
         NSDocumentSaveNewDocumentsToCloud = false;
         NSNavPanelExpandedStateForSaveMode = true;
-        "com.apple.mouse.tapBehavior" = 1;
+        "com.apple.mouse.tapBehavior" = 0;
         "com.apple.swipescrolldirection" = false;
         "com.apple.trackpad.scaling" = 3.0;
       };
