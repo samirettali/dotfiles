@@ -52,7 +52,6 @@
     darwin,
     home-manager,
     nix-vscode-extensions,
-    nix-vscode-extensions-pinned,
     ...
   } @ inputs: let
     stateVersion = "25.05";
