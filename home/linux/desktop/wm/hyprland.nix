@@ -17,8 +17,8 @@
     settings = {
       ecosystem.no_update_news = true;
       general = {
-        gaps_in = 1;
-        gaps_out = 1;
+        gaps_in = 4;
+        gaps_out = 4;
         border_size = 1;
         "col.active_border" = "0xffbbbbbb";
         "col.inactive_border" = "0xff222222";
