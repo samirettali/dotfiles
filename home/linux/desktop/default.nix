@@ -42,23 +42,24 @@
       {id = "bfnaelmomeimhlpmgjnjophhpkkoljpa";} # phantom
       {id = "dmkamcknogkgcdfhhbddcghachkejeap";} # keplr
     ];
-    extraOpts = {
-      ShowHomeButton = false;
-      RestoreOnStartup = 1;
-      PasswordManagerEnabled = false;
-      SpellcheckEnabled = true;
-      SpellcheckLanguages = [
-        "en-US"
-        "it"
-      ];
-      SiteSearchSettings = [
-        {
-          featured = true;
-          name = "nix";
-          shortcut = "nix";
-          url = "https://mynixos.com/search?q=%s";
-        }
-      ];
-    };
+    # TODO: fix
+    # extraOpts = {
+    #   ShowHomeButton = false;
+    #   RestoreOnStartup = 1;
+    #   PasswordManagerEnabled = false;
+    #   SpellcheckEnabled = true;
+    #   SpellcheckLanguages = [
+    #     "en-US"
+    #     "it"
+    #   ];
+    #   SiteSearchSettings = [
+    #     {
+    #       featured = true;
+    #       name = "nix";
+    #       shortcut = "nix";
+    #       url = "https://mynixos.com/search?q=%s";
+    #     }
+    #   ];
+    # };
   };
 }
