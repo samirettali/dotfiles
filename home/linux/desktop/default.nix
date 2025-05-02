@@ -5,7 +5,6 @@
 }: {
   imports = [
     ./wm
-    ./firefox.nix
   ];
 
   services = {
