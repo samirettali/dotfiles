@@ -66,23 +66,26 @@
         trusted-users = ["root" username];
         experimental-features = ["nix-command" "flakes"];
       };
+      optimise.automatic = true;
     };
 
     nixpkgsConfig = {
-      config.allowUnfree = true;
       overlays = with inputs; [
         neovim-nightly-overlay.overlays.default
         nur.overlays.default
         foundry.overlay
         nix-vscode-extensions.overlays.default
       ];
-      config.permittedInsecurePackages = [
-        "dotnet-combined"
-        "dotnet-core-combined"
-        "dotnet-wrapped-combined"
-        "dotnet-sdk-6.0.428"
-        "dotnet-sdk-wrapped-6.0.428"
-      ];
+      config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+          "dotnet-combined"
+          "dotnet-core-combined"
+          "dotnet-wrapped-combined"
+          "dotnet-sdk-6.0.428"
+          "dotnet-sdk-wrapped-6.0.428"
+        ];
+      };
     };
 
     mkCustomArgs = pkgs: {
@@ -180,9 +183,7 @@
             nix =
               defaultNixConfig {}
               // {
-                optimise.automatic = true;
                 package = pkgs.nixVersions.stable;
-                settings.auto-optimise-store = true;
                 gc = {
                   automatic = true;
                   dates = "weekly";
@@ -205,6 +206,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = "bak";
               extraSpecialArgs = {
                 inherit inputs;
                 inherit (mkCustomArgs pkgs) customArgs;
