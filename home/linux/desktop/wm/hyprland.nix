@@ -35,7 +35,7 @@
         split_width_multiplier = 1.35;
       };
       misc = {
-        background_color = "0x00fafafa";
+        background_color = "0x141414";
         new_window_takes_over_fullscreen = 2;
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
