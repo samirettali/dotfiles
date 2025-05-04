@@ -1,5 +1,8 @@
+require("monitors")
+require("reload")
+
 hs.loadSpoon("ControlEscape"):start()
-
-hs.hotkey.bind({ "alt", "shift" }, "R", hs.reload)
-
-hs.alert.show("Hammerspoon reloaded!")
+hs.loadSpoon("Hammerflow")
+spoon.Hammerflow.loadFirstValidTomlFile({
+	"hammerflow.toml",
+})

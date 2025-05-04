@@ -1,0 +1,80 @@
+leader_key = "space"
+leader_key_mods = "cmd"
+auto_reload = false
+show_ui = true
+
+b = "Zen"
+t = "Ghostty"
+r = ["raycast://extensions/raycast", "raycast"]
+
+[o]
+label = "[open]"
+c = "MongoDB Compass"
+d = "Discord"
+f = "Finder"
+k = "KeepassXC"
+o = "Orbstack"
+p = "System Preferences"
+s = "Spotify"
+x = "Cursor"
+
+[o.w]
+label = "[work]"
+b = "Google Chrome"
+c = "MongoDB Compass"
+d = "Datagrip"
+o = "OpenVPN Connect"
+p = "Postman"
+r = "Redis Insight"
+s = "Slack"
+
+[a]
+label = "[actions]"
+e = ["raycast://extensions/raycast/emoji-symbols/search-emoji-symbols", "emoji picker"]
+p = "shortcut:cmd shift 2"    # trigger a keyboard shortcut
+
+[a.s]
+label = "[spotify]"
+n = ["hs:hs.spotify.next()", "next"]
+p = ["hs:hs.spotify.previous()", "previous"]
+t = ["hs:hs.spotify.playpause()", "toggle play/pause"]
+f = ["hs:hs.spotify.ff()", "fast forward"]
+r = ["hs:hs.spotify.rw()", "rewind"]
+
+[l]
+label = "[links]"
+g = "https://google.com"
+b = "https://bsky.app"
+t = "https://twitter.com"
+
+
+[l.m]
+label = "[me]"
+g = ["https://github.com/saml-dev", "my github"]
+b = ["https://bsky.app/profile/saml.dev", "my bluesky"]
+t = ["https://twitter.com/saml_dev", "my twitter"]
+
+# use prefixes for special actions
+[p]
+label = "[prefixes]"
+# t = "text:sam@saml.dev"       # types "sam@saml.dev"
+# z = "cmd:code ~/dev/dotfiles"       # run any terminal command
+# x = "code: ~/.zshrc"          # open a file or directory in VS Code
+# r = "reload"                  # reserved for reloading your hammerspoon config (helpful when auto_reload is false)
+g = "input:https://google.com/search?q={input}" # capture input and insert it into any other action
+
+
+# # we have window management too!
+# [w]
+# label = "[window]"
+# h = "window:left-half"                    # use presets listed in the README
+# c = "window:center-half"                  # use presets listed in the README
+# s = ["window:.4,.3,.2,.4","small center"] # or use 4 percentages for x,y,width,height for custom placement - more details in README
+
+
+# # or use raycast for window management if you prefer
+# [w.r]
+# label = "[raycast-window]"
+# h = ["raycast://extensions/raycast/window-management/left-half", "left half"]
+# l = ["raycast://extensions/raycast/window-management/right-half", "right half"]
+# c = ["raycast://extensions/raycast/window-management/center-half", "center half"]
