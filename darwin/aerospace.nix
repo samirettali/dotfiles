@@ -109,13 +109,6 @@
         {
           check-further-callbacks = true;
           "if" = {
-            app-id = "com.hnc.discord";
-          };
-          run = ["move-node-to-workspace 7"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = {
             app-id = "com.tinyspeck.slackmacgap";
           };
           run = ["move-node-to-workspace 4"];
