@@ -126,8 +126,6 @@
 
             system.stateVersion = 6;
 
-            ids.uids.nixbld = 350; # TODO: fix until update to sequoia
-
             users.users."s.ettali" = {
               home = "/Users/s.ettali";
               shell = pkgs.fish;
