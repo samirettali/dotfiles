@@ -5,32 +5,8 @@ return {
 	config = function()
 		local treesitter = require("nvim-treesitter.configs")
 		local options = {
-			ensure_installed = { -- TODO: maybe install all mantained
-				"lua",
-				"rust",
-				"go",
-				"solidity",
-				"c",
-				"cpp",
-				"c_sharp",
-				"sql",
-				"python",
-				"nix",
-				"java",
-
-				"html",
-				"tsx",
-				"javascript",
-				"typescript",
-
-				"json",
-				"toml",
-				"markdown",
-
-				"vim",
-				"vimdoc",
-				"query",
-			},
+			ensure_installed = "all",
+			auto_install = true,
 			matchup = {
 				enable = true,
 			},
