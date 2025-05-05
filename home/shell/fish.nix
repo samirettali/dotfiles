@@ -30,7 +30,6 @@ in {
       }
     ];
     shellAliases = {
-      assume = "source ~/assume.fish"; # TODO: fix this
       bak = "cp -r $1 $1.bak";
       c = "cursor";
       dcd = "docker compose down";

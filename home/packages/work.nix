@@ -79,6 +79,7 @@ in {
 
     granted = {
       enable = true;
+      enableFishIntegration = true;
     };
   };
 
