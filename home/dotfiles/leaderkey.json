@@ -1,0 +1,147 @@
+{
+  "actions" : [
+    {
+      "actions" : [
+        {
+          "key" : "c",
+          "label" : "",
+          "type" : "application",
+          "value" : "/Applications/MongoDB Compass.app"
+        },
+        {
+          "key" : "x",
+          "label" : "",
+          "type" : "application",
+          "value" : "/Applications/Cursor.app"
+        },
+        {
+          "key" : "f",
+          "label" : "",
+          "type" : "application",
+          "value" : "/System/Library/CoreServices/Finder.app"
+        },
+        {
+          "key" : "d",
+          "label" : "",
+          "type" : "application",
+          "value" : "/Applications/Discord.app"
+        },
+        {
+          "key" : "s",
+          "label" : "",
+          "type" : "application",
+          "value" : "/Applications/Spotify.app"
+        },
+        {
+          "key" : "p",
+          "label" : "",
+          "type" : "application",
+          "value" : "/System/Applications/System Settings.app"
+        },
+        {
+          "actions" : [
+            {
+              "key" : "s",
+              "label" : "",
+              "type" : "application",
+              "value" : "/nix/store/48wgzmqi0hp05sv3wjmb1v30kjm9x8vh-slack-4.42.120/Applications/Slack.app"
+            },
+            {
+              "key" : "d",
+              "label" : "",
+              "type" : "application",
+              "value" : "/Applications/DataGrip.app"
+            },
+            {
+              "key" : "c",
+              "label" : "",
+              "type" : "application",
+              "value" : "/Applications/MongoDB Compass.app"
+            },
+            {
+              "key" : "o",
+              "label" : "",
+              "type" : "application",
+              "value" : "/Applications/OpenVPN Connect/OpenVPN Connect.app"
+            },
+            {
+              "key" : "p",
+              "label" : "",
+              "type" : "application",
+              "value" : "/Applications/Postman.app"
+            },
+            {
+              "key" : "b",
+              "label" : "",
+              "type" : "application",
+              "value" : "/Applications/Google Chrome.app"
+            },
+            {
+              "key" : "r",
+              "label" : "",
+              "type" : "application",
+              "value" : "/Applications/Redis Insight.app"
+            }
+          ],
+          "key" : "w",
+          "label" : "Open work apps",
+          "type" : "group"
+        },
+        {
+          "key" : "k",
+          "label" : "",
+          "type" : "application",
+          "value" : "/nix/store/57d5cjc2lxklfcxcimnvd5v71gnk0iws-keepassxc-2.7.10/Applications/KeePassXC.app"
+        }
+      ],
+      "key" : "o",
+      "label" : "Open apps",
+      "type" : "group"
+    },
+    {
+      "key" : "b",
+      "label" : "",
+      "type" : "application",
+      "value" : "/Applications/Zen.app"
+    },
+    {
+      "key" : "t",
+      "label" : "",
+      "type" : "application",
+      "value" : "/Applications/Ghostty.app"
+    },
+    {
+      "actions" : [
+        {
+          "key" : "e",
+          "label" : "Emoji picker",
+          "type" : "url",
+          "value" : "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols"
+        },
+        {
+          "actions" : [
+            {
+              "key" : "t",
+              "label" : "Toggle play/pause",
+              "type" : "url",
+              "value" : "raycast://extensions/thomas/spotify-controls/playPause"
+            }
+          ],
+          "key" : "s",
+          "label" : "",
+          "type" : "group"
+        }
+      ],
+      "key" : "a",
+      "label" : "Actions",
+      "type" : "group"
+    },
+    {
+      "key" : "r",
+      "label" : "",
+      "type" : "url",
+      "value" : "raycast://extensions/raycast"
+    }
+  ],
+  "type" : "group"
+}
