@@ -15,6 +15,7 @@ return {
 			ocaml = { "ocamlformat" },
 			cpp = { "clang-format" },
 			cs = { "csharpier" },
+			yaml = { "yamlfmt" },
 			["*"] = { "codespell" },
 			["_"] = { "trim_whitespace" }, -- if no formatter is found, use this
 		},
