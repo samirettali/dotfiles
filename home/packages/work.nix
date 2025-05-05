@@ -1,26 +1,19 @@
 {
   pkgs,
   config,
-  inputs,
   ...
 }: let
-  marketplace = pkgs.vscode-marketplace;
   dotnetPackages = with pkgs.dotnetCorePackages;
     combinePackages [
       sdk_6_0-bin
       sdk_8_0-bin
       sdk_9_0-bin
     ];
-  # TODO: use marketplace when dotnet extensions are fixed
-  dotnetMarketplace = (pkgs.extend inputs.nix-vscode-extensions-pinned.overlays.default).vscode-extensions;
-  vscode-dotnet-runtime-fixed = dotnetMarketplace.ms-dotnettools.vscode-dotnet-runtime.overrideAttrs (oldAttrs: {
-    postPatch = ""; # TODO: remove, the postPatch step is broken upstream
-  });
 in {
   home.packages = with pkgs; [
-    dotnet-ef
     awscli2
     csharpier
+    dotnet-ef
     dotnetPackages
     maven
     nuget
@@ -38,14 +31,13 @@ in {
 
     vscode = {
       profiles.default = {
-        extensions = [
-          vscode-dotnet-runtime-fixed
-          dotnetMarketplace.ms-dotnettools.csdevkit
-          dotnetMarketplace.ms-dotnettools.csharp
-          dotnetMarketplace.csharpier.csharpier-vscode
-          marketplace.hashicorp.terraform
-          marketplace.ms-vsliveshare.vsliveshare
-          marketplace.jeppeandersen.vscode-kafka
+        extensions = with pkgs.vscode-marketplace; [
+          csharpier.csharpier-vscode
+          hashicorp.terraform
+          ms-dotnettools.csdevkit
+          ms-dotnettools.csharp
+          ms-dotnettools.vscode-dotnet-runtime
+          ms-vsliveshare.vsliveshare
         ];
         userSettings = {
           "csharp.experimental.debug.hotReload" = true;
