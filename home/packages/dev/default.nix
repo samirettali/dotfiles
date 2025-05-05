@@ -20,6 +20,7 @@
     stdenv
     tree-sitter
     vscode-langservers-extracted
+    yamlfmt
     zizmor
   ];
 
