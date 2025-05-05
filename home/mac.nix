@@ -16,7 +16,16 @@
         sha256 = "sha256-nsRDVLRRnPyp3Yi3l2e+atonQt3zU0lK43RH6VruUJ0=";
       };
     };
+    ".hammerspoon/Spoons/ControlEscape.spoon" = {
+      source = pkgs.fetchFromGitHub {
+        owner = "jasonrudolph";
+        repo = "ControlEscape.spoon";
+        rev = "main";
+        sha256 = "sha256-aTCjdTdDOQMFcML4/C2M7dBPwkI4paOjQR7euNDRuao=";
+      };
+    };
   };
+
   programs = {
     gpg.enable = true;
     zsh = {
