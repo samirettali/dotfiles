@@ -18,8 +18,6 @@ vim.keymap.set("n", "N", "Nzzzv", { desc = "Center previous search result" })
 vim.keymap.set("n", "<C-o>", "<C-o>zzzv", { desc = "Center previous jump" })
 vim.keymap.set("n", "<C-i>", "<C-i>zzzv", { desc = "Center next jump" })
 
--- map("n", "<C-j>", ":cnext<CR>zzzv")
-
 vim.keymap.set("i", ",", ",<C-g>u", { desc = "Treat , as un undo breakpoint" })
 vim.keymap.set("i", ".", ".<C-g>u", { desc = "Treat . as un undo breakpoint" })
 vim.keymap.set("i", "!", "!<C-g>u", { desc = "Treat ! as un undo breakpoint" })
