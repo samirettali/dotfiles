@@ -2,7 +2,6 @@
   programs = {
     go = {
       enable = true;
-      package = pkgs.go_1_24; # TODO: switch to default version when 1.24 is default in nixpkgs
       telemetry = {
         mode = "off";
       };

@@ -68,7 +68,7 @@
         NewWindowTarget = "Home";
       };
       spaces = {
-        spans-displays = false; # TODO: set to true for aerospace
+        spans-displays = false;
       };
       ".GlobalPreferences" = {
         "com.apple.mouse.scaling" = 3.0;

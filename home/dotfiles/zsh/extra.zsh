@@ -35,7 +35,6 @@ function () {
     fi
 }
 
-## TODO do this only if gui
 autoload -U url-quote-magic bracketed-paste-magic
 zle -N self-insert url-quote-magic
 zle -N bracketed-paste bracketed-paste-magic

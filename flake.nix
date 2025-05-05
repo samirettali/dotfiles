@@ -188,7 +188,7 @@
                 };
               };
 
-            nixpkgs = nixpkgsConfig; # TODO: should this go in home-manager?
+            nixpkgs = nixpkgsConfig;
 
             system.stateVersion = "25.05";
 
