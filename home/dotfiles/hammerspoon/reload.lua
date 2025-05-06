@@ -12,6 +12,6 @@ end
 
 configWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 
-hs.alert.show("Config loaded")
+hs.notify.new({ title = "Hammerspoon", informativeText = "Configuration loaded" }):send()
 
 hs.hotkey.bind({ "alt", "shift" }, "R", hs.reload)
