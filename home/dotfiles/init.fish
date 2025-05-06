@@ -98,7 +98,7 @@ function mc --argument dir
 end
 
 function bak --argument filename
-    cp $filename $filename.bak
+    cp -r $filename $filename.bak
 end
 
 function string-empty --argument val

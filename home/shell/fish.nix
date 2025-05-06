@@ -30,7 +30,6 @@ in {
       }
     ];
     shellAliases = {
-      bak = "cp -r $1 $1.bak";
       c = "cursor";
       dcd = "docker compose down";
       dci = "docker compose inspect";
