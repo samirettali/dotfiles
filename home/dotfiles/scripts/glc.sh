@@ -9,21 +9,22 @@ os=$(uname)
 commit_hash=""
 
 # Check the operating system
+# TODO: refactor this using nix to directly use the correct command
 case $os in
     Linux)
     if [ -n "$WAYLAND_DISPLAY" ]; then
         # Wayland
         commit_hash=$(git log --format=%H -n 1)
-        echo "$commit_hash" | wl-copy
+        echo -n "$commit_hash" | wl-copy
     else
         # X11
         commit_hash=$(git log --format=%H -n 1)
-        echo "$commit_hash" | xclip -selection clipboard
+        echo -n "$commit_hash" | xclip -selection clipboard
     fi
     ;;
     Darwin)
     commit_hash=$(git log --format=%H -n 1)
-    echo "$commit_hash" | pbcopy
+    echo -n "$commit_hash" | pbcopy
     ;;
     *)
     echo "Unsupported operating system: $os"
