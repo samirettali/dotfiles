@@ -1,11 +1,28 @@
 {
   config,
+  lib,
   pkgs,
   ...
-}: {
+}: let
+  git = "${config.programs.git.package}/bin/git";
+
+  aliases = {
+    gb = "${git} branch";
+    gd = "${git} diff";
+    gk = "${git} checkout";
+    gc = "${git} clone";
+    ga = "${git} add";
+    gap = "${git} add -p";
+    gdc = "${git} diff --cached";
+    gr = "cd $(${git} rev-parse --show-toplevel) || echo 'Not in a git repository'";
+  };
+in {
   home.packages = with pkgs; [
     git-absorb
   ];
+
+  programs.fish.shellAliases = lib.mkIf config.programs.git.enable aliases;
+  programs.zsh.shellAliases = lib.mkIf config.programs.zsh.enable aliases;
 
   programs = {
     git = {

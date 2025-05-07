@@ -1,6 +1,6 @@
 {
-  pkgs,
   customArgs,
+  pkgs,
   ...
 }: let
   brewCommand = ''
@@ -37,24 +37,19 @@ in {
       dcr = "docker compose restart";
       dcs = "docker compose stop";
       dcu = "docker compose up -d";
-      gb = "git branch";
-      gc = "git clone";
-      gd = "git diff";
-      gdc = "git diff --cached";
-      gk = "git checkout";
       gmt = "go mod tidy";
-      gr = "cd $(git rev-parse --show-toplevel) || echo 'Not in a git repository'";
       iip = "dig +short myip.opendns.com @resolver1.opendns.com";
       jj = "${customArgs.commands.paste} | jq -r | ${customArgs.commands.copy}";
       jjj = "${customArgs.commands.paste} | jq -r";
-      ld = "lazydocker";
-      lg = "lazygit";
       localip = "ipconfig getifaddr en0";
       ls = "${pkgs.coreutils}/bin/ls --color=auto --group-directories-first --indicator-style none";
       ns = "nix-shell --run fish -p";
       ollupd = "ollama ls | tail -n +2 | awk {'print $1'} | xargs -I {} ollama pull {}";
-      rm = "trash";
-      tl = "tmux ls";
+
+      ld = "${pkgs.lazydocker}/bin/lazydocker";
+      lg = "${pkgs.lazygit}/bin/lazygit";
+      rm = "${pkgs.trash-cli}/bin/trash";
+      tl = "${pkgs.tmux}/bin/tmux ls";
     };
   };
 }

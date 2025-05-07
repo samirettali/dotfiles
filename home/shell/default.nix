@@ -58,7 +58,6 @@
     tabview
     tldr
     tmux
-    trash-cli
     tree
     unzip
     vegeta
