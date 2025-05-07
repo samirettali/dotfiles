@@ -19,7 +19,6 @@
     casks = [
       "burp-suite"
       "cursor"
-      "font-sketchybar-app-font"
       "ghostty@tip"
       "hammerspoon"
       "orbstack"
