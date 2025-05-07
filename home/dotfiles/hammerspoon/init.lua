@@ -1,5 +1,6 @@
 local lib = require("lib")
 require("reload")
+require("disable_keyboard")
 
 if lib.file_exists("playground.lua") then
 	require("playground")
