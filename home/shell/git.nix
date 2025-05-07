@@ -29,16 +29,13 @@ in {
       enable = true;
       userEmail = config.home.sessionVariables.EMAIL;
       userName = "Samir Ettali";
-      aliases = {
-        lol = "log --oneline --decorate";
-        graph = "log --graph --decorate --pretty=oneline --abbrev-commit";
-      };
       extraConfig = {
         branch.sort = "-committerdate";
         column.ui = "auto";
         commit.gpgsign = true;
         commit.verbose = true;
         core.editor = config.home.sessionVariables.EDITOR;
+        core.preloadIndex = true;
         diff = {
           algorithm = "histogram";
           colorMoved = "plain";
@@ -54,6 +51,7 @@ in {
         gpg.format = "ssh";
         help.autocorrect = "prompt";
         init.defaultBranch = "main";
+        interactive.singlekey = true;
         log.date = "iso";
         merge.confictStyle = "zdiff3";
         merge.tool = "nvimdiff";
@@ -61,11 +59,13 @@ in {
         push = {
           autoSetupRemote = true;
           default = "simple";
-          followtags = true;
+          followtags = true; # TODO: unset for work
         };
-        rebase.missingCommitsCheck = "error";
+        rebase.missingCommitsCheck = "warn";
+        rebase.autoStash = true;
         rerere.enabled = true;
         status.submoduleSummary = true;
+        status.showUntrackedFiles = "all";
         tag.gpgsign = true;
         tag.sort = "version:refname";
         url = {
@@ -74,6 +74,12 @@ in {
           };
           "git@github.com:YoungAgency" = {
             insteadOf = "https://github.com/YoungAgency";
+          };
+          "git@github.com:samirettali/" = {
+            insteadOf = "se:";
+          };
+          "git@github.com:" = {
+            insteadOf = "gh:";
           };
         };
         user.signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
@@ -105,6 +111,10 @@ in {
       settings = {
         gui = {
           showBottomLine = false;
+          autoForwardBranches = "none";
+        };
+        git = {
+          overrideGpg = true;
         };
       };
     };
