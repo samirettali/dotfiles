@@ -1,4 +1,9 @@
+local lib = require("lib")
 require("reload")
+
+if lib.file_exists("playground.lua") then
+	require("playground")
+end
 
 local function merge_tables(t1, t2)
 	for k, v in pairs(t2) do
