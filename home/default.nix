@@ -31,4 +31,6 @@
       vendorHash = "sha256-HLtAcOkNvNfDvmBrR/Mps2vAcaiBv3cPCbK3B02GFAk=";
     })
   ];
+
+  home.file.".hushlogin".text = "";
 }
