@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./c.nix
     ./go.nix
@@ -17,12 +21,15 @@
     devbox
     devenv
     jdt-language-server
+    libiconv
     stdenv
     tree-sitter
     vscode-langservers-extracted
     yamlfmt
     zizmor
   ];
+
+  home.sessionVariables.LIBRARY_PATH = ''${lib.makeLibraryPath [pkgs.libiconv]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
 
   programs = {
     java.enable = true;
