@@ -1,57 +1,56 @@
-leader_key = "space"
-leader_key_mods = "cmd"
+leader_key = "f18"
+leader_key_mods = ""
 auto_reload = false
 show_ui = true
-use_default_alert_style = true
 
-b = "Zen"
-t = "Ghostty"
-r = ["raycast://extensions/raycast", "raycast"]
+b = ["Firefox", "browser"]
+r = ["Sol", "launcher"]
+t = ["Ghostty", "terminal"]
 
 [o]
 label = "[open]"
-c = "MongoDB Compass"
-d = "Discord"
-f = "Finder"
-k = "KeepassXC"
-m = "Activity Monitor"
-o = "Orbstack"
-p = "System Preferences"
-s = "Spotify"
-x = "Cursor"
+c = ["Cursor", "cursor"]
+d = ["Discord", "discord"]
+e = ["eqMac", "eqmac"]
+f = ["Finder", "finder"]
+k = ["KeepassXC", "keepassxc"]
+m = ["Activity Monitor", "monitor"]
+o = ["Orbstack", "orbstack"]
+p = ["System Preferences", "preferences"]
+s = ["Spotify", "spotify"]
 
-[o.w]
+[w]
 label = "[work]"
-b = "Google Chrome"
-c = "MongoDB Compass"
-d = "Datagrip"
-o = "OpenVPN Connect"
-p = "Postman"
-r = "Redis Insight"
-s = "Slack"
-
-[a]
-label = "[actions]"
-e = ["raycast://extensions/raycast/emoji-symbols/search-emoji-symbols", "emoji picker"]
-p = "shortcut:cmd shift 2"
-
-[a.s]
-label = "[spotify]"
-n = ["hs:hs.spotify.next()", "next"]
-p = ["hs:hs.spotify.previous()", "previous"]
-t = ["hs:hs.spotify.playpause()", "toggle play/pause"]
-f = ["hs:hs.spotify.ff()", "fast forward"]
-r = ["hs:hs.spotify.rw()", "rewind"]
+b = ["Google Chrome", "browser"]
+c = ["MongoDB Compass", "compass"]
+d = ["Datagrip", "datagrip"]
+o = ["OpenVPN Connect", "openvpn"]
+p = ["Postman", "postman"]
+r = ["Redis Insight", "redis"]
+s = ["Slack", "slack"]
 
 [l]
 label = "[links]"
-g = "https://google.com"
-t = "https://twitter.com"
+y = ["https://www.youtube.com", "youtube"]
+
+[l.t]
+label = "[t]"
+w = ["https://twitter.com", "twitter"]
+3 = ["https://t3.chat", "t3"]
+
+[l.g]
+label = "[g]"
+e = ["https://gemini.google.com", "gemini"]
+o = ["https://google.com", "google"]
+
+[l.d]
+label = "[d]"
+r = ["https://drive.google.com", "google drive"]
 
 [p]
-label = "[prefixes]"
+label = "[paste]"
 e = "text:ettali.samir@gmail.com"
-u = "samirettali"
+u = "text:samirettali"
 
 [s]
 label = "[search]"

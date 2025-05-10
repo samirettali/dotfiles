@@ -25,4 +25,19 @@ M.merge_tables = function(t1, t2)
 	return t1
 end
 
+M.toggle_play_pause = function()
+	hs.eventtap.event.newSystemKeyEvent("PLAY", true):post()
+	hs.eventtap.event.newSystemKeyEvent("PLAY", false):post()
+end
+
+M.next_track = function()
+	hs.eventtap.event.newSystemKeyEvent("NEXT", true):post()
+	hs.eventtap.event.newSystemKeyEvent("NEXT", false):post()
+end
+
+M.previous_track = function()
+	hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
+	hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
+end
+
 return M
