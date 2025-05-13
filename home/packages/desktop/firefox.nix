@@ -21,6 +21,7 @@
       });
       profiles.samir = {
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+          adaptive-tab-bar-colour
           clearurls
           copy-selection-as-markdown
           darkreader
