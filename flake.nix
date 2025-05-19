@@ -120,6 +120,7 @@
             nixpkgs = nixpkgsConfig;
 
             system.stateVersion = 6;
+            system.primaryUser = "s.ettali";
 
             users.users."s.ettali" = {
               home = "/Users/s.ettali";
