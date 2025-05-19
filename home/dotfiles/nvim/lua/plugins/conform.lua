@@ -3,7 +3,7 @@ return {
 
 	config = function()
 		local opts = {
-			format_on_save = function()
+			format_after_save = function()
 				if vim.g.disable_autoformat then
 					return
 				end
