@@ -14,6 +14,7 @@
       upgrade = true;
     };
     brews = [
+      "choose-gui"
       "displayplacer"
     ];
     casks = [
