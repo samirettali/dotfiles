@@ -20,6 +20,7 @@
     casks = [
       "burp-suite"
       "cursor"
+      "eqmac"
       "ghostty@tip"
       "hammerspoon"
       "orbstack"
