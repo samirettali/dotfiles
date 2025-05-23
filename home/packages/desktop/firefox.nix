@@ -1,9 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs = {
     firefox = {
       enable = true;
       package = with pkgs; (firefox.override {
-        nativeMessagingHosts = [passff-host];
+        # nativeMessagingHosts = [passff-host];
         extraPolicies = {
           DisableFirefoxStudies = true;
           DisablePocket = true;
@@ -34,6 +38,10 @@
           vimium-c
         ];
         settings = {
+          "browser.startup.homepage" = "http://localhost:3000";
+          # "browser.compactmode.show" = false;
+          # "browser.uidensity" = 1;
+
           # Performance settings
           "gfx.webrender.all" = true; # Force enable GPU acceleration
           "media.ffmpeg.vaapi.enabled" = true;
