@@ -14,3 +14,5 @@ local alertStyle = {
 }
 
 hs.alert.defaultStyle = lib.merge_tables(hs.alert.defaultStyle, alertStyle)
+
+hs.window.animationDuration = 0
