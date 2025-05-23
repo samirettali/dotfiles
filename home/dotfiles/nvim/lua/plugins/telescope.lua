@@ -108,6 +108,8 @@ return {
 			vim.keymap.set("n", "gR", builtin.lsp_references)
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags)
 			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
+			vim.keymap.set("n", "<leader>fk", builtin.keymaps)
+			vim.keymap.set("n", "<leader>fm", builtin.marks)
 
 			telescope.setup(options)
 		end,
