@@ -1,4 +1,14 @@
-local M = {}
+local M = {
+	held_keys = {},
+}
+
+M.is_empty = function(s)
+	return s == nil or s == ""
+end
+
+M.is_empty_or_whitespace = function(s)
+	return M.is_empty(s) or s:match("^%s*$") ~= nil
+end
 
 M.file_exists = function(file)
 	local f = io.open(file, "rb")
@@ -38,6 +48,34 @@ end
 M.previous_track = function()
 	hs.eventtap.event.newSystemKeyEvent("PREVIOUS", true):post()
 	hs.eventtap.event.newSystemKeyEvent("PREVIOUS", false):post()
+end
+
+M.rbind = function(modifier, key, callback, interval)
+	interval = interval or 0.05
+
+	cb = function()
+		if M.held_keys[key] then
+			callback()
+			hs.timer.doAfter(interval, cb)
+		end
+	end
+
+	local combination = {
+		modifier,
+		key,
+	}
+
+	local pressedfn = function()
+		M.held_keys[combination] = true
+		cb()
+	end
+
+	local releasedfn = function()
+		M.held_keys[combination] = false
+		cb()
+	end
+
+	hs.hotkey.bind(modifier, key, pressedfn, releasedfn)
 end
 
 return M
