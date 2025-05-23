@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   programs.aerospace = {
-    enable = true;
+    enable = false;
     userSettings = {
       start-at-login = true;
       accordion-padding = 30;
