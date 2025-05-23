@@ -37,15 +37,21 @@ y = ["https://www.youtube.com", "youtube"]
 label = "[t]"
 w = ["https://twitter.com", "twitter"]
 3 = ["https://t3.chat", "t3"]
+r = ["https://www.tradingview.com/chart/4ztWXosm", "tradingview"]
 
 [l.g]
 label = "[g]"
 e = ["https://gemini.google.com", "gemini"]
 o = ["https://google.com", "google"]
+m = ["https://mail.google.com", "gmail"]
 
 [l.d]
 label = "[d]"
 r = ["https://drive.google.com", "google drive"]
+
+[l.w]
+label = "[w]"
+h = ["https://web.whatsapp.com", "whatsapp"]
 
 [p]
 label = "[paste]"
