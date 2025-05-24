@@ -90,7 +90,8 @@ return {
 
 			-- Telescope
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags)
-			vim.keymap.set("n", "<C-f>", ":Telescope frecency workspace=CWD theme=dropdown previewer=false<CR>")
+			vim.keymap.set("n", "<c-f>", builtin.find_files)
+			-- vim.keymap.set("n", "<C-f>", ":Telescope frecency workspace=CWD theme=dropdown previewer=false<CR>")
 			vim.keymap.set("n", "<C-g>", builtin.live_grep)
 			vim.keymap.set("n", "<leader>fb", builtin.buffers)
 

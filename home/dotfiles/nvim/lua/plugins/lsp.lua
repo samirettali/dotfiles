@@ -78,6 +78,7 @@ return {
 				if client:supports_method(methods.textDocument_declaration) then
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, default_opts)
 				end
+
 				if client:supports_method(methods.textDocument_typeDefinition) then
 					vim.keymap.set("n", "gT", telescope.lsp_type_definitions, default_opts)
 				end
@@ -245,7 +246,11 @@ return {
 						},
 						workspace = {
 							checkThirdParty = false,
-							library = { vim.env.VIMRUNTIME },
+							library = {
+								vim.env.VIMRUNTIME,
+								-- "/Applications/Hammerspoon.app/Contents/Resources/extensions/hs/",
+								"/Users/s.ettali/.hammerspoon/Spoons/EmmyLua.spoon/annotations",
+							},
 						},
 						telemetry = {
 							enable = false,

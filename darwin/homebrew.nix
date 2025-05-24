@@ -18,21 +18,24 @@
       "displayplacer"
     ];
     casks = [
-      "burp-suite"
       "cursor"
+      "docker"
       "eqmac"
+      "flashspace"
       "ghostty@tip"
       "hammerspoon"
       "maccy"
-      "orbstack"
       "shottr"
       "sloth"
       "sol"
+      "spotmenu"
       "the-unarchiver"
+      # "burp-suite"
       # "hyperkey"
       # "leader-key"
       # "ledger-live"
       # "mouseless"
+      # "orbstack"
       # "yaak"
     ];
     taps = [

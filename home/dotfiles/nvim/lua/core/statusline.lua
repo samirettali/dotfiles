@@ -71,5 +71,5 @@ end
 vim.cmd([[
     " hi! link StatusLine Normal
     " hi! link StatusLineNC Normal
-    set statusline=%{repeat('─',winwidth('.'))}
+    set statusline=
 ]])
