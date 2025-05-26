@@ -13,6 +13,13 @@
 
   programs = {
     home-manager.enable = true;
+    ncspot = {
+      enable = true;
+      settings = {
+        shuffle = true;
+        gapless = true;
+      };
+    };
   };
 
   home.packages = with pkgs; [
