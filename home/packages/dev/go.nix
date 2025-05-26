@@ -11,13 +11,13 @@
   home.packages = with pkgs; [
     air
     delve
-    gopls
+    go-tools
+    gofumpt
     golangci-lint
     golangci-lint-langserver
-    gotools
-    go-tools
+    gopls
     gotest
-    gofumpt
+    gotools
     mockgen
     protobuf
     protoc-gen-go
