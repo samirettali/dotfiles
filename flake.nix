@@ -49,7 +49,7 @@
     nix-vscode-extensions,
     ...
   } @ inputs: let
-    stateVersion = "25.05";
+    stateVersion = "25.11";
     user = "samir";
     homeDirectory = "/home/${user}";
 
@@ -186,7 +186,7 @@
 
             nixpkgs = nixpkgsConfig;
 
-            system.stateVersion = "25.05";
+            system.stateVersion = stateVersion;
 
             users.users.${user} = {
               home = homeDirectory;
