@@ -105,7 +105,7 @@
     };
   in {
     darwinConfigurations = {
-      work = darwin.lib.darwinSystem {
+      settali = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         specialArgs = {inherit inputs;};
         modules = [
