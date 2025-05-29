@@ -2,19 +2,19 @@
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 
-sketchybar --bar position=top height=40 notch_display_height=40 blur_radius=30 color=0x60000000
+sketchybar --bar position=top height=32 notch_display_height=40 blur_radius=30 color=0xDD0000000
 
 default=(
-    padding_left=5
-    padding_right=5
-    icon.font="JetBrainsMono Nerd Font:Bold:15.0"
-    label.font="JetBrainsMono Nerd Font:Bold:15.0"
+    padding_left=3
+    padding_right=3
+    icon.font="JetBrainsMono Nerd Font:Bold:14.0"
+    label.font="JetBrainsMono Nerd Font:Bold:14.0"
     icon.color=0xffffffff
     label.color=0xffffffff
-    icon.padding_left=4
-    icon.padding_right=4
-    label.padding_left=4
-    label.padding_right=4
+    icon.padding_left=3
+    icon.padding_right=3
+    label.padding_left=3
+    label.padding_right=3
     updates=on
     # TODO: these options are not working
     # font_smoothing=on

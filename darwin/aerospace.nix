@@ -14,18 +14,18 @@
 
       default-root-container-layout = "tiles"; # TODO: this is not working
       gaps = {
-        inner.horizontal = 8;
-        inner.vertical = 8;
-        outer.left = 8;
-        outer.bottom = 8;
-        outer.right = 8;
+        inner.horizontal = 0;
+        inner.vertical = 0;
+        outer.left = 0;
+        outer.bottom = 0;
+        outer.right = 0;
         outer.top = [
           {
             monitor = {
-              "^built-in retina display$" = 10;
+              "^built-in retina display$" = 0;
             };
           }
-          48
+          32
         ];
       };
       mode.main.binding = {
