@@ -1,7 +1,7 @@
 {...}: {
   environment.variables.HOMEBREW_NO_ANALYTICS = "1";
 
-  services.sketchybar.enable = false;
+  services.sketchybar.enable = true;
 
   # TODO
   # osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hammerspoon.app", hidden:true}' > /dev/null

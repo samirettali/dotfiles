@@ -46,7 +46,7 @@
         autohide-delay = 0.0;
         autohide-time-modifier = 0.0;
         mru-spaces = false; # Don't rearrange spaces based on most recently used
-        expose-group-apps = false; # for aerospace it should be set to true
+        expose-group-apps = true; # for aerospace it should be set to true
         launchanim = false;
         expose-animation-duration = 0.0;
         show-recents = false;
@@ -80,7 +80,7 @@
         AppleKeyboardUIMode = 3;
         AppleShowScrollBars = "Always";
         AppleInterfaceStyle = "Dark";
-        _HIHideMenuBar = false;
+        _HIHideMenuBar = true;
         NSWindowShouldDragOnGesture = true;
         NSAutomaticWindowAnimationsEnabled = false;
         NSAutomaticInlinePredictionEnabled = false;
