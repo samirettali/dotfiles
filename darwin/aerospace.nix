@@ -151,7 +151,7 @@
         {
           check-further-callbacks = true;
           "if" = {
-            app-id = "org.keepassxc.KeePassXC";
+            app-id = "org.keepassxc.keepassxc";
           };
           run = ["move-node-to-workspace 8"];
         }
