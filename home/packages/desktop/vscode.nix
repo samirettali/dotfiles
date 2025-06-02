@@ -36,6 +36,7 @@
           vscodevim.vim
           # augment.vscode-augment
           # continue.continue
+          # github.copilot
         ];
         keybindings = [
           {
@@ -79,12 +80,16 @@
 
           "explorer.confirmDelete" = false;
 
-          "chat.commandCenter.enabled" = false;
-
           "window.commandCenter" = false;
 
-          "github.copilot.editor.enableAutoCompletions" = true;
-          "github.copilot.nextEditSuggestions.enabled" = true;
+          "chat.commandCenter.enabled" = false;
+
+          "github.copilot" = {
+            "enable" = {
+              "*" = false;
+            };
+            "nextEditSuggestions.enabled" = false;
+          };
 
           "git.confirmSync" = false;
 
