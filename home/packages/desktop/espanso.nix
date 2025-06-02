@@ -17,7 +17,7 @@
     keys;
 in {
   services.espanso = {
-    enable = true;
+    enable = false;
     matches = {
       base = {
         matches =

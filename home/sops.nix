@@ -12,13 +12,13 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     secrets = {
-      "espanso_matches/evm" = {};
-      "espanso_matches/alt" = {};
-      "espanso_matches/hot" = {};
-      "espanso_matches/svm" = {};
-      "espanso_matches/em" = {};
-      "espanso_matches/wem" = {};
-      "espanso_matches/pri" = {};
+      # "espanso_matches/evm" = {};
+      # "espanso_matches/alt" = {};
+      # "espanso_matches/hot" = {};
+      # "espanso_matches/svm" = {};
+      # "espanso_matches/em" = {};
+      # "espanso_matches/wem" = {};
+      # "espanso_matches/pri" = {};
     };
   };
 
