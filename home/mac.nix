@@ -5,7 +5,7 @@
 }: {
   home.packages = with pkgs; [
     asitop
-    docker
+    # docker
   ];
   home.file = {
     # TODO: use when PR is merged
@@ -47,7 +47,7 @@
     };
   };
 
-  home.sessionPath = [
-    "${config.home.homeDirectory}/.orbstack/bin"
-  ];
+  # home.sessionPath = [
+  #   "${config.home.homeDirectory}/.orbstack/bin"
+  # ];
 }
