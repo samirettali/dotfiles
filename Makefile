@@ -13,16 +13,16 @@ UPDATE_CMD = nix flake update
 ifeq ($(OS),Linux)
     ifneq ($(wildcard /etc/NIXOS),)
         REBUILD_CMD = sudo nixos-rebuild switch --flake .\#$(HOSTNAME)
-		CLEANUP_CMD = sudo nix-collect-garbage --delete-old
+		CLEAN_CMD = sudo nix-collect-garbage --delete-old
     else
         REBUILD_CMD = nix run --flake .\#$(HOSTNAME)
-		CLEANUP_CMD = nix-collect-garbage --delete-old
+		CLEAN_CMD = nix-collect-garbage --delete-old
     endif
 endif
 
 ifeq ($(OS),Darwin)
     REBUILD_CMD = sudo darwin-rebuild switch --flake .\#$(HOSTNAME)
-	CLEANUP_CMD = nix-collect-garbage --delete-old
+	CLEAN_CMD = nix-collect-garbage --delete-old
 endif
 
 update:
@@ -33,6 +33,6 @@ build:
 	@echo "Running command: $(REBUILD_CMD)"
 	@$(REBUILD_CMD)
 
-cleanup:
-	@echo "Running command: $(CLEANUP_CMD)"
-	@$(CLEANUP_CMD)
+clean:
+	@echo "Running command: $(CLEAN_CMD)"
+	@$(CLEAN_CMD)
