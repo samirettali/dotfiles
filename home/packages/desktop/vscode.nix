@@ -26,6 +26,7 @@
           jnoortheen.nix-ide
           juanblanco.solidity
           mkhl.direnv
+          ms-python.debugpy
           ms-python.python
           quicktype.quicktype
           rust-lang.rust-analyzer
