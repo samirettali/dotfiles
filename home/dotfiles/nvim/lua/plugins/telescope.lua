@@ -51,7 +51,7 @@ return {
 						"%.pdf",
 						"%.zip",
 						"%.dll",
-						"%.Designer.cs",
+						"^%.Designer.cs$",
 					},
 					mappings = {
 						n = { ["q"] = require("telescope.actions").close },
