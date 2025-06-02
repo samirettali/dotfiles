@@ -8,21 +8,12 @@
     # docker
   ];
   home.file = {
-    # TODO: use when PR is merged
-    # ".hammerspoon/Spoons/Hammerflow.spoon" = {
-    #   source = pkgs.fetchFromGitHub {
-    #     owner = "saml-dev";
-    #     repo = "Hammerflow.spoon";
-    #     rev = "main";
-    #     sha256 = "sha256-nsRDVLRRnPyp3Yi3l2e+atonQt3zU0lK43RH6VruUJ0=";
-    #   };
-    # };
     ".hammerspoon/Spoons/Hammerflow.spoon" = {
       source = pkgs.fetchFromGitHub {
         owner = "samirettali";
         repo = "Hammerflow.spoon";
-        rev = "feat-alert-style";
-        sha256 = "sha256-9SzTtvwDe/ZB7ywwwQGs6Z0xfBeAhbMMiAREfUfBiYU=";
+        rev = "main";
+        sha256 = "sha256-Tk0SNGQ6hiINmNxJj9jZIXuc1v2eKz/dE68ejOeztFc=";
       };
     };
     ".hammerspoon/Spoons/ControlEscape.spoon" = {
