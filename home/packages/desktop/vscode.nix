@@ -23,6 +23,7 @@
           github.vscode-github-actions
           github.vscode-pull-request-github
           golang.go
+          google.geminicodeassist
           jnoortheen.nix-ide
           juanblanco.solidity
           mkhl.direnv
@@ -34,7 +35,6 @@
           vscodevim.vim
           # augment.vscode-augment
           # continue.continue
-          # google.geminicodeassist
           # saoudrizwan.claude-dev
         ];
         keybindings = [
