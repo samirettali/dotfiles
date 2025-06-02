@@ -31,11 +31,11 @@
           ms-python.python
           quicktype.quicktype
           rust-lang.rust-analyzer
+          saoudrizwan.claude-dev
           supermaven.supermaven
           vscodevim.vim
           # augment.vscode-augment
           # continue.continue
-          # saoudrizwan.claude-dev
         ];
         keybindings = [
           {
