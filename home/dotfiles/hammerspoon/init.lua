@@ -14,3 +14,12 @@ hs.loadSpoon("Hammerflow")
 spoon.Hammerflow.loadFirstValidTomlFile({
 	"hammerflow.toml",
 })
+
+local SkyRocket = hs.loadSpoon("SkyRocket")
+sky = SkyRocket:new({
+	moveModifiers = { "alt" },
+	moveMouseButton = "left",
+	resizeModifiers = { "alt" },
+	resizeMouseButton = "right",
+	focusWindowOnClick = true,
+})
