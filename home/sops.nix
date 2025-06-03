@@ -12,6 +12,7 @@
     defaultSopsFormat = "yaml";
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     secrets = {
+      "openrouter_api_key" = {};
       # "espanso_matches/evm" = {};
       # "espanso_matches/alt" = {};
       # "espanso_matches/hot" = {};

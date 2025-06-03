@@ -5,12 +5,13 @@
   ...
 }: {
   imports = [
-    ./zsh.nix
+    ./llm
     ./fish.nix
-    ./tmux.nix
-    ./pass.nix
     ./fzf.nix
     ./git.nix
+    ./pass.nix
+    ./tmux.nix
+    ./zsh.nix
   ];
 
   home.packages = with pkgs; [
