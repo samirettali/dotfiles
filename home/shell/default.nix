@@ -50,6 +50,7 @@
     p7zip
     pgcli
     plumber
+    repomix
     ripgrep
     rlwrap
     scc
