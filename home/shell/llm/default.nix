@@ -7,6 +7,7 @@
   llm-openrouter = pkgs.callPackage ./openrouter.nix {};
   llmWithPlugins = pkgs.python313.withPackages (p: [
     p.llm
+    p.llm-cmd
     llm-openrouter
   ]);
 in {
