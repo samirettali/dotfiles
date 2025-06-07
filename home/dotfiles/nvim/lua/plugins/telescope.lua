@@ -90,7 +90,7 @@ return {
 
 			-- Telescope
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags)
-			vim.keymap.set("n", "<c-f", builtin.find_files)
+			vim.keymap.set("n", "<c-f>", builtin.find_files)
 			-- TODO: restore when https://github.com/nvim-telescope/telescope-frecency.nvim/issues/270 is fixed
 			-- vim.keymap.set("n", "<C-f>", ":Telescope frecency workspace=CWD theme=dropdown previewer=false<CR>")
 			vim.keymap.set("n", "<C-g>", builtin.live_grep)
