@@ -5,10 +5,10 @@
   ...
 }: {
   imports = [
-    ./llm
     ./fish.nix
     ./fzf.nix
     ./git.nix
+    ./llm.nix
     ./pass.nix
     ./tmux.nix
     ./zsh.nix
