@@ -20,9 +20,14 @@ return {
 		},
 	},
 	opts = {
-		provider = "ollama",
-		ollama = {
-			model = "qwen2.5-coder",
+		provider = "openrouter",
+		providers = {
+			openrouter = {
+				__inherited_from = "openai",
+				endpoint = "https://openrouter.ai/api/v1",
+				api_key_name = "OPENROUTER_API_KEY",
+				model = "google/gemini-2.5-flash-preview-05-20:thinking",
+			},
 		},
 	},
 }
