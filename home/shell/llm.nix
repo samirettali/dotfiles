@@ -11,8 +11,8 @@
     })
   ];
 
-  home.activation.setupLlm = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ${pkgs.llm}/bin/llm keys set openrouter --value "$(cat ${config.sops.secrets."openrouter_api_key".path})"
-    ${pkgs.llm}/bin/llm models default openrouter/google/gemini-2.5-flash-preview-05-20
+  home.activation.setupLLM = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    ${lib.getExe pkgs.llm} keys set openrouter --value "$(cat ${config.sops.secrets."openrouter_api_key".path})"
+    ${lib.getExe pkgs.llm} models default openrouter/google/gemini-2.5-flash-preview-05-20
   '';
 }
