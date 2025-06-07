@@ -3,7 +3,9 @@
   pkgs,
   inputs,
   ...
-}: {
+}: let
+  codex = pkgs.callPackage ./codex.nix {};
+in {
   imports = [
     ./fish.nix
     ./fzf.nix
@@ -15,6 +17,7 @@
   ];
 
   home.packages = with pkgs; [
+    codex
     age
     bat
     bombardier
