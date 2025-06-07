@@ -36,6 +36,7 @@
       # "mouseless"
       # "orbstack"
       # "yaak"
+      # "loop"
     ];
     taps = [
       "homebrew/bundle"
