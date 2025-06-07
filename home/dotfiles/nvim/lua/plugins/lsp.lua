@@ -71,6 +71,7 @@ return {
 					-- vim.keymap.set("n", "gd", telescope.lsp_definitions, default_opts) -- telescope is not working right now
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, default_opts)
 					vim.keymap.set("n", "GD", function()
+						-- TODO: this is not working properly
 						telescope.lsp_definitions({ jump_type = "vsplit" })
 					end, default_opts)
 				end
@@ -78,6 +79,7 @@ return {
 				if client:supports_method(methods.textDocument_declaration) then
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, default_opts)
 				end
+
 				if client:supports_method(methods.textDocument_typeDefinition) then
 					vim.keymap.set("n", "gT", telescope.lsp_type_definitions, default_opts)
 				end
@@ -245,7 +247,11 @@ return {
 						},
 						workspace = {
 							checkThirdParty = false,
-							library = { vim.env.VIMRUNTIME },
+							library = {
+								vim.env.VIMRUNTIME,
+								-- TODO: enable this only on mac and remove hardcoded path
+								"/Users/s.ettali/.hammerspoon/Spoons/EmmyLua.spoon/annotations",
+							},
 						},
 						telemetry = {
 							enable = false,

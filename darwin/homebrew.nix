@@ -21,7 +21,7 @@
       "cursor"
       "docker"
       "eqmac"
-      "ghostty@tip"
+      "ghostty@tip" # TODO: use `programs.ghostty.enable = true;` when darwin build is fixed
       "hammerspoon"
       "maccy"
       "shottr"
