@@ -38,7 +38,6 @@
     jqp
     kaf
     kcat
-    lazydocker
     lazysql
     libqalculate
     lla
@@ -89,6 +88,15 @@
       viAlias = true;
       vimAlias = true;
       vimdiffAlias = true;
+    };
+    lazydocker = {
+      enable = true;
+      settings = {
+        gui = {
+          showBottomLine = false;
+          returnImmediately = true;
+        };
+      };
     };
     ripgrep = {
       enable = lib.mkDefault true;

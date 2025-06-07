@@ -57,7 +57,6 @@ in {
       ".bin/passbemenu".source = dotfiles/scripts/passbemenu.sh;
       ".bin/scratchpad".source = dotfiles/scripts/scratchpad.sh;
       ".bin/screenshot".source = dotfiles/scripts/screenshot.sh;
-      ".config/lazydocker/config.yml".source = dotfiles/lazydocker.yml;
     })
     (lib.mkIf pkgs.stdenv.isDarwin {
       ".hammerspoon" = {
@@ -72,7 +71,6 @@ in {
         source = dotfiles/sketchybar;
         recursive = true;
       };
-      "Library/Application Support/jesseduffield/lazydocker/config.yml".source = dotfiles/lazydocker.yml;
     })
   ];
 
