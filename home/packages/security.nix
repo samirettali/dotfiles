@@ -4,13 +4,14 @@
     amass
     cent
     dnsx
-    hakrawler
     ffuf
     findomain
+    ghidra-bin
+    hakrawler
     httpx
+    imhex
     jadx
     naabu
-    ghidra-bin
     nmap
     nuclei
     nuclei-templates
