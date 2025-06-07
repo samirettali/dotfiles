@@ -25,6 +25,7 @@
   home.packages = with pkgs; [
     aider-chat
     nix-prefetch-github
+    nix-init
     sops
     (buildGoModule {
       pname = "git-sync";
