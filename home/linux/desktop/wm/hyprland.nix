@@ -47,7 +47,7 @@
       animations.enabled = false;
       exec-once = [
         "dbus-update-activation-environment --systemd --all"
-        "${pkgs.wl-clipboard}/bin/wl-paste --watch cliphist store"
+        ''${lib.getExe' pkgs.wl-clipboard "wl-paste"} --watch cliphist store''
       ];
       binds = {
         workspace_back_and_forth = true;
@@ -55,17 +55,17 @@
       };
 
       bind = let
-        swaylock = "${config.programs.swaylock.package}/bin/swaylock";
+        swaylock = lib.getExe config.programs.swaylock.package;
         terminal = config.home.sessionVariables.TERMINAL;
-        fileExplorer = "${pkgs.nemo}/bin/nemo";
-        bemenuRun = "${pkgs.bemenu}/bin/bemenu-run";
-        bemenu = "${pkgs.bemenu}/bin/bemenu";
-        cliphist = "${pkgs.cliphist}/bin/cliphist";
-        hyprctl = "${pkgs.hyprland}/bin/hyprctl";
-        jq = "${pkgs.jq}/bin/jq";
-        wtype = "${pkgs.wtype}/bin/wtype";
-        wlcopy = "${pkgs.wl-clipboard}/bin/wl-copy";
-        hyprpicker = "${pkgs.hyprpicker}/bin/hyprpicker";
+        fileExplorer = lib.getExe pkgs.nemo;
+        bemenuRun = lib.getExe pkgs.bemenu;
+        bemenu = lib.getExe pkgs.bemenu;
+        cliphist = lib.getExe pkgs.cliphist;
+        hyprctl = lib.getExe pkgs.hyprland;
+        jq = lib.getExe pkgs.jq;
+        wtype = lib.getExe pkgs.wtype;
+        wlcopy = lib.getExe' pkgs.wl-clipboard "wl-copy";
+        hyprpicker = lib.getExe pkgs.hyprpicker;
 
         workspaces = map (n: toString n) (lib.range 1 9);
         directions = rec {
@@ -140,7 +140,7 @@
           )
           directions);
       binde = let
-        wpctl = "${pkgs.wireplumber}/bin/wpctl";
+        wpctl = lib.getExe lib.pkgs.wireplumber "wpctl";
       in [
         ",XF86AudioRaiseVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
         ",XF86AudioLowerVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"

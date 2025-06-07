@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -41,7 +42,7 @@
         eval "$(/opt/homebrew/bin/brew shellenv)"
       '';
       shellAliases = {
-        ls = "${pkgs.coreutils}/bin/ls --color=auto --group-directories-first --indicator-style none";
+        ls = "${lib.getExe' pkgs.coreutils "ls"} --color=auto --group-directories-first --indicator-style none";
       };
     };
   };

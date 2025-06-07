@@ -42,9 +42,15 @@ in {
     enable = false;
   };
 
-  home.activation =
-    {}
-    // lib.optionalAttrs config.services.ollama.enable {
-      downloadOllamaModels = lib.hm.dag.entryAfter ["writeBoundary"] downloadModels;
-    };
+  home.activation = lib.mkIf config.services.ollama.enable {
+    downloadOllamaModels = lib.hm.dag.entryAfter ["writeBoundary"] downloadModels;
+  };
+
+  programs.fish.shellAliases = lib.mkIf config.services.ollama.enable {
+    ollupd = "${lib.getExe pkgs.ollama} ls | tail -n +2 | awk {'print $1'} | xargs -I {} ${lib.getExe pkgs.ollama} pull {}";
+  };
+
+  programs.zsh.shellAliases = lib.mkIf config.services.ollama.enable {
+    ollupd = "${lib.getExe pkgs.ollama} ls | tail -n +2 | awk {'print $1'} | xargs -I {} ${lib.getExe pkgs.ollama} pull {}";
+  };
 }

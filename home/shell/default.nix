@@ -89,15 +89,6 @@
       vimAlias = true;
       vimdiffAlias = true;
     };
-    lazydocker = {
-      enable = true;
-      settings = {
-        gui = {
-          showBottomLine = false;
-          returnImmediately = true;
-        };
-      };
-    };
     ripgrep = {
       enable = lib.mkDefault true;
       arguments = [

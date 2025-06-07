@@ -1,5 +1,6 @@
 {
   customArgs,
+  lib,
   pkgs,
   ...
 }: {
@@ -7,7 +8,7 @@
     enable = false;
     settings = {
       terminal = {
-        shell = "${pkgs.fish}/bin/fish";
+        shell = "${lib.getExe pkgs.fish}";
       };
       font = {
         normal.family = customArgs.font.name;

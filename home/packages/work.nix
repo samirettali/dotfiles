@@ -1,6 +1,7 @@
 {
-  pkgs,
+  lib,
   config,
+  pkgs,
   ...
 }: let
   dotnetPackages = with pkgs.dotnetCorePackages;
@@ -42,7 +43,7 @@ in {
         userSettings = {
           "csharp.experimental.debug.hotReload" = true;
           "dotnetAcquisitionExtension.enableTelemetry" = false;
-          "dotnetAcquisitionExtension.sharedExistingDotnetPath" = "${dotnetPackages}/bin/dotnet";
+          "dotnetAcquisitionExtension.sharedExistingDotnetPath" = "${lib.getExe' dotnetPackages "dotnet"}";
           "csharp.debug.symbolOptions.cachePath" = "${config.home.homeDirectory}/.cache/vscode-csharp-ls";
           "csharp.inlayHints.enableInlayHintsForTypes" = true;
           "csharp.inlayHints.enableInlayHintsForImplicitObjectCreation" = true;

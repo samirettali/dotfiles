@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  git = "${config.programs.git.package}/bin/git";
+  git = "${lib.getExe config.programs.git.package}";
 
   aliases = {
     gb = "${git} branch";
@@ -104,19 +104,6 @@ in {
           };
         }
       ];
-    };
-
-    lazygit = {
-      enable = true;
-      settings = {
-        gui = {
-          showBottomLine = false;
-          autoForwardBranches = "none";
-        };
-        git = {
-          overrideGpg = true;
-        };
-      };
     };
   };
 }

@@ -64,7 +64,7 @@ in {
             portable = "";
             default = ["" "" ""];
           };
-          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+          on-click = lib.getExe pkgs.pavucontrol;
         };
         battery = {
           bat = "BAT0";

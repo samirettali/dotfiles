@@ -27,11 +27,11 @@ in {
             exit 1
         fi
 
-        target=$(${pkgs.zoxide}/bin/zoxide query -l)
+        target=$(${lib.getExe pkgs.zoxide} query -l)
 
         cd "''${target}" || exit 1
 
-        ${inputs.neovim-nightly-overlay.packages.${pkgs.system}.default}/bin/nvim .
+        ${lib.getExe inputs.neovim-nightly-overlay.packages.${pkgs.system}.default} .
       '')
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
