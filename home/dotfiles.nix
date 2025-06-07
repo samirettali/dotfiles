@@ -4,7 +4,13 @@
   config,
   inputs,
   ...
-}: {
+}: let
+  readTemplate = file:
+    builtins.replaceStrings
+    ["{{HOME}}"]
+    ["${config.home.homeDirectory}"]
+    (builtins.readFile file);
+in {
   home.packages =
     [
       (pkgs.writeShellScriptBin "glc" (builtins.readFile dotfiles/scripts/glc.sh))
@@ -45,13 +51,7 @@
         source = dotfiles/nvim;
         recursive = true;
       };
-      ".config/git-sync/config.yaml".text = let
-        templ = builtins.readFile dotfiles/git-sync.yaml;
-      in
-        builtins.replaceStrings
-        ["{{HOME}}"]
-        ["${config.home.homeDirectory}"]
-        templ;
+      ".config/git-sync/config.yaml".text = readTemplate dotfiles/git-sync.yaml;
     }
     (lib.mkIf pkgs.stdenv.isLinux {
       ".bin/passbemenu".source = dotfiles/scripts/passbemenu.sh;
