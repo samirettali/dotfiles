@@ -10,6 +10,8 @@ in {
     ./fish.nix
     ./fzf.nix
     ./git.nix
+    ./lazydocker.nix
+    ./lazygit.nix
     ./llm.nix
     ./pass.nix
     ./tmux.nix
