@@ -23,6 +23,7 @@
       "eqmac"
       "ghostty@tip" # TODO: use `programs.ghostty.enable = true;` when darwin build is fixed
       "hammerspoon"
+      "lm-studio"
       "maccy"
       "shottr"
       "sloth"
