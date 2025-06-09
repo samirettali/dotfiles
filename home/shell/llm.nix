@@ -8,6 +8,7 @@
     (llm.withPlugins {
       cmd = true;
       llm-openrouter = true;
+      llm-cmd = true;
     })
   ];
 
