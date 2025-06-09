@@ -66,6 +66,7 @@
             "**/.project" = true;
             "**/.settings" = true;
             "**/.factorypath" = true;
+            "**/*.Designer.cs" = true;
           };
 
           "telemetry.telemetryLevel" = "off";
