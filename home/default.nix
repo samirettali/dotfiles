@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./sops.nix
     ./dotfiles.nix
@@ -9,6 +14,7 @@
   home.sessionVariables = {
     DEFAULT_BROWSER = "chrome";
     TERMINAL = "ghostty";
+    MANPAGER = "${lib.getExe inputs.neovim-nightly-overlay.packages.${pkgs.system}.default} -c 'Man!' -";
   };
 
   programs = {
