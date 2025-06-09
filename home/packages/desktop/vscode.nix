@@ -79,11 +79,19 @@
           "workbench.statusBar.visible" = true;
           "workbench.navigationControl.enabled" = false;
 
+          "git.confirmSync" = false;
+
+          "debug.onTaskErrors" = "showErrors";
+
           "explorer.confirmDelete" = false;
 
           "window.commandCenter" = false;
 
           "chat.commandCenter.enabled" = false;
+
+          "search.useIgnoreFiles" = false;
+
+          "terminal.integrated.sendKeybindingsToShell" = true;
 
           "github.copilot" = {
             "enable" = {
@@ -91,10 +99,6 @@
             };
             "nextEditSuggestions.enabled" = false;
           };
-
-          "git.confirmSync" = false;
-
-          "terminal.integrated.sendKeybindingsToShell" = true;
 
           # Go
           "go.formatTool" = "gofumpt";
