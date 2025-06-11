@@ -16,11 +16,15 @@ in {
     csharpier
     dotnet-ef
     dotnetPackages
+    jetbrains.datagrip
     maven
+    mongodb-compass
     nuget
+    postman
     roslyn-ls
     slack
     ssm-session-manager-plugin
+    stunnel
     terraform
     terraform-ls
   ];
