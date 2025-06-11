@@ -63,10 +63,6 @@ in {
         source = dotfiles/hammerspoon;
         recursive = true;
       };
-      ".config/raycast/scripts" = {
-        source = dotfiles/scripts/raycast;
-        recursive = true;
-      };
       ".config/sketchybar" = {
         source = dotfiles/sketchybar;
         recursive = true;
