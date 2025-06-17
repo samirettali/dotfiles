@@ -5,6 +5,7 @@
   ...
 }: let
   codex = pkgs.callPackage ./codex.nix {};
+  opencode = pkgs.callPackage ./derivations/opencode.nix {};
 in {
   imports = [
     ./fish.nix
@@ -19,11 +20,11 @@ in {
   ];
 
   home.packages = with pkgs; [
-    codex
     age
     bat
     bombardier
     broot
+    codex
     ctop
     curl
     difftastic
@@ -51,6 +52,7 @@ in {
     mprocs
     ncdu
     ngrok
+    opencode
     p7zip
     pgcli
     plumber

@@ -16,7 +16,6 @@
     brews = [
       "choose-gui"
       "displayplacer"
-      "sst/tap/opencode"
     ];
     casks = [
       "cursor"
@@ -43,7 +42,6 @@
     taps = [
       "homebrew/bundle"
       "homebrew/services"
-      "sst/tap"
     ];
   };
 }
