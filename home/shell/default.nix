@@ -5,7 +5,6 @@
   ...
 }: let
   codex = pkgs.callPackage ./codex.nix {};
-  opencode = pkgs.callPackage ./derivations/opencode.nix {};
 in {
   imports = [
     ./fish.nix
@@ -17,6 +16,7 @@ in {
     ./pass.nix
     ./tmux.nix
     ./zsh.nix
+    ./opencode.nix # TODO: wait for nixpkgs
   ];
 
   home.packages = with pkgs; [
@@ -52,7 +52,6 @@ in {
     mprocs
     ncdu
     ngrok
-    opencode
     p7zip
     pgcli
     plumber

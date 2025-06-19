@@ -92,6 +92,7 @@ in {
         "/target"
         ".idea"
         "Session.vim"
+        ".opencode"
       ];
       signing.format = "ssh";
       includes = [

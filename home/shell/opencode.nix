@@ -1,37 +1,38 @@
+{ pkgs, ... }:
 {
-  lib,
-  fetchFromGitHub,
-  buildGoModule,
-}:
-buildGoModule (finalAttrs: {
-  pname = "opencode";
-  version = "0.0.46";
+  home.packages = [
+    (pkgs.stdenv.mkDerivation rec {
+      pname = "opencode";
+      version = "0.1.105";
 
-  src = fetchFromGitHub {
-    owner = "sst";
-    repo = "opencode";
-    rev = "main";
-    hash = "";
-  };
+      src = pkgs.fetchurl {
+        url = "https://github.com/sst/opencode/releases/download/v${version}/opencode-${
+          if pkgs.stdenv.isDarwin then "darwin" else "linux"
+        }-${
+          if pkgs.stdenv.isAarch64 then "arm64" else "x64"
+        }.zip";
+        sha256 = "sha256-Ogqm+7kEHS6dA4eCzkPgBbLDebIwg/j9CufIs9F5bXA="; # TODO: this only works on darwin arm64
+      };
 
-  vendorHash = "sha256-MVpluFTF/2S6tRQQAXE3ujskQZ3njBkfve0RQgk3IkQ=";
+      nativeBuildInputs = [ pkgs.unzip ];
 
-  checkFlags = let
-    skippedTests = [
-      # permission denied
-      "TestBashTool_Run"
-      "TestSourcegraphTool_Run"
-      "TestLsTool_Run"
-    ];
-  in ["-skip=^${lib.concatStringsSep "$|^" skippedTests}$"];
+      unpackPhase = ''
+        unzip $src
+      '';
 
-  meta = {
-    description = "Powerful terminal-based AI assistant providing intelligent coding assistance";
-    homepage = "https://github.com/sst/opencode";
-    mainProgram = "opencode";
-    license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [
-      zestsystem
-    ];
-  };
-})
+      installPhase = ''
+        mkdir -p $out/bin
+        cp opencode $out/bin/
+        chmod +x $out/bin/opencode
+      '';
+
+      meta = with pkgs.lib; {
+        description = "AI coding agent, built for the terminal";
+        changelog = "https://github.com/sst/opencode/releases/tag/v${version}";
+        homepage = "https://opencode.ai";
+        license = licenses.mit;
+        platforms = platforms.unix;
+      };
+    })
+  ];
+}
