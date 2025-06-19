@@ -5,13 +5,14 @@
 }: {
   home.packages = with pkgs; [
     bun
-    nodejs
-    yarn
-    nodePackages.typescript-language-server
-    nodePackages.prettier
-    prettierd
-    # nodePackages.eslint
     eslint_d
+    nodePackages.eslint
+    nodePackages.prettier
+    nodePackages.typescript-language-server
+    nodejs
+    pnpm
+    prettierd
+    yarn
   ];
 
   home.sessionPath = [
