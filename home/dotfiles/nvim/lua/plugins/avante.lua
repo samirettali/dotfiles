@@ -15,6 +15,10 @@ return {
 					enabled = false,
 					sign = false,
 				},
+				code = {
+					sign = false,
+					border = "thin",
+				},
 			},
 			ft = { "markdown", "Avante" },
 		},
