@@ -31,6 +31,7 @@
           ms-python.python
           quicktype.quicktype
           rust-lang.rust-analyzer
+          vadimcn.vscode-lldb
           saoudrizwan.claude-dev
           sourcegraph.amp
           supermaven.supermaven
