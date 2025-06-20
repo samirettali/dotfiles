@@ -15,7 +15,7 @@
     };
 
     darwin = {
-      url = "github:lnl7/nix-darwin/master";
+      url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -49,11 +49,34 @@
     nix-vscode-extensions,
     ...
   } @ inputs: let
-    stateVersion = "25.11";
-    user = "samir";
-    homeDirectory = "/home/${user}";
+    inherit (nixpkgs) lib;
 
-    defaultNixConfig = {username ? user, ...}: {
+    # Constants
+    stateVersion = "25.11";
+    defaultUser = "samir";
+
+    # System configurations
+    systems = {
+      darwin = "aarch64-darwin";
+      linux = "x86_64-linux";
+    };
+
+    # User configurations
+    users = {
+      personal = {
+        name = defaultUser;
+        homeDirectory = "/home/${defaultUser}";
+        email = "ettali.samir@gmail.com";
+      };
+      work = {
+        name = "s.ettali";
+        homeDirectory = "/Users/s.ettali";
+        email = "s.ettali@young.business";
+      };
+    };
+
+    # Common Nix configuration
+    mkNixConfig = {username ? defaultUser, ...}: {
       enable = true;
       settings = {
         allowed-users = [username];
@@ -103,27 +126,57 @@
         };
       };
     };
+
+    # Common Home Manager configuration
+    mkHomeManagerConfig = {
+      user,
+      extraModules ? [],
+      pkgs,
+      ...
+    }: {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      backupFileExtension = "bak";
+      extraSpecialArgs = {
+        inherit inputs;
+        inherit (mkCustomArgs pkgs) customArgs;
+      };
+      users.${user.name} = {
+        imports =
+          [
+            ./home
+          ]
+          ++ extraModules;
+
+        home = {
+          inherit stateVersion;
+          homeDirectory = user.homeDirectory;
+          username = user.name;
+          sessionVariables.EMAIL = user.email;
+        };
+      };
+    };
   in {
     darwinConfigurations = {
       settali = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
+        system = systems.darwin;
         specialArgs = {inherit inputs;};
         modules = [
           ./machines/mbp.nix
           ./darwin/homebrew.nix
           ./darwin/work.nix
           ({pkgs, ...}: {
-            nix = defaultNixConfig {
-              username = "s.ettali";
+            nix = mkNixConfig {
+              username = users.work.name;
             };
 
             nixpkgs = nixpkgsConfig;
 
             system.stateVersion = 6;
-            system.primaryUser = "s.ettali";
+            system.primaryUser = users.work.name;
 
-            users.users."s.ettali" = {
-              home = "/Users/s.ettali";
+            users.users.${users.work.name} = {
+              home = users.work.homeDirectory;
               shell = pkgs.fish;
               openssh.authorizedKeys.keys = [
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJdetGPFJw+CH6wNU4BinYePWVypM42s9WI0XPodihl samir"
@@ -132,30 +185,17 @@
           })
           home-manager.darwinModules.home-manager
           ({pkgs, ...}: {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = {
-                inherit inputs;
-                inherit (mkCustomArgs pkgs) customArgs;
-              };
-              users."s.ettali" = {...}: {
-                imports = [
-                  ./home
-                  ./home/mac.nix
-                  ./home/packages/desktop
-                  ./home/packages/dev
-                  ./home/packages/work.nix
-                  ./home/packages/security.nix
-                  ./darwin/aerospace.nix
-                ];
-                home.stateVersion = stateVersion;
-                home.homeDirectory = "/Users/s.ettali";
-                home.username = "s.ettali";
-                home.sessionVariables = {
-                  EMAIL = "s.ettali@young.business";
-                };
-              };
+            home-manager = mkHomeManagerConfig {
+              inherit pkgs;
+              user = users.work;
+              extraModules = [
+                ./home/mac.nix
+                ./home/packages/desktop
+                ./home/packages/dev
+                ./home/packages/work.nix
+                ./home/packages/security.nix
+                ./darwin/aerospace.nix
+              ];
             };
           })
         ];
@@ -163,18 +203,18 @@
     };
 
     nixosConfigurations = {
-      xps = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+      xps = lib.nixosSystem {
+        system = systems.linux;
         specialArgs = {
           inherit inputs;
-          inherit user;
+          user = users.personal.name;
         };
         modules = [
           ./machines/xps/configuration.nix
           ./machines/xps/hardware-configuration.nix
           ({pkgs, ...}: {
             nix =
-              defaultNixConfig {}
+              mkNixConfig {}
               // {
                 package = pkgs.nixVersions.stable;
                 gc = {
@@ -188,38 +228,24 @@
 
             system.stateVersion = stateVersion;
 
-            users.users.${user} = {
-              home = homeDirectory;
+            users.users.${users.personal.name} = {
+              home = users.personal.homeDirectory;
               shell = pkgs.fish;
               isNormalUser = true;
             };
           })
           home-manager.nixosModules.home-manager
           ({pkgs, ...}: {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "bak";
-              extraSpecialArgs = {
-                inherit inputs;
-                inherit (mkCustomArgs pkgs) customArgs;
-              };
-              users.${user} = {...}: {
-                imports = [
-                  ./home
-                  ./home/linux
-                  ./home/linux/desktop
-                  ./home/packages/desktop
-                  ./home/packages/dev
-                  ./home/packages/security.nix
-                ];
-                home.stateVersion = stateVersion;
-                home.homeDirectory = homeDirectory;
-                home.username = user;
-                home.sessionVariables = {
-                  EMAIL = "ettali.samir@gmail.com";
-                };
-              };
+            home-manager = mkHomeManagerConfig {
+              inherit pkgs;
+              user = users.personal;
+              extraModules = [
+                ./home/linux
+                ./home/linux/desktop
+                ./home/packages/desktop
+                ./home/packages/dev
+                ./home/packages/security.nix
+              ];
             };
           })
         ];
