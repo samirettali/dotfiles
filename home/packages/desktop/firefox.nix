@@ -461,6 +461,15 @@
               ];
             }
             {
+              name = "AI misc";
+              bookmarks = [
+                {
+                  name = "models.dev";
+                  url = "https://models.dev";
+                }
+              ];
+            }
+            {
               name = "Self-hosted";
               toolbar = false;
               bookmarks = [
