@@ -37,18 +37,14 @@ in {
         commit.verbose = true;
         core.editor = config.home.sessionVariables.EDITOR;
         core.preloadIndex = true;
-        diff = {
-          algorithm = "histogram";
-          colorMoved = "plain";
-          mnemonicPrefix = true;
-          renames = true;
-          submodule = "log";
-        };
-        fetch = {
-          prune = true;
-          pruneTags = true;
-          all = true;
-        };
+        diff.algorithm = "histogram";
+        diff.colorMoved = "plain";
+        diff.mnemonicPrefix = true;
+        diff.renames = true;
+        diff.submodule = "log";
+        fetch.all = true;
+        fetch.prune = true;
+        fetch.pruneTags = true;
         gpg.format = "ssh";
         help.autocorrect = "prompt";
         init.defaultBranch = "main";
@@ -57,32 +53,20 @@ in {
         merge.confictStyle = "zdiff3";
         merge.tool = "nvimdiff";
         pull.ff = "only";
-        push = {
-          autoSetupRemote = true;
-          default = "simple";
-          followtags = true; # TODO: unset for work
-        };
-        rebase.missingCommitsCheck = "warn";
+        push.autoSetupRemote = true;
+        push.default = "simple";
+        push.followtags = true; # TODO: unset for work
         rebase.autoStash = true;
+        rebase.missingCommitsCheck = "warn";
         rerere.enabled = true;
-        status.submoduleSummary = true;
         status.showUntrackedFiles = "all";
+        status.submoduleSummary = true;
         tag.gpgsign = true;
         tag.sort = "version:refname";
-        url = {
-          "git@github.com:samirettali" = {
-            insteadOf = "https://github.com/samirettali";
-          };
-          "git@github.com:YoungAgency" = {
-            insteadOf = "https://github.com/YoungAgency";
-          };
-          "git@github.com:samirettali/" = {
-            insteadOf = "se:";
-          };
-          "git@github.com:" = {
-            insteadOf = "gh:";
-          };
-        };
+        url."git@github.com:".insteadOf = "gh:";
+        url."git@github.com:YoungAgency".insteadOf = "https://github.com/YoungAgency";
+        url."git@github.com:samirettali".insteadOf = "https://github.com/samirettali";
+        url."git@github.com:samirettali/".insteadOf = "se:";
         user.signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
       };
       ignores = [
