@@ -207,6 +207,10 @@
                   url = "https://app.klingai.com/";
                 }
                 {
+                  name = "Hailuoai";
+                  url = "https://hailuoai.video";
+                }
+                {
                   name = "Luma labs";
                   url = "https://lumalabs.ai/blog/news/introducing-modify-video";
                 }
@@ -242,6 +246,14 @@
                   name = "Seedream";
                   url = "https://seedream.pro";
                 }
+                {
+                  name = "Higgsfield";
+                  url = "https://higgsfield.ai";
+                }
+                {
+                  name = "AiClipGen";
+                  url = "https://www.aiclipgen.com/";
+                }
               ];
             }
             {
@@ -259,9 +271,23 @@
               ];
             }
             {
+              name = "STT";
+              toolbar = false;
+              bookmarks = [
+                {
+                  name = "Wisprflow";
+                  url = "https://wisprflow.ai";
+                }
+              ];
+            }
+            {
               name = "AI coding";
               toolbar = false;
               bookmarks = [
+                {
+                  name = "Jules";
+                  url = "https://jules.google.com";
+                }
                 {
                   name = "Replit";
                   url = "https://replit.com";
@@ -273,10 +299,6 @@
                 {
                   name = "Llama Coder";
                   url = "https://llamacoder.together.ai";
-                }
-                {
-                  name = "v0";
-                  url = "https://v0.dev";
                 }
                 {
                   name = "Rork";
@@ -333,6 +355,20 @@
                 {
                   name = "Genie";
                   url = "https://cosine.sh";
+                }
+              ];
+            }
+            {
+              name = "AI website coding";
+              toolbar = false;
+              bookmarks = [
+                {
+                  name = "Wonderish";
+                  url = "https://wonderish.ai";
+                }
+                {
+                  name = "v0";
+                  url = "https://v0.dev";
                 }
               ];
             }
@@ -466,6 +502,10 @@
                 {
                   name = "models.dev";
                   url = "https://models.dev";
+                }
+                {
+                  name = "Pageready";
+                  url = "https://aipageready.com";
                 }
               ];
             }
@@ -646,6 +686,10 @@
                 {
                   name = "Breakout list";
                   url = "https://www.breakoutlist.com/";
+                }
+                {
+                  name = "levels.fyi";
+                  url = "https://www.levels.fyi/jobs";
                 }
               ];
             }
