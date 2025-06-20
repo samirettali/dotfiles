@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home.packages = [
     (pkgs.stdenv.mkDerivation rec {
       pname = "opencode";
@@ -7,14 +6,18 @@
 
       src = pkgs.fetchurl {
         url = "https://github.com/sst/opencode/releases/download/v${version}/opencode-${
-          if pkgs.stdenv.isDarwin then "darwin" else "linux"
+          if pkgs.stdenv.isDarwin
+          then "darwin"
+          else "linux"
         }-${
-          if pkgs.stdenv.isAarch64 then "arm64" else "x64"
+          if pkgs.stdenv.isAarch64
+          then "arm64"
+          else "x64"
         }.zip";
         sha256 = "sha256-Ogqm+7kEHS6dA4eCzkPgBbLDebIwg/j9CufIs9F5bXA="; # TODO: this only works on darwin arm64
       };
 
-      nativeBuildInputs = [ pkgs.unzip ];
+      nativeBuildInputs = [pkgs.unzip];
 
       unpackPhase = ''
         unzip $src
@@ -35,4 +38,24 @@
       };
     })
   ];
+
+  home.file.".config/opencode/config.json".text = ''
+    {
+      "$schema": "https://opencode.ai/config.json",
+      "theme": "opencode",
+      "provider": {
+        "openrouter": {
+          "npm": "@openrouter/ai-sdk-provider",
+          "name": "OpenRouter",
+          "options": {},
+          "models": {
+            "anthropic/claude-sonnet-4": {
+              "name": "Claude Sonnet 4"
+            }
+          }
+        }
+      }
+    }
+  '';
 }
+
