@@ -33,6 +33,7 @@ in {
         branch.sort = "-committerdate";
         column.ui = "auto";
         commit.gpgsign = true;
+        # commit.template = "~/.gitmessage"; # TODO: set this
         commit.verbose = true;
         core.editor = config.home.sessionVariables.EDITOR;
         core.preloadIndex = true;
