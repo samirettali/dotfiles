@@ -32,6 +32,7 @@
           quicktype.quicktype
           rust-lang.rust-analyzer
           saoudrizwan.claude-dev
+          sourcegraph.amp
           supermaven.supermaven
           vscodevim.vim
           # augment.vscode-augment
