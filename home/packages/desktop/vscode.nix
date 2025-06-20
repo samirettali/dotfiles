@@ -92,6 +92,10 @@
           "chat.commandCenter.enabled" = false;
 
           "search.useIgnoreFiles" = false;
+          "search.exclude" = {
+            "**/node_modules" = true;
+            "**/.venv" = true;
+          };
 
           "terminal.integrated.sendKeybindingsToShell" = true;
 
