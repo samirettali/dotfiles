@@ -524,6 +524,15 @@
               name = "Development";
               bookmarks = [
                 {
+                  name = "APIs";
+                  bookmarks = [
+                    {
+                      name = "Serper";
+                      url = "https://serper.dev";
+                    }
+                  ];
+                }
+                {
                   name = "Javascript libraries";
                   bookmarks = [
                     {
@@ -557,6 +566,19 @@
                     {
                       name = "Grainient";
                       url = "https://grainient.supply/freebies";
+                    }
+                    {
+                      name = "use-mcp";
+                      url = "https://github.com/modelcontextprotocol/use-mcp";
+                    }
+                  ];
+                }
+                {
+                  name = "Python libraries";
+                  bookmarks = [
+                    {
+                      name = "Marimo";
+                      url = "https://docs.marimo.io/";
                     }
                   ];
                 }
@@ -619,6 +641,10 @@
                 {
                   name = "Nix package versions";
                   url = "https://lazamar.co.uk/nix-versions";
+                }
+                {
+                  name = "JSON to nix";
+                  url = "https://json-to-nix.pages.dev";
                 }
               ];
             }
