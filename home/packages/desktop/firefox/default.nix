@@ -66,446 +66,499 @@
           settings = [
             {
               name = "AI";
-              toolbar = false; # Assuming these are not toolbar bookmarks
-              bookmarks = [
-                {
-                  name = "t3.chat";
-                  url = "https://t3.chat";
-                }
-                {
-                  name = "Deepseek";
-                  url = "https://chat.deepseek.com";
-                }
-                {
-                  name = "Gemini";
-                  url = "https://gemini.google.com";
-                }
-                {
-                  name = "Claude";
-                  url = "https://claude.ai";
-                }
-                {
-                  name = "Perplexity";
-                  url = "https://www.perplexity.ai";
-                }
-                {
-                  name = "ChatGPT";
-                  url = "https://chat.openai.com";
-                }
-                {
-                  name = "Qwen";
-                  url = "https://chat.qwen.ai";
-                }
-                {
-                  name = "Gemini diffusion";
-                  url = "https://deepmind.google.com/frontiers/gemini-diffusion";
-                }
-                {
-                  name = "Mistral";
-                  url = "https://chat.mistral.ai";
-                }
-                {
-                  name = "Venice AI";
-                  url = "https://venice.ai";
-                }
-                {
-                  name = "Together AI";
-                  url = "https://api.together.xyz/playground";
-                }
-                {
-                  name = "Groq";
-                  url = "https://console.groq.com/playground";
-                }
-                {
-                  name = "Cohere";
-                  url = "https://coral.cohere.com";
-                }
-                {
-                  name = "Sambanova";
-                  url = "https://cloud.sambanova.ai";
-                }
-                {
-                  name = "Compute";
-                  url = "https://compute.hyper.space";
-                }
-                {
-                  name = "devv";
-                  url = "https://devv.ai";
-                }
-                {
-                  name = "Julius";
-                  url = "https://julius.ai/chat";
-                }
-                {
-                  name = "delve";
-                  url = "https://delve.a9.io";
-                }
-                {
-                  name = "Phind";
-                  url = "https://www.phind.com";
-                }
-                {
-                  name = "llmchat";
-                  url = "https://llmchat.co";
-                }
-                {
-                  name = "Replicate";
-                  url = "https://replicate.com";
-                }
-                {
-                  name = "Cerebras";
-                  url = "https://inference.cerebras.ai";
-                }
-                {
-                  name = "Liquid Labs";
-                  url = "https://playground.liquid.ai";
-                }
-                {
-                  name = "Manus";
-                  url = "https://manus.im";
-                }
-                {
-                  name = "Abacus";
-                  url = "https://deepagent.abacus.ai";
-                }
-                {
-                  name = "NotebookLM";
-                  url = "https://notebooklm.google.com";
-                }
-                {
-                  name = "Flux";
-                  url = "https://playground.bfl.ai/image/generate";
-                }
-                {
-                  name = "Bagel";
-                  url = "https://demo.bagel-ai.org";
-                }
-                {
-                  name = "Inception Labs (diffusion chatbot)";
-                  url = "https://chat.inceptionlabs.ai";
-                }
-                {
-                  name = "Github Copilot";
-                  url = "https://github.com/copilot";
-                }
-                {
-                  name = "Minimax";
-                  url = "https://chat.minimax.io";
-                }
-              ];
-            }
-            {
-              name = "Generative AI";
               toolbar = false;
               bookmarks = [
                 {
-                  name = "Fal";
-                  url = "https://fal.ai";
+                  name = "Chat";
+                  toolbar = false; # Assuming these are not toolbar bookmarks
+                  bookmarks = [
+                    {
+                      name = "Diffusion models";
+                      bookmarks = [
+                        {
+                          name = "Gemini diffusion";
+                          url = "https://deepmind.google.com/frontiers/gemini-diffusion";
+                        }
+                        {
+                          name = "Inception Labs (diffusion chatbot)";
+                          url = "https://chat.inceptionlabs.ai";
+                        }
+                      ];
+                    }
+                    {
+                      name = "t3.chat";
+                      url = "https://t3.chat";
+                    }
+                    {
+                      name = "Deepseek";
+                      url = "https://chat.deepseek.com";
+                    }
+                    {
+                      name = "Gemini";
+                      url = "https://gemini.google.com";
+                    }
+                    {
+                      name = "Claude";
+                      url = "https://claude.ai";
+                    }
+                    {
+                      name = "Perplexity";
+                      url = "https://www.perplexity.ai";
+                    }
+                    {
+                      name = "ChatGPT";
+                      url = "https://chat.openai.com";
+                    }
+                    {
+                      name = "Qwen";
+                      url = "https://chat.qwen.ai";
+                    }
+                    {
+                      name = "Mistral";
+                      url = "https://chat.mistral.ai";
+                    }
+                    {
+                      name = "Venice AI";
+                      url = "https://venice.ai";
+                    }
+                    {
+                      name = "Together AI";
+                      url = "https://api.together.xyz/playground";
+                    }
+                    {
+                      name = "Groq";
+                      url = "https://console.groq.com/playground";
+                    }
+                    {
+                      name = "Cohere";
+                      url = "https://coral.cohere.com";
+                    }
+                    {
+                      name = "Sambanova";
+                      url = "https://cloud.sambanova.ai";
+                    }
+                    {
+                      name = "Compute";
+                      url = "https://compute.hyper.space";
+                    }
+                    {
+                      name = "devv";
+                      url = "https://devv.ai";
+                    }
+                    {
+                      name = "Julius";
+                      url = "https://julius.ai/chat";
+                    }
+                    {
+                      name = "delve";
+                      url = "https://delve.a9.io";
+                    }
+                    {
+                      name = "Phind";
+                      url = "https://www.phind.com";
+                    }
+                    {
+                      name = "llmchat";
+                      url = "https://llmchat.co";
+                    }
+                    {
+                      name = "Replicate";
+                      url = "https://replicate.com";
+                    }
+                    {
+                      name = "Cerebras";
+                      url = "https://inference.cerebras.ai";
+                    }
+                    {
+                      name = "Liquid Labs";
+                      url = "https://playground.liquid.ai";
+                    }
+                    {
+                      name = "Manus";
+                      url = "https://manus.im";
+                    }
+                    {
+                      name = "Abacus";
+                      url = "https://deepagent.abacus.ai";
+                    }
+                    {
+                      name = "NotebookLM";
+                      url = "https://notebooklm.google.com";
+                    }
+                    {
+                      name = "Flux";
+                      url = "https://playground.bfl.ai/image/generate";
+                    }
+                    {
+                      name = "Bagel";
+                      url = "https://demo.bagel-ai.org";
+                    }
+                    {
+                      name = "Github Copilot";
+                      url = "https://github.com/copilot";
+                    }
+                    {
+                      name = "Minimax";
+                      url = "https://chat.minimax.io";
+                    }
+                  ];
                 }
                 {
-                  name = "Kling AI";
-                  url = "https://app.klingai.com/";
+                  name = "Media generation";
+                  toolbar = false;
+                  bookmarks = [
+                    {
+                      name = "Fal";
+                      url = "https://fal.ai";
+                    }
+                    {
+                      name = "Kling AI";
+                      url = "https://app.klingai.com/";
+                    }
+                    {
+                      name = "Hailuoai";
+                      url = "https://hailuoai.video";
+                    }
+                    {
+                      name = "Luma labs";
+                      url = "https://lumalabs.ai/blog/news/introducing-modify-video";
+                    }
+                    {
+                      name = "Reve";
+                      url = "https://preview.reve.art/app";
+                    }
+                    {
+                      name = "Midjourney";
+                      url = "https://www.midjourney.com";
+                    }
+                    {
+                      name = "Topaz labs";
+                      url = "https://www.topazlabs.com/bloom";
+                    }
+                    {
+                      name = "Light tricks";
+                      url = "https://www.lightricks.com";
+                    }
+                    {
+                      name = "Riffusion";
+                      url = "https://www.riffusion.com";
+                    }
+                    {
+                      name = "Magi";
+                      url = "https://sand.ai";
+                    }
+                    {
+                      name = "Krea";
+                      url = "https://www.krea.ai/krea-1";
+                    }
+                    {
+                      name = "Seedream";
+                      url = "https://seedream.pro";
+                    }
+                    {
+                      name = "Higgsfield";
+                      url = "https://higgsfield.ai";
+                    }
+                    {
+                      name = "AiClipGen";
+                      url = "https://www.aiclipgen.com/";
+                    }
+                  ];
                 }
                 {
-                  name = "Hailuoai";
-                  url = "https://hailuoai.video";
+                  name = "Text to speech";
+                  toolbar = false;
+                  bookmarks = [
+                    {
+                      name = "Eleven labs";
+                      url = "https://elevenlabs.io/v3";
+                    }
+                    {
+                      name = "Fish audio";
+                      url = "https://fish.audio";
+                    }
+                  ];
                 }
                 {
-                  name = "Luma labs";
-                  url = "https://lumalabs.ai/blog/news/introducing-modify-video";
+                  name = "Speech to text";
+                  toolbar = false;
+                  bookmarks = [
+                    {
+                      name = "Wisprflow";
+                      url = "https://wisprflow.ai";
+                    }
+                  ];
                 }
                 {
-                  name = "Reve";
-                  url = "https://preview.reve.art/app";
+                  name = "AI coding";
+                  toolbar = false;
+                  bookmarks = [
+                    {
+                      name = "Jules";
+                      url = "https://jules.google.com";
+                    }
+                    {
+                      name = "Replit";
+                      url = "https://replit.com";
+                    }
+                    {
+                      name = "All Hands";
+                      url = "https://app.all-hands.dev";
+                    }
+                    {
+                      name = "Llama Coder";
+                      url = "https://llamacoder.together.ai";
+                    }
+                    {
+                      name = "Rork";
+                      url = "https://rork.app";
+                    }
+                    {
+                      name = "bolt.new";
+                      url = "https://bolt.new";
+                    }
+                    {
+                      name = "same";
+                      url = "https://same.new";
+                    }
+                    {
+                      name = "nut";
+                      url = "https://www.nut.new";
+                    }
+                    {
+                      name = "a0";
+                      url = "https://a0.dev";
+                    }
+                    {
+                      name = "Chef";
+                      url = "https://chef.convex.dev";
+                    }
+                    {
+                      name = "Rocket";
+                      url = "https://www.rocket.new";
+                    }
+                    {
+                      name = "Sleek";
+                      url = "https://sleek.design";
+                    }
+                    {
+                      name = "Lovable";
+                      url = "https://lovable.dev";
+                    }
+                    {
+                      name = "Val Town";
+                      url = "https://www.val.town/townie";
+                    }
+                    {
+                      name = "10Web";
+                      url = "https://my.10web.io";
+                    }
+                    {
+                      name = "Lazy";
+                      url = "https://getlazy.ai";
+                    }
+                    {
+                      name = "Another wrapper";
+                      url = "https://anotherwrapper.com/tools/ai-app-generator";
+                    }
+                    {
+                      name = "Genie";
+                      url = "https://cosine.sh";
+                    }
+                  ];
                 }
                 {
-                  name = "Midjourney";
-                  url = "https://www.midjourney.com";
+                  name = "Frontend coding";
+                  toolbar = false;
+                  bookmarks = [
+                    {
+                      name = "v0";
+                      url = "https://v0.dev";
+                    }
+                    {
+                      name = "Wonderish";
+                      url = "https://wonderish.ai";
+                    }
+                  ];
                 }
                 {
-                  name = "Topaz labs";
-                  url = "https://www.topazlabs.com/bloom";
+                  name = "AI apps";
+                  toolbar = false;
+                  bookmarks = [
+                    {
+                      name = "Google Stitch";
+                      url = "https://stitch.withgoogle.com";
+                    }
+                    {
+                      name = "Gamma (presentations)";
+                      url = "https://gamma.app";
+                    }
+                    {
+                      name = "Beautiful (presentations)";
+                      url = "https://www.beautiful.ai";
+                    }
+                    {
+                      name = "BetterDictation (speech to text)";
+                      url = "https://betterdictation.com";
+                    }
+                    {
+                      name = "Jenni (research)";
+                      url = "https://app.jenni.ai";
+                    }
+                    {
+                      name = "Andi (assistant)";
+                      url = "https://andisearch.com";
+                    }
+                    {
+                      name = "Frase (writing)";
+                      url = "https://www.frase.io";
+                    }
+                    {
+                      name = "Rytr (writing)";
+                      url = "https://app.rytr.me";
+                    }
+                    {
+                      name = "Anyword (writing)";
+                      url = "https://go.anyword.com/dashboard";
+                    }
+                    {
+                      name = "Frank (writing)";
+                      url = "https://franks.ai";
+                    }
+                    {
+                      name = "Globe (search)";
+                      url = "https://explorer.globe.engineer";
+                    }
+                    {
+                      name = "CostGPT";
+                      url = "https://costgpt.ai";
+                    }
+                    {
+                      name = "CopyOwl";
+                      url = "https://copyowl.ai/";
+                    }
+                    {
+                      name = "Decktopus (presentations)";
+                      url = "https://www.decktopus.com/";
+                    }
+                    {
+                      name = "Framedrop";
+                      url = "https://www.framedrop.ai";
+                    }
+                    {
+                      name = "Vivid Hubs (video generation)";
+                      url = "https://vividhubs.ai/image-to-video";
+                    }
+                    {
+                      name = "Magicpath (web design)";
+                      url = "https://www.magicpath.ai";
+                    }
+                    {
+                      name = "Emergent";
+                      url = "https://app.emergent.sh/";
+                    }
+                    {
+                      name = "Storm Genie";
+                      url = "https://storm.genie.stanford.edu/";
+                    }
+                  ];
                 }
                 {
-                  name = "Light tricks";
-                  url = "https://www.lightricks.com";
+                  name = "Benchmarks";
+                  toolbar = false;
+                  bookmarks = [
+                    {
+                      name = "Artificial Analysis";
+                      url = "https://artificialanalysis.ai";
+                    }
+                    {
+                      name = "Scale";
+                      url = "https://scale.com/leaderboard";
+                    }
+                    {
+                      name = "LM Arena";
+                      url = "https://beta.lmarena.ai/leaderboard";
+                    }
+                    {
+                      name = "SWE Bench";
+                      url = "https://www.swebench.com";
+                    }
+                    {
+                      name = "Arc Prize";
+                      url = "https://arcprize.org/leaderboard";
+                    }
+                    {
+                      name = "IQ test";
+                      url = "https://www.trackingai.org/home";
+                    }
+                    {
+                      name = "Openrouter rankings";
+                      url = "https://openrouter.ai/rankings";
+                    }
+                    {
+                      name = "LiveCodeBench";
+                      url = "https://livecodebench.github.io/leaderboard.html";
+                    }
+                    {
+                      name = "Berkeley Function Calling Leaderboard";
+                      url = "https://gorilla.cs.berkeley.edu/leaderboard.html";
+                    }
+                  ];
                 }
                 {
-                  name = "Riffusion";
-                  url = "https://www.riffusion.com";
-                }
-                {
-                  name = "Magi";
-                  url = "https://sand.ai";
-                }
-                {
-                  name = "Krea";
-                  url = "https://www.krea.ai/krea-1";
-                }
-                {
-                  name = "Seedream";
-                  url = "https://seedream.pro";
-                }
-                {
-                  name = "Higgsfield";
-                  url = "https://higgsfield.ai";
-                }
-                {
-                  name = "AiClipGen";
-                  url = "https://www.aiclipgen.com/";
+                  name = "Misc";
+                  bookmarks = [
+                    {
+                      name = "models.dev";
+                      url = "https://models.dev";
+                    }
+                    {
+                      name = "Pageready";
+                      url = "https://aipageready.com";
+                    }
+                  ];
                 }
               ];
             }
             {
-              name = "TTS";
-              toolbar = false;
+              name = "Development";
               bookmarks = [
                 {
-                  name = "Eleven labs";
-                  url = "https://elevenlabs.io/v3";
-                }
-                {
-                  name = "Fish audio";
-                  url = "https://fish.audio";
-                }
-              ];
-            }
-            {
-              name = "STT";
-              toolbar = false;
-              bookmarks = [
-                {
-                  name = "Wisprflow";
-                  url = "https://wisprflow.ai";
-                }
-              ];
-            }
-            {
-              name = "AI coding";
-              toolbar = false;
-              bookmarks = [
-                {
-                  name = "Jules";
-                  url = "https://jules.google.com";
-                }
-                {
-                  name = "Replit";
-                  url = "https://replit.com";
-                }
-                {
-                  name = "All Hands";
-                  url = "https://app.all-hands.dev";
-                }
-                {
-                  name = "Llama Coder";
-                  url = "https://llamacoder.together.ai";
-                }
-                {
-                  name = "Rork";
-                  url = "https://rork.app";
-                }
-                {
-                  name = "bolt.new";
-                  url = "https://bolt.new";
-                }
-                {
-                  name = "same";
-                  url = "https://same.new";
-                }
-                {
-                  name = "nut";
-                  url = "https://www.nut.new";
-                }
-                {
-                  name = "a0";
-                  url = "https://a0.dev";
-                }
-                {
-                  name = "Chef";
-                  url = "https://chef.convex.dev";
-                }
-                {
-                  name = "Rocket";
-                  url = "https://www.rocket.new";
-                }
-                {
-                  name = "Sleek";
-                  url = "https://sleek.design";
-                }
-                {
-                  name = "Lovable";
-                  url = "https://lovable.dev";
-                }
-                {
-                  name = "Val Town";
-                  url = "https://www.val.town/townie";
-                }
-                {
-                  name = "10Web";
-                  url = "https://my.10web.io";
-                }
-                {
-                  name = "Lazy";
-                  url = "https://getlazy.ai";
-                }
-                {
-                  name = "Another wrapper";
-                  url = "https://anotherwrapper.com/tools/ai-app-generator";
-                }
-                {
-                  name = "Genie";
-                  url = "https://cosine.sh";
-                }
-              ];
-            }
-            {
-              name = "AI website coding";
-              toolbar = false;
-              bookmarks = [
-                {
-                  name = "Wonderish";
-                  url = "https://wonderish.ai";
-                }
-                {
-                  name = "v0";
-                  url = "https://v0.dev";
-                }
-              ];
-            }
-            {
-              name = "AI apps";
-              toolbar = false;
-              bookmarks = [
-                {
-                  name = "Google Stitch";
-                  url = "https://stitch.withgoogle.com";
-                }
-                {
-                  name = "Gamma (presentations)";
-                  url = "https://gamma.app";
-                }
-                {
-                  name = "Beautiful (presentations)";
-                  url = "https://www.beautiful.ai";
-                }
-                {
-                  name = "BetterDictation (speech to text)";
-                  url = "https://betterdictation.com";
-                }
-                {
-                  name = "Jenni (research)";
-                  url = "https://app.jenni.ai";
-                }
-                {
-                  name = "Andi (assistant)";
-                  url = "https://andisearch.com";
-                }
-                {
-                  name = "Frase (writing)";
-                  url = "https://www.frase.io";
-                }
-                {
-                  name = "Rytr (writing)";
-                  url = "https://app.rytr.me";
-                }
-                {
-                  name = "Anyword (writing)";
-                  url = "https://go.anyword.com/dashboard";
-                }
-                {
-                  name = "Frank (writing)";
-                  url = "https://franks.ai";
-                }
-                {
-                  name = "Globe (search)";
-                  url = "https://explorer.globe.engineer";
-                }
-                {
-                  name = "CostGPT";
-                  url = "https://costgpt.ai";
-                }
-                {
-                  name = "CopyOwl";
-                  url = "https://copyowl.ai/";
-                }
-                {
-                  name = "Decktopus (presentations)";
-                  url = "https://www.decktopus.com/";
-                }
-                {
-                  name = "Framedrop";
-                  url = "https://www.framedrop.ai";
-                }
-                {
-                  name = "Vivid Hubs (video generation)";
-                  url = "https://vividhubs.ai/image-to-video";
-                }
-                {
-                  name = "Magicpath (web design)";
-                  url = "https://www.magicpath.ai";
-                }
-                {
-                  name = "Emergent";
-                  url = "https://app.emergent.sh/";
-                }
-                {
-                  name = "Storm Genie";
-                  url = "https://storm.genie.stanford.edu/";
-                }
-              ];
-            }
-            {
-              name = "AI benchmarks";
-              toolbar = false;
-              bookmarks = [
-                {
-                  name = "Artificial Analysis";
-                  url = "https://artificialanalysis.ai";
-                }
-                {
-                  name = "Scale";
-                  url = "https://scale.com/leaderboard";
-                }
-                {
-                  name = "LM Arena";
-                  url = "https://beta.lmarena.ai/leaderboard";
-                }
-                {
-                  name = "SWE Bench";
-                  url = "https://www.swebench.com";
-                }
-                {
-                  name = "Arc Prize";
-                  url = "https://arcprize.org/leaderboard";
-                }
-                {
-                  name = "IQ test";
-                  url = "https://www.trackingai.org/home";
-                }
-                {
-                  name = "Openrouter rankings";
-                  url = "https://openrouter.ai/rankings";
-                }
-                {
-                  name = "LiveCodeBench";
-                  url = "https://livecodebench.github.io/leaderboard.html";
-                }
-                {
-                  name = "Berkeley Function Calling Leaderboard";
-                  url = "https://gorilla.cs.berkeley.edu/leaderboard.html";
-                }
-              ];
-            }
-            {
-              name = "AI misc";
-              bookmarks = [
-                {
-                  name = "models.dev";
-                  url = "https://models.dev";
-                }
-                {
-                  name = "Pageready";
-                  url = "https://aipageready.com";
+                  name = "Javascript libraries";
+                  bookmarks = [
+                    {
+                      name = "React bits";
+                      url = "https://reactbits.dev";
+                    }
+                    {
+                      name = "tweakcn";
+                      url = "https://tweakcn.com/editor/theme";
+                    }
+                    {
+                      name = "Aceternity";
+                      url = "https://ui.aceternity.com";
+                    }
+                    {
+                      name = "21st";
+                      url = "https://21st.dev";
+                    }
+                    {
+                      name = "MagicUI";
+                      url = "https://pro.magicui.design";
+                    }
+                    {
+                      name = "AlignUI";
+                      url = "https://pro.alignui.com";
+                    }
+                    {
+                      name = "BentoGrids";
+                      url = "https://bentogrids.com";
+                    }
+                    {
+                      name = "Grainient";
+                      url = "https://grainient.supply/freebies";
+                    }
+                  ];
                 }
               ];
             }

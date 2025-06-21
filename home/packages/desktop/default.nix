@@ -9,7 +9,7 @@ in {
   imports = [
     ./alacritty.nix
     ./espanso.nix
-    ./firefox.nix
+    ./firefox
     ./kitty.nix
     ./mpv.nix
     ./vscode.nix
