@@ -2,7 +2,7 @@
   home.packages = [
     (pkgs.stdenv.mkDerivation rec {
       pname = "opencode";
-      version = "0.1.105";
+      version = "0.1.116";
 
       src = pkgs.fetchurl {
         url = "https://github.com/sst/opencode/releases/download/v${version}/opencode-${
@@ -14,7 +14,7 @@
           then "arm64"
           else "x64"
         }.zip";
-        sha256 = "sha256-Ogqm+7kEHS6dA4eCzkPgBbLDebIwg/j9CufIs9F5bXA="; # TODO: this only works on darwin arm64
+        sha256 = "sha256-HPZY9JQM8Ea24NoM1UlzQhDS+nuU23DBiCxTTXYOHrc="; # TODO: this works only on darwin arm64
       };
 
       nativeBuildInputs = [pkgs.unzip];
