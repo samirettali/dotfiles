@@ -136,73 +136,16 @@
           "dom.security.https_only_mode" = true;
           "extensions.getAddons.showPane" = false;
           "identity.fxaccounts.enabled" = true;
-
+          "privacy.trackingprotection.enabled" = true;
+          "privacy.firstparty.isolate" = false; # TODO: disabling this breaks some websites
+          "privacy.trackingprotection.socialtracking.enabled" = true;
           "privacy.donottrackheader.enabled" = true;
           "privacy.donottrackheader.value" = 1;
-          "privacy.firstparty.isolate" = false; # TODO: disabling this breaks some websites
           "privacy.purge_trackers.enabled" = true;
-          "privacy.socialtracking.block_cookies.enabled" = true;
-          "privacy.trackingprotection.cryptomining.enabled" = true;
-          "privacy.trackingprotection.emailtracking.data_collection.enabled" = true;
-          "privacy.trackingprotection.emailtracking.enabled" = true;
-          "privacy.trackingprotection.enabled" = true;
-          "privacy.trackingprotection.fingerprinting.enabled" = true;
-          "privacy.trackingprotection.socialtracking.enabled" = true;
-          "privacy.globalprivacycontrol.enabled" = true;
-          "privacy.globalprivacycontrol.functionality.enabled" = true;
-          "privacy.resistFingerprinting" = true;
-          "privacy.resistFingerprinting.pbmode" = true;
-          "privacy.fingerprintingProtection" = true;
-          "privacy.restrict3rdpartystorage.expiration" = 60 * 60 * 24;
-          "privacy.restrict3rdpartystorage.expiration_redirect" = 60 * 60 * 24;
-          "privacy.userInteraction.expiration" = 60 * 60 * 24;
-          "privacy.query_stripping.strip_on_share.enabled" = true;
-          "privacy.query_stripping.enabled" = true;
-          "privacy.query_stripping.enabled.pbmode" = true;
-          "privacy.query_stripping.redirect" = true;
-          "privacy.query_stripping.strip_list" = toString [
-            "__hsfp"
-            "__hssc"
-            "__hstc"
-            "__s"
-            "_hsenc"
-            "_openstat"
-            "dclid"
-            "fbclid"
-            "gbraid"
-            "gclid"
-            "hsCtaTracking"
-            "igshid"
-            "mc_eid"
-            "ml_subscriber"
-            "ml_subscriber_hash"
-            "msclkid"
-            "oft_c"
-            "oft_ck"
-            "oft_d"
-            "oft_id"
-            "oft_ids"
-            "oft_k"
-            "oft_lk"
-            "oft_sk"
-            "oly_anon_id"
-            "oly_enc_id"
-            "rb_clickid"
-            "s_cid"
-            "twclid"
-            "vero_conv"
-            "vero_id"
-            "wbraid"
-            "wickedid"
-            "yclid"
-          ];
-          # "privacy.antitracking.isolateContentScriptResources" = true; # TODO: This feature is currently disabled (see bug 1965552).
-          "privacy.bounceTrackingProtection.mode" = 1;
-
           "signon.rememberSignons" = false;
 
-          "browser.startup.page" = 3; # Resume previous session
-          "browser.startup.homepage" = "http://localhost:3000";
+          # Reopen previous tabs
+          "browser.startup.page" = 3;
 
           "browser.urlbar.suggest.searches" = false;
           "browser.urlbar.suggest.history" = true;
@@ -230,8 +173,6 @@
           "extensions.pocket.enabled" = false;
           "extensions.shield-recipe-client.enabled" = false;
           "reader.parse-on-load.enabled" = false; # "reader view"
-
-          "browser.formfill.enable" = false;
 
           "browser.sessionstore.interval" = "15000";
           "dom.battery.enabled" = false;
