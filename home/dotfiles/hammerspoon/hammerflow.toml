@@ -60,8 +60,13 @@ u = "text:samirettali"
 
 [s]
 label = "[search]"
-g = "input:https://google.com/search?q={input}"
-m = "input:https://www.google.com/maps/search/{input}"
-n = "input:https://mynixos.com/search?q={input}"
-p = "input:https://perplexity.ai/search?q={input}"
-y = "input:https://www.youtube.com/results?search_query={input}"
+w = ["input:https://google.com/search?q={input}", "google"]
+m = ["input:https://www.google.com/maps/search/{input}", "maps"]
+n = ["input:https://mynixos.com/search?q={input}", "nixos"]
+p = ["input:https://perplexity.ai/search?q={input}", "perplexity"]
+y = ["input:https://www.youtube.com/results?search_query={input}", "youtube"]
+
+[s.g]
+label = "[g]"
+r = ["input:https://github.com/search?q={input}&type=repositories", "github repositories"]
+c = ["input:https://github.com/search?q={input}&type=code" , "github code"]
