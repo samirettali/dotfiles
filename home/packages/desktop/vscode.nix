@@ -35,7 +35,7 @@ in {
           ms-python.python
           quicktype.quicktype
           rust-lang.rust-analyzer
-          vadimcn.vscode-lldb
+          # vadimcn.vscode-lldb # TODO: build is broken
           saoudrizwan.claude-dev
           sourcegraph.amp
           supermaven.supermaven
