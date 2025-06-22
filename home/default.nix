@@ -33,17 +33,6 @@
     nix-prefetch-github
     nix-init
     sops
-    (buildGoModule {
-      pname = "git-sync";
-      version = "latest";
-      src = fetchFromGitHub {
-        owner = "AkashRajpurohit";
-        repo = "git-sync";
-        rev = "main";
-        sha256 = "sha256-GBDC6lQGNDE6G8gIYqQPVeqqrGwW/h2ZRhtJU1x+LKo=";
-      };
-      vendorHash = "sha256-VJLdAkONyJiyQTtrZ9xwVXTqpkbHsIbVgOAu2RA62ao=";
-    })
   ];
 
   home.file.".hushlogin".text = "";
