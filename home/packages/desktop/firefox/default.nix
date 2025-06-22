@@ -87,6 +87,13 @@
           "browser.ctrlTab.recentlyUsedOrder" = false;
           "browser.laterrun.enabled" = false;
 
+          # Vertical tabs
+          "sidebar.revamp" = true;
+          "sidebar.verticalTabs" = true;
+          "sidebar.revamp.round-content-area" = true;
+          "sidebar.main.tools" = null;
+          "sidebar.animation.enabled" = false;
+
           # Disable Activity Stream
           "browser.discovery.enabled" = false;
           "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
