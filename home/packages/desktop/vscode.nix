@@ -3,9 +3,13 @@
   customArgs,
   config,
   ...
-}: {
+}: let
+  cursorSettings = {
+    "cursor.composer.shouldChimeAfterChatFinishes" = true;
+  };
+in {
   home.file."Library/Application Support/Cursor/User/settings.json".text =
-    builtins.toJSON config.programs.vscode.profiles.default.userSettings;
+    builtins.toJSON (config.programs.vscode.profiles.default.userSettings // cursorSettings);
   home.file."Library/Application Support/Cursor/User/keybindings.json".text =
     builtins.toJSON config.programs.vscode.profiles.default.keybindings;
 
