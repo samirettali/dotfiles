@@ -60,6 +60,7 @@
           "openai/gpt-4.1".name = "OpenAI GPT 4.1";
           "openai/gpt-4.1-mini".name = "OpenAI GPT 4.1 Mini";
           "openai/o3".name = "OpenAI O3";
+          "openai/o4-mini-high".name = "OpenAI O4 Mini High";
         };
       };
     };
