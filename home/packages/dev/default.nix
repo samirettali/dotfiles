@@ -22,6 +22,8 @@
     devenv
     jdt-language-server
     libiconv
+    lld
+    lldb # for rust debugging
     stdenv
     tree-sitter
     vscode-langservers-extracted
