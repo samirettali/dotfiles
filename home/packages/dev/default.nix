@@ -2,7 +2,9 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  wgsl-analyzer = import ./wgsl-analyzer.nix {inherit lib pkgs;};
+in {
   imports = [
     ./c.nix
     ./go.nix
@@ -27,6 +29,7 @@
     stdenv
     tree-sitter
     vscode-langservers-extracted
+    wgsl-analyzer
     yamlfmt
     zizmor
   ];

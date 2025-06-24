@@ -239,6 +239,7 @@ return {
 					},
 				},
 			},
+			wgsl_analyzer = {},
 			lua_ls = {
 				settings = {
 					Lua = {
