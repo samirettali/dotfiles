@@ -27,6 +27,8 @@ in {
     lld
     lldb # for rust debugging
     stdenv
+    taplo
+    taplo-lsp
     tree-sitter
     vscode-langservers-extracted
     wgsl-analyzer
