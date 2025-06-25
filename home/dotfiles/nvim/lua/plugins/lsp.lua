@@ -277,6 +277,7 @@ return {
 			terraformls = {}, -- TODO: activate only if terraform-ls is installed or DOTFILES_PROFILE=work
 			jdtls = {},
 			jsonls = {},
+			taplo = {},
 		}
 
 		for name, cfg in pairs(servers) do

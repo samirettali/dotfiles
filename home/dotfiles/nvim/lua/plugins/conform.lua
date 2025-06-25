@@ -23,6 +23,7 @@ return {
 				cs = { "csharpier" },
 				yaml = { "yamlfmt" },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
+				toml = { "taplo" },
 				["*"] = { "codespell" },
 				["_"] = { "trim_whitespace" }, -- fallback
 			},
