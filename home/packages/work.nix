@@ -82,10 +82,7 @@ in {
       assume = "source assume";
     };
 
-    granted = {
-      enable = true;
-      enableFishIntegration = true;
-    };
+    granted.enable = true;
   };
 
   home.sessionVariables = {

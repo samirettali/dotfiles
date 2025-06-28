@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   lib,
   pkgs,
@@ -10,6 +11,11 @@
     ./shell
     ./services/default.nix
   ];
+
+  home.shell = {
+    enableZshIntegration = config.programs.zsh.enable;
+    enableFishIntegration = config.programs.fish.enable;
+  };
 
   home.sessionVariables = {
     DEFAULT_BROWSER = "chrome";

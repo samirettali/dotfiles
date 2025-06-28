@@ -13,7 +13,6 @@
 
     keychain = {
       enable = true;
-      enableZshIntegration = true;
       keys = [];
       inheritType = "any";
     };
