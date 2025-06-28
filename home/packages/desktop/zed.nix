@@ -1,6 +1,11 @@
-{customArgs, ...}: {
+{
+  customArgs,
+  lib,
+  ...
+}: {
   programs.zed-editor = {
-    enable = true;
+    enable = lib.mkDefault false;
+
     extensions = [
       "csharp"
       "csv"
