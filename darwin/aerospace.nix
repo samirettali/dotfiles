@@ -244,6 +244,13 @@
           };
           run = ["layout floating"];
         }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            window-title-regex-substring = "winit window";
+          };
+          run = ["layout floating"];
+        }
       ];
     };
   };
