@@ -32,7 +32,6 @@ in {
   ];
 
   home.packages = with pkgs; [
-    age
     bat
     bombardier
     broot

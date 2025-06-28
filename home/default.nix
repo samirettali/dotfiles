@@ -38,7 +38,6 @@
     aider-chat
     nix-prefetch-github
     nix-init
-    sops
   ];
 
   home.file.".hushlogin".text = "";
