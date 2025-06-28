@@ -78,10 +78,6 @@ in {
       };
     };
 
-    zsh.shellAliases = {
-      assume = "source assume";
-    };
-
     granted.enable = true;
   };
 
