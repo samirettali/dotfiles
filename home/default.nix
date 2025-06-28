@@ -38,6 +38,7 @@
     aider-chat
     nix-prefetch-github
     nix-init
+    nix-update
   ];
 
   home.file.".hushlogin".text = "";
