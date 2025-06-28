@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  inputs,
   ...
 }: let
   codex = pkgs.callPackage ./codex.nix {};
@@ -102,7 +101,7 @@ in {
     fzf.enable = true;
     neovim = {
       enable = lib.mkDefault true;
-      package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+      package = pkgs.neovim;
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
