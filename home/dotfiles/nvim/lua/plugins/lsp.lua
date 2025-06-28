@@ -22,19 +22,6 @@ return {
 					return
 				end
 
-				-- Example 1
-				--   vim.opt.foldmethod = 'expr'
-				-- if client:supports_method('textDocument/foldingRange') and vim.lsp.foldexpr then
-				--   vim.opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
-				--   vim.opt.foldtext = 'v:lua.vim.lsp.foldtext()'
-				-- elseif vim.treesitter.foldexpr then
-				--   vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-				--   vim.opt.foldtext = ''
-				-- else
-				--   vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-				--   vim.opt.foldtext = ''
-				-- end
-
 				if client:supports_method(methods.textDocument_foldingRange) then
 					local fold_opts = { scope = "local" }
 
@@ -135,6 +122,7 @@ return {
 				-- 		vim.diagnostic.jump(prev_opts)
 				-- 	end, default_opts)
 				-- end
+				-- -- TODO map [D ]D and [E and ]E
 
 				if client:supports_method(methods.textDocument_implementation, args.buf) then
 					vim.keymap.set("n", "gi", telescope.lsp_implementations, default_opts)
