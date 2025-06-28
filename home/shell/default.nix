@@ -21,7 +21,6 @@
 in {
   imports = [
     ./fish.nix
-    ./fzf.nix
     ./git.nix
     ./lazydocker.nix
     ./lazygit.nix
@@ -101,6 +100,7 @@ in {
       };
     };
     direnv.enable = true;
+    fzf.enable = true;
     neovim = {
       enable = lib.mkDefault true;
       package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
