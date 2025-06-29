@@ -111,12 +111,12 @@
       };
     })
     (withExtension pkgs.vscode-marketplace.github.copilot {
-      "github.copilot" = {
-        "enable" = {
-          "*" = true;
-        };
-        "nextEditSuggestions.enabled" = true;
+      "github.copilot.enable" = {
+        "*" = true;
+        "plaintext" = true;
+        "markdown" = true;
       };
+      "github.copilot.nextEditSuggestions.enabled" = true;
     })
     (withExtension pkgs.vscode-marketplace.jnoortheen.nix-ide {
       "nix.formatterPath" = "alejandra";
@@ -137,9 +137,6 @@ in {
   programs = {
     vscode = {
       enable = true;
-      # package = pkgs.vscode.override {
-      #   isInsiders = true;
-      # };
       mutableExtensionsDir = false;
       profiles.default = {
         enableExtensionUpdateCheck = false;
