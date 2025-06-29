@@ -18,7 +18,6 @@
       "displayplacer"
     ];
     casks = [
-      "cursor"
       "docker-desktop"
       "eqmac"
       "maccy"

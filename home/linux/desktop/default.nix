@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./wm
   ];
@@ -12,7 +8,6 @@
   };
 
   home.packages = with pkgs; [
-    code-cursor
     ledger-live-desktop
     lmstudio
     redisinsight

@@ -31,6 +31,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    samirettali-nur = {
+      url = "github:samirettali/nur-packages";
+      # url = "path:/Users/s.ettali/proj/nur";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,6 +53,7 @@
     darwin,
     home-manager,
     nix-vscode-extensions,
+    samirettali-nur,
     ...
   } @ inputs: let
     inherit (nixpkgs) lib;
@@ -92,6 +99,7 @@
         nur.overlays.default
         foundry.overlay
         nix-vscode-extensions.overlays.default
+        samirettali-nur.overlays.default
       ];
       config = {
         allowUnfree = true;
@@ -144,6 +152,7 @@
       users.${user.name} = {
         imports =
           [
+            inputs.samirettali-nur.homeManagerModules.default
             ./home
           ]
           ++ extraModules;

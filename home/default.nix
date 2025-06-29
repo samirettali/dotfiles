@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -36,8 +35,9 @@
 
   home.packages = with pkgs; [
     aider-chat
-    nix-prefetch-github
+    cursor
     nix-init
+    nix-prefetch-github
     nix-update
   ];
 
