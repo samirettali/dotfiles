@@ -12,10 +12,6 @@ if hs.fs.attributes("playground.lua") then
 	require("playground")
 end
 
-hs.loadSpoon("Hammerflow")
-spoon.Hammerflow.loadFirstValidTomlFile({
-	"hammerflow.toml",
-})
 
 local SkyRocket = hs.loadSpoon("SkyRocket")
 sky = SkyRocket:new({

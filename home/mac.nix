@@ -10,12 +10,12 @@
   ];
 
   home.file = {
-    ".hammerspoon/Spoons/Hammerflow.spoon" = {
+    ".hammerspoon/Spoons/RecursiveBinder.spoon" = {
       source = pkgs.fetchFromGitHub {
         owner = "samirettali";
-        repo = "Hammerflow.spoon";
+        repo = "RecursiveBinder.spoon";
         rev = "main";
-        sha256 = "sha256-Tk0SNGQ6hiINmNxJj9jZIXuc1v2eKz/dE68ejOeztFc=";
+        sha256 = "sha256-KcxZzYpfuCZy6p+ixvGJszKrRplPsXrr1ICfCw2k1xM=";
       };
     };
     ".hammerspoon/Spoons/ControlEscape.spoon" = {
