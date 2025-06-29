@@ -1,8 +1,6 @@
 {
   lib,
   pkgs,
-  config,
-  inputs,
   ...
 }: {
   home.packages =
@@ -30,7 +28,6 @@
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       (pkgs.writeShellScriptBin "passbemenu" (builtins.readFile dotfiles/scripts/passbemenu.sh))
-      (pkgs.writeShellScriptBin "scratchpad" (builtins.readFile dotfiles/scripts/scratchpad.sh))
       (pkgs.writeShellScriptBin "screenshot" (builtins.readFile dotfiles/scripts/screenshot.sh))
     ];
 
@@ -45,24 +42,5 @@
         recursive = true;
       };
     }
-    (lib.mkIf pkgs.stdenv.isLinux {
-      ".bin/passbemenu".source = dotfiles/scripts/passbemenu.sh;
-      ".bin/scratchpad".source = dotfiles/scripts/scratchpad.sh;
-      ".bin/screenshot".source = dotfiles/scripts/screenshot.sh;
-    })
-    (lib.mkIf pkgs.stdenv.isDarwin {
-      ".hammerspoon" = {
-        source = dotfiles/hammerspoon;
-        recursive = true;
-      };
-      ".config/sketchybar" = {
-        source = dotfiles/sketchybar;
-        recursive = true;
-      };
-    })
-  ];
-
-  home.sessionPath = [
-    "${config.home.homeDirectory}/.bin"
   ];
 }

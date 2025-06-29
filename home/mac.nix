@@ -4,8 +4,8 @@
   ...
 }: {
   home.packages = with pkgs; [
-    nur.repos.natsukium.hammerspoon
     asitop
+    nur.repos.natsukium.hammerspoon
     # docker
   ];
 
@@ -48,7 +48,14 @@
     };
   };
 
-  # home.sessionPath = [
-  #   "${config.home.homeDirectory}/.orbstack/bin"
-  # ];
+  home.file = {
+    ".hammerspoon" = {
+      source = dotfiles/hammerspoon;
+      recursive = true;
+    };
+    ".config/sketchybar" = {
+      source = dotfiles/sketchybar;
+      recursive = true;
+    };
+  };
 }
