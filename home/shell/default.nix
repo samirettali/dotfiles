@@ -54,6 +54,7 @@ in {
     fd
     fx
     gh
+    gnused
     gping
     graphviz
     gum
