@@ -20,7 +20,7 @@
   home.sessionVariables = {
     DEFAULT_BROWSER = "chrome";
     TERMINAL = "ghostty";
-    MANPAGER = "${lib.getExe inputs.neovim-nightly-overlay.packages.${pkgs.system}.default} -c 'Man!' -";
+    MANPAGER = "${lib.getExe pkgs.neovim} -c 'Man!' -";
   };
 
   programs = {
