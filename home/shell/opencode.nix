@@ -27,6 +27,8 @@
           };
         };
       };
+      "autoshare" = false;
+      "autoupdate" = false;
       # TODO: setting mpcs break opencode somehow
       # mcp = {
       #   context7 = {
