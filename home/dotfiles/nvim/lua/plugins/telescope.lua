@@ -105,9 +105,6 @@ return {
 				builtin.grep_string({ search = word })
 			end)
 
-			vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols)
-			vim.keymap.set("n", "<leader>ws", builtin.lsp_dynamic_workspace_symbols)
-			vim.keymap.set("n", "gR", builtin.lsp_references)
 			vim.keymap.set("n", "<leader>fh", builtin.help_tags)
 			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
 			vim.keymap.set("n", "<leader>fk", builtin.keymaps)

@@ -1,5 +1,19 @@
 local methods = vim.lsp.protocol.Methods
 
+local function disable_default_keymaps(bufnr)
+	local default_keymaps = {
+		"grr",
+		"gra",
+		"grn",
+		"gri",
+		"grt",
+	}
+
+	for _, keymap in ipairs(default_keymaps) do
+		vim.keymap.del("n", keymap, { buffer = bufnr })
+	end
+end
+
 return {
 	dependencies = {
 		"nvim-telescope/telescope.nvim",
@@ -21,6 +35,8 @@ return {
 					error("LSP client not found")
 					return
 				end
+
+				disable_default_keymaps(args.buf)
 
 				if client:supports_method(methods.textDocument_foldingRange) then
 					local fold_opts = { scope = "local" }
@@ -55,10 +71,8 @@ return {
 				end
 
 				if client:supports_method(methods.textDocument_definition) then
-					-- vim.keymap.set("n", "gd", telescope.lsp_definitions, default_opts) -- telescope is not working right now
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, default_opts)
 					vim.keymap.set("n", "GD", function()
-						-- TODO: this is not working properly
 						telescope.lsp_definitions({ jump_type = "vsplit" })
 					end, default_opts)
 				end
@@ -91,12 +105,8 @@ return {
 					vim.keymap.set("n", "gR", telescope.lsp_references)
 				end
 
-				if client:supports_method(methods.textDocument_references) then
-					vim.keymap.set("n", "gR", telescope.lsp_references)
-				end
-
 				if client:supports_method(methods.textDocument_signatureHelp) then
-					vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, default_opts)
+					vim.keymap.set("i", "<C-s>", vim.lsp.buf.signature_help, default_opts)
 				end
 
 				if client:supports_method(methods.callHierarchy_incomingCalls) then
@@ -104,6 +114,7 @@ return {
 				end
 
 				if client:supports_method(methods.callHierarchy_outgoingCalls) then
+					-- TODO: gO is conflicting with telescope
 					vim.keymap.set("n", "gO", telescope.lsp_outgoing_calls, default_opts)
 				end
 
