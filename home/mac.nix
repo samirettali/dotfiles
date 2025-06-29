@@ -31,7 +31,7 @@
         owner = "samirettali";
         repo = "SkyRocket.spoon";
         rev = "main";
-        sha256 = "sha256-AJEuFRRF21jm3dWW2cO+r7Attxcs28NTqJhdLsV3fkw=";
+        sha256 = "sha256-ltRQ3DV+Krp02VdvPHNifUjyiZ0Jke+er4HN3hR9xYk=";
       };
     };
   };
