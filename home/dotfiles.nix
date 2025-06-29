@@ -17,15 +17,15 @@
         set -euo pipefail
 
         if [ -z "$1" ]; then
-            echo "Usage: zvim <target>"
+            echo "Usage: zv <target>"
             exit 1
         fi
 
-        target=$(${lib.getExe pkgs.zoxide} query -l)
+        target=$(${lib.getExe pkgs.zoxide} query "''${1}")
 
         cd "''${target}" || exit 1
 
-        ${lib.getExe inputs.neovim-nightly-overlay.packages.${pkgs.system}.default} .
+        ${lib.getExe pkgs.neovim} .
       '')
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
