@@ -4,19 +4,6 @@
   ...
 }: let
   codex = pkgs.callPackage ./codex.nix {};
-  gemini-cli = pkgs.callPackage ./gemini-cli.nix {};
-  gemini-cli-unbundled = gemini-cli.overrideAttrs (oldAttrs: {
-    postInstall =
-      (oldAttrs.postInstall or "")
-      + ''
-        echo "Removing bundled eslint from gemini-cli to prevent collision"
-        rm -rf $out/lib/node_modules/eslint
-
-        # Also remove the symlink that points to the now-deleted directory.
-        # We use -f to prevent an error if the symlink doesn't exist for some reason.
-        rm -f $out/lib/node_modules/.bin/eslint
-      '';
-  });
 
   iredisPkgs =
     import (builtins.fetchGit {
@@ -53,6 +40,7 @@ in {
     diskus
     fd
     fx
+    gemini-cli
     gh
     gnused
     gping
@@ -66,7 +54,6 @@ in {
     jq
     jqp
     kaf
-    gemini-cli-unbundled # TODO: wait for nixpkgs
     kcat
     lazysql
     libqalculate
