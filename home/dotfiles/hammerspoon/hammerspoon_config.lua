@@ -1,13 +1,13 @@
 local lib = require("lib")
 
 local alertStyle = {
-	strokeWidth = 4,
-	strokeColor = { white = 0.9, alpha = 0.9 },
+	strokeWidth = 8,
+	strokeColor = { white = 1, alpha = 1 },
 	fillColor = { white = 0, alpha = 1 },
-	textColor = { white = 0.9 },
+	textColor = { white = 1, alpha = 1 },
 	textFont = "JetBrainsMono Nerd Font",
 	textSize = 20,
-	padding = 20,
+	padding = 40,
 	radius = 24,
 	fadeInDuration = 0,
 	fadeOutDuration = 0,
