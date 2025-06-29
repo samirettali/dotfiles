@@ -5,10 +5,12 @@ require("bindings")
 require("hammerspoon_config")
 require("disable_keyboard")
 require("disable_shortcuts")
-pcall(require("playground"))
 
 hs.loadSpoon("EmmyLua"):init()
 hs.loadSpoon("ControlEscape"):start()
+if hs.fs.attributes("playground.lua") then
+	require("playground")
+end
 
 hs.loadSpoon("Hammerflow")
 spoon.Hammerflow.loadFirstValidTomlFile({
