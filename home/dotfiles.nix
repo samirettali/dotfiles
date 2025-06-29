@@ -39,7 +39,6 @@
       ".ideavimrc".source = dotfiles/ideavimrc;
       ".Xdefaults".source = dotfiles/Xdefaults;
       "revive.toml".source = dotfiles/revive.toml;
-      ".config/ghostty/config".source = dotfiles/ghostty; # TODO: use lib.generators.toINI {}
 
       ".config/nvim" = {
         source = dotfiles/nvim;

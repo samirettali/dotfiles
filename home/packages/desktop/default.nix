@@ -10,6 +10,7 @@ in {
     ./alacritty.nix
     ./espanso.nix
     ./firefox
+    ./ghostty.nix
     ./kitty.nix
     ./mpv.nix
     ./vscode.nix

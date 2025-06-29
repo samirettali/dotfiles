@@ -1,13 +1,14 @@
 {
-  config,
   lib,
   pkgs,
   ...
 }: {
   home.packages = with pkgs; [
+    nur.repos.natsukium.hammerspoon
     asitop
     # docker
   ];
+
   home.file = {
     ".hammerspoon/Spoons/Hammerflow.spoon" = {
       source = pkgs.fetchFromGitHub {
