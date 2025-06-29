@@ -48,7 +48,7 @@
                   template = "https://mynixos.com/search?q={searchTerms}";
                 }
               ];
-              icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              # icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg"; # TODO: this is broken
               definedAliases = ["@n"];
             };
             "NixOS Wiki" = {
