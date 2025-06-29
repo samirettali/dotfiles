@@ -16,7 +16,6 @@
     ledger-live-desktop
     lmstudio
     redisinsight
-    inputs.ghostty.packages."${pkgs.system}".default
   ];
 
   # TODO:
