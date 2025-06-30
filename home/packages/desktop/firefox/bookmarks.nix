@@ -328,6 +328,10 @@
                 url = "https://stitch.withgoogle.com";
               }
               {
+                name = "Chronicle";
+                url = "https://chroniclehq.com/";
+              }
+              {
                 name = "Gamma (presentations)";
                 url = "https://gamma.app";
               }
@@ -338,6 +342,14 @@
               {
                 name = "BetterDictation (speech to text)";
                 url = "https://betterdictation.com";
+              }
+              {
+                name = "DeepWiki";
+                url = "https://deepwiki.com/";
+              }
+              {
+                name = "GitDiagram";
+                url = "https://gitdiagram.com/";
               }
               {
                 name = "Jenni (research)";
