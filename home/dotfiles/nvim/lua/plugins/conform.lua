@@ -25,6 +25,7 @@ return {
 				toml = { "taplo" },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
 				yaml = { "yamlfmt" },
+				wgsl = { "wgslfmt" },
 				["*"] = { "codespell" },
 				["_"] = { "trim_whitespace" }, -- fallback
 			},
