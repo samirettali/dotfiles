@@ -3,8 +3,6 @@
   pkgs,
   ...
 }: let
-  codex = pkgs.callPackage ./codex.nix {};
-
   iredisPkgs =
     import (builtins.fetchGit {
       name = "iredis115";
