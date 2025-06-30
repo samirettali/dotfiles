@@ -209,7 +209,6 @@ return {
 					gopls = {
 						analyses = {
 							shadow = true,
-							composites = false, -- TODO: disable for single projects
 						},
 						codelenses = {
 							test = true,

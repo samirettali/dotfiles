@@ -69,11 +69,6 @@ in {
           };
           "csharpier.dev.useCustomPath" = true;
           "csharpier.dev.customPath" = "${pkgs.csharpier}/bin";
-          "gopls" = {
-            "analyses" = {
-              "composites" = false;
-            };
-          };
         };
       };
     };
