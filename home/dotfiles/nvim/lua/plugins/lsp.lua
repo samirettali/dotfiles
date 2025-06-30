@@ -2,11 +2,11 @@ local methods = vim.lsp.protocol.Methods
 
 local function disable_default_keymaps(bufnr)
 	local default_keymaps = {
-		"grr",
-		"gra",
-		"grn",
-		"gri",
-		"grt",
+		-- "grr",
+		-- "gra",
+		-- "grn",
+		-- "gri",
+		-- "grt",
 	}
 
 	for _, keymap in ipairs(default_keymaps) do
@@ -36,6 +36,7 @@ return {
 					return
 				end
 
+                -- TODO: these seems to not be mapped here
 				disable_default_keymaps(args.buf)
 
 				if client:supports_method(methods.textDocument_foldingRange) then
