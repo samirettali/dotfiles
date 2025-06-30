@@ -34,7 +34,6 @@
   };
 
   home.packages = with pkgs; [
-    aider-chat
     cursor
     nix-init
     nix-prefetch-github
