@@ -3,7 +3,9 @@ return {
 	"tommcdo/vim-exchange", -- Exchange two objects
 	"tpope/vim-surround", -- Add surround object for editing
 	{ "echasnovski/mini.ai", config = true }, -- Extend textobjects
-	{ "stevearc/oil.nvim", config = true }, -- File manager
+	{ "stevearc/oil.nvim", opts = {
+		delete_to_trash = true,
+	} },
 	{
 		"mawkler/refjump.nvim",
 		-- keys = { "]r", "[r" }, -- Uncomment to lazy load
