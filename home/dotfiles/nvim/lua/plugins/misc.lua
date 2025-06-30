@@ -7,7 +7,7 @@ return {
 		delete_to_trash = true,
 	} },
 	{
-		"mawkler/refjump.nvim",
+		"mawkler/refjump.nvim", -- TODO: investigate this
 		-- keys = { "]r", "[r" }, -- Uncomment to lazy load
 		opts = {},
 	},
