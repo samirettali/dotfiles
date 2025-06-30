@@ -29,10 +29,10 @@ in {
 
   home.packages = with pkgs; [
     bat
-    bombardier
+    # bombardier # http load testing
     broot
     codex
-    ctop
+    # ctop # docket container monitoring
     curl
     difftastic
     diskus
@@ -41,13 +41,13 @@ in {
     gemini-cli
     gh
     gnused
-    gping
+    # gping # graphical ping
     graphviz
     gum
-    hexyl
-    htop
-    httptap
-    hwatch
+    hexyl # hex viewer
+    # hto
+    # httptap
+    hwatch # watch alternative with diff snapshots
     iredis115 # TODO: upstream is broken
     jq
     jqp
@@ -55,34 +55,34 @@ in {
     kcat
     lazysql
     libqalculate
-    lla
-    lnav
+    # lla # modern ls
+    # lnav # log navigation
     moreutils
-    mprocs
+    # mprocs # multiple processes
     ncdu
-    ngrok
+    ngrok # tunneling
     p7zip
     pgcli
     plumber
     repomix
     ripgrep
     rlwrap
-    scc
-    sesh
+    # scc # count lines of code
+    sesh # TODO: this is slow
     sqlite
-    superfile
-    tabview
+    # superfile
+    # tabview # csv viewer, maybe keep visidata
     tldr
     tmux
     tree
     unzip
-    vegeta
-    viddy
+    # vegeta # http load testing
+    viddy # watch alternative with diff (not snapshots)
     visidata
-    watchexec
+    watchexec # watch folder for changes and execute command
     wuzz
-    xan
-    yazi
+    xan # csv processing
+    yazi # file manager
     yt-dlp
     yubikey-manager
   ];
