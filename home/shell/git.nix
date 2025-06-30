@@ -71,13 +71,14 @@ in {
       };
       ignores = [
         "*.env"
-        ".env*"
         ".DS_Store"
-        "node_modules"
-        "/target"
+        ".env*"
         ".idea"
-        "Session.vim"
         ".opencode"
+        "/target"
+        "Session.vim"
+        "__debug_bin*"
+        "node_modules"
       ];
       signing.format = "ssh";
       includes = [
