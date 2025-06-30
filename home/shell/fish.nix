@@ -31,15 +31,9 @@ in {
       }
     ];
     shellAliases = {
-      dcd = "docker compose down";
-      dci = "docker compose inspect";
-      dcl = "docker compose logs";
-      dcr = "docker compose restart";
-      dcs = "docker compose stop";
-      dcu = "docker compose up -d";
       iip = "dig +short myip.opendns.com @resolver1.opendns.com";
-      jj = "${customArgs.commands.paste} | jq -r | ${customArgs.commands.copy}";
-      jjj = "${customArgs.commands.paste} | jq -r";
+      jj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r | ${customArgs.commands.copy}";
+      jjj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r";
       localip = "ipconfig getifaddr en0";
       ls = ''${lib.getExe' pkgs.coreutils "ls"} --color=auto --group-directories-first --indicator-style none'';
       ns = "nix-shell --run fish -p";

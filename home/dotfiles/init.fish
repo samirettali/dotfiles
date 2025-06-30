@@ -191,3 +191,35 @@ function dcu
         docker-compose -f $argv[1] up -d
     end
 end
+
+function dcs
+    if string-empty $argv[1]
+        docker-compose stop
+    else
+        docker-compose -f $argv[1] stop
+    end
+end
+
+function dcr
+    if string-empty $argv[1]
+        docker-compose restart
+    else
+        docker-compose -f $argv[1] restart
+    end
+end
+
+function dci
+    if string-empty $argv[1]
+        docker-compose inspect
+    else
+        docker-compose -f $argv[1] inspect
+    end
+end
+
+function dcl
+    if string-empty $argv[1]
+        docker-compose logs
+    else
+        docker-compose -f $argv[1] logs
+    end
+end
