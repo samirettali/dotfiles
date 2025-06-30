@@ -36,7 +36,7 @@ return {
 					return
 				end
 
-                -- TODO: these seems to not be mapped here
+				-- TODO: these seems to not be mapped here
 				disable_default_keymaps(args.buf)
 
 				if client:supports_method(methods.textDocument_foldingRange) then
