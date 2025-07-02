@@ -34,7 +34,7 @@
   };
 
   home.packages = with pkgs; [
-    cursor
+    code-cursor
     nix-init
     nix-prefetch-github
     nix-update

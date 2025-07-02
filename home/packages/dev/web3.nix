@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    foundry-bin
+    foundry
     go-ethereum
     nur.repos.gabr1sr.vscode-solidity-server
     slither-analyzer

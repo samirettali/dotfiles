@@ -21,11 +21,6 @@
 
     ghostty.url = "github:ghostty-org/ghostty";
 
-    foundry = {
-      url = "github:shazow/foundry.nix/monthly";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,7 +28,6 @@
 
     samirettali-nur = {
       url = "github:samirettali/nur-packages";
-      # url = "path:/Users/s.ettali/proj/nur";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -97,7 +91,6 @@
       overlays = with inputs; [
         neovim-nightly-overlay.overlays.default
         nur.overlays.default
-        foundry.overlay
         nix-vscode-extensions.overlays.default
         samirettali-nur.overlays.default
       ];
