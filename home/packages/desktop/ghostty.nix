@@ -26,7 +26,7 @@
       macos-titlebar-proxy-icon = "hidden";
       macos-titlebar-style = "tabs";
       theme = "Builtin Dark";
-      title = " ";
+      title = ''" "'';
     };
   };
 }
