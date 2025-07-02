@@ -45,6 +45,7 @@
       "workbench.navigationControl.enabled" = false;
 
       "git.confirmSync" = false;
+      "git.openRepositoryInParentFolders" = "always";
 
       "debug.onTaskErrors" = "showErrors";
 
