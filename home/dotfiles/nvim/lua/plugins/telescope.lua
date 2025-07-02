@@ -35,7 +35,6 @@ return {
 			"nvim-telescope/telescope-ui-select.nvim",
 			"nvim-telescope/telescope-frecency.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-			"nvim-telescope/telescope-file-browser.nvim",
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -78,9 +77,6 @@ return {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
 					},
-					file_browser = {
-						theme = "ivy",
-					},
 				},
 			}
 
@@ -89,7 +85,6 @@ return {
 			telescope.load_extension("fzf")
 			telescope.load_extension("ui-select")
 			telescope.load_extension("frecency")
-			telescope.load_extension("file_browser")
 
 			local builtin = require("telescope.builtin")
 
@@ -114,10 +109,6 @@ return {
 			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
 			vim.keymap.set("n", "<leader>fk", builtin.keymaps)
 			vim.keymap.set("n", "<leader>fm", builtin.marks)
-
-			vim.keymap.set("n", "<space>fb", function()
-				require("telescope").extensions.file_browser.file_browser()
-			end)
 
 			telescope.setup(options)
 		end,
