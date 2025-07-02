@@ -24,6 +24,8 @@
       "editor.inlineSuggest.suppressSuggestions" = true;
       "editor.inlayHints.enabled" = "offUnlessPressed";
 
+      "terminal.integrated.fontSize" = 13;
+
       "diffEditor.ignoreTrimWhitespace" = false;
 
       "files.exclude" = {
