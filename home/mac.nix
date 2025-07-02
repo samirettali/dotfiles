@@ -26,14 +26,6 @@
         sha256 = "sha256-aTCjdTdDOQMFcML4/C2M7dBPwkI4paOjQR7euNDRuao=";
       };
     };
-    ".hammerspoon/Spoons/SkyRocket.spoon" = {
-      source = pkgs.fetchFromGitHub {
-        owner = "samirettali";
-        repo = "SkyRocket.spoon";
-        rev = "main";
-        sha256 = "sha256-ltRQ3DV+Krp02VdvPHNifUjyiZ0Jke+er4HN3hR9xYk=";
-      };
-    };
   };
 
   programs = {

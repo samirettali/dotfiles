@@ -12,10 +12,3 @@ hs.loadSpoon("ControlEscape"):start()
 if hs.fs.attributes("playground.lua") then
 	require("playground")
 end
-
-local SkyRocket = hs.loadSpoon("SkyRocket")
-sky = SkyRocket:new({
-	resizeModifiers = { "cmd", "ctrl" },
-	resizeMouseButton = "right",
-	focusWindowOnClick = true,
-})
