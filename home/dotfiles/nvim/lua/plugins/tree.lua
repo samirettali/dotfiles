@@ -7,7 +7,7 @@ return {
 		renderer = {
 			icons = {
 				show = {
-					git = false,
+					git = true,
 				},
 			},
 		},
