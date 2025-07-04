@@ -79,6 +79,7 @@ in {
     # vegeta # http load testing
     viddy # watch alternative with diff (not snapshots)
     visidata
+    vi-mongo # mongodb cli
     watchexec # watch folder for changes and execute command
     wuzz
     xan # csv processing
