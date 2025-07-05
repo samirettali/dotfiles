@@ -244,6 +244,14 @@
         {
           check-further-callbacks = true;
           "if" = {
+            app-id = "org.mozilla.firefox";
+            window-title-regex-substring = "Extension: (MetaMask) - MetaMask";
+          };
+          run = ["layout floating"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
             window-title-regex-substring = "winit window";
           };
           run = ["layout floating"];
