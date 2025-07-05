@@ -73,7 +73,6 @@ in {
     # superfile
     # tabview # csv viewer, maybe keep visidata
     tldr
-    tmux
     tree
     unzip
     # vegeta # http load testing

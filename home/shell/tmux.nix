@@ -2,8 +2,13 @@
   config,
   lib,
   pkgs,
+  samirettali-nur,
   ...
-}: {
+}: let
+  tmux-rs = samirettali-nur.packages.${pkgs.system}.tmux-rs;
+in {
+  home.packages = [tmux-rs];
+
   programs.tmux = {
     aggressiveResize = true;
     enable = true;
@@ -15,15 +20,9 @@
     newSession = false;
     plugins = with pkgs.tmuxPlugins; [
       vim-tmux-navigator
-      t-smart-tmux-session-manager
     ];
     shortcut = "a";
   };
-
-  # TODO: check if this is needed
-  home.sessionPath = [
-    "${pkgs.tmuxPlugins.t-smart-tmux-session-manager}/share/tmux-plugins/t-smart-tmux-session-manager/bin"
-  ];
 
   programs.fish.shellAliases = lib.mkIf config.programs.tmux.enable {
     tl = "${lib.getExe pkgs.tmux} ls";
