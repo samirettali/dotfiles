@@ -23,23 +23,6 @@
           OfferToSaveLoginsDefault = false;
         };
       });
-      profiles.work = {
-        isDefault = false;
-        id = 1;
-        path = "work";
-        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-          granted
-          metamask
-          ublock-origin
-          vimium-c
-        ];
-        settings = {
-          # Reopen previous tabs
-          "browser.startup.page" = 3;
-          "app.update.auto" = false;
-          "browser.ctrlTab.recentlyUsedOrder" = false;
-        };
-      };
       profiles.samir = {
         # path = "profiles/samir"; # TODO: backup the profile first
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -47,8 +30,12 @@
           clearurls
           copy-selection-as-markdown
           darkreader
+          granted
           keepassxc-browser
+          lastpass-password-manager
           linkding-extension
+          metamask
+          multi-account-containers
           sponsorblock
           switchyomega
           tampermonkey
