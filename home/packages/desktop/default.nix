@@ -4,6 +4,7 @@
     ./espanso.nix
     ./firefox
     ./ghostty.nix
+    ./keepassxc.nix
     ./kitty.nix
     ./mpv.nix
     ./vscode.nix
@@ -15,10 +16,4 @@
     discord
     spotify
   ];
-
-  programs = {
-    keepassxc = {
-      enable = true;
-    };
-  };
 }
