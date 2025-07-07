@@ -79,6 +79,7 @@ in {
         "Session.vim"
         "__debug_bin*"
         "node_modules"
+        "__pycache__"
       ];
       signing.format = "ssh";
       includes = [
