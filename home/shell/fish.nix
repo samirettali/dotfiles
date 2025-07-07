@@ -35,7 +35,6 @@ in {
       jj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r | ${customArgs.commands.copy}";
       jjj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r";
       localip = "ipconfig getifaddr en0";
-      ls = ''${lib.getExe' pkgs.coreutils "ls"} --color=auto --group-directories-first --indicator-style none'';
       ns = "nix-shell --run fish -p";
       rm = lib.getExe pkgs.trash-cli;
     };

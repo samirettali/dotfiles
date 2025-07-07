@@ -18,6 +18,15 @@
     enableFishIntegration = config.programs.fish.enable;
   };
 
+  programs = {
+    zsh.shellAliases = {
+      ls = "${lib.getExe' pkgs.uutils-coreutils-noprefix "ls"} --color=always --group-directories-first";
+    };
+    fish.shellAliases = {
+      ls = "${lib.getExe' pkgs.uutils-coreutils-noprefix "ls"} --color=always --group-directories-first";
+    };
+  };
+
   home.sessionVariables = {
     DEFAULT_BROWSER = "firefox";
     TERMINAL = "ghostty";

@@ -74,6 +74,7 @@ in {
     # tabview # csv viewer, maybe keep visidata
     tldr
     tree
+    uutils-coreutils-noprefix
     unzip
     # vegeta # http load testing
     viddy # watch alternative with diff (not snapshots)

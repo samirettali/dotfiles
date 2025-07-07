@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     asitop
     nur.repos.natsukium.hammerspoon
@@ -34,9 +30,6 @@
       initContent = ''
         eval "$(/opt/homebrew/bin/brew shellenv)"
       '';
-      shellAliases = {
-        ls = "${lib.getExe' pkgs.coreutils "ls"} --color=auto --group-directories-first --indicator-style none";
-      };
     };
   };
 
