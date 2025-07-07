@@ -27,7 +27,7 @@
     };
 
     samirettali-nur = {
-      url = "github:samirettali/nur-packages";
+      url = "github:samirettali/nur";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -45,6 +45,11 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    tmux-rs = {
+      url = "github:richardscollin/tmux-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -52,7 +57,6 @@
     darwin,
     home-manager,
     nix-vscode-extensions,
-    samirettali-nur,
     ...
   } @ inputs: let
     inherit (nixpkgs) lib;
@@ -97,7 +101,6 @@
         neovim-nightly-overlay.overlays.default
         nur.overlays.default
         nix-vscode-extensions.overlays.default
-        samirettali-nur.overlays.default
         rust-overlay.overlays.default
       ];
       config = {
@@ -146,6 +149,7 @@
       backupFileExtension = "bak";
       extraSpecialArgs = {
         inherit inputs;
+        inherit (inputs) samirettali-nur tmux-rs;
         inherit (mkCustomArgs pkgs) customArgs;
       };
       users.${user.name} = {
