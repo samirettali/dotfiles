@@ -307,6 +307,10 @@
                 name = "Genie";
                 url = "https://cosine.sh";
               }
+              {
+                name = "MySite";
+                url = "https://app.mysite.ai/projects";
+              }
             ];
           }
           {
@@ -469,6 +473,10 @@
               {
                 name = "Pageready";
                 url = "https://aipageready.com";
+              }
+              {
+                name = "Which LLM";
+                url = "https://whichllm.together.ai/use-case";
               }
             ];
           }
