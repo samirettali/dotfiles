@@ -98,7 +98,6 @@ in {
       };
     };
     direnv.enable = true;
-    fzf.enable = true;
     neovim = {
       enable = lib.mkDefault true;
       package = pkgs.neovim;
