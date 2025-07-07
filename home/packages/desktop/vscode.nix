@@ -34,6 +34,8 @@
         "**/.settings" = true;
         "**/.factorypath" = true;
         "**/*.Designer.cs" = true;
+        "**/__pycache__" = true;
+        "**/.ruff_cache" = true;
       };
 
       "telemetry.telemetryLevel" = "off";
