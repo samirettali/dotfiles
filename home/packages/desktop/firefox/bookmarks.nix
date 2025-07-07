@@ -190,6 +190,10 @@
                 url = "https://www.krea.ai/krea-1";
               }
               {
+                name = "Morphic";
+                url = "https://studio.morphic.com";
+              }
+              {
                 name = "Seedream";
                 url = "https://seedream.pro";
               }
