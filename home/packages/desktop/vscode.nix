@@ -169,6 +169,7 @@ in {
           supermaven.supermaven
           vscodevim.vim
           wgsl-analyzer.wgsl-analyzer
+          anthropic.claude-code
           # vadimcn.vscode-lldb # TODO: build is broken
           # augment.vscode-augment
           # continue.continue
