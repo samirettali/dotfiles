@@ -8,6 +8,7 @@
     ./sops.nix
     ./dotfiles.nix
     ./shell
+    ./git-sync.nix
     ./services/default.nix
   ];
 

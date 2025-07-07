@@ -15,17 +15,17 @@ in {
   home.packages = with pkgs; [
     (buildGoModule {
       pname = "git-sync";
-      version = "latest";
+      version = "0.19.0";
       src = fetchFromGitHub {
         owner = "AkashRajpurohit";
         repo = "git-sync";
-        rev = "main";
-        sha256 = "sha256-GBDC6lQGNDE6G8gIYqQPVeqqrGwW/h2ZRhtJU1x+LKo=";
+        rev = "v0.19.0";
+        sha256 = "sha256-MHr4X8bPrbm9YxBSWJ9bHCChlcMFTsUPDliPVzlUFZY=";
       };
       vendorHash = "sha256-VJLdAkONyJiyQTtrZ9xwVXTqpkbHsIbVgOAu2RA62ao=";
     })
   ];
-  ".config/git-sync/config.yaml".text = toYAML {
+  home.file.".config/git-sync/config.yaml".text = toYAML {
     backup_dir = "${config.home.homeDirectory}/git";
     clone_type = "full";
     include_wiki = true;
@@ -60,4 +60,3 @@ in {
     ];
   };
 }
-
