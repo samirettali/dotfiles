@@ -38,6 +38,7 @@
   };
 
   home.packages = with pkgs; [
+    cachix
     code-cursor
     nix-init
     nix-prefetch-github
