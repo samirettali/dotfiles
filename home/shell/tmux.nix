@@ -32,7 +32,7 @@ in {
         c new-window -c '#{pane_current_path}'
 
       bind -r -N "Move window to the left" \
-        '<' swap-window -d -t '{prev}'
+        '<' swap-window -d -t '{previous}'
 
       bind -r -N "Move window to the right" \
         '>' swap-window -d -t '{next}'
@@ -61,8 +61,8 @@ in {
       bind -r -N "Resize the pane right by ${toString cfg.resizeAmount}" \
         L resize-pane -R ${toString cfg.resizeAmount}
 
-      bind r -N "Reload the config" \
-        source-file ~/.tmux.conf \; \
+      bind-N "Reload the config" \
+        r source-file ~/.tmux.conf \; \
         display-message "Config reloaded"
 
       # repeat command in last selected pane
