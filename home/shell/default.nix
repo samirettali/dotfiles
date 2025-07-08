@@ -21,10 +21,10 @@ in {
     ./lazydocker.nix
     ./lazygit.nix
     ./llm.nix
+    ./opencode.nix
     ./pass.nix
     ./tmux.nix
     ./zsh.nix
-    ./opencode.nix # TODO: wait for nixpkgs
   ];
 
   home.packages = with pkgs; [
