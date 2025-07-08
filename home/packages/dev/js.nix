@@ -13,6 +13,7 @@
     pnpm
     prettierd
     yarn
+    nodePackages.js-beautify
   ];
 
   home.sessionPath = [

@@ -14,6 +14,7 @@ return {
 			formatters_by_ft = {
 				cpp = { "clang-format" },
 				cs = { "csharpier" },
+				css = { "css_beautify" },
 				go = { "goimports", "gofumpt" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				lua = { "stylua" },
@@ -24,8 +25,8 @@ return {
 				sh = { "shfmt" },
 				toml = { "taplo" },
 				typescript = { "prettierd", "prettier", stop_after_first = true },
-				yaml = { "yamlfmt" },
 				wgsl = { "wgslfmt" },
+				yaml = { "yamlfmt" },
 				["*"] = { "codespell" },
 				["_"] = { "trim_whitespace" }, -- fallback
 			},
