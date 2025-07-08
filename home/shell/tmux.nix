@@ -72,6 +72,9 @@ in {
       bind -N "Select last window"\
         enter last-window
 
+      bind -N "Open lazygit in a popup" \
+        C-g display-popup -E -d "#{pane_current_path}" -xC -yC -w 80% -h 75% "${lib.getExe pkgs.lazygit}"
+
       set -g renumber-windows on
       set -g allow-rename off
 
