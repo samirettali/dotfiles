@@ -66,7 +66,6 @@ in {
     pgcli
     plumber
     repomix
-    ripgrep
     rlwrap
     # scc # count lines of code
     sesh # TODO: this is slow
