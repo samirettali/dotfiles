@@ -22,6 +22,7 @@ in {
     ./lazygit.nix
     ./llm.nix
     ./opencode.nix
+    ./claude-code.nix
     ./pass.nix
     ./tmux.nix
     ./zsh.nix
@@ -32,7 +33,6 @@ in {
     # bombardier # http load testing
     broot
     codex
-    claude-code
     # ctop # docket container monitoring
     curl
     difftastic
