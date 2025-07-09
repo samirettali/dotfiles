@@ -10,6 +10,6 @@ in {
   ];
 
   home.activation.setupClaudeCode = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ${exe} mcp add --transport http context7 https://mcp.context7.com/mcp
+    ${exe} mcp add --transport http context7 https://mcp.context7.com/mcp > /dev/null
   '';
 }
