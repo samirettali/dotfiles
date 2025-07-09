@@ -73,7 +73,7 @@ in {
       };
     };
 
-    granted.enable = true;
+    # granted.enable = true; # TODO: upstream is broken
   };
 
   home.sessionVariables = {
