@@ -1,10 +1,15 @@
-{...}: {
+{
+  pkgs,
+  samirettali-nur,
+  ...
+}: {
   programs.opencode = {
     enable = true;
+    package = samirettali-nur.packages.${pkgs.system}.opencode;
     settings = {
       "$schema" = "https://opencode.ai/config.json";
       theme = "opencode";
-      disabled_providers = ["anthropic" "google"];
+      disabled_providers = ["google"];
       provider = {
         openrouter = {
           npm = "@openrouter/ai-sdk-provider";
@@ -27,9 +32,9 @@
           };
         };
       };
-      "autoshare" = false;
-      "autoupdate" = false;
-      # TODO: setting mpcs break opencode somehow
+      autoshare = false;
+      autoupdate = false;
+      # TODO: setting MPCs break opencode somehow
       # mcp = {
       #   context7 = {
       #     type = "remote";
