@@ -24,9 +24,11 @@
       font-thicken-strength = 64;
       gtk-titlebar = false;
       macos-titlebar-proxy-icon = "hidden";
-      macos-titlebar-style = "tabs";
+      macos-titlebar-style = "hidden";
       theme = "Builtin Dark";
       title = ''" "'';
+      window-padding-x = 4;
+      window-padding-y = 6;
     };
   };
 }
