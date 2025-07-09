@@ -15,7 +15,7 @@
   };
 
   services = {
-    tailscale.enable = true;
+    # tailscale.enable = true; # TODO: upstream is broken
     karabiner-elements.enable = false;
   };
 
