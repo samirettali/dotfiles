@@ -219,6 +219,10 @@
                 name = "Fish audio";
                 url = "https://fish.audio";
               }
+              {
+                name = "Kyutai";
+                url = "https://kyutai.org/next/tts";
+              }
             ];
           }
           {
@@ -334,6 +338,10 @@
               {
                 name = "Google Stitch";
                 url = "https://stitch.withgoogle.com";
+              }
+              {
+                name = "Director";
+                url = "https://www.director.ai/";
               }
               {
                 name = "Chronicle";
@@ -657,6 +665,14 @@
           {
             name = "Cyberchef";
             url = "https://gchq.github.io/CyberChef";
+          }
+          {
+            name = "JSON space analyzer";
+            url = "https://json-space-analyzer.com/";
+          }
+          {
+            name = "Vanilla JS";
+            url = "http://vanilla-js.com/";
           }
           {
             name = "Firefox settings";
