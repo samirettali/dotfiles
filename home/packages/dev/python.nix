@@ -3,7 +3,7 @@
     basedpyright
     pyrefly
     pyright
-    # python313 # TODO: this is installed along with llm and somehow there's a conflict
+    python313
     ruff
     ty
     uv
