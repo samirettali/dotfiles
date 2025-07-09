@@ -21,15 +21,16 @@ in {
     keyMode = "vi";
     mouse = true;
     focusEvents = true;
-    reverseSplit = true;
     shell = lib.getExe pkgs.fish;
     shortcut = "a";
+    # bind space command-prompt "joinp -s:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
     extraConfig = ''
-      bind space command-prompt "joinp -s:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
-
       unbind c
       bind -N "Create new window with the current path" \
         c new-window -c '#{pane_current_path}'
+
+      bind -N "Create new window with the current path" \
+        C-c new-window -c '#{pane_current_path}'
 
       bind -r -N "Move window to the left" \
         '<' swap-window -d -t '{previous}'
@@ -49,6 +50,20 @@ in {
       bind -N "Full vertical split" \
         V split-window -fh -c '#{pane_current_path}'
 
+      bind -r -N "Select the previous window" C-p select-window -p
+      bind -r -N "Select the previous window" p select-window -p
+      bind -r -N "Select the next window" C-n select-window -n
+      bind -r -N "Select the next window" n select-window -n
+
+      bind -r -N "Select pane to the left of the active pane" C-h select-pane -L
+      bind -r -N "Select pane below the active pane" C-j select-pane -D
+      bind -r -N "Select pane above the active pane" C-k select-pane -U
+      bind -r -N "Select pane to the right of the active pane" C-l select-pane -R
+      bind -r -N "Select pane to the left of the active pane" h select-pane -L
+      bind -r -N "Select pane below the active pane" j select-pane -D
+      bind -r -N "Select pane above the active pane" k select-pane -U
+      bind -r -N "Select pane to the right of the active pane" l select-pane -R
+
       bind -r -N "Resize the pane left by ${toString cfg.resizeAmount}" \
         H resize-pane -L ${toString cfg.resizeAmount}
 
@@ -61,12 +76,8 @@ in {
       bind -r -N "Resize the pane right by ${toString cfg.resizeAmount}" \
         L resize-pane -R ${toString cfg.resizeAmount}
 
-      bind-N "Reload the config" \
-        r source-file ~/.tmux.conf \; \
-        display-message "Config reloaded"
-
       # repeat command in last selected pane
-      bind -n "Repeat command in last pane" \
+      bind -N "Repeat command in last pane" \
         b last-pane \; send-keys Up C-m \; last-pane
 
       bind -N "Select last window"\
