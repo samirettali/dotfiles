@@ -155,7 +155,6 @@
       users.${user.name} = {
         imports =
           [
-            inputs.samirettali-nur.homeManagerModules.default
             ./home
           ]
           ++ extraModules;
