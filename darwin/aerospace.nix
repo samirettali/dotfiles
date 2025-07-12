@@ -126,7 +126,7 @@
           "if" = {
             app-id = "com.jetbrains.datagrip";
           };
-          run = ["move-node-to-workspace 5"];
+          run = ["move-node-to-workspace 6"];
         }
         {
           check-further-callbacks = true;
