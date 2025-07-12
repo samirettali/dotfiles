@@ -7,13 +7,13 @@
 }: let
   cfg = config.programs.tmux;
 in {
-  home.packages = [
+  home.packages = lib.mkIf cfg.enable [
     tmux-rs.packages.${pkgs.system}.default
   ];
 
   programs.tmux = {
+    enable = false;
     aggressiveResize = true;
-    enable = true;
     baseIndex = 1;
     escapeTime = 0;
     historyLimit = 10000;
