@@ -19,7 +19,7 @@ in {
   };
 
   programs.fish.shellAliases = {
-    z = "${lib.getExe zesh} cn $(${lib.getExe zesh} l | ${lib.getExe config.programs.television.package})";
+    ze = "${lib.getExe zesh} cn $(${lib.getExe zesh} l | ${lib.getExe config.programs.television.package})";
     zl = "${lib.getExe config.programs.zellij.package} ls";
     za = "${lib.getExe config.programs.zellij.package} attach -c";
   };
