@@ -24,7 +24,7 @@ return {
 		},
 	},
 	opts = {
-		provider = "openrouter",
+		provider = "copilot",
 		providers = {
 			openrouter = {
 				__inherited_from = "openai",
