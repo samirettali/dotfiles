@@ -42,6 +42,7 @@
           ublock-origin
           vimium-c
         ];
+        userChrome = builtins.readFile ./userChrome.css;
         search = {
           force = true;
           default = "google";
