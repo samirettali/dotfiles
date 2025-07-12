@@ -9,6 +9,10 @@
     "cursor.composer.shouldChimeAfterChatFinishes" = true;
   };
 
+  aliases = {
+    c = lib.getExe config.programs.vscode.package;
+  };
+
   withExtension = ext: settings:
     lib.optionalAttrs (builtins.elem ext config.programs.vscode.profiles.default.extensions) settings;
 
@@ -189,4 +193,9 @@ in {
       };
     };
   };
+
+  programs.fish.shellAliases =
+    lib.mkIf config.programs.vscode.enable aliases;
+
+  programs.zsh.shellAliases = lib.mkIf config.programs.vscode.enable aliases;
 }
