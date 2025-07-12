@@ -33,59 +33,59 @@ in {
 
   home.packages = with pkgs; [
     # bombardier # http load testing
-    broot
-    codex
+    # broot
+    # codex
     # ctop # docket container monitoring
     curl
-    difftastic
-    diskus
+    # difftastic
+    # diskus
     fd
-    fx
+    # fx
     gemini-cli
     gh
     gnused
     # gping # graphical ping
-    graphviz
-    gum
-    hexyl # hex viewer
+    # graphviz
+    # gum
+    # hexyl # hex viewer
     # hto
     # httptap
     hwatch # watch alternative with diff snapshots
     iredis115 # TODO: upstream is broken
     jq
     jqp
-    kaf
+    # kaf
     kcat
     lazysql
-    libqalculate
+    # libqalculate
     # lla # modern ls
     # lnav # log navigation
-    moreutils
+    moreutils # TODO: replace with go-moreutils or rewrite
     # mprocs # multiple processes
     ncdu
     ngrok # tunneling
     p7zip
-    pgcli
-    plumber
+    # pgcli
+    # plumber
     repomix
     rlwrap
     # scc # count lines of code
-    sesh # TODO: this is slow
+    # sesh # TODO: this is slow
     sqlite
     # superfile
     # tabview # csv viewer, maybe keep visidata
-    tldr
+    # tldr
     tree
     uutils-coreutils-noprefix
     unzip
     # vegeta # http load testing
-    viddy # watch alternative with diff (not snapshots)
-    visidata
+    # viddy # watch alternative with diff (not snapshots)
+    # visidata # TODO: the derivation takes ~2.5 GB
     vi-mongo # mongodb cli
     watchexec # watch folder for changes and execute command
-    wuzz
-    xan # csv processing
-    yazi # file manager
+    # wuzz
+    # xan # csv processing
+    # yazi # file manager
     yt-dlp
     yubikey-manager
   ];
