@@ -100,7 +100,6 @@ in {
     direnv.enable = true;
     neovim = {
       enable = lib.mkDefault true;
-      package = pkgs.neovim;
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
