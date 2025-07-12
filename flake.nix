@@ -50,6 +50,11 @@
       url = "github:richardscollin/tmux-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    television = {
+      # https://github.com/alexpasmantier/television
+      url = "github:alexpasmantier/television";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
