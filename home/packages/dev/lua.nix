@@ -1,6 +1,12 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    lua
+    (luajit.withPackages
+      (ps:
+        with ps; [
+          cjson
+          fzy
+          luasocket
+        ]))
     lua-language-server
     stylua
   ];
