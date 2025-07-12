@@ -170,14 +170,15 @@ in {
           rust-lang.rust-analyzer
           saoudrizwan.claude-dev
           sourcegraph.amp
-          supermaven.supermaven
           vscodevim.vim
           wgsl-analyzer.wgsl-analyzer
           anthropic.claude-code
-          # vadimcn.vscode-lldb # TODO: build is broken
+          github.copilot
+          github.copilot-chat
           # augment.vscode-augment
           # continue.continue
-          # github.copilot
+          # supermaven.supermaven
+          # vadimcn.vscode-lldb # TODO: build is broken
         ];
         keybindings = [
           {
