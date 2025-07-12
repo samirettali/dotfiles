@@ -28,6 +28,7 @@ in {
     ./zsh.nix
     ./zellij.nix
     ./bat.nix
+    ./television.nix
   ];
 
   home.packages = with pkgs; [
