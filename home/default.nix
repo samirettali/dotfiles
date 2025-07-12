@@ -42,7 +42,6 @@
     code-cursor
     nix-init
     nix-prefetch-github
-    nix-update
   ];
 
   home.file.".hushlogin".text = "";
