@@ -27,10 +27,10 @@ in {
     ./tmux.nix
     ./zsh.nix
     ./zellij.nix
+    ./bat.nix
   ];
 
   home.packages = with pkgs; [
-    bat
     # bombardier # http load testing
     broot
     codex
