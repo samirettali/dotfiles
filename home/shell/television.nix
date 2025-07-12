@@ -1,19 +1,17 @@
 {
-  config,
   inputs,
-  lib,
   pkgs,
   ...
 }: {
   programs.television = {
     enable = true;
     package = inputs.television.packages.${pkgs.system}.default;
-    # enableFishIntegration = config.programs.fish.enable;
-    enableZshIntegration = config.programs.zsh.enable;
+    settings = {
+      tick_rate = 60;
+      ui = {
+        use_nerd_font_icons = true;
+        features.status_bar.visible = false;
+      };
+    };
   };
-
-  # TODO: upstream is broken
-  programs.fish.interactiveShellInit = lib.mkIf true ''
-    tv init fish | source
-  '';
 }

@@ -51,8 +51,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     television = {
-      # https://github.com/alexpasmantier/television
-      url = "github:alexpasmantier/television";
+      # url = "github:alexpasmantier/television";
+      url = "github:samirettali/television";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
