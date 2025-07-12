@@ -22,26 +22,53 @@ in {
     interactiveShellInit =
       initFile
       + "\n"
-      + ''
-        function gum-file-widget -d "Search files"
-            set -l result (eval ${lib.getExe pkgs.gum} filter)
-            and commandline -rt -- (string join -- ' ' (string escape -- $result))
+      /*
+      fish
+      */
+      ''
+        function vr
+            # Check if ripgrep query was provided
+            if test (count $argv) -eq 0
+                echo "Usage: vr <search_pattern>"
+                return 1
+            end
 
-            commandline -f repaint
+            # Directories to exclude from search
+            set -l excluded_dirs .git .venv venv node_modules __pycache__ .pytest_cache dist build target .next .nuxt coverage .coverage
+
+            # Build glob patterns for excluded directories
+            set -l glob_patterns
+            for dir in $excluded_dirs
+                set -a glob_patterns --glob "!$dir/*"
+            end
+
+            # Run ripgrep and get results, excluding directories
+            set -l rg_results (${lib.getExe pkgs.ripgrep} --vimgrep $glob_patterns $argv)
+
+            # Check if any matches were found
+            if test (count $rg_results) -eq 0
+                echo "No matches found for: $argv"
+                return 1
+            end
+
+            # Get the first match details
+            set -l first_match (echo $rg_results[1])
+            set -l file_path (echo $first_match | cut -d: -f1)
+            set -l line_number (echo $first_match | cut -d: -f2)
+            set -l column_number (echo $first_match | cut -d: -f3)
+
+            # Check if there are multiple matches
+            if test (count $rg_results) -gt 1
+                # Multiple matches: create quickfix file and open with quickfix list
+                set -l qf_file (mktemp)
+                printf "%s\n" $rg_results > $qf_file
+                ${lib.getExe pkgs.neovim} "+call cursor($line_number, $column_number)" "+cgetfile $qf_file" "+copen" "+wincmd p" "$file_path"
+                rm $qf_file
+            else
+                # Single match: just open the file at the exact position
+                ${lib.getExe pkgs.neovim} "+call cursor($line_number, $column_number)" "$file_path"
+            end
         end
-
-        bind \ct gum-file-widget
-        bind -M insert \ct gum-file-widget
-
-        function gum-history-widget -d "Search history"
-            set -l result (eval history -z --max 100 | ${lib.getExe pkgs.gnused} 's/\x0/<new_line_placeholder>/g' | ${lib.getExe pkgs.gum} filter --input-delimiter '<new_line_placeholder>')
-            and commandline -rt -- $result
-
-            commandline -f repaint
-        end
-
-        bind \cr gum-history-widget
-        bind -M insert \cr gum-history-widget
       '';
     plugins = [
       {
