@@ -174,7 +174,7 @@ in {
           wgsl-analyzer.wgsl-analyzer
           anthropic.claude-code
           github.copilot
-          github.copilot-chat
+          github.copilot-chat # FIX: this requires vscode-insiders
           # augment.vscode-augment
           # continue.continue
           # supermaven.supermaven
