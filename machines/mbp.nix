@@ -34,6 +34,12 @@
   # TODO: can this be used in the terminal? and maybe move to common config with linux
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  system.activationScripts.postActivation.text = ''
+    # Avoid having to logout and login to apply the changes
+    # FIX: hardcoded username
+    sudo -u s.ettali /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
+
   system = {
     keyboard = {
       enableKeyMapping = true;
@@ -110,6 +116,21 @@
         Clicking = true;
         Dragging = true;
         TrackpadRightClick = true;
+      };
+
+      CustomUserPreferences = {
+        "com.apple.symbolichotkeys" = {
+          AppleSymbolicHotKeys = {
+            # Disable "Select the previous input source" (Ctrl+Space)
+            "60" = {
+              enabled = false;
+            };
+            # Disable "Select next source in input menu" (Ctrl+Option+Space)
+            "61" = {
+              enabled = false;
+            };
+          };
+        };
       };
     };
   };
