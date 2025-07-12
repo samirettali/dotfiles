@@ -245,7 +245,7 @@
           check-further-callbacks = true;
           "if" = {
             app-id = "org.mozilla.firefox";
-            window-title-regex-substring = "Extension: (MetaMask) - MetaMask";
+            window-title-regex-substring = "Extension: (MetaMask) - MetaMask"; # FIX: the regex is not working
           };
           run = ["layout floating"];
         }
