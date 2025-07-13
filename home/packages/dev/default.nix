@@ -24,7 +24,7 @@
     libiconv
     lld
     lldb # for rust debugging
-    stdenv
+    stdenv # TODO: is this needed?
     taplo
     taplo-lsp
     tree-sitter
