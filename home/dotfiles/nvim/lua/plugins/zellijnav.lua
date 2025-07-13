@@ -4,8 +4,8 @@ return {
 	keys = {
 		{
 			"<c-h>",
-			"<cmd>ZellijNavigateLeftTab<cr>",
-			{ silent = true, desc = "Navigate left or tab" },
+			"<cmd>ZellijNavigateLeft<cr>",
+			{ silent = true, desc = "Navigate left" },
 		},
 		{
 			"<c-j>",
@@ -19,8 +19,8 @@ return {
 		},
 		{
 			"<c-l>",
-			"<cmd>ZellijNavigateRightTab<cr>",
-			{ silent = true, desc = "Navigate right or tab" },
+			"<cmd>ZellijNavigateRight<cr>",
+			{ silent = true, desc = "Navigate right" },
 		},
 	},
 	opts = {},
