@@ -46,10 +46,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    tmux-rs = {
-      url = "github:richardscollin/tmux-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     television = {
       # url = "github:alexpasmantier/television";
       url = "github:samirettali/television";
@@ -154,7 +150,7 @@
       backupFileExtension = "bak";
       extraSpecialArgs = {
         inherit inputs;
-        inherit (inputs) samirettali-nur tmux-rs;
+        inherit (inputs) samirettali-nur;
         inherit (mkCustomArgs pkgs) customArgs;
       };
       users.${user.name} = {

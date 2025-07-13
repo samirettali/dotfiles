@@ -2,15 +2,10 @@
   config,
   lib,
   pkgs,
-  tmux-rs,
   ...
 }: let
   cfg = config.programs.tmux;
 in {
-  home.packages = lib.mkIf cfg.enable [
-    tmux-rs.packages.${pkgs.system}.default
-  ];
-
   programs.tmux = {
     enable = false;
     aggressiveResize = true;
