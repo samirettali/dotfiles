@@ -121,14 +121,9 @@
       CustomUserPreferences = {
         "com.apple.symbolichotkeys" = {
           AppleSymbolicHotKeys = {
-            # Disable "Select the previous input source" (Ctrl+Space)
-            "60" = {
-              enabled = false;
-            };
-            # Disable "Select next source in input menu" (Ctrl+Option+Space)
-            "61" = {
-              enabled = false;
-            };
+            "60" = {enabled = false;}; # Disable "Select the previous input source" (Ctrl+Space)
+            "61" = {enabled = false;}; # Disable "Select next source in input menu" (Ctrl+Option+Space)
+            "64" = {enabled = false;}; # Disable Spotlight (Cmd+Space)
           };
         };
       };
