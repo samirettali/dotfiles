@@ -61,6 +61,13 @@ return {
 			desc = "Grep",
 		},
 		{
+			"<leader>sb",
+			function()
+				Snacks.picker.lines()
+			end,
+			desc = "Buffer Lines",
+		},
+		{
 			"<localleader>fe",
 			function()
 				local opts = {
@@ -75,6 +82,35 @@ return {
 			desc = "File Explorer",
 		},
 		{
+			"<leader>?",
+			function()
+				Snacks.picker.help()
+			end,
+			desc = "Help Pages",
+		},
+		{
+			"<leader>sk",
+			function()
+				Snacks.picker.keymaps()
+			end,
+			desc = "Keymaps",
+		},
+		{
+			"<leader>:",
+			function()
+				Snacks.picker.command_history()
+			end,
+			desc = "Command History",
+		},
+		{
+			"<leader>/",
+			function()
+				Snacks.picker.search_history()
+			end,
+			desc = "Search History",
+		},
+		-- TODO: check the ones below
+		{
 			"<leader>sd",
 			function()
 				Snacks.picker.diagnostics()
@@ -87,14 +123,6 @@ return {
 				Snacks.picker.diagnostics_buffer()
 			end,
 			desc = "Buffer Diagnostics",
-		},
-
-		{
-			"<leader>:",
-			function()
-				Snacks.picker.command_history()
-			end,
-			desc = "Command History",
 		},
 		{
 			"<leader>n",
@@ -148,62 +176,12 @@ return {
 		},
 		-- Grep
 		{
-			"<leader>sb",
-			function()
-				Snacks.picker.lines()
-			end,
-			desc = "Buffer Lines",
-		},
-		{
 			"<leader>sw",
 			function()
 				Snacks.picker.grep_word()
 			end,
 			desc = "Visual selection or word",
 			mode = { "n", "x" },
-		},
-		-- search
-		{
-			"<leader>s/",
-			function()
-				Snacks.picker.search_history()
-			end,
-			desc = "Search History",
-		},
-		{
-			"<leader>sa",
-			function()
-				Snacks.picker.autocmds()
-			end,
-			desc = "Autocmds",
-		},
-		{
-			"<leader>sc",
-			function()
-				Snacks.picker.command_history()
-			end,
-			desc = "Command History",
-		},
-		{
-			"<leader>sh",
-			function()
-				Snacks.picker.help()
-			end,
-			desc = "Help Pages",
-		},
-		{
-			"<leader>sk",
-			function()
-				Snacks.picker.keymaps()
-			end,
-			desc = "Keymaps",
-		},
-		{
-			"<leader>sl",
-			function()
-				Snacks.picker.loclist()
-			end,
-			desc = "Location List",
 		},
 		{
 			"<leader>sm",
@@ -233,7 +211,7 @@ return {
 			end,
 			desc = "Snacks pickers",
 		},
-		-- LSP
+		-- LSP (using mostly the neovim ones for now)
 		-- {
 		-- 	"gd",
 		-- 	function()
