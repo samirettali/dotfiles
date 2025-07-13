@@ -36,22 +36,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
 	end,
 })
 
-local set_cursorline = function(event, value, pattern)
-	vim.api.nvim_create_autocmd(event, {
-		desc = "Keep cursor line only on focused window",
-		group = vim.api.nvim_create_augroup("CustomCursorLineControl", { clear = true }),
-		pattern = pattern,
-		callback = function()
-			vim.opt_local.cursorline = value
-		end,
-	})
-end
-set_cursorline("WinEnter", true)
-set_cursorline("InsertLeave", true)
-set_cursorline("InsertEnter", false)
-set_cursorline("WinLeave", false)
-set_cursorline("FileType", false, "TelescopePrompt")
-
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 	desc = "Enable spell checking for certain file types",
 	pattern = { "*.txt", "*.md" },
