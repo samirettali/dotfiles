@@ -39,4 +39,9 @@ vim.opt.rtp:prepend(lazypath)
 
 load_modules()
 
-require("lazy").setup({ import = "plugins" }, { defaults = { lazy = true } })
+local opts = {
+	defaults = { lazy = true },
+	dev = { path = "~/dev/nvim" },
+}
+
+require("lazy").setup({ import = "plugins" }, opts)
