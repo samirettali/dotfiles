@@ -57,6 +57,9 @@ in {
       "https://github.com/SylvanFranklin/.config.git"
       "https://github.com/elder-plinius/CL4R1T4S.git"
       "https://gitlab.com/usmcamp0811/dotfiles.git"
+      "https://github.com/bluz71/dotfiles.git"
+      "https://github.com/folke/dot.git"
+      "https://github.com/neovim/neovim.git"
     ];
   };
 }
