@@ -24,7 +24,8 @@ vim.opt.smartcase = true
 vim.opt.undofile = true
 
 -- Treat _ as a word separator
-vim.opt.iskeyword = vim.opt.iskeyword - { "_" }
+-- TODO: remove if not needed anymore
+-- vim.opt.iskeyword = vim.opt.iskeyword - { "_" }
 
 -- Show relative line numbers
 vim.opt.number = true
@@ -54,9 +55,9 @@ vim.opt.incsearch = true
 
 vim.opt.pumheight = 15 -- Maximum of 15 elements shown in command auto completion
 vim.opt.wildmode = "longest:full" -- Command-line completion mode
-vim.opt.wildoptions = "pum"
+vim.opt.wildoptions = "pum" -- TODO: use blink.cmp?
 
-vim.opt.showmatch = true -- Temporarily jump to matching parentheresis when inserting one
+vim.opt.showmatch = false -- Temporarily jump to matching parenthesis when inserting one, i kept this on for a bit but it's mostly distracting
 vim.opt.lazyredraw = true -- Disable redrawing while running macros
 vim.opt.inccommand = "nosplit" -- Show result of substitution as you type
 
@@ -82,6 +83,7 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.clipboard = "unnamedplus"
 
+-- TODO: is this needed?
 if os.getenv("SSH_TTY") and os.getenv("SSH_CLIENT") then
 	local clipboard = require("vim.ui.clipboard.osc52")
 
