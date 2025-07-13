@@ -5,6 +5,7 @@ local function copy_file_content()
 end
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
 vim.keymap.set("n", "<bs>", "<C-6>", { remap = true })
 
