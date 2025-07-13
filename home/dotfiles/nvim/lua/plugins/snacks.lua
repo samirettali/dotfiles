@@ -70,14 +70,15 @@ return {
 		{
 			"<localleader>fe",
 			function()
-				local opts = {
-					auto_close = true,
-					layout = {
-						preset = "horizontal",
-						preview = true,
-					},
-				}
-				Snacks.explorer(opts)
+				-- local opts = {
+				-- 	auto_close = true,
+				-- 	layout = {
+				-- 		preset = "horizontal",
+				-- 		preview = true,
+				-- 	},
+				-- }
+				-- Snacks.explorer(opts)
+				Snacks.explorer()
 			end,
 			desc = "File Explorer",
 		},
