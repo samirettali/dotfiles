@@ -44,7 +44,6 @@ return {
 
 		vim.keymap.set("n", "<leader>hu", gitsigns.undo_stage_hunk)
 		vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk)
-		vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk)
 		vim.keymap.set("n", "<leader>hd", gitsigns.diffthis)
 		-- vim.keymap.set("n", "<leader>td", gitsigns.toggle_deleted) -- TODO
 
