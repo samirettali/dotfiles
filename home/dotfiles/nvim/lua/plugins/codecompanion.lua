@@ -7,9 +7,15 @@ return {
 	},
 	opts = {},
 	keys = {
+		-- {
+		-- 	"<C-a>",
+		-- 	"<cmd>CodeCompanionActions<CR>",
+		-- 	desc = "Open the action palette",
+		-- 	mode = { "n", "v" },
+		-- },
 		{
-			"<C-a>",
-			"<cmd>CodeCompanionActions<CR>",
+			"<localleader>ac",
+			":CodeCompanion<cr>",
 			desc = "Open the action palette",
 			mode = { "n", "v" },
 		},
