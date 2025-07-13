@@ -1,7 +1,13 @@
 return {
-	"nvim-treesitter/nvim-treesitter-textobjects",
-	dependencies = "nvim-treesitter/nvim-treesitter",
+	"nvim-treesitter/nvim-treesitter",
+	-- TODO: clone right version
+	-- branch = "main",
+	-- version = false,
 	build = ":TSUpdate",
+	event = { "BufReadPre", "BufNewFile" },
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter-textobjects",
+	},
 	config = function()
 		local treesitter = require("nvim-treesitter.configs")
 		local options = {
@@ -25,10 +31,10 @@ return {
 			incremental_selection = {
 				enable = true,
 				keymaps = {
-					init_selection = "<c-space>",
-					node_incremental = "<c-space>",
-					scope_incremental = "<c-s>",
-					node_decremental = "<M-space>",
+					init_selection = "<leader>vv",
+					node_incremental = "+",
+					scope_incremental = false,
+					node_decremental = "_",
 				},
 			},
 			context_commentstring = {
@@ -40,38 +46,49 @@ return {
 					lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
 					keymaps = {
 						-- You can use the capture groups defined in textobjects.scm
-						["aa"] = "@parameter.outer",
-						["ia"] = "@parameter.inner",
-						["af"] = "@function.outer",
-						["if"] = "@function.inner",
-						["ac"] = "@class.outer",
-						["ic"] = "@class.inner",
-						["al"] = "@loop.outer",
-						["il"] = "@loop.inner",
-						["at"] = "@comment.outer",
-						["it"] = "@comment.inner",
-						["ai"] = "@conditional.outer",
-						["ii"] = "@conditional.inner",
+						["aa"] = { query = "@parameter.outer", desc = "around a parameter" },
+						["ia"] = { query = "@parameter.inner", desc = "inside a parameter" },
+						["af"] = { query = "@function.outer", desc = "around a function" },
+						["if"] = { query = "@function.inner", desc = "inside a function" },
+						["ac"] = { query = "@class.outer", desc = "around a class" },
+						["ic"] = { query = "@class.inner", desc = "inside a class" },
+						["al"] = { query = "@loop.outer", desc = "around a loop" },
+						["il"] = { query = "@loop.inner", desc = "inside a loop" },
+						["ai"] = { query = "@conditional.outer", desc = "around an if statement" },
+						["ii"] = { query = "@conditional.inner", desc = "inside an if statement" },
+						["at"] = { query = "@comment.outer", desc = "around a comment" }, -- TODO: can it be ac?
+						["it"] = { query = "@comment.inner", desc = "around a comment" },
 					},
 				},
 				move = {
-					enable = true,
+					enable = false,
 					set_jumps = true, -- Whether to set jumps in the jumplist
-					goto_next_start = {
-						["]m"] = "@function.outer",
-						["]]"] = "@class.outer",
-					},
-					goto_next_end = {
-						["]M"] = "@function.outer",
-						["]["] = "@class.outer",
-					},
+					-- TODO: remove if not needed
+					-- goto_next_start = {
+					-- 	["]m"] = "@function.outer",
+					-- 	["]]"] = "@class.outer",
+					-- },
+					-- goto_next_end = {
+					-- 	["]M"] = "@function.outer",
+					-- 	["]["] = "@class.outer",
+					-- },
+					-- goto_previous_start = {
+					-- 	["[m"] = "@function.outer",
+					-- 	["[["] = "@class.outer",
+					-- },
+					-- goto_previous_end = {
+					-- 	["[M"] = "@function.outer",
+					-- 	["[]"] = "@class.outer",
+					-- },
 					goto_previous_start = {
-						["[m"] = "@function.outer",
-						["[["] = "@class.outer",
+						["[f"] = { query = "@function.outer", desc = "Previous function" },
+						["[c"] = { query = "@class.outer", desc = "Previous class" },
+						["[p"] = { query = "@parameter.inner", desc = "Previous parameter" },
 					},
-					goto_previous_end = {
-						["[M"] = "@function.outer",
-						["[]"] = "@class.outer",
+					goto_next_start = {
+						["]f"] = { query = "@function.outer", desc = "Next function" },
+						["]c"] = { query = "@class.outer", desc = "Next class" },
+						["]p"] = { query = "@parameter.inner", desc = "Next parameter" },
 					},
 				},
 				swap = {
