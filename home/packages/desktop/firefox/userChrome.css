@@ -1,5 +1,6 @@
 @namespace xul "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
 
+/* TODO: https://github.com/MrOtherGuy/firefox-csshacks */
 /* :root { */
 /*     --bg2: light-dark(#fff, #454545); */
 /*     --bg3: light-dark(rgba(50, 50, 50, .1), rgba(225, 225, 225, .1)); */
