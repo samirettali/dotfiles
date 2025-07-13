@@ -1,7 +1,3 @@
-function P(object)
-	print(vim.inspect(object))
-end
-
 vim.loader.enable()
 
 local function load_modules()
