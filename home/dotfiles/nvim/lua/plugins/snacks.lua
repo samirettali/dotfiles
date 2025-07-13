@@ -42,6 +42,7 @@ return {
 		},
 		words = {
 			enabled = true, -- TODO: enable navigation only
+			debounce = 0,
 		},
 	},
 	keys = {
