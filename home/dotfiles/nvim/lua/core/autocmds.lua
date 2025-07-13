@@ -4,18 +4,6 @@ vim.api.nvim_create_autocmd("VimResized", {
 	command = "wincmd =",
 })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight yanked text",
-	pattern = "*",
-	group = vim.api.nvim_create_augroup("CustomYankHighlight", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank({
-			higroup = "IncSearch",
-			timeout = 40,
-		})
-	end,
-})
-
 -- vim.api.nvim_create_autocmd("FileType", {
 --     desc = "Close help, man, quickfix, lspinfo with q",
 --     pattern = { "qf", "help", "man", "lspinfo" },
