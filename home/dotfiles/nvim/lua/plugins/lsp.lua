@@ -16,9 +16,7 @@ end
 
 return {
 	dependencies = {
-		"nvim-telescope/telescope.nvim",
 		"saghen/blink.cmp",
-		{ "j-hui/fidget.nvim", config = true }, -- Show LSP loading status
 	},
 	"neovim/nvim-lspconfig",
 	config = function()
