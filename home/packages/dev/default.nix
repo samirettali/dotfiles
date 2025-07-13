@@ -32,6 +32,7 @@
     wgsl-analyzer
     yamlfmt
     zizmor
+    codespell
   ];
 
   home.sessionVariables.LIBRARY_PATH = ''${lib.makeLibraryPath [pkgs.libiconv]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
