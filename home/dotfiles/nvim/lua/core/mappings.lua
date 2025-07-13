@@ -1,3 +1,9 @@
+local function copy_file_content()
+	vim.cmd("silent 1,$y +")
+	local line_count = vim.fn.line("$")
+	vim.notify("Copied " .. line_count .. " lines", vim.log.levels.INFO)
+end
+
 vim.g.mapleader = " "
 
 vim.keymap.set("n", "<bs>", "<C-6>", { remap = true })
@@ -8,7 +14,7 @@ vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without copyin
 -- TODO: fix
 -- vim.keymap.set("n", "<Leader>dp", "yip<S-}>po<escape>k", { desc = "Duplicate paragraph" })
 
-vim.keymap.set("n", "<Leader>c", "ggVGy<C-o>", { desc = "Copy entire file", silent = true })
+vim.keymap.set("n", "<Leader>y", copy_file_content, { desc = "Copy file content", silent = true })
 
 vim.keymap.set("n", "gV", "`[v`]", { desc = "Select last changed text" })
 vim.keymap.set("n", "<Leader>tl", ":set list!<CR>", { desc = "Toggle listchars" })
