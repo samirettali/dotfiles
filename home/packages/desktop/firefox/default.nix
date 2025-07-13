@@ -25,24 +25,27 @@
       });
       profiles.samir = {
         # path = "profiles/samir"; # TODO: backup the profile first
-        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-          adaptive-tab-bar-colour
-          clearurls
-          copy-selection-as-markdown
-          darkreader
-          granted
-          keepassxc-browser
-          lastpass-password-manager
-          linkding-extension
-          metamask
-          multi-account-containers
-          sponsorblock
-          switchyomega
-          tampermonkey
-          ublock-origin
-          vimium-c
-        ];
         userChrome = builtins.readFile ./userChrome.css;
+        extensions = {
+          force = true;
+          packages = with pkgs.nur.repos.rycee.firefox-addons; [
+            adaptive-tab-bar-colour
+            clearurls
+            copy-selection-as-markdown
+            darkreader
+            granted
+            keepassxc-browser
+            lastpass-password-manager
+            linkding-extension
+            metamask
+            multi-account-containers
+            sponsorblock
+            switchyomega
+            tampermonkey
+            ublock-origin
+            vimium-c
+          ];
+        };
         search = {
           force = true;
           default = "google";
@@ -53,8 +56,10 @@
                   template = "https://mynixos.com/search?q={searchTerms}";
                 }
               ];
-              # icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg"; # TODO: this is broken
               definedAliases = ["@n"];
+              updateInterval = 24 * 60 * 60 * 1000; # every day
+              # icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg"; # TODO: this is broken
+              icon = "https://mynixos.com/static/icons/mnos-logo.svg";
             };
             "NixOS Wiki" = {
               urls = [
@@ -62,11 +67,11 @@
                   template = "https://nixos.wiki/index.php?search={searchTerms}";
                 }
               ];
-              icon = "https://nixos.wiki/favicon.png";
-              updateInterval = 24 * 60 * 60 * 1000; # every day
               definedAliases = ["@nw"];
+              updateInterval = 24 * 60 * 60 * 1000; # every day
+              icon = "https://nixos.wiki/favicon.png";
             };
-            "bing".metaData.hidden = true;
+            # "bing".metaData.hidden = true; # TODO: is this needed?
             "google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
           };
         };
@@ -84,6 +89,7 @@
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "layers.acceleration.force-enabled" = true;
           "svg.context-properties.content.enabled" = true;
+          "ui.useOverlayScrollbars" = 1;
 
           # Actual settings
           "app.update.auto" = false;
@@ -95,7 +101,7 @@
           # Vertical tabs
           "sidebar.revamp" = true;
           "sidebar.verticalTabs" = true;
-          "sidebar.revamp.round-content-area" = true;
+          "sidebar.revamp.round-content-area" = false;
           "sidebar.main.tools" = null;
           "sidebar.animation.enabled" = false;
 
@@ -135,8 +141,6 @@
           "browser.shell.checkDefaultBrowser" = false;
           "browser.ssb.enabled" = true;
           "browser.toolbars.bookmarks.visibility" = "never";
-          "datareporting.policy.dataSubmissionEnable" = false;
-          "datareporting.policy.dataSubmissionPolicyAcceptedVersion" = 2;
           "dom.security.https_only_mode_ever_enabled" = true;
           "dom.security.https_only_mode" = true;
           "extensions.getAddons.showPane" = false;
@@ -182,7 +186,7 @@
           "browser.sessionstore.interval" = "15000";
           "dom.battery.enabled" = false;
           "dom.gamepad.enabled" = false;
-          "beacon.enabled" = true; # Used for analitycs, disabling it breaks some websites
+          "beacon.enabled" = true; # Used for analytics, disabling it breaks some websites
           "browser.send_pings" = false; # Disable pinging URIs specified in <a> ping= attributes
           "browser.fixup.alternate.enabled" = false; # Don't try to guess domain names when entering an invalid domain name in URL bar
 
