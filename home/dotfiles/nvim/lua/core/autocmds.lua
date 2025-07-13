@@ -4,14 +4,6 @@ vim.api.nvim_create_autocmd("VimResized", {
 	command = "wincmd =",
 })
 
--- vim.api.nvim_create_autocmd("FileType", {
---     desc = "Close help, man, quickfix, lspinfo with q",
---     pattern = { "qf", "help", "man", "lspinfo" },
---     callback = function()
---         vim.keymap.set("n", "q", ":close<CR>")
---     end,
--- })
-
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
 	desc = "Return cursor to where it was last time closing the file",
 	group = vim.api.nvim_create_augroup("CustomCursorPosition", { clear = true }),
@@ -33,14 +25,5 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
 		if dir:match("^%a+://") == nil then
 			vim.fn.mkdir(dir, "p")
 		end
-	end,
-})
-
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	desc = "Enable spell checking for certain file types",
-	pattern = { "*.txt", "*.md" },
-	callback = function()
-		vim.opt.spell = true
-		vim.opt.spelllang = "en" -- TODO: download italian dictionary
 	end,
 })

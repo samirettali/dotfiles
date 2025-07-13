@@ -83,6 +83,8 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.clipboard = "unnamedplus"
 
+vim.opt.spelllang = "en" -- TODO: download italian dictionary
+
 -- TODO: is this needed?
 if os.getenv("SSH_TTY") and os.getenv("SSH_CLIENT") then
 	local clipboard = require("vim.ui.clipboard.osc52")
