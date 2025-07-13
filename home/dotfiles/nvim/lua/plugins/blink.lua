@@ -107,7 +107,7 @@ return {
 		},
 		keymap = {
 			preset = "default",
-			["<c-f>"] = { "accept" },
+			["<c-f>"] = { "accept", "show" },
 		},
 		fuzzy = {
 			implementation = "prefer_rust_with_warning",
