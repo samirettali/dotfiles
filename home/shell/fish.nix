@@ -22,6 +22,7 @@ in {
     interactiveShellInit =
       initFile
       + "\n"
+      +
       /*
       fish
       */
