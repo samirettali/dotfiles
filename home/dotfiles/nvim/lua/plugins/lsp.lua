@@ -19,6 +19,7 @@ return {
 		"saghen/blink.cmp",
 	},
 	"neovim/nvim-lspconfig",
+	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local lspconfig = require("lspconfig")
 
@@ -57,7 +58,7 @@ return {
 					vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 				end
 
-				local telescope = require("telescope.builtin")
+				-- local telescope = require("telescope.builtin")
 
 				local default_opts = { buffer = args.buf }
 				if client:supports_method(methods.textDocument_inlayHint) then
@@ -80,17 +81,17 @@ return {
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, default_opts)
 				end
 
-				if client:supports_method(methods.textDocument_typeDefinition) then
-					vim.keymap.set("n", "gT", telescope.lsp_type_definitions, default_opts)
-				end
+				-- if client:supports_method(methods.textDocument_typeDefinition) then
+				-- 	vim.keymap.set("n", "gT", telescope.lsp_type_definitions, default_opts)
+				-- end
 
-				if client:supports_method(methods.textDocument_documentSymbol) then
-					vim.keymap.set("n", "gs", telescope.lsp_document_symbols, default_opts)
-				end
+				-- if client:supports_method(methods.textDocument_documentSymbol) then
+				-- 	vim.keymap.set("n", "gs", telescope.lsp_document_symbols, default_opts)
+				-- end
 
-				if client:supports_method(methods.workspace_symbol) then
-					vim.keymap.set("n", "gS", telescope.lsp_dynamic_workspace_symbols, default_opts)
-				end
+				-- if client:supports_method(methods.workspace_symbol) then
+				-- 	vim.keymap.set("n", "gS", telescope.lsp_dynamic_workspace_symbols, default_opts)
+				-- end
 
 				if client:supports_method(methods.textDocument_codeAction) then
 					vim.keymap.set("n", "ga", vim.lsp.buf.code_action, default_opts)
@@ -100,22 +101,22 @@ return {
 					vim.keymap.set("n", "gr", vim.lsp.buf.rename, default_opts)
 				end
 
-				if client:supports_method(methods.textDocument_references) then
-					vim.keymap.set("n", "gR", telescope.lsp_references)
-				end
+				-- if client:supports_method(methods.textDocument_references) then
+				-- 	vim.keymap.set("n", "gR", telescope.lsp_references)
+				-- end
 
 				if client:supports_method(methods.textDocument_signatureHelp) then
 					vim.keymap.set("i", "<C-s>", vim.lsp.buf.signature_help, default_opts)
 				end
 
-				if client:supports_method(methods.callHierarchy_incomingCalls) then
-					vim.keymap.set("n", "gI", telescope.lsp_incoming_calls, default_opts)
-				end
+				-- if client:supports_method(methods.callHierarchy_incomingCalls) then
+				-- 	vim.keymap.set("n", "gI", telescope.lsp_incoming_calls, default_opts)
+				-- end
 
-				if client:supports_method(methods.callHierarchy_outgoingCalls) then
-					-- TODO: gO is conflicting with telescope
-					vim.keymap.set("n", "gO", telescope.lsp_outgoing_calls, default_opts)
-				end
+				-- if client:supports_method(methods.callHierarchy_outgoingCalls) then
+				-- 	-- TODO: gO is conflicting with telescope
+				-- 	vim.keymap.set("n", "gO", telescope.lsp_outgoing_calls, default_opts)
+				-- end
 
 				-- if client:supports_method(methods.textDocument_diagnostic) then
 				-- 	vim.keymap.set("n", "<leader>gd", telescope.diagnostics, default_opts)
@@ -134,35 +135,37 @@ return {
 				-- end
 				-- -- TODO map [D ]D and [E and ]E
 
-				if client:supports_method(methods.textDocument_implementation, args.buf) then
-					vim.keymap.set("n", "gi", telescope.lsp_implementations, default_opts)
-				end
-
-				-- The following two autocommands are used to highlight references of the
-				-- word under your cursor when your cursor rests there for a little while.
-				--    See `:help CursorHold` for information about when this is executed
+				-- if client:supports_method(methods.textDocument_implementation, args.buf) then
+				-- 	vim.keymap.set("n", "gi", telescope.lsp_implementations, default_opts)
+				-- end
 				--
-				if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-					local highlight_augroup = vim.api.nvim_create_augroup("CustomLspHighlight", { clear = false })
-					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-						buffer = args.buf,
-						group = highlight_augroup,
-						callback = vim.lsp.buf.document_highlight,
-					})
+				if false then
+					-- The following two autocommands are used to highlight references of the
+					-- word under your cursor when your cursor rests there for a little while.
+					--    See `:help CursorHold` for information about when this is executed
+					--
+					if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+						local highlight_augroup = vim.api.nvim_create_augroup("CustomLspHighlight", { clear = false })
+						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+							buffer = args.buf,
+							group = highlight_augroup,
+							callback = vim.lsp.buf.document_highlight,
+						})
 
-					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-						buffer = args.buf,
-						group = highlight_augroup,
-						callback = vim.lsp.buf.clear_references,
-					})
+						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+							buffer = args.buf,
+							group = highlight_augroup,
+							callback = vim.lsp.buf.clear_references,
+						})
 
-					vim.api.nvim_create_autocmd("LspDetach", {
-						group = vim.api.nvim_create_augroup("CustomLspHighlightDetach", { clear = true }),
-						callback = function(event2)
-							vim.lsp.buf.clear_references()
-							vim.api.nvim_clear_autocmds({ group = "CustomLspHighlight", buffer = event2.buf })
-						end,
-					})
+						vim.api.nvim_create_autocmd("LspDetach", {
+							group = vim.api.nvim_create_augroup("CustomLspHighlightDetach", { clear = true }),
+							callback = function(event2)
+								vim.lsp.buf.clear_references()
+								vim.api.nvim_clear_autocmds({ group = "CustomLspHighlight", buffer = event2.buf })
+							end,
+						})
+					end
 				end
 			end,
 		})
@@ -267,8 +270,20 @@ return {
 			nixd = {},
 			zls = {},
 			clangd = {},
-			ruff = {},
-			basedpyright = {},
+			ruff = {
+				settings = {
+					python = {
+						interpreter = { vim.g.venv_detector_python_path },
+					},
+				},
+			},
+			basedpyright = {
+				settings = {
+					python = {
+						pythonPath = vim.g.venv_detector_python_path,
+					},
+				},
+			},
 			bashls = {},
 			ocamllsp = {},
 			terraformls = {}, -- TODO: activate only if terraform-ls is installed or DOTFILES_PROFILE=work
@@ -278,6 +293,7 @@ return {
 		}
 
 		for name, cfg in pairs(servers) do
+			-- TODO: debug this and understand if it's needed
 			local capabilities = require("blink.cmp").get_lsp_capabilities(cfg.capabilities)
 
 			cfg = vim.tbl_deep_extend("force", {}, {
@@ -286,6 +302,8 @@ return {
 
 			lspconfig[name].setup(cfg)
 		end
+
+		vim.lsp.enable("ty")
 	end,
 }
 
