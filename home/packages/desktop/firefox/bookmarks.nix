@@ -675,6 +675,18 @@
             url = "http://vanilla-js.com/";
           }
           {
+            name = " Finance";
+            bookmarks = [
+              {
+                url = "https://companiesmarketcap.com/";
+              }
+
+              {
+                url = "https://stockanalysis.com/";
+              }
+            ];
+          }
+          {
             name = "Firefox settings";
             bookmarks = [
               {url = "https://kb.mozillazine.org/About:config_entries";}
