@@ -49,7 +49,12 @@ return {
 		{
 			"<c-f>",
 			function()
-				Snacks.picker.files()
+				local opts = {
+					layout = {
+						preset = "vscode",
+					},
+				}
+				Snacks.picker.files(opts)
 			end,
 			desc = "Find Files",
 		},
