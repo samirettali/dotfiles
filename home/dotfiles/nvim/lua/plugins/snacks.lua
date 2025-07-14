@@ -42,7 +42,7 @@ return {
 		},
 		words = {
 			enabled = true, -- TODO: enable navigation only
-			debounce = 0,
+			debounce = 500, -- TODO: is there a way to remove the highlight immediately?
 		},
 	},
 	keys = {
