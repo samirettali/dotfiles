@@ -22,7 +22,7 @@ in {
     hakrawler
     httpx
     imhex
-    # jadx # TODO: upstream is broken
+    jadx
     naabu
     nmap
     nuclei

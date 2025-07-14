@@ -16,7 +16,6 @@
     brews = [
       "choose-gui"
       "displayplacer"
-      "common-fate/granted/granted"
     ];
     casks = [
       "docker-desktop"
@@ -40,7 +39,6 @@
     taps = [
       "homebrew/bundle"
       "homebrew/services"
-      "common-fate/granted"
     ];
   };
 }
