@@ -51,6 +51,11 @@
       url = "github:samirettali/television";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    zjstatus = {
+      url = "github:dj95/zjstatus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -58,6 +63,7 @@
     darwin,
     home-manager,
     nix-vscode-extensions,
+    zjstatus,
     ...
   } @ inputs: let
     inherit (nixpkgs) lib;
@@ -103,6 +109,9 @@
         nur.overlays.default
         nix-vscode-extensions.overlays.default
         rust-overlay.overlays.default
+        (final: prev: {
+          zjstatus = zjstatus.packages.${prev.system}.default;
+        })
       ];
       config = {
         allowUnfree = true;

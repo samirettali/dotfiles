@@ -10,6 +10,7 @@
 in {
   home.packages = [
     zesh
+    pkgs.zjstatus
   ];
 
   programs = {
