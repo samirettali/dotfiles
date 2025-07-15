@@ -55,8 +55,13 @@ else
 			"supermaven-inc/supermaven-nvim",
 			event = "InsertEnter",
 			opts = {
-				disable_inline_completion = true,
-				disable_keymaps = true,
+				keymaps = {
+					accept_suggestion = "<C-f>",
+					clear_suggestion = "<C-]>",
+					-- accept_word = "<c-j>",
+				},
+				disable_inline_completion = false,
+				disable_keymaps = false,
 				log_level = "off",
 			},
 		},
@@ -81,7 +86,7 @@ return {
 				"lsp",
 				"path",
 				"buffer",
-				source,
+				-- source,
 				"snippets",
 			},
 			providers = {
@@ -106,8 +111,18 @@ return {
 			enabled = true,
 		},
 		keymap = {
-			preset = "default",
-			["<c-f>"] = { "accept", "show" },
+			preset = "none",
+			["<c-n>"] = { "select_next", "show", "fallback_to_mappings" },
+			["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+			["<C-e>"] = { "hide" },
+			["<C-y>"] = { "select_and_accept" },
+
+			-- TODO: map these to something
+			-- ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+			-- ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+
+			-- ["<Tab>"] = { "snippet_forward", "fallback" },
+			-- ["<S-Tab>"] = { "snippet_backward", "fallback" },
 		},
 		fuzzy = {
 			implementation = "prefer_rust_with_warning",
@@ -130,7 +145,7 @@ return {
 				},
 			},
 			menu = {
-				auto_show = false,
+				auto_show = true,
 				draw = {
 					columns = {
 						{ "label", "label_description", gap = 1 },
