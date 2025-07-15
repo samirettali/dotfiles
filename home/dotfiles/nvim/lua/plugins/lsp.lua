@@ -27,25 +27,6 @@ return {
 		disable_default_keymaps()
 
 		local lspconfig = require("lspconfig")
-		local augroup_lsp_user = vim.api.nvim_create_augroup("lsp_user", {})
-
-		-- TODO: delete
-		-- vim.api.nvim_create_autocmd("LspAttach", {
-		-- 	group = augroup_lsp_user,
-		-- 	callback = function(args)
-		-- 		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		--
-		-- 		if not client then
-		-- 			error("LSP client not found")
-		-- 			return
-		-- 		end
-		-- if client:supports_method(methods.textDocument_foldingRange) then
-		-- 	local fold_opts = { scope = "local" }
-		--
-		-- 	vim.api.nvim_set_option_value("foldmethod", "expr", fold_opts)
-		-- 	vim.api.nvim_set_option_value("foldexpr", "v:lua.vim.lsp.foldexpr()", fold_opts)
-		-- 	-- vim.api.nvim_set_option_value("foldtext", "v:lua.vim.lsp.foldtext()", fold_opts)
-		-- end
 
 		-- TODO: map vim.lsp.buf.document_symbol
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "vim.lsp.buf.definition()" })
