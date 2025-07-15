@@ -27,6 +27,7 @@ in {
     stunnel
     terraform
     terraform-ls
+    openvpn
   ];
 
   programs = {
