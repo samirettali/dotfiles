@@ -151,5 +151,6 @@ return {
 		end
 
 		vim.lsp.enable("ty")
+		vim.lsp.enable("pyrefly")
 	end,
 }
