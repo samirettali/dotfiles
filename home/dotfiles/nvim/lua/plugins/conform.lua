@@ -19,7 +19,7 @@ return {
 			javascript = { "prettierd", "prettier", stop_after_first = true },
 			lua = { "stylua" },
 			nix = { "alejandra" },
-			python = { "ruff" },
+			python = { "ruff_format" },
 			rust = { "rustfmt" },
 			sh = { "shfmt" },
 			toml = { "taplo" },
