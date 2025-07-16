@@ -11,10 +11,12 @@ return {
 		},
 	},
 	keys = {
-		"<leader>tc",
-		"<cmd>CloakToggle<cr>",
-		"n",
-		silent = true,
-		desc = "Toggle cloak.nvim",
+		{
+			"<leader>tc",
+			"<cmd>CloakToggle<cr>",
+			"n",
+			silent = true,
+			desc = "Toggle cloak.nvim",
+		},
 	},
 }
