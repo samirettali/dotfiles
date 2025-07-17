@@ -172,7 +172,6 @@ in {
           sourcegraph.amp
           vscodevim.vim
           wgsl-analyzer.wgsl-analyzer
-          anthropic.claude-code
           # github.copilot
           # github.copilot-chat # FIX: this requires vscode-insiders
           # augment.vscode-augment
