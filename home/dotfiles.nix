@@ -10,8 +10,6 @@
       (pkgs.writeShellScriptBin "ticker" (builtins.readFile dotfiles/scripts/ticker.sh))
       (pkgs.writeShellScriptBin "extract" (builtins.readFile dotfiles/scripts/extract.sh))
       (pkgs.writeShellScriptBin "zv" ''
-        #!/usr/bin/env bash
-
         set -euo pipefail
 
         if [ -z "$1" ]; then
