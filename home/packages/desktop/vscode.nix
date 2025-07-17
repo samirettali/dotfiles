@@ -179,6 +179,7 @@ in {
           # continue.continue
           supermaven.supermaven
           # vadimcn.vscode-lldb # TODO: build is broken
+          postman.postman-for-vscode
         ];
         keybindings = [
           {
