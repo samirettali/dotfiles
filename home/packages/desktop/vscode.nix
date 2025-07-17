@@ -189,6 +189,14 @@ in {
             "key" = "ctrl+shift+tab";
             "command" = "workbench.action.previousEditor";
           }
+          {
+            "key" = "ctrl+g";
+            "command" = "workbench.action.findInFiles";
+          }
+          {
+            "key" = "ctrl+f";
+            "command" = "workbench.action.quickOpen";
+          }
         ];
         userSettings = settings;
       };
