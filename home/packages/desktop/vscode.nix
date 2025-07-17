@@ -71,9 +71,9 @@
 
       "terminal.integrated.sendKeybindingsToShell" = true;
     }
-    # (lib.mkIf isVSCode {
-    #   "workbench.colorTheme" = "Fleet Sphere";
-    # })
+    (withExtension pkgs.vscode-marketplace.franzgollhammer.jb-fleet-dark {
+      "workbench.colorTheme" = "Fleet Sphere";
+    })
     (withExtension pkgs.vscode-marketplace.vscodevim.vim {
       "vim.handleKeys" = {
         "<C-p>" = false;
