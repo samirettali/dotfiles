@@ -9,6 +9,8 @@
     enable = true;
     package = pkgs.spotify-player.override {
       withMediaControl = false;
+      withImage = false; # TODO: this is broken inside zellij/ghostty
+      withSixel = false;
     };
     settings = {
       theme = "default";
@@ -23,8 +25,6 @@
       enable_notify = true;
       notify_streaming_only = false;
       enable_streaming = "DaemonOnly";
-      cover_img_length = 9;
-      cover_img_width = 9;
       device = {
         name = config.home.username;
         device_type = "speaker";
@@ -42,10 +42,8 @@
     enable = true;
     config = {
       ProgramArguments = [
-        "${pkgs.spotify-player.override {
-          withAudioBackend = "rodio";
-          withMediaControl = false;
-        }}/bin/spotify_player"
+        (lib.getExe
+          config.programs.spotify-player.package)
         "-d"
       ];
       RunAtLoad = true;
