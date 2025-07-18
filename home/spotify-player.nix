@@ -1,6 +1,7 @@
 {
-  pkgs,
   config,
+  lib,
+  pkgs,
   ...
 }: {
   programs.spotify-player = {
@@ -33,6 +34,28 @@
         normalization = false;
         autoplay = false;
       };
+    };
+  };
+
+  launchd.agents.spotify-player = lib.mkIf (config.programs.spotify-player.enable
+    && pkgs.stdenv.isDarwin) {
+    enable = true;
+    config = {
+      ProgramArguments = [
+        "${pkgs.spotify-player.override {
+          withAudioBackend = "rodio";
+          withMediaControl = false;
+        }}/bin/spotify_player"
+        "-d"
+      ];
+      RunAtLoad = true;
+      KeepAlive = {
+        Crashed = true;
+        SuccessfulExit = false;
+      };
+      StandardOutPath = "/tmp/spotify-player.log";
+      StandardErrorPath = "/tmp/spotify-player.error.log";
+      ProcessType = "Background";
     };
   };
 }
