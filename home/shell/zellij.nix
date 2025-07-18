@@ -19,9 +19,15 @@ in {
     };
   };
 
-  programs.fish.shellAliases = {
-    s = "${lib.getExe zesh} cn $(basename $(${lib.getExe zesh} l | ${lib.getExe config.programs.television.package}))";
-    zl = "${lib.getExe config.programs.zellij.package} ls";
-    za = "${lib.getExe config.programs.zellij.package} attach -c";
-  };
+  programs.fish.interactiveShellInit =
+    lib.mkIf (config.programs.zellij.enable && config.programs.ghostty.enable)
+    (lib.mkBefore
+      /*
+      fish
+      */
+      ''
+        if [ "$TERM" = "xterm-ghostty" ]
+            eval (${lib.getExe pkgs.zellij} setup --generate-auto-start fish | string collect)
+        end
+      '');
 }
