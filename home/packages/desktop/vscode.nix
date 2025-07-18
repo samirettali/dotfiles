@@ -179,6 +179,7 @@ in {
           supermaven.supermaven
           # vadimcn.vscode-lldb # TODO: build is broken
           postman.postman-for-vscode
+          detachhead.basedpyright
         ];
         keybindings = [
           {
