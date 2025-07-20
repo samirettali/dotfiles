@@ -16,19 +16,23 @@
   iredis115 = iredisPkgs.iredis;
 in {
   imports = [
+    ./bat.nix
+    ./btop.nix
+    ./claude-code.nix
+    ./direnv.nix
     ./fish.nix
     ./git.nix
     ./lazydocker.nix
     ./lazygit.nix
     ./llm.nix
+    ./neovim.nix
     ./opencode.nix
-    ./claude-code.nix
     ./pass.nix
-    ./tmux.nix
-    ./zsh.nix
-    ./zellij.nix
-    ./bat.nix
+    ./ripgrep.nix
     ./television.nix
+    ./tmux.nix
+    ./zellij.nix
+    ./zsh.nix
   ];
 
   home.packages = with pkgs; [
@@ -91,33 +95,6 @@ in {
   ];
 
   programs = {
-    btop = {
-      enable = true;
-      settings = {
-        color_theme = "TTY";
-        vim_keys = true;
-      };
-    };
-    direnv.enable = true;
-    neovim = {
-      enable = lib.mkDefault true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
-    };
-    ripgrep = {
-      enable = lib.mkDefault true;
-      arguments = [
-        "--max-columns=150"
-        "--max-columns-preview"
-        "--glob=!node_modules/*"
-        "--colors=line:none"
-        "--colors=line:style:bold"
-        "--hidden"
-        "--smart-case"
-      ];
-    };
     zoxide.enable = true;
   };
 }
