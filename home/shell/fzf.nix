@@ -9,8 +9,7 @@
       "--info hidden"
       "--reverse"
       "--style minimal"
+      # "--bind 'ctrl-o:become(${lib.getExe pkgs.neovim} {})'" # TODO: this doesn't work
     ];
-    # fzf --preview="bat --color=always {}"
-    # fzf --bind "enter:become(nvim {})"
   };
 }
