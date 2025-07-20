@@ -21,6 +21,7 @@ in {
     ./claude-code.nix
     ./direnv.nix
     ./fish.nix
+    ./fzf.nix
     ./git.nix
     ./lazydocker.nix
     ./lazygit.nix
