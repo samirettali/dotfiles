@@ -187,7 +187,11 @@
           ./machines/mbp.nix
           ./darwin/homebrew.nix
           ./darwin/work.nix
-          ({pkgs, ...}: {
+          ({
+            config,
+            pkgs,
+            ...
+          }: {
             nix = mkNixConfig {
               username = users.work.name;
             };
@@ -204,6 +208,7 @@
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJdetGPFJw+CH6wNU4BinYePWVypM42s9WI0XPodihl samir"
               ];
             };
+            environment.shellAliases = config.home-manager.users."s.ettali".home.shellAliases;
           })
           home-manager.darwinModules.home-manager
           ({pkgs, ...}: {

@@ -5,6 +5,9 @@
   user,
   ...
 }: {
+  imports = [
+    ../home/shell/fish.nix
+  ];
   boot = {
     loader = {
       systemd-boot = {
@@ -73,7 +76,6 @@
 
   programs = {
     zsh.enable = false;
-    fish.enable = true;
     fuse.userAllowOther = true;
     dconf.enable = true;
   };

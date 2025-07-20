@@ -1,7 +1,14 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    ../home/shell/fish.nix
+  ];
+
   programs = {
-    zsh.enable = true;
-    fish.enable = true;
+    zsh.enable = false; # TODO: also for nixos
     gnupg.agent.enable = true; # TODO is this needed?
   };
 
@@ -26,7 +33,7 @@
   };
 
   environment.shells = [
-    pkgs.fish
+    config.programs.fish.package
   ];
 
   time.timeZone = "Europe/Rome";

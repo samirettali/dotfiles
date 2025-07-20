@@ -26,11 +26,6 @@
 
   programs = {
     gpg.enable = true;
-    zsh = {
-      initContent = ''
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-      '';
-    };
   };
 
   home.file = {

@@ -1,94 +1,114 @@
 {
-  customArgs,
   lib,
   pkgs,
   ...
-}: let
-  brewCommand = ''
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  '';
-  baseInitFile = builtins.readFile ../../home/dotfiles/init.fish;
-  initFile =
-    if pkgs.stdenv.isDarwin
-    then builtins.concatStringsSep "\n" [baseInitFile brewCommand]
-    else baseInitFile;
-in {
-  home.packages = with pkgs; [
-    grc
+}: {
+  # TODO: move file
+  environment.systemPackages = [
+    pkgs.zoxide
   ];
 
   programs.fish = {
     enable = true;
+    useBabelfish = true;
     interactiveShellInit =
-      initFile
-      + "\n"
-      +
       /*
       fish
       */
       ''
-        function vr
-            # Check if ripgrep query was provided
-            if test (count $argv) -eq 0
-                echo "Usage: vr <search_pattern>"
-                return 1
-            end
+        set fish_greeting
 
-            # Directories to exclude from search
-            set -l excluded_dirs .git .venv venv node_modules __pycache__ .pytest_cache dist build target .next .nuxt coverage .coverage
+        set fish_color_command green
+        set fish_color_valid_path normal
 
-            # Build glob patterns for excluded directories
-            set -l glob_patterns
-            for dir in $excluded_dirs
-                set -a glob_patterns --glob "!$dir/*"
-            end
+        set -g fish_key_bindings fish_hybrid_key_bindings
 
-            # Run ripgrep and get results, excluding directories
-            set -l rg_results (${lib.getExe pkgs.ripgrep} --vimgrep $glob_patterns $argv)
+        # TODO: this is not working
+        # bind \cz fg
 
-            # Check if any matches were found
-            if test (count $rg_results) -eq 0
-                echo "No matches found for: $argv"
-                return 1
-            end
-
-            # Get the first match details
-            set -l first_match (echo $rg_results[1])
-            set -l file_path (echo $first_match | cut -d: -f1)
-            set -l line_number (echo $first_match | cut -d: -f2)
-            set -l column_number (echo $first_match | cut -d: -f3)
-
-            # Check if there are multiple matches
-            if test (count $rg_results) -gt 1
-                # Multiple matches: create quickfix file and open with quickfix list
-                set -l qf_file (mktemp)
-                printf "%s\n" $rg_results > $qf_file
-                ${lib.getExe pkgs.neovim} "+call cursor($line_number, $column_number)" "+cgetfile $qf_file" "+copen" "+wincmd p" "$file_path"
-                rm $qf_file
-            else
-                # Single match: just open the file at the exact position
-                ${lib.getExe pkgs.neovim} "+call cursor($line_number, $column_number)" "$file_path"
-            end
+        function fish_mode_prompt
         end
+
+        function fish_prompt
+            # Select symbol
+            set -l symbol '$ '
+            if fish_is_root_user
+                set symbol '# '
+            end
+
+            # Show user@host if connected via SSH
+            set -l ssh
+            if set -q SSH_CLIENT || set -q SSH_TTY
+                set ssh (set_color -o blue) $USER '@' (hostname) (set_color -o normal) ":" (set_color normal)
+            end
+
+            set -l pwd (set_color -o blue) (prompt_pwd) (set_color normal)
+            set -l symbol (set_color -o red) $symbol (set_color normal)
+
+            set -l nix_shell_info
+            if test -n "$IN_NIX_SHELL"
+                set nix_shell_info "<nix-shell> "
+            end
+
+            printf (string join "" -- $ssh $nix_shell_info $pwd $symbol)
+        end
+
+        function fish_right_prompt
+            # Show last status code if != 0
+            set -l last_status $status
+
+            set -l stat
+            if test $last_status -ne 0
+                set stat (set_color -o bryellow)"($last_status)"(set_color normal)
+            end
+
+            # Git prompt
+            set -l gp (set_color -o brmagenta)(fish_git_prompt "[%s]")(set_color normal)
+
+            # Duration
+            set -l d $CMD_DURATION
+            set -l second 1000
+            set -l minute (math 60 \* $second)
+            set -l hour (math $minute \* 60)
+            set -l s (math -s0 $d / $second)
+            set -l m (math -s0 $d / $minute)
+            set -l h (math -s0 $d / $hour)
+            set -l duration
+
+            if test $h -gt 0
+                set h (math -s2 $d / $hour)
+                set duration $h'h'
+            else if test $m -gt 0
+                set m (math -s2 $d / $minute)
+                set duration $m'm'
+            else if test $s -gt 0
+                set s (math -s2 $d / $second)
+                set duration $s's'
+            else
+                set duration $d'ms'
+            end
+
+            set duration (set_color -id white)$duration(set_color normal)
+
+            printf (string join ' ' -- $duration $stat $gp)
+        end
+
+        # TODO: this is a hack to make zoxide work with fish installed from nix-darwin
+        ${lib.getExe pkgs.zoxide} init fish | source
       '';
-    plugins = [
-      {
-        name = "grc";
-        src = pkgs.fishPlugins.grc.src;
-      }
-      {
-        name = "done";
-        src = pkgs.fishPlugins.done.src;
-      }
-    ];
-    # TODO: move
-    shellAliases = {
-      iip = "dig +short myip.opendns.com @resolver1.opendns.com";
-      jj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r | ${customArgs.commands.copy}";
-      jjj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r";
-      localip = "ipconfig getifaddr en0";
-      ns = "nix-shell --run fish -p";
-      rm = lib.getExe pkgs.trash-cli;
-    };
+    # TODO
+    # plugins = [
+    #   {
+    #     name = "grc";
+    #     src = pkgs.fishPlugins.grc.src;
+    #   }
+    #   {
+    #     name = "done";
+    #     src = pkgs.fishPlugins.done.src;
+    #   }
+    # ];
+    # home.packages = with pkgs; [
+    #   grc
+    # ];
   };
 }

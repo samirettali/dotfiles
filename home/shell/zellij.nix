@@ -28,19 +28,6 @@ in {
     };
   };
 
-  programs.fish.interactiveShellInit =
-    lib.mkIf (config.programs.zellij.enable && config.programs.ghostty.enable)
-    (lib.mkBefore
-      /*
-      fish
-      */
-      ''
-        # if [ "$TERM" = "xterm-ghostty" ]
-        #     set ZELLIJ_AUTO_EXIT true
-        #     eval (${lib.getExe pkgs.zellij} setup --generate-auto-start fish | string collect)
-        # end
-      '');
-
   home.shellAliases = {
     za = "${exe} attach -c";
     zd = "${exe} delete-session";

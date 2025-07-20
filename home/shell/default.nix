@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   iredisPkgs =
     import (builtins.fetchGit {
       name = "iredis115";
@@ -20,7 +16,6 @@ in {
     ./btop.nix
     ./claude-code.nix
     ./direnv.nix
-    ./fish.nix
     ./fzf.nix
     ./git.nix
     ./lazydocker.nix
@@ -74,7 +69,7 @@ in {
     # pgcli
     # plumber
     repomix
-    rlwrap
+    # rlwrap
     # scc # count lines of code
     # sesh # TODO: this is slow
     sqlite
@@ -95,8 +90,4 @@ in {
     yt-dlp
     yubikey-manager
   ];
-
-  programs = {
-    zoxide.enable = true;
-  };
 }

@@ -1,7 +1,7 @@
 {
-  config,
   lib,
   pkgs,
+  customArgs,
   ...
 }: {
   imports = [
@@ -13,13 +13,26 @@
     ./spotify-player.nix
   ];
 
+  programs = {
+    fish.enable = false;
+    zsh.enable = false;
+  };
+
   home.shell = {
-    enableZshIntegration = config.programs.zsh.enable;
-    enableFishIntegration = config.programs.fish.enable;
+    enableBashIntegration = false;
+    enableFishIntegration = false;
+    enableZshIntegration = false;
   };
 
   home.shellAliases = {
     ls = "${lib.getExe' pkgs.uutils-coreutils-noprefix "ls"} --color=always --group-directories-first";
+    iip = "dig +short myip.opendns.com @resolver1.opendns.com";
+    jj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r | ${customArgs.commands.copy}";
+    jjj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r";
+    localip = "ipconfig getifaddr en0";
+    rm = lib.getExe pkgs.trash-cli;
+    ns = "${lib.getExe' pkgs.nix "nix-shell"} --run $SHELL -p";
+    nd = "${lib.getExe pkgs.nix} develop -c $SHELL";
   };
 
   home.sessionVariables = {
