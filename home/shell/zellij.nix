@@ -54,13 +54,10 @@ in {
       */
       ''
         layout {
-            pane split_direction="vertical" {
-                pane
-            }
-
             default_tab_template {
+                children
                 pane size=1 borderless=true {
-                    plugin location="file:${builtins.unsafeDiscardStringContext pkgs.zjstatus}/bin/zjstatus.wasm" {
+                    plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
                         hide_frame_for_single_pane "true"
 
                         // border_enabled  "true"           // "true" | "false" for activating the bar
@@ -78,7 +75,8 @@ in {
                         mode_tmux            "#[bg=bright_magenta] "
                         mode_resize          "#[bg=bright_cyan] "
                         mode_normal          "#[bg=bright_magenta] "
-                        mode_locked        "#[bg=bright_red,fg=black,bold]"
+                        // mode_locked        "#[bg=bright_red,fg=black,bold]"
+                        mode_locked          "#[bg=bright_red,fg=black,bold] "
                         mode_default_to_mode "tmux"
 
                         tab_normal               "#[fg=gray,bg=black] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
@@ -343,7 +341,7 @@ in {
         dim_panes true
         simplified_ui true
         default_mode "normal"
-        default_layout "compact" // TODO: fix zjstatus and use "default"
+        default_layout "default"
         mouse_mode true
         pane_frames false
         copy_on_select true
@@ -365,122 +363,122 @@ in {
 
         stacked_resize false
 
-        theme "moonfly" # TODO: customize ansi theme
+        theme "default" // TODO: customize ansi theme
 
         themes {
-            moonfly {
+            default {
                 text_unselected {
-                    base 133 133 133
-                    background 0 0 0
-                    emphasis_0 247 140 108
-                    emphasis_1 121 218 200
-                    emphasis_2 140 200 95
-                    emphasis_3 207 135 232
+                    base 15
+                    background 0
+                    emphasis_0 9
+                    emphasis_1 6
+                    emphasis_2 2
+                    emphasis_3 5
                 }
                 text_selected {
-                    base 189 189 189
-                    background 64 64 64
-                    emphasis_0 247 140 108
-                    emphasis_1 121 218 200
-                    emphasis_2 140 200 95
-                    emphasis_3 207 135 232
-                }
-                ribbon_selected {
-                    base 255 255 255
-                    background 0 0 0
-                    emphasis_0 216 51 75
-                    emphasis_1 132 105 100
-                    emphasis_2 171 101 217
-                    emphasis_3 89 138 255
+                    base 15
+                    background 8
+                    emphasis_0 9
+                    emphasis_1 6
+                    emphasis_2 2
+                    emphasis_3 5
                 }
                 ribbon_unselected {
-                    base 130 130 130
-                    background 0 0 0
-                    emphasis_0 216 51 75
-                    emphasis_1 0 0 0
-                    emphasis_2 89 138 255
-                    emphasis_3 171 101 217
+                    base 0
+                    background 7
+                    emphasis_0 1
+                    emphasis_1 15
+                    emphasis_2 4
+                    emphasis_3 5
+                }
+                ribbon_selected {
+                    base 0
+                    background 2
+                    emphasis_0 1
+                    emphasis_1 9
+                    emphasis_2 5
+                    emphasis_3 4
                 }
                 table_title {
-                    base 140 200 95
+                    base 2
                     background 0
-                    emphasis_0 247 140 108
-                    emphasis_1 121 218 200
-                    emphasis_2 140 200 95
-                    emphasis_3 207 135 232
-                }
-                table_cell_selected {
-                    base 189 189 189
-                    background 64 64 64
-                    emphasis_0 247 140 108
-                    emphasis_1 121 218 200
-                    emphasis_2 140 200 95
-                    emphasis_3 207 135 232
+                    emphasis_0 9
+                    emphasis_1 6
+                    emphasis_2 2
+                    emphasis_3 5
                 }
                 table_cell_unselected {
-                    base 189 189 189
-                    background 8 8 8
-                    emphasis_0 247 140 108
-                    emphasis_1 121 218 200
-                    emphasis_2 140 200 95
-                    emphasis_3 207 135 232
+                    base 15
+                    background 0
+                    emphasis_0 9
+                    emphasis_1 6
+                    emphasis_2 2
+                    emphasis_3 5
                 }
-                list_selected {
-                    base 189 189 189
-                    background 64 64 64
-                    emphasis_0 247 140 108
-                    emphasis_1 121 218 200
-                    emphasis_2 140 200 95
-                    emphasis_3 207 135 232
+                table_cell_selected {
+                    base 15
+                    background 8
+                    emphasis_0 9
+                    emphasis_1 6
+                    emphasis_2 2
+                    emphasis_3 5
                 }
                 list_unselected {
-                    base 189 189 189
-                    background 8 8 8
-                    emphasis_0 247 140 108
-                    emphasis_1 121 218 200
-                    emphasis_2 140 200 95
-                    emphasis_3 207 135 232
+                    base 15
+                    background 0
+                    emphasis_0 9
+                    emphasis_1 6
+                    emphasis_2 2
+                    emphasis_3 5
+                }
+                list_selected {
+                    base 15
+                    background 8
+                    emphasis_0 9
+                    emphasis_1 6
+                    emphasis_2 2
+                    emphasis_3 5
                 }
                 frame_selected {
-                    base 140 200 95
+                    base 2
                     background 0
-                    emphasis_0 247 140 108
-                    emphasis_1 121 218 200
-                    emphasis_2 207 135 232
+                    emphasis_0 9
+                    emphasis_1 6
+                    emphasis_2 5
                     emphasis_3 0
                 }
                 frame_highlight {
-                    base 247 140 108
+                    base 9
                     background 0
-                    emphasis_0 207 135 232
-                    emphasis_1 247 140 108
-                    emphasis_2 247 140 108
-                    emphasis_3 247 140 108
+                    emphasis_0 5
+                    emphasis_1 9
+                    emphasis_2 9
+                    emphasis_3 9
                 }
                 exit_code_success {
-                    base 140 200 95
+                    base 2
                     background 0
-                    emphasis_0 121 218 200
-                    emphasis_1 8 8 8
-                    emphasis_2 207 135 232
-                    emphasis_3 128 160 255
+                    emphasis_0 6
+                    emphasis_1 0
+                    emphasis_2 5
+                    emphasis_3 4
                 }
                 exit_code_error {
-                    base 230 94 114
+                    base 1
                     background 0
-                    emphasis_0 227 199 138
+                    emphasis_0 3
                     emphasis_1 0
                     emphasis_2 0
                     emphasis_3 0
                 }
                 multiplayer_user_colors {
-                    player_1 207 135 232
-                    player_2 128 160 255
+                    player_1 5
+                    player_2 4
                     player_3 0
-                    player_4 227 199 138
-                    player_5 121 218 200
+                    player_4 3
+                    player_5 6
                     player_6 0
-                    player_7 230 94 114
+                    player_7 1
                     player_8 0
                     player_9 0
                     player_10 0
