@@ -43,6 +43,8 @@ in {
 
   home.shellAliases = {
     za = "${exe} attach -c";
+    zd = "${exe} delete-session";
+    zk = "${exe} kill-session";
     zl = "${exe} list-sessions";
   };
 
