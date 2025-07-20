@@ -142,6 +142,9 @@ in {
             shared_except "normal" "locked" {
                 bind "esc" { SwitchToMode "normal"; }
             }
+            renametab {
+                bind "enter" { SwitchToMode "normal"; }
+            }
             shared_except  "scroll" "search" "tmux" {
                 bind "Ctrl a" { SwitchToMode "tmux"; }
                 bind "Ctrl \\" { SwitchToMode "tmux"; }
