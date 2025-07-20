@@ -12,6 +12,7 @@
         echo '${jsonStr}' | yj -jy > $out
       '');
 in {
+  # TODO: install only if git is enabled
   home.packages = with pkgs; [
     (buildGoModule {
       pname = "git-sync";

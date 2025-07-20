@@ -5,7 +5,7 @@
   ...
 }: {
   programs.lazygit = {
-    enable = true;
+    enable = config.programs.git.enable;
     settings = {
       gui = {
         showBottomLine = false;

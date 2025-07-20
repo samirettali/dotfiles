@@ -6,9 +6,10 @@
 }: let
   exe = "${lib.getExe config.programs.git.package}";
 in {
-  home.packages = with pkgs; [
-    git-absorb
-  ];
+  home.packages = with pkgs;
+    lib.mkIf config.programs.git.enable [
+      git-absorb
+    ];
 
   home.shellAliases = lib.mkIf config.programs.git.enable {
     gb = "${exe} branch";
