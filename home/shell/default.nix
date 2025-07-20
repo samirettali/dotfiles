@@ -34,6 +34,7 @@ in {
     ./tmux.nix
     ./zellij.nix
     ./zsh.nix
+    ./scripts
   ];
 
   home.packages = with pkgs; [
