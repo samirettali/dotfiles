@@ -40,9 +40,6 @@ vim.keymap.set("n", "<s-tab>", ":tabprevious<CR>", { desc = "Go to previous tab"
 vim.keymap.set("n", "tn", ":tabnew<CR>", { desc = "Go to new tab", silent = true })
 vim.keymap.set("n", "tc", ":tabclose<CR>", { desc = "Close current tab", silent = true })
 
-vim.keymap.set("n", "[Q", vim.cmd.colder)
-vim.keymap.set("n", "]Q", vim.cmd.cnewer)
-
 vim.keymap.set({ "n", "v" }, "dd", function()
 	if vim.api.nvim_get_current_line():match("^%s*$") then
 		vim.cmd('normal! "_dd')
@@ -67,17 +64,18 @@ vim.keymap.set("v", ">", ">gv")
 -- vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
 -- vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
-local function toggle_quickfix()
-	local windows = vim.fn.getwininfo()
+-- TODO
+-- local function toggle_quickfix()
+-- 	local windows = vim.fn.getwininfo()
+--
+-- 	for _, win in pairs(windows) do
+-- 		if win["quickfix"] == 1 then
+-- 			vim.cmd.cclose()
+-- 			return
+-- 		end
+-- 	end
+--
+-- 	vim.cmd.copen()
+-- end
 
-	for _, win in pairs(windows) do
-		if win["quickfix"] == 1 then
-			vim.cmd.cclose()
-			return
-		end
-	end
-
-	vim.cmd.copen()
-end
-
-vim.keymap.set("n", "<c-q>", toggle_quickfix, { desc = "Toggle Quickfix Window" })
+-- vim.keymap.set("n", "<c-q>", toggle_quickfix, { desc = "Toggle Quickfix Window" })
