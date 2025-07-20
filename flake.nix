@@ -135,6 +135,7 @@
             else 10;
         };
         commands = {
+          # TODO: find a better way
           copy =
             if pkgs.stdenv.isDarwin
             then "pbcopy"
