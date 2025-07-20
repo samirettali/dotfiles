@@ -866,6 +866,10 @@
             name = "Stakan";
             url = "https://stakan.io/terminal";
           }
+          {
+            name = "EigenPhi";
+            url = "https://eigenphi.io/";
+          }
         ];
       }
       {
