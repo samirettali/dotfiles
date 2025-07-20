@@ -494,6 +494,10 @@
         name = "Development";
         bookmarks = [
           {
+            name = "Better Go Playground";
+            url = "https://goplay.tools";
+          }
+          {
             name = "APIs";
             bookmarks = [
               {
