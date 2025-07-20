@@ -254,20 +254,20 @@ return {
 		-- 	end,
 		-- 	desc = "Goto T[y]pe Definition",
 		-- },
-		{
-			"<localleader>ds",
-			function()
-				Snacks.picker.lsp_symbols()
-			end,
-			desc = "LSP Symbols",
-		},
-		{
-			"<localleader>ws",
-			function()
-				Snacks.picker.lsp_workspace_symbols()
-			end,
-			desc = "LSP Workspace Symbols",
-		},
+		-- {
+		-- 	"<localleader>ds",
+		-- 	function()
+		-- 		Snacks.picker.lsp_symbols()
+		-- 	end,
+		-- 	desc = "LSP Symbols",
+		-- },
+		-- {
+		-- 	"<localleader>ws",
+		-- 	function()
+		-- 		Snacks.picker.lsp_workspace_symbols()
+		-- 	end,
+		-- 	desc = "LSP Workspace Symbols",
+		-- },
 		{
 			"<leader>bd",
 			function()

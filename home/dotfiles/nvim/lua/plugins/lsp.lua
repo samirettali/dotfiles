@@ -28,27 +28,42 @@ return {
 
 		local lspconfig = require("lspconfig")
 
-		-- TODO: map vim.lsp.buf.document_symbol
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "vim.lsp.buf.definition()" })
 		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "vim.lsp.buf.declaration()" })
 		vim.keymap.set("n", "gr", vim.lsp.buf.rename, { desc = "vim.lsp.buf.rename()" })
 		vim.keymap.set("n", "gR", vim.lsp.buf.references, { desc = "vim.lsp.buf.references()" })
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "vim.lsp.buf.implementation()" })
+		vim.keymap.set("n", "gs", vim.lsp.buf.document_symbol, { desc = "vim.lsp.buf.document_symbol()" })
+		vim.keymap.set("n", "gS", function()
+			vim.lsp.buf.workspace_symbol()
+		end, { desc = "vim.lsp.buf.workspace_symbol()" })
 
-		vim.keymap.set("n", "gI", vim.lsp.buf.incoming_calls)
-		vim.keymap.set("n", "gO", vim.lsp.buf.outgoing_calls)
+		vim.keymap.set("n", "gI", vim.lsp.buf.incoming_calls, { desc = "vim.lsp.buf.incoming_calls()" })
+		vim.keymap.set("n", "gO", vim.lsp.buf.outgoing_calls, { desc = "vim.lsp.buf.outgoing_calls()" })
 
 		vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { desc = "vim.lsp.buf.type_definition()" })
 		vim.keymap.set({ "n", "x" }, "ga", vim.lsp.buf.code_action, { desc = "vim.lsp.buf.code_action()" })
 
-		vim.diagnostic.config({
-			virtual_text = {
+		vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist()" })
+		vim.keymap.set("n", "<leader>lc", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist()" })
+
+		local function on_jump(_, bufnr)
+			vim.diagnostic.open_float({
+				bufnr = bufnr,
+				scope = "cursor",
+				focus = false,
 				source = "if_many",
+			})
+		end
+
+		vim.diagnostic.config({
+			jump = { on_jump = on_jump },
+			text = {
+				[vim.diagnostic.severity.ERROR] = "E",
+				[vim.diagnostic.severity.WARN] = "W",
+				[vim.diagnostic.severity.HINT] = "H",
+				[vim.diagnostic.severity.INFO] = "I",
 			},
-			signs = false,
-			underline = false,
-			severity_sort = true,
-			update_in_insert = false,
 		})
 
 		local servers = {
