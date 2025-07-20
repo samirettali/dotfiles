@@ -7,13 +7,11 @@
     bun
     eslint_d
     nodePackages.eslint
+    nodePackages.js-beautify
     nodePackages.prettier
     nodePackages.typescript-language-server
     nodejs
-    pnpm
     prettierd
-    yarn
-    nodePackages.js-beautify
   ];
 
   home.sessionPath = [
