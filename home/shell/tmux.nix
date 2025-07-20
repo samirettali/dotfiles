@@ -110,11 +110,7 @@ in {
     '';
   };
 
-  programs.fish.shellAliases = lib.mkIf cfg.enable {
-    tl = "${lib.getExe cfg.package} ls";
-  };
-
-  programs.zsh.shellAliases = lib.mkIf cfg.enable {
+  home.shellAliases = lib.mkIf cfg.enable {
     tl = "${lib.getExe cfg.package} ls";
   };
 }

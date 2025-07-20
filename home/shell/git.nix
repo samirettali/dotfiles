@@ -4,25 +4,22 @@
   pkgs,
   ...
 }: let
-  git = "${lib.getExe config.programs.git.package}";
-
-  aliases = {
-    gb = "${git} branch";
-    gd = "${git} diff";
-    gk = "${git} checkout";
-    gc = "${git} clone";
-    ga = "${git} add";
-    gap = "${git} add -p";
-    gdc = "${git} diff --cached";
-    gr = "cd $(${git} rev-parse --show-toplevel) || echo 'Not in a git repository'";
-  };
+  exe = "${lib.getExe config.programs.git.package}";
 in {
   home.packages = with pkgs; [
     git-absorb
   ];
 
-  programs.fish.shellAliases = lib.mkIf config.programs.git.enable aliases;
-  programs.zsh.shellAliases = lib.mkIf config.programs.zsh.enable aliases;
+  home.shellAliases = lib.mkIf config.programs.git.enable {
+    gb = "${exe} branch";
+    gd = "${exe} diff";
+    gk = "${exe} checkout";
+    gc = "${exe} clone";
+    ga = "${exe} add";
+    gap = "${exe} add -p";
+    gdc = "${exe} diff --cached";
+    gr = "cd $(${exe} rev-parse --show-toplevel) || echo 'Not in a git repository'";
+  };
 
   programs = {
     git = {

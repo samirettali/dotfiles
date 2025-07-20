@@ -33,6 +33,7 @@ in {
       };
       historySubstringSearch.enable = true;
       initContent = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
+      # TODO: move
       shellAliases = {
         bak = "cp -r $1 $1.bak";
         c = "clear";

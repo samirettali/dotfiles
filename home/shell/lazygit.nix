@@ -17,11 +17,7 @@
     };
   };
 
-  programs.fish.shellAliases = lib.mkIf config.programs.lazygit.enable {
+  home.shellAliases = lib.mkIf config.programs.lazygit.enable {
     lg = lib.getExe pkgs.lazygit;
-  };
-
-  programs.zsh.shellAliases = lib.mkIf config.programs.lazygit.enable {
-    lg = "${lib.getExe pkgs.lazygit}";
   };
 }

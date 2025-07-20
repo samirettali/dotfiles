@@ -16,11 +16,7 @@
     };
   };
 
-  programs.fish.shellAliases = lib.mkIf config.programs.lazydocker.enable {
+  home.shellAliases = lib.mkIf config.programs.lazydocker.enable {
     ld = lib.getExe pkgs.lazydocker;
-  };
-
-  programs.zsh.shellAliases = lib.mkIf config.programs.lazydocker.enable {
-    ld = "${lib.getExe pkgs.lazydocker}";
   };
 }

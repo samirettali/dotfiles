@@ -81,6 +81,7 @@ in {
         src = pkgs.fishPlugins.done.src;
       }
     ];
+    # TODO: move
     shellAliases = {
       iip = "dig +short myip.opendns.com @resolver1.opendns.com";
       jj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r | ${customArgs.commands.copy}";
