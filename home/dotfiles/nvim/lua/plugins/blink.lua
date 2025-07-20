@@ -126,9 +126,7 @@ return {
 		},
 		fuzzy = {
 			implementation = "prefer_rust_with_warning",
-			max_typos = function(keyword)
-				return math.floor(#keyword / 4)
-			end,
+			max_typos = 5,
 			use_frecency = true,
 			use_proximity = true,
 		},
