@@ -34,8 +34,6 @@
         "**/.settings" = true;
         "**/.factorypath" = true;
         "**/*.Designer.cs" = true;
-        "**/__pycache__" = true;
-        "**/.ruff_cache" = true;
       };
 
       "telemetry.telemetryLevel" = "off";
@@ -88,33 +86,6 @@
       '';
       "geminicodeassist.inlineSuggestions.enableAuto" = false;
     })
-    (withExtension pkgs.vscode-marketplace.juanblanco.solidity {
-      "solidity.packageDefaultDependenciesContractsDirectory" = "src";
-      "solidity.packageDefaultDependenciesDirectory" = "lib";
-      "solidity.compileUsingRemoteVersion" = "v0.8.23";
-      "solidity.remappings" = [
-        "@openzeppelin/contracts/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/"
-        "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/"
-      ];
-    })
-    (withExtension pkgs.vscode-marketplace.golang.go {
-      "go.formatTool" = "gofumpt";
-      "go.delveConfig" = {
-        "showGlobalVariables" = true;
-      };
-      "go.lintTool" = "revive";
-      "go.coverOnSingleTest" = true;
-      "go.showWelcome" = true;
-      "gopls" = {
-        "ui.diagnostic.analyses" = {
-          "modernize" = true;
-        };
-        "ui.semanticTokens" = false;
-        "analyses" = {
-          "shadow" = true;
-        };
-      };
-    })
     (withExtension pkgs.vscode-marketplace.github.copilot {
       "github.copilot.enable" = {
         "*" = true;
@@ -122,9 +93,6 @@
         "markdown" = true;
       };
       "github.copilot.nextEditSuggestions.enabled" = true;
-    })
-    (withExtension pkgs.vscode-marketplace.jnoortheen.nix-ide {
-      "nix.formatterPath" = "alejandra";
     })
     (withExtension pkgs.vscode-marketplace.eamodio.gitlens {
       "gitlens.advanced.blame.customArguments" = [
@@ -152,15 +120,8 @@ in {
           franzgollhammer.jb-fleet-dark
           github.vscode-github-actions
           github.vscode-pull-request-github
-          golang.go
           google.geminicodeassist
-          jnoortheen.nix-ide
-          juanblanco.solidity
-          mkhl.direnv
-
-          ms-python.python
-          ms-python.debugpy
-          charliermarsh.ruff
+          # mkhl.direnv
 
           quicktype.quicktype
           rust-lang.rust-analyzer
@@ -175,7 +136,6 @@ in {
           supermaven.supermaven
           # vadimcn.vscode-lldb # TODO: build is broken
           postman.postman-for-vscode
-          detachhead.basedpyright
         ];
         keybindings = [
           {
