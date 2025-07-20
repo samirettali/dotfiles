@@ -1,15 +1,10 @@
-{
-  pkgs,
-  customArgs,
-  ...
-}: let
-  scripts = with pkgs; [
-    (callPackage
-      ./nh.nix
-      {
-        copyCmd = customArgs.commands.copy;
-      })
-  ];
+{pkgs, ...}: let
+  copy = pkgs.callPackage ./copy.nix {};
 in {
-  home.packages = scripts;
+  home.packages = [
+    copy
+    (pkgs.callPackage ./nh.nix {
+      inherit copy;
+    })
+  ];
 }
