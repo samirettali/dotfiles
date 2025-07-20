@@ -3,8 +3,8 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	opts = {
 		mappings = {
-			increment = "<C-a>",
-			decrement = "<C-x>",
+			decrement = "<C-,>",
+			increment = "<C-.>",
 		},
 	},
 }
