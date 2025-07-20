@@ -341,6 +341,7 @@ return {
 				Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>ts")
 				Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
 				Snacks.toggle.option("list", { name = "List chars" }):map("<leader>tl")
+				Snacks.toggle.option("cursorline", { name = "Cursorline" }):map("<leader>tu")
 				Snacks.toggle.inlay_hints():map("<leader>ti")
 				Snacks.toggle.diagnostics():map("<leader>td")
 				Snacks.toggle.line_number():map("<leader>tn")
