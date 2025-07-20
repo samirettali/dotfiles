@@ -1,10 +1,11 @@
 {
   inputs,
+  lib,
   pkgs,
   ...
 }: {
   programs.television = {
-    enable = true;
+    enable = lib.mkDefault false;
     package = inputs.television.packages.${pkgs.system}.default;
     settings = {
       tick_rate = 60;
