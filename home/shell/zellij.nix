@@ -60,26 +60,16 @@ in {
                 children
                 pane size=1 borderless=true {
                     plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
-                        hide_frame_for_single_pane "true"
-
-                        // border_enabled  "true"           // "true" | "false" for activating the bar
-                        // border_char     "─"              // character used for drawing the bar
-                        // border_format   "#[fg=#6C7086]"  // format specifier for theming
-                        // border_position "top"            // "top" | "bottom" for the border position relative to the bar
-
                         format_left  "{mode}#[fg=green,bg=black,bold] {session}#[bg=#000000] {tabs}"
-                        // format_right "{command_kubectx}#[fg=#424554,bg=#181825]::{command_kubens}{datetime}"
-                        // format_center "{command_git_branch}"
                         format_right "#[fg=#gray,bg=black]"
                         format_space "#[bg=black]"
 
-                        mode_normal          "#[bg=bright_magenta] "
-                        mode_tmux            "#[bg=bright_magenta] "
+                        mode_normal          "#[bg=bright_blue] "
+                        mode_tmux            "#[bg=bright_green] "
                         mode_resize          "#[bg=bright_cyan] "
-                        mode_normal          "#[bg=bright_magenta] "
-                        // mode_locked        "#[bg=bright_red,fg=black,bold]"
-                        mode_locked          "#[bg=bright_red,fg=black,bold] "
-                        mode_default_to_mode "tmux"
+                        mode_move            "#[bg=bright_magenta] "
+                        mode_locked          "#[bg=bright_red] "
+                        mode_default_to_mode "locked"
 
                         tab_normal               "#[fg=gray,bg=black] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
                         tab_active               "#[fg=white,bg=black,bold] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
@@ -87,22 +77,11 @@ in {
                         tab_fullscreen_indicator "□ "
                         tab_sync_indicator       "  "
                         tab_floating_indicator   "󰉈 "
-                        // tab_sync_indicator       " "
-                        // tab_fullscreen_indicator " 󰊓"
-                        // tab_floating_indicator   " 󰹙"
 
                         command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
                         command_git_branch_format      "#[fg=bright_blue] {stdout} "
                         command_git_branch_interval    "1"
                         command_git_branch_rendermode  "static"
-
-                        // command_kubectx_command  "kubectx -c"
-                        // command_kubectx_format   "#[fg=#6C7086,bg=#181825,italic] {stdout}"
-                        // command_kubectx_interval "2"
-
-                        // command_kubens_command  "kubens -c"
-                        // command_kubens_format   "#[fg=#6C7086,bg=#181825]{stdout} "
-                        // command_kubens_interval "2"
                     }
                 }
             }
@@ -153,9 +132,6 @@ in {
                 bind "Ctrl b" { SwitchToMode "tmux"; }
             }
             tmux {
-                bind "space" { NextSwapLayout; }
-                bind "esc" { SwitchToMode "normal"; }
-
                 // brackets after NewTab are required to open the tab in the current working directory
                 bind "Ctrl c" { NewTab { }; SwitchToMode "normal"; }
                 bind "c" { NewTab { }; SwitchToMode "normal"; }
@@ -183,13 +159,18 @@ in {
 
                 bind "," { SwitchToMode "renametab"; }
                 bind "Ctrl ," { SwitchToMode "renametab"; }
+                bind "m" { SwitchToMode "move"; } // TODO: map also in resize mode
+                bind "o" { SwitchToMode "session"; }
+                bind "r" { SwitchToMode "resize"; }
 
-                bind "d" { Detach; } // TODO: move down
                 bind "/" { SwitchToMode "entersearch"; }
 
                 bind "x" { CloseFocus; SwitchToMode "normal"; }
 
+                bind "d" { Detach; }
                 bind "Ctrl d" { Detach; }
+
+                bind "space" { NextSwapLayout; }
 
                 bind "f" { ToggleFloatingPanes; SwitchToMode "normal"; }
                 bind "Ctrl f" { ToggleFloatingPanes; SwitchToMode "normal"; }
@@ -209,10 +190,6 @@ in {
 
                 bind "{" { MovePaneBackwards; SwitchToMode "normal"; }
                 bind "}" { MovePane; SwitchToMode "normal"; }
-
-                bind "m" { SwitchToMode "move"; } // TODO: map also in resize mode
-                bind "o" { SwitchToMode "session"; }
-                bind "r" { SwitchToMode "resize"; }
 
                 bind "w" {
                     LaunchOrFocusPlugin "session-manager" {
@@ -268,7 +245,6 @@ in {
             }
             move {
                 bind "h" { MovePane "left"; }
-                // bind "Ctrl h" { SwitchToMode "normal"; }
                 bind "j" { MovePane "down"; }
                 bind "k" { MovePane "up"; }
                 bind "l" { MovePane "right"; }
@@ -279,15 +255,7 @@ in {
                 bind ">" { MoveTab "right"; }
             }
             scroll {
-                bind "Alt left" { MoveFocusOrTab "left"; SwitchToMode "normal"; }
-                bind "Alt down" { MoveFocus "down"; SwitchToMode "normal"; }
-                bind "Alt up" { MoveFocus "up"; SwitchToMode "normal"; }
-                bind "Alt right" { MoveFocusOrTab "right"; SwitchToMode "normal"; }
                 bind "e" { EditScrollback; SwitchToMode "normal"; }
-                bind "Alt h" { MoveFocusOrTab "left"; SwitchToMode "normal"; }
-                bind "Alt j" { MoveFocus "down"; SwitchToMode "normal"; }
-                bind "Alt k" { MoveFocus "up"; SwitchToMode "normal"; }
-                bind "Alt l" { MoveFocusOrTab "right"; SwitchToMode "normal"; }
                 bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
             }
             shared_among "scroll" "search" {
@@ -343,7 +311,6 @@ in {
             autolock
         }
 
-        dim_panes true
         simplified_ui true
         default_mode "normal"
         default_layout "default"
@@ -360,15 +327,10 @@ in {
         scrollback_lines_to_serialize 10000
         serialization_interval 10000
         disable_session_metadata false
-
         styled_underlines false
-
-        // Whether to stack panes when resizing beyond a certain size
-        // Default: true
-
         stacked_resize false
 
-        theme "default" // TODO: customize ansi theme
+        theme "default"
 
         themes {
             default {
