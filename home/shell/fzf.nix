@@ -5,7 +5,7 @@
       "--ansi"
       "--bind space:jump,jump:accept"
       "--color 16"
-      "--height ~10" # use at most 10 lines
+      "--height ~30" # use at most 30 lines
       "--info hidden"
       "--reverse"
       "--style minimal"
