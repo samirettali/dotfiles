@@ -486,6 +486,9 @@
                 name = "Which LLM";
                 url = "https://whichllm.together.ai/use-case";
               }
+              {
+                url = "https://www.llm-prices.com/";
+              }
             ];
           }
         ];
