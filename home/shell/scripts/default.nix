@@ -3,7 +3,7 @@
 in {
   home.packages = [
     copy
-    (pkgs.callPackage ./nh.nix {
+    (pkgs.callPackage ./nhash.nix {
       inherit copy;
     })
   ];

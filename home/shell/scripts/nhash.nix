@@ -8,7 +8,7 @@
   nixHash = lib.getExe' pkgs.nix "hash";
   tr = lib.getExe' pkgs.uutils-coreutils-noprefix "tr";
 in
-  pkgs.writeShellScriptBin "nh" ''
+  pkgs.writeShellScriptBin "nhash" ''
     set -euo pipefail
 
     if [ -z "''${1:-}" ]; then
