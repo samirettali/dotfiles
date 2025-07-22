@@ -27,8 +27,6 @@
       macos-titlebar-style = "hidden";
       theme = "Builtin Dark";
       title = ''" "'';
-      window-padding-x = 4;
-      window-padding-y = 6;
       shell-integration-features = "no-cursor";
     };
   };
