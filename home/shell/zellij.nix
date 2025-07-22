@@ -314,7 +314,7 @@ in {
         scrollback_lines_to_serialize 10000
         serialization_interval 10000
         disable_session_metadata false
-        styled_underlines false
+        styled_underlines true
         stacked_resize false
 
         theme "default"
