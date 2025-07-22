@@ -47,6 +47,11 @@ return {
 		vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist()" })
 		vim.keymap.set("n", "<leader>lc", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist()" })
 
+		vim.keymap.set("n", "<localleader>v", function()
+			local config = not vim.diagnostic.config().virtual_lines
+			vim.diagnostic.config({ virtual_lines = config })
+		end, { desc = "Toggle diagnostic virtual lines" })
+
 		local function on_jump(_, bufnr)
 			vim.diagnostic.open_float({
 				bufnr = bufnr,
@@ -58,6 +63,15 @@ return {
 
 		vim.diagnostic.config({
 			jump = { on_jump = on_jump },
+			float = {
+				header = "",
+				scope = "cursor",
+				source = "if_many",
+			},
+			virtual_lines = false,
+			underline = true,
+			severity_sort = true,
+			-- signs = false, -- TODO
 			text = {
 				[vim.diagnostic.severity.ERROR] = "E",
 				[vim.diagnostic.severity.WARN] = "W",
