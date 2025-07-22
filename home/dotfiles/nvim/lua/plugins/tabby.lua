@@ -48,15 +48,9 @@ return {
 						end
 					end
 
-					-- local x = line.sep("", hl, theme.fill)
-					-- vim.notify(vim.inspect(x))
-
 					return {
 						line.sep("", hl, theme.fill),
 						name,
-						-- tab.number(),
-						-- tab.in_jump_mode() and tab.jump_key() .. " " .. tab.name() or tab.name(),
-						-- tab.in_jump_mode() and tab.jump_key() or tab.number(),
 						line.sep("", hl, theme.fill),
 						hl = hl,
 						margin = " ",
