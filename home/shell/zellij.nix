@@ -193,7 +193,7 @@ in {
                     SwitchToMode "normal"
                 }
                 bind "S" { ToggleActiveSyncTab; SwitchToMode "normal"; }
-                bind "tab" { ToggleTab; }
+                bind "tab" { ToggleTab; SwitchToMode "normal"; }
                 bind "1" { GoToTab 1; SwitchToMode "normal"; }
                 bind "2" { GoToTab 2; SwitchToMode "normal"; }
                 bind "3" { GoToTab 3; SwitchToMode "normal"; }
