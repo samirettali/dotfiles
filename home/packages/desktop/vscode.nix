@@ -25,7 +25,6 @@ in {
         enableExtensionUpdateCheck = false;
         enableUpdateCheck = false;
         extensions = with pkgs.vscode-marketplace; [
-          # amos402.scope-bar # TODO: is this needed?
           eamodio.gitlens
           franzgollhammer.jb-fleet-dark
           github.vscode-github-actions
