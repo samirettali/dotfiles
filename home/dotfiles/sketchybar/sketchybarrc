@@ -2,7 +2,7 @@
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
 
-sketchybar --bar position=top height=32 notch_display_height=40 blur_radius=30 color=0xDD0000000
+sketchybar --bar position=top height=32 notch_display_height=40 blur_radius=30 color=0xFF0000000
 
 default=(
     padding_left=3
@@ -36,7 +36,6 @@ for sid in $(/etc/profiles/per-user/s.ettali/bin/aerospace list-workspaces --all
         click_script="aerospace workspace ${sid}" \
         script="$PLUGIN_DIR/aerospace.sh ${sid}"
 done
-
 
 for monitor in $(/etc/profiles/per-user/s.ettali/bin/aerospace list-monitors | awk '{print $1}'); do
     for sid in $(/etc/profiles/per-user/s.ettali/bin/aerospace list-workspaces --monitor "${monitor}" --empty no); do
