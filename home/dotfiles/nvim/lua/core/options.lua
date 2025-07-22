@@ -127,5 +127,4 @@ vim.cmd(":command! WQ wq")
 vim.cmd(":command! Qa qa")
 vim.cmd(":command! QA qa")
 
--- TODO: this breaks telescope, waiting for https://github.com/nvim-telescope/telescope.nvim/issues/3436
--- vim.opt.winborder = "rounded"
+vim.opt.winborder = "rounded"
