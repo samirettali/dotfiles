@@ -47,7 +47,7 @@ in {
                 children
                 pane size=1 borderless=true {
                     plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
-                        format_left  "{mode}#[fg=green,bg=black,bold] {session}#[bg=#000000] {tabs}"
+                        format_left  "{mode}#[fg=green,bg=black,bold] [{session}]#[bg=#000000] {tabs}"
                         format_right "#[fg=#gray,bg=black]"
                         format_space "#[bg=black]"
 
