@@ -131,7 +131,7 @@ in {
           wgsl-analyzer.wgsl-analyzer
           # github.copilot
           # github.copilot-chat # FIX: this requires vscode-insiders
-          # augment.vscode-augment
+          augment.vscode-augment
           # continue.continue
           supermaven.supermaven
           # vadimcn.vscode-lldb # TODO: build is broken
