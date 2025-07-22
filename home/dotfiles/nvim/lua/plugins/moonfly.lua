@@ -6,13 +6,14 @@ return {
 		local moonfly = require("moonfly")
 
 		vim.opt.termguicolors = true
-		vim.g.moonflyTerminalColors = true
 		vim.g.moonflyWinSeparator = 2
-		vim.g.moonflyItalics = false
 		vim.g.moonflyVirtualTextColor = true
+		vim.g.moonflyNormalFloat = true
+		vim.g.moonflyUnderlineMatchParen = true
 
+		local custom_bg = "#000000"
 		local custom_colors = {
-			bg = "#000000",
+			bg = custom_bg,
 		}
 
 		moonfly.custom_colors(custom_colors)
@@ -20,9 +21,26 @@ return {
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			pattern = "moonfly",
 			callback = function()
-				local palette = require("moonfly").palette
-				vim.api.nvim_set_hl(0, "WinBar", { bg = palette.black, fg = palette.grey247 })
-				vim.api.nvim_set_hl(0, "WinBarNC", { bg = palette.black, fg = palette.grey247 })
+				local palette = moonfly.palette
+
+				local winbar_hl = vim.api.nvim_get_hl(0, { name = "WinBar", link = false })
+				winbar_hl.bg = palette.grey16
+				vim.api.nvim_set_hl(0, "WinBar", winbar_hl)
+
+				local winbar_nc_hl = vim.api.nvim_get_hl(0, { name = "WinBarNC", link = false })
+				winbar_nc_hl.bg = palette.grey7
+				vim.api.nvim_set_hl(0, "WinBarNC", winbar_nc_hl)
+
+				vim.api.nvim_set_hl(0, "TablineSel", {
+					bg = palette.grey7,
+					fg = palette.blue,
+				})
+
+				if vim.g.moonflyNormalFloat then
+					vim.api.nvim_set_hl(0, "BlinkCmpSource", {
+						bg = custom_bg,
+					})
+				end
 			end,
 			group = vim.api.nvim_create_augroup("MoonflyHighlight", {}),
 		})
