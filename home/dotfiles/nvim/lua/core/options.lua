@@ -44,6 +44,8 @@ vim.opt.timeoutlen = 400
 vim.opt.updatetime = 250
 
 vim.opt.joinspaces = false -- No double spaces with join after a dot
+vim.opt.scrolloff = 3 -- Lines of context
+vim.opt.sidescrolloff = 3 -- Columns of context
 vim.opt.shiftround = true -- Round indent
 vim.opt.splitbelow = true -- Put new windows below current
 vim.opt.splitright = true -- Put new windows right of current
