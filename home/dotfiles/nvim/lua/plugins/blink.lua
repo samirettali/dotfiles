@@ -68,7 +68,7 @@ return {
 							text = function(ctx)
 								return "[" .. ctx.source_name .. "]"
 							end,
-							highlight = "BlinkCmpSource",
+							highlight = "BlinkCmpSource", -- TODO: is this needed?
 						},
 					},
 				},
