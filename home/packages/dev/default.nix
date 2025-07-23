@@ -11,6 +11,7 @@
     ./nix.nix
     ./python.nix
     ./rust.nix
+    ./java.nix
     ./shell.nix
     ./web3.nix
     ./zig.nix
@@ -36,8 +37,4 @@
   ];
 
   home.sessionVariables.LIBRARY_PATH = ''${lib.makeLibraryPath [pkgs.libiconv]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
-
-  programs = {
-    java.enable = true;
-  };
 }
