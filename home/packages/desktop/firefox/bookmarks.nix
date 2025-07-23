@@ -915,6 +915,36 @@
           }
         ];
       }
+      {
+        name = "Dotfiles";
+        toolbar = false;
+        bookmarks = [
+          {
+            name = "Dotfiles";
+            url = "https://nvimluau.dev";
+          }
+          {
+            name = "Github neovim";
+            url = "https://github.com/topics/neovim";
+          }
+          {
+            name = "Dotfyle";
+            url = "https://dotfyle.com/";
+          }
+          {
+            name = "Nvim store";
+            url = "https://nvim.store/";
+          }
+          {
+            name = "Reddit neovim";
+            url = "https://www.reddit.com/r/neovim/";
+          }
+          {
+            name = "Reddit unixporn";
+            url = "https://www.reddit.com/r/unixporn/";
+          }
+        ];
+      }
     ];
   };
 }
