@@ -6,7 +6,7 @@ return {
 		local moonfly = require("moonfly")
 
 		vim.opt.termguicolors = true
-		vim.g.moonflyWinSeparator = 2
+		vim.g.moonflyWinSeparator = 1
 		vim.g.moonflyVirtualTextColor = true
 		vim.g.moonflyNormalFloat = true
 		vim.g.moonflyUnderlineMatchParen = true
@@ -24,7 +24,7 @@ return {
 				local palette = moonfly.palette
 
 				local winbar_hl = vim.api.nvim_get_hl(0, { name = "WinBar", link = false })
-				winbar_hl.bg = palette.grey16
+				winbar_hl.bg = palette.grey7
 				vim.api.nvim_set_hl(0, "WinBar", winbar_hl)
 
 				local winbar_nc_hl = vim.api.nvim_get_hl(0, { name = "WinBarNC", link = false })
@@ -35,6 +35,13 @@ return {
 					bg = palette.grey7,
 					fg = palette.blue,
 				})
+
+				if vim.g.moonflyWinSeparator == 1 then
+					vim.api.nvim_set_hl(0, "WinSeparator", {
+						bg = palette.grey7,
+						fg = palette.grey7,
+					})
+				end
 
 				if vim.g.moonflyNormalFloat then
 					vim.api.nvim_set_hl(0, "BlinkCmpSource", {
