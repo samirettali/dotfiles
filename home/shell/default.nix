@@ -12,6 +12,7 @@
   iredis115 = iredisPkgs.iredis;
 in {
   imports = [
+    ./fish.nix
     ./bat.nix
     ./btop.nix
     ./claude-code.nix
@@ -29,6 +30,7 @@ in {
     ./tmux.nix
     ./zellij.nix
     ./zsh.nix
+    ./zoxide.nix
     ./scripts
   ];
 

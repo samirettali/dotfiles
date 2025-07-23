@@ -1,16 +1,6 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
-  # TODO: move file
-  environment.systemPackages = [
-    pkgs.zoxide
-  ];
-
+{pkgs, ...}: {
   programs.fish = {
     enable = true;
-    useBabelfish = true;
     interactiveShellInit =
       /*
       fish
@@ -92,23 +82,19 @@
 
             printf (string join ' ' -- $duration $stat $gp)
         end
-
-        # TODO: this is a hack to make zoxide work with fish installed from nix-darwin
-        ${lib.getExe pkgs.zoxide} init fish | source
       '';
-    # TODO
-    # plugins = [
-    #   {
-    #     name = "grc";
-    #     src = pkgs.fishPlugins.grc.src;
-    #   }
-    #   {
-    #     name = "done";
-    #     src = pkgs.fishPlugins.done.src;
-    #   }
-    # ];
-    # home.packages = with pkgs; [
-    #   grc
-    # ];
+    plugins = [
+      {
+        name = "grc";
+        src = pkgs.fishPlugins.grc.src;
+      }
+      {
+        name = "done";
+        src = pkgs.fishPlugins.done.src;
+      }
+    ];
   };
+  home.packages = with pkgs; [
+    grc
+  ];
 }

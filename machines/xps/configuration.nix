@@ -5,9 +5,6 @@
   user,
   ...
 }: {
-  imports = [
-    ../home/shell/fish.nix
-  ];
   boot = {
     loader = {
       systemd-boot = {

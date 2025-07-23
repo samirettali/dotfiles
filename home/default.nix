@@ -13,10 +13,7 @@
     ./spotify-player.nix
   ];
 
-  programs = {
-    fish.enable = false;
-    zsh.enable = false;
-  };
+  programs.fish.enable = true;
 
   home.shell = {
     enableBashIntegration = false;

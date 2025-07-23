@@ -3,13 +3,10 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ../home/shell/fish.nix
-  ];
-
   programs = {
     zsh.enable = false; # TODO: also for nixos
     gnupg.agent.enable = true; # TODO is this needed?
+    fish.enable = true;
   };
 
   networking = {
