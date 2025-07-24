@@ -65,4 +65,8 @@ M.get_current_filename = function()
 	return M.get_parent_folder() .. filename
 end
 
+M.toggle_inlay_hints = function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end
+
 return M

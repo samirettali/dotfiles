@@ -1,4 +1,5 @@
-local methods = vim.lsp.protocol.Methods
+local utils = require("core.utils")
+local disabled_by_autocmd = false -- TODO: should this be global because of garbage collection?
 
 local function disable_default_keymaps()
 	local default_keymaps = {
@@ -51,6 +52,37 @@ return {
 			local config = not vim.diagnostic.config().virtual_lines
 			vim.diagnostic.config({ virtual_lines = config })
 		end, { desc = "Toggle diagnostic virtual lines" })
+
+		vim.keymap.set("n", "<leader>ti", utils.toggle_inlay_hints, { desc = "Toggle inlay hints" })
+
+		vim.api.nvim_create_autocmd("InsertEnter", {
+			-- group = vim.api.nvim_create_augroup("LspAttach", {}),
+			pattern = "*",
+			callback = function(event)
+				vim.schedule(function()
+					-- check if they are enabled
+					if not vim.lsp.inlay_hint.is_enabled() then
+						return
+					end
+
+					vim.lsp.inlay_hint.enable(false, { bufnr = event.buf })
+					disabled_by_autocmd = true
+				end)
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("InsertLeave", {
+			group = vim.api.nvim_create_augroup("LspAttach", {}),
+			pattern = "*",
+			callback = function(event)
+				vim.schedule(function()
+					if disabled_by_autocmd then
+						vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+						disabled_by_autocmd = false
+					end
+				end)
+			end,
+		})
 
 		local function on_jump(_, bufnr)
 			vim.diagnostic.open_float({
