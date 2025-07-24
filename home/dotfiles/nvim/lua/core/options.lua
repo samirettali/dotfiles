@@ -101,6 +101,8 @@ end
 
 vim.opt.showmode = false
 
+vim.opt.cursorline = true
+
 vim.opt.fillchars = {
 	diff = "╱",
 	horiz = "━",
