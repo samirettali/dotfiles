@@ -10,6 +10,7 @@ return {
 		vim.g.moonflyVirtualTextColor = true
 		vim.g.moonflyNormalFloat = true
 		vim.g.moonflyUnderlineMatchParen = true
+		vim.g.moonflyItalics = false
 
 		local custom_bg = "#000000"
 		local custom_colors = {
