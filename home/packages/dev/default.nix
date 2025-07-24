@@ -20,7 +20,6 @@
   home.packages = with pkgs; [
     ast-grep
     devbox
-    devenv
     jdt-language-server
     libiconv
     lld
@@ -37,4 +36,8 @@
   ];
 
   home.sessionVariables.LIBRARY_PATH = ''${lib.makeLibraryPath [pkgs.libiconv]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
+
+  home.shellAliases = {
+    ds = "${lib.getExe pkgs.devenv} shell";
+  };
 }
