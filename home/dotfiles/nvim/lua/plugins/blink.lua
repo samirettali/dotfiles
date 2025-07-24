@@ -22,8 +22,8 @@ return {
 		},
 		keymap = {
 			preset = "none",
-			["<c-n>"] = { "select_next", "show", "fallback_to_mappings" },
-			["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+			["<c-n>"] = { "select_next", "show", "fallback" },
+			["<c-p>"] = { "select_prev", "fallback" },
 			["<C-e>"] = { "hide" },
 			["<C-y>"] = { "select_and_accept" },
 
