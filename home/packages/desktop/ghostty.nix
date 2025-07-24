@@ -1,6 +1,7 @@
 {
-  pkgs,
+  customArgs,
   inputs,
+  pkgs,
   ...
 }: {
   programs.ghostty = {
@@ -14,6 +15,7 @@
       confirm-close-surface = false;
       cursor-style = "block";
       cursor-style-blink = false;
+      font-family = customArgs.font.name;
       font-feature = [
         "-calt"
         "-dlig"
