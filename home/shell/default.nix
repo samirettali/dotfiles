@@ -73,7 +73,6 @@ in {
     repomix
     # rlwrap
     # scc # count lines of code
-    # sesh # TODO: this is slow
     sqlite
     # superfile
     # tabview # csv viewer, maybe keep visidata
