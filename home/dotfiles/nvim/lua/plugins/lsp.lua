@@ -173,7 +173,7 @@ return {
 					},
 				},
 			},
-			ts_ls = {},
+			ts_ls = {}, -- TODO: try vtsls
 			solidity_ls = {},
 			nixd = {},
 			zls = {},
