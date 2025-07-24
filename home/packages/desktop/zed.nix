@@ -11,6 +11,7 @@
       "csv"
       "docker-compose"
       "dockerfile"
+      "env"
       "fleet-themes"
       "lua"
       "nix"
