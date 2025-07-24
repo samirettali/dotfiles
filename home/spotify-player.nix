@@ -16,9 +16,7 @@
       theme = "default";
       client_id = "9f04615abcca4c0d968bd207d2a66215";
       app_refresh_duration_in_ms = 16;
-      # play_icon = "";
-      # pause_icon = "";
-      # liked_icon = "";
+      playback_refresh_duration_in_ms = 1000;
       seek_duration_secs = 5;
       default_device = config.home.username;
       enable_cover_image_cache = true;
