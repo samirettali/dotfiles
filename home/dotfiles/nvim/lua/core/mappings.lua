@@ -19,6 +19,7 @@ vim.keymap.set("n", "<Leader>y", copy_file_content, { desc = "Copy file content"
 vim.keymap.set("n", "gV", "`[v`]", { desc = "Select last changed text" })
 vim.keymap.set("n", "<Leader>tl", ":set list!<CR>", { desc = "Toggle listchars" })
 
+-- TODO:
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Keep cursor position when joining lines" })
 vim.keymap.set("n", "n", "nzzzv", { desc = "Center next search result" })
 vim.keymap.set("n", "N", "Nzzzv", { desc = "Center previous search result" })
