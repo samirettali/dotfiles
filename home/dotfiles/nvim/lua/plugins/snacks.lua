@@ -24,7 +24,7 @@ return {
 		},
 		picker = {
 			enabled = true,
-			ui_select = false,
+			ui_select = true,
 			matcher = {
 				frecency = true,
 			},
