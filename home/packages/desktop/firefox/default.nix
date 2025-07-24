@@ -30,20 +30,20 @@
           force = true;
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
             adaptive-tab-bar-colour
-            clearurls
             copy-selection-as-markdown
             darkreader
-            granted
-            keepassxc-browser
-            lastpass-password-manager
             linkding-extension
-            metamask
             multi-account-containers
             sponsorblock
-            switchyomega
-            tampermonkey
             ublock-origin
             vimium-c
+            # clearurls
+            # granted
+            # keepassxc-browser
+            # lastpass-password-manager
+            # metamask
+            # switchyomega
+            # tampermonkey
           ];
         };
         search = {
