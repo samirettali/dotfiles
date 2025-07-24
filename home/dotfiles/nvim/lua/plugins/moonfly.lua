@@ -6,7 +6,7 @@ return {
 		local moonfly = require("moonfly")
 
 		vim.opt.termguicolors = true
-		vim.g.moonflyWinSeparator = 1
+		vim.g.moonflyWinSeparator = 2
 		vim.g.moonflyVirtualTextColor = true
 		vim.g.moonflyNormalFloat = true
 		vim.g.moonflyUnderlineMatchParen = true
@@ -23,25 +23,37 @@ return {
 			callback = function()
 				local palette = moonfly.palette
 
-				local winbar_hl = vim.api.nvim_get_hl(0, { name = "WinBar", link = false })
-				winbar_hl.bg = palette.grey7
-				vim.api.nvim_set_hl(0, "WinBar", winbar_hl)
+				vim.api.nvim_set_hl(0, "WinBar", {
+					bg = custom_bg,
+					fg = palette.grey39,
+				})
 
-				local winbar_nc_hl = vim.api.nvim_get_hl(0, { name = "WinBarNC", link = false })
-				winbar_nc_hl.bg = palette.grey7
-				vim.api.nvim_set_hl(0, "WinBarNC", winbar_nc_hl)
+				vim.api.nvim_set_hl(0, "WinBarNC", {
+					bg = custom_bg,
+					fg = palette.grey39,
+				})
 
 				vim.api.nvim_set_hl(0, "TablineSel", {
-					bg = palette.grey7,
+					bg = custom_bg,
 					fg = palette.blue,
 				})
 
-				if vim.g.moonflyWinSeparator == 1 then
-					vim.api.nvim_set_hl(0, "WinSeparator", {
-						bg = palette.grey7,
-						fg = palette.grey7,
-					})
-				end
+				vim.api.nvim_set_hl(0, "Tabline", {
+					bg = custom_bg,
+					fg = palette.grey39,
+				})
+
+				vim.api.nvim_set_hl(0, "TablineFill", {
+					bg = custom_bg,
+					-- fg = palette.blue,
+				})
+
+				-- if vim.g.moonflyWinSeparator == 1 then
+				-- 	vim.api.nvim_set_hl(0, "WinSeparator", {
+				-- 		bg = palette.grey7,
+				-- 		fg = palette.grey7,
+				-- 	})
+				-- end
 
 				if vim.g.moonflyNormalFloat then
 					vim.api.nvim_set_hl(0, "BlinkCmpSource", {
