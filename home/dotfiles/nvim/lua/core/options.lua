@@ -38,7 +38,7 @@ vim.opt.foldlevel = 99
 -- vim.opt.foldnestmax = 4
 
 vim.opt.timeoutlen = 300
-vim.opt.updatetime = 250
+vim.opt.updatetime = 250 -- Used for swapfile saving and CursorHold events
 
 vim.opt.joinspaces = false -- No double spaces with join after a dot
 vim.opt.scrolloff = 3 -- Lines of context
