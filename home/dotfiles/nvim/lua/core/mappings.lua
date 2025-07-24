@@ -65,17 +65,17 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
 -- TODO
--- local function toggle_quickfix()
--- 	local windows = vim.fn.getwininfo()
---
--- 	for _, win in pairs(windows) do
--- 		if win["quickfix"] == 1 then
--- 			vim.cmd.cclose()
--- 			return
--- 		end
--- 	end
---
--- 	vim.cmd.copen()
--- end
+local function toggle_quickfix()
+	local windows = vim.fn.getwininfo()
 
--- vim.keymap.set("n", "<c-q>", toggle_quickfix, { desc = "Toggle Quickfix Window" })
+	for _, win in pairs(windows) do
+		if win["quickfix"] == 1 then
+			vim.cmd.cclose()
+			return
+		end
+	end
+
+	vim.cmd.copen()
+end
+
+vim.keymap.set("n", "<localleader>q", toggle_quickfix, { desc = "Toggle Quickfix Window" })
