@@ -102,7 +102,7 @@ end
 vim.opt.showmode = false
 
 vim.opt.fillchars = {
-	diff = "⣿", -- BOX DRAWINGS
+	diff = "╱",
 	horiz = "━",
 	horizup = "┻",
 	horizdown = "┳",
