@@ -52,7 +52,7 @@ return {
 
 					return {
 						line.sep("", hl, theme.fill),
-						icon,
+						-- icon,
 						name,
 						line.sep("", hl, theme.fill),
 						hl = hl,
