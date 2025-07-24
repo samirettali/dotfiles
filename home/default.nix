@@ -40,6 +40,7 @@
 
   programs = {
     home-manager.enable = true;
+    nh.enable = true;
   };
 
   home.packages = with pkgs; [
