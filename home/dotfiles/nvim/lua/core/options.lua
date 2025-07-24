@@ -7,9 +7,6 @@ vim.opt.softtabstop = -1 -- use shiftwidth
 vim.opt.expandtab = true
 
 vim.opt.smartindent = true
-vim.opt.smarttab = true
-
-vim.opt.autoindent = true
 vim.opt.cindent = true
 
 vim.opt.breakindent = true
