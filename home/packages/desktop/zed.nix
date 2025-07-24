@@ -57,6 +57,9 @@
       ui_font_size = 16;
       vim_mode = true;
       soft_wrap = "editor_width";
+      inlay_hints = {
+        show_value_hints = false;
+      };
     };
   };
 }
