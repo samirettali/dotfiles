@@ -14,6 +14,7 @@
       git = {
         overrideGpg = true;
       };
+      promptToReturnFromSubprocess = false;
     };
   };
 
