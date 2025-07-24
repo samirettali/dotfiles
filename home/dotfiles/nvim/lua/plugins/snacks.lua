@@ -40,6 +40,14 @@ return {
 		},
 		statuscolumn = {
 			enabled = true,
+			left = {
+				"sign",
+				"mark",
+			},
+			right = {
+				"git",
+			},
+			-- refresh = 50, -- 50ms at most
 		},
 	},
 	keys = {
@@ -323,7 +331,6 @@ return {
 				Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
 				Snacks.toggle.option("list", { name = "List chars" }):map("<leader>tl")
 				Snacks.toggle.option("cursorline", { name = "Cursorline" }):map("<leader>tu")
-				Snacks.toggle.inlay_hints():map("<leader>ti")
 				Snacks.toggle.diagnostics():map("<leader>td")
 				Snacks.toggle.line_number():map("<leader>tn")
 				-- Snacks.toggle
