@@ -61,8 +61,8 @@ vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
 -- Keep cursor centered when scrolling
--- vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
--- vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
 -- TODO
 -- local function toggle_quickfix()
