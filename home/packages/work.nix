@@ -74,7 +74,11 @@ in {
       };
     };
 
-    granted.enable = true;
+    granted = {
+      enable = true;
+      enableZshIntegration = true;
+      enableFishIntegration = true;
+    };
   };
 
   home.sessionVariables = {
