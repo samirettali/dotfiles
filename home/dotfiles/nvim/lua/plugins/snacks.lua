@@ -274,14 +274,6 @@ return {
 		-- 	desc = "LSP Workspace Symbols",
 		-- },
 		{
-			"<leader>bd",
-			function()
-				Snacks.bufdelete()
-			end,
-			desc = "Delete buffers without disrupting window layout",
-		},
-		-- Other
-		{
 			"<leader>n",
 			function()
 				Snacks.notifier.show_history()
