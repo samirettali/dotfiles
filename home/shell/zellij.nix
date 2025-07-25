@@ -47,28 +47,15 @@ in {
                 children
                 pane size=1 borderless=true {
                     plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
-                        format_left  "{mode}#[fg=green,bg=black,bold] [{session}]#[bg=#000000] {tabs}"
-                        format_right "#[fg=#gray,bg=black]"
-                        format_space "#[bg=black]"
+                        format_left  "#[fg=bright_green,bg=black,bold] {session}#[bg=black] {tabs}"
 
-                        mode_normal          "#[bg=bright_blue] "
-                        mode_tmux            "#[bg=bright_green] "
-                        mode_resize          "#[bg=bright_cyan] "
-                        mode_move            "#[bg=bright_magenta] "
-                        mode_locked          "#[bg=bright_red] "
-                        mode_default_to_mode "locked"
+                        tab_normal               "#[fg=gray]{index}:{name} {fullscreen_indicator}{sync_indicator}{floating_indicator} "
+                        tab_active               "#[fg=white,bold]{index}:{name} {fullscreen_indicator}{sync_indicator}{floating_indicator} "
+                        tab_rename               "#[fg=bright_magenta,bold]{index}:{name} {fullscreen_indicator}{sync_indicator}{floating_indicator} "
 
-                        tab_normal               "#[fg=gray,bg=black] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-                        tab_active               "#[fg=white,bg=black,bold] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-
-                        tab_fullscreen_indicator "□ "
-                        tab_sync_indicator       "  "
-                        tab_floating_indicator   "󰉈 "
-
-                        command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
-                        command_git_branch_format      "#[fg=bright_blue] {stdout} "
-                        command_git_branch_interval    "1"
-                        command_git_branch_rendermode  "static"
+                        tab_fullscreen_indicator " "
+                        tab_sync_indicator       " "
+                        tab_floating_indicator   " "
                     }
                 }
             }
@@ -317,128 +304,7 @@ in {
         styled_underlines true
         stacked_resize false
 
-        theme "default"
-
-        themes {
-            default {
-                text_unselected {
-                    base 15
-                    background 0
-                    emphasis_0 9
-                    emphasis_1 6
-                    emphasis_2 2
-                    emphasis_3 5
-                }
-                text_selected {
-                    base 15
-                    background 8
-                    emphasis_0 9
-                    emphasis_1 6
-                    emphasis_2 2
-                    emphasis_3 5
-                }
-                ribbon_unselected {
-                    base 0
-                    background 7
-                    emphasis_0 1
-                    emphasis_1 15
-                    emphasis_2 4
-                    emphasis_3 5
-                }
-                ribbon_selected {
-                    base 0
-                    background 2
-                    emphasis_0 1
-                    emphasis_1 9
-                    emphasis_2 5
-                    emphasis_3 4
-                }
-                table_title {
-                    base 2
-                    background 0
-                    emphasis_0 9
-                    emphasis_1 6
-                    emphasis_2 2
-                    emphasis_3 5
-                }
-                table_cell_unselected {
-                    base 15
-                    background 0
-                    emphasis_0 9
-                    emphasis_1 6
-                    emphasis_2 2
-                    emphasis_3 5
-                }
-                table_cell_selected {
-                    base 15
-                    background 8
-                    emphasis_0 9
-                    emphasis_1 6
-                    emphasis_2 2
-                    emphasis_3 5
-                }
-                list_unselected {
-                    base 15
-                    background 0
-                    emphasis_0 9
-                    emphasis_1 6
-                    emphasis_2 2
-                    emphasis_3 5
-                }
-                list_selected {
-                    base 15
-                    background 8
-                    emphasis_0 9
-                    emphasis_1 6
-                    emphasis_2 2
-                    emphasis_3 5
-                }
-                frame_selected {
-                    base 2
-                    background 0
-                    emphasis_0 9
-                    emphasis_1 6
-                    emphasis_2 5
-                    emphasis_3 0
-                }
-                frame_highlight {
-                    base 9
-                    background 0
-                    emphasis_0 5
-                    emphasis_1 9
-                    emphasis_2 9
-                    emphasis_3 9
-                }
-                exit_code_success {
-                    base 2
-                    background 0
-                    emphasis_0 6
-                    emphasis_1 0
-                    emphasis_2 5
-                    emphasis_3 4
-                }
-                exit_code_error {
-                    base 1
-                    background 0
-                    emphasis_0 3
-                    emphasis_1 0
-                    emphasis_2 0
-                    emphasis_3 0
-                }
-                multiplayer_user_colors {
-                    player_1 5
-                    player_2 4
-                    player_3 0
-                    player_4 3
-                    player_5 6
-                    player_6 0
-                    player_7 1
-                    player_8 0
-                    player_9 0
-                    player_10 0
-                }
-            }
-        }
+        theme "ansi"
       '';
   };
 }
