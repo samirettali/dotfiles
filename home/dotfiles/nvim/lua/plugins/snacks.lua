@@ -80,15 +80,10 @@ return {
 		{
 			"<localleader>fe",
 			function()
-				-- local opts = {
-				-- 	auto_close = true,
-				-- 	layout = {
-				-- 		preset = "horizontal",
-				-- 		preview = true,
-				-- 	},
-				-- }
-				-- Snacks.explorer(opts)
-				Snacks.explorer()
+				local opts = {
+					git_untracked = true,
+				}
+				Snacks.explorer(opts)
 			end,
 			desc = "File Explorer",
 		},
