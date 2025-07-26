@@ -5,7 +5,7 @@ set -eu
 # Extracts a compressed file
 
 realpath() {
-    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+	[[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
 }
 
 archive=$1
@@ -19,21 +19,21 @@ filename=$(basename "$archive")
 mkdir -p $target
 cd $target
 
-if [ -f $real_archive ] ; then
-    case $real_archive in
-        *.tar.xz)         tar xpvf $real_archive       ;;
-        *.tar.bz2)        tar xjf $real_archive        ;;
-        *.tar.gz)         tar xzf $real_archive        ;;
-        *.bz2)            bunzip2 $real_archive        ;;
-        *.rar)            unrar x $real_archive        ;;
-        *.gz)             gunzip $real_archive         ;;
-        *.tar)            tar xf $real_archive         ;;
-        *.tbz2)           tar xjf $real_archive        ;;
-        *.tgz)            tar xzf $real_archive        ;;
-        *.zip)            unzip $real_archive          ;;
-        *.Z)              uncompress $real_archive     ;;
-        *)                echo "'$archive' cannot be extracted via extract()" ;;
-    esac
+if [ -f $real_archive ]; then
+	case $real_archive in
+	*.tar.xz) tar xpvf $real_archive ;;
+	*.tar.bz2) tar xjf $real_archive ;;
+	*.tar.gz) tar xzf $real_archive ;;
+	*.bz2) bunzip2 $real_archive ;;
+	*.rar) unrar x $real_archive ;;
+	*.gz) gunzip $real_archive ;;
+	*.tar) tar xf $real_archive ;;
+	*.tbz2) tar xjf $real_archive ;;
+	*.tgz) tar xzf $real_archive ;;
+	*.zip) unzip $real_archive ;;
+	*.Z) uncompress $real_archive ;;
+	*) echo "'$archive' cannot be extracted via extract()" ;;
+	esac
 else
-    echo "'$archive' is not a valid file"
+	echo "'$archive' is not a valid file"
 fi

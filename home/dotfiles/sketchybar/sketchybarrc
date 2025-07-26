@@ -5,21 +5,21 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 sketchybar --bar position=top height=32 notch_display_height=40 blur_radius=30 color=0xFF0000000
 
 default=(
-    padding_left=3
-    padding_right=3
-    icon.font="JetBrainsMono Nerd Font:Bold:14.0"
-    label.font="JetBrainsMono Nerd Font:Bold:14.0"
-    icon.color=0xffffffff
-    label.color=0xffffffff
-    icon.padding_left=3
-    icon.padding_right=3
-    label.padding_left=3
-    label.padding_right=3
-    updates=on
-    # TODO: these options are not working
-    # font_smoothing=on
-    # shadow="on"
-    # topmost="window"
+	padding_left=3
+	padding_right=3
+	icon.font="JetBrainsMono Nerd Font:Bold:14.0"
+	label.font="JetBrainsMono Nerd Font:Bold:14.0"
+	icon.color=0xffffffff
+	label.color=0xffffffff
+	icon.padding_left=3
+	icon.padding_right=3
+	label.padding_left=3
+	label.padding_right=3
+	updates=on
+	# TODO: these options are not working
+	# font_smoothing=on
+	# shadow="on"
+	# topmost="window"
 )
 
 sketchybar --default "${default[@]}"
@@ -28,35 +28,35 @@ sketchybar --add event aerospace_workspace_change
 
 # TODO: calling aerospace only works with full path
 for sid in $(/etc/profiles/per-user/s.ettali/bin/aerospace list-workspaces --all); do
-    sketchybar --add item space."${sid}" left \
-        --subscribe "space.${sid}" aerospace_workspace_change \
-        --set "space.${sid}" \
-        drawing=off \
-        icon="${sid}" \
-        click_script="aerospace workspace ${sid}" \
-        script="$PLUGIN_DIR/aerospace.sh ${sid}"
+	sketchybar --add item space."${sid}" left \
+		--subscribe "space.${sid}" aerospace_workspace_change \
+		--set "space.${sid}" \
+		drawing=off \
+		icon="${sid}" \
+		click_script="aerospace workspace ${sid}" \
+		script="$PLUGIN_DIR/aerospace.sh ${sid}"
 done
 
 for monitor in $(/etc/profiles/per-user/s.ettali/bin/aerospace list-monitors | awk '{print $1}'); do
-    for sid in $(/etc/profiles/per-user/s.ettali/bin/aerospace list-workspaces --monitor "${monitor}" --empty no); do
-        sketchybar --set "space.${sid}" drawing=on
-    done
+	for sid in $(/etc/profiles/per-user/s.ettali/bin/aerospace list-workspaces --monitor "${monitor}" --empty no); do
+		sketchybar --set "space.${sid}" drawing=on
+	done
 done
 
 sketchybar --add item space_separator left \
-    --set space_separator icon="" \
-    background.drawing=off \
-    script="${PLUGIN_DIR}/space_windows.sh" \
-    --subscribe space_separator aerospace_workspace_change
+	--set space_separator icon="" \
+	background.drawing=off \
+	script="${PLUGIN_DIR}/space_windows.sh" \
+	--subscribe space_separator aerospace_workspace_change
 
 sketchybar --add item clock right \
-    --set clock update_freq=1 script="${PLUGIN_DIR}/clock.sh" \
-    --add item volume right \
-    --set volume script="${PLUGIN_DIR}/volume.sh" \
-    --subscribe volume volume_change \
-    --add item battery right \
-    --set battery update_freq=120 script="${PLUGIN_DIR}/battery.sh" \
-    --subscribe battery system_woke power_source_change
+	--set clock update_freq=1 script="${PLUGIN_DIR}/clock.sh" \
+	--add item volume right \
+	--set volume script="${PLUGIN_DIR}/volume.sh" \
+	--subscribe volume volume_change \
+	--add item battery right \
+	--set battery update_freq=120 script="${PLUGIN_DIR}/battery.sh" \
+	--subscribe battery system_woke power_source_change
 
 sketchybar --update
 sketchybar --hotload true
