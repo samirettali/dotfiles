@@ -27,6 +27,7 @@ return {
 			ui_select = true,
 			matcher = {
 				frecency = true,
+				history_bonus = true,
 			},
 		},
 		git = {
