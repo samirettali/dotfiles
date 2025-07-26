@@ -16,6 +16,7 @@
     url = "https://github.com/laperlej/zellij-sessionizer/releases/download/v0.4.3/zellij-sessionizer.wasm";
     sha256 = "sha256-AGuWbuRX7Yi9tPdZTzDKULXh3XLUs4navuieCimUgzQ=";
   };
+  zeshExe = lib.getExe samirettali-nur.packages.${pkgs.system}.zesh;
 in {
   home.packages = [
     samirettali-nur.packages.${pkgs.system}.zesh
@@ -33,6 +34,7 @@ in {
     zd = "${exe} delete-session";
     zk = "${exe} kill-session";
     zl = "${exe} list-sessions";
+    zc = "${zeshExe} connect $(${zeshExe} list | ${lib.getExe config.programs.fzf.package})";
   };
 
   xdg.configFile."zellij/layouts/default.kdl" = {
