@@ -26,6 +26,7 @@ return {
 			typescript = { "prettierd", "prettier", stop_after_first = true },
 			wgsl = { "wgslfmt" },
 			yaml = { "yamlfmt" },
+			fish = { "fish_indent" },
 			-- ["*"] = { "codespell" }, -- TODO: this breaks some vim commands, e.g. windo -> window
 			["_"] = { "trim_whitespace" }, -- fallback
 		},
