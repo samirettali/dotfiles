@@ -262,13 +262,13 @@ return {
 		-- 	end,
 		-- 	desc = "LSP Symbols",
 		-- },
-		-- {
-		-- 	"<localleader>ws",
-		-- 	function()
-		-- 		Snacks.picker.lsp_workspace_symbols()
-		-- 	end,
-		-- 	desc = "LSP Workspace Symbols",
-		-- },
+		{
+			"<localleader>ws",
+			function()
+				Snacks.picker.lsp_workspace_symbols()
+			end,
+			desc = "LSP Workspace Symbols",
+		},
 		{
 			"<leader>n",
 			function()
@@ -305,31 +305,20 @@ return {
 		vim.api.nvim_create_autocmd("User", {
 			pattern = "VeryLazy",
 			callback = function()
-				-- Setup some globals for debugging (lazy-loaded)
 				_G.dd = function(...)
 					Snacks.debug.inspect(...)
 				end
 				_G.bt = function()
 					Snacks.debug.backtrace()
 				end
-				vim.print = _G.dd -- Override print to use snacks for `:=` command
+				vim.print = _G.dd
 
-				-- Create some toggle mappings
 				Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>ts")
 				Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>tw")
 				Snacks.toggle.option("list", { name = "List chars" }):map("<leader>tl")
 				Snacks.toggle.option("cursorline", { name = "Cursorline" }):map("<leader>tu")
 				Snacks.toggle.diagnostics():map("<leader>td")
 				Snacks.toggle.line_number():map("<leader>tn")
-				-- Snacks.toggle
-				-- 	.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
-				-- 	:map("<leader>uc")
-				-- Snacks.toggle.treesitter():map("<leader>uT")
-				-- Snacks.toggle
-				-- 	.option("background", { off = "light", on = "dark", name = "Dark Background" })
-				-- 	:map("<leader>ub")
-				-- Snacks.toggle.indent():map("<leader>ug")
-				-- Snacks.toggle.dim():map("<leader>uD")
 			end,
 		})
 	end,
