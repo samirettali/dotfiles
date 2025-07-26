@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  samirettali-nur,
   ...
 }: let
   toYAML = obj: let
@@ -14,17 +15,7 @@
 in {
   # TODO: install only if git is enabled
   home.packages = with pkgs; [
-    (buildGoModule {
-      pname = "git-sync";
-      version = "0.19.0";
-      src = fetchFromGitHub {
-        owner = "AkashRajpurohit";
-        repo = "git-sync";
-        rev = "v0.19.0";
-        sha256 = "sha256-MHr4X8bPrbm9YxBSWJ9bHCChlcMFTsUPDliPVzlUFZY=";
-      };
-      vendorHash = "sha256-VJLdAkONyJiyQTtrZ9xwVXTqpkbHsIbVgOAu2RA62ao=";
-    })
+    samirettali-nur.packages.${pkgs.system}.git-sync
   ];
   home.file.".config/git-sync/config.yaml".text = toYAML {
     backup_dir = "${config.home.homeDirectory}/git";
