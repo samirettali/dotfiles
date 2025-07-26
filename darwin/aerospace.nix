@@ -258,5 +258,9 @@
         }
       ];
     };
+    launchd = {
+      enable = true;
+      keepAlive = true;
+    };
   };
 }
