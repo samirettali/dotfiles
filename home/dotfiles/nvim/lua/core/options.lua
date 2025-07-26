@@ -101,7 +101,7 @@ end
 
 vim.opt.showmode = false
 
-vim.opt.cursorline = true
+vim.opt.cursorline = false
 
 vim.opt.fillchars = {
 	diff = "╱",
