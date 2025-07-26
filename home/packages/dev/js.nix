@@ -8,7 +8,6 @@
     eslint_d
     nodePackages.eslint
     nodePackages.js-beautify
-    nodePackages.prettier
     nodePackages.typescript-language-server
     nodejs
     prettierd
