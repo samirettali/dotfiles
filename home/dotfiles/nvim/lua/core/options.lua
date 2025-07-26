@@ -125,5 +125,3 @@ vim.cmd(":command! Wq wq")
 vim.cmd(":command! WQ wq")
 vim.cmd(":command! Qa qa")
 vim.cmd(":command! QA qa")
-
-vim.opt.winborder = "rounded"
