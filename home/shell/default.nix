@@ -1,15 +1,4 @@
 {pkgs, ...}: let
-  iredisPkgs =
-    import (builtins.fetchGit {
-      name = "iredis115";
-      url = "https://github.com/NixOS/nixpkgs/";
-      ref = "refs/heads/nixpkgs-unstable";
-      rev = "3e2cf88148e732abc1d259286123e06a9d8c964a";
-    }) {
-      system = pkgs.system;
-    };
-
-  iredis115 = iredisPkgs.iredis;
 in {
   imports = [
     ./fish.nix
@@ -54,7 +43,7 @@ in {
     # hto
     # httptap
     hwatch # watch alternative with diff snapshots
-    iredis115 # TODO: upstream is broken
+    # iredis # TODO: upstream is broken
     jq
     jqp
     # kaf
