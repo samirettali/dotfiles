@@ -11,7 +11,7 @@ local function load_modules()
 		"core.abbreviations",
 		"core.autocmds",
 		"core.tabline",
-		"core.lsp",
+		-- "core.lsp",
 		"core.diagnostic",
 		"core.statuscolumn",
 		"core.select",
@@ -69,3 +69,5 @@ local opts = {
 }
 
 require("lazy").setup({ import = "plugins" }, opts)
+
+require("core.lsp") -- TODO: fix mini.icons import order
