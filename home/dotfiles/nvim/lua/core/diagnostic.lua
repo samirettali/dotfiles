@@ -17,24 +17,6 @@ vim.diagnostic.config({
 	virtual_lines = false,
 	underline = true,
 	severity_sort = true,
-	signs = {
-		text = {
-			-- [vim.diagnostic.severity.ERROR] = "",
-			-- [vim.diagnostic.severity.WARN] = "",
-			-- [vim.diagnostic.severity.HINT] = "",
-			-- [vim.diagnostic.severity.INFO] = "",
-
-			-- [vim.diagnostic.severity.ERROR] = "x",
-			-- [vim.diagnostic.severity.WARN] = "!",
-			-- [vim.diagnostic.severity.HINT] = "?",
-			-- [vim.diagnostic.severity.INFO] = "i",
-
-			[vim.diagnostic.severity.ERROR] = "",
-			[vim.diagnostic.severity.WARN] = "",
-			[vim.diagnostic.severity.HINT] = "",
-			[vim.diagnostic.severity.INFO] = "",
-		},
-	},
 })
 
 vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist()" })

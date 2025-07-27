@@ -13,6 +13,7 @@ local function load_modules()
 		"core.tabline",
 		"core.lsp",
 		"core.diagnostic",
+		"core.statuscolumn",
 		-- "core.statusline",
 		-- "core.winbar",
 		"core.mappings",
