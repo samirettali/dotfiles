@@ -7,8 +7,6 @@ end
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-vim.keymap.set("n", "<bs>", "<C-6>", { remap = true })
-
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without copying" })
 
 -- TODO: fix
