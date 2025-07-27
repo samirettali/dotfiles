@@ -14,6 +14,7 @@ local function load_modules()
 		"core.lsp",
 		"core.diagnostic",
 		"core.statuscolumn",
+		"core.select",
 		-- "core.statusline",
 		-- "core.winbar",
 		"core.mappings",
