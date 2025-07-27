@@ -5,6 +5,8 @@ local function label(n)
 
 	if bufname == "" then
 		return "[No Name]"
+    elseif bufname:sub(1, 6) == "oil://" then
+        return "oil"
 	else
 		return vim.fn.fnamemodify(bufname, ":t")
 	end
