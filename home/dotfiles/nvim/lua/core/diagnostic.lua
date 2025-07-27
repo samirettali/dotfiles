@@ -15,7 +15,7 @@ vim.diagnostic.config({
 		source = "if_many",
 	},
 	virtual_lines = false,
-	underline = true,
+	underline = false,
 	severity_sort = true,
 })
 
