@@ -5,6 +5,8 @@ local function load_modules()
 		"core.options",
 		"core.abbreviations",
 		"core.autocmds",
+		"core.lsp",
+		"core.diagnostic",
 		-- "core.statusline",
 		-- "core.winbar",
 		"core.mappings",

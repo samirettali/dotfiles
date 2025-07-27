@@ -62,7 +62,7 @@ vim.opt.mouse = "a"
 
 vim.opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize instead of whitespaces
 
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
 
 vim.opt.undodir = home .. "/.local/share/nvim/undo"
 vim.opt.backup = false
