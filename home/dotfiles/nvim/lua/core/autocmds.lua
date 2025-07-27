@@ -38,3 +38,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
 -- 		vim.api.nvim_win_set_config(win, { border = "none" })
 -- 	end,
 -- })
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight yanked text",
+	group = vim.api.nvim_create_augroup("HighlightYankedText", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+})
