@@ -36,6 +36,7 @@ vim.keymap.set("i", "]", "]<C-g>u", { desc = "Treat ] as un undo breakpoint" })
 vim.keymap.set("n", "<C-p>", ":bp<CR>", { desc = "Go to previous buffer", silent = true })
 vim.keymap.set("n", "<C-n>", ":bn<CR>", { desc = "Go to next buffer", silent = true })
 
+vim.keymap.set("n", "<localleader>q", ":qa<CR>")
 
 vim.keymap.set({ "n", "v" }, "dd", function()
 	if vim.api.nvim_get_current_line():match("^%s*$") then
