@@ -12,13 +12,7 @@ in {
     ];
 
   home.shellAliases = lib.mkIf config.programs.git.enable {
-    gb = "${exe} branch";
-    gd = "${exe} diff";
-    gk = "${exe} checkout";
     gc = "${exe} clone";
-    ga = "${exe} add";
-    gap = "${exe} add -p";
-    gdc = "${exe} diff --cached";
     gr = "cd $(${exe} rev-parse --show-toplevel) || echo 'Not in a git repository'";
   };
 
