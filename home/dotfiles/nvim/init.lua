@@ -1,5 +1,10 @@
 vim.loader.enable()
 
+P = function(x)
+	print(vim.inspect(x))
+	return x
+end
+
 local function load_modules()
 	local modules = {
 		"core.options",
