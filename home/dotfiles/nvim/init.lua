@@ -10,6 +10,7 @@ local function load_modules()
 		"core.options",
 		"core.abbreviations",
 		"core.autocmds",
+		"core.tabline",
 		"core.lsp",
 		"core.diagnostic",
 		-- "core.statusline",
