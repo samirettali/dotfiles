@@ -1,3 +1,7 @@
+if true then
+	return {}
+end
+
 return {
 	-- TODO: cleanup
 	"folke/snacks.nvim",
@@ -40,14 +44,13 @@ return {
 			enabled = false, -- TODO
 		},
 		statuscolumn = {
-			enabled = true,
+			enabled = false,
 			left = {
 				"sign",
-				"mark",
-			},
-			right = {
 				"git",
+				-- "mark",
 			},
+			right = {},
 			-- refresh = 50, -- 50ms at most
 		},
 	},
