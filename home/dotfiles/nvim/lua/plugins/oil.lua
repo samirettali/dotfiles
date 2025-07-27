@@ -6,9 +6,16 @@ return {
 		default_file_explorer = true,
 	},
 	event = "VeryLazy",
-	keys = { {
-		"-",
-		"<CMD>Oil<CR>",
-		{ desc = "Open parent directory" },
-	} },
+	keys = {
+		{
+			"-",
+			"<CMD>Oil<CR>",
+			{ desc = "Open parent directory" },
+		},
+		{
+			"_",
+			"<CMD>Oil .<CR>",
+			{ desc = "Open root directory" },
+		},
+	},
 }
