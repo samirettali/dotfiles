@@ -51,6 +51,20 @@ load_modules()
 local opts = {
 	defaults = { lazy = true },
 	dev = { path = "~/dev/nvim" },
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+				"2html_plugin",
+				"netrwPlugin",
+				"zip",
+			},
+		},
+	},
 }
 
 require("lazy").setup({ import = "plugins" }, opts)
