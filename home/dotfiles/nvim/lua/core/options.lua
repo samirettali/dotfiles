@@ -47,7 +47,7 @@ vim.opt.sidescrolloff = 5 -- Columns of context
 vim.opt.splitbelow = true -- Put new windows below current
 vim.opt.splitright = true -- Put new windows right of current
 
-vim.opt.hlsearch = false
+vim.opt.hlsearch = false -- TODO: set?
 vim.opt.incsearch = true
 
 vim.opt.pumheight = 15 -- Maximum of 15 elements shown in command auto completion
@@ -62,7 +62,7 @@ vim.opt.mouse = "a"
 
 vim.opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize instead of whitespaces
 
-vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
+vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy" }
 
 vim.opt.undodir = home .. "/.local/share/nvim/undo"
 vim.opt.backup = false
