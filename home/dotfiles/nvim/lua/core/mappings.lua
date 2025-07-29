@@ -60,7 +60,10 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
--- TODO
+vim.keymap.set("n", "<localleader>r", function()
+	vim.cmd("restart")
+end, { desc = "Restart Neovim" })
+
 local function toggle_quickfix()
 	local windows = vim.fn.getwininfo()
 
