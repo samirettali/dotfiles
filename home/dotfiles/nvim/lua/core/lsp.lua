@@ -12,163 +12,32 @@ vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "vim.lsp.buf.definiti
 -- vim.keymap.set("n", "gI", vim.lsp.buf.incoming_calls, { desc = "vim.lsp.buf.incoming_calls()" })
 -- vim.keymap.set("n", "gO", vim.lsp.buf.outgoing_calls, { desc = "vim.lsp.buf.outgoing_calls()" })
 
----@type ({menu: string, kind: string, kind_hlgroup: string})[]
--- local kind_icon = {
--- 	{ menu = "Text", kind = "󰦨", kind_hlgroup = "String" },
--- 	{ menu = "Method", kind = "", kind_hlgroup = "Function" },
--- 	{ menu = "Function", kind = "󰡱", kind_hlgroup = "Function" },
--- 	{ menu = "Constructor", kind = "", kind_hlgroup = "Function" },
--- 	{ menu = "Field", kind = "", kind_hlgroup = "@lsp.type.property" },
--- 	{ menu = "Variable", kind = "", kind_hlgroup = "@variable" },
--- 	{ menu = "Class", kind = "", kind_hlgroup = "Include" },
--- 	{ menu = "Interface", kind = "", kind_hlgroup = "Type" },
--- 	{ menu = "Module", kind = "", kind_hlgroup = "Exception" },
--- 	{ menu = "Property", kind = "", kind_hlgroup = "@lsp.type.property" },
--- 	{ menu = "Unit", kind = "󰊱", kind_hlgroup = "Number" },
--- 	{ menu = "Value", kind = "", kind_hlgroup = "@variable" },
--- 	{ menu = "Enum", kind = "", kind_hlgroup = "Number" },
--- 	{ menu = "Keyword", kind = "", kind_hlgroup = "Keyword" },
--- 	{ menu = "Snippet", kind = "", kind_hlgroup = "Keyword" },
--- 	{ menu = "Color", kind = "", kind_hlgroup = "Keyword" },
--- 	{ menu = "File", kind = "", kind_hlgroup = "Tag" },
--- 	{ menu = "Reference", kind = "", kind_hlgroup = "Function" },
--- 	{ menu = "Folder", kind = "󰣞", kind_hlgroup = "Function" },
--- 	{ menu = "EnumMember", kind = "", kind_hlgroup = "Number" },
--- 	{ menu = "Constant", kind = "", kind_hlgroup = "Constant" },
--- 	{ menu = "Struct", kind = "", kind_hlgroup = "Type" },
--- 	{ menu = "Event", kind = "", kind_hlgroup = "Constant" },
--- 	{ menu = "Operator", kind = "", kind_hlgroup = "Operator" },
--- 	{ menu = "TypeParameter", kind = "", kind_hlgroup = "Type" },
--- }
-
-local MiniIcons = require("mini.icons")
-
 local kind_icon = {
-	{
-		menu = "Text",
-		kind = MiniIcons.get("lsp", "text"),
-		kind_hlgroup = "String",
-	},
-	{
-		menu = "Method",
-		kind = MiniIcons.get("lsp", "method"),
-		kind_hlgroup = "Function",
-	},
-	{
-		menu = "Function",
-		kind = MiniIcons.get("lsp", "function"),
-		kind_hlgroup = "Function",
-	},
-	{
-		menu = "Constructor",
-		kind = MiniIcons.get("lsp", "constructor"),
-		kind_hlgroup = "Function",
-	},
-	{
-		menu = "Field",
-		kind = MiniIcons.get("lsp", "field"),
-		kind_hlgroup = "@lsp.type.property",
-	},
-	{
-		menu = "Variable",
-		kind = MiniIcons.get("lsp", "variable"),
-		kind_hlgroup = "@variable",
-	},
-	{
-		menu = "Class",
-		kind = MiniIcons.get("lsp", "class"),
-		kind_hlgroup = "Include",
-	},
-	{
-		menu = "Interface",
-		kind = MiniIcons.get("lsp", "interface"),
-		kind_hlgroup = "Type",
-	},
-	{
-		menu = "Module",
-		kind = MiniIcons.get("lsp", "module"),
-		kind_hlgroup = "Exception",
-	},
-	{
-		menu = "Property",
-		kind = MiniIcons.get("lsp", "property"),
-		kind_hlgroup = "@lsp.type.property",
-	},
-	{
-		menu = "Unit",
-		kind = MiniIcons.get("lsp", "unit"),
-		kind_hlgroup = "Number",
-	},
-	{
-		menu = "Value",
-		kind = MiniIcons.get("lsp", "value"),
-		kind_hlgroup = "@variable",
-	},
-	{
-		menu = "Enum",
-		kind = MiniIcons.get("lsp", "enum"),
-		kind_hlgroup = "Number",
-	},
-	{
-		menu = "Keyword",
-		kind = MiniIcons.get("lsp", "keyword"),
-		kind_hlgroup = "Keyword",
-	},
-	{
-		menu = "Snippet",
-		kind = MiniIcons.get("lsp", "snippet"),
-		kind_hlgroup = "Keyword",
-	},
-	{
-		menu = "Color",
-		kind = MiniIcons.get("lsp", "color"),
-		kind_hlgroup = "Keyword",
-	},
-	{
-		menu = "File",
-		kind = MiniIcons.get("lsp", "file"),
-		kind_hlgroup = "Tag",
-	},
-	{
-		menu = "Reference",
-		kind = MiniIcons.get("lsp", "reference"),
-		kind_hlgroup = "Function",
-	},
-	{
-		menu = "Folder",
-		kind = MiniIcons.get("lsp", "folder"),
-		kind_hlgroup = "Function",
-	},
-	{
-		menu = "EnumMember",
-		kind = MiniIcons.get("lsp", "enummember"),
-		kind_hlgroup = "Number",
-	},
-	{
-		menu = "Constant",
-		kind = MiniIcons.get("lsp", "constant"),
-		kind_hlgroup = "Constant",
-	},
-	{
-		menu = "Struct",
-		kind = MiniIcons.get("lsp", "struct"),
-		kind_hlgroup = "Type",
-	},
-	{
-		menu = "Event",
-		kind = MiniIcons.get("lsp", "event"),
-		kind_hlgroup = "Constant",
-	},
-	{
-		menu = "Operator",
-		kind = MiniIcons.get("lsp", "operator"),
-		kind_hlgroup = "Operator",
-	},
-	{
-		menu = "TypeParameter",
-		kind = MiniIcons.get("lsp", "typeparameter"),
-		kind_hlgroup = "Type",
-	},
+	{ menu = "Text", kind = "󰦨", kind_hlgroup = "String" },
+	{ menu = "Method", kind = "", kind_hlgroup = "Function" },
+	{ menu = "Function", kind = "󰡱", kind_hlgroup = "Function" },
+	{ menu = "Constructor", kind = "", kind_hlgroup = "Function" },
+	{ menu = "Field", kind = "", kind_hlgroup = "@lsp.type.property" },
+	{ menu = "Variable", kind = "", kind_hlgroup = "@variable" },
+	{ menu = "Class", kind = "", kind_hlgroup = "Include" },
+	{ menu = "Interface", kind = "", kind_hlgroup = "Type" },
+	{ menu = "Module", kind = "", kind_hlgroup = "Exception" },
+	{ menu = "Property", kind = "", kind_hlgroup = "@lsp.type.property" },
+	{ menu = "Unit", kind = "󰊱", kind_hlgroup = "Number" },
+	{ menu = "Value", kind = "", kind_hlgroup = "@variable" },
+	{ menu = "Enum", kind = "", kind_hlgroup = "Number" },
+	{ menu = "Keyword", kind = "", kind_hlgroup = "Keyword" },
+	{ menu = "Snippet", kind = "", kind_hlgroup = "Keyword" },
+	{ menu = "Color", kind = "", kind_hlgroup = "Keyword" },
+	{ menu = "File", kind = "", kind_hlgroup = "Tag" },
+	{ menu = "Reference", kind = "", kind_hlgroup = "Function" },
+	{ menu = "Folder", kind = "󰣞", kind_hlgroup = "Function" },
+	{ menu = "EnumMember", kind = "", kind_hlgroup = "Number" },
+	{ menu = "Constant", kind = "", kind_hlgroup = "Constant" },
+	{ menu = "Struct", kind = "", kind_hlgroup = "Type" },
+	{ menu = "Event", kind = "", kind_hlgroup = "Constant" },
+	{ menu = "Operator", kind = "", kind_hlgroup = "Operator" },
+	{ menu = "TypeParameter", kind = "", kind_hlgroup = "Type" },
 }
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -193,8 +62,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 					return {
 						abbr = item.label,
 						kind = m.kind,
-						-- menu = ("[%s]"):format(m.menu),
-						menu = "",
+						menu = m.menu,
 						kind_hlgroup = m.kind_hlgroup,
 					}
 				end,
