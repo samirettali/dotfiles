@@ -12,7 +12,7 @@ return {
 	},
 	keys = {
 		{
-			"<leader>tc",
+			"<leader>ts",
 			"<cmd>CloakToggle<cr>",
 			"n",
 			silent = true,
