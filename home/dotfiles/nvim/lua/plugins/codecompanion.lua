@@ -14,19 +14,19 @@ return {
 		-- 	mode = { "n", "v" },
 		-- },
 		{
-			"<localleader>ac",
+			"<leader>ap",
 			":CodeCompanion<cr>",
 			desc = "Open the action palette",
 			mode = { "n", "v" },
 		},
 		{
-			"<leader>ca",
+			"<leader>ac",
 			"<cmd>CodeCompanionChat Toggle<CR>",
 			desc = "Toggle a chat buffer",
 			mode = { "n", "v" },
 		},
 		{
-			"<localleader>ca",
+			"<leader>aa",
 			"<cmd>CodeCompanionChat Add<CR>",
 			desc = "Add code to a chat buffer",
 			mode = { "v" },
