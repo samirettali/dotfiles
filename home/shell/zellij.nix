@@ -17,10 +17,35 @@
     sha256 = "sha256-AGuWbuRX7Yi9tPdZTzDKULXh3XLUs4navuieCimUgzQ=";
   };
   zeshExe = lib.getExe samirettali-nur.packages.${pkgs.system}.zesh;
+  fzfExe = lib.getExe config.programs.fzf.package;
+  headExe = lib.getExe' pkgs.uutils-coreutils-noprefix "head";
 in {
   home.packages = [
     samirettali-nur.packages.${pkgs.system}.zesh
     pkgs.zjstatus
+    (pkgs.writeShellScriptBin "zc" ''
+      set -euo pipefail
+
+      if [ $# -gt 1 ]; then
+        echo "usage: $(basename ''${0}) [target]"
+        exit 1
+      fi
+
+      target=""
+
+      if [ $# -eq 0 ]; then
+        target=$(${zeshExe} list | ${lib.getExe config.programs.fzf.package})
+      else
+        target=$(${zeshExe} list | ${fzfExe} --filter="''${1}" | ${headExe} -n 1)
+      fi
+
+      if [ -z "$target" ]; then
+        echo "No session found"
+        exit 1
+      fi
+
+      ${zeshExe} connect "''${target}"
+    '')
   ];
 
   programs = {
@@ -34,7 +59,6 @@ in {
     zd = "${exe} delete-session";
     zk = "${exe} kill-session";
     zl = "${exe} list-sessions";
-    zc = "${zeshExe} connect $(${zeshExe} list | ${lib.getExe config.programs.fzf.package})";
   };
 
   xdg.configFile."zellij/layouts/default.kdl" = {
