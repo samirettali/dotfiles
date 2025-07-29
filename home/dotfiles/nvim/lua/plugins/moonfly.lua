@@ -36,7 +36,7 @@ return {
 
 				vim.api.nvim_set_hl(0, "TablineSel", {
 					bg = custom_bg,
-					fg = palette.blue,
+					fg = palette.white,
 				})
 
 				vim.api.nvim_set_hl(0, "Tabline", {
