@@ -49,6 +49,10 @@ return {
 					-- fg = palette.blue,
 				})
 
+				vim.api.nvim_set_hl(0, "PmenuMatch", {
+					fg = palette.blue,
+				})
+
 				-- if vim.g.moonflyWinSeparator == 1 then
 				-- 	vim.api.nvim_set_hl(0, "WinSeparator", {
 				-- 		bg = palette.grey7,
