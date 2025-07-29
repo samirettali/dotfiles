@@ -49,22 +49,18 @@ return {
 					-- fg = palette.blue,
 				})
 
+				-- TODO
+				-- Pmenu
+				-- PmenuSel
+				-- PmenuSbar
+				-- PmenuThumb
+				-- WildMenu
+				-- PmenuMatch
+				-- PmenuMatchSel
+
 				vim.api.nvim_set_hl(0, "PmenuMatch", {
 					fg = palette.blue,
 				})
-
-				-- if vim.g.moonflyWinSeparator == 1 then
-				-- 	vim.api.nvim_set_hl(0, "WinSeparator", {
-				-- 		bg = palette.grey7,
-				-- 		fg = palette.grey7,
-				-- 	})
-				-- end
-
-				if vim.g.moonflyNormalFloat then
-					vim.api.nvim_set_hl(0, "BlinkCmpSource", {
-						bg = custom_bg,
-					})
-				end
 			end,
 			group = vim.api.nvim_create_augroup("MoonflyHighlight", {}),
 		})
