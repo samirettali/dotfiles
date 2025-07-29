@@ -42,8 +42,8 @@ vim.opt.timeoutlen = 300
 vim.opt.updatetime = 250 -- Used for swapfile saving and CursorHold events
 
 vim.opt.joinspaces = false -- No double spaces with join after a dot
-vim.opt.scrolloff = 3 -- Lines of context
-vim.opt.sidescrolloff = 3 -- Columns of context
+vim.opt.scrolloff = 5 -- Lines of context
+vim.opt.sidescrolloff = 5 -- Columns of context
 vim.opt.splitbelow = true -- Put new windows below current
 vim.opt.splitright = true -- Put new windows right of current
 
