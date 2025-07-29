@@ -49,6 +49,11 @@ return {
 					-- fg = palette.blue,
 				})
 
+				vim.api.nvim_set_hl(0, "TreesitterContext", {
+					bg = custom_bg,
+					-- fg = palette.blue,
+				})
+
 				-- TODO
 				-- Pmenu
 				-- PmenuSel
