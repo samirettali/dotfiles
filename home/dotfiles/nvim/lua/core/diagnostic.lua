@@ -27,23 +27,24 @@ vim.keymap.set("n", "<localleader>v", function()
 	vim.diagnostic.config({ virtual_lines = config })
 end, { desc = "Toggle diagnostic virtual lines" })
 
+-- TODO: remove
 -- Override defaults with cursor centering
-vim.keymap.set("n", "]d", function()
-	vim.diagnostic.jump({ count = vim.v.count1 })
-	vim.cmd("normal! zz")
-end, { desc = "Jump to the next diagnostic in the current buffer" })
-
-vim.keymap.set("n", "[d", function()
-	vim.diagnostic.jump({ count = -vim.v.count1 })
-	vim.cmd("normal! zz")
-end, { desc = "Jump to the previous diagnostic in the current buffer" })
-
-vim.keymap.set("n", "]D", function()
-	vim.diagnostic.jump({ count = vim._maxint, wrap = false })
-	vim.cmd("normal! zz")
-end, { desc = "Jump to the last diagnostic in the current buffer" })
-
-vim.keymap.set("n", "[D", function()
-	vim.diagnostic.jump({ count = -vim._maxint, wrap = false })
-	vim.cmd("normal! zz")
-end, { desc = "Jump to the first diagnostic in the current buffer" })
+-- vim.keymap.set("n", "]d", function()
+-- 	vim.diagnostic.jump({ count = vim.v.count1 })
+-- 	vim.cmd("normal! zz")
+-- end, { desc = "Jump to the next diagnostic in the current buffer" })
+--
+-- vim.keymap.set("n", "[d", function()
+-- 	vim.diagnostic.jump({ count = -vim.v.count1 })
+-- 	vim.cmd("normal! zz")
+-- end, { desc = "Jump to the previous diagnostic in the current buffer" })
+--
+-- vim.keymap.set("n", "]D", function()
+-- 	vim.diagnostic.jump({ count = vim._maxint, wrap = false })
+-- 	vim.cmd("normal! zz")
+-- end, { desc = "Jump to the last diagnostic in the current buffer" })
+--
+-- vim.keymap.set("n", "[D", function()
+-- 	vim.diagnostic.jump({ count = -vim._maxint, wrap = false })
+-- 	vim.cmd("normal! zz")
+-- end, { desc = "Jump to the first diagnostic in the current buffer" })
