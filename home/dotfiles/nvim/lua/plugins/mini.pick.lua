@@ -29,5 +29,9 @@ return {
 			"<C-g>",
 			"<Cmd>Pick grep_live<CR>",
 		},
+		{
+			"<C-b>",
+			"<Cmd>Pick buffers<CR>",
+		},
 	},
 }
