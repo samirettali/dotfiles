@@ -3,6 +3,7 @@ local home = os.getenv("HOME")
 -- Tabs
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+vim.opt.shiftround = true -- Round indent
 vim.opt.softtabstop = -1 -- use shiftwidth
 vim.opt.expandtab = true
 
@@ -43,7 +44,6 @@ vim.opt.updatetime = 250 -- Used for swapfile saving and CursorHold events
 vim.opt.joinspaces = false -- No double spaces with join after a dot
 vim.opt.scrolloff = 3 -- Lines of context
 vim.opt.sidescrolloff = 3 -- Columns of context
-vim.opt.shiftround = true -- Round indent
 vim.opt.splitbelow = true -- Put new windows below current
 vim.opt.splitright = true -- Put new windows right of current
 
