@@ -127,3 +127,12 @@ vim.cmd(":command! Wq wq")
 vim.cmd(":command! WQ wq")
 vim.cmd(":command! Qa qa")
 vim.cmd(":command! QA qa")
+
+-- TODO
+-- vim.cmd("syntax manual")
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "gitsendemail", "conf", "editorconfig", "qf", "checkhealth", "less" },
+--   callback = function(event)
+--     vim.bo[event.buf].syntax = vim.bo[event.buf].filetype
+--   end,
+-- })
