@@ -78,6 +78,7 @@ vim.lsp.enable("nixd")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("ts_ls") -- TODO: try vtsls
 vim.lsp.enable("bashls")
+vim.lsp.enable("roslyn_ls")
 
 -- vim.lsp.enable("pyrefly")
 -- vim.lsp.enable("ty")
