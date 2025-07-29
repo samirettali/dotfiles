@@ -5,6 +5,11 @@ P = function(x)
 	return x
 end
 
+N = function(x, level, opts)
+	vim.notify(vim.inspect(x), level, opts)
+	return x
+end
+
 local function load_modules()
 	local modules = {
 		"core.options",
