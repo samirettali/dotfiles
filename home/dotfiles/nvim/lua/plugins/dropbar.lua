@@ -1,7 +1,3 @@
-if true then
-	return {}
-end
-
 return {
 	"Bekaboo/dropbar.nvim",
 	-- TODO: lazy loading might not be needed as the plugin already uses and autocmd
