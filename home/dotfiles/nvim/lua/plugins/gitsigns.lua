@@ -47,7 +47,7 @@ return {
 		vim.keymap.set("n", "<leader>hd", gitsigns.diffthis)
 		-- vim.keymap.set("n", "<leader>td", gitsigns.toggle_deleted) -- TODO
 
-		-- vim.keymap.set("n", "<leader>tB", gitsigns.toggle_current_line_blame) -- TODO: don't really use it that much, maybe remove it
+		vim.keymap.set("n", "<leader>tg", gitsigns.toggle_current_line_blame)
 		vim.keymap.set("n", "<leader>gb", function()
 			gitsigns.blame_line({ full = true })
 		end, { desc = "[g]it [b]lame line" })
@@ -56,9 +56,9 @@ return {
 
 		vim.keymap.set({ "o", "x" }, "ih", gitsigns.select_hunk)
 
-		vim.keymap.set("n", "<leader>hQ", function()
+		vim.keymap.set("n", "<leader>qh", function()
 			gitsigns.setqflist("all")
 		end)
-		vim.keymap.set("n", "<leader>hq", gitsigns.setqflist)
+		vim.keymap.set("n", "<leader>qH", gitsigns.setqflist)
 	end,
 }
