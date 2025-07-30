@@ -77,7 +77,7 @@ local function toggle_quickfix()
 	vim.cmd.copen()
 end
 
-vim.keymap.set("n", "<leeader>qf", toggle_quickfix, { desc = "Toggle quickfix window" })
+vim.keymap.set("n", "<leader>qf", toggle_quickfix, { desc = "Toggle quickfix window" })
 
 vim.keymap.set("n", "<leader>qj", function()
 	local jumplist, _ = unpack(vim.fn.getjumplist())
