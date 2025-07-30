@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    python313Packages.debugpy # used by neovim dap
     basedpyright
     pyrefly
     pyright
