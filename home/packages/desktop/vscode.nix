@@ -115,6 +115,9 @@ in {
             };
 
             "terminal.integrated.sendKeybindingsToShell" = true;
+            "chat.instructionsFilesLocations" = {
+              ".github/instructions" = true;
+            };
           }
           (withExtension pkgs.vscode-marketplace.franzgollhammer.jb-fleet-dark {
             "workbench.colorTheme" = "Fleet Sphere";
