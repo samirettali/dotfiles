@@ -127,7 +127,6 @@ in {
                 bind "enter" { SwitchToMode "normal"; }
             }
             shared_except  "scroll" "search" "tmux" {
-                bind "Ctrl a" { SwitchToMode "tmux"; }
                 bind "Ctrl \\" { SwitchToMode "tmux"; }
                 bind "Ctrl b" { SwitchToMode "tmux"; }
             }
