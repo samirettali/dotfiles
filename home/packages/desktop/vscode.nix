@@ -37,11 +37,11 @@ in {
           sourcegraph.amp
           vscodevim.vim
           wgsl-analyzer.wgsl-analyzer
-          # github.copilot
+          github.copilot
           # github.copilot-chat # FIX: this requires vscode-insiders
           augment.vscode-augment
           # continue.continue
-          supermaven.supermaven
+          # supermaven.supermaven
           # vadimcn.vscode-lldb # TODO: build is broken
           postman.postman-for-vscode
         ];
