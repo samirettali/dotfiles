@@ -30,7 +30,6 @@ in {
           github.vscode-github-actions
           github.vscode-pull-request-github
           google.geminicodeassist
-          # mkhl.direnv
 
           quicktype.quicktype
           rust-lang.rust-analyzer
