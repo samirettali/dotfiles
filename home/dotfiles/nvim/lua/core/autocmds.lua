@@ -1,6 +1,6 @@
 vim.api.nvim_create_autocmd("VimResized", {
-	pattern = "*",
 	desc = "Automatically resize windows when terminal is resized",
+	pattern = "*",
 	command = "wincmd =",
 })
 
@@ -17,8 +17,8 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
 	end,
 })
 
--- Create parent folder if it doesnt exist when saving a file
 vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
+	desc = "Create parent folder if it doesnt exist when saving a file",
 	pattern = "*",
 	callback = function()
 		local dir = vim.fn.expand("<afile>:p:h")
