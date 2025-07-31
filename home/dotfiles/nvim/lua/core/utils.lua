@@ -65,4 +65,34 @@ M.get_current_filename = function()
 	return M.get_parent_folder() .. filename
 end
 
+M.toggle_quickfix = function()
+	local windows = vim.fn.getwininfo()
+
+	for _, win in pairs(windows) do
+		if win["quickfix"] == 1 then
+			vim.cmd.cclose()
+			return
+		end
+	end
+
+	vim.cmd.copen()
+end
+
+M.jumplist_qf = function()
+	local jumplist, _ = unpack(vim.fn.getjumplist())
+	local qf_list = {}
+	for _, v in pairs(jumplist) do
+		if vim.fn.bufloaded(v.bufnr) == 1 then
+			table.insert(qf_list, {
+				bufnr = v.bufnr,
+				lnum = v.lnum,
+				col = v.col,
+				text = vim.api.nvim_buf_get_lines(v.bufnr, v.lnum - 1, v.lnum, false)[1],
+			})
+		end
+	end
+	vim.fn.setqflist(qf_list, " ")
+	vim.cmd("copen")
+end
+
 return M
