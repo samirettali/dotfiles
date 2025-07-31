@@ -157,8 +157,6 @@ return {
 	},
 	settings = {
 		["csharp|background_analysis"] = {
-			-- dotnet_analyzer_diagnostics_scope = "fullSolution",
-			-- dotnet_compiler_diagnostics_scope = "fullSolution",
 			dotnet_analyzer_diagnostics_scope = "openFiles",
 			dotnet_compiler_diagnostics_scope = "openFiles",
 		},
@@ -185,8 +183,7 @@ return {
 			dotnet_provide_regex_completions = true,
 		},
 		["csharp|code_lens"] = {
-			-- dotnet_enable_references_code_lens = true,
-			dotnet_enable_references_code_lens = false,
+			dotnet_enable_references_code_lens = false, -- TODO
 		},
 	},
 }
