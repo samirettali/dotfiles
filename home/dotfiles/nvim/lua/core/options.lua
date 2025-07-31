@@ -127,6 +127,8 @@ vim.cmd(":command! Wq wq")
 vim.cmd(":command! WQ wq")
 vim.cmd(":command! Qa qa")
 vim.cmd(":command! QA qa")
+vim.cmd(":command! Wa wa")
+vim.cmd(":command! WA wa")
 
 -- TODO
 -- vim.cmd("syntax manual")
