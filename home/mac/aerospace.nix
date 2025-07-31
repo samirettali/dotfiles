@@ -10,12 +10,6 @@
       accordion-padding = 30;
       automatically-unhide-macos-hidden-apps = false;
 
-      exec-on-workspace-change = [
-        "/bin/bash"
-        "-c"
-        "${lib.getExe pkgs.sketchybar} --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE"
-      ];
-
       default-root-container-layout = "tiles"; # TODO: this is not working
       gaps = {
         inner.horizontal = 0;

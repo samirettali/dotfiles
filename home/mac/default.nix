@@ -1,6 +1,8 @@
 {pkgs, ...}: {
   imports = [
+    ./aerospace.nix
     ./hammerspoon.nix
+    ./sketchybar.nix
   ];
 
   home.packages = with pkgs; [
@@ -11,12 +13,5 @@
 
   programs = {
     gpg.enable = true;
-  };
-
-  home.file = {
-    ".config/sketchybar" = {
-      source = dotfiles/sketchybar;
-      recursive = true;
-    };
   };
 }

@@ -216,12 +216,11 @@
               inherit pkgs;
               user = users.work;
               extraModules = [
-                ./home/mac.nix
+                ./home/mac
                 ./home/packages/desktop
                 ./home/packages/dev
                 ./home/packages/work.nix
                 ./home/packages/security.nix
-                ./darwin/aerospace.nix
               ];
             };
           })

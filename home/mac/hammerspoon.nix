@@ -32,7 +32,7 @@
 
   home.file = {
     ".hammerspoon" = {
-      source = dotfiles/hammerspoon;
+      source = ../dotfiles/hammerspoon;
       recursive = true;
     };
     ".hammerspoon/spotify.lua".text =
