@@ -1,9 +1,14 @@
 return {
-	"bluz71/vim-moonfly-colors",
+	-- TODO: wait for https://github.com/bluz71/vim-moonfly-colors/pull/83
+	"samirettali/vim-moonfly-colors",
 	priority = 1000,
 	lazy = false,
 	config = function()
 		local moonfly = require("moonfly")
+
+		moonfly.custom_colors({ bg = "#000000" })
+
+		local palette = moonfly.palette
 
 		vim.opt.termguicolors = true
 		vim.g.moonflyWinSeparator = 2
@@ -12,45 +17,38 @@ return {
 		vim.g.moonflyUnderlineMatchParen = true
 		vim.g.moonflyItalics = false
 
-		local custom_bg = "#000000"
-		local custom_colors = {
-			bg = custom_bg,
-		}
-
-		moonfly.custom_colors(custom_colors)
-
+		local custom_highlight = vim.api.nvim_create_augroup("CustomHighlight", {})
 		vim.api.nvim_create_autocmd("ColorScheme", {
+			group = custom_highlight,
 			pattern = "moonfly",
 			callback = function()
-				local palette = moonfly.palette
-
 				vim.api.nvim_set_hl(0, "WinBar", {
-					bg = custom_bg,
+					bg = palette.bg,
 					fg = palette.grey39,
 				})
 
 				vim.api.nvim_set_hl(0, "WinBarNC", {
-					bg = custom_bg,
+					bg = palette.bg,
 					fg = palette.grey39,
 				})
 
 				vim.api.nvim_set_hl(0, "TablineSel", {
-					bg = custom_bg,
+					bg = palette.bg,
 					fg = palette.white,
 				})
 
 				vim.api.nvim_set_hl(0, "Tabline", {
-					bg = custom_bg,
+					bg = palette.bg,
 					fg = palette.grey39,
 				})
 
 				vim.api.nvim_set_hl(0, "TablineFill", {
-					bg = custom_bg,
+					bg = palette.bg,
 					-- fg = palette.blue,
 				})
 
 				vim.api.nvim_set_hl(0, "TreesitterContext", {
-					bg = custom_bg,
+					bg = palette.bg,
 					-- fg = palette.blue,
 				})
 
