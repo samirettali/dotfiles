@@ -154,6 +154,9 @@ in {
               "-CCC"
             ];
           })
+          (withExtension pkgs.vscode-marketplace.augment.vscode-augment {
+            "augment.disableFocusOnAugmentPanel" = true;
+          })
         ];
       };
     };
