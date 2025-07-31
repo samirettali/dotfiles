@@ -2,15 +2,20 @@ local function label(n)
 	local buflist = vim.fn.tabpagebuflist(n)
 	local winnr = vim.fn.tabpagewinnr(n)
 	local bufname = vim.fn.bufname(buflist[winnr])
+	local buftype = vim.fn.getbufvar(buflist[winnr], "&filetype")
+	local title
 
 	if bufname == "" then
-		return "[No Name]"
+		title = "[No Name]"
 	elseif bufname:sub(1, 6) == "oil://" then
-		return "oil"
+		title = "oil"
+	elseif buftype == "codecompanion" then
+		title = "CodeCompanion"
 	else
-		local bufname = vim.fn.fnamemodify(bufname, ":t")
-		return ("%d:%s"):format(n, bufname)
+		title = vim.fn.fnamemodify(bufname, ":t")
 	end
+
+	return ("%d:%s"):format(n, title)
 end
 
 function Tabline()
