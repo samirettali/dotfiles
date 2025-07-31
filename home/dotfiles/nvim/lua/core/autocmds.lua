@@ -46,3 +46,10 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank({ timeout = 50 })
 	end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+	desc = "User: quit in quickfix, loclist and help",
+	pattern = "qf,help",
+	group = vim.api.nvim_create_augroup("QuitInQuickfixLoclistHelp", { clear = true }),
+	command = "nnoremap <buffer> q :q<CR>",
+})
