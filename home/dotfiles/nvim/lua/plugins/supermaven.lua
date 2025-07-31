@@ -1,3 +1,7 @@
+if true then
+	return {}
+end
+
 return {
 	"supermaven-inc/supermaven-nvim",
 	event = "InsertEnter",
