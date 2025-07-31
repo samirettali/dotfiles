@@ -6,9 +6,8 @@ vim.g.maplocalleader = "\\"
 vim.keymap.set("n", "<Leader>tl", ":set list!<CR>", { desc = "Toggle listchars" })
 vim.keymap.set("n", "<localleader>q", utils.toggle_quickfix, { desc = "Toggle quickfix window" })
 
-vim.keymap.set("n", "<Leader>y", ":1,$y +<CR>", { desc = "Copy file content", silent = true })
 -- vim.keymap.set("n", "gV", "`[v`]", { desc = "Select last changed text" })
-vim.keymap.set("n", "<localleader>r", "restart<CR> ", { desc = "Restart Neovim", silent = true })
+vim.keymap.set("n", "<localleader>r", ":restart<CR>", { desc = "Restart Neovim", silent = true })
 
 vim.keymap.set("o", "V", "`[v`]", { desc = "Select last changed text" })
 
