@@ -4,7 +4,6 @@ return {
 	opts = {
 		preview = {
 			win_height = 25,
-			winblend = 0,
 			show_scroll_bar = false,
 		},
 	},
