@@ -23,7 +23,7 @@
       ];
       font-size = 16;
       font-thicken = true;
-      adjust-cell-height = "25%";
+      adjust-cell-height = "15%";
       font-thicken-strength = 16;
       gtk-titlebar = false;
       macos-titlebar-proxy-icon = "hidden";
