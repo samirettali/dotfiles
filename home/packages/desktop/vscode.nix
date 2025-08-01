@@ -175,6 +175,11 @@ in {
           (withExtension pkgs.vscode-marketplace.augment.vscode-augment {
             "augment.disableFocusOnAugmentPanel" = true;
           })
+          # (withExtension pkgs.vscode-marketplace.postman.postman-for-vscode { # TODO
+          #   "chat.instructionsFilesLocations" = {
+          #     "${pkgs.vscode-marketplace.postman.postman-for-vscode}/agent-instruction-files/vscode" = true;
+          #   };
+          # })
         ];
       };
     };
