@@ -1,6 +1,6 @@
 {
-  lib,
   config,
+  lib,
   pkgs,
   ...
 }: let
@@ -10,6 +10,28 @@
       sdk_8_0-bin
       sdk_9_0-bin
     ];
+
+  # TODO: upstream is broken
+  ms-dotnettools-csharp-with-roslyn-copilot = pkgs.vscode-marketplace.ms-dotnettools.csharp.overrideAttrs (oldAttrs: {
+    nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [pkgs.cacert];
+
+    preFixup =
+      oldAttrs.preFixup
+      + ''
+        # Download and setup Roslyn Copilot
+        echo "Setting up Roslyn Copilot..."
+        mkdir -p "$out"/share/vscode/extensions/ms-dotnettools.csharp/.roslynCopilot
+
+        export SSL_CERT_FILE="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+        ${pkgs.curl}/bin/curl -L "https://roslyn.blob.core.windows.net/releases/Microsoft.VisualStudio.Copilot.Roslyn.LanguageServer-18.0.479-alpha.zip" \
+          -o roslyn-copilot.zip
+
+        ${pkgs.unzip}/bin/unzip -q roslyn-copilot.zip -d "$out"/share/vscode/extensions/ms-dotnettools.csharp/.roslynCopilot
+
+        rm roslyn-copilot.zip
+        echo "Roslyn Copilot setup complete."
+      '';
+  });
 in {
   home.packages = with pkgs; [
     awscli2
@@ -28,6 +50,7 @@ in {
     terraform
     terraform-ls
     openvpn
+    netcoredbg
   ];
 
   programs = {
@@ -41,7 +64,7 @@ in {
           csharpier.csharpier-vscode
           hashicorp.terraform
           ms-dotnettools.csdevkit
-          ms-dotnettools.csharp
+          ms-dotnettools-csharp-with-roslyn-copilot
           ms-dotnettools.vscode-dotnet-runtime
           ms-vsliveshare.vsliveshare
         ];
@@ -56,20 +79,20 @@ in {
           "csharp.inlayHints.enableInlayHintsForLambdaParameterTypes" = true;
           "dotnet.inlayHints.enableInlayHintsForIndexerParameters" = true;
           "dotnet.inlayHints.enableInlayHintsForLiteralParameters" = true;
-          "dotnet.inlayHints.enableInlayHintsForObjectCreationParameters" = false;
+          "dotnet.inlayHints.enableInlayHintsForObjectCreationParameters" = true;
           "dotnet.inlayHints.enableInlayHintsForOtherParameters" = true;
           "dotnet.inlayHints.enableInlayHintsForParameters" = true;
           "dotnet.inlayHints.suppressInlayHintsForParametersThatDifferOnlyBySuffix" = false;
           "dotnet.inlayHints.suppressInlayHintsForParametersThatMatchArgumentName" = false;
           "dotnet.inlayHints.suppressInlayHintsForParametersThatMatchMethodIntent" = false;
-          "dotnet.formatting.organizeImportsOnFormat" = true;
-          "csharp.debug.expressionEvaluationOptions.showRawValues" = true;
+          # "dotnet.formatting.organizeImportsOnFormat" = true; # TODO: csharpier?
+          # "csharp.debug.expressionEvaluationOptions.showRawValues" = false;
           "omnisharp.enableDecompilationSupport" = true;
           "[csharp]" = {
             "editor.defaultFormatter" = "csharpier.csharpier-vscode";
           };
           "csharpier.dev.useCustomPath" = true;
-          "csharpier.dev.customPath" = "${pkgs.csharpier}/bin";
+          "csharpier.dev.customPath" = "${pkgs.csharpier}/bin/";
         };
       };
     };
