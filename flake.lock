@@ -395,11 +395,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1753928221,
-        "narHash": "sha256-Na6JjalzCBQx5aiZMa0QYuFU9T0FOuWSKbHnslXWln4=",
+        "lastModified": 1754015654,
+        "narHash": "sha256-tirCA/d4v/+yyjsNHbK0mEtxfeG3SxjhTPsV9SUrb/s=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "1d907938c3f488949c3365afcbbd325e2ce85ee9",
+        "rev": "65b437a31a09ef31d882d34f28e4dbf446165ca1",
         "type": "github"
       },
       "original": {
@@ -477,11 +477,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754001310,
-        "narHash": "sha256-kFjMScZT0abLHLBWdrC+KMaRBvB+2FBod1ZzbTGbHD4=",
+        "lastModified": 1754044146,
+        "narHash": "sha256-0hTNz395ODc7zQOW3Y4u2cTwUFY00YoKlPq9Segvum4=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "5777138d1a25af70f79f915a40f05e53f0498a91",
+        "rev": "f24675cbfdb6a67275dd25201ee7df36081805a3",
         "type": "github"
       },
       "original": {
@@ -513,11 +513,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1753930086,
-        "narHash": "sha256-Os6Ta5zamfAllmQNlvkbGZLHn06zJy3hVXRk+Dy2yMo=",
+        "lastModified": 1754016903,
+        "narHash": "sha256-mRB5OOx7H5kFwW8Qtc/7dO3qHsBQtZ/eYQEj93/Noo8=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "17b672c10c1798696a516cb879edbc2ebd0f58a4",
+        "rev": "ddd488184f01603b712ddbb6dc9fe0b8447eb7fc",
         "type": "github"
       },
       "original": {
@@ -657,15 +657,15 @@
         "nixpkgs-mozilla": "nixpkgs-mozilla"
       },
       "locked": {
-        "lastModified": 1752284688,
-        "narHash": "sha256-2ywyO+SmklmSoEZIKC+o6rhW4lnGOsk0l02W6VKUpKo=",
-        "owner": "samirettali",
+        "lastModified": 1753970179,
+        "narHash": "sha256-vS/XceF9LA0G0QRrAE1sYgpAXJCTjbrJ2cW8u+E8bG8=",
+        "owner": "alexpasmantier",
         "repo": "television",
-        "rev": "494d7802f68be127a50b284994ba533010909003",
+        "rev": "01e12b09af55bf207655bbed2ee0b66b74d3ab89",
         "type": "github"
       },
       "original": {
-        "owner": "samirettali",
+        "owner": "alexpasmantier",
         "repo": "television",
         "type": "github"
       }
