@@ -1,10 +1,9 @@
+if true then
+	return {}
+end
+
 return {
 	"Bekaboo/dropbar.nvim",
-	-- TODO: lazy loading might not be needed as the plugin already uses and autocmd
-	-- https://github.com/Bekaboo/dropbar.nvim/blob/master/plugin/dropbar.lua
-	dependencies = {
-		"nvim-tree/nvim-web-devicons",
-	},
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local dropbar_api = require("dropbar.api")
