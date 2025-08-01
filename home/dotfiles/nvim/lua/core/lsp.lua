@@ -71,20 +71,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-vim.lsp.enable("gopls")
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("rust_analyzer")
-vim.lsp.enable("nixd")
-vim.lsp.enable("jsonls")
-vim.lsp.enable("ts_ls") -- TODO: try vtsls
 vim.lsp.enable("bashls")
+vim.lsp.enable("clangd")
+vim.lsp.enable("gopls")
+vim.lsp.enable("jsonls")
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("nixd")
 vim.lsp.enable("roslyn_ls")
+vim.lsp.enable("rust_analyzer")
+vim.lsp.enable("ts_ls") -- TODO: try vtsls
 
 -- vim.lsp.enable("pyrefly")
 -- vim.lsp.enable("ty")
 -- vim.lsp.enable("solidity_ls")
 -- vim.lsp.enable("zls")
--- vim.lsp.enable("clangd")
 -- vim.lsp.enable("ruff")
 -- vim.lsp.enable("basedpyright")
 -- vim.lsp.enable("ocamllsp")
