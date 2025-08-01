@@ -53,7 +53,7 @@ in {
           vscodevim.vim
           wgsl-analyzer.wgsl-analyzer
           github.copilot
-          # github.copilot-chat # FIX: this requires vscode-insiders
+          github.copilot-chat
           augment.vscode-augment
           # continue.continue
           # supermaven.supermaven
@@ -121,7 +121,7 @@ in {
 
             "window.commandCenter" = false;
 
-            "chat.commandCenter.enabled" = false;
+            "chat.commandCenter.enabled" = true;
 
             "search.useIgnoreFiles" = false;
             "search.exclude" = {
