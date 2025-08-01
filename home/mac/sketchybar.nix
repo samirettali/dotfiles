@@ -21,7 +21,7 @@
     declare -A icons
 
     icons["BTC"]="₿"
-    icons["ETH"]=""
+    icons["ETH"]=""
     icons["SOL"]="◎"
     icons["AAVE"]="Ӕ"
 
