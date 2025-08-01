@@ -161,6 +161,9 @@ in {
               "plaintext" = true;
               "markdown" = true;
             };
+            "github.copilot.advanced" = {
+              "useLanguageServer" = true;
+            };
             "github.copilot.nextEditSuggestions.enabled" = true;
           })
           (withExtension pkgs.vscode-marketplace.eamodio.gitlens {
