@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  nix-prefetch-url = lib.getExe' pkgs.nix "nix-prefetch-url";
-  nixHash = lib.getExe' pkgs.nix "hash";
-  tr = lib.getExe' pkgs.uutils-coreutils-noprefix "tr";
+  nixPrefetchUrlExe = lib.getExe' pkgs.nix "nix-prefetch-url";
+  nixExe = lib.getExe pkgs.nix;
+  trExe = lib.getExe' pkgs.uutils-coreutils-noprefix "tr";
 in
   pkgs.writeShellScriptBin "nhash" ''
     set -euo pipefail
@@ -16,10 +16,10 @@ in
       exit 1
     fi
 
-    hash=$(${nix-prefetch-url} --type sha256 "''${1}" 2>/dev/null)
-    sri_hash=$(${nixHash} convert --hash-algo sha256 --to sri ''${hash})
+    hash=$(${nixPrefetchUrlExe} --type sha256 "''${1}" 2>/dev/null)
+    sri_hash=$(${nixExe} hash convert --hash-algo sha256 --to sri ''${hash})
 
     echo "''${sri_hash}"
-    echo "''${sri_hash}" | ${tr} -d '\n' | ${lib.getExe copy}
+    echo "''${sri_hash}" | ${trExe} -d '\n' | ${lib.getExe copy}
     echo "Copied to clipboard!" >&2
   ''
