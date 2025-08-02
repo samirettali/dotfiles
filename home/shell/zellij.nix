@@ -232,6 +232,7 @@ in {
                 }
             }
             resize {
+                bind "m" { SwitchToMode "move"; }
                 bind "+" { Resize "Increase"; }
                 bind "-" { Resize "Decrease"; }
                 bind "=" { Resize "Increase"; }
@@ -246,6 +247,7 @@ in {
                 bind "Ctrl n" { SwitchToMode "normal"; }
             }
             move {
+                bind "r" { SwitchToMode "resize"; }
                 bind "h" { MovePane "left"; }
                 bind "j" { MovePane "down"; }
                 bind "k" { MovePane "up"; }
