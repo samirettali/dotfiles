@@ -10,7 +10,7 @@
     ./services/default.nix
     ./shell
     ./sops.nix
-    ./spotify-player.nix
+    ./spotify-player
   ];
 
   programs.fish.enable = true;

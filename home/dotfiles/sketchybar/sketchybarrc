@@ -44,13 +44,11 @@ for monitor in $(/etc/profiles/per-user/s.ettali/bin/aerospace list-monitors | a
     done
 done
 
-sketchybar --add item space_separator left \
-    --set space_separator icon="" \
-    background.drawing=off \
-    script="${PLUGIN_DIR}/space_windows.sh" \
-    --subscribe space_separator aerospace_workspace_change
-
-sketchybar --add item clock right \
+sketchybar \
+    --add item space_separator left \
+    --set space_separator icon="" background.drawing=off script="${PLUGIN_DIR}/space_windows.sh" \
+    --subscribe space_separator aerospace_workspace_change \
+    --add item clock right \
     --set clock update_freq=1 script="${PLUGIN_DIR}/clock.sh" \
     --add item battery right \
     --set battery update_freq=120 script="${PLUGIN_DIR}/battery.sh" \
@@ -58,9 +56,10 @@ sketchybar --add item clock right \
     --add item volume right \
     --set volume script="${PLUGIN_DIR}/volume.sh" \
     --subscribe volume volume_change \
+    --set crypto script="${PLUGIN_DIR}/crypto.sh" \
+    --add item music right \
     --add item crypto right \
-    --subscribe crypto crypto_price_change \
-    --set crypto script="${PLUGIN_DIR}/crypto.sh"
+    --subscribe crypto crypto_price_change
 
 sketchybar --update
 sketchybar --hotload true

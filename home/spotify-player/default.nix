@@ -3,9 +3,9 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+in {
   programs.spotify-player = {
-    # TODO: add sketchybar hooks
     enable = true;
     package = pkgs.spotify-player.override {
       withMediaControl = false;
@@ -23,6 +23,8 @@
       enable_notify = true;
       notify_streaming_only = false;
       enable_streaming = "DaemonOnly";
+      cover_img_width = 6;
+      cover_img_length = 13;
       device = {
         name = config.home.username;
         device_type = "speaker";
@@ -32,6 +34,14 @@
         normalization = false;
         autoplay = false;
       };
+      player_event_hook_command.command = lib.optionals config.programs.sketchybar.enable (
+        let
+          hook = import ./sketchybar-hook.nix {
+            inherit pkgs config lib;
+          };
+        in
+          lib.getExe hook
+      );
     };
   };
 
