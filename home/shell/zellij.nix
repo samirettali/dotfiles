@@ -131,6 +131,11 @@ in {
                 bind "Ctrl b" { SwitchToMode "tmux"; }
             }
             tmux {
+                bind "h" { MoveFocus "Left"; }
+                bind "l" { MoveFocus "Right"; }
+                bind "j" { MoveFocus "Down"; }
+                bind "k" { MoveFocus "Up"; }
+
                 // brackets after NewTab are required to open the tab in the current working directory
                 bind "Ctrl c" { NewTab { }; SwitchToMode "normal"; }
                 bind "c" { NewTab { }; SwitchToMode "normal"; }
@@ -182,8 +187,6 @@ in {
 
                 bind "P" { TogglePaneFrames; }
 
-                bind "h" { GoToPreviousTab; }
-                bind "l" { GoToNextTab; }
                 bind "<" { MoveTab "left"; SwitchToMode "normal"; }
                 bind ">" { MoveTab "right"; SwitchToMode "normal"; }
 
