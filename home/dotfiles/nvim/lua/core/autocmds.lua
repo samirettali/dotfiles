@@ -53,3 +53,20 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("QuitInQuickfixLoclistHelp", { clear = true }),
 	command = "nnoremap <buffer> q :q<CR>",
 })
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	desc = "Setup zellij keymaps",
+	pattern = "*",
+	callback = function()
+		if os.getenv("ZELLIJ") ~= "0" then
+			return
+		end
+
+		local zellij = require("core.zellij")
+
+		vim.keymap.set("n", "<C-h>", zellij.left, { silent = true, desc = "Navigate left in Zellij" })
+		vim.keymap.set("n", "<C-j>", zellij.down, { silent = true, desc = "Navigate down in Zellij" })
+		vim.keymap.set("n", "<C-k>", zellij.up, { silent = true, desc = "Navigate up in Zellij" })
+		vim.keymap.set("n", "<C-l>", zellij.right, { silent = true, desc = "Navigate right in Zellij" })
+	end,
+})
