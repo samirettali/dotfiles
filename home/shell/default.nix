@@ -79,5 +79,6 @@ in {
     # yazi # file manager
     yt-dlp
     yubikey-manager
+    nur.repos.charmbracelet.crush
   ];
 }
