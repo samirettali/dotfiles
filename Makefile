@@ -21,7 +21,7 @@ ifeq ($(OS),Linux)
 endif
 
 ifeq ($(OS),Darwin)
-    REBUILD_CMD = sudo darwin-rebuild switch --flake .\#$(HOSTNAME)
+    REBUILD_CMD = nh darwin switch .
 	CLEAN_CMD = nix-collect-garbage --delete-old
 endif
 
