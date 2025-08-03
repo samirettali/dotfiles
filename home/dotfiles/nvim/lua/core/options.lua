@@ -62,7 +62,7 @@ vim.opt.mouse = "a"
 
 vim.opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize instead of whitespaces
 
-vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy" }
+vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
 
 vim.opt.undodir = home .. "/.local/share/nvim/undo"
 vim.opt.backup = false
@@ -79,8 +79,6 @@ vim.opt.cmdheight = 0
 vim.opt.signcolumn = "yes"
 
 vim.opt.clipboard = "unnamedplus"
-
-vim.opt.winborder = "rounded"
 
 vim.opt.spelllang = "en" -- TODO: download italian dictionary
 
