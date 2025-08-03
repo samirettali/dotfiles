@@ -131,10 +131,10 @@ in {
                 bind "Ctrl b" { SwitchToMode "tmux"; }
             }
             tmux {
-                bind "h" { MoveFocus "Left"; }
-                bind "l" { MoveFocus "Right"; }
-                bind "j" { MoveFocus "Down"; }
-                bind "k" { MoveFocus "Up"; }
+                bind "h" { MoveFocus "Left"; SwitchToMode "normal"; }
+                bind "l" { MoveFocus "Right"; SwitchToMode "normal"; }
+                bind "j" { MoveFocus "Down"; SwitchToMode "normal"; }
+                bind "k" { MoveFocus "Up"; SwitchToMode "normal"; }
 
                 // brackets after NewTab are required to open the tab in the current working directory
                 bind "Ctrl c" { NewTab { }; SwitchToMode "normal"; }
