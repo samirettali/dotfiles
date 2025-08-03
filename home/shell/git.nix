@@ -21,8 +21,7 @@ in {
       enable = true;
       userEmail = config.home.sessionVariables.EMAIL;
       userName = "Samir Ettali";
-      # delta.enable = true;
-      patdiff.enable = true;
+      delta.enable = true;
       extraConfig = {
         branch.sort = "-committerdate";
         column.ui = "auto";
