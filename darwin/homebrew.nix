@@ -11,6 +11,10 @@
     brews = [
       "choose-gui"
       "displayplacer"
+      {
+        name = "FelixKratz/formulae/svim";
+        restart_service = "changed";
+      }
     ];
     casks = [
       "docker-desktop"
@@ -34,6 +38,7 @@
     taps = [
       "homebrew/bundle"
       "homebrew/services"
+      "FelixKratz/formulae"
     ];
   };
 }
