@@ -1,6 +1,5 @@
 return {
-	-- TODO: wait for https://github.com/bluz71/vim-moonfly-colors/pull/83
-	"samirettali/vim-moonfly-colors",
+	"bluz71/vim-moonfly-colors",
 	priority = 1000,
 	lazy = false,
 	config = function()
@@ -17,9 +16,8 @@ return {
 		vim.g.moonflyUnderlineMatchParen = true
 		vim.g.moonflyItalics = false
 
-		local custom_highlight = vim.api.nvim_create_augroup("CustomHighlight", {})
 		vim.api.nvim_create_autocmd("ColorScheme", {
-			group = custom_highlight,
+			group = vim.api.nvim_create_augroup("MoonflyColors", { clear = true }),
 			pattern = "moonfly",
 			callback = function()
 				vim.api.nvim_set_hl(0, "WinBar", {
