@@ -21,6 +21,8 @@ in {
       enable = true;
       userEmail = config.home.sessionVariables.EMAIL;
       userName = "Samir Ettali";
+      # delta.enable = true;
+      patdiff.enable = true;
       extraConfig = {
         branch.sort = "-committerdate";
         column.ui = "auto";
@@ -72,6 +74,7 @@ in {
         "__debug_bin*"
         "node_modules"
         "__pycache__"
+        ".crush"
       ];
       signing.format = "ssh";
       includes = [
