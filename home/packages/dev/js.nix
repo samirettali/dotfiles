@@ -16,4 +16,8 @@
   home.sessionPath = [
     "${config.home.homeDirectory}/.yarn/bin"
   ];
+
+  home.sessionVariables = {
+    NEXT_TELEMETRY_DISABLED = "1";
+  };
 }
