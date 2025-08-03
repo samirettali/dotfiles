@@ -48,10 +48,27 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	desc = "User: quit in quickfix, loclist and help",
-	pattern = "qf,help",
+	desc = "Close some filetypes with q",
+	pattern = {
+		-- TODO: remove non used ones
+		"qf",
+		"man",
+		"help",
+		"PlenaryTestPopup",
+		"lspinfo",
+		"notify",
+		"startuptime",
+		"tsplayground",
+		"neotest-output",
+		"checkhealth",
+		"neotest-summary",
+		"neotest-output-panel",
+	},
 	group = vim.api.nvim_create_augroup("QuitInQuickfixLoclistHelp", { clear = true }),
-	command = "nnoremap <buffer> q :q<CR>",
+	callback = function(event)
+		vim.bo[event.buf].buflisted = false
+		vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+	end,
 })
 
 vim.api.nvim_create_autocmd("VimEnter", {
