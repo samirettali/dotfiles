@@ -52,6 +52,10 @@ return {
 					-- fg = palette.blue,
 				})
 
+				vim.api.nvim_set_hl(0, "StatusLine", {
+					bg = palette.bg,
+				})
+
 				-- TODO
 				-- Pmenu
 				-- PmenuSel
