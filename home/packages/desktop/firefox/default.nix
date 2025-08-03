@@ -9,6 +9,14 @@
       package = with pkgs; (firefox.override {
         # nativeMessagingHosts = [passff-host];
         extraPolicies = {
+          DisableFirefoxScreenshots = true;
+          EnableTrackingProtection = {
+            Value = true;
+            Locked = true;
+            Cryptomining = true;
+            Fingerprinting = true;
+            EmailTracking = true;
+          };
           DisableFirefoxStudies = true;
           DisablePocket = true;
           DisableTelemetry = true;
@@ -21,6 +29,7 @@
             SkipOnboarding = true;
           };
           OfferToSaveLoginsDefault = false;
+          SearchBar = "unified";
         };
       });
       profiles.samir = {
@@ -45,34 +54,50 @@
             # switchyomega
             # tampermonkey
           ];
+          settings = with pkgs.nur.repos.rycee.firefox-addons; {
+            "${ublock-origin.addonId}" = {
+              settings = {
+                force = true;
+                selectedFilterLists = [
+                  "user-filters"
+                  "ublock-filters"
+                  "ublock-badware"
+                  "ublock-privacy"
+                  "ublock-quick-fixes"
+                  "ublock-unbreak"
+                  "easylist"
+                  "adguard-generic"
+                  "adguard-spyware"
+                  "adguard-spyware-url"
+                  "adguard-cookies"
+                  "ublock-cookies-adguard"
+                  "KOR-1"
+                ];
+              };
+            };
+          };
         };
         search = {
           force = true;
           default = "google";
           engines = {
             "NixOS" = {
-              urls = [
-                {
-                  template = "https://mynixos.com/search?q={searchTerms}";
-                }
-              ];
+              urls = [{template = "https://mynixos.com/search?q={searchTerms}";}];
               definedAliases = ["@n"];
               updateInterval = 24 * 60 * 60 * 1000; # every day
               # icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg"; # TODO: this is broken
               icon = "https://mynixos.com/static/icons/mnos-logo.svg";
             };
             "NixOS Wiki" = {
-              urls = [
-                {
-                  template = "https://nixos.wiki/index.php?search={searchTerms}";
-                }
-              ];
+              urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
               definedAliases = ["@nw"];
               updateInterval = 24 * 60 * 60 * 1000; # every day
               icon = "https://nixos.wiki/favicon.png";
             };
-            # "bing".metaData.hidden = true; # TODO: is this needed?
-            "google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+            bing.metaData.hidden = true; # TODO: is this needed?
+            ddg.metaData.hidden = true;
+            wikipedia.metaData.hidden = true;
+            google.metaData.alias = "@g"; # builtin engines only support specifying one additional alias
           };
         };
         settings = {
@@ -120,6 +145,8 @@
           "browser.newtabpage.activity-stream.telemetry" = false;
           "extensions.htmlaboutaddons.discover.enabled" = false;
           "extensions.htmlaboutaddons.recommendations.enabled" = false;
+          "extensions'update.autoUpdateDefault" = false;
+          "extensions.update.enabled" = false;
 
           # Disable new tab tile ads & preload
           # http://www.thewindowsclub.com/disable-remove-ad-tiles-from-firefox
@@ -179,7 +206,6 @@
           "browser.onboarding.enabled" = false; # "New to Librewolf? Let's get started!" tour
           "browser.aboutConfig.showWarning" = false; # Warning when opening about:config
           "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
-          "extensions.pocket.enabled" = false;
           "extensions.shield-recipe-client.enabled" = false;
           "reader.parse-on-load.enabled" = false; # "reader view"
 
