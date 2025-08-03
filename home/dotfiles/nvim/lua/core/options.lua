@@ -80,6 +80,8 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.clipboard = "unnamedplus"
 
+vim.opt.winborder = "rounded"
+
 vim.opt.spelllang = "en" -- TODO: download italian dictionary
 
 -- TODO: is this needed?
@@ -119,7 +121,15 @@ vim.opt.fillchars = {
 	foldclose = "▸",
 }
 
-vim.opt.winborder = "rounded"
+vim.opt.sessionoptions = {
+	"buffers",
+	"curdir",
+	"folds",
+	"help",
+	"tabpages",
+	"winsize",
+	"globals",
+}
 
 vim.cmd(":command! W w")
 vim.cmd(":command! Q q")

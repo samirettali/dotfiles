@@ -3,16 +3,6 @@ return {
 	event = "BufReadPre", -- this will only start session saving when an actual file was opened
 	opts = {},
 	init = function()
-		vim.opt.sessionoptions = {
-			"buffers",
-			"curdir",
-			"folds",
-			"help",
-			"tabpages",
-			"winsize",
-			"globals",
-		}
-
 		local persistence_group = vim.api.nvim_create_augroup("Persistence", { clear = true })
 		local home = vim.fn.expand("~")
 		local disabled_dirs = {
