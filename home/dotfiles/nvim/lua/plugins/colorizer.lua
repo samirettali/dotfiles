@@ -5,6 +5,14 @@ return {
 		user_default_options = {
 			mode = "virtualtext",
 			names = false,
+			RRGGBBAA = true,
+			AARRGGBB = true,
+			rgb_fn = true,
+			hsl_fn = true,
+			css = true,
+			css_fn = true,
+			-- boolean|'normal'|'lsp'|'both'.  True sets to 'normal'
+			tailwind = false, -- TODO
 		},
 	},
 	keys = {
