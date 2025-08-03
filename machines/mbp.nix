@@ -104,6 +104,12 @@
         "com.apple.mouse.tapBehavior" = null;
         "com.apple.swipescrolldirection" = false;
         "com.apple.trackpad.scaling" = 3.0;
+        # TODO
+        # AppleLanguages = [
+        #   "en-US"
+        #   "it-IT"
+        # ];
+        # AppleLocale = "en_US";
       };
       LaunchServices = {
         LSQuarantine = false;
