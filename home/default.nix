@@ -48,6 +48,10 @@
     # code-cursor
     nix-init
     nix-prefetch-github
+    (pkgs.writeShellScriptBin "le" ''
+      # loads environment variables from a file (default: .env)
+      export $(${lib.getExe pkgs.gnugrep} -v '^#' "''${1:-.env} | ${lib.getExe pkgs.findutils "grep"})
+    '')
   ];
 
   home.file.".hushlogin".text = "";
