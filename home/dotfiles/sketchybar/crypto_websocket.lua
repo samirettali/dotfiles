@@ -1,0 +1,333 @@
+-- local socket = require("socket")
+-- local ssl = require("ssl")
+-- local cjson = require("cjson")
+-- local bit = require("bit")
+--
+-- local CryptoWebSocket = {}
+-- CryptoWebSocket.__index = CryptoWebSocket
+--
+-- function CryptoWebSocket.new(pairs)
+-- 	local self = setmetatable({}, CryptoWebSocket)
+-- 	self.pairs = pairs or { "BTCUSDT" }
+-- 	self.tickers = {}
+-- 	self.icons = {
+-- 		BTC = "₿",
+-- 		ETH = "",
+-- 		SOL = "◎",
+-- 		AAVE = "Ӕ",
+-- 	}
+-- 	self.running = false
+-- 	self.socket = nil
+-- 	return self
+-- end
+--
+-- -- Base64 encoding for WebSocket key
+-- local function base64_encode(data)
+-- 	local b = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+-- 	return (
+-- 		(data:gsub(".", function(x)
+-- 			local r, b = "", x:byte()
+-- 			for i = 8, 1, -1 do
+-- 				r = r .. (b % 2 ^ i - b % 2 ^ (i - 1) > 0 and "1" or "0")
+-- 			end
+-- 			return r
+-- 		end) .. "0000"):gsub("%d%d%d?%d?%d?%d?", function(x)
+-- 			if #x < 6 then
+-- 				return ""
+-- 			end
+-- 			local c = 0
+-- 			for i = 1, 6 do
+-- 				c = c + (x:sub(i, i) == "1" and 2 ^ (6 - i) or 0)
+-- 			end
+-- 			return b:sub(c + 1, c + 1)
+-- 		end) .. ({ "", "==", "=" })[#data % 3 + 1]
+-- 	)
+-- end
+--
+-- -- Generate WebSocket key
+-- local function generate_websocket_key()
+-- 	math.randomseed(os.time())
+-- 	local key = ""
+-- 	for i = 1, 16 do
+-- 		key = key .. string.char(math.random(0, 255))
+-- 	end
+-- 	return base64_encode(key)
+-- end
+--
+-- -- WebSocket frame masking
+-- local function mask_payload(payload, mask_key)
+-- 	local masked = {}
+-- 	for i = 1, #payload do
+-- 		local byte_val = payload:byte(i)
+-- 		local mask_byte = mask_key:byte(((i - 1) % 4) + 1)
+-- 		masked[i] = string.char(bit.bxor(byte_val, mask_byte))
+-- 	end
+-- 	return table.concat(masked)
+-- end
+--
+-- -- Create WebSocket frame
+-- local function create_websocket_frame(payload)
+-- 	local frame = {}
+--
+-- 	-- First byte: FIN = 1, opcode = 1 (text frame)
+-- 	table.insert(frame, string.char(0x81))
+--
+-- 	-- Payload length and mask
+-- 	local payload_len = #payload
+-- 	local mask_key = ""
+-- 	for i = 1, 4 do
+-- 		mask_key = mask_key .. string.char(math.random(0, 255))
+-- 	end
+--
+-- 	if payload_len < 126 then
+-- 		-- Mask bit = 1, payload length
+-- 		table.insert(frame, string.char(0x80 + payload_len))
+-- 	elseif payload_len < 65536 then
+-- 		table.insert(frame, string.char(0x80 + 126))
+-- 		table.insert(frame, string.char(bit.rshift(payload_len, 8)))
+-- 		table.insert(frame, string.char(bit.band(payload_len, 0xFF)))
+-- 	end
+--
+-- 	-- Mask key
+-- 	table.insert(frame, mask_key)
+--
+-- 	-- Masked payload
+-- 	table.insert(frame, mask_payload(payload, mask_key))
+--
+-- 	return table.concat(frame)
+-- end
+--
+-- -- Parse WebSocket frame
+-- local function parse_websocket_frame(data)
+-- 	if #data < 2 then
+-- 		return nil, data
+-- 	end
+--
+-- 	local pos = 1
+-- 	local first_byte = data:byte(pos)
+-- 	pos = pos + 1
+--
+-- 	local fin = bit.band(first_byte, 0x80) ~= 0
+-- 	local opcode = bit.band(first_byte, 0x0F)
+--
+-- 	local second_byte = data:byte(pos)
+-- 	pos = pos + 1
+--
+-- 	local masked = bit.band(second_byte, 0x80) ~= 0
+-- 	local payload_len = bit.band(second_byte, 0x7F)
+--
+-- 	if payload_len == 126 then
+-- 		if #data < pos + 1 then
+-- 			return nil, data
+-- 		end
+-- 		payload_len = bit.lshift(data:byte(pos), 8) + data:byte(pos + 1)
+-- 		pos = pos + 2
+-- 	elseif payload_len == 127 then
+-- 		-- Extended payload length (64-bit) - not implemented for simplicity
+-- 		return nil, data
+-- 	end
+--
+-- 	if masked then
+-- 		if #data < pos + 3 then
+-- 			return nil, data
+-- 		end
+-- 		pos = pos + 4 -- Skip mask key for received frames
+-- 	end
+--
+-- 	if #data < pos + payload_len - 1 then
+-- 		return nil, data
+-- 	end
+--
+-- 	local payload = data:sub(pos, pos + payload_len - 1)
+-- 	local remaining = data:sub(pos + payload_len)
+--
+-- 	return payload, remaining
+-- end
+--
+-- function CryptoWebSocket:create_subscription()
+-- 	local params = {}
+-- 	for _, pair in ipairs(self.pairs) do
+-- 		table.insert(params, string.lower(pair) .. "@miniTicker")
+-- 	end
+--
+-- 	return cjson.encode({
+-- 		method = "SUBSCRIBE",
+-- 		params = params,
+-- 	})
+-- end
+--
+-- function CryptoWebSocket:update_sketchybar()
+-- 	local parts = {}
+--
+-- 	for _, symbol in ipairs(self.pairs) do
+-- 		local price = self.tickers[symbol]
+-- 		if price then
+-- 			local formatted_price = string.format("%.2f", tonumber(price))
+-- 			local base_asset = symbol:gsub("USDT$", "")
+-- 			local icon = self.icons[base_asset] or base_asset
+-- 			table.insert(parts, icon .. " " .. formatted_price)
+-- 		end
+-- 	end
+--
+-- 	local result = table.concat(parts, " ")
+-- 	if #result > 0 then
+-- 		sbar.trigger("crypto_price_change", { VALUE = result })
+-- 	end
+-- end
+--
+-- function CryptoWebSocket:process_ticker(json_msg)
+-- 	local success, data = pcall(cjson.decode, json_msg)
+-- 	if not success then
+-- 		return
+-- 	end
+--
+-- 	if data.e == "24hrMiniTicker" then
+-- 		local symbol = data.s
+-- 		local price = data.c
+-- 		local quote_volume = data.q
+--
+-- 		if symbol and price and quote_volume and price ~= "null" and quote_volume ~= "null" then
+-- 			self.tickers[symbol] = price
+-- 			self:update_sketchybar()
+-- 		end
+-- 	end
+-- end
+--
+-- function CryptoWebSocket:connect()
+-- 	-- Create TCP socket
+-- 	local tcp = socket.tcp()
+-- 	if not tcp then
+-- 		return false
+-- 	end
+--
+-- 	tcp:settimeout(10)
+--
+-- 	-- Connect to Binance WebSocket
+-- 	local ok, err = tcp:connect("stream.binance.com", 443)
+-- 	if not ok then
+-- 		tcp:close()
+-- 		return false
+-- 	end
+--
+-- 	-- Wrap with SSL
+-- 	local ssl_params = {
+-- 		mode = "client",
+-- 		protocol = "tlsv1_2",
+-- 		verify = "none",
+-- 	}
+--
+-- 	self.socket = ssl.wrap(tcp, ssl_params)
+-- 	if not self.socket then
+-- 		tcp:close()
+-- 		return false
+-- 	end
+--
+-- 	ok, err = self.socket:dohandshake()
+-- 	if not ok then
+-- 		self.socket:close()
+-- 		return false
+-- 	end
+--
+-- 	-- Send WebSocket handshake
+-- 	local key = generate_websocket_key()
+-- 	local handshake = string.format(
+-- 		"GET /ws HTTP/1.1\r\n"
+-- 			.. "Host: stream.binance.com\r\n"
+-- 			.. "Upgrade: websocket\r\n"
+-- 			.. "Connection: Upgrade\r\n"
+-- 			.. "Sec-WebSocket-Key: %s\r\n"
+-- 			.. "Sec-WebSocket-Version: 13\r\n"
+-- 			.. "\r\n",
+-- 		key
+-- 	)
+--
+-- 	self.socket:send(handshake)
+--
+-- 	-- Read handshake response
+-- 	local response = ""
+-- 	while not response:match("\r\n\r\n") do
+-- 		local chunk, err = self.socket:receive(1)
+-- 		if not chunk then
+-- 			self.socket:close()
+-- 			return false
+-- 		end
+-- 		response = response .. chunk
+-- 	end
+--
+-- 	-- Check if handshake was successful
+-- 	if not response:match("HTTP/1.1 101") then
+-- 		self.socket:close()
+-- 		return false
+-- 	end
+--
+-- 	return true
+-- end
+--
+-- function CryptoWebSocket:send_subscription()
+-- 	local subscription = self:create_subscription()
+-- 	local frame = create_websocket_frame(subscription)
+-- 	return self.socket:send(frame)
+-- end
+--
+-- function CryptoWebSocket:start()
+-- 	if not self:connect() then
+-- 		print("Failed to connect to Binance WebSocket")
+-- 		return
+-- 	end
+--
+-- 	if not self:send_subscription() then
+-- 		print("Failed to send subscription")
+-- 		self.socket:close()
+-- 		return
+-- 	end
+--
+-- 	self.running = true
+-- 	self.socket:settimeout(0.1) -- Non-blocking with timeout
+--
+-- 	-- Start processing loop
+-- 	sbar.add("event", "crypto_websocket_timer")
+-- 	local timer = sbar.add("item", "crypto_websocket_timer", {
+-- 		update_freq = 0.1,
+-- 		drawing = false,
+-- 	})
+--
+-- 	local buffer = ""
+-- 	timer:subscribe("routine", function()
+-- 		if not self.running or not self.socket then
+-- 			return
+-- 		end
+--
+-- 		-- Read data from socket
+-- 		local data, err = self.socket:receive("*a")
+-- 		if data then
+-- 			buffer = buffer .. data
+--
+-- 			-- Process complete WebSocket frames
+-- 			while buffer and #buffer > 0 do
+-- 				local payload, remaining = parse_websocket_frame(buffer)
+-- 				if payload then
+-- 					buffer = remaining
+-- 					self:process_ticker(payload)
+-- 				else
+-- 					break
+-- 				end
+-- 			end
+-- 		elseif err ~= "timeout" then
+-- 			-- Connection lost, try to reconnect
+-- 			self:stop()
+-- 			self:start()
+-- 		end
+-- 	end)
+-- end
+--
+-- function CryptoWebSocket:stop()
+-- 	self.running = false
+-- 	if self.socket then
+-- 		self.socket:close()
+-- 		self.socket = nil
+-- 	end
+-- end
+--
+-- return CryptoWebSocket
+--
+

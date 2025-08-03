@@ -21,6 +21,7 @@ in {
       default_device = config.home.username;
       enable_cover_image_cache = true;
       enable_notify = true;
+      client_port = 9999;
       notify_streaming_only = false;
       enable_streaming = "DaemonOnly";
       cover_img_width = 6;
