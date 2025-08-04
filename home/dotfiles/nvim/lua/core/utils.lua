@@ -310,4 +310,74 @@ M.get_git_sign = function(buf, lnum)
 	return nil
 end
 
+M.toggle_line_highlight = function()
+	local line_num = vim.fn.line(".")
+	local highlight_group = "LineHighlight"
+
+	local matches = vim.fn.getmatches()
+	local match_id = nil
+
+	for _, match in ipairs(matches) do
+		if match.group == highlight_group and match.pattern == "\\%" .. line_num .. "l" then
+			match_id = match.id
+			break
+		end
+	end
+
+	if match_id then
+		vim.fn.matchdelete(match_id)
+	else
+		vim.cmd("highlight LineHighlight ctermbg=gray guibg=gray")
+		vim.fn.matchadd("LineHighlight", "\\%" .. line_num .. "l")
+	end
+end
+
+M.delete_hidden_buffers = function(options)
+	local force = options and options.force or false
+	local buffers = vim.api.nvim_list_bufs()
+
+	-- Get all windows across all tabs
+	local function is_buffer_visible(buffer)
+		for _, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
+			for _, window in ipairs(vim.api.nvim_tabpage_list_wins(tabpage)) do
+				if vim.api.nvim_win_get_buf(window) == buffer then
+					return true
+				end
+			end
+		end
+		return false
+	end
+
+	for _, buffer in ipairs(buffers) do
+		if vim.fn.buflisted(buffer) == 1 and not is_buffer_visible(buffer) then
+			if force then
+				vim.api.nvim_command("bwipeout! " .. buffer)
+			else
+				vim.api.nvim_command("bwipeout " .. buffer)
+			end
+		end
+	end
+end
+
+M.duplicate_and_comment_lines = function()
+	local start_line, end_line = vim.api.nvim_buf_get_mark(0, "[")[1], vim.api.nvim_buf_get_mark(0, "]")[1]
+
+	-- NOTE: `nvim_buf_get_mark()` is 1-indexed, but `nvim_buf_get_lines()` is 0-indexed. Adjust accordingly.
+	local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+
+	-- Store cursor position because it might move when commenting out the lines.
+	local cursor = vim.api.nvim_win_get_cursor(0)
+
+	-- Comment out the selection using the builtin gc operator.
+	vim.cmd.normal({ "gcc", range = { start_line, end_line } })
+	-- to make it dot repeatable if vim-repeat does not work
+	-- require("mini.comment").toggle_lines(start_line, end_line)
+
+	-- Append a duplicate of the selected lines to the end of selection.
+	vim.api.nvim_buf_set_lines(0, end_line, end_line, false, lines)
+
+	-- Move cursor to the start of the duplicate lines.
+	vim.api.nvim_win_set_cursor(0, { end_line + 1, cursor[2] })
+end
+
 return M
