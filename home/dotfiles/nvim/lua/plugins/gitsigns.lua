@@ -43,8 +43,8 @@ return {
 		-- vim.keymap.set("n", "<leader>hR", gitsigns.reset_buffer) -- TODO: this is dangerous
 
 		vim.keymap.set("n", "<leader>hu", gitsigns.undo_stage_hunk)
-		vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk)
-		vim.keymap.set("n", "<leader>hd", gitsigns.diffthis)
+		vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk_inline)
+		vim.keymap.set("n", "<leader>hd", gitsigns.diffthis) -- TODO: how to quit?
 		-- vim.keymap.set("n", "<leader>td", gitsigns.toggle_deleted) -- TODO
 
 		vim.keymap.set("n", "<leader>tg", gitsigns.toggle_current_line_blame)
