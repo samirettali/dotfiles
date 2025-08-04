@@ -76,10 +76,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	desc = "Setup zellij keymaps",
 	pattern = "*",
 	callback = function()
-		if os.getenv("ZELLIJ") ~= "0" then
-			return
-		end
-
 		local zellij = require("core.zellij")
 
 		vim.keymap.set("n", "<C-h>", zellij.left, { silent = true, desc = "Navigate left in Zellij" })
@@ -98,10 +94,11 @@ vim.api.nvim_create_autocmd("CompleteChanged", {
 		local winid = rv.preview_winid
 		if winid then
 			vim.wo[winid].winhighlight = "Normal:NormalFloatPreview"
-			vim.api.nvim_win_set_config(winid, {
-				winwidth = 30,
-				-- border = "rounded",
-			})
+			-- TODO
+			-- vim.api.nvim_win_set_config(winid, {
+			-- 	winwidth = 30,
+			-- 	-- border = "rounded",
+			-- })
 		end
 
 		local bufnr = rv.preview_bufnr
