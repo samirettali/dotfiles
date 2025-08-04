@@ -6,9 +6,9 @@ end, { desc = "Toggle inlay hints" })
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "vim.lsp.buf.definition()" })
 -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "vim.lsp.buf.declaration()" })
--- vim.keymap.set("n", "gS", function()
--- 	vim.lsp.buf.workspace_symbol()
--- end, { desc = "vim.lsp.buf.workspace_symbol()" })
+vim.keymap.set("n", "gS", function()
+	vim.lsp.buf.workspace_symbol("")
+end, { desc = "vim.lsp.buf.workspace_symbol()" })
 -- vim.keymap.set("n", "gI", vim.lsp.buf.incoming_calls, { desc = "vim.lsp.buf.incoming_calls()" })
 -- vim.keymap.set("n", "gO", vim.lsp.buf.outgoing_calls, { desc = "vim.lsp.buf.outgoing_calls()" })
 
