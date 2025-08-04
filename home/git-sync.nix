@@ -53,6 +53,7 @@ in {
       "https://github.com/folke/dot.git"
       "https://github.com/neovim/neovim.git"
       "https://github.com/trimstray/the-book-of-secret-knowledge.git"
+      "https://codeberg.org/gpanders/dotfiles.git"
     ];
   };
 }
