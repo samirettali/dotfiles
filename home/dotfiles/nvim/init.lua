@@ -22,6 +22,7 @@ local function load_modules()
 		"core.statuscolumn",
 		"core.select",
 		"core.statusline",
+		"core.commands",
 		-- "core.winbar",
 		-- "core.largefile",
 	}
