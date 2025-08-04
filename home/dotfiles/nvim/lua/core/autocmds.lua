@@ -1,7 +1,8 @@
 vim.api.nvim_create_autocmd("VimResized", {
 	desc = "Automatically resize windows when terminal is resized",
 	pattern = "*",
-	command = "tabdo wincmd =",
+	-- command = "tabdo wincmd =", -- TODO: this leaves you in the last tab
+	command = "wincmd =",
 })
 
 vim.api.nvim_create_autocmd({ "BufReadPost" }, {
