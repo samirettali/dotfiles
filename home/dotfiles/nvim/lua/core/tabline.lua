@@ -38,11 +38,6 @@ function Tabline()
 
 	s = s .. "%#TabLineFill#%T"
 
-	-- -- right-align the label to close the current tab page
-	-- if tabcount > 1 then
-	-- 	s = s .. "%=%#TabLine#%999Xclose"
-	-- end
-
 	return s
 end
 
