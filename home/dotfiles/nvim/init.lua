@@ -13,7 +13,6 @@ end
 local function load_modules()
 	local modules = {
 		"core.options",
-		"core.abbreviations",
 		"core.autocmds",
 		"core.tabline",
 		"core.keymaps",

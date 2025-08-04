@@ -1,5 +1,0 @@
-vim.keymap.set("ia", "dont", "don't")
-vim.keymap.set("ia", "doesnt", "doesn't")
-vim.keymap.set("ia", "btw", "by the way")
-vim.keymap.set("ia", "im", "I'm")
-vim.keymap.set("ia", "youre", "you're")
