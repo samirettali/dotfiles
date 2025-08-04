@@ -38,8 +38,8 @@
         extensions = {
           force = true;
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
-            adaptive-tab-bar-colour
-            copy-selection-as-markdown
+            # adaptive-tab-bar-colour
+            # copy-selection-as-markdown
             darkreader
             linkding-extension
             multi-account-containers
@@ -57,7 +57,7 @@
           settings = with pkgs.nur.repos.rycee.firefox-addons; {
             "${ublock-origin.addonId}" = {
               settings = {
-                force = true;
+                force = true; # TODO: is this needed?
                 selectedFilterLists = [
                   "user-filters"
                   "ublock-filters"
@@ -72,6 +72,42 @@
                   "adguard-cookies"
                   "ublock-cookies-adguard"
                   "KOR-1"
+                ];
+              };
+            };
+            "${vimium-c.addonId}" = {
+              settings = {
+                force = true;
+                exclusionRules = [
+                  {
+                    passKeys = "f ";
+                    pattern = ":https://mail.google.com/";
+                  }
+                  {
+                    passKeys = "";
+                    pattern = ":https://monkeytype.com/";
+                  }
+                  {
+                    passKeys = "/ ";
+                    pattern = ":https://github.com/";
+                  }
+                  {
+                    passKeys = "";
+                    pattern = ":https://vim-adventures.com/";
+                  }
+                  {
+                    passKeys = "";
+                    pattern = ":http://localhost:3333/";
+                  }
+                ];
+                keyMappings = [
+                  "#!no-check"
+                  "unmap J"
+                  "map J nextTab"
+                  ""
+                  "unmap K"
+                  "map K previousTab"
+                  ""
                 ];
               };
             };
