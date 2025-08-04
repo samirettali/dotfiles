@@ -4,7 +4,7 @@
   ...
 }: {
   programs = {
-    zsh.enable = false; # TODO: also for nixos
+    zsh.enable = false;
     gnupg.agent.enable = true; # TODO is this needed?
     fish.enable = true;
   };
