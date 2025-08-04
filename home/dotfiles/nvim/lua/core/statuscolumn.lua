@@ -1,3 +1,5 @@
+local utils = require("core.utils")
+
 --- Get diagnostic signs for a line
 --- @param buf number Buffer number
 --- @param lnum number Line number
@@ -22,51 +24,6 @@ local function get_diagnostic_sign(buf, lnum)
 	}
 
 	return signs[max_severity]
-end
-
---- Get git signs for a line
---- @param buf number Buffer number
---- @param lnum number Line number
-local function get_git_sign(buf, lnum)
-	local namespaces = vim.api.nvim_get_namespaces()
-
-	for name, ns_id in pairs(namespaces) do
-		if name:find("gitsigns") or name:find("GitSigns") or name:find("MiniDiff") then
-			local ok, extmarks = pcall(vim.api.nvim_buf_get_extmarks, buf, ns_id, lnum, lnum, { details = true })
-			if ok then
-				for _, extmark in pairs(extmarks) do
-					local details = extmark[4] or {}
-					if details.sign_text then
-						return {
-							text = details.sign_text,
-							hl = details.sign_hl_group,
-						}
-					end
-				end
-			end
-		end
-	end
-
-	return nil
-end
-
---- Get mark for a line
---- @param buf number Buffer number
---- @param lnum number Line number
-local function get_mark_sign(buf, lnum)
-	local marks = vim.fn.getmarklist(buf)
-	vim.list_extend(marks, vim.fn.getmarklist())
-
-	for _, mark in ipairs(marks) do
-		if mark.pos[1] == buf and mark.pos[2] == lnum and mark.mark:match("[a-zA-Z]") then
-			return {
-				text = mark.mark:sub(2),
-				hl = "DiagnosticHint",
-			}
-		end
-	end
-
-	return nil
 end
 
 local function get_dap_sign(buf, lnum)
@@ -146,16 +103,16 @@ function Statuscolumn()
 	table.insert(components, format_sign(dap, 2))
 
 	-- Marks
-	-- local mark = get_mark_sign(buf, lnum)
+	-- local mark = utils.get_mark_sign(buf, lnum)
 	-- table.insert(components, format_sign(mark, 2))
+
+	-- Git signs
+	local git = utils.get_git_sign(buf, lnum)
+	table.insert(components, format_sign(git, 2))
 
 	-- Line numbers
 	local ln = get_line_number(win)
 	table.insert(components, ln)
-
-	-- Git signs
-	local git = get_git_sign(buf, lnum)
-	table.insert(components, format_sign(git, 2))
 
 	return table.concat(components, "")
 end

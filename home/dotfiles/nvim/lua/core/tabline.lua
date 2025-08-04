@@ -1,4 +1,7 @@
+local utils = require("core.utils")
+
 local function label(n)
+	-- TODO: move to utils
 	local buflist = vim.fn.tabpagebuflist(n)
 	local winnr = vim.fn.tabpagewinnr(n)
 	local bufname = vim.fn.bufname(buflist[winnr])
@@ -15,7 +18,7 @@ local function label(n)
 		title = vim.fn.fnamemodify(bufname, ":t")
 	end
 
-	return ("%d:%s"):format(n, title)
+	return (" %d:%s "):format(n, title)
 end
 
 function Tabline()
@@ -23,22 +26,33 @@ function Tabline()
 	local tabcount = vim.fn.tabpagenr("$")
 	local current_tab = vim.fn.tabpagenr()
 
+	local parts = { " " }
+
 	for i = 1, tabcount do
+		local bufnr = vim.fn.tabpagebuflist(i)[vim.fn.tabpagewinnr(i)]
+
 		if i == current_tab then
-			s = s .. "%#TabLineSel#"
+			table.insert(parts, "%#TabLineSel#")
 		else
-			s = s .. "%#TabLine#"
+			table.insert(parts, "%#TabLine#")
 		end
 
-		-- set the tab page number (for mouse clicks)
-		s = s .. "%" .. i .. "T"
-
-		s = s .. " " .. label(i) .. " "
+		table.insert(parts, ("%%%dT"):format(i)) -- set the tab page number (for mouse clicks)
+		table.insert(parts, label(i))
 	end
 
-	s = s .. "%#TabLineFill#%T"
+	table.insert(parts, "%#TabLineFill#") -- "%T"
 
-	return s
+	table.insert(parts, "%=") -- align to the right
+
+	local right = utils.concat({
+		utils.bracketed_group(utils.get_gitsigns()),
+		utils.bracketed_group(utils.get_diagnostics()),
+	}, " ")
+
+	table.insert(parts, right)
+
+	return utils.concat(parts, "")
 end
 
 vim.opt.tabline = "%!v:lua.Tabline()"
