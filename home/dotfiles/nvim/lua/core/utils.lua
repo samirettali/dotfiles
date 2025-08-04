@@ -95,4 +95,24 @@ M.jumplist_qf = function()
 	vim.cmd("copen")
 end
 
+M.with_hl = function(highlight, ...)
+	local args = { ... }
+	if #args == 0 then
+		return ""
+	end
+
+	local result = {
+		"%#",
+		highlight,
+		"#",
+	}
+	for _, arg in ipairs(args) do
+		table.insert(result, arg)
+	end
+
+	table.insert(result, "%*")
+
+	return table.concat(result, "")
+end
+
 return M

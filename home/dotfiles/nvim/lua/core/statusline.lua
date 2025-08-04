@@ -1,43 +1,28 @@
 local utils = require("core.utils")
 
-local function lsp()
-	local count = {}
-	local levels = {
-		errors = "Error",
-		warnings = "Warn",
-		info = "Info",
-		hints = "Hint",
-	}
+local diagnostic_highlights = {
+	[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+	[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+	[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+	[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+}
 
-	for k, level in pairs(levels) do
-		count[k] = vim.tbl_count(vim.diagnostic.get(nil, { severity = level }))
+function diagnostics()
+	local counts = vim.diagnostic.count()
+	local user_signs = vim.tbl_get(vim.diagnostic.config() --[[@as vim.diagnostic.Opts]], "signs", "text") or {}
+	local signs = vim.tbl_extend("keep", user_signs, { "E", "W", "I", "H" })
+	local result_str = vim.iter(pairs(counts))
+		:map(function(severity, count)
+			local highlight = diagnostic_highlights[severity]
+			return utils.with_hl(highlight, signs[severity], ":", count)
+		end)
+		:join(" ")
+
+	if result_str == "" then
+		return ""
 	end
 
-	local errors = ""
-	local warnings = ""
-	local hints = ""
-	local info = ""
-
-	if count["errors"] ~= 0 then
-		errors = "%#DiagnosticSignError#E " .. count["errors"] .. " "
-	end
-	if count["warnings"] ~= 0 then
-		warnings = "%#DiagnosticSignWarn#W " .. count["warnings"] .. " "
-	end
-	if count["hints"] ~= 0 then
-		hints = "%#DiagnosticSignHint#H " .. count["hints"] .. " "
-	end
-	if count["info"] ~= 0 then
-		info = "%#DiagnosticSignInfoI #" .. count["info"] .. " "
-	end
-
-	local result = errors .. warnings .. hints .. info
-
-	if result ~= "" then
-		return " " .. result .. "%#Statusline#"
-	end
-
-	return ""
+	return "[" .. result_str .. "]"
 end
 
 local function name()
@@ -47,29 +32,66 @@ local function name()
 	return " %f "
 end
 
-local function get_branch_name()
-	local branch = vim.fn.system("git branch --show-current 2> /dev/null | tr -d '\n'")
-	if branch ~= "" then
-		return branch
-	else
+local function lsp_server()
+	local clients = vim.lsp.get_clients({
+		bufnr = vim.api.nvim_get_current_buf(),
+	})
+
+	if rawequal(next(clients), nil) then
 		return ""
 	end
+
+	local result_str = vim.iter(ipairs(clients))
+		:map(function(_, client)
+			return client.name
+		end)
+		:join(" ")
+
+	return ("[%s]"):format(result_str)
+
+	-- local format = "LSP:"
+	-- local format = ""
+	--
+	-- for _, client in ipairs(clients) do
+	-- 	format = string.format("%s [%s]", format, client.name)
+	-- end
+	--
+	-- return format
+end
+
+local function gitsigns()
+	local status = vim.b[0].gitsigns_status_dict
+
+	if not status then
+		return ""
+	end
+
+	local parts = {}
+
+	if status.added and status.added > 0 then
+		local part = utils.with_hl("GitSignsAdd", "+", status.added)
+		table.insert(parts, part)
+	end
+
+	if status.changed and status.changed > 0 then
+		local part = utils.with_hl("GitSignsChange", "~", status.changed)
+		table.insert(parts, part)
+	end
+
+	if status.removed and status.removed > 0 then
+		local part = utils.with_hl("GitSignsDelete", "-", status.removed)
+		table.insert(parts, part)
+	end
+
+	if #parts == 0 then
+		return ""
+	end
+
+	return "[" .. table.concat(parts, " ") .. "]"
 end
 
 function Statusline()
-	local branch = get_branch_name()
-
-	if branch and #branch > 0 then
-		branch = "%#Statusline#  " .. branch .. " %#Statusline#"
-	end
-
-	return "%#Statusline#" .. branch .. " " .. "%{get(b:,'gitsigns_status','')}" .. "%=" .. lsp()
+	return ("%%#Statusline# %s %s %s"):format(lsp_server(), diagnostics(), gitsigns())
 end
 
--- vim.opt.statusline = [[%!luaeval("Statusline()")]]
-
-vim.cmd([[
-    " hi! link StatusLine Normal
-    " hi! link StatusLineNC Normal
-    set statusline=%{repeat('─',winwidth('.'))}
-]])
+vim.opt.statusline = [[%!luaeval("Statusline()")]]
