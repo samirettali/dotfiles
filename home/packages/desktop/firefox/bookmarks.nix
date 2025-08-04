@@ -623,6 +623,10 @@
             name = "JSON to nix";
             url = "https://json-to-nix.pages.dev";
           }
+          {
+            name = "Flakehub";
+            url = "https://flakehub.com/flakes";
+          }
         ];
       }
       {
@@ -872,6 +876,10 @@
           {
             name = "EigenPhi";
             url = "https://eigenphi.io/";
+          }
+          {
+            name = "ChainID";
+            url = "https://chainid.network/chains.json";
           }
         ];
       }
