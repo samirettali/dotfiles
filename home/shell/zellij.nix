@@ -221,7 +221,7 @@ in {
                 bind "0" { GoToTab 10; SwitchToMode "normal"; }
 
                 bind "g" {
-                    LaunchOrFocusPlugin "file:${builtins.unsafeDiscardStringContext zellij-sessionizer}" {
+                    LaunchOrFocusPlugin "file:${zellij-sessionizer}" {
                         floating true
                         move_to_focused_tab true
                         cwd "/"
@@ -301,14 +301,14 @@ in {
                 welcome_screen true
             }
 
-            autolock location="file:${builtins.unsafeDiscardStringContext zellij-autolock}" {
+            autolock location="file://${zellij-autolock}" {
                 is_enabled true
                 triggers "nvim|vim|git|fzf|zoxide|atuin|lazygit"
                 reaction_seconds "0.1"
                 print_to_log true
             }
 
-            zellij-session location="file:${builtins.unsafeDiscardStringContext zellij-sessionizer}" { }
+            zellij-session location="file:${zellij-sessionizer}" { }
         }
 
         load_plugins {
