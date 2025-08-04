@@ -9,7 +9,7 @@ local function nav(short_direction, direction, action)
 	-- if the window ID didn't change, then we didn't switch
 	if cur_winnr == new_winnr then
 		-- os.execute has much less latency than vim.fn.system
-		os.execute("zellij action " .. action .. " " .. direction)
+		os.execute("zellij action move-focus " .. direction)
 	end
 end
 
@@ -27,22 +27,6 @@ end
 
 function M.left()
 	nav("h", "left", "move-focus")
-end
-
-function M.up_tab()
-	nav("k", "up", "move-focus-or-tab")
-end
-
-function M.down_tab()
-	nav("j", "down", "move-focus-or-tab")
-end
-
-function M.right_tab()
-	nav("l", "right", "move-focus-or-tab")
-end
-
-function M.left_tab()
-	nav("h", "left", "move-focus-or-tab")
 end
 
 return M
