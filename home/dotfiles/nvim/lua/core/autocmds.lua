@@ -87,3 +87,25 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		vim.keymap.set("n", "<C-l>", zellij.right, { silent = true, desc = "Navigate right in Zellij" })
 	end,
 })
+
+vim.api.nvim_create_autocmd("CompleteChanged", {
+	group = vim.api.nvim_create_augroup("hax", {}),
+	desc = "Set NormalFloatPreview highlight and preview window width",
+	callback = function()
+		local rv = vim.fn.complete_info()
+
+		local winid = rv.preview_winid
+		if winid then
+			vim.wo[winid].winhighlight = "Normal:NormalFloatPreview"
+			vim.api.nvim_win_set_config(winid, {
+				winwidth = 30,
+				-- border = "rounded",
+			})
+		end
+
+		local bufnr = rv.preview_bufnr
+		if bufnr then
+			vim.bo[bufnr].filetype = "markdown"
+		end
+	end,
+})

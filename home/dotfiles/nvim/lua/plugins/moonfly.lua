@@ -9,10 +9,9 @@ return {
 
 		local palette = moonfly.palette
 
-		vim.opt.termguicolors = true
 		vim.g.moonflyWinSeparator = 2
 		vim.g.moonflyVirtualTextColor = true
-		vim.g.moonflyNormalFloat = false
+		vim.g.moonflyNormalFloat = true
 		vim.g.moonflyUnderlineMatchParen = true
 		vim.g.moonflyItalics = false
 
@@ -42,16 +41,18 @@ return {
 
 				vim.api.nvim_set_hl(0, "TablineFill", {
 					bg = palette.bg,
-					-- fg = palette.blue,
 				})
 
 				vim.api.nvim_set_hl(0, "TreesitterContext", {
 					bg = palette.bg,
-					-- fg = palette.blue,
 				})
 
 				vim.api.nvim_set_hl(0, "StatusLine", {
 					bg = palette.bg,
+				})
+
+				vim.api.nvim_set_hl(0, "NormalFloatPreview", {
+					bg = palette.grey11,
 				})
 
 				-- TODO

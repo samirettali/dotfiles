@@ -64,6 +64,8 @@ vim.opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize
 
 vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
 
+vim.opt.winborder = "rounded"
+
 vim.opt.undodir = home .. "/.local/share/nvim/undo"
 vim.opt.backup = false
 vim.opt.writebackup = false
