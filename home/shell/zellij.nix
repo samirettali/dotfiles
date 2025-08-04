@@ -73,7 +73,7 @@ in {
                 children
                 pane size=1 borderless=true {
                     plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
-                        format_left  "#[fg=bright_green,bg=black,bold] {session}#[bg=black] {tabs}"
+                        format_left  "#[fg=bright_green,bg=black,bold] {session}#[bg=black]  {tabs}"
 
                         tab_normal               "#[fg=gray]{index}:{name} {fullscreen_indicator}{sync_indicator}{floating_indicator} "
                         tab_active               "#[fg=white,bold]{index}:{name} {fullscreen_indicator}{sync_indicator}{floating_indicator} "
