@@ -18,9 +18,9 @@
     };
   };
 
-  programs.vscode.profiles.default = lib.optionals config.programs.direnv.enable {
-    extensions = with pkgs.vscode-marketplace; [
-      mkhl.direnv
+  programs.vscode.profiles.default.extensions =
+    lib.mkIf config.programs.direnv.enable
+    [
+      pkgs.vscode-marketplace.mkhl.direnv
     ];
-  };
 }
