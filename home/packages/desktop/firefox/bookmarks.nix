@@ -487,7 +487,12 @@
                 url = "https://whichllm.together.ai/use-case";
               }
               {
+                name = "LLM pricing calculator";
                 url = "https://www.llm-prices.com/";
+              }
+              {
+                name = "Prompts.chat";
+                url = "https://prompts.chat/";
               }
             ];
           }
