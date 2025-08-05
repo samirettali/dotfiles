@@ -106,13 +106,13 @@ function Statuscolumn()
 	-- local mark = utils.get_mark_sign(buf, lnum)
 	-- table.insert(components, format_sign(mark, 2))
 
-	-- Git signs
-	local git = utils.get_git_sign(buf, lnum)
-	table.insert(components, format_sign(git, 2))
-
 	-- Line numbers
 	local ln = get_line_number(win)
 	table.insert(components, ln)
+
+	-- Git signs
+	local git = utils.get_git_sign(buf, lnum)
+	table.insert(components, format_sign(git, 2))
 
 	return table.concat(components, "")
 end
