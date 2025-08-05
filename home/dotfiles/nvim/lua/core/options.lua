@@ -47,7 +47,7 @@ vim.opt.sidescrolloff = 5 -- Columns of context
 vim.opt.splitbelow = true -- Put new windows below current
 vim.opt.splitright = true -- Put new windows right of current
 
-vim.opt.hlsearch = false -- TODO: set?
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 vim.opt.pumheight = 15 -- Maximum of 15 elements shown in command auto completion
