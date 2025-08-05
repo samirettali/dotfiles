@@ -11,10 +11,10 @@ vim.api.nvim_create_user_command("Bufferize", function(opts)
 
 	local buf = vim.api.nvim_create_buf(false, true)
 
-	vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
-	vim.api.nvim_buf_set_option(buf, "bufhidden", "wipe")
-	vim.api.nvim_buf_set_option(buf, "swapfile", false)
-	vim.api.nvim_buf_set_option(buf, "modifiable", true)
+	vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
+	vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
+	vim.api.nvim_set_option_value("swapfile", false, { buf = buf })
+	vim.api.nvim_set_option_value("modifiable", true, { buf = buf })
 
 	local bufname = ("[Vim Command Output]: %s"):format(cmd)
 	vim.api.nvim_buf_set_name(buf, "[Vim Command Output]: " .. cmd)
@@ -22,7 +22,7 @@ vim.api.nvim_create_user_command("Bufferize", function(opts)
 	local lines = vim.split(output, "\n", { plain = true })
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
-	vim.api.nvim_buf_set_option(buf, "modifiable", false)
+	vim.api.nvim_set_option_value(buf, "modifiable", false)
 
 	vim.cmd("vsplit")
 	vim.api.nvim_win_set_buf(0, buf)

@@ -211,7 +211,7 @@ M.lsp_servers = function(bufnr)
 		:join(" ")
 end
 
-function group(separator, open, close, ...)
+local function group(separator, open, close, ...)
 	local args = { ... }
 
 	local ok

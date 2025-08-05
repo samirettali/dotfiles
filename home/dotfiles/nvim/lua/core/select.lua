@@ -42,7 +42,7 @@ local function custom_select(items, opts, on_choice)
 		width = math.max(20, math.min(60, vim.fn.max(vim.tbl_map(vim.fn.strdisplaywidth, lines)) + 2)),
 		height = math.min(#lines, 10),
 		style = "minimal",
-		border = vim.api.nvim_get_option("winborder"),
+		border = vim.api.nvim_get_option_value("winborder"),
 		title = opts.prompt or "Select item",
 		title_pos = "center",
 	}
