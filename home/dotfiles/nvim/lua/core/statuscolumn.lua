@@ -99,8 +99,8 @@ function Statuscolumn()
 	table.insert(components, format_sign(diagnostic, 2))
 
 	-- Dap breakpoints
-	local dap = get_dap_sign(buf, lnum)
-	table.insert(components, format_sign(dap, 2))
+	-- local dap = get_dap_sign(buf, lnum)
+	-- table.insert(components, format_sign(dap, 2))
 
 	-- Marks
 	-- local mark = utils.get_mark_sign(buf, lnum)
