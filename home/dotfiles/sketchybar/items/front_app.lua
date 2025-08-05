@@ -1,5 +1,5 @@
 local front_app = sbar.add("item", "front_app", {
-	position = "center",
+	position = "left",
 	display = "active",
 	icon = { drawing = false },
 	updates = true,
