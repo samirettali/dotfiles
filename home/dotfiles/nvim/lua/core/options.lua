@@ -60,7 +60,12 @@ vim.opt.inccommand = "nosplit" -- Show result of substitution as you type
 
 vim.opt.mouse = "a"
 
-vim.opt.listchars = "tab:»·,trail:·,nbsp:~,eol:¬" -- Characters to visualize instead of whitespaces
+vim.opt.listchars = {
+	tab = "»·",
+	trail = "·",
+	nbsp = "~",
+	eol = "¬",
+}
 
 vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
 
