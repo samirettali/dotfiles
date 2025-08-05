@@ -57,6 +57,9 @@ load_modules()
 local opts = {
 	defaults = { lazy = true },
 	dev = { path = "~/dev/nvim" },
+	rocks = {
+		enabled = false,
+	},
 	performance = {
 		rtp = {
 			disabled_plugins = {
