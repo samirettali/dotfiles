@@ -3,7 +3,7 @@ return {
 	event = "VeryLazy",
 	opts = {
 		hlgroup = "HighlightUndo",
-		duration = 50,
+		duration = 100,
 		ignored_filetypes = { "neo-tree", "fugitive", "TelescopePrompt", "mason", "lazy" },
 	},
 }
