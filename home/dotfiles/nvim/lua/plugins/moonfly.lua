@@ -68,7 +68,6 @@ return {
 					fg = palette.blue,
 				})
 			end,
-			group = vim.api.nvim_create_augroup("MoonflyHighlight", {}),
 		})
 
 		vim.cmd.colorscheme("moonfly")
