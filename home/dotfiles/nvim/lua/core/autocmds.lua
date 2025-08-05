@@ -110,3 +110,9 @@ vim.api.nvim_create_autocmd("CompleteChanged", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("BufEnter", {
+	desc = "Disable new line comments",
+	callback = function()
+		vim.opt.formatoptions:remove({ "c", "r", "o" })
+	end,
+})
