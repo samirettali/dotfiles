@@ -5,6 +5,7 @@ require("bindings")
 require("hammerspoon_config")
 require("disable_keyboard")
 require("disable_shortcuts")
+require("recursive_binder")
 
 -- hs.loadSpoon("EmmyLua"):init() -- TODO: clone
 hs.loadSpoon("ControlEscape"):start()
