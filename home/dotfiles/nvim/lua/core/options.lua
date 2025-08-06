@@ -59,6 +59,7 @@ vim.opt.lazyredraw = true -- Disable redrawing while running macros
 vim.opt.inccommand = "nosplit" -- Show result of substitution as you type
 
 vim.opt.mouse = "a"
+vim.opt.mousemoveevent = true
 
 vim.opt.listchars = {
 	tab = "»·",
