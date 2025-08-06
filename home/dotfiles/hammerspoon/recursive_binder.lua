@@ -136,7 +136,7 @@ local config = {
 		"o",
 		"[open]",
 		{
-			{ "c", "code", launch("Code") },
+			{ "c", "code", launch("Visual Studio Code - Insiders") },
 			{ "d", "discord", launch("Discord") },
 			{ "e", "eqMac", launch("eqMac") },
 			{ "f", "finder", launch("Finder") },
