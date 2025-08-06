@@ -75,7 +75,7 @@ in {
                     plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
                         format_left  "#[fg=bright_green,bg=black,bold] {session}#[bg=black]  {tabs}"
 
-                        tab_normal               "#[fg=gray]{index}:{name} {fullscreen_indicator}{sync_indicator}{floating_indicator} "
+                        tab_normal               "#[fg=#777777]{index}:{name} {fullscreen_indicator}{sync_indicator}{floating_indicator} "
                         tab_active               "#[fg=white,bold]{index}:{name} {fullscreen_indicator}{sync_indicator}{floating_indicator} "
                         tab_rename               "#[fg=bright_magenta,bold]{index}:{name} {fullscreen_indicator}{sync_indicator}{floating_indicator} "
 
