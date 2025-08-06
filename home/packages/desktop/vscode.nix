@@ -55,10 +55,12 @@ in {
           github.copilot
           github.copilot-chat
           augment.vscode-augment
+          kilocode.kilo-code
+          rooveterinaryinc.roo-cline
           # continue.continue
           # supermaven.supermaven
           # vadimcn.vscode-lldb # TODO: build is broken
-          postman.postman-for-vscode
+          # postman.postman-for-vscode
         ];
         keybindings = [
           {
@@ -175,7 +177,8 @@ in {
           (withExtension pkgs.vscode-marketplace.augment.vscode-augment {
             "augment.disableFocusOnAugmentPanel" = true;
           })
-          # (withExtension pkgs.vscode-marketplace.postman.postman-for-vscode { # TODO
+          # (withExtension pkgs.vscode-marketplace.postman.postman-for-vscode {
+          #   # TODO
           #   "chat.instructionsFilesLocations" = {
           #     "${pkgs.vscode-marketplace.postman.postman-for-vscode}/agent-instruction-files/vscode" = true;
           #   };
