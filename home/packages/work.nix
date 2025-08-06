@@ -88,9 +88,9 @@ in {
           # "dotnet.formatting.organizeImportsOnFormat" = true; # TODO: csharpier?
           # "csharp.debug.expressionEvaluationOptions.showRawValues" = false;
           "omnisharp.enableDecompilationSupport" = true;
-          "[csharp]" = {
-            "editor.defaultFormatter" = "csharpier.csharpier-vscode";
-          };
+          # "[csharp]" = {
+          #   "editor.defaultFormatter" = "csharpier.csharpier-vscode";
+          # };
           "csharpier.dev.useCustomPath" = true;
           "csharpier.dev.customPath" = "${pkgs.csharpier}/bin/";
         };
