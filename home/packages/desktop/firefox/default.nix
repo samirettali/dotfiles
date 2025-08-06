@@ -38,17 +38,17 @@
         extensions = {
           force = true;
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
-            # adaptive-tab-bar-colour
-            # copy-selection-as-markdown
             darkreader
+            keepassxc-browser
             linkding-extension
             multi-account-containers
             sponsorblock
             ublock-origin
             vimium-c
+            # adaptive-tab-bar-colour
             # clearurls
+            # copy-selection-as-markdown
             # granted
-            # keepassxc-browser
             # lastpass-password-manager
             # metamask
             # switchyomega
