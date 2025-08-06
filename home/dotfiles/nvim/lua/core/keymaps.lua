@@ -60,3 +60,5 @@ vim.keymap.set("n", "<C-h>", zellij.left, { silent = true, desc = "Navigate left
 vim.keymap.set("n", "<C-j>", zellij.down, { silent = true, desc = "Navigate down in Zellij" })
 vim.keymap.set("n", "<C-k>", zellij.up, { silent = true, desc = "Navigate up in Zellij" })
 vim.keymap.set("n", "<C-l>", zellij.right, { silent = true, desc = "Navigate right in Zellij" })
+
+vim.keymap.set("n", "<localleader>s", ":source %<CR>", { noremap = true, silent = true, desc = "Source current file" })
