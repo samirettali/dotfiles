@@ -1,6 +1,6 @@
 return {
 	"mfussenegger/nvim-lint",
-	event = { "BufReadPre", "BufNewFile" },
+	event = { "BufWritePost", "BufReadPost", "InsertLeave" },
 	config = function()
 		local lint = require("lint")
 		lint.linters_by_ft = {
@@ -10,10 +10,9 @@ return {
 			bash = { "shellcheck" },
 		}
 
-		-- TODO: does this need an autogroup?
-		-- TODO: should lint be required for each usage?
-		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-			pattern = { "*.go", "*.js", "*.cpp", ".sh" },
+		local lint_augroup = vim.api.nvim_create_augroup("linting", { clear = true })
+		vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+			group = lint_augroup,
 			callback = function()
 				lint.try_lint()
 			end,
