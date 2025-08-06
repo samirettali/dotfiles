@@ -5,7 +5,7 @@
   ...
 }: {
   programs.direnv = {
-    enable = false;
+    enable = true;
     config = {
       # https://www.mankier.com/1/direnv.toml
       load_dotenv = false;
