@@ -1,4 +1,5 @@
 local utils = require("core.utils")
+local zellij = require("core.zellij")
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
@@ -54,3 +55,8 @@ vim.keymap.set(
 vim.keymap.set("x", "R", ":s###g<left><left><left>", { desc = "Start replacement in the visual selected region" })
 
 vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear hlsearch and ESC" })
+
+vim.keymap.set("n", "<C-h>", zellij.left, { silent = true, desc = "Navigate left in Zellij" })
+vim.keymap.set("n", "<C-j>", zellij.down, { silent = true, desc = "Navigate down in Zellij" })
+vim.keymap.set("n", "<C-k>", zellij.up, { silent = true, desc = "Navigate up in Zellij" })
+vim.keymap.set("n", "<C-l>", zellij.right, { silent = true, desc = "Navigate right in Zellij" })
