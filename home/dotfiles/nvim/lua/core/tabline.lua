@@ -18,39 +18,36 @@ local function label(n)
 		title = vim.fn.fnamemodify(bufname, ":t")
 	end
 
-	return (" %d:%s "):format(n, title)
+	return ("%d:%s"):format(n, title)
 end
 
 function Tabline()
-	local s = ""
 	local tabcount = vim.fn.tabpagenr("$")
 	local current_tab = vim.fn.tabpagenr()
 
-	local parts = { " " }
+	local left_parts = {}
 
 	for i = 1, tabcount do
-		local bufnr = vim.fn.tabpagebuflist(i)[vim.fn.tabpagewinnr(i)]
+		local hl
 
 		if i == current_tab then
-			table.insert(parts, "%#TabLineSel#")
+			hl = "TabLineSel"
 		else
-			table.insert(parts, "%#TabLine#")
+			hl = "TabLine"
 		end
 
-		table.insert(parts, ("%%%dT"):format(i)) -- set the tab page number (for mouse clicks)
-		table.insert(parts, label(i))
+		local tab_label = ("%%%dT%s"):format(i, utils.with_hl(hl, label(i)))
+
+		table.insert(left_parts, tab_label)
 	end
 
-	table.insert(parts, "%#TabLineFill#") -- "%T"
+	local parts = {
+		utils.with_hl("MoonflyEmerald", "   "),
+		table.concat(left_parts, "  "),
+		"%#TabLineFill#", -- "%T"
+	}
 
 	table.insert(parts, "%=") -- align to the right
-
-	local right = utils.concat({
-		utils.bracketed_group(utils.get_gitsigns()),
-		utils.bracketed_group(utils.get_diagnostics()),
-	}, " ")
-
-	table.insert(parts, right)
 
 	return utils.concat(parts, "")
 end
