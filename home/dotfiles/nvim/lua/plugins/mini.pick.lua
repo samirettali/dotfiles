@@ -24,14 +24,27 @@ return {
 		{
 			"<C-f>",
 			"<Cmd>Pick files<CR>",
+			{ desc = "Pick files" },
 		},
 		{
 			"<C-g>",
 			"<Cmd>Pick grep_live<CR>",
+			{ desc = "Pick grep live" },
 		},
 		{
-			"<C-b>",
+			"<leader>fb",
 			"<Cmd>Pick buffers<CR>",
+			{ desc = "Pick buffers" },
+		},
+		{
+			"<leader>fr",
+			"<Cmd>Pick resume<CR>",
+			{ desc = "Resume picker" },
+		},
+		{
+			"<leader>fh",
+			"<Cmd>Pick help<CR>",
+			{ desc = "Pick help" },
 		},
 	},
 }
