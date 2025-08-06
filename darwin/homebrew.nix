@@ -11,10 +11,10 @@
     brews = [
       "choose-gui"
       "displayplacer"
-      {
-        name = "FelixKratz/formulae/svim";
-        restart_service = "changed";
-      }
+      # {
+      #   name = "FelixKratz/formulae/svim";
+      #   restart_service = "changed";
+      # }
     ];
     casks = [
       "docker-desktop"
