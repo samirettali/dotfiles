@@ -55,6 +55,16 @@
       url = "github:dj95/zjstatus";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    dbee-src = {
+      url = "github:kndndrj/nvim-dbee";
+      flake = false;
+    };
+
+    opencode-src = {
+      url = "github:sst/opencode";
+      flake = false;
+    };
   };
 
   outputs = {
