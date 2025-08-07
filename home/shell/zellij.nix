@@ -141,7 +141,7 @@ in {
                 bind "c" { NewTab { }; SwitchToMode "normal"; }
 
                 bind "n" { GoToNextTab; SwitchToMode "normal"; }
-                bind "Ctrl n" { GoToNextTab; }
+                bind "Ctrl n" { GoToNextTab; SwitchToMode "normal"; }
 
                 bind "p" { GoToPreviousTab; SwitchToMode "normal"; }
                 bind "Ctrl p" { GoToPreviousTab; SwitchToMode "normal"; }
