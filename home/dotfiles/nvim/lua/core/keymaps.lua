@@ -56,9 +56,11 @@ vim.keymap.set("x", "R", ":s###g<left><left><left>", { desc = "Start replacement
 
 vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear hlsearch and ESC" })
 
+-- TODO: map only inside zellij
 vim.keymap.set("n", "<C-h>", zellij.left, { silent = true, desc = "Navigate left in Zellij" })
 vim.keymap.set("n", "<C-j>", zellij.down, { silent = true, desc = "Navigate down in Zellij" })
 vim.keymap.set("n", "<C-k>", zellij.up, { silent = true, desc = "Navigate up in Zellij" })
 vim.keymap.set("n", "<C-l>", zellij.right, { silent = true, desc = "Navigate right in Zellij" })
 
 vim.keymap.set("n", "<localleader>s", ":source %<CR>", { noremap = true, silent = true, desc = "Source current file" })
+vim.keymap.set("n", "tn", ":tabnew<CR>", { noremap = true, silent = true, desc = "Open new tab" })
