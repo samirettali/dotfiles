@@ -1,5 +1,6 @@
 local icons = {
 	clock = "󰥔",
+	error = " ",
 
 	volume = {
 		_100 = "",

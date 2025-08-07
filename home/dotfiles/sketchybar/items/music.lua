@@ -9,7 +9,22 @@ local item = sbar.add("item", "music", {
 })
 
 local function set()
-	local playback = spotify:get_playback()
+	local playback
+	local ok, err = pcall(function()
+		playback = spotify:get_playback()
+	end)
+
+	if not ok then
+		sbar.set("music", {
+			icon = {
+				string = icons.error,
+			},
+			label = {
+				string = "Error",
+			},
+		})
+		return
+	end
 
 	local parts = {
 		playback and playback.item and playback.item.name or "No track playing",
