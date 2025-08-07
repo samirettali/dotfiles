@@ -2,8 +2,13 @@
   lib,
   pkgs,
   customArgs,
+  inputs,
   ...
-}: {
+}: let
+  dbee = pkgs.callPackage ../derivations/dbee.nix {
+    source = "${inputs.dbee-src}/dbee";
+  };
+in {
   imports = [
     ./dotfiles.nix
     ./git-sync.nix
@@ -48,6 +53,7 @@
     # code-cursor
     nix-init
     nix-prefetch-github
+    dbee
   ];
 
   home.file.".hushlogin".text = "";
