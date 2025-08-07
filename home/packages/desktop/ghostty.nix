@@ -16,14 +16,10 @@
       cursor-style = "block";
       cursor-style-blink = false;
       font-family = customArgs.font.name;
-      font-feature = [
-        "-calt"
-        "-dlig"
-        "-liga"
-      ];
+      font-feature = ["-calt" "-dlig" "-liga"];
       font-size = 16;
       font-thicken = true;
-      adjust-cell-height = "15%";
+      adjust-cell-height = "25%";
       font-thicken-strength = 16;
       gtk-titlebar = false;
       macos-titlebar-proxy-icon = "hidden";
