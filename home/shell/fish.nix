@@ -83,7 +83,9 @@
         set fish_color_command green
         set fish_color_valid_path normal
 
-        set -g fish_key_bindings fish_hybrid_key_bindings
+        if not set -q NVIM
+            set -g fish_key_bindings fish_hybrid_key_bindings
+        end
 
         # TODO: this is not working
         # bind \cz fg
