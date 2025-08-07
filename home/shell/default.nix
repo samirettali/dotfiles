@@ -1,5 +1,4 @@
-{pkgs, ...}: let
-in {
+{pkgs, ...}: {
   imports = [
     ./fish.nix
     ./bat.nix
