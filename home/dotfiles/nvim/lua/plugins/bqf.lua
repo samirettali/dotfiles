@@ -8,4 +8,7 @@ return {
 			show_scroll_bar = false,
 		},
 	},
+	init = function()
+		vim.fn.sign_define("BqfSign", { text = " ", texthl = "BqfSign" })
+	end,
 }
