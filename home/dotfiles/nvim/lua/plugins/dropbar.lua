@@ -21,8 +21,8 @@ return {
 					or vim.wo[win].winbar ~= ""
 					or vim.bo[buf].ft == "help"
 					or vim.bo[buf].ft == "codecompanion"
+					or vim.bo[buf].ft == "terminal"
 				then
-					-- vim.notify("Dropbar: skipping buffer " .. vim.fn.win_gettype(win), vim.log.levels.WARN)
 					return false
 				end
 
@@ -31,8 +31,7 @@ return {
 					return false
 				end
 
-				return vim.bo[buf].bt == "terminal"
-					or vim.bo[buf].ft == "markdown"
+				return vim.bo[buf].ft == "markdown"
 					or pcall(vim.treesitter.get_parser, buf)
 					or not vim.tbl_isempty(vim.lsp.get_clients({
 						bufnr = buf,
@@ -63,9 +62,6 @@ return {
 				dir_icon = function(_)
 					return ""
 				end,
-				-- symbols = {
-				-- 	Folder = "x",
-				-- },
 			},
 		},
 	},
