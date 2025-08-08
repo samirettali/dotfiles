@@ -11,24 +11,58 @@ return {
 			return { timeout_ms = 3000, lsp_format = "fallback" }
 		end,
 
+		-- TODO: try sqlfluff and sqlfmt
 		formatters_by_ft = {
-			cpp = { "clang-format" },
-			cs = { "csharpier" },
-			css = { "css_beautify" },
-			go = { "goimports", "gofumpt" },
-			javascript = { "prettierd" },
-			lua = { "stylua" },
-			nix = { "alejandra" },
-			python = { "ruff_format" },
-			rust = { "rustfmt" },
-			sh = { "shfmt" },
-			toml = { "taplo" },
-			typescript = { "prettierd" },
-			wgsl = { "wgslfmt" },
-			yaml = { "yamlfmt" },
-			fish = { "fish_indent" },
-			-- ["*"] = { "codespell" }, -- TODO: this breaks some vim commands, e.g. windo -> window
-			["_"] = { "trim_whitespace" }, -- fallback
+			cpp = {
+				"clang-format",
+			},
+			cs = {
+				"csharpier",
+			},
+			css = {
+				"css_beautify",
+			},
+			go = {
+				"goimports",
+				"gofumpt",
+			},
+			javascript = {
+				"prettierd",
+			},
+			lua = {
+				"stylua",
+			},
+			nix = {
+				"alejandra",
+			},
+			python = {
+				"ruff_format",
+				"ruff_fix",
+				"ruff_organize_imports",
+			},
+			rust = {
+				"rustfmt",
+			},
+			sh = {
+				"shfmt",
+			},
+			toml = {
+				"taplo",
+			},
+			typescript = {
+				"prettierd",
+			},
+			wgsl = {
+				"wgslfmt",
+			},
+			yaml = {
+				"yamlfmt",
+			},
+			fish = {
+				"fish_indent",
+			},
+			-- ["*"] = { "codespell" }, -- TODO: this breaks some vim commands, e.g. window -> window
+			["_"] = { "trim_whitespace" }, -- fallback,
 		},
 		-- formatters = {
 		-- 	shfmt = {
