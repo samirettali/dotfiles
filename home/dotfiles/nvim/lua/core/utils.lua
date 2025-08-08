@@ -310,6 +310,7 @@ M.get_git_sign = function(buf, lnum)
 	return nil
 end
 
+-- Toggle line highlight
 M.toggle_line_highlight = function()
 	local line_num = vim.fn.line(".")
 	local highlight_group = "LineHighlight"
@@ -330,6 +331,10 @@ M.toggle_line_highlight = function()
 		vim.cmd("highlight LineHighlight ctermbg=gray guibg=gray")
 		vim.fn.matchadd("LineHighlight", "\\%" .. line_num .. "l")
 	end
+end
+
+M.clear_line_highlight = function()
+	vim.cmd("<cmd>call clearmatches()<CR>")
 end
 
 M.delete_hidden_buffers = function(options)
