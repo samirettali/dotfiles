@@ -27,6 +27,7 @@
       theme = "Builtin Dark";
       title = ''" "'';
       shell-integration-features = "no-cursor";
+      copy-on-select = "clipboard";
     };
   };
 }
