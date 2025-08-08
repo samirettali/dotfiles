@@ -62,25 +62,8 @@ return {
 					},
 				},
 				move = {
-					enable = false,
-					set_jumps = true, -- Whether to set jumps in the jumplist
-					-- TODO: remove if not needed
-					-- goto_next_start = {
-					-- 	["]m"] = "@function.outer",
-					-- 	["]]"] = "@class.outer",
-					-- },
-					-- goto_next_end = {
-					-- 	["]M"] = "@function.outer",
-					-- 	["]["] = "@class.outer",
-					-- },
-					-- goto_previous_start = {
-					-- 	["[m"] = "@function.outer",
-					-- 	["[["] = "@class.outer",
-					-- },
-					-- goto_previous_end = {
-					-- 	["[M"] = "@function.outer",
-					-- 	["[]"] = "@class.outer",
-					-- },
+					enable = true,
+					set_jumps = true,
 					goto_previous_start = {
 						["[f"] = { query = "@function.outer", desc = "Previous function" },
 						["[c"] = { query = "@class.outer", desc = "Previous class" },
@@ -90,6 +73,16 @@ return {
 						["]f"] = { query = "@function.outer", desc = "Next function" },
 						["]c"] = { query = "@class.outer", desc = "Next class" },
 						["]p"] = { query = "@parameter.inner", desc = "Next parameter" },
+					},
+					goto_previous_end = {
+						["[F"] = { query = "@function.outer", desc = "Previous function end" },
+						["[C"] = { query = "@class.outer", desc = "Previous class end" },
+						["[P"] = { query = "@parameter.inner", desc = "Previous parameter end" },
+					},
+					goto_next_end = {
+						["]F"] = { query = "@function.outer", desc = "Next function end" },
+						["]C"] = { query = "@class.outer", desc = "Next class end" },
+						["]P"] = { query = "@parameter.inner", desc = "Next parameter end" },
 					},
 				},
 				swap = {

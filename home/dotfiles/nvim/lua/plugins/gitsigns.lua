@@ -15,17 +15,17 @@ return {
 
 		gitsigns.setup(opts)
 
-		vim.keymap.set("n", "]c", function()
+		vim.keymap.set("n", "]h", function()
 			if vim.wo.diff then
-				vim.cmd.normal({ "]c", bang = true })
+				vim.cmd.normal({ "]h", bang = true })
 			else
 				gitsigns.nav_hunk("next")
 			end
 		end)
 
-		vim.keymap.set("n", "[c", function()
+		vim.keymap.set("n", "[h", function()
 			if vim.wo.diff then
-				vim.cmd.normal({ "[c", bang = true })
+				vim.cmd.normal({ "[h", bang = true })
 			else
 				gitsigns.nav_hunk("prev")
 			end
