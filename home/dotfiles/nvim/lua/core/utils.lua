@@ -284,32 +284,6 @@ M.get_mark_sign = function(buf, lnum)
 	return nil
 end
 
---- Get git signs for a line
---- @param buf number Buffer number
---- @param lnum number Line number
-M.get_git_sign = function(buf, lnum)
-	local namespaces = vim.api.nvim_get_namespaces()
-
-	for name, ns_id in pairs(namespaces) do
-		if name:find("gitsigns") or name:find("GitSigns") or name:find("MiniDiff") then
-			local ok, extmarks = pcall(vim.api.nvim_buf_get_extmarks, buf, ns_id, lnum, lnum, { details = true })
-			if ok then
-				for _, extmark in pairs(extmarks) do
-					local details = extmark[4] or {}
-					if details.sign_text then
-						return {
-							text = details.sign_text,
-							hl = details.sign_hl_group,
-						}
-					end
-				end
-			end
-		end
-	end
-
-	return nil
-end
-
 -- Toggle line highlight
 M.toggle_line_highlight = function()
 	local line_num = vim.fn.line(".")
