@@ -7,6 +7,7 @@ vim.keymap.set("n", "<Leader>tl", "<CMD>set list!<CR>", { desc = "Toggle listcha
 vim.keymap.set("n", "<Leader>tc", "<CMD>set cursorline!<CR>", { desc = "Toggle cursorline" })
 
 vim.keymap.set("n", "<localleader>q", utils.toggle_quickfix, { desc = "Toggle quickfix window" })
+vim.keymap.set("n", "<localleader>r", "<CMD>restart<CR>", { desc = "Restart" })
 
 vim.keymap.set({ "n", "v" }, "dd", function()
 	if vim.api.nvim_get_current_line():match("^%s*$") then
