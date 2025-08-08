@@ -67,7 +67,7 @@ vim.opt.listchars = {
 	eol = "¬",
 }
 
-vim.opt.completeopt = { "menu", "menuone", "noinsert", "fuzzy", "popup" }
+vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert", "fuzzy", "popup" }
 
 vim.opt.winborder = "rounded"
 
