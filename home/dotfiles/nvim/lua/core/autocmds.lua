@@ -72,25 +72,6 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("VimEnter", {
-	desc = "Setup zellij keymaps",
-	pattern = "*",
-	callback = function()
-		if vim.env.ZELLIJ then
-			local zellij = require("core.zellij")
-			vim.keymap.set("n", "<C-h>", zellij.left, { silent = true, desc = "Navigate left in Zellij" })
-			vim.keymap.set("n", "<C-j>", zellij.down, { silent = true, desc = "Navigate down in Zellij" })
-			vim.keymap.set("n", "<C-k>", zellij.up, { silent = false, desc = "Navigate up in Zellij" })
-			vim.keymap.set("n", "<C-l>", zellij.right, { silent = true, desc = "Navigate right in Zellij" })
-		else
-			vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { silent = true, desc = "Navigate left in Zellij" })
-			vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { silent = true, desc = "Navigate down in Zellij" })
-			vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { silent = true, desc = "Navigate up in Zellij" })
-			vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { silent = true, desc = "Navigate right in Zellij" })
-		end
-	end,
-})
-
 vim.api.nvim_create_autocmd("CompleteChanged", {
 	group = vim.api.nvim_create_augroup("hax", {}),
 	desc = "Set NormalFloatPreview highlight and preview window width",
