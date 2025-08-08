@@ -1,5 +1,3 @@
-local utils = require("core.utils")
-
 --- Get diagnostic signs for a line
 --- @param buf number Buffer number
 --- @param lnum number Line number
@@ -26,6 +24,9 @@ local function get_diagnostic_sign(buf, lnum)
 	return signs[max_severity]
 end
 
+--- Get DAP breakpoint signs for a line
+--- @param buf number Buffer number
+--- @param lnum number Line number
 local function get_dap_sign(buf, lnum)
 	local ok, placements = pcall(vim.fn.sign_getplaced, buf, { group = "dap_breakpoints", lnum = lnum })
 	if ok and placements and placements[1] and placements[1].signs then
@@ -43,24 +44,25 @@ local function get_dap_sign(buf, lnum)
 			end
 		end
 	end
-	return nil
 end
 
 -- Format sign with highlight and padding
 local function format_sign(sign, width)
+	sign = sign or {}
 	width = width or 2
-	if not sign then
-		return string.rep(" ", width)
-	end
 
 	local text = sign.text or ""
-	text = vim.fn.strcharpart(text, 0, width)
-	text = text .. string.rep(" ", width - vim.fn.strchars(text))
 
-	if sign.hl then
-		return "%#" .. sign.hl .. "#" .. text .. "%*"
+	if width then
+		text = vim.fn.strcharpart(text, 0, width)
+		text = text .. string.rep(" ", width - vim.fn.strchars(text))
 	end
-	return text
+
+	if not sign.hl then
+		return text
+	end
+
+	return "%#" .. sign.hl .. "#" .. text .. "%*"
 end
 
 local function get_line_number(win)
@@ -82,10 +84,66 @@ local function get_line_number(win)
 	return "" -- TODO: ?
 end
 
+local bqf_sign_ns = vim.api.nvim_create_namespace("BqfSignGroup")
+
+--- Get Bqf signs for a line
+--- @param bufnr number Buffer number
+--- @param lnum number Line number
+local function get_bqf_sign(bufnr, lnum)
+	local signs = vim.api.nvim_buf_get_extmarks(
+		bufnr,
+		bqf_sign_ns,
+		{ lnum - 1, 0 },
+		{ lnum - 1, -1 },
+		{ details = true }
+	)
+
+	if #signs == 0 then
+		return {}
+	end
+
+	local sign_data = signs[1][4]
+	if not sign_data or not sign_data.sign_text then
+		return {}
+	end
+
+	local result = { text = sign_data.sign_text, hl = sign_data.sign_hl_group }
+	return result
+end
+
+--- Get git signs for a line
+--- @param buf number Buffer number
+--- @param lnum number Line number
+local function get_git_sign(buf, lnum)
+	local namespaces = vim.api.nvim_get_namespaces()
+
+	for name, ns_id in pairs(namespaces) do
+		if name:find("gitsigns") then
+			local ok, extmarks = pcall(vim.api.nvim_buf_get_extmarks, buf, ns_id, lnum, lnum, { details = true })
+			if ok then
+				for _, extmark in pairs(extmarks) do
+					local details = extmark[4] or {}
+					if details.sign_text then
+						return {
+							text = details.sign_text,
+							hl = details.sign_hl_group,
+						}
+					end
+				end
+			end
+		end
+	end
+
+	return nil
+end
+
 function Statuscolumn()
 	local win = vim.g.statusline_winid
 	local buf = vim.api.nvim_win_get_buf(win)
 	local lnum = vim.v.lnum
+
+	local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
+	local filetype = vim.api.nvim_get_option_value("filetype", { buf = buf })
 
 	-- Skip virtual lines
 	if vim.v.virtnum ~= 0 then
@@ -94,25 +152,33 @@ function Statuscolumn()
 
 	local components = {}
 
-	-- Diagnostics
-	local diagnostic = get_diagnostic_sign(buf, lnum)
-	table.insert(components, format_sign(diagnostic, 2))
+	if buftype == "terminal" or filetype == "codecompanion" then
+		local ln = get_line_number(win)
+		table.insert(components, ln)
+	elseif buftype == "quickfix" then
+		local bqf_sign = get_bqf_sign(buf, lnum)
+		table.insert(components, format_sign(bqf_sign))
+	else
+		-- Diagnostics
+		local diagnostic = get_diagnostic_sign(buf, lnum)
+		table.insert(components, format_sign(diagnostic, 2))
 
-	-- Dap breakpoints
-	-- local dap = get_dap_sign(buf, lnum)
-	-- table.insert(components, format_sign(dap, 2))
+		-- Dap breakpoints
+		local dap = get_dap_sign(buf, lnum)
+		table.insert(components, format_sign(dap, 2))
 
-	-- Marks
-	-- local mark = utils.get_mark_sign(buf, lnum)
-	-- table.insert(components, format_sign(mark, 2))
+		-- Marks
+		-- local mark = utils.get_mark_sign(buf, lnum)
+		-- table.insert(components, format_sign(mark, 2))
 
-	-- Line numbers
-	local ln = get_line_number(win)
-	table.insert(components, ln)
+		-- Line numbers
+		local ln = get_line_number(win)
+		table.insert(components, ln)
 
-	-- Git signs
-	local git = utils.get_git_sign(buf, lnum)
-	table.insert(components, format_sign(git, 2))
+		-- Git signs
+		local git = get_git_sign(buf, lnum)
+		table.insert(components, format_sign(git, 2))
+	end
 
 	return table.concat(components, "")
 end
