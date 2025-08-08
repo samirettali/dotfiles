@@ -10,3 +10,6 @@ Disabled = true
 
 [rule.unhandled-error]
 arguments = ["fmt.Println", "fmt.Printf"]
+
+[rule.line-length-limit]
+arguments = [120]
