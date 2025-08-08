@@ -3,8 +3,8 @@ local utils = require("core.utils")
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-vim.keymap.set("n", "<Leader>tl", ":set list!<CR>", { desc = "Toggle listchars" })
-vim.keymap.set("n", "<Leader>tc", ":set cursorline!<CR>", { desc = "Toggle cursorline" })
+vim.keymap.set("n", "<Leader>tl", "<CMD>set list!<CR>", { desc = "Toggle listchars" })
+vim.keymap.set("n", "<Leader>tc", "<CMD>set cursorline!<CR>", { desc = "Toggle cursorline" })
 
 vim.keymap.set("n", "<localleader>q", utils.toggle_quickfix, { desc = "Toggle quickfix window" })
 
@@ -30,11 +30,15 @@ end, { expr = true, desc = "Duplicate [count] lines and comment out the first in
 
 -- TODO: overrides default behaviour
 -- vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search within visual selection" })
--- vim.keymap.set("n", "J", "mzJ`z:delmarks z<cr>", { desc = "Keep cursor in place when joining lines" })
+-- vim.keymap.set("n", "J", "mzJ`z:delmarks z<CR>", { desc = "Keep cursor in place when joining lines" })
 
 vim.keymap.set("x", "R", ":s###g<left><left><left>", { desc = "Start replacement in the visual selected region" })
 
-vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear hlsearch and ESC" })
+vim.keymap.set({ "i", "n" }, "<esc>", "<CMD>noh<CR><esc>", { desc = "Clear hlsearch and ESC" })
 
-vim.keymap.set("n", "<localleader>s", ":source %<CR>", { noremap = true, silent = true, desc = "Source current file" })
-vim.keymap.set("n", "tn", ":tabnew<CR>", { noremap = true, silent = true, desc = "Open new tab" })
+vim.keymap.set(
+	"n",
+	"<localleader>s",
+	"<CMD>source %<CR>",
+	{ noremap = true, silent = true, desc = "Source current file" }
+)

@@ -334,7 +334,7 @@ M.toggle_line_highlight = function()
 end
 
 M.clear_line_highlight = function()
-	vim.cmd("<cmd>call clearmatches()<CR>")
+	vim.cmd("<CMD>call clearmatches()<CR>")
 end
 
 M.delete_hidden_buffers = function(options)

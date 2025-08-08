@@ -10,7 +10,7 @@ return {
 	keys = {
 		{
 			"<localleader>g",
-			":Neogit<CR>",
+			"<CMD>Neogit<CR>",
 		},
 	},
 }

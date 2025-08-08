@@ -82,7 +82,6 @@ return {
 					vim.notify("Format on save enabled")
 				end
 			end,
-			"n",
 			desc = "Toggle format on save",
 		},
 	},

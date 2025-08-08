@@ -15,12 +15,12 @@ return {
 		{
 			"-",
 			"<CMD>Oil<CR>",
-			{ desc = "Open parent directory" },
+			desc = "Open parent directory",
 		},
 		{
 			"_",
 			"<CMD>Oil .<CR>",
-			{ desc = "Open root directory" },
+			desc = "Open root directory",
 		},
 	},
 }

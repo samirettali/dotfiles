@@ -22,7 +22,7 @@ return {
 					position = "surround",
 				})
 			end,
-			{ desc = "Timber: insert timed log" },
+			desc = "Timber: insert timed log",
 		},
 	},
 }

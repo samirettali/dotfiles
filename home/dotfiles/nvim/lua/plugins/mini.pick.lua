@@ -23,28 +23,28 @@ return {
 	keys = {
 		{
 			"<C-f>",
-			"<Cmd>Pick files<CR>",
-			{ desc = "Pick files" },
+			"<CMD>Pick files<CR>",
+			desc = "Pick files",
 		},
 		{
 			"<C-g>",
-			"<Cmd>Pick grep_live<CR>",
-			{ desc = "Pick grep live" },
+			"<CMD>Pick grep_live<CR>",
+			desc = "Pick grep live",
 		},
 		{
 			"<leader>fb",
-			"<Cmd>Pick buffers<CR>",
-			{ desc = "Pick buffers" },
+			"<CMD>Pick buffers<CR>",
+			desc = "Pick buffers",
 		},
 		{
 			"<leader>fr",
-			"<Cmd>Pick resume<CR>",
-			{ desc = "Resume picker" },
+			"<CMD>Pick resume<CR>",
+			desc = "Resume picker",
 		},
 		{
 			"<leader>fh",
-			"<Cmd>Pick help<CR>",
-			{ desc = "Pick help" },
+			"<CMD>Pick help<CR>",
+			desc = "Pick help",
 		},
 	},
 }

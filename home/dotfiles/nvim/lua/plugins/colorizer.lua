@@ -18,9 +18,7 @@ return {
 	keys = {
 		{
 			"<leader>th",
-			function()
-				vim.cmd("ColorizerToggle")
-			end,
+			"<CMD>ColorizerToggle<CR>",
 			desc = "Toggle colorizer",
 		},
 	},
