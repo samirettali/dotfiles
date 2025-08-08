@@ -1,16 +1,12 @@
 local utils = require("core.utils")
-local zellij = require("core.zellij")
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 vim.keymap.set("n", "<Leader>tl", ":set list!<CR>", { desc = "Toggle listchars" })
+vim.keymap.set("n", "<Leader>tc", ":set cursorline!<CR>", { desc = "Toggle cursorline" })
+
 vim.keymap.set("n", "<localleader>q", utils.toggle_quickfix, { desc = "Toggle quickfix window" })
-
--- vim.keymap.set("n", "gV", "`[v`]", { desc = "Select last changed text" })
-vim.keymap.set("n", "<localleader>r", ":restart<CR>", { desc = "Restart Neovim", silent = true })
-
-vim.keymap.set("o", "V", "`[v`]", { desc = "Select last changed text" })
 
 vim.keymap.set({ "n", "v" }, "dd", function()
 	if vim.api.nvim_get_current_line():match("^%s*$") then
@@ -20,13 +16,7 @@ vim.keymap.set({ "n", "v" }, "dd", function()
 	end
 end, { desc = "Delete a line and copy it only if it's not empty", silent = true })
 
-vim.keymap.set("n", "<leader>ha", utils.toggle_line_highlight, { desc = "Toggle highlight line" })
-vim.keymap.set("n", "<leader>hr", "<cmd>call clearmatches()<CR>", { desc = "Clear highlighted lines" })
-
 vim.keymap.set("n", "<localleader>c", utils.delete_hidden_buffers, { desc = "Close hidden buffers" })
-
--- TODO: overrides gp
-vim.keymap.set("n", "gp", "`[v`]", { desc = "Select pasted text" })
 
 vim.keymap.set({ "n", "x" }, "yc", function()
 	vim.opt.operatorfunc = [[v:lua.require("core.utils").duplicate_and_comment_lines]]
@@ -39,28 +29,12 @@ vim.keymap.set("n", "ycc", function()
 end, { expr = true, desc = "Duplicate [count] lines and comment out the first instance" })
 
 -- TODO: overrides default behaviour
-vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search within visual selection" })
-vim.keymap.set("n", "J", "mzJ`z:delmarks z<cr>", { desc = "Keep cursor in place when joining lines" })
-
-vim.keymap.set("n", "d{", "V{jd", { desc = "Delete until the start of the paragraph" })
-vim.keymap.set("n", "d}", "V}kd", { desc = "Delete until the end of the paragraph" })
-
-vim.keymap.set(
-	"v",
-	"<leader>_",
-	":<C-U>keeppatterns '<,'>s/\\%V[ -]/_/g<CR>",
-	{ desc = "Replace all spaces in selected region with _" }
-)
+-- vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search within visual selection" })
+-- vim.keymap.set("n", "J", "mzJ`z:delmarks z<cr>", { desc = "Keep cursor in place when joining lines" })
 
 vim.keymap.set("x", "R", ":s###g<left><left><left>", { desc = "Start replacement in the visual selected region" })
 
 vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear hlsearch and ESC" })
-
--- TODO: map only inside zellij
-vim.keymap.set("n", "<C-h>", zellij.left, { silent = true, desc = "Navigate left in Zellij" })
-vim.keymap.set("n", "<C-j>", zellij.down, { silent = true, desc = "Navigate down in Zellij" })
-vim.keymap.set("n", "<C-k>", zellij.up, { silent = true, desc = "Navigate up in Zellij" })
-vim.keymap.set("n", "<C-l>", zellij.right, { silent = true, desc = "Navigate right in Zellij" })
 
 vim.keymap.set("n", "<localleader>s", ":source %<CR>", { noremap = true, silent = true, desc = "Source current file" })
 vim.keymap.set("n", "tn", ":tabnew<CR>", { noremap = true, silent = true, desc = "Open new tab" })
