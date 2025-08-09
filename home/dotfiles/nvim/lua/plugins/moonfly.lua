@@ -12,7 +12,7 @@ return {
 		vim.g.moonflyWinSeparator = 2
 		vim.g.moonflyVirtualTextColor = true
 		vim.g.moonflyNormalFloat = true
-		vim.g.moonflyUnderlineMatchParen = true
+		vim.g.moonflyUnderlineMatchParen = true -- TODO: needed?
 		vim.g.moonflyItalics = false
 
 		vim.api.nvim_create_autocmd("ColorScheme", {
@@ -27,6 +27,11 @@ return {
 				vim.api.nvim_set_hl(0, "WinBarNC", {
 					bg = palette.bg,
 					fg = palette.grey39,
+				})
+
+				vim.api.nvim_set_hl(0, "BqfSign", {
+					bg = palette.bg,
+					fg = palette.emerald,
 				})
 
 				vim.api.nvim_set_hl(0, "TablineSel", {
