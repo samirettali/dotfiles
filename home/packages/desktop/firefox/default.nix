@@ -45,7 +45,7 @@
             sponsorblock
             ublock-origin
             vimium-c
-            # adaptive-tab-bar-colour
+            adaptive-tab-bar-colour
             # clearurls
             # copy-selection-as-markdown
             # granted
@@ -55,6 +55,39 @@
             # tampermonkey
           ];
           settings = with pkgs.nur.repos.rycee.firefox-addons; {
+            "${adaptive-tab-bar-colour.addonId}" = {
+              settings = {
+                tabbar = 5;
+                tabbarBorder = 0;
+                tabSelected = 0;
+                tabSelectedBorder = 0;
+                toolbar = 0;
+                toolbarBorder = 0;
+                toolbarField = 5;
+                toolbarFieldBorder = 5;
+                toolbarFieldOnFocus = 5;
+                sidebar = 5;
+                sidebarBorder = 5;
+                popup = 5;
+                popupBorder = 5;
+                minContrast_light = 90;
+                minContrast_dark = 45;
+                allowDarkLight = true;
+                dynamic = true;
+                noThemeColour = true;
+                compatibilityMode = false;
+                homeBackground_light = "#ffffff";
+                homeBackground_dark = "#2b2a33";
+                fallbackColour_light = "#ffffff";
+                fallbackColour_dark = "#2b2a33";
+                siteList = {
+                };
+                version = [
+                  3
+                  1
+                ];
+              };
+            };
             "${ublock-origin.addonId}" = {
               settings = {
                 force = true; # TODO: is this needed?
