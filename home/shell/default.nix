@@ -14,7 +14,6 @@
     ./opencode.nix
     ./pass.nix
     ./ripgrep.nix
-    ./television.nix
     ./tmux.nix
     ./zellij.nix
     ./zsh.nix
