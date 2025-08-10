@@ -109,7 +109,7 @@ local diagnostic_highlights = {
 }
 
 M.get_diagnostics = function(bufnr)
-	local counts = vim.diagnostic.count(bufnr or 0)
+	local counts = vim.diagnostic.count(bufnr)
 	local user_signs = vim.tbl_get(vim.diagnostic.config() --[[@as vim.diagnostic.Opts]], "signs", "text") or {}
 	local signs = vim.tbl_extend("keep", user_signs, { "E", "W", "I", "H" })
 
