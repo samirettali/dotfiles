@@ -13,3 +13,6 @@ arguments = ["fmt.Println", "fmt.Printf"]
 
 [rule.line-length-limit]
 arguments = [120]
+
+[rule.add-constant]
+Disabled = true
