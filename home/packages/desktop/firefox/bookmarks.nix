@@ -469,6 +469,10 @@
                 name = "Berkeley Function Calling Leaderboard";
                 url = "https://gorilla.cs.berkeley.edu/leaderboard.html";
               }
+              {
+                name = "Terminal bench";
+                url = "https://www.tbench.ai/leaderboard";
+              }
             ];
           }
           {
@@ -693,6 +697,10 @@
           {
             name = "grep.app";
             url = "https://grep.app";
+          }
+          {
+            name = "Dictionary of Algorithms and Data Structures";
+            url = "https://xlinux.nist.gov/dads/";
           }
           {
             name = " Finance";
