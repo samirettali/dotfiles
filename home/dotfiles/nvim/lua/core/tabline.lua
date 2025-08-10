@@ -18,7 +18,7 @@ local function label(n)
 		title = vim.fn.fnamemodify(bufname, ":t")
 	end
 
-	return ("%d:%s"):format(n, title)
+	return (" %d:%s "):format(n, title)
 end
 
 function Tabline()
@@ -42,8 +42,8 @@ function Tabline()
 	end
 
 	local parts = {
-		utils.with_hl("MoonflyEmerald", "   "),
-		table.concat(left_parts, "  "),
+		utils.with_hl("MoonflyEmerald", "  "),
+		table.concat(left_parts, ""),
 		"%#TabLineFill#", -- "%T"
 	}
 
