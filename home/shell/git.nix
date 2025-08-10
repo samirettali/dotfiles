@@ -85,6 +85,14 @@ in {
             };
           };
         }
+        {
+          condition = "gitdir:~/proj";
+          contents = {
+            user = {
+              email = "ettali.samir@gmail.com";
+            };
+          };
+        }
       ];
     };
   };
