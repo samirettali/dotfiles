@@ -14,6 +14,7 @@
     ./opencode.nix
     ./pass.nix
     ./ripgrep.nix
+    ./posting.nix
     ./tmux.nix
     ./zellij.nix
     ./zsh.nix
