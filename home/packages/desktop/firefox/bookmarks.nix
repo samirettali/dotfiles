@@ -691,6 +691,10 @@
             url = "http://vanilla-js.com/";
           }
           {
+            name = "grep.app";
+            url = "https://grep.app";
+          }
+          {
             name = " Finance";
             bookmarks = [
               {
