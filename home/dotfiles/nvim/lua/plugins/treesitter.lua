@@ -55,6 +55,7 @@ return {
 			{ parser = "astro", ft = { "astro" } },
 			{ parser = "desktop", ft = { "desktop" } },
 			{ parser = "nix", ft = { "nix" } },
+			{ parser = "fish", ft = { "fish" } },
 
 			{ parser = "doxygen" },
 			{ parser = "re2c" },
