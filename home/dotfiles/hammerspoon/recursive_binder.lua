@@ -204,7 +204,7 @@ local config = {
 		"s",
 		"[search]",
 		{
-			{ "g", "google", search("https://google.com/search?q={input}") },
+			{ "w", "google", search("https://google.com/search?q={input}") },
 			{ "m", "maps", search("https://www.google.com/maps/search/{input}") },
 			{ "n", "nixos", search("https://mynixos.com/search?q={input}") },
 			{ "p", "perplexity", search("https://perplexity.ai/search?q={input}") },
@@ -212,6 +212,7 @@ local config = {
 			{ "r", "repos", search("https://github.com/search?q={input}&type=repositories") },
 			{ "c", "code", search("https://github.com/search?q={input}&type=code") },
 			{ "t", "twitter", search("https://x.com/search?q={input}&src=typed_query") },
+			{ "g", "grep.app", search("https://grep.app/search?q={input}") },
 			-- { "u", "nur", nur.show },
 			-- {
 			-- 	"b",
