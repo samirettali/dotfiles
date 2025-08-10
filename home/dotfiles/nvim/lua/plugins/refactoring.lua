@@ -4,7 +4,7 @@ return {
 		{ "nvim-treesitter/nvim-treesitter", branch = "main" },
 		"nvim-lua/plenary.nvim",
 	},
-	event = { "BufEnter", "BufNewFile" },
+	event = { "BufReadPre", "BufNewFile" },
 	opts = {},
 	keys = {
 		{

@@ -1,7 +1,7 @@
 return {
 	-- Git signs integration
 	"lewis6991/gitsigns.nvim",
-	event = { "BufReadPost" },
+	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local gitsigns = require("gitsigns")
 

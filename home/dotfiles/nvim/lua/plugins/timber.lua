@@ -1,6 +1,6 @@
 return {
 	"Goose97/timber.nvim",
-	event = "VeryLazy",
+	event = { "BufReadPre", "BufNewFile" },
 	opts = {
 		log_templates = {
 			time_start = {

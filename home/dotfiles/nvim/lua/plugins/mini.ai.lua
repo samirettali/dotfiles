@@ -1,7 +1,8 @@
 return {
 	"echasnovski/mini.ai",
 	dependencies = { "echasnovski/mini.extra" },
-	event = "VeryLazy",
+	event = { "BufReadPre", "BufNewFile" },
+	version = false,
 	config = function()
 		local gen_ai_spec = require("mini.extra").gen_ai_spec
 		require("mini.ai").setup({

@@ -1,6 +1,7 @@
 return {
 	"echasnovski/mini.extra",
 	event = "VeryLazy",
+	version = false,
 	opts = {},
 	dependencies = { "echasnovski/mini.pick" },
 	keys = {

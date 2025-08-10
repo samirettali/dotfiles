@@ -1,6 +1,5 @@
 return {
 	"copilotlsp-nvim/copilot-lsp",
-	event = { "BufEnter", "BufNewFile" },
 	init = function()
 		vim.g.copilot_nes_debounce = 0
 		vim.lsp.enable("copilot_ls")
@@ -22,4 +21,5 @@ return {
 			end
 		end, { desc = "Accept Copilot NES suggestion", expr = true })
 	end,
+	event = { "BufReadPre", "BufNewFile" },
 }

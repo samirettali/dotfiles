@@ -3,7 +3,7 @@ return {
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 	},
-	event = "VeryLazy",
+	cmd = "Dbee",
 	opts = {
 		drawer = {
 			disable_help = true,
