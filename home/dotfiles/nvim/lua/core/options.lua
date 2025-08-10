@@ -126,22 +126,6 @@ vim.opt.fillchars = {
 	foldclose = "▸",
 }
 
-vim.opt.sessionoptions = {
-	"blank",
-	"buffers",
-	"curdir", -- TODO: sesdir?
-	"folds",
-	-- "globals",
-	"help",
-	-- "localoptions",
-	-- "options",
-	"resize",
-	"tabpages",
-	"winsize",
-	"terminal",
-	"winpos",
-}
-
 vim.cmd(":command! E e")
 vim.cmd(":command! W w")
 vim.cmd(":command! Q q")
