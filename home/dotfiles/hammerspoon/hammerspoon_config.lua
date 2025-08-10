@@ -7,8 +7,8 @@ local alertStyle = {
 	textColor = { white = 1, alpha = 1 },
 	textFont = "JetBrainsMono Nerd Font",
 	textSize = 20,
-	padding = 40,
-	radius = 24,
+	padding = 30,
+	radius = 16,
 	fadeInDuration = 0,
 	fadeOutDuration = 0,
 }
