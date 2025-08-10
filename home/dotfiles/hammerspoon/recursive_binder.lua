@@ -204,7 +204,7 @@ local config = {
 		"s",
 		"[search]",
 		{
-			{ "w", "google", search("https://google.com/search?q={input}") },
+			{ "g", "google", search("https://google.com/search?q={input}") },
 			{ "m", "maps", search("https://www.google.com/maps/search/{input}") },
 			{ "n", "nixos", search("https://mynixos.com/search?q={input}") },
 			{ "p", "perplexity", search("https://perplexity.ai/search?q={input}") },
