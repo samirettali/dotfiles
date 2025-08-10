@@ -195,20 +195,23 @@ M.get_gitsigns = function(bufnr)
 	return table.concat(parts, " ")
 end
 
+--- Get the names of all LSP servers attached to the current buffer.
+--- @param bufnr integer|nil The buffer number to check. If nil all buffers are checked.
+--- @return table<string>
 M.lsp_servers = function(bufnr)
 	local clients = vim.lsp.get_clients({
-		bufnr = bufnr or 0,
+		bufnr = bufnr,
 	})
 
 	if rawequal(next(clients), nil) then
-		return ""
+		return {}
 	end
 
 	return vim.iter(ipairs(clients))
 		:map(function(_, client)
 			return client.name
 		end)
-		:join(" ")
+		:totable()
 end
 
 local function group(separator, open, close, ...)
