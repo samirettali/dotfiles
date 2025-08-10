@@ -31,3 +31,18 @@ end, {
 	complete = "command",
 	desc = "Run a Vim command and show output in a new buffer",
 })
+
+vim.cmd(":command! E e")
+vim.cmd(":command! W w")
+vim.cmd(":command! Q q")
+vim.cmd(":command! Wq wq")
+vim.cmd(":command! WQ wq")
+vim.cmd(":command! Qa qa")
+vim.cmd(":command! QA qa")
+vim.cmd(":command! Wa wa")
+vim.cmd(":command! WA wa")
+vim.cmd(":command! Wqa wqa")
+vim.cmd(":command! WQa wqa")
+vim.cmd(":command! WQA wqa")
+vim.cmd(":command! Cq cq")
+vim.cmd(":command! CQ cq")
