@@ -36,7 +36,7 @@
           	set nix_shell_info "<nix-shell> "
           end
 
-          printf (string join "" -- $stat $ssh $nix_shell_info $pwd $symbol)
+          printf (string join "" -- $ssh $nix_shell_info $pwd $symbol $stat)
         '';
     };
     interactiveShellInit =
