@@ -154,7 +154,7 @@ function Statuscolumn()
 
 	if buftype == "terminal" or filetype == "codecompanion" then
 		local ln = get_line_number(win)
-		table.insert(components, ln)
+		table.insert(components, (" %s "):format(ln))
 	elseif buftype == "quickfix" then
 		local bqf_sign = get_bqf_sign(buf, lnum)
 		table.insert(components, format_sign(bqf_sign))
