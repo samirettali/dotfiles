@@ -39,7 +39,7 @@ return {
 			{ parser = "ini", ft = { "ini" } },
 			{ parser = "jsonc", ft = { "jsonc" } },
 			{ parser = "make", ft = { "make" } },
-			{ parser = "markdown", ft = { "markdown" } },
+			{ parser = "markdown", ft = { "markdown", "codecompanion" } },
 			{ parser = "pem", ft = { "pem" } },
 			{ parser = "php", ft = { "php" } },
 			{ parser = "proto", ft = { "proto" } },
