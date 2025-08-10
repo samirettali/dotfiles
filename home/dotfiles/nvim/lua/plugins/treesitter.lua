@@ -86,6 +86,9 @@ return {
 			require("nvim-treesitter").install(ensure_installed)
 		end
 
+		-- TODO
+		-- require("nvim-treesitter").update()
+
 		local pattern = vim.iter(ts_info)
 			:map(function(info)
 				return info.ft
