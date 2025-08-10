@@ -57,7 +57,7 @@
           settings = with pkgs.nur.repos.rycee.firefox-addons; {
             "${adaptive-tab-bar-colour.addonId}" = {
               settings = {
-                tabbar = 5;
+                tabbar = 10;
                 tabbarBorder = 0;
                 tabSelected = 0;
                 tabSelectedBorder = 0;
@@ -66,8 +66,8 @@
                 toolbarField = 5;
                 toolbarFieldBorder = 5;
                 toolbarFieldOnFocus = 5;
-                sidebar = 5;
-                sidebarBorder = 5;
+                sidebar = 10;
+                sidebarBorder = 10;
                 popup = 5;
                 popupBorder = 5;
                 minContrast_light = 90;
