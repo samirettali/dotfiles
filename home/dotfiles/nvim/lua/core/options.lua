@@ -127,13 +127,19 @@ vim.opt.fillchars = {
 }
 
 vim.opt.sessionoptions = {
+	"blank",
 	"buffers",
-	"curdir",
+	"curdir", -- TODO: sesdir?
 	"folds",
+	-- "globals",
 	"help",
+	-- "localoptions",
+	-- "options",
+	"resize",
 	"tabpages",
 	"winsize",
-	"globals",
+	"terminal",
+	"winpos",
 }
 
 vim.cmd(":command! E e")
