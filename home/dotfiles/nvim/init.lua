@@ -23,7 +23,6 @@ local function load_modules()
 		"core.statusline",
 		"core.commands",
 		-- "core.winbar",
-		-- "core.largefile",
 	}
 
 	for _, module in ipairs(modules) do
