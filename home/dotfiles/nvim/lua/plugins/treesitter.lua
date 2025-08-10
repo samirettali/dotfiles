@@ -1,102 +1,104 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	-- TODO: clone right version
-	-- branch = "main",
-	-- version = false,
-	build = ":TSUpdate",
+	branch = "main",
 	event = { "BufReadPre", "BufNewFile" },
-	dependencies = {
-		"nvim-treesitter/nvim-treesitter-textobjects",
-	},
+	build = ":TSUpdate",
 	config = function()
-		local treesitter = require("nvim-treesitter.configs")
-		local options = {
-			ensure_installed = "all",
-			auto_install = true,
-			matchup = {
-				enable = true,
-			},
-			highlight = {
-				enable = true,
-				disable = function(_, bufnr)
-					-- TODO: disable if filename is *.min.js
-					return vim.api.nvim_buf_line_count(bufnr) > 5000
-				end,
-			},
-			autotag = {
-				enable = true,
-			},
-			indent = {
-				enable = true,
-			},
-			incremental_selection = {
-				enable = true,
-				keymaps = {
-					init_selection = "gnn",
-					node_incremental = "grn",
-					scope_incremental = "grc",
-					node_decremental = "grm",
-				},
-			},
-			context_commentstring = {
-				enable = true,
-			},
-			textobjects = {
-				select = {
-					enable = true,
-					lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-					keymaps = {
-						-- You can use the capture groups defined in textobjects.scm
-						["aa"] = { query = "@parameter.outer", desc = "around a parameter" },
-						["ia"] = { query = "@parameter.inner", desc = "inside a parameter" },
-						["af"] = { query = "@function.outer", desc = "around a function" },
-						["if"] = { query = "@function.inner", desc = "inside a function" },
-						["ac"] = { query = "@class.outer", desc = "around a class" },
-						["ic"] = { query = "@class.inner", desc = "inside a class" },
-						["al"] = { query = "@loop.outer", desc = "around a loop" },
-						["il"] = { query = "@loop.inner", desc = "inside a loop" },
-						["ai"] = { query = "@conditional.outer", desc = "around an if statement" },
-						["ii"] = { query = "@conditional.inner", desc = "inside an if statement" },
-						["at"] = { query = "@comment.outer", desc = "around a comment" }, -- TODO: can it be ac?
-						["it"] = { query = "@comment.inner", desc = "around a comment" },
-					},
-				},
-				move = {
-					enable = true,
-					set_jumps = true,
-					goto_previous_start = {
-						["[f"] = { query = "@function.outer", desc = "Previous function" },
-						["[c"] = { query = "@class.outer", desc = "Previous class" },
-						["[p"] = { query = "@parameter.inner", desc = "Previous parameter" },
-					},
-					goto_next_start = {
-						["]f"] = { query = "@function.outer", desc = "Next function" },
-						["]c"] = { query = "@class.outer", desc = "Next class" },
-						["]p"] = { query = "@parameter.inner", desc = "Next parameter" },
-					},
-					goto_previous_end = {
-						["[F"] = { query = "@function.outer", desc = "Previous function end" },
-						["[C"] = { query = "@class.outer", desc = "Previous class end" },
-						["[P"] = { query = "@parameter.inner", desc = "Previous parameter end" },
-					},
-					goto_next_end = {
-						["]F"] = { query = "@function.outer", desc = "Next function end" },
-						["]C"] = { query = "@class.outer", desc = "Next class end" },
-						["]P"] = { query = "@parameter.inner", desc = "Next parameter end" },
-					},
-				},
-				swap = {
-					enable = true,
-					swap_next = {
-						["g>"] = { query = "@parameter.inner", desc = "Swap parameter with next" },
-					},
-					swap_previous = {
-						["g<"] = { query = "@parameter.inner", desc = "Swap parameter with previous" },
-					},
-				},
-			},
+		---@type {parser: string, ft: string[]?}[]
+		local ts_info = {
+			{ parser = "bash", ft = { "bash" } },
+			{ parser = "c", ft = { "c" } },
+			{ parser = "lua", ft = { "lua" } },
+			{ parser = "vim", ft = { "vim" } },
+			{ parser = "xml", ft = { "xml" } },
+			{ parser = "http", ft = { "http" } },
+			{ parser = "json", ft = { "json" } },
+			{ parser = "graphql", ft = { "graphql" } },
+			{ parser = "rust", ft = { "rust" } },
+			{ parser = "query", ft = { "query" } },
+			{ parser = "vimdoc", ft = { "help" } },
+			{ parser = "c_sharp", ft = { "cs" } },
+			{ parser = "cpp", ft = { "cpp" } },
+			{ parser = "css", ft = { "css" } },
+			{ parser = "dockerfile", ft = { "dockerfile" } },
+			{ parser = "editorconfig", ft = { "editorconfig" } },
+			{ parser = "git_config", ft = { "gitconfig" } },
+			{ parser = "git_rebase", ft = { "gitrebase" } },
+			{ parser = "gitattributes", ft = { "gitattributes" } },
+			{ parser = "gitcommit", ft = { "gitcommit" } },
+			{ parser = "gitignore", ft = { "gitignore" } },
+			{ parser = "go", ft = { "go" } },
+			{ parser = "gomod", ft = { "gomod" } },
+			{ parser = "gosum", ft = { "gosum" } },
+			{ parser = "groovy", ft = { "groovy" } },
+			{ parser = "html", ft = { "html" } },
+			{ parser = "javascript", ft = { "javascript", "javascriptreact" } },
+			{ parser = "typescript", ft = { "typescript" } },
+			{ parser = "tsx", ft = { "typescriptreact" } },
+			{ parser = "java", ft = { "java" } },
+			{ parser = "ini", ft = { "ini" } },
+			{ parser = "jsonc", ft = { "jsonc" } },
+			{ parser = "make", ft = { "make" } },
+			{ parser = "markdown", ft = { "markdown" } },
+			{ parser = "pem", ft = { "pem" } },
+			{ parser = "php", ft = { "php" } },
+			{ parser = "proto", ft = { "proto" } },
+			{ parser = "python", ft = { "python" } },
+			{ parser = "ruby", ft = { "ruby" } },
+			{ parser = "sql", ft = { "sql" } },
+			{ parser = "ssh_config", ft = { "sshconfig" } },
+			{ parser = "toml", ft = { "toml" } },
+			{ parser = "vue", ft = { "vue" } },
+			{ parser = "yaml", ft = { "yaml" } },
+			{ parser = "diff", ft = { "diff" } },
+			{ parser = "powershell", ft = { "ps1" } },
+			{ parser = "astro", ft = { "astro" } },
+			{ parser = "desktop", ft = { "desktop" } },
+			{ parser = "nix", ft = { "nix" } },
+
+			{ parser = "doxygen" },
+			{ parser = "re2c" },
+			{ parser = "luap" },
+			{ parser = "printf" },
+			{ parser = "luadoc" },
+			{ parser = "jsdoc" },
+			{ parser = "regex" },
+			{ parser = "angular" },
+			{ parser = "scss" },
 		}
 
-		treesitter.setup(options)
+		local ensure_installed = vim.iter(ts_info)
+			:map(function(info)
+				return info.parser
+			end)
+			:totable()
+
+		local already_installed = require("nvim-treesitter.config").get_installed("parsers")
+
+		local to_install = vim.iter(ensure_installed)
+			:filter(function(p)
+				return not vim.tbl_contains(already_installed, p)
+			end)
+			:totable()
+
+		if #to_install > 0 then
+			require("nvim-treesitter").install(ensure_installed)
+		end
+
+		local pattern = vim.iter(ts_info)
+			:map(function(info)
+				return info.ft
+			end)
+			:flatten(1)
+			:totable()
+
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = pattern,
+			-- group = vim.api.nvim_create_augroup("custom-treesitter", { clear = true }),
+			callback = function(args)
+				vim.treesitter.start(args.buf)
+			end,
+		})
+		-- end, 0)
 	end,
 }
