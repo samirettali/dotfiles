@@ -133,15 +133,7 @@
                     pattern = ":http://localhost:3333/";
                   }
                 ];
-                keyMappings = [
-                  "#!no-check"
-                  "unmap J"
-                  "map J nextTab"
-                  ""
-                  "unmap K"
-                  "map K previousTab"
-                  ""
-                ];
+                keyMappings = [];
               };
             };
           };
