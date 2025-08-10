@@ -1,16 +1,12 @@
 {
   pkgs,
   samirettali-nur,
-  inputs,
   ...
 }: let
-  opencode = pkgs.callPackage ../../derivations/opencode.nix {
-    source = inputs.opencode-src;
-  };
 in {
   programs.opencode = {
     enable = true;
-    package = opencode;
+    package = samirettali-nur.packages.${pkgs.system}.opencode;
     settings = {
       "$schema" = "https://opencode.ai/config.json";
       theme = "opencode";

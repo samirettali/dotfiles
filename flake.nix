@@ -55,11 +55,6 @@
       url = "github:kndndrj/nvim-dbee";
       flake = false;
     };
-
-    opencode-src = {
-      url = "github:sst/opencode";
-      flake = false;
-    };
   };
 
   outputs = {
