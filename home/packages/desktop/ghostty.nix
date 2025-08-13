@@ -1,6 +1,5 @@
 {
   customArgs,
-  inputs,
   pkgs,
   ...
 }: {
@@ -8,8 +7,8 @@
     enable = true;
     package =
       if pkgs.stdenv.isDarwin
-      then pkgs.nur.repos.DimitarNestorov.ghostty
-      else inputs.ghostty.packages."${pkgs.system}".default;
+      then pkgs.ghostty-bin
+      else pkgs.ghostty;
     settings = {
       bold-is-bright = true;
       confirm-close-surface = false;
@@ -28,6 +27,7 @@
       title = ''" "'';
       shell-integration-features = "no-cursor";
       copy-on-select = "clipboard";
+      auto-update = "off";
     };
   };
 }
