@@ -22,7 +22,12 @@ vim.diagnostic.config({
 vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist()" })
 vim.keymap.set("n", "<leader>lc", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist()" })
 
-vim.keymap.set("n", "<localleader>v", function()
+vim.keymap.set("n", "<leaver>tu", function()
+	local config = not vim.diagnostic.config().underline
+	vim.diagnostic.config({ underline = config })
+end, { desc = "Toggle diagnostic underlines" })
+
+vim.keymap.set("n", "<leader>tv", function()
 	local config = not vim.diagnostic.config().virtual_lines
 	vim.diagnostic.config({ virtual_lines = config })
 end, { desc = "Toggle diagnostic virtual lines" })
