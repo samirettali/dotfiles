@@ -12,6 +12,9 @@ return {
 				accept = "<c-f>",
 			},
 		},
+		server = {
+			type = "binary",
+		},
 	},
 	keys = {
 		{
