@@ -90,7 +90,6 @@
             };
             "${ublock-origin.addonId}" = {
               settings = {
-                force = true; # TODO: is this needed?
                 selectedFilterLists = [
                   "user-filters"
                   "ublock-filters"
@@ -110,7 +109,6 @@
             };
             "${vimium-c.addonId}" = {
               settings = {
-                force = true;
                 exclusionRules = [
                   {
                     passKeys = "f ";
