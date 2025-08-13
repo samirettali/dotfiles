@@ -473,6 +473,10 @@
                 name = "Terminal bench";
                 url = "https://www.tbench.ai/leaderboard";
               }
+              {
+                name = "LiveBench";
+                url = "https://livebench.ai/";
+              }
             ];
           }
           {
@@ -567,6 +571,16 @@
                 url = "https://docs.marimo.io/";
               }
             ];
+          }
+        ];
+      }
+      {
+        name = "Tools";
+        toolbar = false;
+        bookmarks = [
+          {
+            name = "Image compression";
+            url = "https://mazanoke.com/";
           }
         ];
       }
@@ -967,6 +981,10 @@
           {
             name = "Reddit unixporn";
             url = "https://www.reddit.com/r/unixporn/";
+          }
+          {
+            name = "Terminal trove";
+            url = "https://terminaltrove.com/explore/";
           }
         ];
       }
