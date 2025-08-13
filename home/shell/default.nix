@@ -79,5 +79,6 @@
     yt-dlp
     yubikey-manager
     nur.repos.charmbracelet.crush
+    amp-cli
   ];
 }
