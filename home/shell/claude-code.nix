@@ -15,13 +15,17 @@ in {
   '';
 
   # TODO: https://docs.anthropic.com/en/docs/claude-code/settings
-  # home.file = {
-  #   ".claude/settings.json".text = builtins.toJSON {
-  #     includeCoAuthoredBy = false;
-  #     env = {
-  #       CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL = "1";
-  #       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
-  #     };
-  #   };
-  # };
+  home.file = {
+    ".claude/settings.json".text = builtins.toJSON {
+      statusLine = {
+        type = "command";
+        command = "bunx ccusage statusline";
+      };
+      includeCoAuthoredBy = false;
+      env = {
+        CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL = "1";
+        CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
+      };
+    };
+  };
 }
