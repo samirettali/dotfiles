@@ -135,6 +135,20 @@ in {
             "chat.instructionsFilesLocations" = {
               ".github/instructions" = true;
             };
+            "mcp" = {
+              "servers" = {
+                "context7" = {
+                  "type" = "http";
+                  "url" = "https://mcp.context7.com/mcp";
+                };
+                "playwright" = {
+                  "command" = "npx";
+                  "args" = [
+                    "@playwright/mcp@latest"
+                  ];
+                };
+              };
+            };
           }
           (withExtension pkgs.vscode-marketplace.franzgollhammer.jb-fleet-dark {
             "workbench.colorTheme" = "Fleet Sphere";
