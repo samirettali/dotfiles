@@ -102,9 +102,22 @@
                   "adguard-spyware"
                   "adguard-spyware-url"
                   "adguard-cookies"
+                  "adguard-mobile"
+                  "easyprivacy"
+                  "block-lan"
+                  "urlhaus-1"
+                  "plowe-0"
+                  "adguard-social"
+                  "adguard-mobile-app-banners"
+                  "adguard-other-annoyances"
+                  "adguard-popup-overlays"
+                  "adguard-widgets"
                   "ublock-cookies-adguard"
-                  "KOR-1"
                 ];
+                user-filters = ''
+                  $3p,to=facebook.*,from=~facebook.*|~instagram.com|~messenger.com|~meta.*|~threads.*
+                  ||accounts.google.com/gsi/*$xhr,script,3p
+                '';
               };
             };
             "${vimium-c.addonId}" = {
