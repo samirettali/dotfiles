@@ -7,7 +7,6 @@ return {
 	},
 	init = function()
 		vim.g.copilot_nes_debounce = 0
-		vim.lsp.enable("copilot_ls")
 	end,
 	event = { "BufReadPre", "BufNewFile" },
 	keys = {
@@ -42,7 +41,7 @@ return {
 					vim.lsp.enable("copilot_ls")
 					vim.notify("Copilot LSP enabled", vim.log.levels.INFO)
 				else
-					vim.lsp.enalle("copilot_ls", false)
+					vim.lsp.enable("copilot_ls", false)
 					vim.notify("Copilot LSP disabled", vim.log.levels.INFO)
 				end
 			end,
