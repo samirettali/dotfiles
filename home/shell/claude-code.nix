@@ -10,8 +10,10 @@ in {
   ];
 
   home.activation.setupClaudeCode = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ${exe} mcp remove context7 > /dev/null
-    ${exe} mcp add --transport http context7 https://mcp.context7.com/mcp > /dev/null
+    ${exe} mcp remove context7 || true > /dev/null
+    ${exe} mcp remove playwright || true > /dev/null
+    ${exe} mcp add --scope user --transport http context7 https://mcp.context7.com/mcp > /dev/null
+    ${exe} mcp add --scope user playwright npx "@playwright/mcp@latest" > /dev/null
   '';
 
   # TODO: https://docs.anthropic.com/en/docs/claude-code/settings
