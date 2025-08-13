@@ -16,3 +16,15 @@ arguments = [120]
 
 [rule.add-constant]
 Disabled = true
+
+[rule.max-public-structs]
+Disabled = true
+
+[rule.cognitive-complexity]
+Disabled = true
+
+[rule.cyclomatic]
+Disabled = true
+
+[rule.function-length]
+Disabled = true
