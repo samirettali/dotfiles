@@ -12,7 +12,6 @@ in {
   imports = [
     ./dotfiles.nix
     ./git-sync.nix
-    ./services/default.nix
     ./shell
     ./sops.nix
     ./spotify-player
