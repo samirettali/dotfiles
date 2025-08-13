@@ -60,17 +60,43 @@ return {
 					bg = palette.grey11,
 				})
 
-				-- TODO
-				-- Pmenu
-				-- PmenuSel
-				-- PmenuSbar
-				-- PmenuThumb
-				-- WildMenu
-				-- PmenuMatch
-				-- PmenuMatchSel
-
 				vim.api.nvim_set_hl(0, "PmenuMatch", {
 					fg = palette.blue,
+				})
+				vim.api.nvim_set_hl(0, "PounceMatch", {
+					bg = palette.lime,
+					fg = palette.grey11,
+				})
+				vim.api.nvim_set_hl(0, "PounceUnmatched", {
+					link = "Comment",
+				})
+				vim.api.nvim_set_hl(0, "PounceGap", {
+					bg = palette.emerald,
+					fg = palette.grey11,
+				})
+				vim.api.nvim_set_hl(0, "PounceAccept", {
+					bg = palette.orange,
+					fg = palette.grey11,
+				})
+				vim.api.nvim_set_hl(0, "PounceAcceptBest", {
+					bg = palette.turquoise,
+					fg = palette.grey11,
+				})
+				vim.api.nvim_set_hl(0, "PounceCursor", {
+					bg = palette.red,
+					fg = palette.grey11,
+				})
+				vim.api.nvim_set_hl(0, "PounceCursorGap", {
+					bg = palette.cranberry,
+					fg = palette.grey11,
+				})
+				vim.api.nvim_set_hl(0, "PounceCursorAccept", {
+					bg = palette.orange,
+					fg = palette.grey11,
+				})
+				vim.api.nvim_set_hl(0, "PounceCursorAcceptBest", {
+					bg = palette.turquoise,
+					fg = palette.grey11,
 				})
 			end,
 		})
