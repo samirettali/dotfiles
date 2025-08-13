@@ -38,6 +38,29 @@
 
           printf (string join "" -- $ssh $nix_shell_info $pwd $symbol $stat)
         '';
+      le =
+        /*
+        fish
+        */
+        ''
+          if test -z "$env_file_path"
+              set env_file_path .env
+          end
+
+          if not test -f "$env_file_path"
+              echo "error: $env_file_path not found" >&2
+              return 1
+          end
+
+          for line in (cat "$env_file_path" | sed -e '/^\s*#.*$/d' -e '/^\s*$/d' -e 's/"//g')
+              if string match -q --regex '^[a-zA-Z_][a-zA-Z0-9_]*=' "$line"
+                  set --local key (string split -m 1 = "$line")[1]
+                  set --local value (string split -m 1 = "$line")[2]
+
+                  set -gx "$key" "$value"
+              end
+          end
+        '';
     };
     interactiveShellInit =
       /*
