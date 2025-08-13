@@ -132,7 +132,7 @@
                     pattern = ":https://monkeytype.com/";
                   }
                   {
-                    passKeys = "/ ";
+                    passKeys = "/";
                     pattern = ":https://github.com/";
                   }
                   {
@@ -144,7 +144,7 @@
                     pattern = ":http://localhost:3333/";
                   }
                 ];
-                keyMappings = [];
+                # keyMappings = [];
               };
             };
           };
@@ -219,6 +219,8 @@
           "extensions.htmlaboutaddons.recommendations.enabled" = false;
           "extensions'update.autoUpdateDefault" = false;
           "extensions.update.enabled" = false;
+          "browser.tabs.insertAfterCurrent" = true;
+          "browser.tabs.insertAfterCurrentExceptPinned" = true;
 
           # Disable new tab tile ads & preload
           # http://www.thewindowsclub.com/disable-remove-ad-tiles-from-firefox
