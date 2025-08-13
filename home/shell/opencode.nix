@@ -1,6 +1,7 @@
 {
   pkgs,
   samirettali-nur,
+  config,
   ...
 }: let
 in {
@@ -9,46 +10,57 @@ in {
     package = samirettali-nur.packages.${pkgs.system}.opencode;
     settings = {
       "$schema" = "https://opencode.ai/config.json";
+      autoshare = false;
+      autoupdate = false;
       theme = "opencode";
       disabled_providers = ["google"];
+      model = "anthropic/claude-sonnet-4-20250514";
+      small_model = "anthropic/claude-3-5-haiku-20241022";
       provider = {
         openrouter = {
           npm = "@openrouter/ai-sdk-provider";
           name = "OpenRouter";
-          options = {};
-          models = {
-            "anthropic/claude-sonnet-4".name = "Claude Sonnet 4";
-            "deepseek/deepseek-r1-0528".name = "Deepseek R1";
-            "deepseek/deepseek-r1-distill-qwen-7b".name = "Deepseek R1 Qwen 7b";
-            "google/gemini-2.5-flash".name = "Gemini 2.5 Flash";
-            "google/gemini-2.5-flash-lite-preview-06-17".name = "Gemini 2.5 Flash Lite";
-            "google/gemini-2.5-pro".name = "Gemini 2.5 Pro";
-            "minimax/minimax-m1".name = "Minimax M1";
-            "mistralai/devstral-small".name = "Mistral Devstral Small";
-            "moonshotai/kimi-dev-72b:free".name = "Kimi Dev 72b";
-            "openai/gpt-4.1".name = "OpenAI GPT 4.1";
-            "openai/gpt-4.1-mini".name = "OpenAI GPT 4.1 Mini";
-            "openai/o3".name = "OpenAI O3";
-            "openai/o4-mini-high".name = "OpenAI O4 Mini High";
+          options = {
+            apiKey = "{file:${config.sops.secrets.openrouter_api_key.path}}";
           };
         };
       };
-      autoshare = false;
-      autoupdate = false;
-      # TODO: setting MPCs break opencode somehow
-      # mcp = {
-      #   context7 = {
-      #     type = "remote";
-      #     url = "https://mcp.context7.com/mcp";
-      #   };
-      #   stagehand = {
-      #     type = "local";
-      #     command = [
-      #       "bun"
-      #       "/Users/s.ettali/proj/mcp-server-browserbase/stagehand/dist/index.js"
-      #     ];
-      #   };
-      # };
+      agent = {
+        code-reviewer = {
+          description = "Reviews code for best practices and potential issues";
+          model = "anthropic/claude-sonnet-4-20250514";
+          prompt = "You are a code reviewer. Focus on security, performance, and maintainability.";
+          tools = {
+            write = false;
+            edit = false;
+          };
+        };
+      };
+      mcp = {
+        context7 = {
+          enabled = true;
+          type = "remote";
+          url = "https://mcp.context7.com/mcp";
+        };
+        playwright = {
+          enabled = true;
+          type = "local";
+          command = [
+            "npx"
+            "@playwright/mcp@latest"
+          ];
+        };
+        ast-grep = {
+          enabled = true;
+          type = "local";
+          command = [
+            "uvx"
+            "--from"
+            "git+https://github.com/ast-grep/ast-grep-mcp"
+            "ast-grep-server"
+          ];
+        };
+      };
     };
   };
 }
