@@ -9,13 +9,31 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-treesitter/nvim-treesitter", branch = "main" },
+		"franco-ruggeri/codecompanion-spinner.nvim",
+		"ravitemer/codecompanion-history.nvim",
 	},
 	opts = {
+		extensions = {
+			spinner = {},
+		},
 		strategies = {
 			chat = {
+				opts = {
+					completion_provider = "default",
+				},
 				adapter = {
 					name = "copilot",
 					model = "claude-sonnet-4",
+				},
+				keymaps = {
+					completion = {
+						modes = {
+							i = "<C-x>",
+						},
+						index = 1,
+						callback = "keymaps.completion",
+						description = "Completion Menu",
+					},
 				},
 			},
 		},
