@@ -61,6 +61,7 @@ return {
 			fish = {
 				"fish_indent",
 			},
+			json = { "jq" },
 			-- ["*"] = { "codespell" }, -- TODO: this breaks some vim commands, e.g. window -> window
 			["_"] = { "trim_whitespace" }, -- fallback,
 		},
