@@ -873,6 +873,19 @@
         toolbar = false;
         bookmarks = [
           {
+            name = "Development";
+            bookmarks = [
+              {
+                name = "EVM decompiler";
+                url = "https://www.evmdecompiler.com/";
+              }
+              {
+                name = "Tenderly";
+                url = "https://dashboard.tenderly.co/";
+              }
+            ];
+          }
+          {
             name = "Trading view";
             url = "https://www.tradingview.com/chart/VIP09u4q/?symbol=BINANCE%3ABTCUSDT";
           }
