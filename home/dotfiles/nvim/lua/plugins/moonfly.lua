@@ -14,6 +14,7 @@ return {
 		vim.g.moonflyNormalFloat = true
 		vim.g.moonflyUnderlineMatchParen = true -- TODO: needed?
 		vim.g.moonflyItalics = false
+		vim.g.moonflyUndercurls = false
 
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			group = vim.api.nvim_create_augroup("MoonflyColors", { clear = true }),
