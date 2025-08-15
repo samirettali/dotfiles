@@ -26,6 +26,13 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.opt.diffopt = "internal,filler,closeoff,linematch:60"
 
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = ""
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldnestmax = 4
+
 vim.opt.completeopt = {
 	"menu",
 	"menuone",
@@ -78,13 +85,3 @@ vim.opt.fillchars = {
 }
 
 vim.opt.showbreak = "↳ "
-
--- TODO
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
--- vim.opt.foldcolumn = "0"
--- vim.opt.foldtext = "" -- Use syntax highlighting for the first line of the fold
--- vim.opt.foldlevel = 99
--- vim.opt.foldlevelstart = 2
--- vim.opt.foldnestmax = 4

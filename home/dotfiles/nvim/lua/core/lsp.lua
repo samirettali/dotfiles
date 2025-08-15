@@ -61,6 +61,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				end,
 			})
 		end
+
+		if client:supports_method(methods.textDocument_foldingRange) then
+			local win = vim.api.nvim_get_current_win()
+			-- TODO: in gpanders dotfiles it's vim.wo[win][0]
+			vim.wo[win].foldexpr = "v:lua.vim.lsp.foldexpr()"
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("LspDetach", {
+	callback = function(ev)
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if client == nil then
+			return
+		end
+
+		if client:supports_method(methods.textDocument_foldingRange) then
+			local win = vim.api.nvim_get_current_win()
+			vim.wo[win].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		end
 	end,
 })
 
