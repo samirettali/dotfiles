@@ -502,6 +502,10 @@
                 name = "Prompts.chat";
                 url = "https://prompts.chat/";
               }
+              {
+                name = "GPT prompt optimizer";
+                url = "https://platform.openai.com/chat/edit?models=gpt-5&optimize=true";
+              }
             ];
           }
         ];
@@ -998,6 +1002,10 @@
           {
             name = "Terminal trove";
             url = "https://terminaltrove.com/explore/";
+          }
+          {
+            name = "Neovimcraft";
+            url = "https://neovimcraft.com/";
           }
         ];
       }
