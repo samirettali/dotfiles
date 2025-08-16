@@ -41,10 +41,22 @@ return {
 			desc = "Pick quickfix",
 		},
 		{
+			"<leader>fe",
+			"<CMD>Pick explorer<CR>",
+			desc = "Pick quickfix",
+		},
+		{
 			"<leader>fs",
 			"<CMD>lua require('mini.extra').pickers.lsp({ scope = 'document_symbol' })<CR>",
 			desc = "Pick lsp document symbol",
-			silent = true,
+		},
+		{
+			"<leader>fw",
+			function()
+				local scope = vim.fn.input("Query: ", "")
+				require("mini.extra").pickers.lsp({ scope = "workspace_symbol", symbol_query = scope })
+			end,
+			desc = "Pick lsp document symbol",
 		},
 	},
 }
