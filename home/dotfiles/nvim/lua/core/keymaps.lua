@@ -16,15 +16,16 @@ vim.keymap.set({ "i", "n" }, "<esc>", "<CMD>noh<CR><esc>", { desc = "Clear hlsea
 -- vim.keymap.set("x", "/", "<Esc>/\\%V", { desc = "Search within visual selection" })
 -- vim.keymap.set("n", "J", "mzJ`z:delmarks z<CR>", { desc = "Keep cursor in place when joining lines" })
 
-vim.keymap.set({ "n", "x" }, "yc", function()
-	vim.opt.operatorfunc = [[v:lua.require("core.utils").duplicate_and_comment_lines]]
-	return "g@"
-end, { expr = true, desc = "Duplicate selection and comment out the first instance" })
+-- TODO: make it an operator
+-- vim.keymap.set({ "n", "x" }, "yc", function()
+-- 	vim.opt.operatorfunc = [[v:lua.require("core.utils").duplicate_and_comment_lines]]
+-- 	return "g@"
+-- end, { expr = true, desc = "Duplicate selection and comment out the first instance" })
 
-vim.keymap.set("n", "ycc", function()
-	vim.opt.operatorfunc = [[v:lua.require("core.utils").duplicate_and_comment_lines]]
-	return "g@_"
-end, { expr = true, desc = "Duplicate [count] lines and comment out the first instance" })
+-- vim.keymap.set("n", "ycc", function()
+-- 	vim.opt.operatorfunc = [[v:lua.require("core.utils").duplicate_and_comment_lines]]
+-- 	return "g@_"
+-- end, { expr = true, desc = "Duplicate [count] lines and comment out the first instance" })
 
 vim.keymap.set({ "n", "v" }, "dd", function()
 	if vim.api.nvim_get_current_line():match("^%s*$") then
