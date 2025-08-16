@@ -6,7 +6,10 @@
   programs = {
     zsh.enable = false;
     gnupg.agent.enable = true; # TODO is this needed?
-    fish.enable = true;
+    fish = {
+      enable = true;
+      useBabelfish = true;
+    };
   };
 
   networking = {
