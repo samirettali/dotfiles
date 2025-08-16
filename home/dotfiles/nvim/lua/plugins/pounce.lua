@@ -1,11 +1,18 @@
 return {
 	"rlane/pounce.nvim",
 	event = { "BufReadPre", "BufNewFile" },
-	config = function()
-		local map = vim.keymap.set
-		map("n", "<localleader>f", function()
-			require("pounce").pounce({})
-		end)
+	opts = {
+		increase_cmd_height_if_zero = false,
+	},
+
+	keys = {
+		{
+			"<localleader>f",
+			function()
+				require("pounce").pounce({})
+			end,
+			desc = "Pounce",
+		},
 		-- TODO
 		-- map("n", "S", function()
 		-- 	require("pounce").pounce({ do_repeat = true })
@@ -19,5 +26,5 @@ return {
 		-- map("n", "S", function()
 		-- 	require("pounce").pounce({ input = { reg = "/" } })
 		-- end)
-	end,
+	},
 }
