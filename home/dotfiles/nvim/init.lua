@@ -20,6 +20,7 @@ local function load_modules()
 		"core.diagnostic",
 		"core.statuscolumn",
 		"core.select",
+		"core.input",
 		"core.statusline",
 		"core.commands",
 		-- "core.winbar",
