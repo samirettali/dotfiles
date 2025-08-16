@@ -112,6 +112,10 @@ in {
             }
             shared_except "locked" {
                 bind "Alt q" { SwitchToMode "locked"; }
+                bind "Ctrl h" { MoveFocus "Left"; }
+                bind "Ctrl l" { MoveFocus "Right"; }
+                bind "Ctrl j" { MoveFocus "Down"; }
+                bind "Ctrl k" { MoveFocus "Up"; }
             }
             shared_except "locked" "move" {
                 bind "Ctrl m" { SwitchToMode "move"; }
