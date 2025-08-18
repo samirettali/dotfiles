@@ -27,12 +27,13 @@ vim.keymap.set({ "i", "n" }, "<esc>", "<CMD>noh<CR><esc>", { desc = "Clear hlsea
 -- 	return "g@_"
 -- end, { expr = true, desc = "Duplicate [count] lines and comment out the first instance" })
 
-vim.keymap.set({ "n", "v" }, "dd", function()
-	if vim.api.nvim_get_current_line():match("^%s*$") then
-		vim.cmd('normal! "_dd')
-	else
-		vim.cmd("normal! dd")
-	end
-end, { desc = "Delete a line and copy it only if it's not empty", silent = true })
+-- TODO: keep?
+-- vim.keymap.set({ "n", "v" }, "dd", function()
+-- 	if vim.api.nvim_get_current_line():match("^%s*$") then
+-- 		vim.cmd('normal! "_dd')
+-- 	else
+-- 		vim.cmd("normal! dd")
+-- 	end
+-- end, { desc = "Delete a line and copy it only if it's not empty", silent = true })
 
 vim.keymap.set("n", "<localleader>r", "<CMD>restart<CR>", { desc = "Restart" })
