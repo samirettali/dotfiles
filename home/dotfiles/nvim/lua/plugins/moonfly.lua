@@ -99,6 +99,14 @@ return {
 					bg = palette.turquoise,
 					fg = palette.grey11,
 				})
+
+				vim.api.nvim_set_hl(0, "CursorLine", {
+					bg = palette.black,
+				})
+
+				vim.api.nvim_set_hl(0, "CursorLineNr", {
+					bg = palette.black,
+				})
 			end,
 		})
 
