@@ -27,6 +27,7 @@
     stdenv # TODO: is this needed?
     taplo
     taplo-lsp
+    yaml-language-server
     tree-sitter
     vscode-langservers-extracted
     wgsl-analyzer

@@ -94,6 +94,7 @@ vim.lsp.enable("roslyn_ls")
 vim.lsp.enable("rust_analyzer")
 vim.lsp.enable("ts_ls") -- TODO: try vtsls
 vim.lsp.enable("solidity_ls")
+vim.lsp.enable("yamlls")
 
 -- vim.lsp.enable("pyrefly")
 -- vim.lsp.enable("ty")
