@@ -25,6 +25,7 @@ vim.opt.winborder = "rounded"
 vim.opt.clipboard = "unnamedplus"
 
 vim.opt.diffopt = "internal,filler,closeoff,linematch:60"
+vim.opt.conceallevel = 2
 
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"

@@ -97,3 +97,19 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		vim.opt.formatoptions:remove({ "c", "r", "o" })
 	end,
 })
+
+vim.api.nvim_create_autocmd("InsertEnter", {
+	desc = "Disable conceal level in insert mode",
+	pattern = "*",
+	callback = function()
+		vim.opt.conceallevel = 0
+	end,
+})
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+	desc = "Enable conceal level in normal mode",
+	pattern = "*",
+	callback = function()
+		vim.opt.conceallevel = 2
+	end,
+})
