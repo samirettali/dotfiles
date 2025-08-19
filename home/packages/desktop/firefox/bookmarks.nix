@@ -427,6 +427,15 @@
                 name = "Storm Genie";
                 url = "https://storm.genie.stanford.edu/";
               }
+              {
+                name = "Kagi summarizer";
+                url = "https://kagi.com/summarizer";
+              }
+              {
+                name = "Hemingway";
+
+                url = "https://hemingwayapp.com/";
+              }
             ];
           }
           {
@@ -576,6 +585,15 @@
               }
             ];
           }
+          {
+            name = "Design";
+            bookmarks = [
+              {
+                name = "Mobbin (design library)";
+                url = "https://mobbin.com/";
+              }
+            ];
+          }
         ];
       }
       {
@@ -689,12 +707,12 @@
             url = "https://excalidraw.com";
           }
           {
-            name = "Hyvector";
-            url = "https://www.hyvector.com";
+            name = "tldraw";
+            url = "https://www.tldraw.com/";
           }
           {
-            name = "Photopea";
-            url = "https://www.photopea.com";
+            name = "Hyvector";
+            url = "https://www.hyvector.com";
           }
           {
             name = "Josepha (price comparison)";
@@ -703,6 +721,10 @@
           {
             name = "Cyberchef";
             url = "https://gchq.github.io/CyberChef";
+          }
+          {
+            name = "Canary tokens";
+            url = "https://canaytokens.org";
           }
           {
             name = "JSON space analyzer";
@@ -719,6 +741,49 @@
           {
             name = "Dictionary of Algorithms and Data Structures";
             url = "https://xlinux.nist.gov/dads/";
+          }
+          {
+            name = "TypeLit";
+            url = "https://www.typelit.io/";
+          }
+          {
+            name = "OneLook thesaurus";
+            url = "https://onelook.com/thesaurus/";
+          }
+          {
+            name = "Omni calculator";
+            url = "https://www.omnicalculator.com/";
+          }
+          {
+            name = "Media";
+            bookmarks = [
+              {
+                name = "Photopea";
+                url = "https://www.photopea.com";
+              }
+              {
+                name = "Edit photo";
+                url = "https://edit.photo";
+              }
+
+              {
+                name = "Cleanup.pictures";
+                url = "https://cleanup.pictures/";
+              }
+            ];
+          }
+          {
+            name = "Music";
+            bookmarks = [
+              {
+                name = "Music map";
+                url = "https://www.music-map.com";
+              }
+              {
+                name = "Tunefind";
+                url = "https://www.tunefind.com";
+              }
+            ];
           }
           {
             name = " Finance";
@@ -739,6 +804,45 @@
               {url = "https://searchfox.org/mozilla-release/source/modules/libpref/init/StaticPrefList.yaml";}
               {url = "https://searchfox.org/mozilla-release/source/browser/app/profile/firefox.js";}
               {url = "https://searchfox.org/mozilla-release/source/modules/libpref/init/all.js";}
+            ];
+          }
+          {
+            name = "Games";
+            bookmarks = [
+              {
+                url = "https://humanbenchmark.com";
+                name = "Human benchmark";
+              }
+              {
+                name = "Hexcodle";
+                url = "https://hexcodle.com/";
+              }
+
+              {
+                name = "Wordle";
+                url = "https://www.nytimes.com/games/wordle/index.html";
+              }
+              {
+                name = "GeoGuessr";
+                url = "https://www.geoguessr.com:";
+              }
+              {
+                name = "Skribbl";
+                url = "https://skribbl.io/";
+              }
+              {
+                name = "The useless web";
+
+                url = "https://theuselessweb.com/";
+              }
+              {
+                name = "The useless web 2";
+                url = "https://theuselessweb.site";
+              }
+              {
+                name = "Quickdraw";
+                url = "https://quickdraw.withgoogle.com/";
+              }
             ];
           }
         ];
@@ -832,6 +936,7 @@
             url = "https://webgl-particle-life.netlify.app/";
           }
           {
+            name = "Particle life simulation";
             url = "https://hunar4321.github.io/particle-life/particle_life.html";
           }
           {
@@ -877,6 +982,56 @@
         toolbar = false;
         bookmarks = [
           {
+            name = "Apps";
+            toolbar = false;
+            bookmarks = [
+              {
+                name = "Contango";
+                url = "https://app.contango.xyz/strategies/leveraged-staking/eth";
+              }
+              {
+                name = "Pendle";
+                url = "https://app.pendle.finance/trade/markets";
+              }
+              {
+                name = "vfat.io";
+                url = "https://vfat.io/yield";
+              }
+              {
+                name = "Merkl";
+                url = "https://app.merkl.xyz";
+              }
+              {
+                name = "Pool together";
+                url = "https://app.cabana.fi/account";
+              }
+              {
+                name = "Ventuals";
+                url = "https://testnet.ventuals.com/trade";
+              }
+              {
+                name = "Layer3";
+                url = "https://app.layer3.xyz";
+              }
+              {
+                name = "Whales market";
+                url = "https://app.whales.market/points-markets";
+              }
+              {
+                name = "Polymarket";
+                url = "https://polymarket.com";
+              }
+              {
+                name = "Splits";
+                url = "https://app.splits.org/";
+              }
+              {
+                name = "Superfluid";
+                url = "https://app.superfluid.org/";
+              }
+            ];
+          }
+          {
             name = "Development";
             bookmarks = [
               {
@@ -886,6 +1041,67 @@
               {
                 name = "Tenderly";
                 url = "https://dashboard.tenderly.co/";
+              }
+              {
+                name = "Honeypot";
+                url = "https://honeypot.is/ethereum";
+              }
+              {
+                name = "EVM storage";
+                url = "https://evm.storage";
+              }
+              {
+                name = "Ethernow";
+                url = "https://www.ethernow.xyz/mempool/all";
+              }
+              {
+                name = "Phalcon";
+                url = "https://phalcon.blocksec.com/explorer";
+              }
+              {
+                name = "Tokensniffer";
+                url = "https://tokensniffer.com";
+              }
+              {
+                name = "Revoke";
+                url = "https://revoke.cash";
+              }
+              {
+                name = "Tenderly";
+                url = "https://dashboard.tenderly.co/";
+              }
+            ];
+          }
+          {
+            name = "Dashboards";
+            bookmarks = [
+              {
+                name = "Ethereum validator queue";
+                url = "https://www.validatorqueue.com/";
+              }
+              {
+                name = "Token terminal";
+                url = "https://tokenterminal.com";
+              }
+              {
+                name = "Messari";
+                url = "https://messari.io/";
+              }
+              {
+                name = "The block";
+                url = "https://www.theblock.co/data";
+              }
+              {
+                name = "Defillama";
+                url = "https://defillama.com/";
+              }
+              {
+                name = "Dune";
+                url = "https://dune.com/home";
+              }
+              {
+                name = "Cryptoquant";
+                url = "https://cryptoquant.com/asset/btc/summary";
               }
             ];
           }
@@ -898,20 +1114,12 @@
             url = "https://debank.com/profile";
           }
           {
-            name = "Layer3";
-            url = "https://app.layer3.xyz";
-          }
-          {
-            name = "Whales market";
-            url = "https://app.whales.market/points-markets";
+            name = "Cerebro";
+            url = "https://cerebro.xyz/dashboard";
           }
           {
             name = "Phoenix news";
             url = "https://phoenixnews.io";
-          }
-          {
-            name = "Polymarket";
-            url = "https://polymarket.com";
           }
           {
             name = "AAVE governance";
@@ -928,32 +1136,6 @@
           {
             name = "ChainID";
             url = "https://chainid.network/chains.json";
-          }
-        ];
-      }
-      {
-        name = "Yield";
-        toolbar = false;
-        bookmarks = [
-          {
-            name = "Contango";
-            url = "https://app.contango.xyz/strategies/leveraged-staking/eth";
-          }
-          {
-            name = "Pendle";
-            url = "https://app.pendle.finance/trade/markets";
-          }
-          {
-            name = "vfat.io";
-            url = "https://vfat.io/yield";
-          }
-          {
-            name = "Merkl";
-            url = "https://app.merkl.xyz";
-          }
-          {
-            name = "Pool together";
-            url = "https://app.cabana.fi/account";
           }
         ];
       }
@@ -1008,6 +1190,10 @@
             url = "https://neovimcraft.com/";
           }
         ];
+      }
+      {
+        name = "Calcolatore Italia";
+        url = "https://tuttocalcolato.it/";
       }
     ];
   };
