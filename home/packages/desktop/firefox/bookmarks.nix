@@ -827,8 +827,17 @@
                 url = "https://www.geoguessr.com:";
               }
               {
+                name = "Timeguessr";
+                url = "https://timeguessr.com/";
+              }
+              {
                 name = "Skribbl";
                 url = "https://skribbl.io/";
+              }
+              {
+                name = "EnterTrained - type books";
+
+                url = "https://entertrained.app/";
               }
               {
                 name = "The useless web";
@@ -994,6 +1003,10 @@
                 url = "https://app.pendle.finance/trade/markets";
               }
               {
+                name = "Hyperliquid";
+                url = "https://app.hyperliquid.xyz/";
+              }
+              {
                 name = "vfat.io";
                 url = "https://vfat.io/yield";
               }
@@ -1076,6 +1089,57 @@
             name = "Dashboards";
             bookmarks = [
               {
+                name = "News";
+                bookmarks = [
+                  {
+                    name = "Tree of alpha";
+                    url = "https://news.treeofalpha.com/";
+                  }
+                  {
+                    name = "Phoenix news";
+                    url = "https://phoenixnews.io/";
+                  }
+                ];
+              }
+              {
+                name = "Coinglass";
+                bookmarks = [
+                  {
+                    name = "Ethereum ETF";
+                    url = "https://www.coinglass.com/eth-etf?ck_subscriber_id=1650003955";
+                  }
+                  {
+                    name = "Bull market peak signals";
+                    url = "https://www.coinglass.com/bull-market-peak-signals";
+                  }
+                  {
+                    name = "Funding rate heatmap";
+                    url = "https://www.coinglass.com/FundingRateHeatMap";
+                  }
+                ];
+              }
+              {
+                name = "Reserves";
+                bookmarks = [
+                  {
+                    name = "Bitcoin treasuries";
+                    url = "https://bitcointreasuries.net";
+                  }
+                  {
+                    name = "Ethereum reserves";
+                    url = "https://www.strategicethreserve.xyz";
+                  }
+                  {
+                    name = "Solana reserves";
+                    url = "https://www.strategicsolanareserve.org";
+                  }
+                ];
+              }
+              {
+                name = "SoSo Value";
+                url = "https://alpha.sosovalue.com/";
+              }
+              {
                 name = "Ethereum validator queue";
                 url = "https://www.validatorqueue.com/";
               }
@@ -1102,6 +1166,11 @@
               {
                 name = "Cryptoquant";
                 url = "https://cryptoquant.com/asset/btc/summary";
+              }
+
+              {
+                name = "Artemis analytics";
+                url = "https://app.artemisanalytics.com/chains";
               }
             ];
           }
@@ -1188,6 +1257,10 @@
           {
             name = "Neovimcraft";
             url = "https://neovimcraft.com/";
+          }
+          {
+            name = "Terminal apps";
+            url = "https://terminal-apps.dev/";
           }
         ];
       }
