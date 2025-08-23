@@ -64,8 +64,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		if client:supports_method(methods.textDocument_foldingRange) then
 			local win = vim.api.nvim_get_current_win()
-			-- TODO: in gpanders dotfiles it's vim.wo[win][0]
-			vim.wo[win].foldexpr = "v:lua.vim.lsp.foldexpr()"
+			vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
 		end
 	end,
 })
