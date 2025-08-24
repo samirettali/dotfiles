@@ -6,7 +6,6 @@
   ];
 
   home.packages = with pkgs; [
-    nur.repos.natsukium.hammerspoon
     # docker
   ];
 
