@@ -34,6 +34,7 @@
     yamlfmt
     zizmor
     codespell
+    buf
   ];
 
   home.sessionVariables.LIBRARY_PATH = ''${lib.makeLibraryPath [pkgs.libiconv]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
