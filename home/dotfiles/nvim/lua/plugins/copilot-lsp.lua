@@ -1,3 +1,7 @@
+if true then
+	return {}
+end
+
 return {
 	"copilotlsp-nvim/copilot-lsp",
 	opts = {
