@@ -82,6 +82,20 @@ in {
             "command" = "workbench.action.quickOpen";
           }
         ];
+        userMcp = {
+          "servers" = {
+            "context7" = {
+              "type" = "http";
+              "url" = "https://mcp.context7.com/mcp";
+            };
+            "playwright" = {
+              "command" = "npx";
+              "args" = [
+                "@playwright/mcp@latest"
+              ];
+            };
+          };
+        };
         userSettings = lib.mkMerge [
           {
             "editor.fontFamily" = customArgs.font.name;
@@ -136,20 +150,6 @@ in {
             "terminal.integrated.sendKeybindingsToShell" = true;
             "chat.instructionsFilesLocations" = {
               ".github/instructions" = true;
-            };
-            "mcp" = {
-              "servers" = {
-                "context7" = {
-                  "type" = "http";
-                  "url" = "https://mcp.context7.com/mcp";
-                };
-                "playwright" = {
-                  "command" = "npx";
-                  "args" = [
-                    "@playwright/mcp@latest"
-                  ];
-                };
-              };
             };
           }
           (withExtension pkgs.vscode-marketplace.franzgollhammer.jb-fleet-dark {
