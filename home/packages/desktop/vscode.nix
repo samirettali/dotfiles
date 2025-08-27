@@ -41,26 +41,28 @@ in {
         enableUpdateCheck = false;
         extensions = with pkgs.vscode-marketplace; [
           eamodio.gitlens
+          vscodevim.vim
           franzgollhammer.jb-fleet-dark
+
+          zxh404.vscode-proto3
+          rust-lang.rust-analyzer
+          wgsl-analyzer.wgsl-analyzer
+
           github.vscode-github-actions
           github.vscode-pull-request-github
-          google.geminicodeassist
 
-          quicktype.quicktype
-          rust-lang.rust-analyzer
-          saoudrizwan.claude-dev
+          google.geminicodeassist
           sourcegraph.amp
-          vscodevim.vim
-          wgsl-analyzer.wgsl-analyzer
-          github.copilot
-          github.copilot-chat
-          augment.vscode-augment
-          kilocode.kilo-code
           rooveterinaryinc.roo-cline
+          supermaven.supermaven
           # continue.continue
-          # supermaven.supermaven
           # vadimcn.vscode-lldb # TODO: build is broken
           # postman.postman-for-vscode
+          # saoudrizwan.claude-dev
+          # github.copilot
+          # github.copilot-chat
+          # augment.vscode-augment
+          # kilocode.kilo-code
         ];
         keybindings = [
           {
