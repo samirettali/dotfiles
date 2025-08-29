@@ -97,7 +97,7 @@
         trusted-users = ["root" username];
         experimental-features = ["nix-command" "flakes"];
       };
-      optimise.automatic = true;
+      optimise.automatic = false;
     };
 
     # hack to make every package use the binary versions of the .NET SDKs
