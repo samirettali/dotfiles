@@ -103,11 +103,11 @@ vim.lsp.enable("solidity_ls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("buf_ls")
 
+vim.lsp.enable("basedpyright")
 -- vim.lsp.enable("pyrefly")
 -- vim.lsp.enable("ty")
 -- vim.lsp.enable("zls")
 -- vim.lsp.enable("ruff")
--- vim.lsp.enable("basedpyright")
 -- vim.lsp.enable("ocamllsp")
 -- vim.lsp.enable("terraformls") -- TODO: activate only if terraform-ls is installed
 -- vim.lsp.enable("jdtls")
