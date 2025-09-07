@@ -100,7 +100,7 @@ in {
         userSettings = lib.mkMerge [
           {
             "editor.fontFamily" = customArgs.font.name;
-            "editor.fontSize" = 14;
+            "editor.fontSize" = 13;
             "editor.minimap.enabled" = false;
             "editor.formatOnSave" = true;
             "editor.renderWhitespace" = "trailing";
