@@ -90,6 +90,13 @@
             };
             "${ublock-origin.addonId}" = {
               settings = {
+                userSettings = {
+                  userFiltersTrusted = true;
+                };
+                whitelist = [
+                  "chrome-extension-scheme"
+                  "moz-extension-scheme"
+                ];
                 selectedFilterLists = [
                   "user-filters"
                   "ublock-filters"
@@ -113,10 +120,12 @@
                   "adguard-popup-overlays"
                   "adguard-widgets"
                   "ublock-cookies-adguard"
+                  "ublock-annoyances"
                 ];
                 user-filters = ''
                   $3p,to=facebook.*,from=~facebook.*|~instagram.com|~messenger.com|~meta.*|~threads.*
                   ||accounts.google.com/gsi/*$xhr,script,3p
+                  ||googlevideo.com/videoplayback$xhr,3p,method=get,domain=www.youtube.com
                 '';
               };
             };
