@@ -152,6 +152,8 @@ in {
             "chat.instructionsFilesLocations" = {
               ".github/instructions" = true;
             };
+
+            "extensions.autoUpdate" = false;
           }
           (withExtension pkgs.vscode-marketplace.jacobwgillespie.minimal-icons {
             "workbench.iconTheme" = "minimal-icons-without-explorer-arrows";
