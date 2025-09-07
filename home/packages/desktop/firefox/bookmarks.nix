@@ -739,6 +739,10 @@
             url = "https://grep.app";
           }
           {
+            name = "Greppers";
+            url = "https://www.greppers.com/";
+          }
+          {
             name = "Dictionary of Algorithms and Data Structures";
             url = "https://xlinux.nist.gov/dads/";
           }
