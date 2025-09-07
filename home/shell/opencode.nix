@@ -42,24 +42,24 @@ in {
           type = "remote";
           url = "https://mcp.context7.com/mcp";
         };
-        playwright = {
-          enabled = true;
-          type = "local";
-          command = [
-            "npx"
-            "@playwright/mcp@latest"
-          ];
-        };
-        ast-grep = {
-          enabled = true;
-          type = "local";
-          command = [
-            "uvx"
-            "--from"
-            "git+https://github.com/ast-grep/ast-grep-mcp"
-            "ast-grep-server"
-          ];
-        };
+        # playwright = {
+        #   enabled = true;
+        #   type = "local";
+        #   command = [
+        #     "npx"
+        #     "@playwright/mcp@latest"
+        #   ];
+        # };
+        # ast-grep = {
+        #   enabled = true;
+        #   type = "local";
+        #   command = [
+        #     "uvx"
+        #     "--from"
+        #     "git+https://github.com/ast-grep/ast-grep-mcp"
+        #     "ast-grep-server"
+        #   ];
+        # };
       };
     };
   };
