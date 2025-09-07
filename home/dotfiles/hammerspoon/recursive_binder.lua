@@ -207,6 +207,7 @@ local config = {
 			{ "c", "code", search("https://github.com/search?q={input}&type=code") },
 			{ "d", "duckduckgo", search("https://duckduckgo.com?q={input}") },
 			{ "g", "grep.app", search("https://grep.app/search?q={input}") },
+			{ "l", "greppers.com", search("https://www.greppers.com/?q={input}") },
 			{ "m", "maps", search("https://www.google.com/maps/search/{input}") },
 			{ "n", "nixos", search("https://mynixos.com/search?q={input}") },
 			{ "p", "perplexity", search("https://perplexity.ai/search?q={input}") },
