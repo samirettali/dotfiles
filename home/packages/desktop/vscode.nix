@@ -55,6 +55,7 @@ in {
           sourcegraph.amp
           rooveterinaryinc.roo-cline
           supermaven.supermaven
+          jacobwgillespie.minimal-icons
           # continue.continue
           # vadimcn.vscode-lldb # TODO: build is broken
           # postman.postman-for-vscode
@@ -152,6 +153,9 @@ in {
               ".github/instructions" = true;
             };
           }
+          (withExtension pkgs.vscode-marketplace.jacobwgillespie.minimal-icons {
+            "workbench.iconTheme" = "minimal-icons-without-explorer-arrows";
+          })
           (withExtension pkgs.vscode-marketplace.franzgollhammer.jb-fleet-dark {
             "workbench.colorTheme" = "Fleet Sphere";
           })
