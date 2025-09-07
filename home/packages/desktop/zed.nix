@@ -23,6 +23,11 @@
 
     userSettings = {
       auto_update = false;
+      agent_servers = {
+        gemini = {
+          ignore_system_version = false;
+        };
+      };
       buffer_font_family = customArgs.font.name;
       buffer_font_features = {
         "calt" = false;
