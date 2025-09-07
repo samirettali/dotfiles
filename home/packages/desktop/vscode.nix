@@ -20,21 +20,21 @@ in {
   programs = {
     vscode = {
       enable = true;
-      package =
-        (pkgs.vscode.override {
-          isInsiders = true;
-        }).overrideAttrs (old: rec {
-          src = builtins.fetchurl {
-            url = "https://vscode.download.prss.microsoft.com/dbazure/download/insider/8c0b3c16f47d628d0d767358d5a3fa1d95237f70/VSCode-darwin-arm64.zip"; # TODO: hardcoded darwin-arm64
-            sha256 = "sha256-ksJaMW3fwSKszMdU7XRFW+nwlnqAfYaGZV5TzebS6Qs=";
-          };
-          postInstall = ''
-            ${old.postInstall or ""}
-            chmod +x $out/Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code
-            ln -s $out/bin/code-insiders $out/bin/code
-            # xattr -d com.apple.quarantine $out/Applications/Visual\ Studio\ Code\ -\ Insiders.app || true
-          '';
-        });
+      # package =
+      # (pkgs.vscode.override {
+      #   isInsiders = true;
+      # }).overrideAttrs (old: rec {
+      #   src = builtins.fetchurl {
+      #     url = "https://vscode.download.prss.microsoft.com/dbazure/download/insider/8c0b3c16f47d628d0d767358d5a3fa1d95237f70/VSCode-darwin-arm64.zip"; # TODO: hardcoded darwin-arm64
+      #     sha256 = "sha256-ksJaMW3fwSKszMdU7XRFW+nwlnqAfYaGZV5TzebS6Qs=";
+      #   };
+      #   postInstall = ''
+      #     ${old.postInstall or ""}
+      #     chmod +x $out/Applications/Visual\ Studio\ Code\ -\ Insiders.app/Contents/Resources/app/bin/code
+      #     ln -s $out/bin/code-insiders $out/bin/code
+      #     # xattr -d com.apple.quarantine $out/Applications/Visual\ Studio\ Code\ -\ Insiders.app || true
+      #   '';
+      # });
       mutableExtensionsDir = false;
       profiles.default = {
         enableExtensionUpdateCheck = false;
