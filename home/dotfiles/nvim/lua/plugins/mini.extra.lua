@@ -22,7 +22,7 @@ return {
 		},
 		{
 			"<leader>fl",
-			"<CMD>Pick buf_lines<CR>",
+			"<CMD>Pick buf_lines scope='current'<CR>",
 			desc = "Pick lines",
 		},
 		{
