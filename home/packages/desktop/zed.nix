@@ -4,7 +4,7 @@
   ...
 }: {
   programs.zed-editor = {
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault false; # TODO: upstream is broken
 
     extensions = [
       "csharp"
