@@ -1136,6 +1136,27 @@
                 ];
               }
               {
+                name = "Polymarket";
+                bookmarks = [
+                  {
+                    name = "Polymarket analytics";
+                    url = "https://polymarketanalytics.com";
+                  }
+                  {
+                    name = "Hashdive";
+                    url = "https://hashdive.com/";
+                  }
+                  {
+                    name = "Polysights";
+                    url = "https://app.polysights.xyz/";
+                  }
+                  {
+                    name = "@alexmccullough / Polymarket Accuracy %";
+                    url = "https://dune.com/queries/4229518/7116830";
+                  }
+                ];
+              }
+              {
                 name = "SoSo Value";
                 url = "https://alpha.sosovalue.com/";
               }
@@ -1171,6 +1192,22 @@
               {
                 name = "Artemis analytics";
                 url = "https://app.artemisanalytics.com/chains";
+              }
+              {
+                name = "Pentagon pizza tracker";
+                url = "https://www.pizzint.watch/";
+              }
+              {
+                name = "Token unlocks";
+                url = "https://tokenomist.ai/";
+              }
+              {
+                name = "Financial juice";
+                url = "https://www.financialjuice.com";
+              }
+              {
+                name = "CME FedWatch Tool";
+                url = "https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html";
               }
             ];
           }
