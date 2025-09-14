@@ -32,7 +32,7 @@ in {
   ];
 
   programs = {
-    go.goPrivate = [
+    go.env.GOPRIVATE = [
       "github.com/YoungAgency/*"
     ];
 
