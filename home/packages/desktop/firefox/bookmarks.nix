@@ -1151,12 +1151,65 @@
                     url = "https://hashdive.com/";
                   }
                   {
+                    name = "Monitor the situation";
+                    url = "https://monitorthesituation.lol/";
+                  }
+                  {
                     name = "Polysights";
                     url = "https://app.polysights.xyz/";
                   }
                   {
+                    name = "Polyfactual";
+                    url = "https://www.polyfactual.com/";
+                  }
+                  {
+                    name = "Polyfund";
+                    url = "https://www.polyfund.so/";
+                  }
+                  {
+                    name = "Aerospace";
+                    url = "https://www.aerospace.sh";
+                  }
+                  {
+                    name = "IvanCryptoSlav - Substack";
+                    url = "https://substack.com/@ivancryptoslav";
+                  }
+                  {
                     name = "@alexmccullough / Polymarket Accuracy %";
                     url = "https://dune.com/queries/4229518/7116830";
+                  }
+                  {
+                    name = "Twitter";
+                    bookmarks = [
+                      {
+                        name = "TaikiMaeda2";
+                        url = "https://x.com/TaikiMaeda2";
+                      }
+                      {
+                        name = "PolyGamblerGR";
+                        url = "https://x.com/PolyGamblerGR";
+                      }
+                      {
+                        name = "0xwondr";
+                        url = "https://x.com/0xwondr";
+                      }
+                      {
+                        name = "IvanCryptoSlav";
+                        url = "https://x.com/IvanCryptoSlav";
+                      }
+                      {
+                        name = "GenaTheCroco";
+                        url = "https://x.com/GenaTheCroco";
+                      }
+                      {
+                        name = "VersoTrading";
+                        url = "https://x.com/VersoTrading";
+                      }
+                      {
+                        name = "PixOnChain";
+                        url = "https://x.com/PixOnChain";
+                      }
+                    ];
                   }
                 ];
               }
