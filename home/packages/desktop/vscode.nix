@@ -45,7 +45,6 @@ in {
           franzgollhammer.jb-fleet-dark
 
           zxh404.vscode-proto3
-          rust-lang.rust-analyzer
           wgsl-analyzer.wgsl-analyzer
 
           github.vscode-github-actions
