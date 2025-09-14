@@ -51,6 +51,7 @@ in {
     cachix
     code-cursor
     nix-init
+    nix-tree
     nix-prefetch-github
     dbee
   ];
