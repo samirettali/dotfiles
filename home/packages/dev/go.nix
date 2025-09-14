@@ -46,11 +46,9 @@
       "gopls" = {
         "ui.diagnostic.analyses" = {
           "modernize" = true;
-        };
-        "ui.semanticTokens" = false;
-        "analyses" = {
           "shadow" = true;
         };
+        "ui.semanticTokens" = false;
       };
     };
   };
