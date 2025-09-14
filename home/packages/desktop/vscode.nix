@@ -52,17 +52,17 @@ in {
 
           google.geminicodeassist
           sourcegraph.amp
-          rooveterinaryinc.roo-cline
           supermaven.supermaven
+          kilocode.kilo-code
           jacobwgillespie.minimal-icons
+          # rooveterinaryinc.roo-cline
           # continue.continue
           # vadimcn.vscode-lldb # TODO: build is broken
           # postman.postman-for-vscode
-          saoudrizwan.claude-dev
+          # saoudrizwan.claude-dev
           # github.copilot
           # github.copilot-chat
           # augment.vscode-augment
-          kilocode.kilo-code
         ];
         keybindings = [
           {
