@@ -16,6 +16,7 @@
       "docker-desktop"
       "eqmac"
       "maccy"
+      "neohtop"
       "shottr"
       "sloth"
       "sol"

@@ -11,6 +11,7 @@
     ledger-live-desktop
     lmstudio
     redisinsight
+    neohtop
   ];
 
   # TODO:
