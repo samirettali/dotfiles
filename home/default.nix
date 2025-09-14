@@ -49,7 +49,7 @@ in {
 
   home.packages = with pkgs; [
     cachix
-    # code-cursor
+    code-cursor
     nix-init
     nix-prefetch-github
     dbee
