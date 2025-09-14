@@ -32,7 +32,6 @@
     # diskus
     fd
     # fx
-    gemini-cli
     gh
     gnused
     # gping # graphical ping
@@ -78,7 +77,9 @@
     # yazi # file manager
     yt-dlp
     yubikey-manager
+
     nur.repos.charmbracelet.crush
+    gemini-cli
     amp-cli
   ];
 }
