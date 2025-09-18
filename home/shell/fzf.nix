@@ -1,6 +1,7 @@
 {...}: {
   programs.fzf = {
     enable = true;
+    enableFishIntegration = true;
     defaultOptions = [
       "--ansi"
       "--bind space:jump,jump:accept"
