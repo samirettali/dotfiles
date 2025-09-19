@@ -1266,6 +1266,10 @@
                 name = "CME FedWatch Tool";
                 url = "https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html";
               }
+              {
+                name = "Perpetual Pulse";
+                url = "https://www.perpetualpulse.xyz/";
+              }
             ];
           }
           {
