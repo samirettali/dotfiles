@@ -55,7 +55,7 @@
     ncdu
     ngrok # tunneling
     p7zip
-    # pgcli
+    pgcli
     # plumber
     repomix
     # rlwrap
