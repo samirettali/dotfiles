@@ -139,6 +139,20 @@
         {
           check-further-callbacks = true;
           "if" = {
+            app-id = "com.hnc.discord";
+          };
+          run = ["move-node-to-workspace 7"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
+            app-id = "ru.keepcoder.Telegram";
+          };
+          run = ["move-node-to-workspace 7"];
+        }
+        {
+          check-further-callbacks = true;
+          "if" = {
             app-id = "com.spotify.client";
           };
           run = ["move-node-to-workspace 8"];
@@ -147,13 +161,6 @@
           check-further-callbacks = true;
           "if" = {
             app-id = "org.keepassxc.keepassxc";
-          };
-          run = ["move-node-to-workspace 8"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = {
-            app-id = "com.hnc.discord";
           };
           run = ["move-node-to-workspace 8"];
         }
