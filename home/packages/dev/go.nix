@@ -29,6 +29,10 @@
       protoc-gen-go
       protoc-gen-go-grpc
       revive
+      (go-migrate.overrideAttrs
+        (oldAttrs: {
+          tags = ["postgres"];
+        }))
     ];
 
   programs.vscode.profiles.default = lib.optionals config.programs.go.enable {
