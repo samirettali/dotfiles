@@ -3,6 +3,324 @@
     force = true;
     settings = [
       {
+        name = "Betting";
+        bookmarks = [
+          {
+            name = "Polymarket";
+            url = "https://polymarket.com";
+          }
+          {
+            name = "Polymarket analytics";
+            url = "https://polymarketanalytics.com";
+          }
+          {
+            name = "Hashdive";
+            url = "https://hashdive.com/";
+          }
+          {
+            name = "Monitor the situation";
+            url = "https://monitorthesituation.lol/";
+          }
+          {
+            name = "Polysights";
+            url = "https://app.polysights.xyz/";
+          }
+          {
+            name = "Polyfactual";
+            url = "https://www.polyfactual.com/";
+          }
+          {
+            name = "Polyfund";
+            url = "https://www.polyfund.so/";
+          }
+          {
+            name = "Aerospace";
+            url = "https://www.aerospace.sh";
+          }
+          {
+            name = "Polymarket arbitrage bets";
+            url = "https://getarbitragebets.com/";
+          }
+          {
+            name = "IvanCryptoSlav - Substack";
+            url = "https://substack.com/@ivancryptoslav";
+          }
+          {
+            name = "Oddsjam tools";
+            url = "https://oddsjam.com/betting-calculators/arbitrage-hedge-bet";
+          }
+          {
+            name = "Metaculus";
+            url = "https://www.metaculus.com";
+          }
+          {
+            name = "Betmoar";
+            url = "https://www.betmoar.fun/";
+          }
+          {
+            name = "Pentagon pizza tracker";
+            url = "https://www.pizzint.watch/";
+          }
+          {
+            name = "Polyglobe";
+            url = "https://www.pizzint.watch/polyglobe";
+          }
+          {
+            name = "Nevua markets";
+            url = "https://nevua.markets/";
+          }
+          {
+            name = "Prediction index";
+            url = "https://predictionindex.xyz/markets";
+          }
+          {
+            name = "Stand trade";
+            url = "https://www.stand.trade/discover";
+          }
+          {
+            name = "Polyalerthub";
+            url = "https://polyalerthub.com/";
+          }
+          {
+            name = "PredictEX";
+            url = "https://app.predictex.io/";
+          }
+          {
+            name = "Manifold";
+            url = "https://manifold.markets/";
+          }
+          {
+            name = "@alexmccullough / Polymarket Accuracy %";
+            url = "https://dune.com/queries/4229518/7116830";
+          }
+          {
+            name = "Parsec - Polymarket";
+            url = "https://parsec.fi/polymarket";
+          }
+          {
+            name = "PMX";
+            url = "https://pmx.trade";
+          }
+          {
+            name = "Sports";
+            bookmarks = [
+              {
+                name = "CBS Sports";
+                url = "https://www.cbssports.com/";
+              }
+              {
+                name = "Pickswise";
+                url = "https://www.pickswise.com/";
+              }
+              {
+                name = "Sportsline";
+                url = "https://www.sportsline.com/";
+              }
+            ];
+          }
+          {
+            name = "Twitter";
+            bookmarks = [
+              {
+                name = "TaikiMaeda2";
+                url = "https://x.com/TaikiMaeda2";
+              }
+              {
+                name = "PolyGamblerGR";
+                url = "https://x.com/PolyGamblerGR";
+              }
+              {
+                name = "0xwondr";
+                url = "https://x.com/0xwondr";
+              }
+              {
+                name = "IvanCryptoSlav";
+                url = "https://x.com/IvanCryptoSlav";
+              }
+              {
+                name = "GenaTheCroco";
+                url = "https://x.com/GenaTheCroco";
+              }
+              {
+                name = "VersoTrading";
+                url = "https://x.com/VersoTrading";
+              }
+              {
+                name = "PixOnChain";
+                url = "https://x.com/PixOnChain";
+              }
+            ];
+          }
+        ];
+      }
+      {
+        name = "Dashboards";
+        bookmarks = [
+          {
+            name = "News";
+            bookmarks = [
+              {
+                name = "Tree of alpha";
+                url = "https://news.treeofalpha.com/";
+              }
+              {
+                name = "Phoenix news";
+                url = "https://phoenixnews.io/";
+              }
+            ];
+          }
+          {
+            name = "Analytics";
+            bookmarks = [
+              {
+                name = "Social Blade";
+                url = "https://socialblade.com";
+              }
+            ];
+          }
+          {
+            name = "Coinglass";
+            bookmarks = [
+              {
+                name = "Ethereum ETF";
+                url = "https://www.coinglass.com/eth-etf?ck_subscriber_id=1650003955";
+              }
+              {
+                name = "Bull market peak signals";
+                url = "https://www.coinglass.com/bull-market-peak-signals";
+              }
+              {
+                name = "Funding rate heatmap";
+                url = "https://www.coinglass.com/FundingRateHeatMap";
+              }
+            ];
+          }
+          {
+            name = "Reserves";
+            bookmarks = [
+              {
+                name = "Bitcoin treasuries";
+                url = "https://bitcointreasuries.net";
+              }
+              {
+                name = "Ethereum reserves";
+                url = "https://www.strategicethreserve.xyz";
+              }
+              {
+                name = "Solana reserves";
+                url = "https://www.strategicsolanareserve.org";
+              }
+            ];
+          }
+          {
+            name = "SoSo Value";
+            url = "https://alpha.sosovalue.com/";
+          }
+          {
+            name = "Ethereum validator queue";
+            url = "https://www.validatorqueue.com/";
+          }
+          {
+            name = "Token terminal";
+            url = "https://tokenterminal.com";
+          }
+          {
+            name = "Messari";
+            url = "https://messari.io/";
+          }
+          {
+            name = "The block";
+            url = "https://www.theblock.co/data";
+          }
+          {
+            name = "Defillama";
+            url = "https://defillama.com/";
+          }
+          {
+            name = "Dune";
+            url = "https://dune.com/home";
+          }
+          {
+            name = "Cryptoquant";
+            url = "https://cryptoquant.com/asset/btc/summary";
+          }
+
+          {
+            name = "Artemis analytics";
+            url = "https://app.artemisanalytics.com/chains";
+          }
+          {
+            name = "Token unlocks";
+            url = "https://tokenomist.ai/";
+          }
+          {
+            name = "Financial juice";
+            url = "https://www.financialjuice.com";
+          }
+          {
+            name = "CME FedWatch Tool";
+            url = "https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html";
+          }
+          {
+            name = "Perpetual Pulse";
+            url = "https://www.perpetualpulse.xyz/";
+          }
+          {
+            name = "RWA";
+            url = "https://app.rwa.xyz/";
+          }
+        ];
+      }
+      {
+        name = "Finance";
+        bookmarks = [
+          {
+            name = "Companies market cap";
+            url = "https://companiesmarketcap.com/";
+          }
+          {
+            name = "Stock analysis";
+            url = "https://stockanalysis.com/";
+          }
+          {
+            name = "Seeking Alpha";
+            url = "https://seekingalpha.com";
+          }
+          {
+            name = "Finviz";
+            url = "https://finviz.com/";
+          }
+          {
+            name = "Investing";
+            url = "https://investing.com";
+          }
+          {
+            name = "Wallstreetbets";
+            url = "https://www.reddit.com/r/wallstreetbets";
+          }
+          {
+            name = "Marketwatch";
+            url = "https://www.marketwatch.com/";
+          }
+          {
+            name = "Zacks";
+            url = "https://www.zacks.com";
+          }
+          {
+            name = "Marketbeat";
+            url = "https://www.marketbeat.com/";
+          }
+          {
+            name = "IMF data";
+            url = "https://www.imf.org/external/datamapper/datasets";
+          }
+          {
+            name = "Portfolios lab";
+            url = "https://portfolioslab.com";
+          }
+        ];
+      }
+      {
         name = "AI";
         toolbar = false;
         bookmarks = [
@@ -278,6 +596,14 @@
               {
                 name = "Chef";
                 url = "https://chef.convex.dev";
+              }
+              {
+                name = "Orchids";
+                url = "https://www.orchids.app/";
+              }
+              {
+                name = "Anything";
+                url = "https://www.createanything.com";
               }
               {
                 name = "Rocket";
@@ -790,18 +1116,6 @@
             ];
           }
           {
-            name = " Finance";
-            bookmarks = [
-              {
-                url = "https://companiesmarketcap.com/";
-              }
-
-              {
-                url = "https://stockanalysis.com/";
-              }
-            ];
-          }
-          {
             name = "Firefox settings";
             bookmarks = [
               {url = "https://kb.mozillazine.org/About:config_entries";}
@@ -1035,10 +1349,6 @@
                 url = "https://app.whales.market/points-markets";
               }
               {
-                name = "Polymarket";
-                url = "https://polymarket.com";
-              }
-              {
                 name = "Splits";
                 url = "https://app.splits.org/";
               }
@@ -1089,189 +1399,7 @@
               }
             ];
           }
-          {
-            name = "Dashboards";
-            bookmarks = [
-              {
-                name = "News";
-                bookmarks = [
-                  {
-                    name = "Tree of alpha";
-                    url = "https://news.treeofalpha.com/";
-                  }
-                  {
-                    name = "Phoenix news";
-                    url = "https://phoenixnews.io/";
-                  }
-                ];
-              }
-              {
-                name = "Coinglass";
-                bookmarks = [
-                  {
-                    name = "Ethereum ETF";
-                    url = "https://www.coinglass.com/eth-etf?ck_subscriber_id=1650003955";
-                  }
-                  {
-                    name = "Bull market peak signals";
-                    url = "https://www.coinglass.com/bull-market-peak-signals";
-                  }
-                  {
-                    name = "Funding rate heatmap";
-                    url = "https://www.coinglass.com/FundingRateHeatMap";
-                  }
-                ];
-              }
-              {
-                name = "Reserves";
-                bookmarks = [
-                  {
-                    name = "Bitcoin treasuries";
-                    url = "https://bitcointreasuries.net";
-                  }
-                  {
-                    name = "Ethereum reserves";
-                    url = "https://www.strategicethreserve.xyz";
-                  }
-                  {
-                    name = "Solana reserves";
-                    url = "https://www.strategicsolanareserve.org";
-                  }
-                ];
-              }
-              {
-                name = "Polymarket";
-                bookmarks = [
-                  {
-                    name = "Polymarket analytics";
-                    url = "https://polymarketanalytics.com";
-                  }
-                  {
-                    name = "Hashdive";
-                    url = "https://hashdive.com/";
-                  }
-                  {
-                    name = "Monitor the situation";
-                    url = "https://monitorthesituation.lol/";
-                  }
-                  {
-                    name = "Polysights";
-                    url = "https://app.polysights.xyz/";
-                  }
-                  {
-                    name = "Polyfactual";
-                    url = "https://www.polyfactual.com/";
-                  }
-                  {
-                    name = "Polyfund";
-                    url = "https://www.polyfund.so/";
-                  }
-                  {
-                    name = "Aerospace";
-                    url = "https://www.aerospace.sh";
-                  }
-                  {
-                    name = "IvanCryptoSlav - Substack";
-                    url = "https://substack.com/@ivancryptoslav";
-                  }
-                  {
-                    name = "@alexmccullough / Polymarket Accuracy %";
-                    url = "https://dune.com/queries/4229518/7116830";
-                  }
-                  {
-                    name = "Twitter";
-                    bookmarks = [
-                      {
-                        name = "TaikiMaeda2";
-                        url = "https://x.com/TaikiMaeda2";
-                      }
-                      {
-                        name = "PolyGamblerGR";
-                        url = "https://x.com/PolyGamblerGR";
-                      }
-                      {
-                        name = "0xwondr";
-                        url = "https://x.com/0xwondr";
-                      }
-                      {
-                        name = "IvanCryptoSlav";
-                        url = "https://x.com/IvanCryptoSlav";
-                      }
-                      {
-                        name = "GenaTheCroco";
-                        url = "https://x.com/GenaTheCroco";
-                      }
-                      {
-                        name = "VersoTrading";
-                        url = "https://x.com/VersoTrading";
-                      }
-                      {
-                        name = "PixOnChain";
-                        url = "https://x.com/PixOnChain";
-                      }
-                    ];
-                  }
-                ];
-              }
-              {
-                name = "SoSo Value";
-                url = "https://alpha.sosovalue.com/";
-              }
-              {
-                name = "Ethereum validator queue";
-                url = "https://www.validatorqueue.com/";
-              }
-              {
-                name = "Token terminal";
-                url = "https://tokenterminal.com";
-              }
-              {
-                name = "Messari";
-                url = "https://messari.io/";
-              }
-              {
-                name = "The block";
-                url = "https://www.theblock.co/data";
-              }
-              {
-                name = "Defillama";
-                url = "https://defillama.com/";
-              }
-              {
-                name = "Dune";
-                url = "https://dune.com/home";
-              }
-              {
-                name = "Cryptoquant";
-                url = "https://cryptoquant.com/asset/btc/summary";
-              }
 
-              {
-                name = "Artemis analytics";
-                url = "https://app.artemisanalytics.com/chains";
-              }
-              {
-                name = "Pentagon pizza tracker";
-                url = "https://www.pizzint.watch/";
-              }
-              {
-                name = "Token unlocks";
-                url = "https://tokenomist.ai/";
-              }
-              {
-                name = "Financial juice";
-                url = "https://www.financialjuice.com";
-              }
-              {
-                name = "CME FedWatch Tool";
-                url = "https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html";
-              }
-              {
-                name = "Perpetual Pulse";
-                url = "https://www.perpetualpulse.xyz/";
-              }
-            ];
-          }
           {
             name = "Trading view";
             url = "https://www.tradingview.com/chart/VIP09u4q/?symbol=BINANCE%3ABTCUSDT";
