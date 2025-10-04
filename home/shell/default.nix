@@ -4,6 +4,7 @@
     ./bat.nix
     ./btop.nix
     ./claude-code.nix
+    ./gemini-cli.nix
     ./direnv.nix
     ./fzf.nix
     ./git.nix
@@ -79,7 +80,6 @@
     yubikey-manager
 
     nur.repos.charmbracelet.crush
-    gemini-cli
     amp-cli
   ];
 }
