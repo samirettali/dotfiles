@@ -13,8 +13,7 @@ in {
       autoshare = false;
       autoupdate = false;
       theme = "opencode";
-      disabled_providers = ["google"];
-      model = "anthropic/claude-sonnet-4-20250514";
+      model = "anthropic/claude-sonnet-4-5-20250929";
       small_model = "anthropic/claude-3-5-haiku-20241022";
       provider = {
         openrouter = {
@@ -28,7 +27,7 @@ in {
       agent = {
         code-reviewer = {
           description = "Reviews code for best practices and potential issues";
-          model = "anthropic/claude-sonnet-4-20250514";
+          model = "anthropic/claude-sonnet-4-5-20250929";
           prompt = "You are a code reviewer. Focus on security, performance, and maintainability.";
           tools = {
             write = false;
@@ -37,11 +36,11 @@ in {
         };
       };
       mcp = {
-        context7 = {
-          enabled = true;
-          type = "remote";
-          url = "https://mcp.context7.com/mcp";
-        };
+        # context7 = {
+        #   enabled = true;
+        #   type = "remote";
+        #   url = "https://mcp.context7.com/mcp";
+        # };
         # playwright = {
         #   enabled = true;
         #   type = "local";
