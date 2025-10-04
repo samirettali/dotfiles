@@ -1,6 +1,6 @@
-{...}: {
+{lib, ...}: {
   programs.bat = {
-    enable = true;
+    enable = lib.mkDefault false;
     config = {
       theme = "base16";
       style = "numbers,changes,header";
