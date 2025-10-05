@@ -14,6 +14,14 @@
             url = "https://polymarketanalytics.com";
           }
           {
+            name = "Polymarket ecosystem";
+            url = "https://www.polymark.et/";
+          }
+          {
+            name = "PredictShark";
+            url = "https://www.predictshark.io";
+          }
+          {
             name = "Hashdive";
             url = "https://hashdive.com/";
           }
@@ -36,6 +44,10 @@
           {
             name = "Aerospace";
             url = "https://www.aerospace.sh";
+          }
+          {
+            name = "Tremor";
+            url = "https://tremor.sh";
           }
           {
             name = "Polymarket arbitrage bets";
@@ -115,6 +127,43 @@
               {
                 name = "Sportsline";
                 url = "https://www.sportsline.com/";
+              }
+              {
+                name = "Betmonitor";
+                url = "https://www.betmonitor.com/";
+              }
+              {
+                name = "Betburger";
+                url = "https://www.betburger.com/events/prematch";
+              }
+              {
+                name = "Surebet";
+                url = "https://en.surebet.com/valuebets";
+              }
+              {
+                name = "Oddspedia";
+                url = "https://oddspedia.com";
+              }
+              {
+                name = "Oddsalerts";
+                url = "https://oddalerts.com/value-bets";
+              }
+              {
+                name = "Unabated";
+                url = "https://unabated.com";
+              }
+            ];
+          }
+          {
+            name = "Mr Beast";
+            bookmarks = [
+              {
+                name = "Mr Beast - X";
+                url = "https://x.com/MrBeast";
+              }
+              {
+                name = "Mr Beast Stats - X";
+                url = "https://x.com/MrBeast_Stats";
               }
             ];
           }
