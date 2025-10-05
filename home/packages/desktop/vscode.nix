@@ -5,18 +5,9 @@
   pkgs,
   ...
 }: let
-  cursorSettings =
-    (builtins.removeAttrs config.programs.vscode.profiles.default.userSettings ["workbench.colorTheme"])
-    // {"cursor.composer.shouldChimeAfterChatFinishes" = true;};
-
   withExtension = ext: settings:
     lib.optionalAttrs (builtins.elem ext config.programs.vscode.profiles.default.extensions) settings;
 in {
-  home.file."Library/Application Support/Cursor/User/settings.json".text =
-    builtins.toJSON cursorSettings;
-  home.file."Library/Application Support/Cursor/User/keybindings.json".text =
-    builtins.toJSON config.programs.vscode.profiles.default.keybindings;
-
   programs = {
     vscode = {
       enable = true;

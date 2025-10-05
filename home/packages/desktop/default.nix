@@ -3,6 +3,7 @@
     ./alacritty.nix
     ./espanso.nix
     ./firefox
+    ./cursor.nix
     ./ghostty.nix
     ./keepassxc.nix
     ./kitty.nix
