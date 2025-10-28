@@ -1,12 +1,16 @@
-local Aerospace = require("aerospace")
+local Rift = require("rift_client")
 
-local aerospace = Aerospace.new() -- it finds the socket on its own
-while not aerospace:is_initialized() do
-	os.execute("sleep 0.1") -- wait for connection, not the best workaround
-end
+local rift_success, rift = pcall(Rift.new) -- connects to rift via mach ports
 
 sbar = require("sketchybar")
-sbar.aerospace = aerospace
+
+if rift_success then
+	while not rift:is_connected() do
+		os.execute("sleep 0.1") -- wait for connection
+	end
+
+	sbar.rift = rift
+end
 
 local cjson = require("cjson")
 D = function(data)

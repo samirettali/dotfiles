@@ -109,6 +109,7 @@
 
   # TODO: cleanup
   # aerospaceLuaPackage = pkgs.callPackage ./aerospace-lua.nix {};
+  riftLuaPackage = pkgs.callPackage ./rift-lua.nix {};
 
   luaposixPackage = pkgs.callPackage ./luaposix.nix {
     buildLuarocksPackage = pkgs.lua54Packages.buildLuarocksPackage;
@@ -134,6 +135,7 @@
         pkgs.sbarlua
         luaposixPackage
         luasimdjsonPackage
+        riftLuaPackage
         # luasec
         # luabitop
       ]);
@@ -153,8 +155,6 @@ in {
     "${sketchybarExe} --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE"
   ];
 
-  # -- package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath pkgs.lua54Packages.luasec}"
-  # -- package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath pkgs.lua54Packages.luabitop}"
   xdg.configFile = {
     "sketchybar" = {
       source = ../dotfiles/sketchybar;
@@ -168,6 +168,7 @@ in {
         package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath pkgs.lua54Packages.luasocket}"
         package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath luaposixPackage}"
         package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath luasimdjsonPackage}"
+        package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath riftLuaPackage}"
         require("init")
       '';
     };
