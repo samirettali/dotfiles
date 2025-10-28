@@ -15,7 +15,6 @@
         overrideGpg = true;
         paging = {
           colorArg = "always";
-          pager = "${lib.getExe pkgs.delta} --dark --paging=never";
         };
       };
       promptToReturnFromSubprocess = false;

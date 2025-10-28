@@ -4,7 +4,7 @@
   ...
 }: {
   programs.git.delta = {
-    enable = true;
+    enable = false;
     options = {
       syntax-theme = "base16";
       # TODO

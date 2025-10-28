@@ -19,10 +19,12 @@ in {
   programs = {
     git = {
       enable = true;
-      userEmail = config.home.sessionVariables.EMAIL;
-      userName = "Samir Ettali";
-      delta.enable = true;
-      extraConfig = {
+      settings = {
+        user = {
+          email = config.home.sessionVariables.EMAIL;
+          name = "Samir Ettali";
+          signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
+        };
         branch.sort = "-committerdate";
         column.ui = "auto";
         commit.gpgsign = true;
@@ -60,7 +62,6 @@ in {
         url."git@github.com:YoungAgency".insteadOf = "https://github.com/YoungAgency";
         url."git@github.com:samirettali".insteadOf = "https://github.com/samirettali";
         url."git@github.com:samirettali/".insteadOf = "se:";
-        user.signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
       };
       ignores = [
         "*.env"
