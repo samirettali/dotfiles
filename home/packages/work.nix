@@ -30,6 +30,7 @@ in {
     terraform
     terraform-ls
     mongosh
+    mongodb-tools
   ];
 
   programs = {
