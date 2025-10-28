@@ -15,31 +15,39 @@ in {
       profiles.default = {
         enableExtensionUpdateCheck = false;
         enableUpdateCheck = false;
-        extensions = with pkgs.vscode-marketplace; [
-          eamodio.gitlens
-          vscodevim.vim
-          franzgollhammer.jb-fleet-dark
+        extensions = with pkgs.vscode-marketplace;
+          [
+            eamodio.gitlens
+            vscodevim.vim
+            franzgollhammer.jb-fleet-dark
 
-          zxh404.vscode-proto3
-          wgsl-analyzer.wgsl-analyzer
+            zxh404.vscode-proto3
+            wgsl-analyzer.wgsl-analyzer
 
-          github.vscode-github-actions
-          github.vscode-pull-request-github
+            github.vscode-github-actions
+            github.vscode-pull-request-github
 
-          google.geminicodeassist
-          sourcegraph.amp
-          supermaven.supermaven
-          kilocode.kilo-code
-          jacobwgillespie.minimal-icons
-          # rooveterinaryinc.roo-cline
-          # continue.continue
-          # vadimcn.vscode-lldb # TODO: build is broken
-          # postman.postman-for-vscode
-          # saoudrizwan.claude-dev
-          # github.copilot
-          # github.copilot-chat
-          # augment.vscode-augment
-        ];
+            jacobwgillespie.minimal-icons
+
+            # vadimcn.vscode-lldb # TODO: build is broken
+            # postman.postman-for-vscode
+
+            sourcegraph.amp
+            supermaven.supermaven
+            kilocode.kilo-code
+            anthropic.claude-code
+            # saoudrizwan.claude-dev
+            # github.copilot
+            # github.copilot-chat
+            # augment.vscode-augment
+            # google.geminicodeassist
+            # rooveterinaryinc.roo-cline
+            # continue.continue
+          ]
+          ++ (with pkgs.vscode-extensions; [
+            ms-toolsai.jupyter
+            ms-toolsai.jupyter-renderers
+          ]);
         keybindings = [
           {
             "key" = "ctrl+tab";
@@ -59,18 +67,18 @@ in {
           }
         ];
         userMcp = {
-          "servers" = {
-            "context7" = {
-              "type" = "http";
-              "url" = "https://mcp.context7.com/mcp";
-            };
-            "playwright" = {
-              "command" = "npx";
-              "args" = [
-                "@playwright/mcp@latest"
-              ];
-            };
-          };
+          # "servers" = {
+          #   "context7" = {
+          #     "type" = "http";
+          #     "url" = "https://mcp.context7.com/mcp";
+          #   };
+          #   "playwright" = {
+          #     "command" = "npx";
+          #     "args" = [
+          #       "@playwright/mcp@latest"
+          #     ];
+          #   };
+          # };
         };
         userSettings = lib.mkMerge [
           {
