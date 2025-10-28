@@ -6,7 +6,7 @@ in {
     cent
     dnsx
     ffuf
-    # findomain # TODO: upstream is broken
+    findomain
     ghidra-bin
     hakrawler
     httpx
