@@ -158,7 +158,7 @@ function Statuscolumn()
 	elseif buftype == "quickfix" then
 		local bqf_sign = get_bqf_sign(buf, lnum)
 		table.insert(components, format_sign(bqf_sign))
-	else
+	elseif filetype ~= "nvim-undotree" then
 		-- Diagnostics
 		local diagnostic = get_diagnostic_sign(buf, lnum)
 		table.insert(components, format_sign(diagnostic, 2))

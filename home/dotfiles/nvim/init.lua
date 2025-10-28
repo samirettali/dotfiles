@@ -77,3 +77,5 @@ local opts = {
 }
 
 require("lazy").setup({ import = "plugins" }, opts)
+
+vim.cmd("packadd nvim.undotree")

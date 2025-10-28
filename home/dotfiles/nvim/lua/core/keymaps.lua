@@ -37,3 +37,4 @@ vim.keymap.set({ "i", "n" }, "<esc>", "<CMD>noh<CR><esc>", { desc = "Clear hlsea
 -- end, { desc = "Delete a line and copy it only if it's not empty", silent = true })
 
 vim.keymap.set("n", "<localleader>r", "<CMD>restart<CR>", { desc = "Restart" })
+vim.keymap.set("n", "<leader>u", "<CMD>Undotree<CR>", { desc = "Restart" })
