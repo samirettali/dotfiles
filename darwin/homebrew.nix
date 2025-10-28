@@ -17,7 +17,7 @@
       "eqmac"
       "maccy"
       "neohtop"
-      "hammerspoon"
+      # "hammerspoon"
       "shottr"
       "sloth"
       "sol"

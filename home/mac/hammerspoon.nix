@@ -5,7 +5,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    # nur.repos.natsukium.hammerspoon
+    nur.repos.natsukium.hammerspoon
   ];
 
   home.file = {
