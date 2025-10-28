@@ -29,6 +29,7 @@ in {
     stunnel
     terraform
     terraform-ls
+    mongosh
   ];
 
   programs = {
