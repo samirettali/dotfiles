@@ -23,7 +23,7 @@ in {
   home.packages = [
     samirettali-nur.packages.${pkgs.system}.zesh
     pkgs.zjstatus
-    (pkgs.writeShellScriptBin "zc" ''
+    (pkgs.writeShellScriptBin "za" ''
       set -euo pipefail
 
       if [ $# -gt 1 ]; then
@@ -55,7 +55,6 @@ in {
   };
 
   home.shellAliases = {
-    za = "${exe} attach -c";
     zd = "${exe} delete-session";
     zk = "${exe} kill-session";
     zl = "${exe} list-sessions";
