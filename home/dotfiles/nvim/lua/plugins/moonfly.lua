@@ -78,7 +78,7 @@ return {
 					fg = palette.grey11,
 				})
 				vim.api.nvim_set_hl(0, "PounceAcceptBest", {
-					bg = palette.turquoise,
+					bg = palette.red,
 					fg = palette.grey11,
 				})
 				vim.api.nvim_set_hl(0, "PounceCursor", {
@@ -94,7 +94,7 @@ return {
 					fg = palette.grey11,
 				})
 				vim.api.nvim_set_hl(0, "PounceCursorAcceptBest", {
-					bg = palette.turquoise,
+					bg = palette.red,
 					fg = palette.grey11,
 				})
 
