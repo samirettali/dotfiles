@@ -12,6 +12,7 @@ return {
 		vim.g.moonflyWinSeparator = 2
 		vim.g.moonflyVirtualTextColor = true
 		vim.g.moonflyNormalFloat = true
+		vim.g.moonflyNormalPmenu = true
 		vim.g.moonflyUnderlineMatchParen = true -- TODO: needed?
 		vim.g.moonflyItalics = false
 		vim.g.moonflyUndercurls = true
@@ -61,9 +62,6 @@ return {
 					bg = palette.grey11,
 				})
 
-				vim.api.nvim_set_hl(0, "PmenuMatch", {
-					fg = palette.blue,
-				})
 				vim.api.nvim_set_hl(0, "PounceMatch", {
 					bg = palette.lime,
 					fg = palette.grey11,
