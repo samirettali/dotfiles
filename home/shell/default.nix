@@ -42,7 +42,7 @@
     # hto
     # httptap
     hwatch # watch alternative with diff snapshots
-    # iredis # TODO: upstream is broken
+    iredis
     jq
     jqp
     # kaf
