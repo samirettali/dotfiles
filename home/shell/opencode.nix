@@ -13,8 +13,8 @@ in {
       autoshare = false;
       autoupdate = false;
       theme = "opencode";
-      model = "anthropic/claude-sonnet-4-5-20250929";
-      small_model = "anthropic/claude-3-5-haiku-20241022";
+      model = "anthropic/claude-sonnet-4-5";
+      small_model = "anthropic/claude-haiku-4-5";
       provider = {
         openrouter = {
           npm = "@openrouter/ai-sdk-provider";
