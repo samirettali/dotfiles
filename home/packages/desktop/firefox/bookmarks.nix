@@ -38,12 +38,20 @@
             url = "https://www.polyfactual.com/";
           }
           {
+            name = "True Markets";
+            url = "https://truemarkets.org";
+          }
+          {
             name = "Polyfund";
             url = "https://www.polyfund.so/";
           }
           {
             name = "Aerospace";
             url = "https://www.aerospace.sh";
+          }
+          {
+            name = "Mention Metrix";
+            url = "https://www.mentionmetrix.com/";
           }
           {
             name = "Tremor";
@@ -64,6 +72,10 @@
           {
             name = "Metaculus";
             url = "https://www.metaculus.com";
+          }
+          {
+            name = "Manifold";
+            url = "https://manifold.markets/";
           }
           {
             name = "Betmoar";
@@ -96,10 +108,6 @@
           {
             name = "PredictEX";
             url = "https://app.predictex.io/";
-          }
-          {
-            name = "Manifold";
-            url = "https://manifold.markets/";
           }
           {
             name = "@alexmccullough / Polymarket Accuracy %";
@@ -216,6 +224,32 @@
                 name = "Phoenix news";
                 url = "https://phoenixnews.io/";
               }
+              {
+                name = "Financial juice";
+                url = "https://www.financialjuice.com";
+              }
+              {
+                name = "CryptoPanic";
+                url = "https://cryptopanic.com/";
+              }
+            ];
+          }
+          {
+            name = "Insiders";
+            bookmarks = [
+              {
+                name = "Quiver Quant";
+                url = "https://www.quiverquant.com/";
+              }
+            ];
+          }
+          {
+            name = "Yield aggregators";
+            bookmarks = [
+              {
+                name = "Liquidity.land";
+                url = "https://app.liquidity.land/";
+              }
             ];
           }
           {
@@ -224,6 +258,32 @@
               {
                 name = "Social Blade";
                 url = "https://socialblade.com";
+              }
+            ];
+          }
+          {
+            name = "Technical analysis";
+            bookmarks = [
+              {
+                name = "Trading view";
+                url = "https://www.tradingview.com/chart/VIP09u4q/?symbol=BINANCE%3ABTCUSDT";
+              }
+              {
+                name = "Kiyotaka";
+                url = "https://kiyotaka.ai";
+              }
+            ];
+          }
+          {
+            name = "Sentiment analysis";
+            bookmarks = [
+              {
+                name = "Elfa";
+                url = "https://app.elfa.ai/leaderboard/token";
+              }
+              {
+                name = "Dexu";
+                url = "https://dexu.ai/narratives";
               }
             ];
           }
@@ -241,6 +301,27 @@
               {
                 name = "Funding rate heatmap";
                 url = "https://www.coinglass.com/FundingRateHeatMap";
+              }
+            ];
+          }
+          {
+            name = "Data";
+            bookmarks = [
+              {
+                name = "Grow the pie";
+                url = "https://www.growthepie.com/";
+              }
+              {
+                name = "Token unlocks";
+                url = "https://tokenomist.ai/";
+              }
+              {
+                name = "Defiscan";
+                url = "https://www.defiscan.info/";
+              }
+              {
+                name = "Defi saver AAVE explorer";
+                url = "https://aave.defiexplore.com/";
               }
             ];
           }
@@ -293,18 +374,17 @@
             name = "Cryptoquant";
             url = "https://cryptoquant.com/asset/btc/summary";
           }
-
+          {
+            name = "Loris tools - Funding arbitrage";
+            url = "https://loris.tools";
+          }
+          {
+            name = "Smartbitrage";
+            url = "https://smartbitrage.com";
+          }
           {
             name = "Artemis analytics";
             url = "https://app.artemisanalytics.com/chains";
-          }
-          {
-            name = "Token unlocks";
-            url = "https://tokenomist.ai/";
-          }
-          {
-            name = "Financial juice";
-            url = "https://www.financialjuice.com";
           }
           {
             name = "CME FedWatch Tool";
@@ -317,6 +397,10 @@
           {
             name = "RWA";
             url = "https://app.rwa.xyz/";
+          }
+          {
+            name = "Coinmarketman - Hypertracker";
+            url = "https://app.coinmarketman.com/hypertracker";
           }
         ];
       }
@@ -354,6 +438,10 @@
           {
             name = "Zacks";
             url = "https://www.zacks.com";
+          }
+          {
+            name = "Tipranks";
+            url = "https://www.tipranks.com";
           }
           {
             name = "Marketbeat";
@@ -1134,6 +1222,10 @@
             url = "https://www.omnicalculator.com/";
           }
           {
+            name = "Alpha Arena";
+            url = "https://nof1.ai/";
+          }
+          {
             name = "Media";
             bookmarks = [
               {
@@ -1362,6 +1454,18 @@
             toolbar = false;
             bookmarks = [
               {
+                name = "AAVE";
+                url = "https://app.aave.com/";
+              }
+              {
+                name = "Superform";
+                url = "https://app.superform.xyz";
+              }
+              {
+                name = "Fluid";
+                url = "https://fluid.io";
+              }
+              {
                 name = "Contango";
                 url = "https://app.contango.xyz/strategies/leveraged-staking/eth";
               }
@@ -1408,6 +1512,23 @@
             ];
           }
           {
+            name = "Explorers";
+            bookmarks = [
+              {
+                name = "Routescan";
+                url = "https://routescan.io/";
+              }
+              {
+                name = "NFTScan";
+                url = "https://www.nftscan.com/";
+              }
+              {
+                name = "Socketscan";
+                url = "https://www.socketscan.io/";
+              }
+            ];
+          }
+          {
             name = "Development";
             bookmarks = [
               {
@@ -1448,11 +1569,6 @@
               }
             ];
           }
-
-          {
-            name = "Trading view";
-            url = "https://www.tradingview.com/chart/VIP09u4q/?symbol=BINANCE%3ABTCUSDT";
-          }
           {
             name = "DeBank";
             url = "https://debank.com/profile";
@@ -1460,10 +1576,6 @@
           {
             name = "Cerebro";
             url = "https://cerebro.xyz/dashboard";
-          }
-          {
-            name = "Phoenix news";
-            url = "https://phoenixnews.io";
           }
           {
             name = "AAVE governance";
