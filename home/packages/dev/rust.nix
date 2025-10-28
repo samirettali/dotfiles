@@ -17,6 +17,7 @@
 in {
   home.packages = [
     rustPkgs
+    pkgs.cargo-geiger
   ];
 
   programs.vscode.profiles.default =
