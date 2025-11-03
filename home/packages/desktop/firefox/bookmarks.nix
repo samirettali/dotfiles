@@ -1348,6 +1348,10 @@
             url = "https://takeoffspeeds.com";
           }
           {
+            name = "Strange attractors";
+            url = "https://blog.shashanktomar.com/posts/strange-attractors";
+          }
+          {
             name = "LifeWiki";
             url = "https://conwaylife.com/wiki";
           }
