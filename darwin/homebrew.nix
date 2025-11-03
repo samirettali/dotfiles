@@ -23,6 +23,7 @@
       "sol"
       # "burp-suite"
       # "flashspace"
+      "betterdisplay"
       # "hyperkey"
       # "leader-key"
       # "ledger-live"
