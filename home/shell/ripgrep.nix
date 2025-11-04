@@ -8,7 +8,7 @@
     *.pdf)
       # The -s flag ensures that the file is non-empty.
       if [ -s "$1" ]; then
-        exec ${lib.getExe' pkgs.poppler_utils "pdftotext"} - - # TODO: find a faster alternative
+        exec ${lib.getExe' pkgs.poppler-utils "pdftotext"} - - # TODO: find a faster alternative
       else
         exec cat
       fi
