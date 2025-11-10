@@ -56,6 +56,7 @@ return {
 			{ parser = "desktop", ft = { "desktop" } },
 			{ parser = "nix", ft = { "nix" } },
 			{ parser = "fish", ft = { "fish" } },
+			{ parser = "terraform", ft = { "terraform", "terraform-vars" } },
 
 			{ parser = "doxygen" },
 			{ parser = "re2c" },
