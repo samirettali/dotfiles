@@ -34,6 +34,10 @@
             url = "https://app.polysights.xyz/";
           }
           {
+            name = "Flipr";
+            url = "https://flipr.bot/";
+          }
+          {
             name = "Polyfactual";
             url = "https://www.polyfactual.com/";
           }
@@ -1310,6 +1314,10 @@
               {
                 name = "Quickdraw";
                 url = "https://quickdraw.withgoogle.com/";
+              }
+              {
+                name = "Factually";
+                url = "https://factually.co/";
               }
             ];
           }
