@@ -13,9 +13,6 @@
       };
       git = {
         overrideGpg = true;
-        paging = {
-          colorArg = "always";
-        };
       };
       promptToReturnFromSubprocess = false;
       customCommands = [
