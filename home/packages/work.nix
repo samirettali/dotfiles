@@ -45,9 +45,12 @@ in {
           ms-vsliveshare.vsliveshare
 
           # csharpier.csharpier-vscode
-          pkgs.vscode-extensions.ms-dotnettools.csharp
-          pkgs.vscode-extensions.ms-dotnettools.csdevkit
-          pkgs.vscode-extensions.ms-dotnettools.vscode-dotnet-runtime
+          ms-dotnettools.csharp
+          ms-dotnettools.csdevkit
+          ms-dotnettools.vscode-dotnet-runtime
+          # pkgs.vscode-extensions.ms-dotnettools.csharp
+          # pkgs.vscode-extensions.ms-dotnettools.csdevkit
+          # pkgs.vscode-extensions.ms-dotnettools.vscode-dotnet-runtime
         ];
         userSettings = {
           "csharp.experimental.debug.hotReload" = true;
