@@ -245,6 +245,14 @@
                 name = "Quiver Quant";
                 url = "https://www.quiverquant.com/";
               }
+              {
+                name = "Open Insider";
+                url = "http://openinsider.com/";
+              }
+              {
+                name = "US House Financial Disclosure";
+                url = "https://disclosures-clerk.house.gov/FinancialDisclosure";
+              }
             ];
           }
           {
@@ -348,7 +356,7 @@
           }
           {
             name = "SoSo Value";
-            url = "https://alpha.sosovalue.com/";
+            url = "https://sosovalue.com";
           }
           {
             name = "Ethereum validator queue";
@@ -405,6 +413,10 @@
           {
             name = "Coinmarketman - Hypertracker";
             url = "https://app.coinmarketman.com/hypertracker";
+          }
+          {
+            name = "Blockworks";
+            url = "https://blockworks.com/analytics";
           }
         ];
       }
