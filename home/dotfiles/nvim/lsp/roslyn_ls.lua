@@ -35,10 +35,10 @@ local function on_init_sln(client, target)
 end
 
 ---@param client vim.lsp.Client
-
 local function refresh_diagnostics(client)
-	local buffers = vim.lsp.get_buffers_by_client_id(client.id)
-	for _, buf in ipairs(buffers) do
+	local buffers = vim.lsp.get_client_by_id(client.id).attached_buffers
+
+	for buf, _ in ipairs(buffers) do
 		if vim.api.nvim_buf_is_loaded(buf) then
 			client:request(
 				vim.lsp.protocol.Methods.textDocument_diagnostic,
