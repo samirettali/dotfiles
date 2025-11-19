@@ -15,6 +15,7 @@ in {
       profiles.default = {
         enableExtensionUpdateCheck = false;
         enableUpdateCheck = false;
+        enableMcpIntegration = true;
         extensions = with pkgs.vscode-marketplace;
           [
             eamodio.gitlens

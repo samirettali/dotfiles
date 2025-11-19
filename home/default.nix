@@ -15,6 +15,7 @@ in {
     ./shell
     ./sops.nix
     ./spotify-player
+    ./mcp.nix
   ];
 
   programs.fish.enable = true;

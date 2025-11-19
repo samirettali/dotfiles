@@ -8,6 +8,7 @@ in {
   programs.opencode = {
     enable = true;
     package = samirettali-nur.packages.${pkgs.system}.opencode;
+    enableMcpIntegration = true;
     settings = {
       "$schema" = "https://opencode.ai/config.json";
       autoshare = false;
@@ -34,31 +35,6 @@ in {
             edit = false;
           };
         };
-      };
-      mcp = {
-        # context7 = {
-        #   enabled = true;
-        #   type = "remote";
-        #   url = "https://mcp.context7.com/mcp";
-        # };
-        # playwright = {
-        #   enabled = true;
-        #   type = "local";
-        #   command = [
-        #     "npx"
-        #     "@playwright/mcp@latest"
-        #   ];
-        # };
-        # ast-grep = {
-        #   enabled = true;
-        #   type = "local";
-        #   command = [
-        #     "uvx"
-        #     "--from"
-        #     "git+https://github.com/ast-grep/ast-grep-mcp"
-        #     "ast-grep-server"
-        #   ];
-        # };
       };
     };
   };
