@@ -13,7 +13,7 @@
       '');
 in {
   home.packages = with pkgs; [
-    posting
+    # posting
   ];
 
   xdg.configFile."posting.config.yaml" = {

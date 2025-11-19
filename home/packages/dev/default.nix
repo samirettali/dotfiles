@@ -26,7 +26,7 @@
     lldb # for rust debugging
     stdenv # TODO: is this needed?
     taplo
-    taplo-lsp
+    # taplo-lsp # TODO: remove, included in taplo
     yaml-language-server
     tree-sitter
     vscode-langservers-extracted

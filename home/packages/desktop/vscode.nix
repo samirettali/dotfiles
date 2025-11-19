@@ -18,7 +18,7 @@ in {
         enableMcpIntegration = true;
         extensions = with pkgs.vscode-marketplace;
           [
-            eamodio.gitlens
+            # eamodio.gitlens # TODO: upstream is broken
             vscodevim.vim
             franzgollhammer.jb-fleet-dark
 

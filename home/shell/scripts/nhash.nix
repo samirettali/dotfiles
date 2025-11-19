@@ -6,7 +6,7 @@
 }: let
   nixPrefetchUrlExe = lib.getExe' pkgs.nix "nix-prefetch-url";
   nixExe = lib.getExe pkgs.nix;
-  trExe = lib.getExe' pkgs.uutils-coreutils-noprefix "tr";
+  trExe = lib.getExe' pkgs.coreutils "tr";
 in
   pkgs.writeShellScriptBin "nhash" ''
     set -euo pipefail

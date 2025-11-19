@@ -5,7 +5,7 @@
   ...
 }: {
   programs.alacritty = {
-    enable = false;
+    enable = lib.mkDefault false;
     settings = {
       terminal = {
         shell = "${lib.getExe pkgs.fish}";

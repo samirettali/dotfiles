@@ -46,7 +46,7 @@
     jq
     jqp
     # kaf
-    kcat
+    # kcat
     lazysql
     # libqalculate
     # lla # modern ls
@@ -56,7 +56,7 @@
     ncdu
     ngrok # tunneling
     p7zip
-    pgcli
+    # pgcli
     # plumber
     repomix
     # rlwrap
@@ -66,7 +66,7 @@
     # tabview # csv viewer, maybe keep visidata
     # tldr
     tree
-    uutils-coreutils-noprefix
+    coreutils
     unzip
     # vegeta # http load testing
     # viddy # watch alternative with diff (not snapshots)
@@ -79,7 +79,7 @@
     yt-dlp
     yubikey-manager
 
-    nur.repos.charmbracelet.crush
-    amp-cli
+    # crush
+    # amp-cli
   ];
 }

@@ -5,7 +5,7 @@
 }: {
   programs = {
     password-store = {
-      enable = true;
+      enable = lib.mkDefault false;
       package = pkgs.pass.withExtensions (exts: [
         exts.pass-genphrase
         exts.pass-otp

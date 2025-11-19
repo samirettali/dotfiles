@@ -9,7 +9,7 @@
 in {
   programs = {
     zsh = {
-      enable = false;
+      enable = lib.mkDefault false;
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;

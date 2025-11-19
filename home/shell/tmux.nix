@@ -7,7 +7,7 @@
   cfg = config.programs.tmux;
 in {
   programs.tmux = {
-    enable = false;
+    enable = lib.mkDefault false;
     aggressiveResize = true;
     baseIndex = 1;
     escapeTime = 0;

@@ -18,7 +18,7 @@
   };
   zeshExe = lib.getExe samirettali-nur.packages.${pkgs.system}.zesh;
   fzfExe = lib.getExe config.programs.fzf.package;
-  headExe = lib.getExe' pkgs.uutils-coreutils-noprefix "head";
+  headExe = lib.getExe' pkgs.coreutils "head";
 in {
   home.packages = [
     samirettali-nur.packages.${pkgs.system}.zesh

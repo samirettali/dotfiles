@@ -5,7 +5,7 @@
   ...
 }: let
   jqExe = lib.getExe pkgs.jq;
-  trExe = lib.getExe' pkgs.uutils-coreutils-noprefix "tr";
+  trExe = lib.getExe' pkgs.coreutils "tr";
   websocatExe = lib.getExe pkgs.websocat;
   sketchybarExe = lib.getExe config.programs.sketchybar.package;
 

@@ -1,6 +1,6 @@
-{...}: {
+{lib, ...}: {
   programs.btop = {
-    enable = true;
+    enable = lib.mkDefault false;
     settings = {
       color_theme = "TTY";
       vim_keys = true;

@@ -3,8 +3,8 @@
   lib,
   ...
 }: let
-  cat = lib.getExe' pkgs.uutils-coreutils-noprefix "cat";
-  base64 = lib.getExe' pkgs.uutils-coreutils-noprefix "base64";
+  cat = lib.getExe' pkgs.coreutils "cat";
+  base64 = lib.getExe' pkgs.coreutils "base64";
 in
   pkgs.writeShellScriptBin "copy" ''
     set -euo pipefail
