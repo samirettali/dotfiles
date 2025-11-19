@@ -7,9 +7,9 @@
   home.packages = with pkgs; [
     foundry
     go-ethereum
-    nur.repos.gabr1sr.vscode-solidity-server
     slither-analyzer
     solc-select
+    vscode-solidity-server
   ];
 
   programs.vscode.profiles.default = lib.optionals (builtins.elem pkgs.solc-select config.home.packages) {
