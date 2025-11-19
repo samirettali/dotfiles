@@ -11,10 +11,10 @@
     ./vscode.nix
     ./wezterm.nix
     ./zed.nix
+    ./discord.nix
   ];
 
   home.packages = with pkgs; [
-    discord
     spotify
   ];
 }
