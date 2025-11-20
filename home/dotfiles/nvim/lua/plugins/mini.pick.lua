@@ -42,6 +42,11 @@ return {
 			desc = "Resume picker",
 		},
 		{
+			"<leader>fg",
+			"<CMD>Pick git_hunks<CR>",
+			desc = "Git hunks",
+		},
+		{
 			"<leader>fh",
 			"<CMD>Pick help<CR>",
 			desc = "Pick help",
