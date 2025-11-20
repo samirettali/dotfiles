@@ -1,6 +1,8 @@
-{pkgs, ...}: {
+{...}: let
+in {
   programs.fish = {
     enable = true;
+    generateCompletions = false;
     functions = {
       fish_greeting = "";
       fish_mode_prompt = "";
