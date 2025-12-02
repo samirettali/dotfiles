@@ -1,5 +1,6 @@
 local M = {
 	held_keys = {},
+	toggle_layout_notification = nil,
 }
 
 M.is_empty = function(s)
@@ -76,6 +77,46 @@ M.rbind = function(modifier, key, callback, interval)
 	end
 
 	hs.hotkey.bind(modifier, key, pressedfn, releasedfn)
+end
+
+M.toggleLayout = function()
+	local layouts = hs.keycodes.layouts()
+
+	local currentLayout = hs.keycodes.currentLayout()
+
+	local idx = nil
+	for i, layout in ipairs(layouts) do
+		if layout == currentLayout then
+			idx = i
+			break
+		end
+	end
+
+	if idx == nil then
+		hs.alert.show("Could not find current layout in list")
+		return
+	end
+
+	idx = idx + 1
+
+	if idx > #layouts then
+		idx = 1
+	end
+
+	local nextLayout = layouts[idx]
+
+	local changed = hs.keycodes.setLayout(nextLayout)
+
+	if M.toggle_layout_notification ~= nil then
+		hs.alert.closeSpecific(M.toggle_layout_notification)
+	end
+
+	if not changed then
+		M.toggle_layout_notification = hs.alert.show("Keyboard: " .. nextLayout, 1)
+		return
+	end
+
+	M.toggle_layout_notification = hs.alert.show("Keyboard: " .. nextLayout, 1)
 end
 
 return M
