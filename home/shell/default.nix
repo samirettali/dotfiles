@@ -26,7 +26,6 @@
   home.packages = with pkgs; [
     # bombardier # http load testing
     # broot
-    # codex
     # ctop # docket container monitoring
     curl
     # difftastic
