@@ -18,7 +18,7 @@ in {
         enableMcpIntegration = true;
         extensions = with pkgs.vscode-marketplace;
           [
-            # eamodio.gitlens # TODO: upstream is broken
+            eamodio.gitlens
             vscodevim.vim
             franzgollhammer.jb-fleet-dark
 
@@ -33,13 +33,14 @@ in {
             # vadimcn.vscode-lldb # TODO: build is broken
             # postman.postman-for-vscode
 
-            sourcegraph.amp
             supermaven.supermaven
             kilocode.kilo-code
-            anthropic.claude-code
+
+            # sourcegraph.amp
+            # anthropic.claude-code
             # saoudrizwan.claude-dev
-            # github.copilot
-            # github.copilot-chat
+            # pkgs.vscode-extensions.github.copilot
+            # pkgs.vscode-extensions.github.copilot-chat
             # augment.vscode-augment
             # google.geminicodeassist
             # rooveterinaryinc.roo-cline
