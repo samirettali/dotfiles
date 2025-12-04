@@ -5,7 +5,7 @@
 }: {
   programs.aerospace = {
     enable = false;
-    userSettings = {
+    settings = {
       start-at-login = true;
       accordion-padding = 30;
       automatically-unhide-macos-hidden-apps = false;
