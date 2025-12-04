@@ -6,7 +6,7 @@
   programs = {
     firefox = {
       enable = true;
-      package = with pkgs; (firefox.override {
+      package = with pkgs; (firefox-bin.override {
         # nativeMessagingHosts = [passff-host];
         extraPolicies = {
           DisableFirefoxScreenshots = true;
