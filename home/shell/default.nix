@@ -81,5 +81,6 @@
 
     # crush
     # amp-cli
+    github-copilot-cli
   ];
 }
