@@ -196,7 +196,7 @@ local config = {
 			{ "e", "email", paste("ettali.samir@gmail.com") },
 			{ "u", "username", paste("samirettali") },
 			{ "t", "timestamp", paste_fn(unixTimestamp) },
-			{ "d", "timestamp", paste_fn(date) },
+			{ "d", "date", paste_fn(date) },
 			{ "g", "uuid", paste_fn(uuid) },
 		},
 	},
