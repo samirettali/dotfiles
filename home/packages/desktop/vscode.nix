@@ -85,7 +85,7 @@ in {
         userSettings = lib.mkMerge [
           {
             "editor.fontFamily" = customArgs.font.name;
-            "editor.fontSize" = 13;
+            "editor.fontSize" = 12;
             "editor.minimap.enabled" = false;
             "editor.formatOnSave" = true;
             "editor.renderWhitespace" = "trailing";
@@ -94,7 +94,7 @@ in {
             "editor.inlineSuggest.suppressSuggestions" = true;
             "editor.inlayHints.enabled" = "offUnlessPressed";
 
-            "terminal.integrated.fontSize" = 13;
+            "terminal.integrated.fontSize" = 12;
 
             "diffEditor.ignoreTrimWhitespace" = false;
 
