@@ -10,7 +10,7 @@
     pyrefly
     python314
     ruff
-    ty
+    # ty # TODO: upstream is broken
     uv
   ];
 
