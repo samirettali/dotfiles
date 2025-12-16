@@ -55,6 +55,7 @@ in {
     terraform-ls
     mongosh
     mongodb-tools
+    go-swag
 
     (pkgs.writeShellScriptBin "csharp-ls" ''
       #!${pkgs.runtimeShell}
