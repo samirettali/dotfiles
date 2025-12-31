@@ -45,7 +45,7 @@
     jq
     jqp
     # kaf
-    # kcat
+    kcat
     lazysql
     # libqalculate
     # lla # modern ls
