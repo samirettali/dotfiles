@@ -471,6 +471,35 @@
             name = "Portfolios lab";
             url = "https://portfolioslab.com";
           }
+          {
+            name = "Biotech";
+            bookmarks = [
+              {
+                name = "FDA calendar";
+                url = "https://www.benzinga.com/fda-calendar";
+              }
+              {
+                name = "BioPharma Watch";
+                url = "https://www.biopharmawatch.com/";
+              }
+              {
+                name = "PDUFA Pulse";
+                url = "https://pdufapulse.com/";
+              }
+              {
+                name = "ScanScor";
+                url = "https://scanscor.com/";
+              }
+              {
+                name = "BioPharmCatalyst";
+                url = "https://biopharmcatalyst.com/";
+              }
+              {
+                name = "Clinical trials arena";
+                url = "https://www.clinicaltrialsarena.com/";
+              }
+            ];
+          }
         ];
       }
       {
