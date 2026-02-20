@@ -14,8 +14,8 @@ in {
       autoshare = false;
       autoupdate = false;
       theme = "opencode";
-      model = "github-copilot/claude-sonnet";
-      small_model = "github-copilot/claude-haiku";
+      model = "github-copilot/claude-sonnet-4.5";
+      small_model = "github-copilot/claude-haiku-4.5";
       provider = {
         openrouter = {
           npm = "@openrouter/ai-sdk-provider";
@@ -28,7 +28,7 @@ in {
       agent = {
         code-reviewer = {
           description = "Reviews code for best practices and potential issues";
-          model = "github-copilot/claude-haiku";
+          model = "github-copilot/claude-sonnet-4.5";
           prompt = "You are a code reviewer. Focus on security, performance, and maintainability.";
           tools = {
             write = false;
