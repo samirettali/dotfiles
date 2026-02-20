@@ -59,12 +59,6 @@
               "value" : "/Applications/MongoDB Compass.app"
             },
             {
-              "key" : "o",
-              "label" : "",
-              "type" : "application",
-              "value" : "/Applications/OpenVPN Connect/OpenVPN Connect.app"
-            },
-            {
               "key" : "p",
               "label" : "",
               "type" : "application",
