@@ -705,6 +705,10 @@
                 name = "AiClipGen";
                 url = "https://www.aiclipgen.com/";
               }
+              {
+                name = "Enhancor";
+                url = "https://www.enhancor.ai";
+              }
             ];
           }
           {
@@ -1022,6 +1026,10 @@
               {
                 name = "GPT prompt optimizer";
                 url = "https://platform.openai.com/chat/edit?models=gpt-5&optimize=true";
+              }
+              {
+                name = "skills.sh";
+                url = "https://skills.sh/";
               }
             ];
           }
@@ -1495,6 +1503,10 @@
           {
             name = "levels.fyi";
             url = "https://www.levels.fyi/jobs";
+          }
+          {
+            name = "Welcome to the jungle";
+            url = "https://www.welcometothejungle.com/en";
           }
         ];
       }
