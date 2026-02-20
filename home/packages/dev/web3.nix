@@ -13,13 +13,13 @@
   ];
 
   programs.vscode.profiles.default = lib.optionals (builtins.elem pkgs.solc-select config.home.packages) {
-    extensions = with pkgs.vscode-marketplace; [
-      juanblanco.solidity
+    extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version [
+      "juanblanco.solidity"
     ];
     userSettings = {
       "solidity.packageDefaultDependenciesContractsDirectory" = "src";
       "solidity.packageDefaultDependenciesDirectory" = "lib";
-      "solidity.compileUsingRemoteVersion" = "v0.8.23";
+      "solidity.compileUsingRemoteVersion" = "v0.8.23"; # TODO: should this be removed?
       "solidity.remappings" = [
         "@openzeppelin/contracts/=lib/openzeppelin-contracts-upgradeable/lib/openzeppelin-contracts/contracts/"
         "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/"

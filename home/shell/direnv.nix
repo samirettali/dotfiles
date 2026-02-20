@@ -18,9 +18,10 @@
     };
   };
 
-  programs.vscode.profiles.default.extensions =
-    lib.mkIf config.programs.direnv.enable
+  programs.vscode.profiles.default.extensions = lib.mkIf config.programs.direnv.enable (
+    pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version
     [
-      pkgs.vscode-marketplace.mkhl.direnv
-    ];
+      "mkhl.direnv"
+    ]
+  );
 }

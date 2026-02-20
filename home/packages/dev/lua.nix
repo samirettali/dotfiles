@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }: {
   home.packages = with pkgs; [
@@ -16,9 +17,9 @@
   ];
 
   programs.vscode.profiles.default = {
-    extensions = with pkgs.vscode-marketplace; [
-      sumneko.lua
-      johnnymorganz.stylua
+    extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version [
+      "sumneko.lua"
+      "johnnymorganz.stylua"
     ];
     userSettings = {
       "Lua.format.enable" = false;

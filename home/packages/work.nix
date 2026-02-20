@@ -70,17 +70,14 @@ in {
 
     vscode = {
       profiles.default = {
-        extensions = with pkgs.vscode-marketplace; [
-          hashicorp.terraform
-          ms-vsliveshare.vsliveshare
+        extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version [
+          "hashicorp.terraform"
+          "ms-vsliveshare.vsliveshare"
 
-          # csharpier.csharpier-vscode
-          ms-dotnettools.csharp
-          ms-dotnettools.csdevkit
-          ms-dotnettools.vscode-dotnet-runtime
-          # pkgs.vscode-extensions.ms-dotnettools.csharp
-          # pkgs.vscode-extensions.ms-dotnettools.csdevkit
-          # pkgs.vscode-extensions.ms-dotnettools.vscode-dotnet-runtime
+          # "csharpier.csharpier-vscode"
+          "ms-dotnettools.csharp"
+          "ms-dotnettools.csdevkit"
+          "ms-dotnettools.vscode-dotnet-runtime"
         ];
         userSettings = {
           "csharp.experimental.debug.hotReload" = true;
@@ -102,7 +99,7 @@ in {
           "dotnet.inlayHints.suppressInlayHintsForParametersThatMatchMethodIntent" = false;
           # "dotnet.formatting.organizeImportsOnFormat" = true; # TODO: csharpier?
           # "csharp.debug.expressionEvaluationOptions.showRawValues" = false;
-          "omnisharp.enableDecompilationSupport" = true;
+          # "omnisharp.enableDecompilationSupport" = true;
           # "[csharp]" = {
           #   "editor.defaultFormatter" = "csharpier.csharpier-vscode";
           # };

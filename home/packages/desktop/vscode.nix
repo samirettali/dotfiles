@@ -5,51 +5,73 @@
   pkgs,
   ...
 }: let
+  system = pkgs.stdenv.hostPlatform.system;
+  throwSystem = throw "Unsupported system: ${system}";
+  source =
+    {
+      aarch64-darwin = {
+        os = "darwin-arm64";
+        sha256 = "sha256-Rzsk9W9lCPfljeusfL5gje3oZbJjjuPFBgwVRHuajys="; # TODO
+      };
+    }.${
+      system
+    } or throwSystem;
+
+  extensions = [
+    # DrBlury.protobuf-vsc # TODO: doesn't exist anymore
+    "jacobwgillespie.minimal-icons"
+    "franzgollhammer.jb-fleet-dark"
+
+    "vadimcn.vscode-lldb"
+    "wgsl-analyzer.wgsl-analyzer"
+    "postman.postman-for-vscode"
+    "vscodevim.vim"
+    "eamodio.gitlens"
+
+    "kilocode.Kilo-Code"
+
+    "github.vscode-github-actions"
+    "github.vscode-pull-request-github"
+    "github.copilot-chat"
+  ];
+
   withExtension = ext: settings:
-    lib.optionalAttrs (builtins.elem ext config.programs.vscode.profiles.default.extensions) settings;
+    lib.optionalAttrs (builtins.elem ext extensions) settings;
 in {
+  home.packages = [
+    (pkgs.writeShellScriptBin "code" ''
+      exec ${lib.getExe' config.programs.vscode.package "code-insiders"}
+    '')
+  ];
+
   programs = {
     vscode = {
       enable = true;
+      package =
+        (pkgs.vscode.override {
+          isInsiders = true;
+        }).overrideAttrs (oldAttrs: {
+          version = "1.110.0";
+          src = pkgs.fetchurl {
+            name = "VSCode-insiders-darwin-arm64.zip";
+            url = "https://update.code.visualstudio.com/latest/${source.os}/insider"; # TODO: version and linux
+            sha256 = source.sha256;
+          };
+          # src = fetchTarball {
+          #   # src = builtins.fetchurl {
+          #   url = "https://code.visualstudio.com/sha/download?build=insider&os=${os}";
+          #   sha256 = sha256;
+          #   # url = "https://code.visualstudio.com/sha/download?build=insider&os=darwin";
+          #   # sha256 = lib.fakeSha256; # TODO
+          # };
+        });
+
       mutableExtensionsDir = false;
       profiles.default = {
         enableExtensionUpdateCheck = false;
         enableUpdateCheck = false;
         enableMcpIntegration = true;
-        extensions = with pkgs.vscode-marketplace;
-          [
-            eamodio.gitlens
-            vscodevim.vim
-            franzgollhammer.jb-fleet-dark
-
-            zxh404.vscode-proto3
-            wgsl-analyzer.wgsl-analyzer
-
-            github.vscode-github-actions
-            github.vscode-pull-request-github
-
-            jacobwgillespie.minimal-icons
-
-            # vadimcn.vscode-lldb # TODO: build is broken
-            # postman.postman-for-vscode
-
-            supermaven.supermaven
-            kilocode.kilo-code
-
-            # sourcegraph.amp
-            # anthropic.claude-code
-            # saoudrizwan.claude-dev
-            # pkgs.vscode-extensions.github.copilot
-            # pkgs.vscode-extensions.github.copilot-chat
-            # augment.vscode-augment
-            # google.geminicodeassist
-            # rooveterinaryinc.roo-cline
-            # continue.continue
-          ]
-          ++ (with pkgs.vscode-extensions; [
-            ms-toolsai.jupyter
-            ms-toolsai.jupyter-renderers
-          ]);
+        extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version extensions;
         keybindings = [
           {
             "key" = "ctrl+tab";
@@ -68,24 +90,10 @@ in {
             "command" = "workbench.action.quickOpen";
           }
         ];
-        userMcp = {
-          # "servers" = {
-          #   "context7" = {
-          #     "type" = "http";
-          #     "url" = "https://mcp.context7.com/mcp";
-          #   };
-          #   "playwright" = {
-          #     "command" = "npx";
-          #     "args" = [
-          #       "@playwright/mcp@latest"
-          #     ];
-          #   };
-          # };
-        };
         userSettings = lib.mkMerge [
           {
             "editor.fontFamily" = customArgs.font.name;
-            "editor.fontSize" = 12;
+            "editor.fontSize" = customArgs.font.size;
             "editor.minimap.enabled" = false;
             "editor.formatOnSave" = true;
             "editor.renderWhitespace" = "trailing";
@@ -94,7 +102,7 @@ in {
             "editor.inlineSuggest.suppressSuggestions" = true;
             "editor.inlayHints.enabled" = "offUnlessPressed";
 
-            "terminal.integrated.fontSize" = 12;
+            "terminal.integrated.fontSize" = customArgs.font.size;
 
             "diffEditor.ignoreTrimWhitespace" = false;
 
@@ -134,37 +142,16 @@ in {
             };
 
             "terminal.integrated.sendKeybindingsToShell" = true;
-            "chat.instructionsFilesLocations" = {
-              ".github/instructions" = true;
-            };
 
             "extensions.autoUpdate" = false;
           }
-          (withExtension pkgs.vscode-marketplace.jacobwgillespie.minimal-icons {
-            "workbench.iconTheme" = "minimal-icons-without-explorer-arrows";
-          })
-          (withExtension pkgs.vscode-marketplace.franzgollhammer.jb-fleet-dark {
-            "workbench.colorTheme" = "Fleet Sphere";
-          })
-          (withExtension pkgs.vscode-marketplace.vscodevim.vim {
-            "vim.handleKeys" = {
-              "<C-p>" = false;
+          (withExtension "github.copilot-chat" {
+            "chat.extensionUnification.enabled" = true;
+            "chat.useAgentSkills" = true;
+            "chat.instructionsFilesLocations" = {
+              ".github/instructions" = true;
+              ".claude/rules" = true;
             };
-          })
-          (withExtension pkgs.vscode-marketplace.google.geminicodeassist {
-            "geminicodeassist.enableTelemetry" = false;
-            "geminicodeassist.customCommands" = {
-              "add-comment" = "comment the code";
-              "refactor" = "refactor the code";
-            };
-            "geminicodeassist.rules" = ''
-              Never ask "Would you like me to make this change for you?" Just do it.
-              In Python projects, use `uv` to manage dependencies.
-              In JavaScript/TypeScript projects, use `bun` to manage dependencies.
-            '';
-            "geminicodeassist.inlineSuggestions.enableAuto" = false;
-          })
-          (withExtension pkgs.vscode-marketplace.github.copilot {
             "github.copilot.enable" = {
               "*" = true;
               "plaintext" = true;
@@ -175,21 +162,29 @@ in {
             };
             "github.copilot.nextEditSuggestions.enabled" = true;
           })
-          (withExtension pkgs.vscode-marketplace.eamodio.gitlens {
+          (withExtension "jacobwgillespie.minimal-icons" {
+            "workbench.iconTheme" = "minimal-icons-without-explorer-arrows";
+          })
+          (withExtension "franzgollhammer.jb-fleet-dark" {
+            "workbench.colorTheme" = "Sphere";
+          })
+          (withExtension "vscodevim.vim" {
+            "vim.handleKeys" = {
+              "<C-p>" = false;
+            };
+          })
+          (withExtension "eamodio.gitlens" {
             "gitlens.advanced.blame.customArguments" = [
               "-w"
               "-CCC"
             ];
           })
-          (withExtension pkgs.vscode-marketplace.augment.vscode-augment {
-            "augment.disableFocusOnAugmentPanel" = true;
+          (withExtension "postman.postman-for-vscode" {
+            # TODO
+            # "chat.instructionsFilesLocations" = {
+            #   "${extensions.postman.postman-for-vscode}/agent-instruction-files/vscode" = true;
+            # };
           })
-          # (withExtension pkgs.vscode-marketplace.postman.postman-for-vscode {
-          #   # TODO
-          #   "chat.instructionsFilesLocations" = {
-          #     "${pkgs.vscode-marketplace.postman.postman-for-vscode}/agent-instruction-files/vscode" = true;
-          #   };
-          # })
         ];
       };
     };

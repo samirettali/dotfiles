@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   home.packages = with pkgs; [
     alejandra
     nil
@@ -6,8 +10,8 @@
   ];
 
   programs.vscode.profiles.default = {
-    extensions = with pkgs.vscode-marketplace; [
-      jnoortheen.nix-ide
+    extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version [
+      "jnoortheen.nix-ide"
     ];
     userSettings = {
       "nix.formatterPath" = "alejandra";

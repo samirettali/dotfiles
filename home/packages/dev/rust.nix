@@ -26,8 +26,8 @@ in {
       rustPkgs
       config.home.packages
     ) {
-      extensions = with pkgs.vscode-marketplace; [
-        rust-lang.rust-analyzer
+      extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version [
+        "rust-lang.rust-analyzer"
       ];
     };
 }

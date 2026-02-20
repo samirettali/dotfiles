@@ -34,8 +34,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
+    nix4vscode = {
+      url = "github:nix-community/nix4vscode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -60,7 +60,7 @@
     nixpkgs,
     darwin,
     home-manager,
-    nix-vscode-extensions,
+    nix4vscode,
     zjstatus,
     ...
   } @ inputs: let
@@ -105,7 +105,7 @@
       overlays = with inputs; [
         neovim-nightly-overlay.overlays.default
         nur.overlays.default
-        nix-vscode-extensions.overlays.default
+        nix4vscode.overlays.default
         rust-overlay.overlays.default
         (final: prev: {
           fish = prev.fish.overrideAttrs (oldAttrs: {

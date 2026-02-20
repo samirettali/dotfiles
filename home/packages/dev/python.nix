@@ -22,28 +22,39 @@
   };
 
   programs.vscode.profiles.default = {
-    extensions = with pkgs.vscode-marketplace;
+    extensions =
+      pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version
       [
-        ms-python.debugpy
-        ms-python.python
-      ]
-      ++ lib.optionals (builtins.elem pkgs.basedpyright config.home.packages) [
-        detachhead.basedpyright
-      ]
-      ++ lib.optionals (builtins.elem pkgs.pyrefly config.home.packages) [
-        meta.pyrefly
-      ]
-      ++ lib.optionals config.programs.ruff.enable [
-        charliermarsh.ruff
-      ]
-      ++ lib.optionals (builtins.elem pkgs.ty config.home.packages) [
-        astral-sh.ty
+        "ms-python.debugpy"
+        "ms-python.python"
+        "ms-toolsai.jupyter"
+        "ms-toolsai.jupyter-renderers"
+        (
+          lib.optionals (builtins.elem pkgs.basedpyright config.home.packages)
+          "detachhead.basedpyright"
+        )
+        # TODO: not available for pre release
+        # (
+        #   lib.optionals (builtins.elem pkgs.pyrefly config.home.packages)
+        #   "meta.pyrefly"
+        # )
+        (
+          lib.optionals config.programs.ruff.enable
+          "charliermarsh.ruff"
+        )
+        (
+          lib.optionals (builtins.elem pkgs.ty config.home.packages)
+          "astral-sh.ty"
+        )
       ];
     userSettings = {
-      "files.exclude" = {
-        "**/__pycache__" = true;
-        "**/.ruff_cache" = true;
-      };
+      "files.exclude" =
+        {
+          "**/__pycache__" = true;
+        }
+        // lib.optionalAttrs config.programs.ruff.enable {
+          "**/.ruff_cache" = true;
+        };
     };
   };
 }

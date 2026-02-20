@@ -37,8 +37,8 @@
     ];
 
   programs.vscode.profiles.default = lib.optionals config.programs.go.enable {
-    extensions = with pkgs.vscode-marketplace; [
-      golang.go
+    extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version [
+      "golang.go"
     ];
     userSettings = {
       "go.formatTool" = "gofumpt";
