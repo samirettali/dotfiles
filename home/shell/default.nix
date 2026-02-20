@@ -60,6 +60,7 @@
     repomix
     # rlwrap
     # scc # count lines of code
+    snitch
     sqlite
     # superfile
     # tabview # csv viewer, maybe keep visidata
