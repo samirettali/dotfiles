@@ -76,7 +76,10 @@ end
 -- @param cb function Optional callback function(workspaces)
 -- @return table Array of workspace data
 function Rift:query_workspaces(cb)
-	local request = '"get_workspaces"'
+	local request = {
+		get_workspaces = {},
+	}
+
 	local response, err = self:_request(request)
 
 	if not response then
