@@ -16,12 +16,12 @@
     url = "https://github.com/laperlej/zellij-sessionizer/releases/download/v0.4.3/zellij-sessionizer.wasm";
     sha256 = "sha256-AGuWbuRX7Yi9tPdZTzDKULXh3XLUs4navuieCimUgzQ=";
   };
-  zeshExe = lib.getExe samirettali-nur.packages.${pkgs.system}.zesh;
+  zeshExe = lib.getExe samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.zesh;
   fzfExe = lib.getExe config.programs.fzf.package;
   headExe = lib.getExe' pkgs.coreutils "head";
 in {
   home.packages = [
-    samirettali-nur.packages.${pkgs.system}.zesh
+    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.zesh
     pkgs.zjstatus
     (pkgs.writeShellScriptBin "za" ''
       set -euo pipefail

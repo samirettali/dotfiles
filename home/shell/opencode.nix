@@ -7,7 +7,7 @@
 in {
   programs.opencode = {
     enable = true;
-    package = samirettali-nur.packages.${pkgs.system}.opencode;
+    package = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
     enableMcpIntegration = true;
     settings = {
       "$schema" = "https://opencode.ai/config.json";

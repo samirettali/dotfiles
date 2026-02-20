@@ -15,7 +15,7 @@
       '');
 in {
   home.packages = lib.mkIf config.programs.git.enable [
-    samirettali-nur.packages.${pkgs.system}.git-sync
+    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.git-sync
   ];
 
   xdg.configFile."git-sync/config.yaml" = {
