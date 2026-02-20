@@ -7,7 +7,7 @@
 }:
 lua54Packages.buildLuaPackage {
   pname = "rift";
-  version = "ec555e8294d87aa7aaf5e869471ab4e1912a8186";
+  version = "ba2d42af96f66d1343f9d4b963ec0199e170f4ab";
 
   src = fetchFromGitHub {
     owner = "acsandmann";
