@@ -108,11 +108,6 @@
         nix4vscode.overlays.default
         rust-overlay.overlays.default
         (final: prev: {
-          fish = prev.fish.overrideAttrs (oldAttrs: {
-            doCheck = false; # TODO: upstream is broken
-          });
-        })
-        (final: prev: {
           zjstatus = zjstatus.packages.${prev.system}.default;
         })
       ];
