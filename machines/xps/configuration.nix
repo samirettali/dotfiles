@@ -58,7 +58,6 @@
       udisks
       apfs-fuse
       openresolv
-      openvpn
     ];
     etc = {
       "dual-function-keys.yaml".text = builtins.readFile ./dual-function-keys.yaml;

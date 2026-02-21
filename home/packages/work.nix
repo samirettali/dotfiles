@@ -44,7 +44,6 @@ in {
     mongodb-compass
     netcoredbg
     nuget
-    openvpn
     postman
     # csharp-ls # TODO: upstream is broken
     # roslyn-ls
