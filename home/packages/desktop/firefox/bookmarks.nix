@@ -945,8 +945,11 @@
               }
               {
                 name = "Hemingway";
-
                 url = "https://hemingwayapp.com/";
+              }
+              {
+                name = "ZLM OCR";
+                url = "https://ocr.z.ai";
               }
             ];
           }
@@ -1481,6 +1484,10 @@
           {
             name = "Eoin Murray";
             url = "https://eoinmurray.info";
+          }
+          {
+            name = "Paradigm";
+            url = "https://www.paradigm.xyz/writing";
           }
         ];
       }
