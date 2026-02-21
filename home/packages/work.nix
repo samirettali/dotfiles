@@ -11,6 +11,18 @@
       sdk_9_0-bin
     ];
 
+  dotnet-affected = pkgs.buildDotnetGlobalTool {
+    pname = "dotnet-affected";
+    version = "6.1.0"; # Use the version you need
+
+    # You get this hash by running:
+    # nix-prefetch-url --unpack https://www.nuget.org/api/v2/package/dotnet-affected/3.2.1
+    nugetHash = "sha256-OOOsNtillI6hRE5YMwv2HPEOmsmqSTh7XeT914cASrk=";
+
+    # Optional: If the binary name is different from pname
+    executables = "dotnet-affected";
+  };
+
   pname = "csharp-ls";
   version = "0.20.0";
 
@@ -55,6 +67,7 @@ in {
     mongosh
     mongodb-tools
     go-swag
+    dotnet-affected
 
     (pkgs.writeShellScriptBin "csharp-ls" ''
       #!${pkgs.runtimeShell}
