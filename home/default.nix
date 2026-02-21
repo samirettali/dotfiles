@@ -2,17 +2,13 @@
   lib,
   pkgs,
   customArgs,
-  inputs,
   ...
 }: let
-  dbee = pkgs.callPackage ../derivations/dbee.nix {
-    source = "${inputs.dbee-src}/dbee";
-  };
 in {
   imports = [
     ./dotfiles.nix
     ./git-sync.nix
-    ./dbee.nix
+    # ./dbee.nix
     ./shell
     ./sops.nix
     ./spotify-player
@@ -55,7 +51,6 @@ in {
     nix-init
     nix-tree
     nix-prefetch-github
-    dbee
   ];
 
   home.file.".hushlogin".text = "";
