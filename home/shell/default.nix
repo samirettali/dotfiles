@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  samirettali-nur,
+  ...
+}: {
   imports = [
     ./fish.nix
     ./bat.nix
@@ -25,63 +29,64 @@
   ];
 
   home.packages = with pkgs; [
-    # bombardier # http load testing
-    # broot
-    # ctop # docket container monitoring
+    coreutils
     curl
     difftastic
-    # diskus
     fd
-    # fx
     gh
+    github-copilot-cli
     gnused
+    hwatch
+    iredis
+    jq
+    jqp
+    lazysql
+    moreutils
+    ncdu
+    ngrok
+    p7zip
+    repomix
+    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.tredis
+    scc
+    snitch
+    sqlite
+    tree
+    unzip
+    vi-mongo
+    watchexec
+    yubikey-manager
+    # amp-cli
+    # bombardier # http load testing
+    # broot
+    # crush
+    # ctop # docket container monitoring
+    # diskus
+    # fx
     # gping # graphical ping
     # graphviz
     # gum
     # hexyl # hex viewer
     # hto
     # httptap
-    hwatch # watch alternative with diff snapshots
-    iredis
-    jq
-    jqp
     # kaf
     # kcat # TODO: upstream is broken
-    lazysql
     # libqalculate
-    # lla # modern ls
     # lnav # log navigation
-    moreutils # TODO: replace with go-moreutils or rewrite
     # mprocs # multiple processes
-    ncdu
-    ngrok # tunneling
-    p7zip
     # pgcli
     # plumber
-    repomix
     # rlwrap
-    # scc # count lines of code
-    snitch
-    sqlite
+    # sqlit-tui
     # superfile
     # tabview # csv viewer, maybe keep visidata
     # tldr
-    tree
-    coreutils
-    unzip
     # vegeta # http load testing
     # viddy # watch alternative with diff (not snapshots)
     # visidata # TODO: the derivation takes ~2.5 GB
-    vi-mongo # mongodb cli
-    watchexec # watch folder for changes and execute command
+    # witr # find out why processes are running
     # wuzz
     # xan # csv processing
     # yazi # file manager
     # yt-dlp # TODO: upstream is broken
-    yubikey-manager
-
-    # crush
-    # amp-cli
-    github-copilot-cli
   ];
 }
