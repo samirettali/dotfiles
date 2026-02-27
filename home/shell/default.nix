@@ -6,6 +6,7 @@
     ./claude-code.nix
     ./gemini-cli.nix
     ./direnv.nix
+    ./fabric.nix
     ./fzf.nix
     ./git.nix
     ./lazydocker.nix
