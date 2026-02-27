@@ -8,7 +8,6 @@ in {
   imports = [
     ./dotfiles.nix
     ./git-sync.nix
-    # ./dbee.nix
     ./shell
     ./sops.nix
     ./spotify-player

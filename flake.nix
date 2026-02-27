@@ -49,11 +49,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.rust-overlay.follows = "rust-overlay"; # TODO: upstream is broken
     };
-
-    dbee-src = {
-      url = "github:kndndrj/nvim-dbee";
-      flake = false;
-    };
   };
 
   outputs = {

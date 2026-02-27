@@ -35,22 +35,6 @@
         "type": "github"
       }
     },
-    "dbee-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1753439236,
-        "narHash": "sha256-rvKUqUsLpGYqDVNeRVUlEPkpntahFDx4qJH7a5Uw760=",
-        "owner": "kndndrj",
-        "repo": "nvim-dbee",
-        "rev": "dda517694889a5d238d7aa407403984da9f80cc0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kndndrj",
-        "repo": "nvim-dbee",
-        "type": "github"
-      }
-    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -230,7 +214,6 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
-        "dbee-src": "dbee-src",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",
