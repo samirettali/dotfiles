@@ -38,6 +38,7 @@
         extensions = {
           force = true;
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
+            adaptive-tab-bar-colour
             darkreader
             keepassxc-browser
             linkding-extension
@@ -45,7 +46,7 @@
             sponsorblock
             ublock-origin
             vimium-c
-            adaptive-tab-bar-colour
+            web-clipper-obsidian
             # clearurls
             # copy-selection-as-markdown
             # granted
