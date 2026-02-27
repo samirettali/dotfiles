@@ -25,7 +25,8 @@ local function reload_workspace(bufnr)
 	local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })
 	for _, client in ipairs(clients) do
 		vim.notify("Reloading Cargo Workspace")
-		client.request("rust-analyzer/reloadWorkspace", nil, function(err)
+		---@diagnostic disable-next-line:param-type-mismatch
+		client:request("rust-analyzer/reloadWorkspace", nil, function(err)
 			if err then
 				error(tostring(err))
 			end
@@ -51,19 +52,10 @@ local function is_library(fname)
 	end
 end
 
+---@type vim.lsp.Config
 return {
 	cmd = { "rust-analyzer" },
 	filetypes = { "rust" },
-	settings = {
-		["rust-analyzer"] = {
-			check = {
-				command = "clippy",
-			},
-			cargo = {
-				features = "all",
-			},
-		},
-	},
 	root_dir = function(bufnr, on_dir)
 		local fname = vim.api.nvim_buf_get_name(bufnr)
 		local reused_dir = is_library(fname)
@@ -121,6 +113,29 @@ return {
 					"rust-analyzer.runSingle",
 					"rust-analyzer.debugSingle",
 				},
+			},
+		},
+	},
+	settings = {
+		["rust-analyzer"] = {
+			-- lens = { -- TODO
+			--   debug = { enable = true },
+			--   enable = true,
+			--   implementations = { enable = true },
+			--   references = {
+			--     adt = { enable = true },
+			--     enumVariant = { enable = true },
+			--     method = { enable = true },
+			--     trait = { enable = true },
+			--   },
+			--   run = { enable = true },
+			--   updateTest = { enable = true },
+			-- },
+			check = {
+				command = "clippy",
+			},
+			cargo = {
+				features = "all",
 			},
 		},
 	},
