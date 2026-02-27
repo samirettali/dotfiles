@@ -77,7 +77,7 @@
     # wuzz
     # xan # csv processing
     # yazi # file manager
-    yt-dlp
+    # yt-dlp # TODO: upstream is broken
     yubikey-manager
 
     # crush
