@@ -8,10 +8,11 @@ in {
   imports = [
     ./dotfiles.nix
     ./git-sync.nix
+    ./mcp.nix
+    ./nh.nix
     ./shell
     ./sops.nix
     ./spotify-player
-    ./mcp.nix
   ];
 
   programs.fish.enable = true;
@@ -41,7 +42,6 @@ in {
 
   programs = {
     home-manager.enable = true;
-    nh.enable = true;
   };
 
   home.packages = with pkgs; [
