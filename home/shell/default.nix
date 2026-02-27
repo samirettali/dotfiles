@@ -46,7 +46,7 @@
     jq
     jqp
     # kaf
-    kcat
+    # kcat # TODO: upstream is broken
     lazysql
     # libqalculate
     # lla # modern ls
