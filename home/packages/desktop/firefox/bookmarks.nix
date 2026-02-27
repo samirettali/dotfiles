@@ -1489,6 +1489,10 @@
             name = "Paradigm";
             url = "https://www.paradigm.xyz/writing";
           }
+          {
+            name = "Daniel Miessler";
+            url = "https://danielmiessler.com/";
+          }
         ];
       }
       {
