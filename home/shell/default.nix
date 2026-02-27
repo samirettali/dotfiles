@@ -29,7 +29,7 @@
     # broot
     # ctop # docket container monitoring
     curl
-    # difftastic
+    difftastic
     # diskus
     fd
     # fx
