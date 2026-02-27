@@ -63,7 +63,7 @@ in {
       };
       StandardOutPath = "/tmp/spotify-player.log";
       StandardErrorPath = "/tmp/spotify-player.error.log";
-      ProcessType = "Background";
+      ProcessType = "Interactive";
     };
   };
 }
