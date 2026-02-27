@@ -23,29 +23,6 @@
     # Optional: If the binary name is different from pname
     executables = "dotnet-affected";
   };
-
-  pname = "csharp-ls";
-  version = "0.20.0";
-
-  csharp-ls-unwrapped = pkgs.stdenv.mkDerivation rec {
-    inherit pname version;
-
-    src = pkgs.fetchurl {
-      url = "https://api.nuget.org/v3-flatcontainer/csharp-ls/${version}/csharp-ls.${version}.nupkg";
-      sha256 = "038j9jydsf7waj6yfc2xhdk5rb1d0qzkcycqcl9azqm7j0csk9is";
-    };
-
-    nativeBuildInputs = [pkgs.unzip];
-
-    unpackPhase = ''
-      unzip $src
-    '';
-
-    installPhase = ''
-      mkdir -p $out/lib/csharp-ls
-      cp -r tools/net9.0/any/* $out/lib/csharp-ls/
-    '';
-  };
 in {
   home.packages = with pkgs; [
     awscli2
@@ -58,8 +35,7 @@ in {
     netcoredbg
     nuget
     postman
-    # csharp-ls # TODO: upstream is broken
-    # roslyn-ls
+    roslyn-ls
     slack
     ssm-session-manager-plugin
     stunnel
@@ -69,11 +45,6 @@ in {
     mongodb-tools
     go-swag
     dotnet-affected
-
-    (pkgs.writeShellScriptBin "csharp-ls" ''
-      #!${pkgs.runtimeShell}
-      exec ${dotnetPackages}/bin/dotnet ${csharp-ls-unwrapped}/lib/csharp-ls/CSharpLanguageServer.dll "$@"
-    '')
   ];
 
   programs = {

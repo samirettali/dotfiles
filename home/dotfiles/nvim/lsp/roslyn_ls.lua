@@ -7,6 +7,7 @@
 -- replace `<platform>` with one of the following `linux-x64`, `osx-x64`, `win-x64`, `neutral` (for more info on the download location see https://github.com/dotnet/roslyn/issues/71474#issuecomment-2177303207).
 -- Download and extract it (nuget's are zip files).
 -- - if you chose `neutral` nuget version, then you have to change the `cmd` like so:
+--   ```lua
 --   cmd = {
 --     'dotnet',
 --     '<my_folder>/Microsoft.CodeAnalysis.LanguageServer.dll',
@@ -16,6 +17,7 @@
 --     fs.joinpath(uv.os_tmpdir(), 'roslyn_ls/logs'),
 --     '--stdio',
 --   },
+--   ```
 --   where `<my_folder>` has to be the folder you extracted the nuget package to.
 -- - for all other platforms put the extracted folder to neovim's PATH (`vim.env.PATH`)
 
@@ -35,22 +37,6 @@ local function on_init_sln(client, target)
 end
 
 ---@param client vim.lsp.Client
-local function refresh_diagnostics(client)
-	local buffers = vim.lsp.get_client_by_id(client.id).attached_buffers
-
-	for buf, _ in ipairs(buffers) do
-		if vim.api.nvim_buf_is_loaded(buf) then
-			client:request(
-				vim.lsp.protocol.Methods.textDocument_diagnostic,
-				{ textDocument = vim.lsp.util.make_text_document_params(buf) },
-				nil,
-				buf
-			)
-		end
-	end
-end
-
----@param client vim.lsp.Client
 ---@param project_files string[]
 local function on_init_project(client, project_files)
 	vim.notify("Initializing: projects", vim.log.levels.TRACE, { title = "roslyn_ls" })
@@ -60,6 +46,20 @@ local function on_init_project(client, project_files)
 			return vim.uri_from_fname(file)
 		end, project_files),
 	})
+end
+
+---@param client vim.lsp.Client
+local function refresh_diagnostics(client)
+	for buf, _ in pairs(vim.lsp.get_client_by_id(client.id).attached_buffers) do
+		if vim.api.nvim_buf_is_loaded(buf) then
+			client:request(
+				vim.lsp.protocol.Methods.textDocument_diagnostic,
+				{ textDocument = vim.lsp.util.make_text_document_params(buf) },
+				nil,
+				buf
+			)
+		end
+	end
 end
 
 local function roslyn_handlers()
@@ -99,7 +99,17 @@ local function roslyn_handlers()
 	}
 end
 
----@type vim.lsp.ClientConfig
+---@param bufname string
+---@return boolean
+local function is_decompiled(bufname)
+	local _, endpos = bufname:find("[/\\]MetadataAsSource[/\\]")
+	if endpos == nil then
+		return false
+	end
+	return vim.fn.finddir(bufname:sub(1, endpos), uv.os_tmpdir()) ~= ""
+end
+
+---@type vim.lsp.Config
 return {
 	name = "roslyn_ls",
 	offset_encoding = "utf-8",
@@ -118,6 +128,7 @@ return {
 			local client = assert(vim.lsp.get_client_by_id(ctx.client_id))
 			local args = command.arguments or {}
 			local uri, edit = args[1], args[2]
+			---@diagnostic disable: undefined-field
 			if uri and edit and edit.newText and edit.range then
 				local workspace_edit = {
 					changes = {
@@ -130,6 +141,7 @@ return {
 					},
 				}
 				vim.lsp.util.apply_workspace_edit(workspace_edit, client.offset_encoding)
+			---@diagnostic enable: undefined-field
 			else
 				vim.notify(
 					"roslyn_ls: completionComplexEdit args not understood: " .. vim.inspect(args),
@@ -142,7 +154,7 @@ return {
 		local bufname = vim.api.nvim_buf_get_name(bufnr)
 		-- don't try to find sln or csproj for files from libraries
 		-- outside of the project
-		if not bufname:match("^" .. fs.joinpath("/tmp/MetadataAsSource/")) then
+		if not is_decompiled(bufname) then
 			-- try find solutions root first
 			local root_dir = fs.root(bufnr, function(fname, _)
 				return fname:match("%.sln[x]?$") ~= nil
@@ -158,6 +170,16 @@ return {
 			if root_dir then
 				cb(root_dir)
 			end
+		else
+			-- Decompiled code (example: "/tmp/MetadataAsSource/f2bfba/DecompilationMetadataAsSourceFileProvider/d5782a/Console.cs")
+			local prev_buf = vim.fn.bufnr("#")
+			local client = vim.lsp.get_clients({
+				name = "roslyn_ls",
+				bufnr = prev_buf ~= 1 and prev_buf or nil,
+			})[1]
+			if client then
+				cb(client.config.root_dir)
+			end
 		end
 	end,
 	on_init = {
@@ -166,7 +188,7 @@ return {
 
 			-- try load first solution we find
 			for entry, type in fs.dir(root_dir) do
-				if type == "file" and vim.endswith(entry, ".sln") or vim.endswith(entry, ".slnx") then
+				if type == "file" and (vim.endswith(entry, ".sln") or vim.endswith(entry, ".slnx")) then
 					on_init_sln(client, fs.joinpath(root_dir, entry))
 					return
 				end
@@ -205,8 +227,9 @@ return {
 	},
 	settings = {
 		["csharp|background_analysis"] = {
-			dotnet_analyzer_diagnostics_scope = "openFiles",
-			dotnet_compiler_diagnostics_scope = "openFiles",
+			-- NOTE: use openFiles instead of fullSolution if too slow
+			dotnet_analyzer_diagnostics_scope = "fullSolution",
+			dotnet_compiler_diagnostics_scope = "fullSolution",
 		},
 		["csharp|inlay_hints"] = {
 			csharp_enable_inlay_hints_for_implicit_object_creation = true,
