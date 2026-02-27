@@ -16,7 +16,6 @@
       "docker-desktop"
       "eqmac"
       "maccy"
-      "neohtop"
       # "hammerspoon"
       "shottr"
       "sloth"
