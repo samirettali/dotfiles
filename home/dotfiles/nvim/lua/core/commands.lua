@@ -17,12 +17,12 @@ vim.api.nvim_create_user_command("Bufferize", function(opts)
 	vim.api.nvim_set_option_value("modifiable", true, { buf = buf })
 
 	local bufname = ("[Vim Command Output]: %s"):format(cmd)
-	vim.api.nvim_buf_set_name(buf, "[Vim Command Output]: " .. cmd)
+	vim.api.nvim_buf_set_name(buf, bufname)
 
 	local lines = vim.split(output, "\n", { plain = true })
 	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
-	vim.api.nvim_set_option_value(buf, "modifiable", false)
+	vim.api.nvim_set_option_value("modifiable", false, { buf = buf })
 
 	vim.cmd("vsplit")
 	vim.api.nvim_win_set_buf(0, buf)
