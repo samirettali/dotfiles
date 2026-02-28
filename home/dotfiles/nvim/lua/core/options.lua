@@ -25,8 +25,9 @@ vim.opt.pumborder = "rounded"
 
 vim.opt.clipboard = "unnamedplus"
 
-vim.opt.diffopt = "internal,filler,closeoff,linematch:60"
+vim.opt.diffopt = "internal,filler,closeoff,algorithm:histogram,context:5,linematch:60" -- TODO: read docs
 
+-- TODO: is this needed?
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldtext = ""
