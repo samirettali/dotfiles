@@ -47,6 +47,7 @@
     p7zip
     repomix
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.tredis
+    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.go-qo
     scc
     snitch
     sqlite
