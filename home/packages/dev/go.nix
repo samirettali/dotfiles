@@ -7,6 +7,7 @@
   programs = {
     go = {
       enable = true;
+      package = pkgs.go_1_26;
       telemetry = {
         mode = "off";
       };
