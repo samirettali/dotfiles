@@ -142,6 +142,7 @@ local config = {
 			{ "f", "finder", launch("Finder") },
 			{ "k", "keepassxc", launch("KeepassXC") },
 			{ "m", "monitor", launch("Activity Monitor") },
+			{ "o", "obsidian", launch("Obsidian") },
 			{ "p", "preferences", launch("System Preferences") },
 			{ "s", "spotify", launch("Spotify") },
 		},
