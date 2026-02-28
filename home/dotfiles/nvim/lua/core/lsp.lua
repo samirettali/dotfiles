@@ -4,13 +4,22 @@ vim.keymap.set("n", "<leader>ti", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = "Toggle inlay hints" })
 
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "vim.lsp.buf.definition()" })
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0, desc = "vim.lsp.buf.definition()" })
 -- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "vim.lsp.buf.declaration()" })
 vim.keymap.set("n", "gS", function()
 	vim.lsp.buf.workspace_symbol("")
 end, { desc = "vim.lsp.buf.workspace_symbol()" })
 -- vim.keymap.set("n", "gI", vim.lsp.buf.incoming_calls, { desc = "vim.lsp.buf.incoming_calls()" })
 -- vim.keymap.set("n", "gO", vim.lsp.buf.outgoing_calls, { desc = "vim.lsp.buf.outgoing_calls()" })
+
+vim.keymap.set("n", "<leader>gS", function()
+	vim.cmd("vsplit")
+	vim.lsp.buf.definition()
+end, { buffer = 0 })
+
+vim.keymap.set("n", "<leader>q", function()
+	vim.diagnostic.setloclist({ open = true })
+end, { desc = "Open diagnostic list" })
 
 local kind_icon = {
 	{ menu = "Text", kind = "󰦨", kind_hlgroup = "String" },
