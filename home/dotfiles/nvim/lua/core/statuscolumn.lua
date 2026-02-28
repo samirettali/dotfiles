@@ -1,29 +1,3 @@
---- Get diagnostic signs for a line
---- @param buf number Buffer number
---- @param lnum number Line number
-local function get_diagnostic_sign(buf, lnum)
-	local diagnostics = vim.diagnostic.get(buf, { lnum = lnum - 1 })
-	if #diagnostics == 0 then
-		return nil
-	end
-
-	local max_severity = vim.diagnostic.severity.HINT
-	for _, diag in ipairs(diagnostics) do
-		if diag.severity < max_severity then
-			max_severity = diag.severity
-		end
-	end
-
-	local signs = {
-		[vim.diagnostic.severity.ERROR] = { text = "E", hl = "DiagnosticSignError" },
-		[vim.diagnostic.severity.WARN] = { text = "W", hl = "DiagnosticSignWarn" },
-		[vim.diagnostic.severity.HINT] = { text = "H", hl = "DiagnosticSignHint" },
-		[vim.diagnostic.severity.INFO] = { text = "I", hl = "DiagnosticSignInfo" },
-	}
-
-	return signs[max_severity]
-end
-
 --- Get DAP breakpoint signs for a line
 --- @param buf number Buffer number
 --- @param lnum number Line number
@@ -159,10 +133,6 @@ function Statuscolumn()
 		local bqf_sign = get_bqf_sign(buf, lnum)
 		table.insert(components, format_sign(bqf_sign))
 	elseif filetype ~= "nvim-undotree" then
-		-- Diagnostics
-		local diagnostic = get_diagnostic_sign(buf, lnum)
-		table.insert(components, format_sign(diagnostic, 2))
-
 		-- Dap breakpoints
 		local dap = get_dap_sign(buf, lnum)
 		table.insert(components, format_sign(dap, 2))
