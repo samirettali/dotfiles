@@ -73,6 +73,31 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			local win = vim.api.nvim_get_current_win()
 			vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
 		end
+
+		if client:supports_method(methods.textDocument_inlineCompletion) then
+			local opts = {
+				bufnr = ev.buf,
+			}
+
+			vim.lsp.inline_completion.enable(true, opts)
+			vim.keymap.set(
+				"i",
+				"<Tab>",
+				vim.lsp.inline_completion.get,
+				{ desc = "LSP: accept inline completion", buffer = ev.buf }
+			)
+
+			vim.keymap.set(
+				"i",
+				"<C-g>",
+				vim.lsp.inline_completion.select,
+				{ desc = "LSP: switch inline completion", buffer = ev.buf }
+			)
+		end
+
+		if client:supports_method(methods.textDocument_onTypeFormatting) then
+			vim.lsp.on_type_formatting.enable(true, { client_id = ev.data.client_id })
+		end
 	end,
 })
 
@@ -90,6 +115,16 @@ vim.api.nvim_create_autocmd("LspDetach", {
 	end,
 })
 
+vim.keymap.set("n", "<leader>ta", function()
+	local status = not vim.lsp.is_enabled("copilot")
+	vim.lsp.enable("copilot", status)
+	if status then
+		vim.notify("Copilot enabled")
+	else
+		vim.notify("Copilot disabled")
+	end
+end, { desc = "Toggle copilot lsp" })
+
 vim.lsp.enable("bashls")
 vim.lsp.enable("clangd")
 vim.lsp.enable("gopls")
@@ -103,6 +138,7 @@ vim.lsp.enable("solidity_ls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("buf_ls")
 
+vim.lsp.enable("copilot")
 vim.lsp.enable("basedpyright")
 -- vim.lsp.enable("ruff")
 -- vim.lsp.enable("pyrefly")
