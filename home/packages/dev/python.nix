@@ -9,7 +9,6 @@
     basedpyright
     pyrefly
     python314
-    ruff
     ty
     uv
   ];
