@@ -16,7 +16,7 @@
       cursor-style-blink = false;
       font-family = customArgs.font.name;
       font-feature = ["-calt" "-dlig" "-liga"];
-      font-size = 16;
+      font-size = customArgs.font.size;
       font-thicken = true;
       adjust-cell-height = "25%";
       font-thicken-strength = 16;
