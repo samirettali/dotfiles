@@ -19,7 +19,7 @@
       font-size = customArgs.font.size;
       font-thicken = true;
       adjust-cell-height = "25%";
-      font-thicken-strength = 16;
+      font-thicken-strength = 8;
       gtk-titlebar = false;
       macos-titlebar-proxy-icon = "hidden";
       macos-titlebar-style = "hidden";
