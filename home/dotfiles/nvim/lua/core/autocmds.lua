@@ -16,9 +16,12 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
 
 		local mark = vim.api.nvim_buf_get_mark(0, '"')
 		local lcount = vim.api.nvim_buf_line_count(0)
-		if mark[1] > 0 and mark[1] <= lcount then
-			vim.api.nvim_win_set_cursor(0, mark)
+
+		if mark[1] <= 0 or mark[1] > lcount then
+			return
 		end
+
+		vim.api.nvim_win_set_cursor(0, mark)
 	end,
 })
 
@@ -27,9 +30,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre", "FileWritePre" }, {
 	pattern = "*",
 	callback = function()
 		local dir = vim.fn.expand("<afile>:p:h")
-		if dir:match("^%a+://") == nil then
-			vim.fn.mkdir(dir, "p")
+		if dir:match("^%a+://") ~= nil then
+			return
 		end
+
+		vim.fn.mkdir(dir, "p")
 	end,
 })
 
