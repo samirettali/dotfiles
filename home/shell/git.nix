@@ -75,7 +75,6 @@ in {
         "node_modules"
         "__pycache__"
         ".crush"
-        ".claude"
       ];
       signing.format = "ssh";
       includes = [
