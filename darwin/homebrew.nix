@@ -13,16 +13,15 @@
       "displayplacer"
     ];
     casks = [
+      "betterdisplay"
       "docker-desktop"
       "eqmac"
       "maccy"
-      # "hammerspoon"
       "shottr"
       "sloth"
       "sol"
       # "burp-suite"
       # "flashspace"
-      "betterdisplay"
       # "hyperkey"
       # "leader-key"
       # "ledger-live"
