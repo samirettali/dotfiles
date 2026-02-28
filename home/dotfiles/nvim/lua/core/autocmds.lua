@@ -10,6 +10,10 @@ vim.api.nvim_create_autocmd({ "BufReadPost" }, {
 	group = vim.api.nvim_create_augroup("CustomCursorPosition", { clear = true }),
 	pattern = "*",
 	callback = function()
+		if vim.o.diff then
+			return
+		end
+
 		local mark = vim.api.nvim_buf_get_mark(0, '"')
 		local lcount = vim.api.nvim_buf_line_count(0)
 		if mark[1] > 0 and mark[1] <= lcount then
