@@ -1,5 +1,4 @@
 return {
-	-- Git signs integration
 	"lewis6991/gitsigns.nvim",
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
@@ -16,7 +15,7 @@ return {
 		gitsigns.setup(opts)
 
 		vim.keymap.set("n", "]h", function()
-			if vim.wo.diff then
+			if vim.wo.diff then -- TODO: why?
 				vim.cmd.normal({ "]h", bang = true })
 			else
 				gitsigns.nav_hunk("next")
@@ -31,28 +30,28 @@ return {
 			end
 		end)
 
-		vim.keymap.set("n", "<leader>gr", gitsigns.reset_hunk, { desc = "Git: reset hunk" })
-		vim.keymap.set("n", "<leader>gs", gitsigns.stage_hunk, { desc = "Git: stage hunk" })
-		vim.keymap.set("v", "<leader>gr", function()
+		vim.keymap.set("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Git: reset hunk" })
+		vim.keymap.set("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Git: stage hunk" })
+		vim.keymap.set("v", "<leader>hr", function()
 			gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 		end)
-		vim.keymap.set("v", "<leader>gs", function()
+		vim.keymap.set("v", "<leader>hs", function()
 			gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
 		end)
-		vim.keymap.set("n", "<leader>gS", gitsigns.stage_buffer)
-		vim.keymap.set("n", "<leader>gR", gitsigns.reset_buffer) -- TODO: this is dangerous
+		vim.keymap.set("n", "<leader>hS", gitsigns.stage_buffer)
+		vim.keymap.set("n", "<leader>hR", gitsigns.reset_buffer)
 
-		vim.keymap.set("n", "<leader>gu", gitsigns.undo_stage_hunk)
-		vim.keymap.set("n", "<leader>gp", gitsigns.preview_hunk_inline)
-		vim.keymap.set("n", "<leader>gd", gitsigns.diffthis) -- TODO: how to quit?
+		vim.keymap.set("n", "<leader>hu", gitsigns.undo_stage_hunk)
+		vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk_inline)
+		vim.keymap.set("n", "<leader>hd", gitsigns.diffthis) -- TODO: how to quit?
 		-- vim.keymap.set("n", "<leader>td", gitsigns.toggle_deleted) -- TODO
 
 		vim.keymap.set("n", "<leader>tg", gitsigns.toggle_current_line_blame)
-		vim.keymap.set("n", "<leader>gb", function()
+		vim.keymap.set("n", "<leader>hb", function()
 			gitsigns.blame_line({ full = true })
 		end, { desc = "[g]it [b]lame line" })
 
-		vim.keymap.set("n", "<leader>gB", gitsigns.blame, { desc = "[g]it [B]lame file" })
+		vim.keymap.set("n", "<leader>hB", gitsigns.blame, { desc = "[g]it [B]lame file" })
 
 		vim.keymap.set({ "o", "x" }, "ih", gitsigns.select_hunk)
 
