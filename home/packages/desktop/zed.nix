@@ -1,10 +1,14 @@
 {
   lib,
   customArgs,
+  pkgs,
   ...
 }: {
   programs.zed-editor = {
-    enable = lib.mkDefault false;
+    enable = lib.mkDefault true;
+    extraPackages = with pkgs; [
+      claude-code-acp
+    ];
 
     extensions = [
       "csharp"
@@ -71,7 +75,7 @@
       toolbar = {
         quick_actions = false;
       };
-      relative_line_numbers = true;
+      relative_line_numbers = "enabled";
       ui_font_family = customArgs.font.name;
       ui_font_size = 16;
       vim_mode = true;
@@ -82,18 +86,12 @@
       notification_panel = {
         dock = "left";
       };
-      chat_panel = {
-        dock = "left";
-      };
       project_panel = {
         dock = "right";
         indent_size = 16;
         git_status = true;
       };
       vertical_scroll_margin = 20;
-      features = {
-        edit_prediction_provider = "zed";
-      };
       scrollbar = {
         show = "never";
       };
