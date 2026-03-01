@@ -6,7 +6,6 @@
 }: let
   dotnetPackages = with pkgs.dotnetCorePackages;
     combinePackages [
-      sdk_6_0-bin
       sdk_8_0-bin
       sdk_9_0-bin
       sdk_10_0-bin
@@ -27,11 +26,15 @@ in {
   home.packages = with pkgs; [
     awscli2
     csharpier
+    dotnet-affected
     dotnet-ef
     dotnetPackages
+    go-swag
     jetbrains.datagrip
     maven
     mongodb-compass
+    mongodb-tools
+    mongosh
     netcoredbg
     nuget
     postman
@@ -41,10 +44,6 @@ in {
     stunnel
     terraform
     terraform-ls
-    mongosh
-    mongodb-tools
-    go-swag
-    dotnet-affected
   ];
 
   programs = {

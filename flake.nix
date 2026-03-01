@@ -108,13 +108,6 @@
       ];
       config = {
         allowUnfree = true;
-        permittedInsecurePackages = [
-          "dotnet-combined"
-          "dotnet-core-combined"
-          "dotnet-wrapped-combined"
-          "dotnet-sdk-6.0.428"
-          "dotnet-sdk-wrapped-6.0.428"
-        ];
       };
     };
 
