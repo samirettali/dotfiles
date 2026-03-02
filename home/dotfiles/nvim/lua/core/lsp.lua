@@ -5,44 +5,33 @@ vim.keymap.set("n", "<leader>ti", function()
 end, { desc = "Toggle inlay hints" })
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0, desc = "vim.lsp.buf.definition()" })
--- vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "vim.lsp.buf.declaration()" })
-vim.keymap.set("n", "gS", function()
-	vim.lsp.buf.workspace_symbol("")
-end, { desc = "vim.lsp.buf.workspace_symbol()" })
--- vim.keymap.set("n", "gI", vim.lsp.buf.incoming_calls, { desc = "vim.lsp.buf.incoming_calls()" })
--- vim.keymap.set("n", "gO", vim.lsp.buf.outgoing_calls, { desc = "vim.lsp.buf.outgoing_calls()" })
 
-vim.keymap.set("n", "<leader>gS", function()
-	vim.cmd("vsplit")
-	vim.lsp.buf.definition()
-end, { buffer = 0 })
-
-local kind_icon = {
-	{ menu = "Text", kind = "󰦨", kind_hlgroup = "String" },
-	{ menu = "Method", kind = "", kind_hlgroup = "Function" },
-	{ menu = "Function", kind = "󰡱", kind_hlgroup = "Function" },
-	{ menu = "Constructor", kind = "", kind_hlgroup = "Function" },
-	{ menu = "Field", kind = "", kind_hlgroup = "@lsp.type.property" },
-	{ menu = "Variable", kind = "", kind_hlgroup = "@variable" },
-	{ menu = "Class", kind = "", kind_hlgroup = "Include" },
-	{ menu = "Interface", kind = "", kind_hlgroup = "Type" },
-	{ menu = "Module", kind = "", kind_hlgroup = "Exception" },
-	{ menu = "Property", kind = "", kind_hlgroup = "@lsp.type.property" },
-	{ menu = "Unit", kind = "󰊱", kind_hlgroup = "Number" },
-	{ menu = "Value", kind = "", kind_hlgroup = "@variable" },
-	{ menu = "Enum", kind = "", kind_hlgroup = "Number" },
-	{ menu = "Keyword", kind = "", kind_hlgroup = "Keyword" },
-	{ menu = "Snippet", kind = "", kind_hlgroup = "Keyword" },
-	{ menu = "Color", kind = "", kind_hlgroup = "Keyword" },
-	{ menu = "File", kind = "", kind_hlgroup = "Tag" },
-	{ menu = "Reference", kind = "", kind_hlgroup = "Function" },
-	{ menu = "Folder", kind = "󰣞", kind_hlgroup = "Function" },
-	{ menu = "EnumMember", kind = "", kind_hlgroup = "Number" },
-	{ menu = "Constant", kind = "", kind_hlgroup = "Constant" },
-	{ menu = "Struct", kind = "", kind_hlgroup = "Type" },
-	{ menu = "Event", kind = "", kind_hlgroup = "Constant" },
-	{ menu = "Operator", kind = "", kind_hlgroup = "Operator" },
-	{ menu = "TypeParameter", kind = "", kind_hlgroup = "Type" },
+local kind_hl = {
+	Text = "String",
+	Method = "Function",
+	Function = "Function",
+	Constructor = "Function",
+	Field = "@lsp.type.property",
+	Variable = "@variable",
+	Class = "Include",
+	Interface = "Type",
+	Module = "Exception",
+	Property = "@lsp.type.property",
+	Unit = "Number",
+	Value = "@variable",
+	Enum = "Number",
+	Keyword = "Keyword",
+	Snippet = "Keyword",
+	Color = "Keyword",
+	File = "Tag",
+	Reference = "Function",
+	Folder = "Function",
+	EnumMember = "Number",
+	Constant = "Constant",
+	Struct = "Type",
+	Event = "Constant",
+	Operator = "Operator",
+	TypeParameter = "Type",
 }
 
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -53,22 +42,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 
 		if client:supports_method(methods.textDocument_completion) then
-			-- local chars = {}
-			-- for i = 32, 126 do
-			-- 	table.insert(chars, string.char(i))
-			-- end
-			--
-			-- client.server_capabilities.completionProvider.triggerCharacters = chars
-
 			vim.lsp.completion.enable(true, client.id, ev.buf, {
 				autotrigger = true,
 				convert = function(item)
-					local m = kind_icon[item.kind]
+					local kind = vim.lsp.protocol.CompletionItemKind[item.kind] or "Text"
+					if item.data and item.data.bufnames then
+						kind = "Buffer"
+					end
+
+					local hl = kind_hl[kind] or "Normal"
+
 					return {
 						abbr = item.label,
-						kind = m.kind,
-						menu = m.menu,
-						kind_hlgroup = m.kind_hlgroup,
+						kind = kind,
+						menu = "",
+						kind_hlgroup = hl,
 					}
 				end,
 			})
@@ -121,13 +109,7 @@ vim.api.nvim_create_autocmd("LspDetach", {
 })
 
 vim.keymap.set("n", "<leader>ta", function()
-	local status = not vim.lsp.is_enabled("copilot")
-	vim.lsp.enable("copilot", status)
-	if status then
-		vim.notify("Copilot enabled")
-	else
-		vim.notify("Copilot disabled")
-	end
+	vim.lsp.enable("copilot", not vim.lsp.is_enabled("copilot"))
 end, { desc = "Toggle copilot lsp" })
 
 vim.lsp.enable("bashls")
