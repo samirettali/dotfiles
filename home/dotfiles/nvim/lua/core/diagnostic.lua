@@ -17,6 +17,7 @@ vim.diagnostic.config({
 	virtual_text = false,
 	underline = true,
 	severity_sort = true,
+	signs = false,
 	jump = { on_jump = on_jump },
 })
 
