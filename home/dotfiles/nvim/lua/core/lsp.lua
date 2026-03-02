@@ -17,10 +17,6 @@ vim.keymap.set("n", "<leader>gS", function()
 	vim.lsp.buf.definition()
 end, { buffer = 0 })
 
-vim.keymap.set("n", "<leader>q", function()
-	vim.diagnostic.setloclist({ open = true })
-end, { desc = "Open diagnostic list" })
-
 local kind_icon = {
 	{ menu = "Text", kind = "󰦨", kind_hlgroup = "String" },
 	{ menu = "Method", kind = "", kind_hlgroup = "Function" },
