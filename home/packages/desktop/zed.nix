@@ -19,6 +19,7 @@
       "fleet-themes"
       "lua"
       "nix"
+      "rainbow-csv"
       "ruff"
       "sql"
       "terraform"
