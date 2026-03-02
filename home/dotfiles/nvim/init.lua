@@ -14,16 +14,12 @@ local function load_modules()
 	local modules = {
 		"core.options",
 		"core.autocmds",
-		"core.tabline",
 		"core.keymaps",
 		"core.lsp",
 		"core.diagnostic",
 		"core.statuscolumn",
 		"core.select",
-		-- "core.input",
-		"core.statusline",
 		"core.commands",
-		-- "core.winbar",
 	}
 
 	for _, module in ipairs(modules) do

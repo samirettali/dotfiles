@@ -87,3 +87,5 @@ vim.opt.fillchars = {
 }
 
 vim.opt.showbreak = "↳ "
+
+vim.opt.statusline = " "
