@@ -9,7 +9,7 @@
     extraPackages = with pkgs; [
       claude-code-acp
     ];
-
+    mutableUserSettings = false;
     extensions = [
       "csharp"
       "csv"
@@ -24,7 +24,6 @@
       "terraform"
       "zig"
     ];
-
     userSettings = {
       auto_update = false;
       agent_servers = {
@@ -75,6 +74,7 @@
       toolbar = {
         quick_actions = false;
       };
+      redact_private_values = true;
       relative_line_numbers = "enabled";
       ui_font_family = customArgs.font.name;
       ui_font_size = 16;
