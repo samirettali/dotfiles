@@ -3,7 +3,7 @@ return {
 	version = false,
 	lazy = false,
 	config = function()
-		require("mini.icons").setup()
+		require("mini.icons").setup({ style = "ascii" })
 		MiniIcons.mock_nvim_web_devicons()
 	end,
 }
