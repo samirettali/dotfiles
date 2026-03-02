@@ -105,16 +105,6 @@
         (final: prev: {
           zjstatus = zjstatus.packages.${prev.system}.default;
         })
-        # fix jeepney on macOS for mpv - D-Bus tests fail and optional deps cause import check issues
-        (final: prev: {
-          python313Packages = prev.python313Packages.overrideScope (pyFinal: pyPrev: {
-            jeepney = pyPrev.jeepney.overridePythonAttrs (old: {
-              doCheck = !prev.stdenv.isDarwin;
-              # Skip import checks for optional trio/asyncio modules
-              pythonImportsCheck = ["jeepney"];
-            });
-          });
-        })
       ];
       config = {
         allowUnfree = true;
