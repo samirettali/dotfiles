@@ -26,6 +26,7 @@ in {
       "--max-columns-preview"
       "--glob=!node_modules/*"
       "--glob=!.git/*"
+      "--glob=!*.aof"
       "--hidden"
       "--smart-case"
     ];
