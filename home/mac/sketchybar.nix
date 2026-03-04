@@ -107,7 +107,7 @@
 
   # TODO: cleanup
   # aerospaceLuaPackage = pkgs.callPackage ./aerospace-lua.nix {};
-  riftLuaPackage = pkgs.callPackage ./rift-lua.nix {};
+  # riftLuaPackage = pkgs.callPackage ./rift-lua.nix {};
 
   luaposixPackage = pkgs.callPackage ./luaposix.nix {
     buildLuarocksPackage = pkgs.lua54Packages.buildLuarocksPackage;
@@ -133,7 +133,7 @@
         pkgs.sbarlua
         luaposixPackage
         luasimdjsonPackage
-        riftLuaPackage
+        # riftLuaPackage
         # luasec
         # luabitop
       ]);
@@ -160,13 +160,13 @@ in {
     };
     "sketchybar/sketchybarrc" = {
       executable = true;
+      # package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath aerospaceLuaPackage}"
       text = ''
         #!/usr/bin/env ${lib.getExe config.programs.sketchybar.luaPackage}
         package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath pkgs.sbarlua}"
         package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath pkgs.lua54Packages.luasocket}"
         package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath luaposixPackage}"
         package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath luasimdjsonPackage}"
-        package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath riftLuaPackage}"
         require("init")
       '';
     };

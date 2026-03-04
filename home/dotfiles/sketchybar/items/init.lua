@@ -1,4 +1,4 @@
-require("items.rift")
+-- require("items.rift")
 require("items.front_app")
 require("items.calendar")
 require("items.battery")

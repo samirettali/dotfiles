@@ -4,7 +4,7 @@
   ...
 }: {
   programs.aerospace = {
-    enable = false;
+    enable = true;
     settings = {
       start-at-login = true;
       accordion-padding = 30;
