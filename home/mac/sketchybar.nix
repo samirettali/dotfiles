@@ -107,7 +107,6 @@
 
   # TODO: cleanup
   # aerospaceLuaPackage = pkgs.callPackage ./aerospace-lua.nix {};
-  # riftLuaPackage = pkgs.callPackage ./rift-lua.nix {};
 
   luaposixPackage = pkgs.callPackage ./luaposix.nix {
     buildLuarocksPackage = pkgs.lua54Packages.buildLuarocksPackage;
@@ -133,7 +132,6 @@
         pkgs.sbarlua
         luaposixPackage
         luasimdjsonPackage
-        # riftLuaPackage
         # luasec
         # luabitop
       ]);
