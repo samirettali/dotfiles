@@ -22,7 +22,6 @@
     ./ripgrep.nix
     ./posting.nix
     ./tmux.nix
-    ./zellij.nix
     ./zsh.nix
     ./zoxide.nix
     ./scripts

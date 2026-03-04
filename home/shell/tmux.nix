@@ -7,7 +7,7 @@
   cfg = config.programs.tmux;
 in {
   programs.tmux = {
-    enable = lib.mkDefault false;
+    enable = lib.mkDefault true;
     aggressiveResize = true;
     baseIndex = 1;
     escapeTime = 0;
@@ -17,7 +17,6 @@ in {
     mouse = true;
     focusEvents = true;
     shell = lib.getExe pkgs.fish;
-    shortcut = "a";
     # bind space command-prompt "joinp -s:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
     extraConfig = ''
       unbind c
