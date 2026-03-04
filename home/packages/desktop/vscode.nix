@@ -38,40 +38,40 @@
   withExtension = ext: settings:
     lib.optionalAttrs (builtins.elem ext extensions) settings;
 in {
-  home.packages = [
-    (pkgs.writeShellScriptBin "code" ''
-      exec ${lib.getExe' config.programs.vscode.package "code-insiders"}
-    '')
-  ];
+  # home.packages = [
+  #   (pkgs.writeShellScriptBin "code" ''
+  #     exec ${lib.getExe' config.programs.vscode.package "code-insiders"}
+  #   '')
+  # ];
 
   programs = {
     vscode = {
       enable = true;
-      package =
-        (pkgs.vscode.override {
-          isInsiders = true;
-        }).overrideAttrs (oldAttrs: {
-          version = "1.110.0";
-          src = pkgs.fetchurl {
-            name = "VSCode-insiders-darwin-arm64.zip";
-            url = "https://update.code.visualstudio.com/latest/${source.os}/insider"; # TODO: version and linux
-            sha256 = source.sha256;
-          };
-          # src = fetchTarball {
-          #   # src = builtins.fetchurl {
-          #   url = "https://code.visualstudio.com/sha/download?build=insider&os=${os}";
-          #   sha256 = sha256;
-          #   # url = "https://code.visualstudio.com/sha/download?build=insider&os=darwin";
-          #   # sha256 = lib.fakeSha256; # TODO
-          # };
-        });
+      # package =
+      # (pkgs.vscode.override {
+      #   isInsiders = true;
+      # }).overrideAttrs (oldAttrs: {
+      #   version = "1.110.0";
+      #   src = pkgs.fetchurl {
+      #     name = "VSCode-insiders-darwin-arm64.zip";
+      #     url = "https://update.code.visualstudio.com/latest/${source.os}/insider"; # TODO: version and linux
+      #     sha256 = source.sha256;
+      #   };
+      #   # src = fetchTarball {
+      #   #   # src = builtins.fetchurl {
+      #   #   url = "https://code.visualstudio.com/sha/download?build=insider&os=${os}";
+      #   #   sha256 = sha256;
+      #   #   # url = "https://code.visualstudio.com/sha/download?build=insider&os=darwin";
+      #   #   # sha256 = lib.fakeSha256; # TODO
+      #   # };
+      # });
 
       mutableExtensionsDir = false;
       profiles.default = {
         enableExtensionUpdateCheck = false;
         enableUpdateCheck = false;
         enableMcpIntegration = true;
-        extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version extensions;
+        extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version extensions;
         keybindings = [
           {
             "key" = "ctrl+tab";

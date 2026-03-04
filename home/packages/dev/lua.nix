@@ -17,7 +17,7 @@
   ];
 
   programs.vscode.profiles.default = {
-    extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version [
+    extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version [
       "sumneko.lua"
       "johnnymorganz.stylua"
     ];

@@ -38,7 +38,7 @@
     ];
 
   programs.vscode.profiles.default = lib.optionals config.programs.go.enable {
-    extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version [
+    extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version [
       "golang.go"
     ];
     userSettings = {

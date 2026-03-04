@@ -22,7 +22,7 @@
 
   programs.vscode.profiles.default = {
     extensions =
-      pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version
+      pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version
       [
         "ms-python.debugpy"
         "ms-python.python"

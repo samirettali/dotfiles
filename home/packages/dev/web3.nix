@@ -13,7 +13,7 @@
   ];
 
   programs.vscode.profiles.default = lib.optionals (builtins.elem pkgs.solc-select config.home.packages) {
-    extensions = pkgs.nix4vscode.forVscodeVersionPrerelease config.programs.vscode.package.version [
+    extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version [
       "juanblanco.solidity"
     ];
     userSettings = {
