@@ -12,7 +12,7 @@
         "rust-src"
         "rust-analyzer"
       ];
-      targets = ["x86_64-unknown-linux-gnu"];
+      targets = lib.optionals pkgs.stdenv.isLinux ["x86_64-unknown-linux-gnu"]; # TODO: is this needed?
     };
 in {
   home.packages = [
