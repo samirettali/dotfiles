@@ -74,11 +74,10 @@ in {
       bind -N "Repeat command in last pane" \
         b last-pane \; send-keys Up C-m \; last-pane
 
-      bind -N "Select last window"\
-        enter last-window
+      bind r source-file ~/.config/tmux/tmux.conf \; display "Config reloaded!"
 
-      bind -N "Open lazygit in a popup" \
-        C-g display-popup -E -d "#{pane_current_path}" -xC -yC -w 80% -h 75% "${lib.getExe pkgs.lazygit}"
+      bind -N "Select last window" \
+        tab last-window
 
       set -g renumber-windows on
       set -g allow-rename off
