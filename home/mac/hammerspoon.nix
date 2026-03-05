@@ -36,7 +36,7 @@
       recursive = true;
     };
     ".hammerspoon/spotify.lua".text =
-      lib.optionals (config.programs.spotify-player.enable)
+      lib.optionalString (config.programs.spotify-player.enable)
       /*
       lua
       */
