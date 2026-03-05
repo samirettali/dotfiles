@@ -1,3 +1,10 @@
+local ignored = {
+	"ST1005", -- error strings should not be capitalized
+	"ST1003", -- method ... should be ...
+	"any", -- interface{} can be replaced with any
+	"shadow",
+}
+
 return {
 	cmd = { "gopls" },
 	filetypes = { "go", "gomod", "gowork", "gotmpl", "gosum" },
@@ -93,5 +100,18 @@ return {
 			directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
 			semanticTokens = true,
 		},
+	},
+	handlers = {
+		["textDocument/publishDiagnostics"] = function(err, result, ctx)
+			local uri = result.uri or ""
+
+			if uri:match("%.gen%.go$") then
+				result.diagnostics = vim.tbl_filter(function(d)
+					return not vim.tbl_contains(ignored, d.source)
+				end, result.diagnostics)
+			end
+
+			vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx)
+		end,
 	},
 }
