@@ -1,18 +1,3 @@
----@brief
----
---- Combination of both lint server and client
----
---- https://github.com/nametake/golangci-lint-langserver
---- https://github.com/golangci/golangci-lint
----
----
---- Installation of binaries needed is done via
----
---- ```
---- go install github.com/nametake/golangci-lint-langserver@latest
---- go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
---- ```
-
 ---@type vim.lsp.Config
 return {
 	cmd = { "golangci-lint-langserver" },
@@ -23,6 +8,8 @@ return {
 			"run",
 			"--default",
 			"all",
+			"--disable",
+			"depguard",
 			-- disable all output formats that might be enabled by the users .golangci.yml
 			"--output.text.path=",
 			"--output.tab.path=",
