@@ -43,12 +43,6 @@
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    zjstatus = {
-      url = "github:dj95/zjstatus";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay"; # TODO: upstream is broken
-    };
   };
 
   outputs = {
@@ -56,7 +50,6 @@
     darwin,
     home-manager,
     nix4vscode,
-    zjstatus,
     ...
   } @ inputs: let
     inherit (nixpkgs) lib;
