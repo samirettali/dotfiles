@@ -5,18 +5,6 @@
   pkgs,
   ...
 }: let
-  system = pkgs.stdenv.hostPlatform.system;
-  throwSystem = throw "Unsupported system: ${system}";
-  source =
-    {
-      aarch64-darwin = {
-        os = "darwin-arm64";
-        sha256 = "sha256-YKSCppJYA9IvTE+MYOikzWXoA8ClXiOxaE4LufHn4V4="; # TODO
-      };
-    }.${
-      system
-    } or throwSystem;
-
   extensions = [
     # DrBlury.protobuf-vsc # TODO: doesn't exist anymore
     "jacobwgillespie.minimal-icons"
@@ -38,33 +26,9 @@
   withExtension = ext: settings:
     lib.optionalAttrs (builtins.elem ext extensions) settings;
 in {
-  # home.packages = [
-  #   (pkgs.writeShellScriptBin "code" ''
-  #     exec ${lib.getExe' config.programs.vscode.package "code-insiders"}
-  #   '')
-  # ];
-
   programs = {
     vscode = {
       enable = true;
-      # package =
-      # (pkgs.vscode.override {
-      #   isInsiders = true;
-      # }).overrideAttrs (oldAttrs: {
-      #   version = "1.110.0";
-      #   src = pkgs.fetchurl {
-      #     name = "VSCode-insiders-darwin-arm64.zip";
-      #     url = "https://update.code.visualstudio.com/latest/${source.os}/insider"; # TODO: version and linux
-      #     sha256 = source.sha256;
-      #   };
-      #   # src = fetchTarball {
-      #   #   # src = builtins.fetchurl {
-      #   #   url = "https://code.visualstudio.com/sha/download?build=insider&os=${os}";
-      #   #   sha256 = sha256;
-      #   #   # url = "https://code.visualstudio.com/sha/download?build=insider&os=darwin";
-      #   #   # sha256 = lib.fakeSha256; # TODO
-      #   # };
-      # });
 
       mutableExtensionsDir = false;
       profiles.default = {
