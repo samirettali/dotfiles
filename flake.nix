@@ -141,6 +141,10 @@
         inherit inputs;
         inherit (inputs) samirettali-nur;
         inherit (mkCustomArgs pkgs) customArgs;
+        features = {
+          rust = false; # TODO: can the input flake be used conditionally?
+          security = false;
+        };
       };
       users.${user.name} = {
         imports =
