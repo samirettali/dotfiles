@@ -12,7 +12,6 @@
 
     "vadimcn.vscode-lldb"
     "wgsl-analyzer.wgsl-analyzer"
-    "postman.postman-for-vscode"
     "vscodevim.vim"
     "eamodio.gitlens"
 
@@ -142,12 +141,6 @@ in {
               "-w"
               "-CCC"
             ];
-          })
-          (withExtension "postman.postman-for-vscode" {
-            # TODO
-            # "chat.instructionsFilesLocations" = {
-            #   "${extensions.postman.postman-for-vscode}/agent-instruction-files/vscode" = true;
-            # };
           })
         ];
       };
