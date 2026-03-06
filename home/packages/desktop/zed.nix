@@ -143,7 +143,7 @@
       {
         context = "Pane";
         "bindings" = {
-          ctrl-shift-tab = "pane::ActivatePrevItem";
+          ctrl-shift-tab = "pane::ActivatePreviousItem";
           ctrl-tab = "pane::ActivateNextItem";
         };
       }
