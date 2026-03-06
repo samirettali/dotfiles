@@ -164,8 +164,6 @@
         specialArgs = {inherit inputs;};
         modules = [
           ./machines/mbp.nix
-          ./darwin/homebrew.nix
-          ./darwin/work.nix
           ({
             config,
             pkgs,

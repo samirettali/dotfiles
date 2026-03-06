@@ -1,7 +1,0 @@
-{...}: {
-  homebrew = {
-    casks = [
-      "redis-insight"
-    ];
-  };
-}

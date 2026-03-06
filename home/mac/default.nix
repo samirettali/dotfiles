@@ -9,8 +9,12 @@
     ./sketchybar.nix
   ];
 
-  home.packages = [
-    # docker
+  home.packages = with pkgs; [
+    docker
+    maccy
+    betterdisplay
+    shottr
+    choose-gui
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.mole
   ];
 
