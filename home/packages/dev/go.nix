@@ -44,7 +44,7 @@
       "go.delveConfig" = {
         "showGlobalVariables" = true;
       };
-      "go.lintTool" = "revive";
+      "go.lintTool" = "golangci-lint-v2"; # TODO: this downloads golangci-lint-v2 in ~/go/bin
       "go.coverOnSingleTest" = true;
       "go.showWelcome" = true;
       "gopls" = {
