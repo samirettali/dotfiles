@@ -1,4 +1,4 @@
-local spotify = require("spotify")
+-- local spotify = require("spotify")
 local display = require("display")
 -- local bookmarks = require("bookmarks") -- TODO
 -- local nur = require("nur") -- TODO
@@ -126,10 +126,10 @@ local function uuid()
 	return cmd("uuidgen")
 end
 
-hs.timer.doEvery(60, spotify.fetch_playlists)
+-- hs.timer.doEvery(60, spotify.fetch_playlists)
 
 local config = {
-	{ "m", "music", spotify.play_playlist },
+	-- { "m", "music", spotify.play_playlist },
 	{ "b", "browser", launch("Firefox") },
 	{ "t", "terminal", launch("Ghostty") },
 	{
