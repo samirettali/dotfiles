@@ -1,12 +1,4 @@
-{
-  customArgs,
-  lib,
-  pkgs,
-  config,
-  ...
-}: let
-  git = lib.getExe config.programs.git.package;
-in {
+{lib, ...}: {
   programs = {
     zsh = {
       enable = lib.mkDefault false;
@@ -33,25 +25,6 @@ in {
       };
       historySubstringSearch.enable = true;
       initContent = builtins.readFile ../../home/dotfiles/zsh/extra.zsh;
-      # TODO: move
-      shellAliases = {
-        bak = "cp -r $1 $1.bak";
-        c = "clear";
-        gb = "${git} branch";
-        gc = "${git} clone";
-        gch = "${git} checkout";
-        gd = "${git} diff";
-        gdc = "${git} diff --cached";
-        jj = "${customArgs.commands.paste} | jq -r | ${customArgs.commands.copy}";
-        jjj = "${customArgs.commands.paste} | jq -r";
-        la = "ls -la";
-        ll = "ls -l";
-        ns = "nix-shell --run zsh -p";
-        rm = lib.getExe pkgs.trash;
-      };
-      shellGlobalAliases = {
-        trim = "awk '{\$1=\$1;print}'";
-      };
       sessionVariables = {
         KEYTIMEOUT = "1";
       };
