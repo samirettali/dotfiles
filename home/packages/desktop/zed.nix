@@ -139,5 +139,14 @@
         "**/node_modules"
       ];
     };
+    userKeymaps = [
+      {
+        context = "Pane";
+        "bindings" = {
+          ctrl-shift-tab = "pane::ActivatePrevItem";
+          ctrl-tab = "pane::ActivateNextItem";
+        };
+      }
+    ];
   };
 }
