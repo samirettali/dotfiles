@@ -10,6 +10,8 @@
   sketchybarExe = lib.getExe config.programs.sketchybar.package;
 
   cryptoMonitorScript = pkgs.writeShellScriptBin "crypto-monitor" ''
+    set -o pipefail
+
     if [[ $# -eq 0 ]]; then
         echo "Usage: ./''${0} <BTCUSDT> [ETHUSDT ...]"
         exit 1
@@ -88,20 +90,33 @@
         echo "{\"method\":\"SUBSCRIBE\",\"params\":[$params]}"
     }
 
-    subscription=$(create_subscription)
+    connect() {
+        local subscription
+        subscription=$(create_subscription)
 
-    {
-        echo "$subscription"
-        while true; do sleep 1; done
-    } | ${websocatExe} wss://stream.binance.com/ws | while IFS= read -r line; do
-        # skip first response
-        if echo "$line" | ${jqExe} -e '.result // false' &>/dev/null; then
-            continue
-        fi
+        echo "$(date): connecting to binance webSocket..." >&2
 
-        if echo "$line" | ${jqExe} -e '.e == "24hrMiniTicker"' &>/dev/null; then
-            process_ticker "$line"
-        fi
+        {
+            echo "$subscription"
+            while true; do sleep 60; done
+        } | ${websocatExe} --ping-interval 20 wss://stream.binance.com/ws | while IFS= read -r line; do
+            # skip subscription confirmation response
+            if echo "$line" | ${jqExe} -e '.result // false' &>/dev/null; then
+                continue
+            fi
+
+            if echo "$line" | ${jqExe} -e '.e == "24hrMiniTicker"' &>/dev/null; then
+                process_ticker "$line"
+            fi
+        done
+    }
+
+    RETRY_DELAY=5
+
+    while true; do
+        connect || true
+        echo "$(date): websocket disconnected, reconnecting in ''${RETRY_DELAY}s..." >&2
+        sleep "$RETRY_DELAY"
     done
   '';
 
