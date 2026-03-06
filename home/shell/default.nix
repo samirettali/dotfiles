@@ -33,7 +33,6 @@
     difftastic
     fd
     gh
-    github-copilot-cli
     gnused
     hwatch
     iredis
@@ -60,6 +59,7 @@
     # broot
     # crush
     # ctop # docket container monitoring
+    # github-copilot-cli
     # diskus
     # fx
     # gping # graphical ping
