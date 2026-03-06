@@ -18,7 +18,6 @@
       "eqmac"
       "maccy"
       "shottr"
-      "sloth"
       "sol"
       # "burp-suite"
       # "flashspace"
