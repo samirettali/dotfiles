@@ -5,7 +5,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    python313Packages.debugpy # used by neovim dap
+    python314Packages.debugpy # used by neovim dap (TODO: remove?)
     basedpyright
     pyrefly
     python314
