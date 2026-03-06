@@ -107,8 +107,8 @@
         default_height = 320;
         default_view = "thread";
         default_model = {
-          provider = "zed.dev";
-          model = "claude-sonnet-4";
+          provider = "anthropic";
+          model = "claude-sonnet-4-6";
         };
         single_file_review = true;
       };
