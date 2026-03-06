@@ -46,7 +46,6 @@ in {
 
   home.packages = with pkgs; [
     cachix
-    code-cursor
     nix-init
     nix-tree
     nix-prefetch-github
