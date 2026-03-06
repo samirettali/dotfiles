@@ -1001,6 +1001,10 @@
                 name = "LiveBench";
                 url = "https://livebench.ai/";
               }
+              {
+                name = "Minebench";
+                url = "https://minebench.ai";
+              }
             ];
           }
           {
