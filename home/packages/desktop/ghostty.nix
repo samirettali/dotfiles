@@ -1,5 +1,5 @@
 {
-  customArgs,
+  vars,
   pkgs,
   ...
 }: {
@@ -14,9 +14,9 @@
       confirm-close-surface = false;
       cursor-style = "block";
       cursor-style-blink = false;
-      font-family = customArgs.font.name;
+      font-family = vars.font.name;
       font-feature = ["-calt" "-dlig" "-liga"];
-      font-size = customArgs.font.size;
+      font-size = vars.font.size;
       font-thicken = true;
       adjust-cell-height = "25%";
       font-thicken-strength = 4;

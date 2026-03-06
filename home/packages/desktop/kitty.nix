@@ -1,13 +1,13 @@
 {
   lib,
-  customArgs,
+  vars,
   ...
 }: {
   programs.kitty = {
     enable = lib.mkDefault false;
     font = {
-      name = customArgs.font.name;
-      size = customArgs.font.size;
+      name = vars.font.name;
+      size = vars.font.size;
     };
     extraConfig = ''
       cursor_shape block

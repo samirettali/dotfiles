@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  vars,
   ...
 }: let
   exe = "${lib.getExe config.programs.git.package}";
@@ -21,7 +22,7 @@ in {
       enable = true;
       settings = {
         user = {
-          email = config.home.sessionVariables.EMAIL;
+          email = vars.email;
           name = "Samir Ettali";
           signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
         };
@@ -77,24 +78,6 @@ in {
         ".crush"
       ];
       signing.format = "ssh";
-      includes = [
-        {
-          condition = "gitdir:~/dev/dotfiles/";
-          contents = {
-            user = {
-              email = "ettali.samir@gmail.com";
-            };
-          };
-        }
-        {
-          condition = "gitdir:~/proj";
-          contents = {
-            user = {
-              email = "ettali.samir@gmail.com";
-            };
-          };
-        }
-      ];
     };
   };
 }

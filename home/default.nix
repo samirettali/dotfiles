@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  customArgs,
+  vars,
   ...
 }: let
 in {
@@ -26,8 +26,8 @@ in {
   home.shellAliases = {
     ls = "${lib.getExe' pkgs.coreutils "ls"} --color=always --group-directories-first";
     iip = "dig +short myip.opendns.com @resolver1.opendns.com";
-    jj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r | ${customArgs.commands.copy}";
-    jjj = "${customArgs.commands.paste} | ${lib.getExe pkgs.jq} -r";
+    jj = "${vars.commands.paste} | ${lib.getExe pkgs.jq} -r | ${vars.commands.copy}";
+    jjj = "${vars.commands.paste} | ${lib.getExe pkgs.jq} -r";
     localip = "ipconfig getifaddr en0";
     rm = lib.getExe pkgs.trash-cli;
     ns = "${lib.getExe' pkgs.nix "nix-shell"} --run $SHELL -p";

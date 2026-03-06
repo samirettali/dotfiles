@@ -1,5 +1,5 @@
 {
-  customArgs,
+  vars,
   lib,
   pkgs,
   ...
@@ -11,10 +11,10 @@
         shell = "${lib.getExe pkgs.fish}";
       };
       font = {
-        normal.family = customArgs.font.name;
+        normal.family = vars.font.name;
         normal.style = "Regular";
         bold.style = "Medium";
-        size = customArgs.font.size;
+        size = vars.font.size;
       };
       env = {
         TERM = "xterm-256color";

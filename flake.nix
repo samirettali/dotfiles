@@ -104,29 +104,6 @@
       };
     };
 
-    mkCustomArgs = pkgs: {
-      customArgs = {
-        font = {
-          name = "JetBrainsMono Nerd Font";
-          size =
-            if pkgs.stdenv.isDarwin
-            then 14
-            else 10;
-        };
-        commands = {
-          # TODO: find a better way
-          copy =
-            if pkgs.stdenv.isDarwin
-            then "pbcopy"
-            else "xclip -selection clipboard";
-          paste =
-            if pkgs.stdenv.isDarwin
-            then "pbpaste"
-            else "xclip -o -selection clipboard";
-        };
-      };
-    };
-
     # Common Home Manager configuration
     mkHomeManagerConfig = {
       user,
@@ -140,10 +117,30 @@
       extraSpecialArgs = {
         inherit inputs;
         inherit (inputs) samirettali-nur;
-        inherit (mkCustomArgs pkgs) customArgs;
         features = {
           rust = false; # TODO: can the input flake be used conditionally?
           security = false;
+        };
+        vars = {
+          email = "ettali.samir@gmail.com";
+          font = {
+            name = "JetBrainsMono Nerd Font";
+            size =
+              if pkgs.stdenv.isDarwin
+              then 14
+              else 10;
+          };
+          commands = {
+            # TODO: find a better way
+            copy =
+              if pkgs.stdenv.isDarwin
+              then "pbcopy"
+              else "xclip -selection clipboard";
+            paste =
+              if pkgs.stdenv.isDarwin
+              then "pbpaste"
+              else "xclip -o -selection clipboard";
+          };
         };
       };
       users.${user.name} = {
@@ -157,7 +154,6 @@
           inherit stateVersion;
           homeDirectory = user.homeDirectory;
           username = user.name;
-          sessionVariables.EMAIL = user.email;
         };
       };
     };

@@ -1,6 +1,6 @@
 {
   lib,
-  customArgs,
+  vars,
   pkgs,
   ...
 }: {
@@ -32,7 +32,7 @@
           ignore_system_version = false;
         };
       };
-      buffer_font_family = customArgs.font.name;
+      buffer_font_family = vars.font.name;
       buffer_font_features = {
         "calt" = false;
       };
@@ -77,7 +77,7 @@
       };
       redact_private_values = true;
       relative_line_numbers = "enabled";
-      ui_font_family = customArgs.font.name;
+      ui_font_family = vars.font.name;
       ui_font_size = 16;
       vim_mode = true;
       soft_wrap = "editor_width";
