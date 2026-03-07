@@ -101,6 +101,7 @@
         "10" = "secondary";
       };
       on-window-detected = [
+        # TODO: https://github.com/nix-community/home-manager/commit/7f619d2a72061c24c5ef184aa9f89a4b6c6a2e70
         {
           check-further-callbacks = true;
           "if" = {
