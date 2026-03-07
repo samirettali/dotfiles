@@ -40,6 +40,7 @@ in {
     postman
     roslyn-ls
     slack
+    sqlcmd
     ssm-session-manager-plugin
     stunnel
     terraform
