@@ -15,7 +15,6 @@
     ./git.nix
     ./lazydocker.nix
     ./lazygit.nix
-    ./llm.nix
     ./neovim.nix
     ./opencode.nix
     ./pass.nix
@@ -43,7 +42,6 @@
     ncdu
     ngrok
     p7zip
-    repomix
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.tredis
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.go-qo
     scc
@@ -53,7 +51,8 @@
     unzip
     vi-mongo
     watchexec
-    yubikey-manager
+    # yubikey-manager
+    # repomix
     # amp-cli
     # bombardier # http load testing
     # broot

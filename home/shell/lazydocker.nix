@@ -4,14 +4,12 @@
   config,
   ...
 }: {
-  programs = {
-    lazydocker = {
-      enable = true;
-      settings = {
-        gui = {
-          showBottomLine = false;
-          returnImmediately = true;
-        };
+  programs.lazydocker = {
+    enable = lib.mkDefault false;
+    settings = {
+      gui = {
+        showBottomLine = false;
+        returnImmediately = true;
       };
     };
   };

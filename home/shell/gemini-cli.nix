@@ -1,6 +1,6 @@
-{...}: {
+{lib, ...}: {
   programs.gemini-cli = {
-    enable = true;
+    enable = lib.mkDefault false;
     settings = {
       preferredEditor = "vim";
       vimMode = true;
