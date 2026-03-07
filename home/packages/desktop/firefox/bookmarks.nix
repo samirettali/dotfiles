@@ -1650,6 +1650,19 @@
             ];
           }
           {
+            name = "Airdrop checkers";
+            bookmarks = [
+              {
+                name = "Drops";
+                url = "http://drops.bot/";
+              }
+              {
+                name = "Watchoor";
+                url = "https://watchoor.xyz";
+              }
+            ];
+          }
+          {
             name = "DeBank";
             url = "https://debank.com/profile";
           }
