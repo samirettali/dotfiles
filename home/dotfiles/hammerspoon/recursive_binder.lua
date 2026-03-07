@@ -136,7 +136,7 @@ local config = {
 		"o",
 		"[open]",
 		{
-			{ "c", "code", launch("Visual Studio Code - Insiders") },
+			{ "c", "code", launch("Visual Studio Code") },
 			{ "d", "discord", launch("Discord") },
 			{ "e", "eqMac", launch("eqMac") },
 			{ "f", "finder", launch("Finder") },
@@ -145,6 +145,7 @@ local config = {
 			{ "o", "obsidian", launch("Obsidian") },
 			{ "p", "preferences", launch("System Preferences") },
 			{ "s", "spotify", launch("Spotify") },
+			{ "z", "zed", launch("Zed") },
 		},
 	},
 	{
