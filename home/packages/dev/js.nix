@@ -1,23 +1,23 @@
 {
   pkgs,
-  config,
+  lib,
+  features,
   ...
 }: {
-  home.packages = with pkgs; [
-    bun
-    eslint_d
-    nodePackages.eslint
-    nodePackages.js-beautify
-    nodePackages.typescript-language-server
-    nodejs
-    prettierd
-  ];
+  home.packages = with pkgs;
+    [
+      nodejs # TODO: define "minimal" | "full" flag
+    ]
+    ++ lib.optionals features.js [
+      bun
+      eslint_d
+      nodePackages.eslint
+      nodePackages.js-beautify
+      nodePackages.typescript-language-server
+      prettierd
+    ];
 
-  home.sessionPath = [
-    "${config.home.homeDirectory}/.yarn/bin"
-  ];
-
-  home.sessionVariables = {
+  home.sessionVariables = lib.optionalAttrs features.js {
     NEXT_TELEMETRY_DISABLED = "1";
   };
 }

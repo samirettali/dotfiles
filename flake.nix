@@ -119,6 +119,12 @@
         features = {
           rust = false; # TODO: can the input flake be used conditionally?
           security = false;
+          web3 = false;
+          zig = false;
+          java = false;
+          js = false;
+          c = false;
+          go = true;
         };
         vars = {
           email = "ettali.samir@gmail.com";

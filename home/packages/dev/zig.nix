@@ -1,6 +1,11 @@
-{pkgs, ...}: {
-  home.packages = with pkgs; [
-    zig
-    zls
-  ];
+{
+  pkgs,
+  features,
+  ...
+}: {
+  home.packages = with pkgs;
+    lib.optionals features.zig [
+      zig
+      zls
+    ];
 }

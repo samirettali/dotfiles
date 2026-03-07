@@ -1,5 +1,15 @@
-{lib, ...}: {
+{
+  lib,
+  pkgs,
+  features,
+  ...
+}: {
   programs = {
-    java.enable = lib.mkDefault false;
+    java.enable = features.java;
   };
+
+  home.packages = with pkgs;
+    lib.optionals features.java [
+      jdt-language-server
+    ];
 }

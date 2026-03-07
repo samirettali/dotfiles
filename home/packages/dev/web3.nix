@@ -2,17 +2,19 @@
   config,
   lib,
   pkgs,
+  features,
   ...
 }: {
-  home.packages = with pkgs; [
-    foundry
-    go-ethereum
-    slither-analyzer
-    solc-select
-    vscode-solidity-server
-  ];
+  home.packages = with pkgs;
+    lib.optionals features.web3 [
+      foundry
+      go-ethereum
+      slither-analyzer
+      solc-select
+      vscode-solidity-server
+    ];
 
-  programs.vscode.profiles.default = lib.optionals (builtins.elem pkgs.solc-select config.home.packages) {
+  programs.vscode.profiles.default = lib.optionalAttrs features.web3 {
     extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version [
       "juanblanco.solidity"
     ];

@@ -151,13 +151,12 @@
         # luabitop
       ]);
 in {
-  home.packages = lib.optionals config.programs.sketchybar.enable [
-    pkgs.sketchybar-app-font
-  ];
-
   programs.sketchybar = {
     enable = true;
     luaPackage = luaPackage;
+    extraPackages = with pkgs; [
+      sketchybar-app-font
+    ];
   };
 
   programs.aerospace.settings.exec-on-workspace-change = lib.mkIf config.programs.aerospace.enable [
@@ -168,11 +167,15 @@ in {
 
   xdg.configFile = {
     "sketchybar" = {
+      enable = config.programs.sketchybar.enable;
+      force = true;
       source = ../dotfiles/sketchybar;
       recursive = true;
     };
     "sketchybar/sketchybarrc" = {
+      enable = config.programs.sketchybar.enable;
       executable = true;
+      force = true;
       # package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath aerospaceLuaPackage}"
       text = ''
         #!/usr/bin/env ${lib.getExe config.programs.sketchybar.luaPackage}
@@ -186,7 +189,7 @@ in {
   };
 
   launchd.agents.crypto-monitor = {
-    enable = true;
+    enable = config.programs.sketchybar.enable;
     config = {
       ProgramArguments = [
         (lib.getExe cryptoMonitorScript)

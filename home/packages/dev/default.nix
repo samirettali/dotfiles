@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./c.nix
     ./go.nix
@@ -18,28 +14,8 @@
   ];
 
   home.packages = with pkgs; [
-    ast-grep
-    devbox
-    jdt-language-server
-    libiconv
-    lld
-    lldb # for rust debugging
-    stdenv # TODO: is this needed?
-    taplo
-    # taplo-lsp # TODO: remove, included in taplo
-    yaml-language-server
-    tree-sitter
-    vscode-langservers-extracted
-    wgsl-analyzer
-    yamlfmt
-    zizmor
-    codespell
-    buf
+    # ast-grep
+    # lld # TODO: needed?
+    # stdenv # TODO: is this needed?
   ];
-
-  home.sessionVariables.LIBRARY_PATH = ''${lib.makeLibraryPath [pkgs.libiconv]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
-
-  home.shellAliases = {
-    ds = "${lib.getExe pkgs.devenv} shell";
-  };
 }
