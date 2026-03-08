@@ -8,5 +8,10 @@
     scripts = with pkgs.mpvScripts; [
       autocrop
     ];
+    scriptOpts = {
+      autocrop = {
+        auto = "no";
+      };
+    };
   };
 }
