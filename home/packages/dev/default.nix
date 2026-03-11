@@ -8,7 +8,6 @@
     ./python.nix
     ./rust.nix
     ./java.nix
-    ./shell.nix
     ./web3.nix
     ./zig.nix
   ];

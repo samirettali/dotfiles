@@ -11,6 +11,10 @@
     vimdiffAlias = true;
     extraPackages = with pkgs; [
       tree-sitter
+      copilot-language-server # for "copilotlsp" neovim plugin
+      bash-language-server
+      shellcheck
+      shfmt
       # TODO: lsp formatting and linters
       # yaml-language-server
       # buf
@@ -19,7 +23,6 @@
       # yamlfmt
       # zizmor
       # wgsl-analyzer
-      # vscode-langservers-extracted # TODO: needed?
     ];
   };
 }
