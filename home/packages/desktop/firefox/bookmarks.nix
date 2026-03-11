@@ -1479,6 +1479,10 @@
             name = "Clusters";
             url = "https://www.ventrella.com/Clusters/";
           }
+          {
+            name = "The endless acid banger";
+            url = "https://www.vitling.xyz/toys/acid-banger";
+          }
         ];
       }
       {
