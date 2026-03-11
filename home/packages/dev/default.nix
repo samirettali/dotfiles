@@ -17,4 +17,8 @@
     # lld # TODO: needed?
     # stdenv # TODO: is this needed?
   ];
+
+  programs.codex = {
+    enable = true;
+  };
 }
