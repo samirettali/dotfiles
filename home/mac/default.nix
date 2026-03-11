@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    ./aerospace.nix
     ./hammerspoon.nix
     ./sketchybar.nix
   ];

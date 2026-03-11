@@ -120,35 +120,11 @@
     done
   '';
 
-  # TODO: cleanup
-  # aerospaceLuaPackage = pkgs.callPackage ./aerospace-lua.nix {};
-
-  luaposixPackage = pkgs.callPackage ./luaposix.nix {
-    buildLuarocksPackage = pkgs.lua54Packages.buildLuarocksPackage;
-    fetchurl = pkgs.fetchurl;
-    fetchzip = pkgs.fetchzip;
-  };
-
-  luasimdjsonPackage = pkgs.callPackage ./simdjson.nix {
-    buildLuarocksPackage = pkgs.lua54Packages.buildLuarocksPackage;
-    fetchurl = pkgs.fetchurl;
-    fetchzip = pkgs.fetchzip;
-  };
-
   luaPackage =
     pkgs.lua5_4.withPackages
     (ps:
       with ps; [
-        cjson
-        # luaposix
-        # fzy
-        luasocket
-        # aerospaceLuaPackage
         pkgs.sbarlua
-        luaposixPackage
-        luasimdjsonPackage
-        # luasec
-        # luabitop
       ]);
 in {
   programs.sketchybar = {
@@ -176,13 +152,9 @@ in {
       enable = config.programs.sketchybar.enable;
       executable = true;
       force = true;
-      # package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath aerospaceLuaPackage}"
       text = ''
         #!/usr/bin/env ${lib.getExe config.programs.sketchybar.luaPackage}
         package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath pkgs.sbarlua}"
-        package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath pkgs.lua54Packages.luasocket}"
-        package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath luaposixPackage}"
-        package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath luasimdjsonPackage}"
         require("init")
       '';
     };
