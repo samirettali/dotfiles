@@ -46,7 +46,7 @@
         "hour_format" = "hour24";
       };
       debugger = {
-        dock = "right";
+        dock = "bottom";
       };
       outline_panel = {
         "dock" = "right";
