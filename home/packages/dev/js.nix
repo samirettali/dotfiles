@@ -15,6 +15,7 @@
       nodePackages.js-beautify
       nodePackages.typescript-language-server
       prettierd
+      vscode-langservers-extracted # TODO: needed for neovim?
     ];
 
   home.sessionVariables = lib.optionalAttrs features.js {
