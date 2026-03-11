@@ -4,121 +4,15 @@
   pkgs,
   ...
 }: let
-  jqExe = lib.getExe pkgs.jq;
-  trExe = lib.getExe' pkgs.coreutils "tr";
-  websocatExe = lib.getExe pkgs.websocat;
   sketchybarExe = lib.getExe config.programs.sketchybar.package;
 
-  cryptoMonitorScript = pkgs.writeShellScriptBin "crypto-monitor" ''
-    set -o pipefail
-
-    if [[ $# -eq 0 ]]; then
-        echo "Usage: ./''${0} <BTCUSDT> [ETHUSDT ...]"
-        exit 1
-    fi
-
-    PAIRS=("''${@:1}")
-
-    declare -A tickers
-    declare -A icons
-
-    icons["BTC"]="₿"
-    icons["ETH"]=""
-
-    update_sketchybar() {
-        local parts=()
-
-        for symbol in "''${PAIRS[@]}"; do
-            local price
-            price="''${tickers[$symbol]}"
-
-            if [[ -z "$price" ]]; then
-                continue
-            fi
-
-            local formatted_price
-
-            formatted_price=$(printf "%.2f" "$price")
-
-            local base_asset="''${symbol%USDT}"
-
-            local icon="''${icons[$base_asset]:-$base_asset}"
-
-            parts+=("$icon $formatted_price")
-        done
-
-        local result
-        result=$(
-            IFS=' '
-            echo "''${parts[*]}"
-        )
-
-        echo "$result"
-
-        ${sketchybarExe} --trigger crypto_price_change "VALUE=$result" 2>/dev/null || true
-    }
-
-    process_ticker() {
-        local json_msg="$1"
-
-        local symbol
-        symbol=$(echo "$json_msg" | ${jqExe} -r '.s // empty' 2>/dev/null)
-
-        local price
-        price=$(echo "$json_msg" | ${jqExe} -r '.c // empty' 2>/dev/null)
-
-        local quote_volume
-        quote_volume=$(echo "$json_msg" | ${jqExe} -r '.q // empty' 2>/dev/null)
-
-        if [[ -n "$symbol" && -n "$price" && -n "$quote_volume" && "$price" != "null" && "$quote_volume" != "null" ]]; then
-            tickers["$symbol"]="$price"
-            update_sketchybar
-        fi
-    }
-
-    create_subscription() {
-        local params=""
-        for pair in "''${PAIRS[@]}"; do
-            local lower_pair
-            lower_pair=$(echo "$pair" | ${trExe} '[:upper:]' '[:lower:]')
-            if [[ -n "$params" ]]; then
-                params+=","
-            fi
-            params+="\"''${lower_pair}@miniTicker\""
-        done
-
-        echo "{\"method\":\"SUBSCRIBE\",\"params\":[$params]}"
-    }
-
-    connect() {
-        local subscription
-        subscription=$(create_subscription)
-
-        echo "$(date): connecting to binance webSocket..." >&2
-
-        {
-            echo "$subscription"
-            while true; do sleep 60; done
-        } | ${websocatExe} --ping-interval 20 wss://stream.binance.com/ws | while IFS= read -r line; do
-            # skip subscription confirmation response
-            if echo "$line" | ${jqExe} -e '.result // false' &>/dev/null; then
-                continue
-            fi
-
-            if echo "$line" | ${jqExe} -e '.e == "24hrMiniTicker"' &>/dev/null; then
-                process_ticker "$line"
-            fi
-        done
-    }
-
-    RETRY_DELAY=5
-
-    while true; do
-        connect || true
-        echo "$(date): websocket disconnected, reconnecting in ''${RETRY_DELAY}s..." >&2
-        sleep "$RETRY_DELAY"
-    done
-  '';
+  cryptoMonitor = pkgs.buildGoModule {
+    pname = "crypto-monitor";
+    version = "0.1.0";
+    src = ./crypto-monitor;
+    vendorHash = "sha256-epDYl6RAigGv6hSQW7vqKjQ6mXy+vxAMNOgbZgG29+0=";
+    GOEXPERIMENT = "jsonv2";
+  };
 
   luaPackage =
     pkgs.lua5_4.withPackages
@@ -164,8 +58,12 @@ in {
     enable = config.programs.sketchybar.enable;
     config = {
       ProgramArguments = [
-        (lib.getExe cryptoMonitorScript)
+        (lib.getExe cryptoMonitor)
+        "--sketchybar"
+        sketchybarExe
+        "--pair"
         "BTCUSDT"
+        "--pair"
         "ETHUSDT"
       ];
       KeepAlive = true;
