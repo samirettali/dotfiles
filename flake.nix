@@ -108,7 +108,7 @@
         inherit inputs;
         inherit (inputs) samirettali-nur;
         features = {
-          rust = false; # TODO: can the input flake be used conditionally?
+          rust = false;
           security = false;
           web3 = false;
           zig = false;
