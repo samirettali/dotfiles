@@ -2,25 +2,29 @@
   config,
   lib,
   pkgs,
+  features,
   ...
 }: {
-  home.packages = with pkgs; [
-    python314Packages.debugpy # used by neovim dap (TODO: remove?)
-    basedpyright
-    pyrefly
-    python314
-    ty
-    uv
-  ];
+  home.packages = with pkgs;
+    lib.optionals (features.python == "minimal" || features.python == "full") [
+      python314
+    ]
+    ++ lib.optionals (features.python == "full") [
+      python314Packages.debugpy # used by neovim dap (TODO: remove?)
+      basedpyright
+      pyrefly
+      ty
+      uv
+    ];
 
   programs = {
     ruff = {
-      enable = true;
+      enable = features.python == "full";
       settings = {};
     };
   };
 
-  programs.vscode.profiles.default = {
+  programs.vscode.profiles.default = lib.optionalAttrs (features.python == "full") {
     extensions =
       pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version
       [

@@ -119,6 +119,7 @@
           js = "minimal";
           c = false;
           go = true;
+          python = "minimal";
         };
         vars = {
           email = "ettali.samir@gmail.com";
