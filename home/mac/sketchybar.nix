@@ -22,7 +22,7 @@
       ]);
 in {
   programs.sketchybar = {
-    enable = true;
+    enable = lib.mkDefault false;
     luaPackage = luaPackage;
     extraPackages = with pkgs; [
       sketchybar-app-font

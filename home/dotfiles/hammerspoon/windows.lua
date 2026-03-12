@@ -8,12 +8,6 @@ local floating = {
 	choose = true,
 }
 
-local defaultPadding = 32
-
-local topPaddings = {
-	["Built-in Retina Display"] = 0,
-}
-
 local function handleWindow(win, appName, event)
 	if not win then
 		return
@@ -40,15 +34,7 @@ local function handleWindow(win, appName, event)
 		local screen = win:screen()
 		local frame = screen:frame()
 
-		-- if screen name
-		local padding = defaultPadding
-		local screenName = screen:name()
-
-		if topPaddings[screenName] then
-			padding = topPaddings[screenName]
-		end
-
-		win:setFrame(hs.geometry.rect(frame.x, frame.y + padding, frame.w, frame.h - padding))
+		win:setFrame(hs.geometry.rect(frame.x, frame.y, frame.w, frame.h))
 	end
 end
 
