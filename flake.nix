@@ -88,9 +88,6 @@
         neovim-nightly-overlay.overlays.default
         nur.overlays.default
         nix4vscode.overlays.default
-        (final: prev: {
-          zjstatus = zjstatus.packages.${prev.system}.default;
-        })
       ];
       config = {
         allowUnfree = true;
