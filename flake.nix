@@ -2,7 +2,7 @@
   description = "Home Manager configuration of samir";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/e34c50af092dffcf5edc419ebda28f18535b2a3b"; # TODO: should use nixos-unstable for NixOS?
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable"; # TODO: should use nixos-unstable for NixOS?
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
