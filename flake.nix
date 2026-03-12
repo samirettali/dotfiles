@@ -116,7 +116,7 @@
           web3 = false;
           zig = false;
           java = false;
-          js = false;
+          js = "minimal";
           c = false;
           go = true;
         };

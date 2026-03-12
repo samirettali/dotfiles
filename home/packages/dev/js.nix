@@ -5,20 +5,20 @@
   ...
 }: {
   home.packages = with pkgs;
-    [
-      nodejs # TODO: define "minimal" | "full" flag
+    lib.optionals (features.js == "minimal" || features.js == "full") [
+      nodejs
     ]
-    ++ lib.optionals features.js [
+    ++ lib.optionals (features.js == "full") [
       bun
       eslint_d
       nodePackages.eslint
       nodePackages.js-beautify
       nodePackages.typescript-language-server
       prettierd
-      vscode-langservers-extracted # TODO: needed for neovim?
+      vscode-langservers-extracted
     ];
 
-  home.sessionVariables = lib.optionalAttrs features.js {
+  home.sessionVariables = lib.optionalAttrs (features.js == "full") {
     NEXT_TELEMETRY_DISABLED = "1";
   };
 }
