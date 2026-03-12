@@ -37,11 +37,6 @@
       url = "github:nix-community/nix4vscode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -93,7 +88,6 @@
         neovim-nightly-overlay.overlays.default
         nur.overlays.default
         nix4vscode.overlays.default
-        rust-overlay.overlays.default
         (final: prev: {
           zjstatus = zjstatus.packages.${prev.system}.default;
         })
