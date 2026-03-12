@@ -36,7 +36,6 @@ in {
 
   home.sessionVariables = {
     DEFAULT_BROWSER = "firefox";
-    TERMINAL = "ghostty";
     MANPAGER = "${lib.getExe pkgs.neovim} -c 'Man!' -";
   };
 
