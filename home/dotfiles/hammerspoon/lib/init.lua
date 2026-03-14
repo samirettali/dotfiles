@@ -1,6 +1,15 @@
 local M = {
 	held_keys = {},
 	toggle_layout_notification = nil,
+	ignored_windows = {
+		choose = true,
+	},
+	floating_windows = {
+		Finder = true,
+		["System Settings"] = true,
+		choose = true,
+	},
+	is_keyboard_disabled = false,
 }
 
 M.is_empty = function(s)
@@ -117,6 +126,122 @@ M.toggleLayout = function()
 	end
 
 	M.toggle_layout_notification = hs.alert.show("Keyboard: " .. nextLayout, 1)
+end
+
+M.handle_window = function(win, app_name, event)
+	if not win then
+		return
+	end
+
+	if M.ignored_windows[app_name] then
+		return
+	end
+
+	hs.logger.f("handling window event: %s - %s", app_name, event)
+
+	if M.floating_windows[app_name] and win:isStandard() then
+		local screen = win:screen():frame()
+		local winFrame = win:frame()
+
+		local x = screen.x + (screen.w - winFrame.w) / 2
+		local y = screen.y + (screen.h - winFrame.h) / 2
+
+		win:setFrame(hs.geometry.rect(x, y, winFrame.w, winFrame.h))
+
+		return
+	end
+
+	-- Ensure the window still exists and is a standard window (not a dialog or palette)
+	if win and win:isStandard() then
+		local screen = win:screen()
+		local frame = screen:frame()
+
+		win:setFrame(hs.geometry.rect(frame.x, frame.y, frame.w, frame.h))
+	end
+end
+
+M.send_to_prev_screen = function()
+	local win = hs.window.focusedWindow()
+	local screens = hs.screen.allScreens()
+	local currentScreen = win:screen()
+	local currentIndex = nil
+
+	for i, screen in ipairs(screens) do
+		if screen == currentScreen then
+			currentIndex = i
+			break
+		end
+	end
+
+	local prevIndex = ((currentIndex - 2) % #screens) + 1
+	win:moveToScreen(screens[prevIndex])
+end
+
+M.send_to_next_screen = function()
+	local win = hs.window.focusedWindow()
+	local screens = hs.screen.allScreens()
+	local currentScreen = win:screen()
+	local currentIndex = nil
+
+	for i, screen in ipairs(screens) do
+		if screen == currentScreen then
+			currentIndex = i
+			break
+		end
+	end
+
+	local nextIndex = (currentIndex % #screens) + 1
+	win:moveToScreen(screens[nextIndex])
+end
+
+M.tile_right = function()
+	local win = hs.window.focusedWindow()
+	local f = win:frame()
+	local screen = win:screen()
+	local max = screen:frame()
+
+	f.x = max.x
+	f.y = max.y
+	f.w = max.w / 2
+	f.h = max.h
+	win:setFrame(f)
+end
+
+M.tile_left = function()
+	local win = hs.window.focusedWindow()
+	local f = win:frame()
+	local screen = win:screen()
+	local max = screen:frame()
+
+	f.x = max.x + (max.w / 2)
+	f.y = max.y
+	f.w = max.w / 2
+	f.h = max.h
+	win:setFrame(f)
+end
+
+M.focus_prev_screen = function()
+	local currentScreen = hs.screen.mainScreen()
+	local prevScreen = currentScreen:previous()
+	local windows = hs.window.orderedWindows()
+	for _, win in ipairs(windows) do
+		if win:screen() == prevScreen then
+			win:focus()
+			break
+		end
+	end
+end
+
+M.focus_next_screen = function()
+	local currentScreen = hs.screen.mainScreen()
+	local nextScreen = currentScreen:next()
+	local windows = hs.window.orderedWindows()
+	for _, win in ipairs(windows) do
+		if win:screen() == nextScreen then
+			win:focus()
+			break
+		end
+	end
 end
 
 return M
