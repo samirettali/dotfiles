@@ -8,13 +8,13 @@
   home.packages = with pkgs;
     lib.optionals (features.python == "minimal" || features.python == "full") [
       python314
+      uv
     ]
     ++ lib.optionals (features.python == "full") [
       python314Packages.debugpy # used by neovim dap (TODO: remove?)
       basedpyright
       pyrefly
       ty
-      uv
     ];
 
   programs = {
