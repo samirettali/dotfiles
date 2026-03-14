@@ -137,7 +137,12 @@ M.handle_window = function(win, app_name, event)
 		return
 	end
 
-	hs.logger.f("handling window event: %s - %s", app_name, event)
+	M.log.f(
+		"handling window event: app_name: %s, event: %s, isStandard: %s",
+		app_name,
+		event,
+		tostring(win:isStandard())
+	)
 
 	if M.floating_windows[app_name] and win:isStandard() then
 		local screen = win:screen():frame()
@@ -243,5 +248,7 @@ M.focus_next_screen = function()
 		end
 	end
 end
+
+M.log = hs.logger.new("lib", "debug")
 
 return M
