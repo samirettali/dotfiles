@@ -18,8 +18,6 @@
     the-unarchiver
   ];
 
-  targets.darwin.copyApps.enableChecks = false; # TODO: upstream is broken
-
   programs = {
     gpg.enable = true;
   };
