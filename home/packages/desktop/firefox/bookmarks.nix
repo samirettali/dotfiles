@@ -967,7 +967,7 @@
               }
               {
                 name = "LM Arena";
-                url = "https://beta.lmarena.ai/leaderboard";
+                url = "https://arena.ai/leaderboard";
               }
               {
                 name = "SWE Bench";
@@ -1284,6 +1284,10 @@
           {
             name = "Alpha Arena";
             url = "https://nof1.ai/";
+          }
+          {
+            name = "eu/acc";
+            url = "https://euacc.com/";
           }
           {
             name = "Media";
