@@ -15,6 +15,7 @@
       bash-language-server
       shellcheck
       shfmt
+      harper
       # TODO: lsp formatting and linters
       # yaml-language-server
       # buf
