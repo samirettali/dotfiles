@@ -7,9 +7,9 @@
   home.packages = with pkgs;
     lib.optionals (features.js == "minimal" || features.js == "full") [
       nodejs
+      bun
     ]
     ++ lib.optionals (features.js == "full") [
-      bun
       eslint_d
       nodePackages.eslint
       nodePackages.js-beautify
