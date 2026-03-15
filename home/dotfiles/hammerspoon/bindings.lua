@@ -23,7 +23,7 @@ end)
 hs.hotkey.bind({ "alt", "shift" }, "m", function()
 	local wins = hs.window.allWindows()
 	for _, win in ipairs(wins) do
-		M.handle_window(win, win:application():name())
+		lib.handle_window(win, win:application():name())
 	end
 end)
 
