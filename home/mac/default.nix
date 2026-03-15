@@ -12,6 +12,7 @@
     betterdisplay
     choose-gui
     docker
+    hidden-bar
     maccy
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.mole
     shottr
