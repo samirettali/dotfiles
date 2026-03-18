@@ -110,7 +110,7 @@
         features = {
           rust = false;
           security = false;
-          web3 = false;
+          web3 = true;
           zig = false;
           java = false;
           js = "minimal";
