@@ -30,6 +30,7 @@
     coreutils
     curl
     difftastic
+    duf
     fd
     gh
     gnused
