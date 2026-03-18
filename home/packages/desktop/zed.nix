@@ -37,7 +37,7 @@
         "calt" = false;
       };
       buffer_font_size = 14;
-      buffer_font_weight = 600;
+      buffer_font_weight = 500;
       cursor_blink = false;
       inlay_hints = {
         "enabled" = false;
