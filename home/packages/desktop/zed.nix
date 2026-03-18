@@ -10,6 +10,8 @@
       claude-code-acp
     ];
     mutableUserSettings = false;
+    mutableUserTasks = false;
+    mutableUserKeymaps = false;
     extensions = [
       "csharp"
       "csv"
