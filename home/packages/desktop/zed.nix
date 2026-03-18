@@ -141,12 +141,39 @@
         "**/node_modules"
       ];
     };
+    userTasks = [
+      {
+        label = "LazyGit";
+        command = "lazygit";
+        shell = {
+          program = "sh";
+        };
+        hide = "on_success";
+        reveal_target = "center";
+        show_summary = false;
+        show_command = false;
+        allow_concurrent_runs = true;
+        use_new_terminal = true;
+      }
+    ];
     userKeymaps = [
       {
         context = "Pane";
-        "bindings" = {
+        bindings = {
           ctrl-shift-tab = "pane::ActivatePreviousItem";
           ctrl-tab = "pane::ActivateNextItem";
+        };
+      }
+      {
+        context = "Workspace";
+        bindings = {
+          cmd-shift-g = [
+            "task::Spawn"
+            {
+              task_name = "LazyGit";
+              reveal_target = "center";
+            }
+          ];
         };
       }
     ];
