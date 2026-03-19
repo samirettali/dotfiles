@@ -19,6 +19,7 @@ in {
     shell = lib.getExe pkgs.fish;
     # bind space command-prompt "joinp -s:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
     extraConfig = ''
+      set-option repeat-time 0
       unbind c
       bind -N "Create new window with the current path" \
         c new-window -c '#{pane_current_path}'
