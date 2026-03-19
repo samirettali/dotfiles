@@ -1130,32 +1130,6 @@
         ];
       }
       {
-        name = "Self-hosted";
-        toolbar = false;
-        bookmarks = [
-          {
-            name = "Miniflux";
-            url = "http://localhost:3001";
-          }
-          {
-            name = "Airdrops";
-            url = "http://localhost:3003";
-          }
-          {
-            name = "Open WebUI";
-            url = "http://localhost:3002";
-          }
-          {
-            name = "Linkding";
-            url = "http://localhost:3004";
-          }
-          {
-            name = "qBittorrent";
-            url = "http://localhost:3005";
-          }
-        ];
-      }
-      {
         name = "Nix";
         toolbar = false;
         bookmarks = [
