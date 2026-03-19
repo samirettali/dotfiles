@@ -136,13 +136,7 @@
           AppleSymbolicHotKeys = {
             "60" = {enabled = false;}; # Disable "Select the previous input source" (Ctrl+Space)
             "61" = {enabled = false;}; # Disable "Select next source in input menu" (Ctrl+Option+Space)
-            "64" = {
-              enabled = true;
-              value = {
-                parameters = [32 49 524288]; # Opt+Space (524288 = Option key mask)
-                type = "standard";
-              };
-            };
+            "64" = {enabled = false;}; # Disable Spotlight
           };
         };
       };
