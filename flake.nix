@@ -83,11 +83,28 @@
       optimise.automatic = false;
     };
 
+    # # hack to make every package use the binary versions of the .NET SDKs
+    dotnet-bin-overlay = final: prev: {
+      # roslyn-ls = prev.roslyn-ls.override {
+      dotnetCorePackages =
+        prev.dotnetCorePackages
+        // {
+          sdk_8_0 = prev.dotnetCorePackages.sdk_8_0-bin;
+          sdk_9_0 = prev.dotnetCorePackages.sdk_9_0-bin;
+          sdk_10_0 = prev.dotnetCorePackages.sdk_10_0-bin;
+          runtime_8_0 = prev.dotnetCorePackages.runtime_8_0-bin;
+          runtime_9_0 = prev.dotnetCorePackages.runtime_9_0-bin;
+          runtime_10_0 = prev.dotnetCorePackages.runtime_10_0-bin;
+        };
+      # };
+    };
+
     nixpkgsConfig = {
       overlays = with inputs; [
         neovim-nightly-overlay.overlays.default
         nur.overlays.default
         nix4vscode.overlays.default
+        dotnet-bin-overlay
       ];
       config = {
         allowUnfree = true;

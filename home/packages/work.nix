@@ -6,9 +6,9 @@
 }: let
   dotnetPackages = with pkgs.dotnetCorePackages;
     combinePackages [
-      sdk_8_0-bin
-      sdk_9_0-bin
-      sdk_10_0-bin
+      sdk_8_0
+      sdk_9_0
+      sdk_10_0
     ];
 
   dotnet-affected = pkgs.buildDotnetGlobalTool {
