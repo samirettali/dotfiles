@@ -205,9 +205,22 @@ M.tile_right = function()
 	local screen = win:screen()
 	local max = screen:frame()
 
+	local half = math.floor(max.w / 2)
+	local third = math.floor(max.w / 3)
+	local two_thirds = math.floor(max.w * 2 / 3)
+
+	local new_w
+	if math.abs(f.w - half) < 2 then
+		new_w = third
+	elseif math.abs(f.w - third) < 2 then
+		new_w = two_thirds
+	else
+		new_w = half
+	end
+
 	f.x = max.x
 	f.y = max.y
-	f.w = max.w / 2
+	f.w = new_w
 	f.h = max.h
 	win:setFrame(f)
 end
@@ -218,9 +231,22 @@ M.tile_left = function()
 	local screen = win:screen()
 	local max = screen:frame()
 
-	f.x = max.x + (max.w / 2)
+	local half = math.floor(max.w / 2)
+	local third = math.floor(max.w / 3)
+	local two_thirds = math.floor(max.w * 2 / 3)
+
+	local new_w
+	if math.abs(f.w - half) < 2 then
+		new_w = third
+	elseif math.abs(f.w - third) < 2 then
+		new_w = two_thirds
+	else
+		new_w = half
+	end
+
+	f.x = max.x + (max.w - new_w)
 	f.y = max.y
-	f.w = max.w / 2
+	f.w = new_w
 	f.h = max.h
 	win:setFrame(f)
 end
