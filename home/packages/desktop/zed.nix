@@ -7,7 +7,7 @@
   programs.zed-editor = {
     enable = lib.mkDefault true;
     extraPackages = with pkgs; [
-      claude-code-acp
+      claude-agent-acp
     ];
     mutableUserSettings = false;
     mutableUserTasks = false;
