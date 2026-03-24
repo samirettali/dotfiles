@@ -236,6 +236,10 @@
                 name = "CryptoPanic";
                 url = "https://cryptopanic.com/";
               }
+              {
+                name = "SoSo Value";
+                url = "https://sosovalue.com";
+              }
             ];
           }
           {
@@ -355,10 +359,6 @@
             ];
           }
           {
-            name = "SoSo Value";
-            url = "https://sosovalue.com";
-          }
-          {
             name = "Ethereum validator queue";
             url = "https://www.validatorqueue.com/";
           }
@@ -381,6 +381,18 @@
           {
             name = "Dune";
             url = "https://dune.com/home";
+          }
+          {
+            name = "Nansen";
+            url = "https://app.nansen.ai/";
+          }
+          {
+            name = "Arkham";
+            url = "https://intel.arkm.com/";
+          }
+          {
+            name = "Glassnode";
+            url = "https://studio.glassnode.com/";
           }
           {
             name = "Cryptoquant";
@@ -417,6 +429,18 @@
           {
             name = "Blockworks";
             url = "https://blockworks.com/analytics";
+          }
+          {
+            name = "Mempool space";
+            url = "https://mempool.space/";
+          }
+          {
+            name = "L2Beat";
+            url = "https://l2beat.com";
+          }
+          {
+            name = "Developer report";
+            url = "https://www.developerreport.com/";
           }
         ];
       }
@@ -1645,10 +1669,6 @@
             ];
           }
           {
-            name = "DeBank";
-            url = "https://debank.com/profile";
-          }
-          {
             name = "Cerebro";
             url = "https://cerebro.xyz/dashboard";
           }
@@ -1667,6 +1687,39 @@
           {
             name = "ChainID";
             url = "https://chainid.network/chains.json";
+          }
+          {
+            name = "Wallet trackers";
+            bookmarks = [
+              {
+                name = "DeBank";
+                url = "https://debank.com/profile";
+              }
+              {
+                name = "Octav";
+                url = "https://octav.fi";
+              }
+              {
+                name = "Cielo Finance";
+                url = "https://app.cielo.finance/";
+              }
+              {
+                name = "TrustGo - On Chain Reputation";
+                url = "https://trustgo.trustalabs.ai/dashboard";
+              }
+              {
+                name = "OnceUpon";
+                url = "https://www.onceupon.gg";
+              }
+              {
+                name = "Plasma Finance APY";
+                url = "https://apy.plasma.finance";
+              }
+              {
+                name = "WeHODL Finance";
+                url = "https://app.wehodl.finance";
+              }
+            ];
           }
         ];
       }
