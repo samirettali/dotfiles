@@ -152,10 +152,6 @@ in {
                   }
                   {
                     passKeys = "";
-                    pattern = ":http://localhost:3333/";
-                  }
-                  {
-                    passKeys = "";
                     pattern = ":https://app.godelterminal.com/";
                   }
                 ];
