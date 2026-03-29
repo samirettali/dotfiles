@@ -1,4 +1,11 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  gwfoxSrc = pkgs.fetchFromGitHub {
+    owner = "akkva";
+    repo = "gwfox";
+    rev = "main";
+    hash = "sha256-Zbm91e/c6y6Tn5VThmOYPZMCgDNJi0yV3JaeRthm8yo=";
+  };
+in {
   imports = [
     ./bookmarks.nix
   ];
@@ -7,7 +14,6 @@
     firefox = {
       enable = true;
       package = with pkgs; (firefox-bin.override {
-        # nativeMessagingHosts = [passff-host];
         extraPolicies = {
           DisableFirefoxScreenshots = true;
           EnableTrackingProtection = {
@@ -34,7 +40,8 @@
       });
       profiles.samir = {
         # path = "profiles/samir"; # TODO: backup the profile first
-        userChrome = builtins.readFile ./userChrome.css;
+        userChrome = builtins.readFile "${gwfoxSrc}/userChrome.css";
+        userContent = builtins.readFile "${gwfoxSrc}/userContent.css";
         extensions = {
           force = true;
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -215,6 +222,13 @@
           "sidebar.revamp.round-content-area" = false;
           "sidebar.main.tools" = null;
           "sidebar.animation.enabled" = false;
+
+          "widget.macos.native-context-menus" = false;
+          "gwfox.plus" = true;
+          "gwfox.noborder" = true;
+          "gwfox.icons" = true;
+          "gwfox.sidebar" = 3;
+          "gwfox.atbc" = true;
 
           # Disable Activity Stream
           "browser.discovery.enabled" = false;
