@@ -1,26 +1,39 @@
+-- functions
+function P(x)
+	print(vim.inspect(x))
+	return x
+end
+
+function N(x, level, opts)
+	vim.notify(vim.inspect(x), level, opts)
+	return x
+end
+
 vim.pack.add({
 	{
 		src = "https://github.com/nvim-treesitter/nvim-treesitter",
-		data = {
-			run = function(_)
-				vim.cmd("TSUpdate")
-			end,
-		},
+		-- data = {
+		-- 	run = function(_)
+		-- 		vim.cmd("TSUpdate")
+		-- 	end,
+		-- },
 	},
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 	{ src = "https://github.com/felipeagc/fleet-theme-nvim" },
-	{ src = "https://github.com/stevearc/quicker.nvim" },
+	{ src = "https://github.com/bluz71/vim-moonfly-colors" },
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 })
 
 vim.cmd("packadd nvim.undotree") -- built in
-vim.cmd("packadd nvim-treesitter")
-vim.cmd("packadd nvim-treesitter-textobjects")
-vim.cmd("packadd oil.nvim")
-vim.cmd("packadd gitsigns.nvim")
-vim.cmd("packadd fleet-theme-nvim")
-vim.cmd("packadd quicker.nvim")
+-- vim.cmd("packadd nvim-treesitter")
+-- vim.cmd("packadd nvim-treesitter-textobjects")
+-- vim.cmd("packadd oil.nvim")
+-- vim.cmd("packadd gitsigns.nvim")
+-- vim.cmd("packadd fleet-theme-nvim")
+-- vim.cmd("packadd vim-moonfly-colors")
+-- vim.cmd("packadd nvim-web-devicons")
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 0
@@ -60,10 +73,17 @@ vim.opt.wildmode = "longest:full,full"
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.shortmess:append("c")
 vim.opt.shortmess:append("I")
+vim.opt.fillchars = { eob = " " }
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-vim.cmd.colorscheme("fleet")
+vim.opt.winborder = "rounded"
+vim.opt.pumborder = "rounded"
+
+require("ui.tabline")
+require("autocmds")
+require("samir.plugins.moonfly")
+require("samir.plugins.nightfly")
 
 -- diagnostic and lsp
 vim.diagnostic.config({ signs = false })
@@ -87,6 +107,7 @@ vim.lsp.enable({
 	"copilot",
 	"basedpyright",
 	"ruff",
+	"harper",
 })
 
 local on_lsp_attach = function(ev)
@@ -98,7 +119,52 @@ local on_lsp_attach = function(ev)
 	end
 
 	if client:supports_method(vim.lsp.protocol.Methods.textDocument_completion) then
-		vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+		local kind_hl = {
+			Text = "String",
+			Method = "Function",
+			Function = "Function",
+			Constructor = "Function",
+			Field = "@lsp.type.property",
+			Variable = "@variable",
+			Class = "Include",
+			Interface = "Type",
+			Module = "Exception",
+			Property = "@lsp.type.property",
+			Unit = "Number",
+			Value = "@variable",
+			Enum = "Number",
+			Keyword = "Keyword",
+			Snippet = "Keyword",
+			Color = "Keyword",
+			File = "Tag",
+			Reference = "Function",
+			Folder = "Function",
+			EnumMember = "Number",
+			Constant = "Constant",
+			Struct = "Type",
+			Event = "Constant",
+			Operator = "Operator",
+			TypeParameter = "Type",
+		}
+
+		vim.lsp.completion.enable(true, client.id, ev.buf, {
+			autotrigger = true,
+			convert = function(item)
+				local kind = vim.lsp.protocol.CompletionItemKind[item.kind] or "Text"
+				if item.data and item.data.bufnames then
+					kind = "Buffer"
+				end
+
+				local hl = kind_hl[kind] or "Normal"
+
+				return {
+					abbr = item.label,
+					kind = kind,
+					menu = "",
+					kind_hlgroup = hl,
+				}
+			end,
+		})
 	end
 
 	if client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange) then
@@ -146,16 +212,8 @@ local function on_lsp_detach(ev)
 end
 
 -- plugins setup
-require("oil").setup({
-	default_file_explorer = false,
-	delete_to_trash = true,
-	skip_confirm_for_simple_edits = true,
-	view_options = {
-		show_hidden = false,
-	},
-})
+require("samir.plugins")
 
-require("quicker").setup()
 require("nvim-treesitter").install("all")
 require("nvim-treesitter-textobjects").setup({
 	select = {
@@ -165,6 +223,8 @@ require("nvim-treesitter-textobjects").setup({
 		set_jumps = true,
 	},
 })
+
+require("oil").setup({ delete_to_trash = true })
 
 require("gitsigns").setup({
 	current_line_blame = true,
@@ -177,6 +237,13 @@ local swap = require("nvim-treesitter-textobjects.swap")
 local move = require("nvim-treesitter-textobjects.move")
 
 -- autocmds
+vim.api.nvim_create_autocmd("VimResized", {
+	desc = "Automatically resize windows when terminal is resized",
+	pattern = "*",
+	-- command = "tabdo wincmd =", -- TODO: this leaves you in the last tab
+	command = "wincmd =",
+})
+
 vim.api.nvim_create_autocmd("LspAttach", { callback = on_lsp_attach })
 vim.api.nvim_create_autocmd("LspDetach", { callback = on_lsp_detach })
 vim.api.nvim_create_autocmd("FileType", {
@@ -213,6 +280,21 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 			return
 		end
 
+		local clients = vim.lsp.get_clients({ bufnr = args.buf })
+
+		local ok = false
+
+		for _, client in ipairs(clients) do
+			if client:supports_method(vim.lsp.protocol.Methods.textDocument_formatting) then
+				ok = true
+				break
+			end
+		end
+
+		if not ok then
+			return
+		end
+
 		vim.lsp.buf.format({
 			bufnr = args.buf,
 			filter = function(c)
@@ -223,15 +305,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 -- custom commands
 vim.api.nvim_create_user_command("PackClean", function()
-	local plugins = vim.pack.get()
-	local to_delete = {}
-	for _, plugin in ipairs(plugins) do
-		if not plugin.active then
-			table.insert(to_delete, plugin.spec.name)
-		end
-	end
+	local plugins = vim.iter(vim.pack.get())
+		:filter(function(x)
+			return not x.active
+		end)
+		:map(function(x)
+			return x.spec.name
+		end)
+		:totable()
 
-	vim.pack.del(to_delete)
+	vim.pack.del(plugins)
 end, { desc = "Remove unused plugins" })
 
 vim.api.nvim_create_user_command("PackList", function()
@@ -251,9 +334,13 @@ vim.api.nvim_create_user_command("Grep", function(opts)
 end, { nargs = "+", desc = "Run grep with the given query" })
 
 -- keymaps
+vim.keymap.set("n", "<localleader>r", "<cmd>restart<cr>", { desc = "Restart neovim" })
 vim.keymap.set("n", "<leader>g", "<cmd>Grep <cword><cr>", { desc = "Grep word under cursor" })
 vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist()" })
 vim.keymap.set("n", "<leader>lc", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist()" })
+
+-- nnoremap <silent><esc><esc> :nohlsearch<CR>
+vim.keymap.set("n", "<esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlights" })
 
 vim.keymap.set("n", "<leader>ta", function()
 	vim.lsp.enable("copilot", not vim.lsp.is_enabled("copilot"))
@@ -416,13 +503,72 @@ vim.keymap.set("n", "g<", function()
 	swap.swap_previous("@parameter.inner")
 end, { desc = "Swap parameter with previous" })
 
--- functions
-P = function(x)
-	print(vim.inspect(x))
-	return x
-end
+----------------- yooooooooooo
+-- vim.opt.wildmode = "noselect"
+-- vim.api.nvim_create_autocmd("CmdlineChanged", {
+-- 	pattern = ":",
+-- 	callback = function()
+-- 		vim.fn.wildtrigger()
+-- 	end,
+-- })
 
-N = function(x, level, opts)
-	vim.notify(vim.inspect(x), level, opts)
-	return x
-end
+-- function _G.my_find(text, _)
+-- 	local files = vim.fn.glob("**/*", true, true)
+-- 	-- return { "%#DiagnosticError#" .. text .. "%*" .. "\t" .. "%#DiagnosticHint#" .. "in " .. files }
+-- 	local result = vim.fn.matchfuzzy(files, text)
+-- 	P(result)
+-- 	return result
+-- end
+--
+-- vim.opt.findfunc = "v:lua.my_find"
+
+-------------------------------------
+
+vim.api.nvim_create_user_command("Bufferize", function(opts)
+	-- TODO: maybe make a version that takes a lua expression, evaluates it and prints it using vim.inspect
+	local cmd = opts.args
+
+	if cmd == "" then
+		vim.notify("Please provide a Vim command to run", vim.log.levels.ERROR)
+		return
+	end
+
+	local output = vim.fn.execute(cmd)
+
+	local buf = vim.api.nvim_create_buf(false, true)
+
+	vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
+	vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
+	vim.api.nvim_set_option_value("swapfile", false, { buf = buf })
+	vim.api.nvim_set_option_value("modifiable", true, { buf = buf })
+
+	local bufname = ("[Vim Command Output]: %s"):format(cmd)
+	vim.api.nvim_buf_set_name(buf, bufname)
+
+	local lines = vim.split(output, "\n", { plain = true })
+	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+	vim.api.nvim_set_option_value("modifiable", false, { buf = buf })
+
+	vim.cmd("vsplit")
+	vim.api.nvim_win_set_buf(0, buf)
+end, {
+	nargs = "+",
+	complete = "command",
+	desc = "Run a Vim command and show output in a new buffer",
+})
+
+vim.cmd(":command! E e")
+vim.cmd(":command! W w")
+vim.cmd(":command! Q q")
+vim.cmd(":command! Wq wq")
+vim.cmd(":command! WQ wq")
+vim.cmd(":command! Qa qa")
+vim.cmd(":command! QA qa")
+vim.cmd(":command! Wa wa")
+vim.cmd(":command! WA wa")
+vim.cmd(":command! Wqa wqa")
+vim.cmd(":command! WQa wqa")
+vim.cmd(":command! WQA wqa")
+vim.cmd(":command! Cq cq")
+vim.cmd(":command! CQ cq")
