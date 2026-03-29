@@ -184,6 +184,7 @@ in {
           };
         };
         settings = {
+          "browser.startup.homepage" = "https://home.samirettali.com";
           # Performance settings
           "gfx.webrender.all" = true; # Force enable GPU acceleration
           "media.ffmpeg.vaapi.enabled" = true;
