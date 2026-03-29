@@ -46,21 +46,15 @@ in {
           force = true;
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
             adaptive-tab-bar-colour
+            bitwarden
+            consent-o-matic
             darkreader
-            keepassxc-browser
             linkding-extension
             multi-account-containers
             sponsorblock
             ublock-origin
             vimium-c
             web-clipper-obsidian
-            # clearurls
-            # copy-selection-as-markdown
-            # granted
-            # lastpass-password-manager
-            # metamask
-            # switchyomega
-            # tampermonkey
           ];
           settings = with pkgs.nur.repos.rycee.firefox-addons; {
             "${adaptive-tab-bar-colour.addonId}" = {
