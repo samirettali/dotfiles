@@ -3,7 +3,7 @@
     owner = "akkva";
     repo = "gwfox";
     rev = "main";
-    hash = "sha256-Zbm91e/c6y6Tn5VThmOYPZMCgDNJi0yV3JaeRthm8yo=";
+    hash = "sha256-LfeLVWC5FkWbDxccKe9J7H0AaKh4YY0kC/hAuaeY2sg=";
   };
 in {
   imports = [
