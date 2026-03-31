@@ -15,8 +15,6 @@
     "vscodevim.vim"
     "eamodio.gitlens"
 
-    "kilocode.Kilo-Code"
-
     "github.vscode-github-actions"
     "github.vscode-pull-request-github"
     "github.copilot-chat"
