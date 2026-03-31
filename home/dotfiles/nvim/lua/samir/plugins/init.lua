@@ -7,7 +7,6 @@ require("samir.plugins.dap")
 require("samir.plugins.actions-preview")
 require("samir.plugins.split")
 require("samir.plugins.codediff")
-require("samir.plugins.codecompanion")
 require("samir.plugins.csvview")
 
 vim.pack.add({
