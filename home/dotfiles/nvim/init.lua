@@ -10,14 +10,7 @@ function N(x, level, opts)
 end
 
 vim.pack.add({
-	{
-		src = "https://github.com/nvim-treesitter/nvim-treesitter",
-		-- data = {
-		-- 	run = function(_)
-		-- 		vim.cmd("TSUpdate")
-		-- 	end,
-		-- },
-	},
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
@@ -27,13 +20,6 @@ vim.pack.add({
 })
 
 vim.cmd("packadd nvim.undotree") -- built in
--- vim.cmd("packadd nvim-treesitter")
--- vim.cmd("packadd nvim-treesitter-textobjects")
--- vim.cmd("packadd oil.nvim")
--- vim.cmd("packadd gitsigns.nvim")
--- vim.cmd("packadd fleet-theme-nvim")
--- vim.cmd("packadd vim-moonfly-colors")
--- vim.cmd("packadd nvim-web-devicons")
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 0
@@ -82,8 +68,8 @@ vim.opt.pumborder = "rounded"
 
 require("ui.tabline")
 require("autocmds")
-require("samir.plugins.moonfly")
-require("samir.plugins.nightfly")
+require("plugins.moonfly")
+require("plugins.nightfly")
 
 -- diagnostic and lsp
 vim.diagnostic.config({ signs = false })
