@@ -6,10 +6,6 @@
     hash = "sha256-LfeLVWC5FkWbDxccKe9J7H0AaKh4YY0kC/hAuaeY2sg=";
   };
 in {
-  imports = [
-    ./bookmarks.nix
-  ];
-
   programs = {
     firefox = {
       enable = true;
