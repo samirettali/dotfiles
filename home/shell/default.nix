@@ -27,6 +27,7 @@
   ];
 
   home.packages = with pkgs; [
+    ansible
     coreutils
     curl
     difftastic
