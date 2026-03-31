@@ -29,6 +29,7 @@ in {
     dotnet-affected
     dotnet-ef
     dotnetPackages
+    e1s
     go-swag
     jetbrains.datagrip
     maven
