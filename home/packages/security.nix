@@ -8,15 +8,20 @@ in {
     lib.optionals features.security [
       # burpsuite
       amass
+      android-tools
+      apksigner
+      apktool
       cent
+      dex2jar
       dnsx
       ffuf
       findomain
+      frida-tools
       ghidra-bin
       hakrawler
       httpx
       imhex
-      # jadx # TODO: upstream is broken
+      jadx
       naabu
       nmap
       nuclei
