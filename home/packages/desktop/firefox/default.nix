@@ -1,11 +1,8 @@
-{pkgs, ...}: let
-  gwfoxSrc = pkgs.fetchFromGitHub {
-    owner = "akkva";
-    repo = "gwfox";
-    rev = "main";
-    hash = "sha256-LfeLVWC5FkWbDxccKe9J7H0AaKh4YY0kC/hAuaeY2sg=";
-  };
-in {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   programs = {
     firefox = {
       enable = true;
@@ -36,8 +33,8 @@ in {
       });
       profiles.samir = {
         # path = "profiles/samir"; # TODO: backup the profile first
-        userChrome = builtins.readFile "${gwfoxSrc}/userChrome.css";
-        userContent = builtins.readFile "${gwfoxSrc}/userContent.css";
+        userChrome = builtins.readFile "${inputs.gwfox}/userChrome.css";
+        userContent = builtins.readFile "${inputs.gwfox}/userContent.css";
         extensions = {
           force = true;
           packages = with pkgs.nur.repos.rycee.firefox-addons; [

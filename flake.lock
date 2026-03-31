@@ -62,6 +62,23 @@
         "type": "github"
       }
     },
+    "gwfox": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774968516,
+        "narHash": "sha256-RhygqSl825+DPStjilvnO7wKJzIi9W6WmJQ730n8mwc=",
+        "owner": "akkva",
+        "repo": "gwfox",
+        "rev": "97a223c54869b0124db59d9b4269014c5e73c042",
+        "type": "github"
+      },
+      "original": {
+        "owner": "akkva",
+        "ref": "main",
+        "repo": "gwfox",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -179,11 +196,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774960851,
-        "narHash": "sha256-sV4J4ruyQKgKwQD8jDHVLE4KGEUmIBV3wvtRgfa1LTo=",
+        "lastModified": 1774967601,
+        "narHash": "sha256-0cf4MTYbnXHST99++IrYEENhC4BlpOyMtIJ0LhXjh4I=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "bed7c634eb2ce686d0a07aed76ff0efac238b130",
+        "rev": "99fec9d31c7ce58161659e5fdc65b8bcc08fffd0",
         "type": "github"
       },
       "original": {
@@ -195,6 +212,7 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
+        "gwfox": "gwfox",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",

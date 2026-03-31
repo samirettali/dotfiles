@@ -37,6 +37,11 @@
       url = "github:nix-community/nix4vscode";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    gwfox = {
+      url = "github:akkva/gwfox?ref=main";
+      flake = false;
+    };
   };
 
   outputs = {
