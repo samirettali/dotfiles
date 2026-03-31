@@ -198,7 +198,7 @@ local function on_lsp_detach(ev)
 end
 
 -- plugins setup
-require("samir.plugins")
+require("plugins")
 
 require("nvim-treesitter").install("all")
 require("nvim-treesitter-textobjects").setup({
