@@ -95,7 +95,7 @@ in {
               set duration $d'ms'
           end
 
-          set duration (set_color -id white)$duration(set_color normal)
+          set duration (set_color -i -d white)$duration(set_color normal)
 
           printf (string join ' ' -- $duration $stat $gp)
         '';
