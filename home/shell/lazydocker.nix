@@ -5,7 +5,7 @@
   ...
 }: {
   programs.lazydocker = {
-    enable = lib.mkDefault false;
+    enable = lib.mkDefault true;
     settings = {
       gui = {
         showBottomLine = false;
