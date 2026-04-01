@@ -24,6 +24,11 @@ in {
           end
 
           set -l pwd (set_color -o blue) (prompt_pwd) (set_color normal)
+          set -l bg_jobs (jobs -p)
+          set -l bg_marker
+          if test (count $bg_jobs) -gt 0
+              set bg_marker (set_color -o yellow)'*'(set_color normal)
+          end
           set -l symbol (set_color -o red) $symbol (set_color normal)
 
           set -l nix_shell_info
@@ -31,7 +36,7 @@ in {
               set nix_shell_info "<nix-shell> "
           end
 
-          printf (string join "" -- $ssh $nix_shell_info $pwd $symbol)
+          printf (string join "" -- $ssh $nix_shell_info $pwd $bg_marker $symbol)
         '';
       le =
         /*
