@@ -4,30 +4,30 @@
   ...
 }: {
   imports = [
-    ./fish.nix
+    ./ansible.nix
     ./bat.nix
     ./btop.nix
     ./claude-code.nix
-    ./gemini-cli.nix
     ./direnv.nix
     ./fabric.nix
+    ./fish.nix
     ./fzf.nix
+    ./gemini-cli.nix
     ./git.nix
     ./lazydocker.nix
     ./lazygit.nix
     ./neovim.nix
     ./opencode.nix
     ./pass.nix
-    ./ripgrep.nix
     ./posting.nix
-    ./tmux.nix
-    ./zsh.nix
-    ./zoxide.nix
+    ./ripgrep.nix
     ./scripts
+    ./tmux.nix
+    ./zoxide.nix
+    ./zsh.nix
   ];
 
   home.packages = with pkgs; [
-    ansible
     coreutils
     curl
     difftastic
