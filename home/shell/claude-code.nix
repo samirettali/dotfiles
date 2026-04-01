@@ -4,7 +4,7 @@
   ...
 }: {
   programs.claude-code = {
-    enable = true;
+    enable = lib.mkDefault false; # TODO: upstream is broken (404)
     settings = {
       includeCoAuthoredBy = false;
       env = {
