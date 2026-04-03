@@ -22,6 +22,7 @@
     ./posting.nix
     ./ripgrep.nix
     ./scripts
+    ./sesh.nix
     ./tmux.nix
     ./zoxide.nix
     ./zsh.nix

@@ -2,6 +2,7 @@
   programs.fzf = {
     enable = true;
     enableFishIntegration = true;
+    tmux.enableShellIntegration = true;
     defaultOptions = [
       "--ansi"
       "--bind space:jump,jump:accept"
