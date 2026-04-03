@@ -11,9 +11,9 @@
     ]
     ++ lib.optionals (features.js == "full") [
       eslint_d
-      nodePackages.eslint
-      nodePackages.js-beautify
-      nodePackages.typescript-language-server
+      eslint
+      js-beautify
+      typescript-language-server
       prettierd
       vscode-langservers-extracted
     ];

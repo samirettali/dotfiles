@@ -135,7 +135,7 @@
           web3 = true;
           zig = false;
           java = false;
-          js = "minimal";
+          js = "full";
           c = false;
           go = true;
           python = "minimal";
