@@ -21,6 +21,7 @@
     ./nh.nix
     ./opencode.nix
     ./pass.nix
+    ./pi-coding-agent.nix
     ./posting.nix
     ./ripgrep.nix
     ./scripts
