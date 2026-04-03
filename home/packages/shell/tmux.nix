@@ -20,6 +20,13 @@ in {
     # bind space command-prompt "joinp -s:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
     extraConfig = ''
       set-option repeat-time 0
+
+      set -g extended-keys on
+      # TODO
+      # set -as terminal-features 'xterm*:extkeys'
+      # set -as terminal-features ',*ghostty*:extkeys'
+      set -g extended-keys-format csi-u
+
       unbind c
       bind -N "Create new window with the current path" \
         c new-window -c '#{pane_current_path}'
