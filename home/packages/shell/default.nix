@@ -32,6 +32,7 @@
   ];
 
   home.packages = with pkgs; [
+    bitwarden-cli
     coreutils
     curl
     difftastic
