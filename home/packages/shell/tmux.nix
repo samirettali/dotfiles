@@ -96,12 +96,14 @@ in {
       set -g window-status-current-style "fg=white"
 
       set -g pane-active-border-style "bold fg=#858585"
-      # set -g pane-border-style "fg=colour234"
+      set -g pane-border-style "fg=colour234"
       set -g allow-passthrough on
 
       # TODO: is this still needed with ghostty?
       set -g default-terminal "tmux-256color"
       set -ag terminal-overrides ",xterm-256color:RGB"
+
+      set -g message-style 'fg=yellow bg=black bold'
 
       bind-key "t" display-popup -E -w 40% "${lib.getExe pkgs.sesh} connect \"$(
         ${lib.getExe pkgs.sesh} list -i | ${lib.getExe pkgs.gum} filter --limit 1 --no-sort --fuzzy --placeholder ''' --height 10

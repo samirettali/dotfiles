@@ -13,16 +13,19 @@
     ./fish.nix
     ./fzf.nix
     ./gemini-cli.nix
+    ./git-sync.nix
     ./git.nix
     ./lazydocker.nix
     ./lazygit.nix
     ./neovim.nix
+    ./nh.nix
     ./opencode.nix
     ./pass.nix
     ./posting.nix
     ./ripgrep.nix
     ./scripts
     ./sesh.nix
+    ./spotify-player.nix
     ./tmux.nix
     ./zoxide.nix
     ./zsh.nix

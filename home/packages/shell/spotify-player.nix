@@ -36,14 +36,6 @@ in {
         normalization = false;
         autoplay = false;
       };
-      player_event_hook_command.command = lib.optionals config.programs.sketchybar.enable (
-        let
-          hook = import ./sketchybar-hook.nix {
-            inherit pkgs config lib;
-          };
-        in
-          lib.getExe hook
-      );
     };
   };
 

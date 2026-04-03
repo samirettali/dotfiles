@@ -7,12 +7,9 @@
 in {
   imports = [
     ./dotfiles.nix
-    ./git-sync.nix
     ./mcp.nix
-    ./nh.nix
-    ./shell
+    ./packages/shell
     ./sops.nix
-    ./spotify-player
   ];
 
   programs.fish.enable = true;

@@ -2,11 +2,12 @@
   pkgs,
   samirettali-nur,
   config,
+  lib,
   ...
 }: let
 in {
   programs.opencode = {
-    enable = true;
+    enable = lib.mkDefault false;
     package = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
     enableMcpIntegration = true;
     settings = {
