@@ -1,0 +1,46 @@
+From 3fdbb1efac9d0696a44c7305c54d49d7882dac04 Mon Sep 17 00:00:00 2001
+From: Samir Ettali <ettali.samir@gmail.com>
+Date: Sat, 4 Apr 2026 00:48:10 +0200
+Subject: [PATCH] yessssssssss
+
+---
+ userChrome.css | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
+
+diff --git a/userChrome.css b/userChrome.css
+index fb0e772..e51dfba 100644
+--- a/userChrome.css
++++ b/userChrome.css
+@@ -3146,10 +3146,26 @@ tab-group > .tabbrowser-tab,
+ 
+ :has(#tabbrowser-tabs:not([expanded])) {
+ #sidebar-main {
+-  width: 52px !important;
+-@media -moz-pref("gwfox.plus") {
+-  width: 82px !important;
++  width: 0 !important;
++  min-width: 0 !important;
++  overflow: hidden !important;
+ }
++
++#tabbrowser-tabbox {
++  margin-inline-start: 0 !important;
++}
++
++.sidebar-splitter,
++#sidebar-splitter {
++  display: none !important;
++}
++
++.titlebar-buttonbox-container {
++  left: -295px !important;
++}
++
++#urlbar:not([breakout][breakout-extend]) {
++  left: -295px !important;
+ }
+ 
+ .tab-group-label {
+-- 
+2.53.0
+

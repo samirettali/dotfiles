@@ -2,7 +2,13 @@
   pkgs,
   inputs,
   ...
-}: {
+}: let
+  gwfox = pkgs.applyPatches {
+    src = inputs.gwfox;
+    name = "gwfox-collapsed-sidebar";
+    patches = [./gwfox-collapsed-sidebar.patch];
+  };
+in {
   programs = {
     firefox = {
       enable = true;
@@ -33,8 +39,8 @@
       });
       profiles.samir = {
         # path = "profiles/samir"; # TODO: backup the profile first
-        userChrome = builtins.readFile "${inputs.gwfox}/userChrome.css";
-        userContent = builtins.readFile "${inputs.gwfox}/userContent.css";
+        userChrome = builtins.readFile "${gwfox}/userChrome.css";
+        userContent = builtins.readFile "${gwfox}/userContent.css";
         extensions = {
           force = true;
           packages = with pkgs.nur.repos.rycee.firefox-addons; [
