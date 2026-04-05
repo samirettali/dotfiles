@@ -138,10 +138,13 @@ M.handle_window = function(win, app_name, event)
 	end
 
 	M.log.f(
-		"handling window event: app_name: %s, event: %s, isStandard: %s",
+		"handling window event: app_name: %s, event: %s, isStandard: %s, role: %s, subrole: %s, title: %s",
 		app_name,
 		event,
-		tostring(win:isStandard())
+		tostring(win:isStandard()),
+		win:role(),
+		win:subrole(),
+		win:title()
 	)
 
 	if M.floating_windows[app_name] and win:isStandard() then
