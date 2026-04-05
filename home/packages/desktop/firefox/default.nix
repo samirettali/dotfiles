@@ -51,6 +51,7 @@ in {
             linkding-extension
             multi-account-containers
             sponsorblock
+            violentmonkey
             ublock-origin
             vimium-c
             web-clipper-obsidian
