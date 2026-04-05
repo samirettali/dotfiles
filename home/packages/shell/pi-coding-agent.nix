@@ -6,14 +6,21 @@
   ...
 }: let
   piCodingAgent = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.pi-coding-agent;
-  piRoot = piCodingAgent + "/lib/node_modules/pi-monorepo";
-  piNodeModules = piRoot + "/node_modules";
+  piPackageDir = piCodingAgent + "/share/pi-coding-agent";
+  piRuntimeRoot = piCodingAgent + "/lib/node_modules/pi-monorepo";
+  piNodeModules = piRuntimeRoot + "/node_modules";
 in {
   home.packages = [
     piCodingAgent
   ];
 
+  home.sessionVariables = {
+    PI_PACKAGE_DIR = "${config.home.homeDirectory}/.pi/pi-source";
+  };
+
   home.file = lib.mkIf (builtins.elem piCodingAgent config.home.packages) {
+    ".pi/pi-source".source = piPackageDir;
+
     ".pi/agent/extensions/package.json".text = builtins.toJSON {
       name = "pi-agent-extensions";
       private = true;
@@ -34,7 +41,7 @@ in {
       exclude = ["./node_modules"];
     };
 
-    ".pi/agent/extensions/node_modules/@mariozechner/pi-coding-agent".source = piRoot;
+    ".pi/agent/extensions/node_modules/@mariozechner/pi-coding-agent".source = piRuntimeRoot;
     ".pi/agent/extensions/node_modules/@mariozechner/pi-ai".source = piNodeModules + "/@mariozechner/pi-ai";
     ".pi/agent/extensions/node_modules/@mariozechner/pi-tui".source = piNodeModules + "/@mariozechner/pi-tui";
     ".pi/agent/extensions/node_modules/@sinclair/typebox".source = piNodeModules + "/@sinclair/typebox";
