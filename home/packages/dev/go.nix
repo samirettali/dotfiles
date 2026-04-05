@@ -24,11 +24,11 @@
       gopls
       gotest
       gotools
-      # mockgen
-      # protobuf
-      # protoc-gen-go
-      # protoc-gen-go-grpc
-      # oapi-codegen
+      mockgen
+      protobuf
+      protoc-gen-go
+      protoc-gen-go-grpc
+      oapi-codegen
       revive
       (go-migrate.overrideAttrs
         (oldAttrs: {
