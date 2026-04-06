@@ -42,6 +42,16 @@
       url = "github:akkva/gwfox?ref=main";
       flake = false;
     };
+
+    spoons = {
+      url = "github:Hammerspoon/Spoons";
+      flake = false;
+    };
+
+    control-escape-spoon = {
+      url = "github:jasonrudolph/ControlEscape.spoon";
+      flake = false;
+    };
   };
 
   outputs = {

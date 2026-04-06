@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "control-escape-spoon": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1612029299,
+        "narHash": "sha256-aTCjdTdDOQMFcML4/C2M7dBPwkI4paOjQR7euNDRuao=",
+        "owner": "jasonrudolph",
+        "repo": "ControlEscape.spoon",
+        "rev": "cc5749931afe61c299ac8371230ec77a870b775a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jasonrudolph",
+        "repo": "ControlEscape.spoon",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -211,6 +227,7 @@
     },
     "root": {
       "inputs": {
+        "control-escape-spoon": "control-escape-spoon",
         "darwin": "darwin",
         "gwfox": "gwfox",
         "home-manager": "home-manager",
@@ -219,7 +236,8 @@
         "nixpkgs": "nixpkgs_2",
         "nur": "nur",
         "samirettali-nur": "samirettali-nur",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "spoons": "spoons"
       }
     },
     "samirettali-nur": {
@@ -259,6 +277,22 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "spoons": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773444505,
+        "narHash": "sha256-LeMsmm/au7GbnETVAUNNABanjU1byXpYbzWG/5nT4sM=",
+        "owner": "Hammerspoon",
+        "repo": "Spoons",
+        "rev": "5c20bcecc380acff5f0f5df7a718c5679aaaf62a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Hammerspoon",
+        "repo": "Spoons",
         "type": "github"
       }
     },

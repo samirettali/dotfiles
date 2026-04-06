@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -9,22 +10,11 @@
   ];
 
   home.file = {
-    ".hammerspoon/Spoons/RecursiveBinder.spoon" = {
-      source = pkgs.fetchFromGitHub {
-        owner = "samirettali";
-        repo = "RecursiveBinder.spoon";
-        rev = "main";
-        sha256 = "sha256-KcxZzYpfuCZy6p+ixvGJszKrRplPsXrr1ICfCw2k1xM=";
-      };
-    };
-    ".hammerspoon/Spoons/ControlEscape.spoon" = {
-      source = pkgs.fetchFromGitHub {
-        owner = "jasonrudolph";
-        repo = "ControlEscape.spoon";
-        rev = "main";
-        sha256 = "sha256-aTCjdTdDOQMFcML4/C2M7dBPwkI4paOjQR7euNDRuao=";
-      };
-    };
+    ".hammerspoon/Spoons".source = pkgs.runCommandLocal "hammerspoon-spoons" {} ''
+      mkdir -p "$out"
+      cp -R ${inputs.spoons}/Source/. "$out"/
+      cp -R ${inputs.control-escape-spoon} "$out/ControlEscape.spoon"
+    '';
   };
 
   # TODO
