@@ -1,7 +1,6 @@
 -- local spotify = require("spotify")
+local canvas = require("canvas")
 local display = require("display")
--- local bookmarks = require("bookmarks") -- TODO
--- local nur = require("nur") -- TODO
 
 hs.loadSpoon("RecursiveBinder")
 
@@ -29,51 +28,6 @@ local function openURL(url)
 	end
 end
 
-local function fuzzyOpenURL(url)
-	local chooser = hs.chooser.new(function(selected)
-		if not selected then
-			return
-		end
-		hs.urlevent.openURL(selected.uuid)
-	end)
-
-	local choices = {}
-
-	for _, url in pairs(urls) do
-		local choice = {
-			["text"] = url,
-			["subText"] = "",
-			["uuid"] = url,
-		}
-
-		table.insert(choices, choice)
-	end
-
-	chooser:choices(choices)
-	-- add queryChangedCallback and if only one result is shown then open the url
-	chooser:queryChangedCallback(function(query)
-		if #query == 0 then
-			return
-		end
-
-		-- use fzy to filter the choices
-		local filteredChoices = hs.fnutils.filter(choices, function(choice)
-			return string.find(choice.text:lower(), query:lower(), 1, true) ~= nil
-		end)
-
-		if #filteredChoices == 1 then
-			-- If only one result is shown, open the URL immediately
-			chooser:hide()
-			hs.urlevent.openURL(filteredChoices[1].uuid)
-			return
-		end
-
-		chooser:choices(filteredChoices)
-	end)
-
-	chooser:show()
-end
-
 local function paste(text)
 	return function()
 		hs.eventtap.keyStrokes(text)
@@ -89,19 +43,30 @@ end
 local function search(template)
 	return function()
 		local focusedWindow = hs.window.focusedWindow()
-		local button, userInput = hs.dialog.textPrompt("", "", "", "Submit", "Cancel")
+		local domain = string.match(template, "https?://([^/]+)")
+		local prompt = ("search %s"):format(domain)
 
-		if focusedWindow then
-			focusedWindow:focus()
-		end
+		canvas.prompt({
+			prompt = prompt,
+			height = 150,
+			onSubmit = function(userInput)
+				if focusedWindow then
+					focusedWindow:focus()
+				end
 
-		if button == "Cancel" then
-			return
-		end
+				if userInput == "" then
+					return
+				end
 
-		local url = string.gsub(template, "{input}", userInput)
-
-		hs.urlevent.openURL(url)
+				local url = string.gsub(template, "{input}", userInput)
+				hs.urlevent.openURL(url)
+			end,
+			onCancel = function()
+				if focusedWindow then
+					focusedWindow:focus()
+				end
+			end,
+		})
 	end
 end
 
@@ -140,7 +105,6 @@ local config = {
 			{ "d", "discord", launch("Discord") },
 			{ "e", "eqMac", launch("eqMac") },
 			{ "f", "finder", launch("Finder") },
-			{ "k", "keepassxc", launch("KeepassXC") },
 			{ "m", "monitor", launch("Activity Monitor") },
 			{ "o", "obsidian", launch("Obsidian") },
 			{ "p", "preferences", launch("System Preferences") },
@@ -163,32 +127,13 @@ local config = {
 		"l",
 		"[links]",
 		{
-			{
-				"c",
-				"claude",
-				openURL("https://claude.ai"),
-			},
+			{ "c", "claude", openURL("https://claude.ai") },
 			{ "y", "youtube", openURL("youtube.com") },
-			{
-				"t",
-				"[t]",
-				{
-					{ "w", "twitter", openURL("https://twitter.com") },
-					{ "3", "t3.chat", openURL("https://t3.chat") },
-					{ "r", "tradingview", openURL("https://www.tradingview.com/chart/4ztWXosm") },
-				},
-			},
-			{
-				"g",
-				"[g]",
-				{
-					{ "e", "gemini", openURL("https://gemini.google.com") },
-					{ "o", "google", openURL("https://google.com") },
-					{ "m", "gmail", openURL("https://mail.google.com") },
-				},
-			},
-			{ "d", "drive", openURL("https://drive.google.com") },
+			{ "t", "twitter", openURL("https://twitter.com") },
+			{ "c", "chat", openURL("https://chat.openai.com") },
+			{ "g", "google", openURL("https://google.com") },
 			{ "w", "whatsapp", openURL("https://web.whatsapp.com") },
+			{ "m", "mail", openURL("https://fastmail.com") },
 		},
 	},
 	{
@@ -207,22 +152,15 @@ local config = {
 		"[search]",
 		{
 			{ "c", "code", search("https://github.com/search?q={input}&type=code") },
-			{ "d", "duckduckgo", search("https://duckduckgo.com?q={input}") },
-			{ "g", "grep.app", search("https://grep.app/search?q={input}") },
-			{ "l", "greppers.com", search("https://www.greppers.com/?q={input}") },
+			{ "g", "google", search("https://google.com/search?q={input}") },
+			-- { "g", "grep.app", search("https://grep.app/search?q={input}") },
+			-- { "l", "greppers.com", search("https://www.greppers.com/?q={input}") },
 			{ "m", "maps", search("https://www.google.com/maps/search/{input}") },
 			{ "n", "nixos", search("https://mynixos.com/search?q={input}") },
 			{ "p", "perplexity", search("https://perplexity.ai/search?q={input}") },
 			{ "r", "repos", search("https://github.com/search?q={input}&type=repositories") },
 			{ "t", "twitter", search("https://x.com/search?q={input}&src=typed_query") },
-			{ "w", "google", search("https://google.com/search?q={input}") },
 			{ "y", "youtube", search("https://www.youtube.com/results?search_query={input}") },
-			-- { "u", "nur", nur.show },
-			-- {
-			-- 	"b",
-			-- 	"bookmarks",
-			-- 	bookmarks.show,
-			-- },
 		},
 	},
 	{
@@ -233,11 +171,6 @@ local config = {
 			{ "s", "side by side", display.side_by_side },
 			{ "e", "external", display.external },
 		},
-	},
-	{
-		"u",
-		"urls",
-		fuzzyOpenURL,
 	},
 }
 
