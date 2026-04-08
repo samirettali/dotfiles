@@ -25,6 +25,7 @@ local function openURL(url)
 
 	return function()
 		hs.urlevent.openURL(url)
+		return true
 	end
 end
 
