@@ -29,11 +29,6 @@
     ];
     userSettings = {
       auto_update = false;
-      agent_servers = {
-        gemini = {
-          ignore_system_version = false;
-        };
-      };
       buffer_font_family = vars.font.name;
       buffer_font_features = {
         "calt" = false;
