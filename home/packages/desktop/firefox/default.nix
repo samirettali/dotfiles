@@ -236,7 +236,7 @@ in {
           "browser.newtabpage.activity-stream.telemetry" = false;
           "extensions.htmlaboutaddons.discover.enabled" = false;
           "extensions.htmlaboutaddons.recommendations.enabled" = false;
-          "extensions'update.autoUpdateDefault" = false;
+          "extensions.update.autoUpdateDefault" = false;
           "extensions.update.enabled" = false;
           "browser.tabs.insertAfterCurrent" = true;
           "browser.tabs.insertAfterCurrentExceptPinned" = true;
