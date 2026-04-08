@@ -45,6 +45,7 @@
     iredis
     jq
     jqp
+    kcat
     lazysql
     moreutils
     ncdu
@@ -76,7 +77,6 @@
     # hto
     # httptap
     # kaf
-    # kcat # TODO: upstream is broken
     # libqalculate
     # lnav # log navigation
     # mprocs # multiple processes
