@@ -104,6 +104,7 @@
         NSAutomaticSpellingCorrectionEnabled = false;
         NSDocumentSaveNewDocumentsToCloud = false;
         NSNavPanelExpandedStateForSaveMode = true;
+        # NSMenuEnableActionImages = false; # TODO: wait for PR to be merged
         "com.apple.mouse.tapBehavior" = null;
         "com.apple.swipescrolldirection" = false;
         "com.apple.trackpad.scaling" = 3.0;
