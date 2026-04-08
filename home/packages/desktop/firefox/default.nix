@@ -249,7 +249,7 @@ in {
           # https://gecko.readthedocs.org/en/latest/browser/browser/DirectoryLinksProvider.html#browser-newtabpage-directory-ping
           "browser.newtabpage.pinned" = false;
           "browser.newtabpage.enabled" = false;
-          "browser.newtabpage.url" = "about:black";
+          "browser.newtabpage.url" = "https://home.samirettali.com";
           "browser.newtabpage.enhanced" = false;
           "browser.newtabpage.introShown" = true;
           "browser.newtab.preload" = false;
