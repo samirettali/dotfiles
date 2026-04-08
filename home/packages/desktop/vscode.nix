@@ -2,10 +2,10 @@
   config,
   vars,
   lib,
-  pkgs,
+  vscodeExtLib,
   ...
 }: let
-  extensions = [
+  baseExtensionIds = [
     # DrBlury.protobuf-vsc # TODO: doesn't exist anymore
     "jacobwgillespie.minimal-icons"
     "franzgollhammer.jb-fleet-dark"
@@ -20,128 +20,133 @@
     "github.copilot-chat"
   ];
 
+  extensionIds = lib.unique (baseExtensionIds ++ config.dotfiles.vscode.extensionIds);
+
   withExtension = ext: settings:
-    lib.optionalAttrs (builtins.elem ext extensions) settings;
+    lib.optionalAttrs (builtins.elem ext extensionIds) settings;
 in {
-  programs = {
-    vscode = {
-      enable = true;
+  options.dotfiles.vscode.extensionIds = lib.mkOption {
+    type = with lib.types; listOf str;
+    default = [];
+  };
 
-      mutableExtensionsDir = false;
-      profiles.default = {
-        enableExtensionUpdateCheck = false;
-        enableUpdateCheck = false;
-        enableMcpIntegration = true;
-        extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version extensions;
-        keybindings = [
-          {
-            "key" = "ctrl+tab";
-            "command" = "workbench.action.nextEditor";
-          }
-          {
-            "key" = "ctrl+shift+tab";
-            "command" = "workbench.action.previousEditor";
-          }
-          {
-            "key" = "ctrl+g";
-            "command" = "workbench.action.findInFiles";
-          }
-          {
-            "key" = "ctrl+f";
-            "command" = "workbench.action.quickOpen";
-          }
-        ];
-        userSettings = lib.mkMerge [
-          {
-            "editor.fontFamily" = vars.font.name;
-            "editor.fontSize" = vars.font.size;
-            "editor.minimap.enabled" = false;
-            "editor.formatOnSave" = true;
-            "editor.renderWhitespace" = "trailing";
-            "editor.lineNumbers" = "relative";
-            "editor.wordSeparators" = "/\\()\"'=,.;<>~!@#$%^&*|+=[]{}`?-";
-            "editor.inlineSuggest.suppressSuggestions" = true;
-            "editor.inlayHints.enabled" = "offUnlessPressed";
+  config.programs.vscode = {
+    enable = true;
 
-            "terminal.integrated.fontSize" = vars.font.size;
+    mutableExtensionsDir = false;
+    profiles.default = {
+      enableExtensionUpdateCheck = false;
+      enableUpdateCheck = false;
+      enableMcpIntegration = true;
+      extensions = vscodeExtLib.forVscodeVersion config.programs.vscode.package.version extensionIds;
+      keybindings = [
+        {
+          "key" = "ctrl+tab";
+          "command" = "workbench.action.nextEditor";
+        }
+        {
+          "key" = "ctrl+shift+tab";
+          "command" = "workbench.action.previousEditor";
+        }
+        {
+          "key" = "ctrl+g";
+          "command" = "workbench.action.findInFiles";
+        }
+        {
+          "key" = "ctrl+f";
+          "command" = "workbench.action.quickOpen";
+        }
+      ];
+      userSettings = lib.mkMerge [
+        {
+          "editor.fontFamily" = vars.font.name;
+          "editor.fontSize" = vars.font.size;
+          "editor.minimap.enabled" = false;
+          "editor.formatOnSave" = true;
+          "editor.renderWhitespace" = "trailing";
+          "editor.lineNumbers" = "relative";
+          "editor.wordSeparators" = "/\\()\"'=,.;<>~!@#$%^&*|+=[]{}`?-";
+          "editor.inlineSuggest.suppressSuggestions" = true;
+          "editor.inlayHints.enabled" = "offUnlessPressed";
 
-            "diffEditor.ignoreTrimWhitespace" = false;
+          "terminal.integrated.fontSize" = vars.font.size;
 
-            "files.exclude" = {
-              "**/.classpath" = true;
-              "**/.project" = true;
-              "**/.settings" = true;
-              "**/.factorypath" = true;
-              "**/*.Designer.cs" = true;
-            };
+          "diffEditor.ignoreTrimWhitespace" = false;
 
-            "telemetry.telemetryLevel" = "off";
+          "files.exclude" = {
+            "**/.classpath" = true;
+            "**/.project" = true;
+            "**/.settings" = true;
+            "**/.factorypath" = true;
+            "**/*.Designer.cs" = true;
+          };
 
-            "workbench.tree.indent" = 24;
-            "workbench.welcomePage.walkthroughs.openOnInstall" = false;
-            "workbench.startupEditor" = "none";
-            "workbench.sideBar.location" = "right";
-            "workbench.layoutControl.enabled" = false;
-            "workbench.statusBar.visible" = true;
-            "workbench.navigationControl.enabled" = false;
+          "telemetry.telemetryLevel" = "off";
 
-            "git.confirmSync" = false;
-            "git.openRepositoryInParentFolders" = "always";
+          "workbench.tree.indent" = 24;
+          "workbench.welcomePage.walkthroughs.openOnInstall" = false;
+          "workbench.startupEditor" = "none";
+          "workbench.sideBar.location" = "right";
+          "workbench.layoutControl.enabled" = false;
+          "workbench.statusBar.visible" = true;
+          "workbench.navigationControl.enabled" = false;
 
-            "debug.onTaskErrors" = "showErrors";
+          "git.confirmSync" = false;
+          "git.openRepositoryInParentFolders" = "always";
 
-            "explorer.confirmDelete" = false;
+          "debug.onTaskErrors" = "showErrors";
 
-            "window.commandCenter" = false;
+          "explorer.confirmDelete" = false;
 
-            "chat.commandCenter.enabled" = true;
+          "window.commandCenter" = false;
 
-            "search.useIgnoreFiles" = false;
-            "search.exclude" = {
-              "**/node_modules" = true;
-              "**/.venv" = true;
-            };
+          "chat.commandCenter.enabled" = true;
 
-            "terminal.integrated.sendKeybindingsToShell" = true;
+          "search.useIgnoreFiles" = false;
+          "search.exclude" = {
+            "**/node_modules" = true;
+            "**/.venv" = true;
+          };
 
-            "extensions.autoUpdate" = false;
-          }
-          (withExtension "github.copilot-chat" {
-            "chat.extensionUnification.enabled" = true;
-            "chat.useAgentSkills" = true;
-            "chat.instructionsFilesLocations" = {
-              ".github/instructions" = true;
-              ".claude/rules" = true;
-            };
-            "github.copilot.enable" = {
-              "*" = true;
-              "plaintext" = true;
-              "markdown" = true;
-            };
-            "github.copilot.advanced" = {
-              "useLanguageServer" = true;
-            };
-            "github.copilot.nextEditSuggestions.enabled" = true;
-          })
-          (withExtension "jacobwgillespie.minimal-icons" {
-            "workbench.iconTheme" = "minimal-icons-without-explorer-arrows";
-          })
-          (withExtension "franzgollhammer.jb-fleet-dark" {
-            "workbench.colorTheme" = "Sphere";
-          })
-          (withExtension "vscodevim.vim" {
-            "vim.handleKeys" = {
-              "<C-p>" = false;
-            };
-          })
-          (withExtension "eamodio.gitlens" {
-            "gitlens.advanced.blame.customArguments" = [
-              "-w"
-              "-CCC"
-            ];
-          })
-        ];
-      };
+          "terminal.integrated.sendKeybindingsToShell" = true;
+
+          "extensions.autoUpdate" = false;
+        }
+        (withExtension "github.copilot-chat" {
+          "chat.extensionUnification.enabled" = true;
+          "chat.useAgentSkills" = true;
+          "chat.instructionsFilesLocations" = {
+            ".github/instructions" = true;
+            ".claude/rules" = true;
+          };
+          "github.copilot.enable" = {
+            "*" = true;
+            "plaintext" = true;
+            "markdown" = true;
+          };
+          "github.copilot.advanced" = {
+            "useLanguageServer" = true;
+          };
+          "github.copilot.nextEditSuggestions.enabled" = true;
+        })
+        (withExtension "jacobwgillespie.minimal-icons" {
+          "workbench.iconTheme" = "minimal-icons-without-explorer-arrows";
+        })
+        (withExtension "franzgollhammer.jb-fleet-dark" {
+          "workbench.colorTheme" = "Sphere";
+        })
+        (withExtension "vscodevim.vim" {
+          "vim.handleKeys" = {
+            "<C-p>" = false;
+          };
+        })
+        (withExtension "eamodio.gitlens" {
+          "gitlens.advanced.blame.customArguments" = [
+            "-w"
+            "-CCC"
+          ];
+        })
+      ];
     };
   };
 }

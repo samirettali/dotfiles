@@ -24,32 +24,24 @@
     };
   };
 
+  dotfiles.vscode.extensionIds =
+    lib.optionals (features.python == "full") [
+      "ms-python.debugpy"
+      "ms-python.python"
+      "ms-toolsai.jupyter"
+      "ms-toolsai.jupyter-renderers"
+    ]
+    ++ lib.optionals (features.python == "full" && builtins.elem pkgs.basedpyright config.home.packages) [
+      "detachhead.basedpyright"
+    ]
+    ++ lib.optionals (features.python == "full" && config.programs.ruff.enable) [
+      "charliermarsh.ruff"
+    ]
+    ++ lib.optionals (features.python == "full" && builtins.elem pkgs.ty config.home.packages) [
+      "astral-sh.ty"
+    ];
+
   programs.vscode.profiles.default = lib.optionalAttrs (features.python == "full") {
-    extensions =
-      pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version
-      [
-        "ms-python.debugpy"
-        "ms-python.python"
-        "ms-toolsai.jupyter"
-        "ms-toolsai.jupyter-renderers"
-        (
-          lib.optionals (builtins.elem pkgs.basedpyright config.home.packages)
-          "detachhead.basedpyright"
-        )
-        # TODO: not available for pre release
-        # (
-        #   lib.optionals (builtins.elem pkgs.pyrefly config.home.packages)
-        #   "meta.pyrefly"
-        # )
-        (
-          lib.optionals config.programs.ruff.enable
-          "charliermarsh.ruff"
-        )
-        (
-          lib.optionals (builtins.elem pkgs.ty config.home.packages)
-          "astral-sh.ty"
-        )
-      ];
     userSettings = {
       "files.exclude" =
         {

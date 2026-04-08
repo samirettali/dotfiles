@@ -2,6 +2,7 @@
   lib,
   pkgs,
   vars,
+  neovimPackage,
   ...
 }: let
 in {
@@ -33,7 +34,7 @@ in {
 
   home.sessionVariables = {
     DEFAULT_BROWSER = "firefox";
-    MANPAGER = "${lib.getExe pkgs.neovim} -c 'Man!' -";
+    MANPAGER = "${lib.getExe neovimPackage} -c 'Man!' -";
   };
 
   programs = {

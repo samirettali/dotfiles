@@ -36,10 +36,11 @@
         }))
     ];
 
+  dotfiles.vscode.extensionIds = lib.optionals features.go [
+    "golang.go"
+  ];
+
   programs.vscode.profiles.default = lib.optionalAttrs features.go {
-    extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version [
-      "golang.go"
-    ];
     userSettings = {
       "go.formatTool" = "gofumpt";
       "go.delveConfig" = {

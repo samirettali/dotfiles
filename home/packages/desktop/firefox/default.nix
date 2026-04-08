@@ -8,6 +8,14 @@
     name = "gwfox-collapsed-sidebar";
     patches = [./gwfox-collapsed-sidebar.patch];
   };
+
+  gwfoxUserChrome = pkgs.runCommand "gwfox-userChrome.css" {} ''
+    ln -s ${gwfox}/userChrome.css $out
+  '';
+
+  gwfoxUserContent = pkgs.runCommand "gwfox-userContent.css" {} ''
+    ln -s ${gwfox}/userContent.css $out
+  '';
 in {
   programs = {
     firefox = {
@@ -39,11 +47,11 @@ in {
       });
       profiles.samir = {
         # path = "profiles/samir"; # TODO: backup the profile first
-        userChrome = builtins.readFile "${gwfox}/userChrome.css";
-        userContent = builtins.readFile "${gwfox}/userContent.css";
+        userChrome = gwfoxUserChrome;
+        userContent = gwfoxUserContent;
         extensions = {
           force = true;
-          packages = with pkgs.nur.repos.rycee.firefox-addons; [
+          packages = with inputs.nur.legacyPackages.${pkgs.stdenv.hostPlatform.system}.repos.rycee.firefox-addons; [
             adaptive-tab-bar-colour
             bitwarden
             consent-o-matic
@@ -56,7 +64,7 @@ in {
             vimium-c
             web-clipper-obsidian
           ];
-          settings = with pkgs.nur.repos.rycee.firefox-addons; {
+          settings = with inputs.nur.legacyPackages.${pkgs.stdenv.hostPlatform.system}.repos.rycee.firefox-addons; {
             "${adaptive-tab-bar-colour.addonId}" = {
               settings = {
                 tabbar = 10;

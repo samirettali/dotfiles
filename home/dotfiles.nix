@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  neovimPackage,
   ...
 }: {
   home.packages =
@@ -21,7 +22,7 @@
 
         cd "''${target}" || exit 1
 
-        ${lib.getExe pkgs.neovim} .
+        ${lib.getExe neovimPackage} .
       '')
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [

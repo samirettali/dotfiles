@@ -1,10 +1,12 @@
 {
   lib,
   pkgs,
+  neovimPackage,
   ...
 }: {
   programs.neovim = {
     enable = lib.mkDefault true;
+    package = neovimPackage;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;

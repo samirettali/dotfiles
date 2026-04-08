@@ -48,6 +48,16 @@ in {
     terraform-ls
   ];
 
+  dotfiles.vscode.extensionIds = [
+    "hashicorp.terraform"
+    "ms-vsliveshare.vsliveshare"
+
+    # "csharpier.csharpier-vscode"
+    "ms-dotnettools.csharp"
+    "ms-dotnettools.csdevkit"
+    "ms-dotnettools.vscode-dotnet-runtime"
+  ];
+
   programs = {
     go.env.GOPRIVATE = [
       "github.com/YoungAgency/*"
@@ -55,15 +65,6 @@ in {
 
     vscode = {
       profiles.default = {
-        extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version [
-          "hashicorp.terraform"
-          "ms-vsliveshare.vsliveshare"
-
-          # "csharpier.csharpier-vscode"
-          "ms-dotnettools.csharp"
-          "ms-dotnettools.csdevkit"
-          "ms-dotnettools.vscode-dotnet-runtime"
-        ];
         userSettings = {
           "csharp.experimental.debug.hotReload" = true;
           "csharp.debug.justMyCode" = false;

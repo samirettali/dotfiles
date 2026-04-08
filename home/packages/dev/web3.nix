@@ -14,10 +14,11 @@
       vscode-solidity-server
     ];
 
+  dotfiles.vscode.extensionIds = lib.optionals features.web3 [
+    "juanblanco.solidity"
+  ];
+
   programs.vscode.profiles.default = lib.optionalAttrs features.web3 {
-    extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version [
-      "juanblanco.solidity"
-    ];
     userSettings = {
       "solidity.packageDefaultDependenciesContractsDirectory" = "src";
       "solidity.packageDefaultDependenciesDirectory" = "lib";

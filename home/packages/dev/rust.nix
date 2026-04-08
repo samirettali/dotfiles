@@ -26,11 +26,7 @@
     RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
   };
 
-  programs.vscode.profiles.default =
-    lib.optionalAttrs features.rust
-    {
-      extensions = pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version [
-        "rust-lang.rust-analyzer"
-      ];
-    };
+  dotfiles.vscode.extensionIds = lib.optionals features.rust [
+    "rust-lang.rust-analyzer"
+  ];
 }

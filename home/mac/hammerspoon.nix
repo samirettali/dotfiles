@@ -5,8 +5,8 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
-    nur.repos.natsukium.hammerspoon
+  home.packages = [
+    inputs.nur.legacyPackages.${pkgs.stdenv.hostPlatform.system}.repos.natsukium.hammerspoon
   ];
 
   home.file = {

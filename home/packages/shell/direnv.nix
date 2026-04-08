@@ -18,10 +18,7 @@
     };
   };
 
-  programs.vscode.profiles.default.extensions = lib.mkIf config.programs.direnv.enable (
-    pkgs.nix4vscode.forVscodeVersion config.programs.vscode.package.version
-    [
-      "mkhl.direnv"
-    ]
-  );
+  dotfiles.vscode.extensionIds = lib.optionals config.programs.direnv.enable [
+    "mkhl.direnv"
+  ];
 }

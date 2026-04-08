@@ -58,7 +58,6 @@
     nixpkgs,
     darwin,
     home-manager,
-    nix4vscode,
     ...
   } @ inputs: let
     inherit (nixpkgs) lib;
@@ -94,6 +93,12 @@
         allowed-users = [username];
         trusted-users = ["root" username];
         experimental-features = ["nix-command" "flakes"];
+        extra-substituters = [
+          "https://nix-community.cachix.org"
+        ];
+        extra-trusted-public-keys = [
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
       };
       optimise.automatic = false;
     };
@@ -115,10 +120,7 @@
     };
 
     nixpkgsConfig = {
-      overlays = with inputs; [
-        neovim-nightly-overlay.overlays.default
-        nur.overlays.default
-        nix4vscode.overlays.default
+      overlays = [
         dotnet-bin-overlay
       ];
       config = {
@@ -139,6 +141,8 @@
       extraSpecialArgs = {
         inherit inputs;
         inherit (inputs) samirettali-nur;
+        neovimPackage = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
         features = {
           rust = false;
           security = false;
