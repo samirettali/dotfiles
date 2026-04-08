@@ -40,17 +40,18 @@ in {
       bind -r -N "Move window to the right" \
         '>' swap-window -d -t '{next}'
 
-      bind -N "Horizontal split" \
-        s split-window -v -c '#{pane_current_path}'
+      # TODO: remove
+      # bind -N "Horizontal split" \
+      #   s split-window -v -c '#{pane_current_path}'
 
-      bind -N "Full horizontal split" \
-        S split-window -fv -c '#{pane_current_path}'
+      # bind -N "Full horizontal split" \
+      #   S split-window -fv -c '#{pane_current_path}'
 
-      bind -N "Vertical split" \
-        v split-window -h -c '#{pane_current_path}'
+      # bind -N "Vertical split" \
+      #   v split-window -h -c '#{pane_current_path}'
 
-      bind -N "Full vertical split" \
-        V split-window -fh -c '#{pane_current_path}'
+      # bind -N "Full vertical split" \
+      #   V split-window -fh -c '#{pane_current_path}'
 
       bind -r -N "Select the previous window" C-p select-window -p
       bind -r -N "Select the previous window" p select-window -p
@@ -78,11 +79,7 @@ in {
       bind -r -N "Resize the pane right by ${toString cfg.resizeAmount}" \
         L resize-pane -R ${toString cfg.resizeAmount}
 
-      # repeat command in last selected pane
-      bind -N "Repeat command in last pane" \
-        b last-pane \; send-keys Up C-m \; last-pane
-
-      bind r source-file ~/.config/tmux/tmux.conf \; display "Config reloaded!"
+      bind r source-file ~/.config/tmux/tmux.conf \; display " Config reloaded!"
 
       bind -N "Select last window" \
         tab last-window
@@ -109,12 +106,9 @@ in {
       # TODO: is this still needed with ghostty?
       set -g default-terminal "tmux-256color"
       set -ag terminal-overrides ",xterm-256color:RGB"
+      set-option -sa terminal-overrides ",xterm*:Tc"
 
       set -g message-style 'fg=yellow bg=black bold'
-
-      bind-key "t" display-popup -E -w 40% "${lib.getExe pkgs.sesh} connect \"$(
-        ${lib.getExe pkgs.sesh} list -i | ${lib.getExe pkgs.gum} filter --limit 1 --no-sort --fuzzy --placeholder ''' --height 10
-      )\""
     '';
   };
 
