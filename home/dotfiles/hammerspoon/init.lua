@@ -18,3 +18,5 @@ seal:bindHotkeys({
 	show = { { "alt" }, "space" },
 })
 seal:start()
+
+hs.alert.show("Hammerspoon loaded")
