@@ -13,6 +13,7 @@
     ./fish.nix
     ./fzf.nix
     ./gemini-cli.nix
+    ./gh.nix
     ./git-sync.nix
     ./git.nix
     ./lazydocker.nix
@@ -39,7 +40,6 @@
     difftastic
     duf
     fd
-    gh
     gnused
     hwatch
     iredis
