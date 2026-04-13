@@ -38,6 +38,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixpkgs-vscode = {
+      # TODO: waiting for https://github.com/NixOS/nixpkgs/issues/509248
+      url = "github:nixos/nixpkgs/9d29d5f667d7467f98efc31881e824fa586c927e";
+    };
+
     gwfox = {
       url = "github:akkva/gwfox?ref=main";
       flake = false;
