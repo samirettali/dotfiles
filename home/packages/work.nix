@@ -38,6 +38,7 @@ in {
     mongosh
     netcoredbg
     nuget
+    pnpm
     postman
     roslyn-ls
     slack
