@@ -95,6 +95,7 @@ vim.lsp.enable({
 	"basedpyright",
 	"ruff",
 	"harper",
+	"dartls",
 })
 
 local on_lsp_attach = function(ev)

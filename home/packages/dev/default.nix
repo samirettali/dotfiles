@@ -10,6 +10,7 @@
     ./java.nix
     ./web3.nix
     ./zig.nix
+    ./dart.nix
   ];
 
   home.packages = with pkgs; [
