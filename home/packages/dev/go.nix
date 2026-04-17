@@ -4,7 +4,15 @@
   pkgs,
   features,
   ...
-}: {
+}: let
+  gotoolsWithoutModernize = pkgs.symlinkJoin {
+    name = "gotools-without-modernize";
+    paths = [pkgs.gotools];
+    postBuild = ''
+      rm -f "$out/bin/modernize"
+    '';
+  };
+in {
   programs = {
     go = {
       enable = features.go;
@@ -23,7 +31,7 @@
       golangci-lint-langserver
       gopls
       gotest
-      gotools
+      gotoolsWithoutModernize # TODO: https://github.com/NixOS/nixpkgs/issues/509480
       mockgen
       protobuf
       protoc-gen-go
