@@ -176,7 +176,6 @@ in {
               urls = [{template = "https://mynixos.com/search?q={searchTerms}";}];
               definedAliases = ["@n"];
               updateInterval = 24 * 60 * 60 * 1000; # every day
-              # icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg"; # TODO: this is broken
               icon = "https://mynixos.com/static/icons/mnos-logo.svg";
             };
             "NixOS Wiki" = {
@@ -193,6 +192,7 @@ in {
         };
         settings = {
           "browser.startup.homepage" = "https://home.samirettali.com";
+
           # Performance settings
           "gfx.webrender.all" = true; # Force enable GPU acceleration
           "media.ffmpeg.vaapi.enabled" = true;
@@ -294,6 +294,8 @@ in {
           "browser.urlbar.shortcuts.tabs" = true;
           "browser.urlbar.showSearchSuggestionsFirst" = true;
           "browser.urlbar.speculativeConnect.enabled" = true;
+
+          "browser.formfill.enable" = false;
 
           # https://bugzilla.mozilla.org/1642623
           "browser.urlbar.dnsResolveSingleWordsAfterSearch" = 0;
