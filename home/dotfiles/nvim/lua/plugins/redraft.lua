@@ -1,4 +1,3 @@
--- dependencies: snacks, copilot.lua
 vim.api.nvim_create_autocmd("PackChanged", {
 	group = vim.api.nvim_create_augroup("RedraftPackChanged", { clear = true }),
 	callback = function(ev)
@@ -16,9 +15,6 @@ vim.pack.add({
 	{ src = "https://github.com/zbirenbaum/copilot.lua" },
 })
 
--- vim.cmd("packadd copilot.lua")
--- vim.cmd("packadd nvim-redraft")
-
 require("copilot").setup({ enabled = false, suggestion = { enabled = false } })
 require("nvim-redraft").setup({
 	llm = {
@@ -26,10 +22,6 @@ require("nvim-redraft").setup({
 			{
 				provider = "copilot",
 				model = "claude-sonnet-4.6",
-			},
-			{
-				provider = "copilot",
-				model = "grok-code-fast-1",
 			},
 		},
 	},
