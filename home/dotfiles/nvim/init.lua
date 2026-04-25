@@ -17,7 +17,6 @@ vim.pack.add({
 	{ src = "https://github.com/felipeagc/fleet-theme-nvim" },
 	{ src = "https://github.com/bluz71/vim-moonfly-colors" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
-	{ src = "https://github.com/pablopunk/pi.nvim" },
 })
 
 vim.cmd("packadd nvim.undotree") -- built in
