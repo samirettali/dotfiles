@@ -14,6 +14,7 @@
     docker
     hidden-bar
     maccy
+    pika
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.mole
     shottr
     the-unarchiver
