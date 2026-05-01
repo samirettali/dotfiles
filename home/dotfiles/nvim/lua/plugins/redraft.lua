@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
 })
 
 vim.pack.add({
-	{ src = "https://github.com/samirettali/nvim-redraft", version = "fix-multiple-edits" },
+	{ src = "https://github.com/jim-at-jibba/nvim-redraft" },
 	{ src = "https://github.com/zbirenbaum/copilot.lua" },
 })
 
