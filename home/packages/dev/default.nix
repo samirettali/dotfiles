@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  samirettali-nur,
+  ...
+}: {
   imports = [
     ./c.nix
     ./go.nix
@@ -21,5 +25,6 @@
 
   programs.codex = {
     enable = true;
+    package = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.codex;
   };
 }
