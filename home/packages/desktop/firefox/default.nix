@@ -223,11 +223,16 @@ in {
           "sidebar.animation.enabled" = false;
 
           "widget.macos.native-context-menus" = false;
-          "gwfox.plus" = true;
-          "gwfox.noborder" = true;
           "gwfox.icons" = true;
-          "gwfox.sidebar" = 3;
+          "gwfox.blur" = false;
+          "gwfox.toolbar" = true;
+          "gwfox.urlbar" = true;
+          "gwfox.newtab" = false;
+          "gwfox.noborder" = true;
           "gwfox.atbc" = true;
+          "gwfox.db" = true;
+          # "gwfox.plus" = true;
+          "gwfox.sidebar" = 3;
 
           # Disable Activity Stream
           "browser.discovery.enabled" = false;
