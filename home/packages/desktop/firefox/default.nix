@@ -349,6 +349,8 @@ in {
           # Disable smooth scrolling (hate this feature on web browsers)
           "general.smoothScroll" = false;
 
+          "dom.storage.default_quota" = 25600;
+
           permissions = {
             "default.desktop-notification" = false;
           };
