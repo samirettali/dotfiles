@@ -16,6 +16,7 @@
     maccy
     pika
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.mole
+    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.sol
     shottr
     the-unarchiver
   ];
