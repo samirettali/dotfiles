@@ -19,20 +19,11 @@ in {
     shell = lib.getExe pkgs.fish;
     # bind space command-prompt "joinp -s:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
     extraConfig = ''
-      set-option repeat-time 0
-
       set -g extended-keys on
       # TODO
       # set -as terminal-features 'xterm*:extkeys'
       # set -as terminal-features ',*ghostty*:extkeys'
       set -g extended-keys-format csi-u
-
-      unbind c
-      bind -N "Create new window with the current path" \
-        c new-window -c '#{pane_current_path}'
-
-      bind -N "Create new window with the current path" \
-        C-c new-window -c '#{pane_current_path}'
 
       bind -r -N "Move window to the left" \
         '<' swap-window -d -t '{previous}'
@@ -40,32 +31,19 @@ in {
       bind -r -N "Move window to the right" \
         '>' swap-window -d -t '{next}'
 
-      # TODO: remove
-      # bind -N "Horizontal split" \
-      #   s split-window -v -c '#{pane_current_path}'
+      bind -N "Select the previous window" C-p select-window -p
+      bind -N "Select the previous window" p select-window -p
+      bind -N "Select the next window" C-n select-window -n
+      bind -N "Select the next window" n select-window -n
 
-      # bind -N "Full horizontal split" \
-      #   S split-window -fv -c '#{pane_current_path}'
-
-      # bind -N "Vertical split" \
-      #   v split-window -h -c '#{pane_current_path}'
-
-      # bind -N "Full vertical split" \
-      #   V split-window -fh -c '#{pane_current_path}'
-
-      bind -r -N "Select the previous window" C-p select-window -p
-      bind -r -N "Select the previous window" p select-window -p
-      bind -r -N "Select the next window" C-n select-window -n
-      bind -r -N "Select the next window" n select-window -n
-
-      bind -r -N "Select pane to the left of the active pane" C-h select-pane -L
-      bind -r -N "Select pane below the active pane" C-j select-pane -D
-      bind -r -N "Select pane above the active pane" C-k select-pane -U
-      bind -r -N "Select pane to the right of the active pane" C-l select-pane -R
-      bind -r -N "Select pane to the left of the active pane" h select-pane -L
-      bind -r -N "Select pane below the active pane" j select-pane -D
-      bind -r -N "Select pane above the active pane" k select-pane -U
-      bind -r -N "Select pane to the right of the active pane" l select-pane -R
+      bind -N "Select pane to the left of the active pane" C-h select-pane -L
+      bind -N "Select pane below the active pane" C-j select-pane -D
+      bind -N "Select pane above the active pane" C-k select-pane -U
+      bind -N "Select pane to the right of the active pane" C-l select-pane -R
+      bind -N "Select pane to the left of the active pane" h select-pane -L
+      bind -N "Select pane below the active pane" j select-pane -D
+      bind -N "Select pane above the active pane" k select-pane -U
+      bind -N "Select pane to the right of the active pane" l select-pane -R
 
       bind -r -N "Resize the pane left by ${toString cfg.resizeAmount}" \
         H resize-pane -L ${toString cfg.resizeAmount}
