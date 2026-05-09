@@ -66,6 +66,10 @@ in {
         fish
         */
         ''
+          if contains -- --final-rendering $argv
+              return
+          end
+
           # Show last status code if != 0
           set -l last_status $status
 
@@ -110,6 +114,8 @@ in {
       fish
       */
       ''
+        set -g fish_transient_prompt 1
+
         set fish_color_command green
         set fish_color_valid_path normal
 
