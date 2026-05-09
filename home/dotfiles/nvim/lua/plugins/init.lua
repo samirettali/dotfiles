@@ -10,3 +10,9 @@ require("plugins.codediff")
 require("plugins.csvview")
 require("plugins.fluoride")
 require("plugins.pi")
+
+vim.pack.add({
+	"https://github.com/wincent/shannon",
+})
+
+require("wincent.shannon").setup()
