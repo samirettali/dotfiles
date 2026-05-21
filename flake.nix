@@ -84,11 +84,11 @@
         homeDirectory = "/home/${defaultUser}";
         email = "ettali.samir@gmail.com";
       };
-      work = {
-        name = "s.ettali";
-        homeDirectory = "/Users/s.ettali";
-        email = "s.ettali@young.business";
-      };
+      # work = {
+      #   name = "s.ettali";
+      #   homeDirectory = "/Users/s.ettali";
+      #   email = "s.ettali@young.business";
+      # };
     };
 
     # Common Nix configuration
@@ -198,7 +198,7 @@
     };
   in {
     darwinConfigurations = {
-      settali = darwin.lib.darwinSystem {
+      samir = darwin.lib.darwinSystem {
         system = systems.darwin;
         specialArgs = {inherit inputs;};
         modules = [
@@ -209,16 +209,16 @@
             ...
           }: {
             nix = mkNixConfig {
-              username = users.work.name;
+              username = users.personal.name;
             };
 
             nixpkgs = nixpkgsConfig;
 
             system.stateVersion = 6;
-            system.primaryUser = users.work.name;
+            system.primaryUser = users.personal.name;
 
-            users.users.${users.work.name} = {
-              home = users.work.homeDirectory;
+            users.users.${users.personal.name} = {
+              home = users.personal.homeDirectory;
               shell = pkgs.fish;
               openssh.authorizedKeys.keys = [
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJdetGPFJw+CH6wNU4BinYePWVypM42s9WI0XPodihl samir"
@@ -230,12 +230,12 @@
           ({pkgs, ...}: {
             home-manager = mkHomeManagerConfig {
               inherit pkgs;
-              user = users.work;
+              user = users.personal;
               extraModules = [
                 ./home/mac
                 ./home/packages/desktop
                 ./home/packages/dev
-                ./home/packages/work.nix
+                # ./home/packages/work.nix
                 ./home/packages/security.nix
               ];
             };
