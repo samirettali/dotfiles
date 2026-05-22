@@ -150,7 +150,7 @@
           web3 = false;
           zig = false;
           java = false;
-          js = "full";
+          js = "minimal";
           c = false;
           go = true;
           python = "minimal";
