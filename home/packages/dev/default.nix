@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   samirettali-nur,
   ...
@@ -24,7 +25,7 @@
   ];
 
   programs.codex = {
-    enable = true;
+    enable = lib.mkDefault false;
     package = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.codex;
   };
 }
