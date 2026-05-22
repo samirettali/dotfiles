@@ -99,7 +99,7 @@
       finder = {
         AppleShowAllExtensions = true;
         FXEnableExtensionChangeWarning = false;
-        FXPreferredViewStyle = "icnv";
+        FXPreferredViewStyle = "Nlsv";
         ShowPathbar = false;
         ShowStatusBar = false;
         "_FXSortFoldersFirst" = true;
