@@ -1,7 +1,7 @@
-{...}: {
+{lib, ...}: {
   programs = {
     keepassxc = {
-      enable = true;
+      enable = lib.mkDefault false;
       settings = {
         Browser = {
           Enabled = true;
