@@ -5,7 +5,7 @@
   ...
 }: {
   programs.zed-editor = {
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault false;
     extraPackages = with pkgs; [
       claude-agent-acp
     ];
