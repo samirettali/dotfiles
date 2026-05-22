@@ -5,7 +5,6 @@
 }: {
   imports = [
     ./ansible.nix
-    ./bat.nix
     ./btop.nix
     ./claude-code.nix
     ./direnv.nix
@@ -22,7 +21,6 @@
     ./nh.nix
     ./opencode.nix
     ./pi-coding-agent
-    ./pass.nix
     ./posting.nix
     ./ripgrep.nix
     ./scripts
