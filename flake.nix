@@ -145,7 +145,7 @@
         vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
         features = {
           rust = false;
-          dart = true;
+          dart = false;
           security = false;
           web3 = true;
           zig = false;
