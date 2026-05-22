@@ -9,10 +9,11 @@
 }: let
   vscodePkgs =
     if pkgs.stdenv.isDarwin
-    then import inputs.nixpkgs-vscode {
-      system = pkgs.stdenv.hostPlatform.system;
-      config.allowUnfree = true;
-    }
+    then
+      import inputs.nixpkgs-vscode {
+        system = pkgs.stdenv.hostPlatform.system;
+        config.allowUnfree = true;
+      }
     else pkgs;
 
   baseExtensionIds = [
@@ -41,7 +42,7 @@ in {
   };
 
   config.programs.vscode = {
-    enable = true;
+    enable = lib.mkDefault false;
     package = vscodePkgs.vscode;
 
     mutableExtensionsDir = false;
