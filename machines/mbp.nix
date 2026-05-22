@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -13,7 +14,7 @@
   };
 
   networking = {
-    hostName = "settali";
+    hostName = "mbp";
     knownNetworkServices = ["Wi-Fi"];
     dns = [
       "1.1.1.1"
@@ -32,20 +33,41 @@
     ];
   };
 
-  environment.shells = [
-    config.programs.fish.package
-  ];
+  environment = {
+    shells = [
+      config.programs.fish.package
+    ];
+
+    systemPackages = with pkgs; [
+      duti
+    ];
+  };
 
   time.timeZone = "Europe/Rome";
 
   # TODO: can this be used in the terminal? and maybe move to common config with linux
   security.pam.services.sudo_local.touchIdAuth = true;
 
-  system.activationScripts.postActivation.text = ''
-    # Avoid having to logout and login to apply the changes
-    # FIX: hardcoded username
-    sudo -u s.ettali /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-  '';
+  system.activationScripts.postActivation.text = lib.mkAfter (let
+    user = config.system.primaryUser;
+    firefoxBundleId = "org.mozilla.firefox";
+  in ''
+    user_home="$(/usr/bin/dscl . -read /Users/${user} NFSHomeDirectory | /usr/bin/awk '{print $2}')"
+    user_uid="$(/usr/bin/id -u ${user})"
+    user_cmd=(/bin/launchctl asuser "$user_uid" /usr/bin/sudo -u ${user} --set-home)
+
+    # Register Firefox from Home Manager's app bundle and make it the default browser.
+    firefox_app="$(${pkgs.findutils}/bin/find "$user_home/Applications" -maxdepth 3 -name Firefox.app -print -quit 2>/dev/null || true)"
+    if [ -n "$firefox_app" ]; then
+      /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$firefox_app"
+    fi
+
+    # macOS may reject programmatic browser changes until the user approves the
+    # Firefox default-browser prompt once, so keep this best-effort.
+    "''${user_cmd[@]}" ${lib.getExe pkgs.duti} -s ${firefoxBundleId} http || true
+    "''${user_cmd[@]}" ${lib.getExe pkgs.duti} -s ${firefoxBundleId} https || true
+
+  '');
 
   system = {
     keyboard = {
@@ -53,7 +75,11 @@
       remapCapsLockToControl = true;
     };
     defaults = {
-      WindowManager.EnableStandardClickToShowDesktop = false;
+      WindowManager = {
+        EnableStandardClickToShowDesktop = false;
+        StandardHideWidgets = true;
+        StageManagerHideWidgets = true;
+      };
       dock = {
         autohide = true;
         autohide-delay = 0.0;
@@ -73,8 +99,9 @@
       finder = {
         AppleShowAllExtensions = true;
         FXEnableExtensionChangeWarning = false;
-        FXPreferredViewStyle = "Nlsv";
+        FXPreferredViewStyle = "icnv";
         ShowPathbar = false;
+        ShowStatusBar = false;
         "_FXSortFoldersFirst" = true;
         "_FXSortFoldersFirstOnDesktop" = true;
         CreateDesktop = true;

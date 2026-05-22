@@ -81,14 +81,9 @@
     users = {
       personal = {
         name = defaultUser;
-        homeDirectory = "/home/${defaultUser}";
+        homeDirectory = "/Users/${defaultUser}";
         email = "ettali.samir@gmail.com";
       };
-      # work = {
-      #   name = "s.ettali";
-      #   homeDirectory = "/Users/s.ettali";
-      #   email = "s.ettali@young.business";
-      # };
     };
 
     # Common Nix configuration
@@ -198,7 +193,7 @@
     };
   in {
     darwinConfigurations = {
-      samir = darwin.lib.darwinSystem {
+      mbp = darwin.lib.darwinSystem {
         system = systems.darwin;
         specialArgs = {inherit inputs;};
         modules = [
@@ -224,7 +219,7 @@
                 "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJdetGPFJw+CH6wNU4BinYePWVypM42s9WI0XPodihl samir"
               ];
             };
-            environment.shellAliases = config.home-manager.users."s.ettali".home.shellAliases;
+            environment.shellAliases = config.home-manager.users."${defaultUser}".home.shellAliases;
           })
           home-manager.darwinModules.home-manager
           ({pkgs, ...}: {

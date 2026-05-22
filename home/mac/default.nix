@@ -6,6 +6,7 @@
   imports = [
     ./hammerspoon.nix
     ./sketchybar.nix
+    ./desktoppr.nix
   ];
 
   home.packages = with pkgs; [
