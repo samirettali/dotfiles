@@ -10,5 +10,5 @@ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer 
 * Keyboard layout
 * Disable true tone
 * `echo host.docker.internal | sudo tee -a /etc/hosts`
-* Set up chrome as default browser
+* Set fish as default shell
 * Disable low power mode on battery
