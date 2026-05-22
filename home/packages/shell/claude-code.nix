@@ -5,7 +5,7 @@
 }: {
   # TODO: feedbackSurveyRate: 0
   programs.claude-code = {
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault false;
     settings = {
       includeCoAuthoredBy = false;
       env = {
