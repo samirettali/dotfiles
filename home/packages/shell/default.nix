@@ -21,8 +21,8 @@
     ./neovim.nix
     ./nh.nix
     ./opencode.nix
+    ./pi-coding-agent
     ./pass.nix
-    ./pi-coding-agent.nix
     ./posting.nix
     ./ripgrep.nix
     ./scripts

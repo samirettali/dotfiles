@@ -41,6 +41,12 @@ in {
       exclude = ["./node_modules"];
     };
 
+    ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
+    ".pi/agent/extensions/memory.ts".source = ./extensions/memory.ts;
+    ".pi/agent/extensions/permission-gate.ts".source = ./extensions/permission-gate.ts;
+    ".pi/agent/extensions/protected-paths.ts".source = ./extensions/protected-paths.ts;
+    ".pi/agent/extensions/system-prompt.ts".source = ./extensions/system-prompt.ts;
+
     ".pi/agent/extensions/node_modules/@mariozechner/pi-coding-agent".source = piRuntimeRoot;
     ".pi/agent/extensions/node_modules/@mariozechner/pi-ai".source = piNodeModules + "/@mariozechner/pi-ai";
     ".pi/agent/extensions/node_modules/@mariozechner/pi-tui".source = piNodeModules + "/@mariozechner/pi-tui";
