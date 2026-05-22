@@ -147,7 +147,7 @@
           rust = false;
           dart = false;
           security = false;
-          web3 = true;
+          web3 = false;
           zig = false;
           java = false;
           js = "full";
