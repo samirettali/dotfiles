@@ -161,7 +161,7 @@
             name = "JetBrainsMono Nerd Font";
             size =
               if pkgs.stdenv.isDarwin
-              then 14
+              then 16
               else 10;
           };
           commands = {
