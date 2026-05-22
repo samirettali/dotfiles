@@ -53,6 +53,7 @@
     p7zip
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.go-qo
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.tredis
+    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.hunk
     scc
     snitch
     sqlite
