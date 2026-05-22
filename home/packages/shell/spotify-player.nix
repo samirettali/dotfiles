@@ -26,7 +26,7 @@ in {
       notify_streaming_only = false;
       enable_streaming = "DaemonOnly";
       cover_img_width = 6;
-      cover_img_length = 13;
+      cover_img_length = 16;
       device = {
         name = config.home.username;
         device_type = "speaker";
