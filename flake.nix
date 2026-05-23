@@ -192,6 +192,28 @@
       };
     };
   in {
+    homeConfigurations = {
+      andromeda = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = systems.linux;
+          inherit (nixpkgsConfig) config;
+        };
+
+        modules = [
+          ./home/packages/shell/tmux.nix
+          {
+            home = {
+              username = defaultUser;
+              homeDirectory = "/home/${defaultUser}";
+              inherit stateVersion;
+            };
+
+            programs.home-manager.enable = true;
+          }
+        ];
+      };
+    };
+
     darwinConfigurations = {
       mbp = darwin.lib.darwinSystem {
         system = systems.darwin;
