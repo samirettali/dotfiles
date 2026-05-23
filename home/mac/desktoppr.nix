@@ -1,12 +1,12 @@
 {pkgs, ...}: let
-  blackWallpaper = pkgs.runCommand "black-wallpaper.png" {} ''
-    ${pkgs.imagemagick}/bin/magick -size 1x1 xc:black "$out"
+  wallpaper = pkgs.runCommand "wallpaper.png" {} ''
+    ${pkgs.imagemagick}/bin/magick -size 1x1 canvas:#021623 "$out"
   '';
 in {
   programs.desktoppr = {
     enable = true;
     settings = {
-      picture = "${blackWallpaper}";
+      picture = "${wallpaper}";
       scale = "fill";
       setOnlyOnce = false;
     };
