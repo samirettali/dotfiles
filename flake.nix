@@ -214,6 +214,8 @@
             home.packages = with pkgs; [
               ghostty.terminfo
             ];
+
+            home.file.".terminfo".source = "${pkgs.ghostty.terminfo}/share/terminfo";
           })
         ];
       };
