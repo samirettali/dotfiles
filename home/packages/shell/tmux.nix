@@ -66,7 +66,7 @@ in {
 
       # Theme
       set -g status-justify left
-      set -g status-style "bg=black bold"
+      set -g status-style "bg=default bold"
 
       set -g status-left " #S "
       set -g status-left-style "fg=green"
