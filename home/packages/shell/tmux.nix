@@ -16,7 +16,6 @@ in {
     keyMode = "vi";
     mouse = true;
     focusEvents = true;
-    shell = lib.getExe pkgs.fish;
     extraConfig = ''
       set -g extended-keys on
       # TODO
