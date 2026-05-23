@@ -17,7 +17,6 @@ in {
     mouse = true;
     focusEvents = true;
     shell = lib.getExe pkgs.fish;
-    # bind space command-prompt "joinp -s:%%" # %% = prompt for window.pane [-V|H] # vert|hor split
     extraConfig = ''
       set -g extended-keys on
       # TODO
