@@ -18,6 +18,7 @@
     pika
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.mole
     samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.sol
+    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.eqmac
     shottr
     the-unarchiver
   ];
