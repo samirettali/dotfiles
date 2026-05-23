@@ -75,6 +75,7 @@
     systems = {
       darwin = "aarch64-darwin";
       linux = "x86_64-linux";
+      server = "aarch64-linux";
     };
 
     # User configurations
@@ -195,7 +196,7 @@
     homeConfigurations = {
       andromeda = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
-          system = systems.linux;
+          system = systems.server;
           inherit (nixpkgsConfig) config;
         };
 
