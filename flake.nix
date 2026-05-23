@@ -202,7 +202,7 @@
 
         modules = [
           ./home/packages/shell/tmux.nix
-          {
+          ({pkgs, ...}: {
             home = {
               username = defaultUser;
               homeDirectory = "/home/${defaultUser}";
@@ -210,7 +210,11 @@
             };
 
             programs.home-manager.enable = true;
-          }
+
+            home.packages = with pkgs; [
+              ghostty.terminfo
+            ];
+          })
         ];
       };
     };
