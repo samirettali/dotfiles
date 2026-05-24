@@ -63,6 +63,9 @@ in {
       set -g renumber-windows on
       set -g allow-rename off
 
+      unbind -T copy-mode-vi MouseDragEnd1Pane
+      bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection-no-clear
+
       # Theme
       set -g status-justify left
       set -g status-style "bg=default bold"
