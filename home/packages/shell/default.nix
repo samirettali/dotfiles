@@ -32,7 +32,6 @@
   ];
 
   home.packages = with pkgs; [
-    bitwarden-cli
     coreutils
     curl
     difftastic
@@ -59,6 +58,8 @@
     unzip
     vi-mongo
     watchexec
+    # bitwarden-cli
+    # ghui # TODO: upstream is broken
     # yubikey-manager
     # repomix
     # amp-cli
