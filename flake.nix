@@ -244,9 +244,6 @@
             users.users.${users.personal.name} = {
               home = users.personal.homeDirectory;
               shell = pkgs.fish;
-              openssh.authorizedKeys.keys = [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJJdetGPFJw+CH6wNU4BinYePWVypM42s9WI0XPodihl samir"
-              ];
             };
             environment.shellAliases = config.home-manager.users."${defaultUser}".home.shellAliases;
           })
