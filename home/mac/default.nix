@@ -11,7 +11,6 @@
 
   home.packages = with pkgs; [
     betterdisplay
-    choose-gui
     docker
     hidden-bar
     maccy
