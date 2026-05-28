@@ -145,7 +145,7 @@
         neovimPackage = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
         vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
         features = {
-          rust = false;
+          rust = true;
           dart = false;
           security = false;
           web3 = false;
