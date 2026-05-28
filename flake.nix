@@ -259,7 +259,6 @@
                 ./home/mac
                 ./home/packages/desktop
                 ./home/packages/dev
-                # ./home/packages/work.nix
                 ./home/packages/security.nix
               ];
             };
