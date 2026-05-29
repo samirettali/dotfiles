@@ -7,6 +7,7 @@
     ./hammerspoon.nix
     ./sketchybar.nix
     ./desktoppr.nix
+    ./rift.nix
   ];
 
   home.packages = with pkgs; [
