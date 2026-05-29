@@ -19,7 +19,7 @@
       font-feature = ["-calt" "-dlig" "-liga"];
       font-size = vars.font.size;
       font-thicken = true;
-      adjust-cell-height = "45%";
+      adjust-cell-height = "35%";
       font-thicken-strength = 32;
       gtk-titlebar = false;
       macos-titlebar-proxy-icon = "hidden";
