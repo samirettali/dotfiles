@@ -80,6 +80,7 @@
           { app_name = "Archive Utility", floating = true },
           { app_name = "Finder", floating = true },
           { app_id = "cc.ffitch.shottr", floating = true },
+          { app_id = "com.riotgames.LeagueofLegends.LeagueClientUx", floating = true},
           # { title_substring = "Rabby Wallet Notification", workspace = "", floating = true },
           { app_id = "com.mitchellh.ghostty", workspace = 2 },
           # { app_id = "com.tinyspeck.slackmacgap", workspace = "4" },
