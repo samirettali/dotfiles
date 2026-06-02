@@ -4,15 +4,36 @@
   lib,
   config,
   ...
-}: {
-  home.packages = with pkgs; [
-    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.rift
+}: let
+  riftPackage = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.rift;
+in {
+  home.packages = [
+    riftPackage
   ];
+
+  # Rift needs access to the logged-in GUI session, so run it as a per-user
+  # LaunchAgent rather than a system LaunchDaemon.
+  launchd.agents.rift = {
+    enable = pkgs.stdenv.hostPlatform.isDarwin;
+    config = {
+      ProgramArguments = [
+        (lib.getExe riftPackage)
+      ];
+      RunAtLoad = true;
+      KeepAlive = {
+        Crashed = true;
+        SuccessfulExit = false;
+      };
+      ProcessType = "Interactive";
+      StandardOutPath = "${config.home.homeDirectory}/Library/Logs/rift.log";
+      StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/rift.err.log";
+    };
+  };
 
   # create ~/.config/rift/config.toml if rift is installed by checking if rift is in the list of home.packages, and set some default settings
   xdg.configFile = {
     "rift/config.toml" = {
-      enable = lib.elem samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.rift config.home.packages;
+      enable = lib.elem riftPackage config.home.packages;
       force = true;
       text = ''
         [settings]
