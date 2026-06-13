@@ -1,6 +1,6 @@
 {lib, ...}: {
-  programs.gemini-cli = {
-    enable = lib.mkDefault false;
+  programs.antigravity-cli = {
+    enable = lib.mkDefault true;
     settings = {
       preferredEditor = "vim";
       vimMode = true;
@@ -14,7 +14,7 @@
       telemetry = {
         enabled = false;
       };
-      # contextFileName = "AGENTS.md";
+      contextFileName = "AGENTS.md";
       selectedAuthType = "oauth-personal";
     };
   };

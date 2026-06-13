@@ -5,13 +5,13 @@
 }: {
   imports = [
     ./ansible.nix
+    ./antigravity-cli.nix
     ./btop.nix
     ./claude-code.nix
     ./direnv.nix
     ./fabric.nix
     ./fish.nix
     ./fzf.nix
-    ./gemini-cli.nix
     ./gh.nix
     ./git-sync.nix
     ./git.nix
