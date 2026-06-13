@@ -18,6 +18,20 @@ local function launch(app)
 	end
 end
 
+local function openDefaultBrowser()
+	return function()
+		local bundleID = hs.urlevent.getDefaultHandler("https") or hs.urlevent.getDefaultHandler("http")
+
+		if bundleID then
+			hs.application.launchOrFocusByBundleID(bundleID)
+		else
+			hs.urlevent.openURL("https://")
+		end
+
+		return true -- This closes the RecursiveBinder popup immediately
+	end
+end
+
 urls = {}
 
 local function openURL(url)
@@ -96,7 +110,7 @@ end
 
 local config = {
 	-- { "m", "music", spotify.play_playlist },
-	{ "b", "browser", launch("Firefox") },
+	{ "b", "browser", openDefaultBrowser() },
 	{ "t", "terminal", launch("Ghostty") },
 	{
 		"o",
