@@ -42,7 +42,7 @@ in {
   };
 
   config.programs.vscode = {
-    enable = lib.mkDefault false;
+    enable = lib.mkDefault true;
     package = vscodePkgs.vscode;
 
     mutableExtensionsDir = false;
@@ -72,7 +72,7 @@ in {
       userSettings = lib.mkMerge [
         {
           "editor.fontFamily" = vars.font.name;
-          "editor.fontSize" = vars.font.size;
+          "editor.fontSize" = vars.font.size - 4;
           "editor.minimap.enabled" = false;
           "editor.formatOnSave" = true;
           "editor.renderWhitespace" = "trailing";
