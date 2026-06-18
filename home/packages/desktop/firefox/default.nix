@@ -46,7 +46,6 @@ in {
         };
       });
       profiles.samir = {
-        # path = "profiles/samir"; # TODO: backup the profile first
         userChrome = gwfoxUserChrome;
         userContent = gwfoxUserContent;
         extensions = {
