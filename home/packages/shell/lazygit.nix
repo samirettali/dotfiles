@@ -16,7 +16,9 @@
           overrideGpg = true;
         }
         // lib.optionalAttrs config.programs.difftastic.enable {
-          paging.externalDiffCommand = "difft --color=always";
+          pagers = [
+            {externalDiffCommand = "difft --color=always";}
+          ];
         };
       promptToReturnFromSubprocess = false;
       customCommands = [
