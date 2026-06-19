@@ -11,12 +11,13 @@
         showBottomLine = false;
         autoForwardBranches = "none";
       };
-      git = {
-        overrideGpg = true;
-        paging = {
-          externalDiffCommand = "difft --color=always";
+      git =
+        {
+          overrideGpg = true;
+        }
+        // lib.optionalAttrs config.programs.difftastic.enable {
+          paging.externalDiffCommand = "difft --color=always";
         };
-      };
       promptToReturnFromSubprocess = false;
       customCommands = [
         # TODO

@@ -9,6 +9,7 @@
     ./bat.nix
     ./btop.nix
     ./claude-code.nix
+    ./difftastic.nix
     ./direnv.nix
     ./fabric.nix
     ./fish.nix
@@ -36,7 +37,6 @@
   home.packages = with pkgs; [
     coreutils
     curl
-    difftastic
     duf
     fd
     gnused
