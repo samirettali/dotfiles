@@ -32,7 +32,7 @@ in {
   };
 
   config.programs.vscode = {
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault false;
     package = pkgs.vscode;
 
     mutableExtensionsDir = false;
