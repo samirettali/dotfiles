@@ -4,10 +4,11 @@
   features,
   ...
 }: {
+  programs.bun.enable = features.js == "minimal" || features.js == "full";
+
   home.packages = with pkgs;
     lib.optionals (features.js == "minimal" || features.js == "full") [
       nodejs
-      bun
     ]
     ++ lib.optionals (features.js == "full") [
       eslint_d
