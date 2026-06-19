@@ -4,8 +4,7 @@
   vars,
   neovimPackage,
   ...
-}: let
-in {
+}: {
   imports = [
     ./dotfiles.nix
     ./mcp.nix
