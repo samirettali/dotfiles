@@ -204,22 +204,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-vscode": {
-      "locked": {
-        "lastModified": 1775793324,
-        "narHash": "sha256-omax7atcZbol+6HJ2RLpP+ZCFcPa5bZ65Hn71RufeWQ=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "9d29d5f667d7467f98efc31881e824fa586c927e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "9d29d5f667d7467f98efc31881e824fa586c927e",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1781607440,
@@ -267,7 +251,6 @@
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-vscode": "nixpkgs-vscode",
         "nur": "nur",
         "samirettali-nur": "samirettali-nur",
         "sops-nix": "sops-nix",

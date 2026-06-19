@@ -3,19 +3,9 @@
   vars,
   lib,
   pkgs,
-  inputs,
   vscodeExtLib,
   ...
 }: let
-  vscodePkgs =
-    if pkgs.stdenv.isDarwin
-    then
-      import inputs.nixpkgs-vscode {
-        system = pkgs.stdenv.hostPlatform.system;
-        config.allowUnfree = true;
-      }
-    else pkgs;
-
   baseExtensionIds = [
     # DrBlury.protobuf-vsc # TODO: doesn't exist anymore
     "jacobwgillespie.minimal-icons"
@@ -43,7 +33,7 @@ in {
 
   config.programs.vscode = {
     enable = lib.mkDefault true;
-    package = vscodePkgs.vscode;
+    package = pkgs.vscode;
 
     mutableExtensionsDir = false;
     profiles.default = {
