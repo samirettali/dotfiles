@@ -27,6 +27,7 @@
     ./scripts
     ./sesh.nix
     ./spotify-player.nix
+    ./tealdeer.nix
     ./tmux.nix
     ./zoxide.nix
     ./zsh.nix
@@ -88,7 +89,6 @@
     # sqlit-tui
     # superfile
     # tabview # csv viewer, maybe keep visidata
-    # tldr
     # vegeta # http load testing
     # viddy # watch alternative with diff (not snapshots)
     # visidata # TODO: the derivation takes ~2.5 GB
