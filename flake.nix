@@ -92,6 +92,20 @@
       };
     };
 
+    # Default feature toggles; override per machine at the call site.
+    defaultFeatures = {
+      rust = true;
+      dart = false;
+      security = false;
+      web3 = false;
+      zig = false;
+      java = false;
+      js = "minimal";
+      c = false;
+      go = true;
+      python = "minimal";
+    };
+
     # Common Nix configuration
     mkNixConfig = {username ? defaultUser, ...}: {
       enable = true;
@@ -138,6 +152,7 @@
     mkHomeManagerConfig = {
       user,
       extraModules ? [],
+      features ? defaultFeatures,
       pkgs,
       ...
     }: {
@@ -149,18 +164,7 @@
         inherit (inputs) samirettali-nur;
         neovimPackage = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
         vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
-        features = {
-          rust = true;
-          dart = false;
-          security = false;
-          web3 = false;
-          zig = false;
-          java = false;
-          js = "minimal";
-          c = false;
-          go = true;
-          python = "minimal";
-        };
+        inherit features;
         vars = {
           email = user.email;
           font = {
@@ -257,6 +261,7 @@
             home-manager = mkHomeManagerConfig {
               inherit pkgs;
               user = users.personal;
+              features = defaultFeatures;
               extraModules = [
                 ./home/mac
                 ./home/packages/desktop
@@ -306,6 +311,7 @@
             home-manager = mkHomeManagerConfig {
               inherit pkgs;
               user = users.personal;
+              features = defaultFeatures;
               extraModules = [
                 ./home/linux
                 ./home/linux/desktop
