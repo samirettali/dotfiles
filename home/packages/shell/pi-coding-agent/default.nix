@@ -1,12 +1,12 @@
 {
   pkgs,
-  samirettali-nur,
+  nurPkgs,
   config,
   lib,
   inputs,
   ...
 }: let
-  piCodingAgent = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.pi-coding-agent;
+  piCodingAgent = nurPkgs.pi-coding-agent;
   piPackageDir = piCodingAgent + "/share/pi-coding-agent";
   piRuntimeRoot = piCodingAgent + "/lib/node_modules/pi-monorepo";
   piNodeModules = piRuntimeRoot + "/node_modules";

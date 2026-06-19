@@ -161,7 +161,7 @@
       backupFileExtension = "bak";
       extraSpecialArgs = {
         inherit inputs;
-        inherit (inputs) samirettali-nur;
+        nurPkgs = inputs.samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system};
         neovimPackage = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
         vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
         inherit features;

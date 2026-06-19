@@ -1,11 +1,11 @@
 {
-  samirettali-nur,
+  nurPkgs,
   pkgs,
   lib,
   config,
   ...
 }: let
-  riftPackage = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.rift;
+  riftPackage = nurPkgs.rift;
 in {
   home.packages = [
     riftPackage

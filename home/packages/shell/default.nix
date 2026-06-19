@@ -1,6 +1,6 @@
 {
   pkgs,
-  samirettali-nur,
+  nurPkgs,
   ...
 }: {
   imports = [
@@ -48,10 +48,10 @@
     ncdu
     ngrok
     p7zip
-    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.go-qo
-    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.tredis
-    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.hunk
-    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.grok-cli
+    nurPkgs.go-qo
+    nurPkgs.tredis
+    nurPkgs.hunk
+    nurPkgs.grok-cli
     scc
     snitch
     sqlite

@@ -1,14 +1,12 @@
 {
-  pkgs,
-  samirettali-nur,
+  nurPkgs,
   config,
   lib,
   ...
-}: let
-in {
+}: {
   programs.opencode = {
     enable = lib.mkDefault false;
-    package = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
+    package = nurPkgs.opencode;
     enableMcpIntegration = true;
     settings = {
       "$schema" = "https://opencode.ai/config.json";

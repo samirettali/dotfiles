@@ -1,6 +1,6 @@
 {
   pkgs,
-  samirettali-nur,
+  nurPkgs,
   ...
 }: {
   imports = [
@@ -16,9 +16,9 @@
     hidden-bar
     maccy
     pika
-    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.mole
-    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.sol
-    samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.eqmac
+    nurPkgs.mole
+    nurPkgs.sol
+    nurPkgs.eqmac
     shottr
     the-unarchiver
   ];

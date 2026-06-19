@@ -1,14 +1,14 @@
 {
   vars,
   pkgs,
-  samirettali-nur,
+  nurPkgs,
   ...
 }: {
   programs.ghostty = {
     enable = true;
     package =
       if pkgs.stdenv.isDarwin
-      then samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.ghostty
+      then nurPkgs.ghostty
       else pkgs.ghostty;
     settings = {
       bold-is-bright = true;
