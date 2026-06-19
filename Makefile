@@ -1,4 +1,5 @@
 .DEFAULT_GOAL := build
+.PHONY: build update clean fmt check
 
 # TODO:
 # sudo nix-channel --update
@@ -9,6 +10,8 @@ OS := $(shell uname -s)
 USERNAME := $(shell whoami)
 HOSTNAME := $(shell hostname)
 UPDATE_CMD = nix flake update
+FMT_CMD = alejandra .
+CHECK_CMD = nix flake check
 
 ifeq ($(OS),Linux)
     ifneq ($(wildcard /etc/NIXOS),)
@@ -36,3 +39,11 @@ build:
 clean:
 	@echo "Running command: $(CLEAN_CMD)"
 	@$(CLEAN_CMD)
+
+fmt:
+	@echo "Running command: $(FMT_CMD)"
+	@$(FMT_CMD)
+
+check:
+	@echo "Running command: $(CHECK_CMD)"
+	@$(CHECK_CMD)
