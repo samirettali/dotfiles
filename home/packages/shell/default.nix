@@ -12,13 +12,18 @@
     ./difftastic.nix
     ./direnv.nix
     ./fabric.nix
+    ./fd.nix
     ./fish.nix
     ./fzf.nix
     ./gh.nix
     ./git-sync.nix
     ./git.nix
+    ./hwatch.nix
+    ./jq.nix
+    ./jqp.nix
     ./lazydocker.nix
     ./lazygit.nix
+    ./lazysql.nix
     ./neovim.nix
     ./nh.nix
     ./opencode.nix
@@ -38,14 +43,9 @@
     coreutils
     curl
     duf
-    fd
     gnused
-    hwatch
     # iredis
-    jq
-    jqp
     kcat
-    lazysql
     moreutils
     ncdu
     ngrok

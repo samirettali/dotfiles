@@ -1,0 +1,3 @@
+{...}: {
+  programs.hwatch.enable = true;
+}
