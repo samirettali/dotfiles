@@ -83,7 +83,7 @@
       personal = {
         name = defaultUser;
         homeDirectory = "/Users/${defaultUser}";
-        email = "ettali.samir@gmail.com";
+        email = "samir@ettali.com";
       };
     };
 
@@ -157,7 +157,7 @@
           python = "minimal";
         };
         vars = {
-          email = "ettali.samir@gmail.com";
+          email = user.email;
           font = {
             name = "JetBrainsMono Nerd Font";
             size =

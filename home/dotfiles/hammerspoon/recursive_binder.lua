@@ -155,7 +155,7 @@ local config = {
 		"p",
 		"[paste]",
 		{
-			{ "e", "email", paste("ettali.samir@gmail.com") },
+			{ "e", "email", paste("samir@ettali.com") },
 			{ "u", "username", paste("samirettali") },
 			{ "t", "timestamp", paste_fn(unixTimestamp) },
 			{ "d", "date", paste_fn(date) },
