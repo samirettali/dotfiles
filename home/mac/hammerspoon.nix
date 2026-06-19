@@ -11,34 +11,34 @@
 
   home.file = {
     ".hammerspoon/Spoons".source = pkgs.runCommandLocal "hammerspoon-spoons" {} ''
-      tmp="$(mktemp -d)"
-      cp -R ${inputs.spoons}/Source/. "$tmp"/
-      cp -R ${inputs.control-escape-spoon} "$tmp/ControlEscape.spoon"
-      chmod -R u+w "$tmp"
+            tmp="$(mktemp -d)"
+            cp -R ${inputs.spoons}/Source/. "$tmp"/
+            cp -R ${inputs.control-escape-spoon} "$tmp/ControlEscape.spoon"
+            chmod -R u+w "$tmp"
 
-      TMP="$tmp" ${pkgs.python3}/bin/python3 - <<'PY'
-import os
-from pathlib import Path
+            TMP="$tmp" ${pkgs.python3}/bin/python3 - <<'PY'
+      import os
+      from pathlib import Path
 
-path = Path(os.environ["TMP"]) / "RecursiveBinder.spoon" / "init.lua"
-text = path.read_text()
-old = """      if string.len(newEntry) > obj.helperEntryLengthInChar then
-         newEntry = string.sub(newEntry, 1, obj.helperEntryLengthInChar - 2)..'..'
-      elseif string.len(newEntry) < obj.helperEntryLengthInChar then
-         newEntry = newEntry..string.rep(' ', obj.helperEntryLengthInChar - string.len(newEntry))
-      end
-"""
-new = """      if obj.helperEntryLengthInChar > 0 and string.len(newEntry) > obj.helperEntryLengthInChar then
-         newEntry = string.sub(newEntry, 1, obj.helperEntryLengthInChar - 2)..'..'
-      elseif obj.helperEntryLengthInChar > 0 and string.len(newEntry) < obj.helperEntryLengthInChar then
-         newEntry = newEntry..string.rep(' ', obj.helperEntryLengthInChar - string.len(newEntry))
-      end
-"""
-path.write_text(text.replace(old, new))
-PY
+      path = Path(os.environ["TMP"]) / "RecursiveBinder.spoon" / "init.lua"
+      text = path.read_text()
+      old = """      if string.len(newEntry) > obj.helperEntryLengthInChar then
+               newEntry = string.sub(newEntry, 1, obj.helperEntryLengthInChar - 2)..'..'
+            elseif string.len(newEntry) < obj.helperEntryLengthInChar then
+               newEntry = newEntry..string.rep(' ', obj.helperEntryLengthInChar - string.len(newEntry))
+            end
+      """
+      new = """      if obj.helperEntryLengthInChar > 0 and string.len(newEntry) > obj.helperEntryLengthInChar then
+               newEntry = string.sub(newEntry, 1, obj.helperEntryLengthInChar - 2)..'..'
+            elseif obj.helperEntryLengthInChar > 0 and string.len(newEntry) < obj.helperEntryLengthInChar then
+               newEntry = newEntry..string.rep(' ', obj.helperEntryLengthInChar - string.len(newEntry))
+            end
+      """
+      path.write_text(text.replace(old, new))
+      PY
 
-      mkdir -p "$out"
-      cp -R "$tmp"/. "$out"/
+            mkdir -p "$out"
+            cp -R "$tmp"/. "$out"/
     '';
   };
 
