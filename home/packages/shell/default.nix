@@ -6,6 +6,7 @@
   imports = [
     ./ansible.nix
     ./antigravity-cli.nix
+    ./bat.nix
     ./btop.nix
     ./claude-code.nix
     ./direnv.nix
