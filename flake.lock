@@ -95,6 +95,22 @@
         "type": "github"
       }
     },
+    "hallmark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780605762,
+        "narHash": "sha256-+yPIG1XdI6hhyOH48rd20+YlFrA9Gr416tPt1OoxfwQ=",
+        "owner": "nutlope",
+        "repo": "hallmark",
+        "rev": "aeb42fb354ff4efa36ab475773a082315a3af2ce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nutlope",
+        "repo": "hallmark",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -246,6 +262,7 @@
         "control-escape-spoon": "control-escape-spoon",
         "darwin": "darwin",
         "gwfox": "gwfox",
+        "hallmark": "hallmark",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",

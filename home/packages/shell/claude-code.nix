@@ -1,11 +1,16 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: {
-  # TODO: feedbackSurveyRate: 0
   programs.claude-code = {
     enable = lib.mkDefault true;
+    skills = {
+      # https://github.com/nutlope/hallmark — anti-AI-slop design skill.
+      # Pinned via the `hallmark` flake input; `nix flake update` bumps it.
+      hallmark = "${inputs.hallmark}/skills/hallmark";
+    };
     settings = {
       model = "claude-opus-4-8";
       includeCoAuthoredBy = false;

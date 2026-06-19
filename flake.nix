@@ -57,6 +57,11 @@
       url = "github:jasonrudolph/ControlEscape.spoon";
       flake = false;
     };
+
+    hallmark = {
+      url = "github:nutlope/hallmark";
+      flake = false;
+    };
   };
 
   outputs = {
