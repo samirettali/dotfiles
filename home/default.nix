@@ -38,11 +38,11 @@
 
   programs = {
     home-manager.enable = true;
+    nix-init.enable = true;
   };
 
   home.packages = with pkgs; [
     cachix
-    nix-init
     nix-tree
     nix-prefetch-github
   ];
