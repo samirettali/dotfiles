@@ -8,7 +8,6 @@
   home.packages = with pkgs;
     lib.optionals (features.python == "minimal" || features.python == "full") [
       python314
-      uv
     ]
     ++ lib.optionals (features.python == "full") [
       python314Packages.debugpy # used by neovim dap (TODO: remove?)
@@ -18,6 +17,7 @@
     ];
 
   programs = {
+    uv.enable = features.python == "minimal" || features.python == "full";
     ruff = {
       enable = features.python == "full";
       settings = {};
