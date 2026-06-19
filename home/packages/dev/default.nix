@@ -2,6 +2,7 @@
   lib,
   pkgs,
   samirettali-nur,
+  inputs,
   ...
 }: {
   imports = [
@@ -27,5 +28,6 @@
   programs.codex = {
     enable = lib.mkDefault false;
     package = samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system}.codex;
+    skills = import ../shell/coding-agent-skills.nix {inherit inputs;};
   };
 }

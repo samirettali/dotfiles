@@ -6,11 +6,7 @@
 }: {
   programs.claude-code = {
     enable = lib.mkDefault true;
-    skills = {
-      # https://github.com/nutlope/hallmark — anti-AI-slop design skill.
-      # Pinned via the `hallmark` flake input; `nix flake update` bumps it.
-      hallmark = "${inputs.hallmark}/skills/hallmark";
-    };
+    skills = import ./coding-agent-skills.nix {inherit inputs;};
     settings = {
       model = "claude-opus-4-8";
       includeCoAuthoredBy = false;
