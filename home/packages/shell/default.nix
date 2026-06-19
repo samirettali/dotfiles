@@ -39,7 +39,7 @@
     fd
     gnused
     hwatch
-    iredis
+    # iredis
     jq
     jqp
     kcat
@@ -49,7 +49,7 @@
     ngrok
     p7zip
     nurPkgs.go-qo
-    nurPkgs.tredis
+    # nurPkgs.tredis
     nurPkgs.hunk
     nurPkgs.grok-cli
     scc

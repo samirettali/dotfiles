@@ -10,7 +10,6 @@
   home.packages = with pkgs; [
     ledger-live-desktop
     lmstudio
-    redisinsight
   ];
 
   # TODO:
