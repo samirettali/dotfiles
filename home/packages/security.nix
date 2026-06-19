@@ -2,8 +2,7 @@
   pkgs,
   features,
   ...
-}: let
-in {
+}: {
   home.packages = with pkgs;
     lib.optionals features.security [
       # burpsuite
