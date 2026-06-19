@@ -13,6 +13,9 @@
       };
       git = {
         overrideGpg = true;
+        paging = {
+          externalDiffCommand = "difft --color=always";
+        };
       };
       promptToReturnFromSubprocess = false;
       customCommands = [
