@@ -51,7 +51,7 @@ in {
         pull.ff = "only";
         push.autoSetupRemote = true;
         push.default = "simple";
-        push.followtags = true; # TODO: unset for work
+        push.followtags = true;
         rebase.autoStash = true;
         rebase.missingCommitsCheck = "warn";
         rerere.enabled = true;
