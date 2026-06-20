@@ -28,6 +28,28 @@ in {
     // {
       ".pi/pi-source".source = piPackageDir;
 
+      ".pi/agent/settings.json".text = builtins.toJSON {
+        defaultProvider = "openai-codex";
+        defaultModel = "gpt-5.5";
+        defaultThinkingLevel = "medium";
+        packages = [];
+        theme = "dark";
+        hideThinkingBlock = false;
+        enabledModels = [
+          "openrouter/minimax/minimax-m3"
+          "openrouter/qwen/qwen3.7-max"
+          "openrouter/deepseek/deepseek-v4-flash"
+          "openrouter/deepseek/deepseek-v4-pro"
+          "openrouter/z-ai/glm-5.2"
+          "openrouter/moonshotai/kimi-k2.7-code"
+          "openai-codex/gpt-5.5"
+          "openrouter/anthropic/claude-opus-4.8"
+          "openrouter/anthropic/claude-sonnet-4.6"
+          "openrouter/google/gemini-3.1-pro-preview"
+          "openrouter/google/gemini-3.5-flash"
+        ];
+      };
+
       ".pi/agent/extensions/package.json".text = builtins.toJSON {
         name = "pi-agent-extensions";
         private = true;
