@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./gpg.nix
     ./hammerspoon.nix
     ./sketchybar.nix
     ./desktoppr.nix
@@ -22,8 +23,4 @@
     shottr
     the-unarchiver
   ];
-
-  programs = {
-    gpg.enable = true;
-  };
 }
