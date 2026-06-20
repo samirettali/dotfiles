@@ -24,6 +24,8 @@ in {
     PI_PACKAGE_DIR = "${config.home.homeDirectory}/.pi/pi-source";
     PI_TELEMETRY = "0";
     PI_SKIP_VERSION_CHECK = "1";
+    PI_AI_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/index.js";
+    PI_AI_OAUTH_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/oauth.js";
   };
 
   home.file = lib.mkIf (builtins.elem piCodingAgent config.home.packages) (skillFiles

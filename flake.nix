@@ -57,6 +57,11 @@
       url = "github:nutlope/hallmark";
       flake = false;
     };
+
+    agent-stuff = {
+      url = "github:mitsuhiko/agent-stuff";
+      flake = false;
+    };
   };
 
   outputs = {

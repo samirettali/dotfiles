@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "agent-stuff": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781464780,
+        "narHash": "sha256-5ipGVC+B+6NDZXQVVw9ezXGy3++bvEt7yv/f969m7Ys=",
+        "owner": "mitsuhiko",
+        "repo": "agent-stuff",
+        "rev": "19abb5afc61269d1ddbec39047a9e93faa70bd0d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mitsuhiko",
+        "repo": "agent-stuff",
+        "type": "github"
+      }
+    },
     "control-escape-spoon": {
       "flake": false,
       "locked": {
@@ -243,6 +259,7 @@
     },
     "root": {
       "inputs": {
+        "agent-stuff": "agent-stuff",
         "control-escape-spoon": "control-escape-spoon",
         "darwin": "darwin",
         "gwfox": "gwfox",
