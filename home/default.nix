@@ -12,8 +12,6 @@
     ./sops.nix
   ];
 
-  programs.fish.enable = true;
-
   home.shell = {
     enableBashIntegration = false;
     enableFishIntegration = false;
