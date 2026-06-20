@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./gpg.nix
+    ./google-chrome.nix
     ./hammerspoon.nix
     ./sketchybar.nix
     ./desktoppr.nix
