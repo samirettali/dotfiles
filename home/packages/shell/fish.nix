@@ -84,21 +84,18 @@
           set -l d $CMD_DURATION
           set -l second 1000
           set -l minute (math 60 \* $second)
-          set -l hour (math $minute \* 60)
-          set -l s (math -s0 $d / $second)
-          set -l m (math -s0 $d / $minute)
+          set -l hour (math 60 \* $minute)
           set -l h (math -s0 $d / $hour)
+          set -l m (math -s0 $d % $hour / $minute)
+          set -l s (math -s0 $d % $minute / $second)
           set -l duration
 
           if test $h -gt 0
-              set h (math -s2 $d / $hour)
-              set duration $h'h'
+              set duration $h'h'$m'm'
           else if test $m -gt 0
-              set m (math -s2 $d / $minute)
-              set duration $m'm'
+              set duration $m'm'$s's'
           else if test $s -gt 0
-              set s (math -s2 $d / $second)
-              set duration $s's'
+              set duration (math -s2 $d / $second)'s'
           else
               set duration $d'ms'
           end
