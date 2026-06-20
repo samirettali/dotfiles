@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   features,
@@ -39,7 +38,7 @@ in {
       oapi-codegen
       revive
       (go-migrate.overrideAttrs
-        (oldAttrs: {
+        (_oldAttrs: {
           tags = ["postgres"];
         }))
     ];

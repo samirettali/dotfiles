@@ -22,7 +22,7 @@ in {
       enable = true;
       settings = {
         user = {
-          email = vars.email;
+          inherit (vars) email;
           name = "Samir Ettali";
           signingkey = "${config.home.homeDirectory}/.ssh/github.pub";
         };

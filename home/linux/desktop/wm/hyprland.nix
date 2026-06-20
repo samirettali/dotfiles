@@ -67,7 +67,7 @@
         wlcopy = lib.getExe' pkgs.wl-clipboard "wl-copy";
         hyprpicker = lib.getExe pkgs.hyprpicker;
 
-        workspaces = map (n: toString n) (lib.range 1 9);
+        workspaces = map toString (lib.range 1 9);
         directions = rec {
           left = "l";
           right = "r";

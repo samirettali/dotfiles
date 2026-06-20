@@ -119,7 +119,7 @@
     };
 
     # # hack to make every package use the binary versions of the .NET SDKs
-    dotnet-bin-overlay = final: prev: {
+    dotnet-bin-overlay = _final: prev: {
       # roslyn-ls = prev.roslyn-ls.override {
       dotnetCorePackages =
         prev.dotnetCorePackages
@@ -161,7 +161,7 @@
         vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
         inherit features;
         vars = {
-          email = user.email;
+          inherit (user) email;
           font = {
             name = "JetBrainsMono Nerd Font";
             size =
@@ -191,7 +191,7 @@
 
         home = {
           inherit stateVersion;
-          homeDirectory = user.homeDirectory;
+          inherit (user) homeDirectory;
           username = user.name;
         };
       };

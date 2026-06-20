@@ -1,5 +1,4 @@
-{...}: let
-in {
+{...}: {
   programs.mcp = {
     enable = true;
     servers = {
