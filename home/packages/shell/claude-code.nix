@@ -1,11 +1,12 @@
 {
   lib,
   inputs,
+  pkgs,
   ...
 }: {
   programs.claude-code = {
     enable = lib.mkDefault true;
-    skills = import ./coding-agent-skills.nix {inherit inputs;};
+    skills = import ./coding-agent-skills.nix {inherit inputs pkgs;};
     settings = {
       model = "claude-opus-4-8";
       includeCoAuthoredBy = false;

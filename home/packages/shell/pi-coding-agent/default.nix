@@ -3,6 +3,7 @@
   config,
   lib,
   inputs,
+  pkgs,
   ...
 }: let
   piCodingAgent = nurPkgs.pi-coding-agent;
@@ -10,7 +11,7 @@
   piRuntimeRoot = piCodingAgent + "/lib/node_modules/pi-monorepo";
   piNodeModules = piRuntimeRoot + "/node_modules";
 
-  skills = import ../coding-agent-skills.nix {inherit inputs;};
+  skills = import ../coding-agent-skills.nix {inherit inputs pkgs;};
   skillFiles =
     lib.mapAttrs'
     (name: src: lib.nameValuePair ".pi/agent/skills/${name}" {source = src;})
