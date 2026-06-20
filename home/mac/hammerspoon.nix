@@ -40,18 +40,16 @@
             mkdir -p "$out"
             cp -R "$tmp"/. "$out"/
     '';
-  };
 
-  # TODO
-  # osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hammerspoon.app", hidden:true}' > /dev/null
+    # TODO
+    # osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Hammerspoon.app", hidden:true}' > /dev/null
 
-  home.file = {
     ".hammerspoon" = {
       source = ../dotfiles/hammerspoon;
       recursive = true;
     };
     ".hammerspoon/spotify.lua".text =
-      lib.optionalString (config.programs.spotify-player.enable)
+      lib.optionalString config.programs.spotify-player.enable
       /*
       lua
       */
