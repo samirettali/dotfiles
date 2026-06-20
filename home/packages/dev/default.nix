@@ -1,12 +1,7 @@
-{
-  lib,
-  pkgs,
-  nurPkgs,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./c.nix
+    ./codex.nix
     ./go.nix
     ./js.nix
     ./lua.nix
@@ -24,10 +19,4 @@
     # lld # TODO: needed?
     # stdenv # TODO: is this needed?
   ];
-
-  programs.codex = {
-    enable = lib.mkDefault true;
-    package = nurPkgs.codex;
-    skills = import ../shell/coding-agent-skills.nix {inherit inputs;};
-  };
 }
