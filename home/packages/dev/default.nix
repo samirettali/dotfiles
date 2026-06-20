@@ -26,7 +26,7 @@
   ];
 
   programs.codex = {
-    enable = lib.mkDefault false;
+    enable = lib.mkDefault true;
     package = nurPkgs.codex;
     skills = import ../shell/coding-agent-skills.nix {inherit inputs;};
   };
