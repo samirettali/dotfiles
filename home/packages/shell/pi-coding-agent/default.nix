@@ -1,5 +1,4 @@
 {
-  pkgs,
   nurPkgs,
   config,
   lib,

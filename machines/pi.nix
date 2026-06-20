@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{pkgs, ...}: let
   user = "samir";
   interface = "wlan0";
   hostname = "pi";

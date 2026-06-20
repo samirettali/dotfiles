@@ -5,9 +5,7 @@
   ...
 }: let
   hasSway = config.wayland.windowManager.sway.enable;
-  sway = config.wayland.windowManager.sway.package;
   hasHyprland = config.wayland.windowManager.hyprland.enable;
-  hyprland = config.wayland.windowManager.hyprland.package;
 in {
   systemd.user.services.waybar = {
     Unit.StartLimitBurst = 30;
