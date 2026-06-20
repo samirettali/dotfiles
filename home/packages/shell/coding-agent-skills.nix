@@ -23,6 +23,7 @@
 in {
   commit = "${inputs.agent-stuff}/skills/commit";
   frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
+  github = "${inputs.agent-stuff}/skills/github";
   hallmark = "${inputs.hallmark}/skills/hallmark";
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   web-browser = "${webBrowserSkill}";
