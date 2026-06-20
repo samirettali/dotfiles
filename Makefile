@@ -11,6 +11,8 @@ USERNAME := $(shell whoami)
 HOSTNAME := $(shell hostname)
 UPDATE_CMD = nix flake update
 FMT_CMD = alejandra .
+DEADNIX_CMD = deadnix --fail --exclude=machines/xps/hardware-configuration.nix .
+STATIX_CMD = statix check .
 CHECK_CMD = nix flake check
 
 ifeq ($(OS),Linux)
@@ -45,5 +47,9 @@ fmt:
 	@$(FMT_CMD)
 
 check:
+	@echo "Running command: $(DEADNIX_CMD)"
+	@$(DEADNIX_CMD)
+	@echo "Running command: $(STATIX_CMD)"
+	@$(STATIX_CMD)
 	@echo "Running command: $(CHECK_CMD)"
 	@$(CHECK_CMD)
