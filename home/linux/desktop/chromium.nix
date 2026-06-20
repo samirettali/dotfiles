@@ -20,7 +20,6 @@
       {id = "acmacodkjbdgmoleebolmdjonilkdbch";} # rabby
       {id = "bfnaelmomeimhlpmgjnjophhpkkoljpa";} # phantom
       {id = "hnfanknocfeofbddgcijnmhnfnkdnaad";} # coinbase
-      {id = "bfnaelmomeimhlpmgjnjophhpkkoljpa";} # phantom
       {id = "dmkamcknogkgcdfhhbddcghachkejeap";} # keplr
     ];
     # TODO: fix
