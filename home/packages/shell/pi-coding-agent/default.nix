@@ -20,8 +20,10 @@ in {
     piCodingAgent
   ];
 
-  home.sessionVariables = {
+  home.sessionVariables = lib.mkIf (builtins.elem piCodingAgent config.home.packages) {
     PI_PACKAGE_DIR = "${config.home.homeDirectory}/.pi/pi-source";
+    PI_TELEMETRY = "0";
+    PI_SKIP_VERSION_CHECK = "1";
   };
 
   home.file = lib.mkIf (builtins.elem piCodingAgent config.home.packages) (skillFiles
