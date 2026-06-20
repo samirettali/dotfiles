@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./agents-memory.nix
     ./ansible.nix
     ./antigravity-cli.nix
     ./bat.nix

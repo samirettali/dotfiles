@@ -18,11 +18,14 @@ The `warning: Git tree ... is dirty` line during eval is benign.
 
 ## Conventions
 
-- **Commits:** Conventional Commits, lowercase, short subject, **no body**.
+- **Commits:** Conventional Commits, lowercase short subject; add a longer body only
+  when it adds useful context, otherwise subject alone.
   `type(scope): subject` — types seen: `feat`, `fix`, `chore`, `refactor`.
 - **Format edited `.nix` files with `alejandra` before committing** (`make fmt`).
 - **New files are invisible to the flake until staged** (flake reads the git tree).
   Run `git add -N <file>` before `nix eval`/`flake lock`, or eval fails to find it.
+- **Never use `mkOutOfStoreSymlink` or symlinks to non-store paths** unless Samir agrees —
+  use standard in-store `home.file` / module options.
 - Keep comments sparse; the user dislikes noise.
 
 ## Structure
