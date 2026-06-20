@@ -15,6 +15,8 @@ not transcripts. Shared across coding agents (Claude Code, Codex, pi).
 ## Interaction
 
 - Address me as Samir in conversation.
+- Don't take initiative beyond what we've agreed: do exactly what was asked and
+  nothing more. If something else seems worth doing, ask first before doing it.
 
 ## Preferences
 
