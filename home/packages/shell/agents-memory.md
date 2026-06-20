@@ -17,9 +17,3 @@ Curated, always-on facts about the user
 - Don't take initiative beyond what we've agreed: do exactly what was asked and
   nothing more. If something else seems worth doing, ask first before doing it —
   unless I explicitly say you can do whatever you want, in which case go ahead.
-
-## Preferences
-
-- Commits: Conventional Commits — lowercase short subject. Add a longer body only
-  when it adds useful context; otherwise the subject alone.
-- Dislikes unnecessary comments in code; keep it clean.
