@@ -17,9 +17,7 @@ in {
     focusEvents = true;
     extraConfig = ''
       set -g extended-keys on
-      # TODO
-      # set -as terminal-features 'xterm*:extkeys'
-      # set -as terminal-features ',*ghostty*:extkeys'
+      set -as terminal-features ',*ghostty*:extkeys'
       set -g extended-keys-format csi-u
 
       bind -r -N "Move window to the left" \
