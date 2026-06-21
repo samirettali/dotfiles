@@ -291,27 +291,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 -- custom commands
-vim.api.nvim_create_user_command("PackClean", function()
-	local plugins = vim.iter(vim.pack.get())
-		:filter(function(x)
-			return not x.active
-		end)
-		:map(function(x)
-			return x.spec.name
-		end)
-		:totable()
-
-	vim.pack.del(plugins)
-end, { desc = "Remove unused plugins" })
-
-vim.api.nvim_create_user_command("PackList", function()
-	vim.pack.update(nil, { offline = true })
-end, { desc = "List plugins" })
-
-vim.api.nvim_create_user_command("PackUpdate", function()
-	vim.pack.update()
-end, { desc = "Update plugins" })
-
 vim.api.nvim_create_user_command("Grep", function(opts)
 	-- TODO: args or fargs?
 	local query = table.concat(opts.fargs, " ")
