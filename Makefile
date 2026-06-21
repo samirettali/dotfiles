@@ -1,11 +1,6 @@
 .DEFAULT_GOAL := build
 .PHONY: build update clean fmt check
 
-# TODO:
-# sudo nix-channel --update
-# nix flake update
-# sudo nixos-rebuild switch --flake ~/dev/dotfiles/#xps
-
 OS := $(shell uname -s)
 USERNAME := $(shell whoami)
 HOSTNAME := $(shell hostname)
@@ -18,16 +13,16 @@ CHECK_CMD = nix flake check
 ifeq ($(OS),Linux)
     ifneq ($(wildcard /etc/NIXOS),)
         REBUILD_CMD = sudo nixos-rebuild switch --flake .\#$(HOSTNAME)
-		CLEAN_CMD = sudo nix-collect-garbage --delete-old
+        CLEAN_CMD = sudo nix-collect-garbage --delete-old
     else
         REBUILD_CMD = nix run --flake .\#$(HOSTNAME)
-		CLEAN_CMD = nix-collect-garbage --delete-old
+        CLEAN_CMD = nix-collect-garbage --delete-old
     endif
 endif
 
 ifeq ($(OS),Darwin)
     REBUILD_CMD = nh darwin switch .
-	CLEAN_CMD = nix-collect-garbage --delete-old
+    CLEAN_CMD = nix-collect-garbage --delete-old
 endif
 
 update:
