@@ -46,7 +46,7 @@ in {
         init.defaultBranch = "main";
         interactive.singlekey = true;
         log.date = "iso";
-        merge.confictStyle = "zdiff3";
+        merge.conflictStyle = "zdiff3";
         merge.tool = "nvimdiff";
         pull.ff = "only";
         push.autoSetupRemote = true;
