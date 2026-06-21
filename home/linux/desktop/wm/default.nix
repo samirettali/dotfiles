@@ -5,7 +5,6 @@
 }: {
   imports = [
     ./hyprland.nix
-    ./sway.nix
     ./waybar.nix
     ./swaylock.nix
     ./mako.nix
