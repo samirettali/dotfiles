@@ -397,10 +397,10 @@ vim.keymap.set({ "x", "o" }, "ic", function()
 	select.select_textobject("@class.inner", "textobjects")
 end, { desc = "inside a class" })
 
-vim.keymap.set({ "x", "o" }, "al", function()
+vim.keymap.set({ "x", "o" }, "aL", function()
 	select.select_textobject("@loop.outer", "textobjects")
 end, { desc = "around a loop" })
-vim.keymap.set({ "x", "o" }, "il", function()
+vim.keymap.set({ "x", "o" }, "iL", function()
 	select.select_textobject("@loop.inner", "textobjects")
 end, { desc = "inside a loop" })
 
