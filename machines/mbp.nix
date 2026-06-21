@@ -44,7 +44,6 @@
 
   time.timeZone = "Europe/Rome";
 
-  # TODO: can this be used in the terminal? and maybe move to common config with linux
   security.pam.services.sudo_local.touchIdAuth = true;
 
   system.activationScripts.postActivation.text = lib.mkAfter (let
