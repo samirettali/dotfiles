@@ -11,6 +11,8 @@ Curated, always-on facts about the user
 - Dev-tools obsessive: NixOS + nix-darwin, Neovim, keyboard-driven ("Mouseless").
   Publishes his own tools via NUR (samirettali/nur).
 - Uses AI tools primarily in the terminal; in Neovim, prefers only lightweight inline-edit helpers, not full AI assistants.
+- Prefers Neovim to stay editing-first/minimal, using native features and small focused plugins over big IDE-like plugins.
+- When committing, prefers one commit per logical change.
 
 ## Interaction
 
