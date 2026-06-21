@@ -9,7 +9,8 @@
     ./hammerspoon.nix
     ./sketchybar.nix
     ./desktoppr.nix
-    ./rift.nix
+    ./aerospace.nix
+    # ./rift.nix # temporarily disabled in favor of aerospace
   ];
 
   home.packages = with pkgs; [

@@ -104,15 +104,9 @@ in {
           { app_id = "com.riotgames.LeagueofLegends.LeagueClientUx", floating = true},
           # { title_substring = "Rabby Wallet Notification", workspace = "", floating = true },
           { app_id = "com.mitchellh.ghostty", workspace = 2 },
-          # { app_id = "com.tinyspeck.slackmacgap", workspace = "4" },
-          # { app_id = "com.postmanlabs.mac", workspace = "5" },
-          # { app_id = "com.jetbrains.datagrip", workspace = "6" },
-          # { app_id = "com.mongodb.compass", workspace = "6" },
-          # { app_id = "org.RedisLabs.RedisInsight-V2", workspace = "6" },
           { app_id = "com.hnc.discord", workspace = 3},
           { app_id = "ru.keepcoder.Telegram", workspace = 3},
           { app_id = "com.spotify.client", workspace = 3},
-          # { app_id = "org.keepassxc.keepassxc", workspace = "8" },
           { app_id = "com.apple.Preview", workspace = 3},
         ]
 
