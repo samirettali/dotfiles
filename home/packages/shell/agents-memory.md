@@ -10,6 +10,7 @@ Curated, always-on facts about the user
 - Security background; active bug-bounty / CTF practice.
 - Dev-tools obsessive: NixOS + nix-darwin, Neovim, keyboard-driven ("Mouseless").
   Publishes his own tools via NUR (samirettali/nur).
+- Uses AI tools primarily in the terminal; in Neovim, prefers only lightweight inline-edit helpers, not full AI assistants.
 
 ## Interaction
 
