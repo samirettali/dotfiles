@@ -24,7 +24,6 @@
 
   services = {
     tailscale.enable = true;
-    karabiner-elements.enable = false;
   };
 
   fonts = {
