@@ -73,7 +73,7 @@
     inherit (nixpkgs) lib;
 
     # Constants
-    stateVersion = "26.05";
+    stateVersion = "26.11";
     defaultUser = "samir";
 
     # System configurations
