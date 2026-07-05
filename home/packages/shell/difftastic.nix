@@ -1,6 +1,6 @@
-{...}: {
+{lib, ...}: {
   programs.difftastic = {
-    enable = true;
+    enable = lib.mkDefault false;
     git.enable = true;
   };
 }
