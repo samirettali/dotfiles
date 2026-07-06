@@ -73,7 +73,7 @@ in {
 
       set -g status-right ""
       set -g window-status-style "fg=#858585"
-      set -g window-status-current-style "fg=white"
+      set -g window-status-current-style "fg=terminal"
 
       set -g pane-active-border-style "bold fg=#858585"
       set -g pane-border-style "fg=colour234"
