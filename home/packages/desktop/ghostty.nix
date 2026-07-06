@@ -24,7 +24,7 @@
       gtk-titlebar = false;
       macos-titlebar-proxy-icon = "hidden";
       macos-titlebar-style = "hidden";
-      theme = "Builtin Dark";
+      theme = "light:Builtin Light,dark:Builtin Dark";
       title = ''" "'';
       shell-integration-features = "no-cursor";
       copy-on-select = "clipboard";
