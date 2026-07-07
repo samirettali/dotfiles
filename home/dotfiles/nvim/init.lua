@@ -71,6 +71,7 @@ require("ui.tabline")
 require("autocmds")
 require("plugins.moonfly")
 require("plugins.nightfly")
+require("plugins.auto-dark-mode")
 
 -- diagnostic and lsp
 vim.diagnostic.config({ signs = false })
