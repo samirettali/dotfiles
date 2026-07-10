@@ -47,7 +47,7 @@ in {
           "openrouter/deepseek/deepseek-v4-pro"
           "openrouter/z-ai/glm-5.2"
           "openrouter/moonshotai/kimi-k2.7-code"
-          "openai-codex/gpt-5.5"
+          "openai-codex/gpt-5.6-sol"
           "openrouter/anthropic/claude-opus-4.8"
           "openrouter/anthropic/claude-sonnet-4.6"
           "openrouter/google/gemini-3.1-pro-preview"
