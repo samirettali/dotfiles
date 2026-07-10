@@ -35,7 +35,7 @@ in {
 
       ".pi/agent/settings.json".text = builtins.toJSON {
         defaultProvider = "openai-codex";
-        defaultModel = "gpt-5.5";
+        defaultModel = "gpt-5.6-sol";
         defaultThinkingLevel = "medium";
         packages = [];
         theme = "dark";
