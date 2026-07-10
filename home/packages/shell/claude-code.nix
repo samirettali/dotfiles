@@ -12,6 +12,7 @@
       includeCoAuthoredBy = false;
       feedbackSurveyRate = 0;
       theme = "auto";
+      effortLevel = "medium";
       env = {
         CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL = "1";
         CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
