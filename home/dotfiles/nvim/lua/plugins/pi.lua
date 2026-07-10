@@ -2,7 +2,7 @@ vim.pack.add({ "https://github.com/pablopunk/pi.nvim" })
 
 require("pi").setup({
 	provider = "openai-codex",
-	model = "gpt-5.4-mini",
+	model = "gpt-5.6-luna-pro",
 	extensions = false, -- TODO: needed?
 })
 
