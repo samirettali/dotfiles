@@ -29,7 +29,7 @@ in {
     ];
   };
 
-  programs.aerospace.settings.exec-on-workspace-change = lib.mkIf config.programs.aerospace.enable [
+  programs.aerospace.settings.exec-on-workspace-change = lib.mkIf (config.programs.aerospace.enable && config.programs.sketchybar.enable) [
     "/bin/bash"
     "-c"
     "${sketchybarExe} --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE"
