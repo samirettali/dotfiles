@@ -59,7 +59,7 @@
     tree
     unzip
     vi-mongo
-    watchexec
+    # watchexec # TODO: upstream is broken
     # bitwarden-cli
     # ghui # TODO: upstream is broken
     # yubikey-manager
