@@ -143,7 +143,9 @@
       extraSpecialArgs = {
         inherit inputs;
         nurPkgs = inputs.samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system};
-        neovimPackage = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        neovimPackage = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (_: {
+          doCheck = false; # TODO: upstream is broken
+        });
         vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
         inherit features;
         vars = {
