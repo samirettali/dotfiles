@@ -1,3 +1,5 @@
+vim.pack.add({ "https://github.com/bluz71/vim-moonfly-colors" })
+
 local moonfly = require("moonfly")
 moonfly.custom_colors({ bg = "#000000" })
 

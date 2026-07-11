@@ -14,7 +14,9 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
-	{ src = "https://github.com/bluz71/vim-moonfly-colors" },
+})
+require("plugins.moonfly")
+vim.pack.add({
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 })
 
@@ -68,7 +70,6 @@ vim.opt.pumborder = "rounded"
 
 require("ui.tabline")
 require("autocmds")
-require("plugins.moonfly")
 require("plugins.nightfly")
 require("plugins.auto-dark-mode")
 
