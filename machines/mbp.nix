@@ -67,6 +67,23 @@
 
   '');
 
+  # Hack: system.keyboard.remapCapsLockToControl only runs hidutil once at
+  # activation, and macOS drops that transient mapping (reboot/wake/reconnect),
+  # so caps->ctrl stops working sometime after a rebuild. Reapply it at load and
+  # periodically to keep it stuck.
+  launchd.daemons.remap-capslock-to-control = {
+    serviceConfig = {
+      ProgramArguments = [
+        "/usr/bin/hidutil"
+        "property"
+        "--set"
+        ''{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":30064771129,"HIDKeyboardModifierMappingDst":30064771296}]}''
+      ];
+      RunAtLoad = true;
+      StartInterval = 60;
+    };
+  };
+
   system = {
     keyboard = {
       enableKeyMapping = true;
