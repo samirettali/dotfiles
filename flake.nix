@@ -194,6 +194,7 @@
 
         extraSpecialArgs = {
           inherit inputs;
+          features.python = "minimal";
           nurPkgs = inputs.samirettali-nur.packages.${systems.server};
           neovimPackage = inputs.neovim-nightly-overlay.packages.${systems.server}.default.overrideAttrs (_: {
             doCheck = false;

@@ -2,6 +2,7 @@
   imports = [
     ./dotfiles.nix
     ./options.nix
+    ./packages/dev/python.nix
     ./packages/shell/direnv.nix
     ./packages/shell/fd.nix
     ./packages/shell/fzf.nix
