@@ -9,8 +9,8 @@ function N(x, level, opts)
 	return x
 end
 
+require("plugins.nvim-treesitter")
 vim.pack.add({
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
@@ -41,10 +41,6 @@ vim.opt.laststatus = 3
 vim.opt.cmdheight = 1
 vim.opt.clipboard = "unnamedplus"
 vim.opt.signcolumn = "yes"
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldtext = ""
-vim.opt.foldlevelstart = 99
 -- vim.opt.diffopt = "internal,filler,closeoff,algorithm:histogram,context:5,linematch:60" -- TODO: read docs
 -- vim.opt.statusline = '[%n] %<%f %h%w%m%r%=%-14.(%l,%c%V%) %P' -- https://github.com/y9san9/y9san9.nvim/blob/main/init.lua
 vim.opt.completeopt = {
@@ -203,7 +199,6 @@ end
 -- plugins setup
 require("plugins")
 
-require("nvim-treesitter").install("all")
 require("nvim-treesitter-textobjects").setup({
 	select = {
 		lookahead = true,
@@ -235,13 +230,6 @@ vim.api.nvim_create_autocmd("VimResized", {
 
 vim.api.nvim_create_autocmd("LspAttach", { callback = on_lsp_attach })
 vim.api.nvim_create_autocmd("LspDetach", { callback = on_lsp_detach })
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "*",
-	callback = function(args)
-		pcall(vim.treesitter.start, args.buf)
-	end,
-})
-
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight yanked text",
 	group = vim.api.nvim_create_augroup("HighlightYankedText", { clear = true }),
