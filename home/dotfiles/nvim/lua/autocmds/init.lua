@@ -1,3 +1,5 @@
+require("autocmds.general")
+require("autocmds.lsp")
 require("autocmds.miscellaneous")
 
 vim.api.nvim_create_autocmd("PackChanged", {
