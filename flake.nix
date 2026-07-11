@@ -207,7 +207,10 @@
           ./home/ai.nix
           ./home/server.nix
           ({pkgs, ...}: {
-            features.python = "minimal";
+            features = {
+              c = "minimal";
+              python = "minimal";
+            };
 
             home = {
               username = defaultUser;

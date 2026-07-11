@@ -16,7 +16,10 @@
         type = lib.types.enum [false "minimal" "full"];
         default = false;
       };
-      c = lib.mkEnableOption "C tooling";
+      c = lib.mkOption {
+        type = lib.types.enum [false "minimal" "full"];
+        default = false;
+      };
       go = lib.mkEnableOption "Go tooling";
       python = lib.mkOption {
         type = lib.types.enum [false "minimal" "full"];
