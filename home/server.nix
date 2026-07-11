@@ -3,6 +3,7 @@
     ./dotfiles.nix
     ./options.nix
     ./packages/dev/c.nix
+    ./packages/dev/go.nix
     ./packages/dev/python.nix
     ./packages/shell/direnv.nix
     ./packages/shell/fd.nix

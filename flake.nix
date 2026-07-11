@@ -210,6 +210,7 @@
             features = {
               c = "minimal";
               python = "minimal";
+              go = true;
             };
 
             home = {
