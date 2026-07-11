@@ -1,4 +1,7 @@
+local group = vim.api.nvim_create_augroup("General", { clear = true })
+
 vim.api.nvim_create_autocmd("VimResized", {
+	group = group,
 	desc = "Automatically resize windows when terminal is resized",
 	pattern = "*",
 	-- command = "tabdo wincmd =", -- TODO: this leaves you in the last tab
@@ -7,13 +10,14 @@ vim.api.nvim_create_autocmd("VimResized", {
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight yanked text",
-	group = vim.api.nvim_create_augroup("HighlightYankedText", { clear = true }),
+	group = group,
 	callback = function()
 		vim.hl.on_yank({ timeout = 100 })
 	end,
 })
 
 vim.api.nvim_create_autocmd("BufEnter", {
+	group = group,
 	desc = "Disable new line comments",
 	callback = function()
 		vim.opt.formatoptions:remove({ "c", "r", "o" })

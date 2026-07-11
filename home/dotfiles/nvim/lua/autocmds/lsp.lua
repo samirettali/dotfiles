@@ -1,3 +1,5 @@
+local group = vim.api.nvim_create_augroup("Lsp", { clear = true })
+
 local on_lsp_attach = function(ev)
 	-- TODO: should the buffer checked to be modifiable etc?
 	local client = vim.lsp.get_client_by_id(ev.data.client_id)
@@ -99,11 +101,11 @@ local function on_lsp_detach(ev)
 	end
 end
 
-vim.api.nvim_create_autocmd("LspAttach", { callback = on_lsp_attach })
-vim.api.nvim_create_autocmd("LspDetach", { callback = on_lsp_detach })
+vim.api.nvim_create_autocmd("LspAttach", { group = group, callback = on_lsp_attach })
+vim.api.nvim_create_autocmd("LspDetach", { group = group, callback = on_lsp_detach })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-	group = vim.api.nvim_create_augroup("AutoFormat", { clear = true }),
+	group = group,
 	callback = function(args)
 		if
 			vim.g.disable_autoformat
