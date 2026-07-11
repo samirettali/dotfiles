@@ -1,3 +1,6 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
 -- functions
 function P(x)
 	print(vim.inspect(x))
@@ -54,9 +57,6 @@ vim.opt.grepprg = "rg --vimgrep"
 vim.opt.shortmess:append("c")
 vim.opt.shortmess:append("I")
 vim.opt.fillchars = { eob = " " }
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
 vim.opt.winborder = "rounded"
 vim.opt.pumborder = "rounded"
 
