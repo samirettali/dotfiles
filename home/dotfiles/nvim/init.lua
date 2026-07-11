@@ -16,9 +16,7 @@ vim.pack.add({
 })
 require("plugins.gitsigns")
 require("plugins.moonfly")
-vim.pack.add({
-	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
-})
+require("plugins.nvim-web-devicons")
 
 vim.cmd("packadd nvim.undotree") -- built in
 
