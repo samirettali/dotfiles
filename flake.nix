@@ -192,7 +192,13 @@
           inherit (nixpkgsConfig) config;
         };
 
+        extraSpecialArgs = {
+          inherit inputs;
+          nurPkgs = inputs.samirettali-nur.packages.${systems.server};
+        };
+
         modules = [
+          ./home/ai.nix
           ./home/packages/shell/tmux.nix
           ({pkgs, ...}: {
             home = {

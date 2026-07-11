@@ -6,6 +6,7 @@
   ...
 }: {
   imports = [
+    ./ai.nix
     ./dotfiles.nix
     ./mcp.nix
     ./packages/shell

@@ -9,7 +9,6 @@
     ./antigravity-cli.nix
     ./bat.nix
     ./btop.nix
-    ./claude-code.nix
     ./difftastic.nix
     ./direnv.nix
     ./fabric.nix
@@ -28,7 +27,6 @@
     ./neovim.nix
     ./nh.nix
     ./opencode.nix
-    ./pi-coding-agent
     ./posting.nix
     ./ripgrep.nix
     ./scripts

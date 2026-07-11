@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   imports = [
     ./c.nix
-    ./codex.nix
     ./go.nix
     ./js.nix
     ./lua.nix
