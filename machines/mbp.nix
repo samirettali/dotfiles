@@ -23,7 +23,7 @@
   };
 
   services = {
-    tailscale.enable = true;
+    tailscale.enable = false; # TODO: switch to tailscale-gui
   };
 
   fonts = {
