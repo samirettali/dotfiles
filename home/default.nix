@@ -9,6 +9,7 @@
     ./ai.nix
     ./dotfiles.nix
     ./mcp.nix
+    ./options.nix
     ./packages/shell
     ./sops.nix
   ];

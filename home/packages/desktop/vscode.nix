@@ -26,12 +26,7 @@
   withExtension = ext: settings:
     lib.optionalAttrs (builtins.elem ext extensionIds) settings;
 in {
-  options.dotfiles.vscode.extensionIds = lib.mkOption {
-    type = with lib.types; listOf str;
-    default = [];
-  };
-
-  config.programs.vscode = {
+  programs.vscode = {
     enable = lib.mkDefault false;
     package = pkgs.vscode;
 

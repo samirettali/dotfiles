@@ -195,11 +195,15 @@
         extraSpecialArgs = {
           inherit inputs;
           nurPkgs = inputs.samirettali-nur.packages.${systems.server};
+          neovimPackage = inputs.neovim-nightly-overlay.packages.${systems.server}.default.overrideAttrs (_: {
+            doCheck = false;
+          });
+          vars.email = users.personal.email;
         };
 
         modules = [
           ./home/ai.nix
-          ./home/packages/shell/tmux.nix
+          ./home/server.nix
           ({pkgs, ...}: {
             home = {
               username = defaultUser;

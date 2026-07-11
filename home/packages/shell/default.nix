@@ -4,14 +4,12 @@
   ...
 }: {
   imports = [
-    ./agents-memory.nix
     ./ansible.nix
     ./antigravity-cli.nix
     ./bat.nix
     ./btop.nix
     ./difftastic.nix
     ./direnv.nix
-    ./fabric.nix
     ./fd.nix
     ./fish.nix
     ./fzf.nix
