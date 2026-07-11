@@ -71,7 +71,7 @@ in {
       set -g status-left-style "fg=green"
       set -g status-left-length 20
 
-      set -g status-right ""
+      set -g status-right "#{?#{SSH_CONNECTION},#[fg=brightblue#,bold] #{user}@#H #[default],}"
       set -g window-status-style "fg=#858585"
       set -g window-status-current-style "fg=terminal"
 
