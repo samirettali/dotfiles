@@ -11,8 +11,8 @@ end
 
 require("plugins.nvim-treesitter")
 require("plugins.nvim-treesitter-textobjects")
+require("plugins.oil")
 vim.pack.add({
-	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 })
 require("plugins.moonfly")
@@ -199,8 +199,6 @@ end
 -- plugins setup
 require("plugins")
 
-require("oil").setup({ delete_to_trash = true })
-
 require("gitsigns").setup({
 	current_line_blame = true,
 	current_line_blame_opts = { delay = 0 },
@@ -305,9 +303,6 @@ vim.keymap.set("n", "<leader>tv", function()
 		virtual_lines = not vim.diagnostic.config().virtual_lines,
 	})
 end, { desc = "Toggle diagnostic virtual lines" })
-
-vim.keymap.set("n", "-", "<cmd>Oil<cr>", { desc = "Open parent directory" })
-vim.keymap.set("n", "_", "<cmd>Oil .<cr>", { desc = "Open root directory" })
 
 vim.keymap.set("n", "]c", function()
 	if vim.wo.diff then
