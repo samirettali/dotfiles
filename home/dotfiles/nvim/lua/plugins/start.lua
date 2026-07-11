@@ -1,0 +1,6 @@
+require("plugins.nvim-treesitter")
+require("plugins.nvim-treesitter-textobjects")
+require("plugins.oil")
+require("plugins.gitsigns")
+require("plugins.moonfly")
+require("plugins.nvim-web-devicons")

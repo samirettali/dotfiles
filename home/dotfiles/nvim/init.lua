@@ -12,12 +12,7 @@ function N(x, level, opts)
 	return x
 end
 
-require("plugins.nvim-treesitter")
-require("plugins.nvim-treesitter-textobjects")
-require("plugins.oil")
-require("plugins.gitsigns")
-require("plugins.moonfly")
-require("plugins.nvim-web-devicons")
+require("plugins.start")
 
 vim.cmd("packadd nvim.undotree") -- built in
 
