@@ -1,10 +1,10 @@
 {
+  config,
   pkgs,
-  features,
   ...
 }: {
   home.packages = with pkgs;
-    lib.optionals features.dart [
+    lib.optionals config.features.dart [
       # dart
       flutter
     ];

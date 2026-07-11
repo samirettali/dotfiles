@@ -1,11 +1,11 @@
 {
+  config,
   lib,
   pkgs,
-  features,
   ...
 }: {
   home.packages = with pkgs;
-    lib.optionals features.web3 [
+    lib.optionals config.features.web3 [
       foundry
       go-ethereum
       slither-analyzer
@@ -13,11 +13,11 @@
       vscode-solidity-server
     ];
 
-  dotfiles.vscode.extensionIds = lib.optionals features.web3 [
+  dotfiles.vscode.extensionIds = lib.optionals config.features.web3 [
     "juanblanco.solidity"
   ];
 
-  programs.vscode.profiles.default = lib.optionalAttrs features.web3 {
+  programs.vscode.profiles.default = lib.optionalAttrs config.features.web3 {
     userSettings = {
       "solidity.packageDefaultDependenciesContractsDirectory" = "src";
       "solidity.packageDefaultDependenciesDirectory" = "lib";

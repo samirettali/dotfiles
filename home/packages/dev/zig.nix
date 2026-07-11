@@ -1,10 +1,10 @@
 {
+  config,
   pkgs,
-  features,
   ...
 }: {
   home.packages = with pkgs;
-    lib.optionals features.zig [
+    lib.optionals config.features.zig [
       zig
       zls
     ];

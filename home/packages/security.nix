@@ -1,10 +1,10 @@
 {
+  config,
   pkgs,
-  features,
   ...
 }: {
   home.packages = with pkgs;
-    lib.optionals features.security [
+    lib.optionals config.features.security [
       # burpsuite
       amass
       android-tools

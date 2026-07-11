@@ -1,15 +1,15 @@
 {
+  config,
   lib,
   pkgs,
-  features,
   ...
 }: {
   programs = {
-    java.enable = features.java;
+    java.enable = config.features.java;
   };
 
   home.packages = with pkgs;
-    lib.optionals features.java [
+    lib.optionals config.features.java [
       jdt-language-server
     ];
 }

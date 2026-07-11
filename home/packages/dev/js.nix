@@ -1,16 +1,16 @@
 {
+  config,
   pkgs,
   lib,
-  features,
   ...
 }: {
-  programs.bun.enable = features.js == "minimal" || features.js == "full";
+  programs.bun.enable = config.features.js == "minimal" || config.features.js == "full";
 
   home.packages = with pkgs;
-    lib.optionals (features.js == "minimal" || features.js == "full") [
+    lib.optionals (config.features.js == "minimal" || config.features.js == "full") [
       nodejs
     ]
-    ++ lib.optionals (features.js == "full") [
+    ++ lib.optionals (config.features.js == "full") [
       eslint_d
       eslint
       js-beautify
@@ -19,7 +19,7 @@
       vscode-langservers-extracted
     ];
 
-  home.sessionVariables = lib.optionalAttrs (features.js == "full") {
+  home.sessionVariables = lib.optionalAttrs (config.features.js == "full") {
     NEXT_TELEMETRY_DISABLED = "1";
   };
 }

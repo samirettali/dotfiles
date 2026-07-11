@@ -1,10 +1,10 @@
 {
+  config,
   pkgs,
-  features,
   ...
 }: {
   home.packages = with pkgs;
-    lib.optionals features.c [
+    lib.optionals config.features.c [
       clang-tools
       cmake
       cppcheck

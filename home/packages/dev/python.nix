@@ -2,14 +2,13 @@
   config,
   lib,
   pkgs,
-  features,
   ...
 }: {
   home.packages = with pkgs;
-    lib.optionals (features.python == "minimal" || features.python == "full") [
+    lib.optionals (config.features.python == "minimal" || config.features.python == "full") [
       python314
     ]
-    ++ lib.optionals (features.python == "full") [
+    ++ lib.optionals (config.features.python == "full") [
       python314Packages.debugpy # used by neovim dap (TODO: remove?)
       basedpyright
       pyrefly
@@ -17,31 +16,31 @@
     ];
 
   programs = {
-    uv.enable = features.python == "minimal" || features.python == "full";
+    uv.enable = config.features.python == "minimal" || config.features.python == "full";
     ruff = {
-      enable = features.python == "full";
+      enable = config.features.python == "full";
       settings = {};
     };
   };
 
   dotfiles.vscode.extensionIds =
-    lib.optionals (features.python == "full") [
+    lib.optionals (config.features.python == "full") [
       "ms-python.debugpy"
       "ms-python.python"
       "ms-toolsai.jupyter"
       "ms-toolsai.jupyter-renderers"
     ]
-    ++ lib.optionals (features.python == "full" && builtins.elem pkgs.basedpyright config.home.packages) [
+    ++ lib.optionals (config.features.python == "full" && builtins.elem pkgs.basedpyright config.home.packages) [
       "detachhead.basedpyright"
     ]
-    ++ lib.optionals (features.python == "full" && config.programs.ruff.enable) [
+    ++ lib.optionals (config.features.python == "full" && config.programs.ruff.enable) [
       "charliermarsh.ruff"
     ]
-    ++ lib.optionals (features.python == "full" && builtins.elem pkgs.ty config.home.packages) [
+    ++ lib.optionals (config.features.python == "full" && builtins.elem pkgs.ty config.home.packages) [
       "astral-sh.ty"
     ];
 
-  programs.vscode.profiles.default = lib.optionalAttrs (features.python == "full") {
+  programs.vscode.profiles.default = lib.optionalAttrs (config.features.python == "full") {
     userSettings = {
       "files.exclude" =
         {

@@ -1,7 +1,7 @@
 {
+  config,
   lib,
   pkgs,
-  features,
   ...
 }: let
   gotoolsWithoutModernize = pkgs.symlinkJoin {
@@ -14,14 +14,14 @@
 in {
   programs = {
     go = {
-      enable = features.go;
+      enable = config.features.go;
       package = pkgs.go_1_26;
       telemetry.mode = "off";
     };
   };
 
   home.packages = with pkgs;
-    lib.optionals features.go [
+    lib.optionals config.features.go [
       air
       delve
       go-tools
@@ -43,11 +43,11 @@ in {
         }))
     ];
 
-  dotfiles.vscode.extensionIds = lib.optionals features.go [
+  dotfiles.vscode.extensionIds = lib.optionals config.features.go [
     "golang.go"
   ];
 
-  programs.vscode.profiles.default = lib.optionalAttrs features.go {
+  programs.vscode.profiles.default = lib.optionalAttrs config.features.go {
     userSettings = {
       "go.formatTool" = "gofumpt";
       "go.delveConfig" = {

@@ -106,6 +106,11 @@
       python = "minimal";
     };
 
+    mkNeovimPackage = system:
+      inputs.neovim-nightly-overlay.packages.${system}.default.overrideAttrs (_: {
+        doCheck = false; # TODO: upstream is broken
+      });
+
     # Common Nix configuration
     mkNixConfig = {username ? defaultUser, ...}: {
       enable = true;
@@ -143,11 +148,8 @@
       extraSpecialArgs = {
         inherit inputs;
         nurPkgs = inputs.samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system};
-        neovimPackage = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (_: {
-          doCheck = false; # TODO: upstream is broken
-        });
+        neovimPackage = mkNeovimPackage pkgs.stdenv.hostPlatform.system;
         vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
-        inherit features;
         vars = {
           inherit (user) email;
           font = {
@@ -171,6 +173,8 @@
         };
       };
       users.${user.name} = {
+        inherit features;
+
         imports =
           [
             ./home
@@ -194,11 +198,8 @@
 
         extraSpecialArgs = {
           inherit inputs;
-          features.python = "minimal";
           nurPkgs = inputs.samirettali-nur.packages.${systems.server};
-          neovimPackage = inputs.neovim-nightly-overlay.packages.${systems.server}.default.overrideAttrs (_: {
-            doCheck = false;
-          });
+          neovimPackage = mkNeovimPackage systems.server;
           vars.email = users.personal.email;
         };
 
@@ -206,6 +207,8 @@
           ./home/ai.nix
           ./home/server.nix
           ({pkgs, ...}: {
+            features.python = "minimal";
+
             home = {
               username = defaultUser;
               homeDirectory = "/home/${defaultUser}";
