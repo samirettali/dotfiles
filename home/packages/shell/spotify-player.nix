@@ -5,7 +5,7 @@
   ...
 }: {
   programs.spotify-player = {
-    enable = true;
+    enable = lib.mkDefault false;
     package = pkgs.spotify-player.override {
       withMediaControl = false;
       withImage = false; # TODO: this is broken inside zellij/ghostty
