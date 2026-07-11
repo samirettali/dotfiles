@@ -33,14 +33,7 @@ require("lsp")
 -- plugins setup
 require("plugins")
 
--- custom commands
-vim.api.nvim_create_user_command("Grep", function(opts)
-	-- TODO: args or fargs?
-	local query = table.concat(opts.fargs, " ")
-	vim.cmd("silent! grep! " .. query)
-	vim.cmd("cwindow")
-	vim.cmd("redraw!")
-end, { nargs = "+", desc = "Run grep with the given query" })
+require("commands")
 
 -- keymaps
 vim.keymap.set("n", "<leader>g", "<cmd>Grep <cword><cr>", { desc = "Grep word under cursor" })
@@ -92,52 +85,3 @@ end, { desc = "Toggle diagnostic virtual lines" })
 -- vim.opt.findfunc = "v:lua.my_find"
 
 -------------------------------------
-
-vim.api.nvim_create_user_command("Bufferize", function(opts)
-	-- TODO: maybe make a version that takes a lua expression, evaluates it and prints it using vim.inspect
-	local cmd = opts.args
-
-	if cmd == "" then
-		vim.notify("Please provide a Vim command to run", vim.log.levels.ERROR)
-		return
-	end
-
-	local output = vim.fn.execute(cmd)
-
-	local buf = vim.api.nvim_create_buf(false, true)
-
-	vim.api.nvim_set_option_value("buftype", "nofile", { buf = buf })
-	vim.api.nvim_set_option_value("bufhidden", "wipe", { buf = buf })
-	vim.api.nvim_set_option_value("swapfile", false, { buf = buf })
-	vim.api.nvim_set_option_value("modifiable", true, { buf = buf })
-
-	local bufname = ("[Vim Command Output]: %s"):format(cmd)
-	vim.api.nvim_buf_set_name(buf, bufname)
-
-	local lines = vim.split(output, "\n", { plain = true })
-	vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-
-	vim.api.nvim_set_option_value("modifiable", false, { buf = buf })
-
-	vim.cmd("vsplit")
-	vim.api.nvim_win_set_buf(0, buf)
-end, {
-	nargs = "+",
-	complete = "command",
-	desc = "Run a Vim command and show output in a new buffer",
-})
-
-vim.cmd(":command! E e")
-vim.cmd(":command! W w")
-vim.cmd(":command! Q q")
-vim.cmd(":command! Wq wq")
-vim.cmd(":command! WQ wq")
-vim.cmd(":command! Qa qa")
-vim.cmd(":command! QA qa")
-vim.cmd(":command! Wa wa")
-vim.cmd(":command! WA wa")
-vim.cmd(":command! Wqa wqa")
-vim.cmd(":command! WQa wqa")
-vim.cmd(":command! WQA wqa")
-vim.cmd(":command! Cq cq")
-vim.cmd(":command! CQ cq")
