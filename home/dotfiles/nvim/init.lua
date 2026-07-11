@@ -302,7 +302,6 @@ vim.api.nvim_create_user_command("Grep", function(opts)
 end, { nargs = "+", desc = "Run grep with the given query" })
 
 -- keymaps
-vim.keymap.set("n", "<localleader>r", "<cmd>restart<cr>", { desc = "Restart neovim" })
 vim.keymap.set("n", "<leader>g", "<cmd>Grep <cword><cr>", { desc = "Grep word under cursor" })
 vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist()" })
 vim.keymap.set("n", "<leader>lc", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist()" })
