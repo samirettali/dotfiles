@@ -17,5 +17,6 @@
     ./packages/shell/sesh.nix
     ./packages/shell/tmux.nix
     ./packages/shell/zoxide.nix
+    ./packages/desktop/google-chrome.nix
   ];
 }

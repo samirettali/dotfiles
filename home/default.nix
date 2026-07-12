@@ -10,6 +10,7 @@
     ./dotfiles.nix
     ./options.nix
     ./packages/shell
+    ./packages/desktop/google-chrome.nix
     ./sops.nix
   ];
 
