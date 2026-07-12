@@ -9,6 +9,7 @@
   home.packages = with pkgs;
     lib.optionals (config.features.js == "minimal" || config.features.js == "full") [
       nodejs
+      pnpm
     ]
     ++ lib.optionals (config.features.js == "full") [
       eslint_d
