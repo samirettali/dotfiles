@@ -5,7 +5,7 @@
   ...
 }: {
   programs.google-chrome = {
-    enable = true;
+    enable = lib.elem pkgs.stdenv.hostPlatform.system ["aarch64-darwin" "x86_64-linux"];
     package = pkgs.google-chrome;
     extensions = [
       {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock
