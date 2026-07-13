@@ -23,5 +23,7 @@
     nurPkgs.eqmac
     shottr
     the-unarchiver
+    slack
+    mongodb-compass
   ];
 }
