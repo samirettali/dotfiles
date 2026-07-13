@@ -5,7 +5,6 @@
 }: {
   imports = [
     ./ansible.nix
-    ./antigravity-cli.nix
     ./bat.nix
     ./btop.nix
     ./difftastic.nix
@@ -50,7 +49,6 @@
     nurPkgs.go-qo
     # nurPkgs.tredis
     nurPkgs.hunk
-    nurPkgs.grok-cli
     scc
     snitch
     sqlite
