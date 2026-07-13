@@ -38,24 +38,24 @@
   home.packages = with pkgs; [
     coreutils
     curl
-    duf
     gnused
-    # iredis
+    iredis
     kcat
     moreutils
     ncdu
     ngrok
     p7zip
     nurPkgs.go-qo
-    # nurPkgs.tredis
     nurPkgs.hunk
     scc
     snitch
     sqlite
     tree
     unzip
-    vi-mongo
-    # watchexec # TODO: upstream is broken
+    watchexec
+    # nurPkgs.tredis
+    # duf
+    # vi-mongo
     # bitwarden-cli
     # ghui # TODO: upstream is broken
     # yubikey-manager
