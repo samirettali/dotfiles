@@ -11,6 +11,8 @@
   piRuntimeRoot = piCodingAgent + "/lib/node_modules/pi-monorepo";
   piNodeModules = piRuntimeRoot + "/node_modules";
 
+  piMcpAdapter = nurPkgs.pi-mcp-adapter;
+
   skills = import ../coding-agent-skills.nix {inherit inputs pkgs;};
   skillFiles =
     lib.mapAttrs'
@@ -37,7 +39,7 @@ in {
         defaultProvider = "openai-codex";
         defaultModel = "gpt-5.6-sol";
         defaultThinkingLevel = "medium";
-        packages = [];
+        packages = ["${piMcpAdapter}"];
         theme = "dark";
         hideThinkingBlock = false;
         enabledModels = [
