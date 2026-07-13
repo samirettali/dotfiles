@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   nurPkgs,
   ...
 }: {
@@ -23,7 +24,6 @@
     ./lazysql.nix
     ./neovim.nix
     ./nh.nix
-    ./opencode.nix
     ./posting.nix
     ./ripgrep.nix
     ./scripts
@@ -34,6 +34,11 @@
     ./zoxide.nix
     ./zsh.nix
   ];
+
+  dotfiles.programs = {
+    ansible.enable = lib.mkDefault true;
+    git-sync.enable = lib.mkDefault true;
+  };
 
   home.packages = with pkgs; [
     coreutils

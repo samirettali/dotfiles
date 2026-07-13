@@ -47,12 +47,12 @@
     ];
   };
 in {
-  home.packages = lib.mkIf config.programs.git.enable [
+  home.packages = lib.mkIf (config.dotfiles.programs.git-sync.enable && config.programs.git.enable) [
     nurPkgs.git-sync
   ];
 
   xdg.configFile."git-sync/config.yaml" = {
-    enable = config.programs.git.enable;
+    enable = config.dotfiles.programs.git-sync.enable && config.programs.git.enable;
     source = configFile;
   };
 }

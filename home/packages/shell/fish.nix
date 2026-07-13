@@ -1,6 +1,6 @@
-{...}: {
+{lib, ...}: {
   programs.fish = {
-    enable = true;
+    enable = lib.mkDefault true;
     generateCompletions = false;
     functions = {
       fish_greeting = "";
