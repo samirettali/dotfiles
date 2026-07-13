@@ -57,7 +57,7 @@
     sqlite
     tree
     unzip
-    watchexec
+    # watchexec TODO: upstream is broken
     # nurPkgs.tredis
     # duf
     # vi-mongo
