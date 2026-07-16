@@ -6,7 +6,7 @@
 }: {
   programs.claude-code = {
     enable = lib.mkDefault true;
-    skills = import ./coding-agent-skills.nix {inherit inputs pkgs;};
+    skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
     settings = {
       model = "claude-opus-4-8";
       includeCoAuthoredBy = false;
