@@ -27,4 +27,4 @@ Projects live under `~/dev`, each with its own `AGENTS.md`. Read that file befor
 working on, or answering questions about, the project.
 
 - **dotfiles** — `~/dev/dotfiles` (this repo). NixOS + home-manager config.
-- **selfhosted** — `~/dev/selfhosted`. Self-hosted stack (Docker Compose + Ansible).
+- **selfhosted** — `~/dev/selfhosted`. Self-hosted stack (Docker Compose + Ansible), deployed on the `andromeda` host.
