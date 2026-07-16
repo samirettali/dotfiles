@@ -55,6 +55,7 @@
     scc
     snitch
     sqlite
+    opentofu
     tree
     unzip
     # watchexec TODO: upstream is broken
