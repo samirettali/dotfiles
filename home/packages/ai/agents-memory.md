@@ -38,3 +38,13 @@ that project's `AGENTS.md` to capture it.
 
 - **dotfiles** — `~/dev/dotfiles` (this repo). NixOS + home-manager config.
 - **selfhosted** — `~/dev/selfhosted`. Self-hosted stack (Docker Compose + Ansible), deployed on the `andromeda` host.
+
+## Memory
+
+- Never use a built-in "memory" tool or feature. I use multiple agents (Claude
+  Code, Codex, pi) and per-tool memories aren't shared — they drift and get lost.
+  `AGENTS.md` is the single source of persistent project knowledge.
+- Put durable facts and decisions in the relevant project's `AGENTS.md`.
+- If something is long or only occasionally relevant, put it in a separate file
+  and link it from `AGENTS.md` with a one-line description — so it's discoverable
+  without bloating always-loaded context.
