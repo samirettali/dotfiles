@@ -20,3 +20,11 @@ Curated, always-on facts about the user
 - Don't take initiative beyond what we've agreed: do exactly what was asked and
   nothing more. If something else seems worth doing, ask first before doing it —
   unless I explicitly say you can do whatever you want, in which case go ahead.
+
+## Projects
+
+Projects live under `~/dev`, each with its own `AGENTS.md`. Read that file before
+working on, or answering questions about, the project.
+
+- **dotfiles** — `~/dev/dotfiles` (this repo). NixOS + home-manager config.
+- **selfhosted** — `~/dev/selfhosted`. Self-hosted stack (Docker Compose + Ansible).
