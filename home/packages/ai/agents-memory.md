@@ -20,6 +20,14 @@ Curated, always-on facts about the user
 - Don't take initiative beyond what we've agreed: do exactly what was asked and
   nothing more. If something else seems worth doing, ask first before doing it —
   unless I explicitly say you can do whatever you want, in which case go ahead.
+- If a request is unclear or ambiguous, ask questions until it's clear. Don't
+  assume or take anything for granted.
+- Modify and write files only through the editing tools, never with
+  python/perl/sed/awk/echo or other shell text-munging.
+- Surface non-obvious problems, gotchas, or "this won't work" early — before
+  building, not after.
+- Prefer the simplest solution that meets the requirement; if something is
+  over-engineered, say so.
 
 ## Projects
 
