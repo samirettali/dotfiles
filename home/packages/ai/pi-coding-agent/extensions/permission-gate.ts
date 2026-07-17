@@ -42,7 +42,6 @@ export default function(pi: ExtensionAPI) {
         // remote script execution
         { label: "remote script execution: curl|wget pipe to shell", pattern: /\b(curl|wget)\b.*\|\s*(sh|bash|zsh)\b/i },
         { label: "remote script execution: shell -c $(curl ...)", pattern: /\b(sh|bash|zsh)\s+-c\s+["']?\$\(curl\b/i },
-        { label: "dynamic evaluation: eval", pattern: /\beval\b/i },
 
         // process / system disruption
         { label: "system disruption: kill -9 -1", pattern: /\bkill\s+-9\s+-1\b/i },
