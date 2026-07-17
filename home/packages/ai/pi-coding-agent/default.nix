@@ -12,6 +12,7 @@
   piNodeModules = piRuntimeRoot + "/node_modules";
 
   piMcpAdapter = nurPkgs.pi-mcp-adapter;
+  piProviderKimiCode = nurPkgs.pi-provider-kimi-code;
 
   skills = import ../coding-agent-skills.nix {inherit inputs pkgs;};
   skillFiles =
@@ -29,6 +30,7 @@ in {
     PI_SKIP_VERSION_CHECK = "1";
     PI_AI_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/index.js";
     PI_AI_OAUTH_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/oauth.js";
+    KIMI_MEMBERSHIP_LEVEL = "moderato";
   };
 
   home.file = lib.mkIf (builtins.elem piCodingAgent config.home.packages) (skillFiles
@@ -39,7 +41,10 @@ in {
         defaultProvider = "openai-codex";
         defaultModel = "gpt-5.6-sol";
         defaultThinkingLevel = "medium";
-        packages = ["${piMcpAdapter}"];
+        packages = [
+          "${piMcpAdapter}"
+          "${piProviderKimiCode}"
+        ];
         theme = "dark";
         hideThinkingBlock = false;
         enabledModels = [
@@ -48,7 +53,7 @@ in {
           "openrouter/deepseek/deepseek-v4-flash"
           "openrouter/deepseek/deepseek-v4-pro"
           "openrouter/z-ai/glm-5.2"
-          "openrouter/moonshotai/kimi-k2.7-code"
+          "kimi-coding/k3"
           "openai-codex/gpt-5.6-sol"
           "openrouter/anthropic/claude-opus-4.8"
           "openrouter/anthropic/claude-sonnet-4.6"
