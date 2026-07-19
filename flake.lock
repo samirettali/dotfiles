@@ -147,6 +147,22 @@
         "type": "github"
       }
     },
+    "jakubkrehel-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783971616,
+        "narHash": "sha256-R2lG8BWZHItEze/TheqydalKDN4i4Utkq5us4mTUWvU=",
+        "owner": "jakubkrehel",
+        "repo": "skills",
+        "rev": "f8a1574b08319685705a82e3c28139d1c935af9e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jakubkrehel",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -265,6 +281,7 @@
         "gwfox": "gwfox",
         "hallmark": "hallmark",
         "home-manager": "home-manager",
+        "jakubkrehel-skills": "jakubkrehel-skills",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",
         "nixpkgs": "nixpkgs_2",

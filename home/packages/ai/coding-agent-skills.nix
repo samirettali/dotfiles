@@ -21,10 +21,13 @@
     '';
   };
 in {
+  better-colors = "${inputs.jakubkrehel-skills}/skills/better-colors";
+  better-typography = "${inputs.jakubkrehel-skills}/skills/better-typography";
+  better-ui = "${inputs.jakubkrehel-skills}/skills/better-ui";
   commit = "${inputs.agent-stuff}/skills/commit";
   frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
   github = "${inputs.agent-stuff}/skills/github";
-  # hallmark = "${inputs.hallmark}/skills/hallmark"; # TODO: keep?
+  hallmark = "${inputs.hallmark}/skills/hallmark";
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
