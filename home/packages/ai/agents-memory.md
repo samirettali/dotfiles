@@ -15,6 +15,10 @@ Curated, always-on facts about the user
 - When committing, prefers one commit per logical change.
 - When asked to commit, commit only changes made by the current agent/task; leave
   all unrelated pre-existing changes unstaged and uncommitted.
+- Sharp eye for visual detail: immediately notices micro-asymmetries, misalignments,
+  spacing imbalances, and inconsistent animation/transition timings. In UI work,
+  sweat these details proactively (consistent motion durations, symmetric edges,
+  aligned rhythms) — he will spot them anyway.
 
 ## Interaction
 
@@ -44,6 +48,12 @@ that project's `AGENTS.md` to capture it.
 
 ## Memory
 
+- This very file lives in the dotfiles repo: to update these memories, edit
+  `~/dev/dotfiles/home/packages/ai/agents-memory.md` (host-specific extras come
+  from `config.dotfiles.agentsMemory.extra`). The deployed copies
+  (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.pi/agent/AGENTS.md`) are
+  read-only home-manager symlinks into the nix store; changes land on the next
+  home-manager switch.
 - Never use a built-in "memory" tool or feature. I use multiple agents (Claude
   Code, Codex, pi) and per-tool memories aren't shared — they drift and get lost.
   `AGENTS.md` is the single source of persistent project knowledge.
