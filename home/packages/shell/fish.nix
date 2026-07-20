@@ -120,6 +120,10 @@
             set -gx ELEVENLABS_API_KEY (string collect < ${lib.escapeShellArg config.sops.secrets.elevenlabs_api_key.path})
         end
 
+        if test -f ${lib.escapeShellArg config.sops.secrets.gemini_api_key.path}
+            set -gx GEMINI_API_KEY (string collect < ${lib.escapeShellArg config.sops.secrets.gemini_api_key.path})
+        end
+
         set fish_color_command green
         set fish_color_valid_path normal
 

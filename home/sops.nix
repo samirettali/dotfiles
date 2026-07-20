@@ -19,6 +19,7 @@
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     secrets = {
       "elevenlabs_api_key" = {};
+      "gemini_api_key" = {};
       "openrouter_api_key" = {};
     };
   };
