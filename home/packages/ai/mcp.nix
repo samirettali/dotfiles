@@ -2,6 +2,10 @@
   programs.mcp = {
     enable = true;
     servers = {
+      elevenlabs = {
+        command = "uvx";
+        args = ["elevenlabs-mcp"];
+      };
       #   everything = {
       #     command = "npx";
       #     args = [

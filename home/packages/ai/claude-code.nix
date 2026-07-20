@@ -6,6 +6,7 @@
 }: {
   programs.claude-code = {
     enable = lib.mkDefault true;
+    enableMcpIntegration = true;
     skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
     settings = {
       model = "claude-opus-4-8";
