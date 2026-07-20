@@ -63,6 +63,11 @@
       flake = false;
     };
 
+    remotion-skills = {
+      url = "github:remotion-dev/skills";
+      flake = false;
+    };
+
     agent-stuff = {
       url = "github:mitsuhiko/agent-stuff";
       flake = false;

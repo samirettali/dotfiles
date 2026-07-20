@@ -30,6 +30,7 @@ in {
   github = "${inputs.agent-stuff}/skills/github";
   hallmark = "${inputs.hallmark}/skills/hallmark";
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
+  remotion-best-practices = "${inputs.remotion-skills}/skills/remotion-best-practices";
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
 }

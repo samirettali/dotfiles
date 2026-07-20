@@ -273,6 +273,22 @@
         "type": "github"
       }
     },
+    "remotion-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784482759,
+        "narHash": "sha256-mxgAbI6bpI9pl2TJY5+m3KcgwR4cYE7HHs1+q6M/co0=",
+        "owner": "remotion-dev",
+        "repo": "skills",
+        "rev": "62d0a68043d5adb5ff6baa1e38328855172c9d92",
+        "type": "github"
+      },
+      "original": {
+        "owner": "remotion-dev",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agent-stuff": "agent-stuff",
@@ -286,6 +302,7 @@
         "nix4vscode": "nix4vscode",
         "nixpkgs": "nixpkgs_2",
         "nur": "nur",
+        "remotion-skills": "remotion-skills",
         "samirettali-nur": "samirettali-nur",
         "sops-nix": "sops-nix",
         "spoons": "spoons"
