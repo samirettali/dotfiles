@@ -31,6 +31,7 @@ in {
   hallmark = "${inputs.hallmark}/skills/hallmark";
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   remotion-best-practices = "${inputs.remotion-skills}/skills/remotion-best-practices";
+  spotify = ../../../.agents/skills/spotify;
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
 }
