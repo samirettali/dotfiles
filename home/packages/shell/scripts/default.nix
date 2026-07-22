@@ -17,6 +17,7 @@ in {
       (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
       (pkgs.writeShellScriptBin "ticker" (builtins.readFile "${scriptsDir}/ticker.sh"))
       (pkgs.writeShellScriptBin "extract" (builtins.readFile "${scriptsDir}/extract.sh"))
+      (pkgs.writeShellScriptBin "sync-configs" (builtins.readFile "${scriptsDir}/sync-configs.sh"))
       (pkgs.writeShellScriptBin "zv" ''
         set -euo pipefail
 
