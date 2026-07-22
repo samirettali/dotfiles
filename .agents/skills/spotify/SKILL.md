@@ -1,12 +1,12 @@
 ---
 name: spotify
-description: Search and play Spotify music, inspect or append to the playback queue, and create or edit Spotify playlists with spotctl. Use when the user asks to find or play songs, albums, artists, or playlists; manage a Spotify playlist; add music to the queue; or inspect what is queued.
+description: Search and play Spotify music, inspect listening history and top items, manage the playback queue, and create or edit playlists with spotctl. Use when the user asks to find or play music; inspect their top tracks, top artists, or recent listening history; manage a playlist; add music to the queue; or inspect what is queued.
 compatibility: Requires spotctl, Spotify OAuth authentication, and Spotify Premium for queue operations.
 ---
 
 # Spotify
 
-Use `spotctl` for Spotify searches, queue operations, and playlist management. Its stdout is JSON; errors are JSON on stderr.
+Use `spotctl` for Spotify searches, listening statistics, queue operations, and playlist management. Its stdout is JSON; errors are JSON on stderr.
 
 ## Before using it
 
@@ -22,7 +22,7 @@ If `authenticated` is false, ask the user to run:
 spotctl auth login --client-id THEIR_SPOTIFY_CLIENT_ID
 ```
 
-Do not request a client secret. `spotctl` uses OAuth Authorization Code with PKCE.
+Top items require `user-top-read`; recent history requires `user-read-recently-played`. If either scope is absent from `auth status`, ask the user to authenticate again with the same command. Do not request a client secret. `spotctl` uses OAuth Authorization Code with PKCE.
 
 ## Resolve items safely
 
@@ -38,6 +38,30 @@ spotctl search --type playlist --limit 10 "playlist"
 Use IDs or URIs from the JSON response. Match both title and artist; do not blindly select the first result when several plausible matches exist. Ask the user to choose if intent remains ambiguous.
 
 Items may be passed as a Spotify URI, an `open.spotify.com` URL, or a bare track ID.
+
+## Listening statistics
+
+Inspect the user's top tracks or artists:
+
+```sh
+spotctl top tracks --time-range short_term --limit 50
+spotctl top artists --time-range medium_term --limit 50
+spotctl top tracks --time-range long_term --limit 50 --offset 50
+```
+
+Valid time ranges are `short_term` (approximately 4 weeks), `medium_term` (approximately 6 months), and `long_term` (several years). The limit is 1-50; use `--offset` to paginate.
+
+Inspect recently played tracks:
+
+```sh
+spotctl history recent --limit 50
+spotctl history recent --before UNIX_TIMESTAMP_MS
+spotctl history recent --after UNIX_TIMESTAMP_MS
+```
+
+Recent history returns at most 50 tracks per request. Use the millisecond values in the response's `cursors` object with `--before` or `--after`; the two options cannot be combined.
+
+Spotify does not expose extended or lifetime streaming history through its Web API. If the user wants complete listening statistics, direct them to request Extended Streaming History from Spotify's account privacy page and download the archive from the emailed link.
 
 ## Playback
 
