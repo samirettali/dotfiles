@@ -1,7 +1,7 @@
 ---
 name: spotify
-description: Search and play Spotify music, inspect listening history and top items, manage the playback queue, and create or edit playlists with spotctl. Use when the user asks to find or play music; inspect their top tracks, top artists, or recent listening history; manage a playlist; add music to the queue; or inspect what is queued.
-compatibility: Requires spotctl, Spotify OAuth authentication, and Spotify Premium for queue operations.
+description: Search and play Spotify music, inspect listening history and top items, manage the playback queue, and create, edit, or query playlists with spotctl. Use when the user asks to find or play music; inspect their top tracks, top artists, or recent listening history; manage a playlist; check whether a playlist contains a track; add music to the queue; or inspect what is queued.
+compatibility: Requires spotctl. Spotify API operations require OAuth authentication; queue operations also require Spotify Premium. Cached playlist membership checks work offline.
 ---
 
 # Spotify
@@ -10,7 +10,7 @@ Use `spotctl` for Spotify searches, listening statistics, queue operations, and 
 
 ## Before using it
 
-Check that authentication is configured:
+Skip the authentication check when only running `spotctl playlist contains`; it queries the local SQLite cache without network access. For all Spotify API operations, check that authentication is configured:
 
 ```sh
 spotctl auth status
@@ -138,6 +138,33 @@ Delete/unfollow a playlist:
 ```sh
 spotctl playlist delete PLAYLIST_ID
 ```
+
+Cache all owned and followed playlists, including every track:
+
+```sh
+spotctl playlist cache
+```
+
+Check one or more exact track IDs, URIs, or URLs against every cached playlist without contacting Spotify:
+
+```sh
+spotctl playlist contains TRACK_ID
+spotctl playlist contains TRACK_ID spotify:track:OTHER_TRACK_ID
+```
+
+The result preserves input order and reports `contains` plus every matching playlist for each track. Both commands accept `--db PATH`; otherwise they use the platform user cache directory. Refresh the cache before checking when current playlist contents matter. Cache membership checks support tracks only, not episodes.
+
+## Recommendation workflow
+
+When asked to recommend or queue a number of tracks that are not already in any playlist:
+
+1. Use current top items and recent history to guide discovery, applying any requested genre, type, language, or artist constraints.
+2. Search for more candidates than requested and resolve each candidate to an exact track ID.
+3. Run `spotctl playlist cache` once.
+4. Pass all candidate IDs to one bulk `spotctl playlist contains` call.
+5. Keep only results where `contains` is false, then report or queue exactly the requested number in the chosen order.
+
+Do not query the SQLite database directly; use `spotctl playlist contains`.
 
 Spotify implements playlist deletion as unfollowing. Before deleting a playlist or removing items, confirm the target and summarize the destructive change unless the user's request already identifies both unambiguously.
 
