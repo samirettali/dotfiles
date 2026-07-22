@@ -28,6 +28,7 @@
     ./ripgrep.nix
     ./scripts
     ./sesh.nix
+    ./spotctl.nix
     ./spotify-player.nix
     ./tealdeer.nix
     ./tmux.nix
