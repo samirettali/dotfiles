@@ -16,6 +16,7 @@
     ./gh.nix
     ./git-sync.nix
     ./git.nix
+    ./herdr.nix
     ./hwatch.nix
     ./jq.nix
     ./jqp.nix
@@ -53,6 +54,7 @@
     p7zip
     nurPkgs.go-qo
     nurPkgs.hunk
+    nurPkgs.herdr
     scc
     snitch
     sqlite
