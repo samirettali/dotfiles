@@ -40,6 +40,7 @@ that project's `AGENTS.md` to capture it.
 
 - **dotfiles** — `~/dev/dotfiles` (this repo). NixOS + home-manager config.
 - **selfhosted** — `~/dev/selfhosted`. Self-hosted stack (Docker Compose + Ansible), deployed on the `andromeda` host.
+- **nur** — `~/dev/nur`. Personal NUR repository (samirettali/nur); dotfiles consumes it via the `nurPkgs` specialArg.
 
 ## Memory
 
