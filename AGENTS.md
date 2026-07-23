@@ -51,7 +51,7 @@ The `warning: Git tree ... is dirty` line during eval is benign.
 
 ## Skills (Claude Code / Codex / pi)
 
-- Shared skill set lives in `home/packages/shell/coding-agent-skills.nix` (one source of
+- Shared skill set lives in `home/packages/ai/coding-agent-skills.nix` (one source of
   truth: `{ name = dir-with-SKILL.md; }`); each agent materializes it into its own path.
 - External skills are pinned as `flake = false` inputs; `nix flake update` bumps them.
 - Repo-local skills live in `.agents/skills/<name>/` (the standard path pi reads) with a
