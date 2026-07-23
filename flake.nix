@@ -72,6 +72,11 @@
       url = "github:mitsuhiko/agent-stuff";
       flake = false;
     };
+
+    spotctl = {
+      url = "github:samirettali/spotctl";
+      flake = false;
+    };
   };
 
   outputs = {

@@ -305,7 +305,8 @@
         "remotion-skills": "remotion-skills",
         "samirettali-nur": "samirettali-nur",
         "sops-nix": "sops-nix",
-        "spoons": "spoons"
+        "spoons": "spoons",
+        "spotctl": "spotctl"
       }
     },
     "samirettali-nur": {
@@ -361,6 +362,22 @@
       "original": {
         "owner": "Hammerspoon",
         "repo": "Spoons",
+        "type": "github"
+      }
+    },
+    "spotctl": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784768834,
+        "narHash": "sha256-davUPoaXpT4uhR/cZLxzvmGQ/IWNcHqM6mK8YeZdRxc=",
+        "owner": "samirettali",
+        "repo": "spotctl",
+        "rev": "f0755cc8eb97e6306748fd04a2d571ad4def1e41",
+        "type": "github"
+      },
+      "original": {
+        "owner": "samirettali",
+        "repo": "spotctl",
         "type": "github"
       }
     },
