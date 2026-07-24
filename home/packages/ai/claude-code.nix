@@ -9,7 +9,7 @@
     enableMcpIntegration = true;
     skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
     settings = {
-      model = "claude-opus-4-8";
+      model = "claude-opus-5";
       includeCoAuthoredBy = false;
       feedbackSurveyRate = 0;
       theme = "auto";
