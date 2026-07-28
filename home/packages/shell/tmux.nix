@@ -72,7 +72,7 @@ in {
       set -g status-left-length 20
 
       set -g status-right "#{?#{SSH_CONNECTION},#[fg=brightblue#,bold] #{user}@#H #[default],}"
-      set -g window-status-style "fg=#858585"
+      set -g window-status-style "#{?#{==:#{client_theme},light},fg=colour8#,bg=default#,dim,fg=colour8#,bg=default}"
       set -g window-status-current-style "fg=terminal"
 
       set -g pane-active-border-style "bold fg=#858585"
