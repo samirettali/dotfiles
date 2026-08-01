@@ -47,17 +47,29 @@ in {
         theme = "dark";
         hideThinkingBlock = false;
         enabledModels = [
+          "openai-codex/gpt-5.6-sol"
+          "openai-codex/gpt-5.6-terra"
+          "openai-codex/gpt-5.6-luna"
+          "kimi-coding/k3"
+          "kimi-coding/k3-256"
+          "xai/grok-4.5"
           "openrouter/minimax/minimax-m3"
           "openrouter/qwen/qwen3.7-max"
-          "openrouter/deepseek/deepseek-v4-flash"
+          "openrouter/qwen/qwen3.7-plus"
+          "openrouter/qwen/qwen3.7-flash"
+          "openrouter/qwen/qwen3.6-35b-a3b"
+          "openrouter/qwen/qwen3.6-27b"
           "openrouter/deepseek/deepseek-v4-pro"
+          "openrouter/deepseek/deepseek-v4-flash-0731"
           "openrouter/z-ai/glm-5.2"
-          "kimi-coding/k3"
-          "openai-codex/gpt-5.6-sol"
-          "openrouter/anthropic/claude-opus-4.8"
-          "openrouter/anthropic/claude-sonnet-4.6"
+          "openrouter/anthropic/claude-fable-5"
+          "openrouter/anthropic/claude-opus-5"
+          "openrouter/anthropic/claude-sonnet-5"
           "openrouter/google/gemini-3.1-pro-preview"
-          "openrouter/google/gemini-3.5-flash"
+          "openrouter/google/gemini-3.6-flash"
+          "openrouter/google/gemini-3.5-flash-lite"
+          "openrouter/xiaomi/mimo-v2.5"
+          "openrouter/tencent/hy3"
         ];
       };
 
