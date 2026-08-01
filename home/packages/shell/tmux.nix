@@ -17,7 +17,7 @@ in {
     focusEvents = true;
     extraConfig = ''
       set -g extended-keys on
-      set -as terminal-features ',*ghostty*:extkeys'
+      set -as terminal-features ',*ghostty*:extkeys:progressbar'
       set -g extended-keys-format csi-u
 
       bind -r -N "Move window to the left" \
