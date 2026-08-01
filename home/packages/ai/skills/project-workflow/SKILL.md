@@ -5,21 +5,21 @@ description: Work on tasks tracked as GitHub issues in Samir's personal repos �
 
 # Project workflow
 
-Le task dei progetti personali sono **issue GitHub**, raccolte nel Project `dev`
-(<https://github.com/users/samirettali/projects/1>). I repo stanno sotto
-`samirettali/`, i checkout locali in `~/dev/<nome-repo>`.
+Tasks for personal projects are **GitHub issues**, collected in the `dev` Project
+(<https://github.com/users/samirettali/projects/1>). Repos live under
+`samirettali/`, local checkouts in `~/dev/<repo-name>`.
 
-`Priority` (P0–P3) e `Status` sono **campi del Project**, non label.
+`Priority` (P0–P3) and `Status` are **Project fields**, not labels.
 
-**Non decidere `Priority` di tua iniziativa**: la triage la fa Samir. Se te la
-indica lui, impostala pure.
+**Never decide `Priority` on your own**: Samir does the triage. If he tells you
+what it should be, set it.
 
-## Stati
+## Statuses
 
 `📋 Backlog` → `🏗 In progress` → `👀 In review` → `✅ Done`
 
-Backlog e Done sono automatici (workflow del Project: *item added* e *pull
-request merged* / *item closed*). Le due transizioni di mezzo le fai tu:
+Backlog and Done are automatic (Project workflows: *item added* and *pull request
+merged* / *item closed*). The two middle transitions are yours to make:
 
 ```sh
 ITEM=$(gh project item-list 1 --owner samirettali --format json \
@@ -28,89 +28,90 @@ ITEM=$(gh project item-list 1 --owner samirettali --format json \
 
 gh project item-edit --project-id PVT_kwHOALClx84AFfr4 --id "$ITEM" \
   --field-id PVTSSF_lAHOALClx84AFfr4zgDKqo8 \
-  --single-select-option-id <OPZIONE>
+  --single-select-option-id <OPTION>
 ```
 
-`<OPZIONE>`: `In progress` = `4ddd38ae`, `In review` = `f78a3bae`.
+`<OPTION>`: `In progress` = `4ddd38ae`, `In review` = `f78a3bae`.
 
-Gli ID qui sopra sono fissi perché `item-edit` non accetta i nomi. Se un giorno
-smettono di funzionare — Project o campo ricreati — ripescali con:
+The IDs above are hardcoded because `item-edit` does not accept names. If they
+ever stop working — Project or field recreated — look them up again with:
 
 ```sh
 gh project field-list 1 --owner samirettali --format json
 ```
 
-## Prendere in carico una issue
+## Picking up an issue
 
-1. Leggi la issue **con i commenti** — il contesto vero spesso sta lì, non nel corpo:
+1. Read the issue **with its comments** — the real context is often there, not in
+   the body:
 
    ```sh
    gh issue view <N> --repo samirettali/<repo> --comments
    ```
 
-2. Leggi il contesto del progetto: `AGENTS.md`, l'indice di `docs/`, e
-   `JOURNAL.md` se esiste.
-3. Crea un branch dedicato: `git switch -c issue-<N>-<slug>`.
-4. Porta la issue su `🏗 In progress` (vedi [Stati](#stati)).
-5. Se qualcosa nella issue non torna o è ambiguo, **chiedi prima di scrivere
-   codice**. Una issue scritta mesi fa può descrivere un problema che nel
-   frattempo è cambiato.
+2. Read the project context: `AGENTS.md`, the `docs/` index, and `JOURNAL.md` if
+   it exists.
+3. Create a dedicated branch: `git switch -c issue-<N>-<slug>`.
+4. Move the issue to `🏗 In progress` (see [Statuses](#statuses)).
+5. If anything in the issue does not add up or is ambiguous, **ask before writing
+   code**. An issue written months ago may describe a problem that has since
+   changed.
 
-## Aprire una issue
+## Opening an issue
 
-1. Cerca prima i doppioni:
+1. Search for duplicates first:
 
    ```sh
-   gh issue list --repo samirettali/<repo> --search "<parole chiave>" --state all
+   gh issue list --repo samirettali/<repo> --search "<keywords>" --state all
    ```
 
-2. Scrivi una descrizione **autosufficiente**. Il lettore è qualcuno — o un
-   agente — che la prende a freddo mesi dopo, senza memoria di come è saltata
-   fuori:
+2. Write a **self-sufficient** description. The reader is someone — or some agent
+   — picking it up cold months later, with no memory of how it surfaced:
 
-   - cosa non va
-   - **dove**: file e funzione, con lo snippet quando aiuta a capire
-   - perché conta, in concreto
-   - come si ripara — e se non lo sai, scrivi che è da indagare invece di
-     inventare una causa plausibile
-   - cosa verificare dopo
-   - quali doc vanno aggiornati quando atterra
+   - what is wrong
+   - **where**: file and function, with the snippet when it helps
+   - why it matters, in concrete terms
+   - what the fix looks like — and if you don't know, say it needs investigating
+     rather than inventing a plausible cause
+   - what to verify afterwards
+   - which docs need updating when it lands
 
-3. Crea passando **sempre** il Project, senza contare sull'auto-add (il piano
-   Free ne consente uno solo, su un repo solo):
+3. Always pass the Project explicitly, don't rely on auto-add (the Free plan
+   allows a single auto-add workflow, on a single repo):
 
    ```sh
    gh issue create --repo samirettali/<repo> --project "dev" \
-     --title "<titolo>" --body "<corpo>"
+     --title "<title>" --body "<body>"
    ```
 
-4. La nuova issue entra in `📋 Backlog` da sola. Non impostare `Priority`.
+4. The new issue lands in `📋 Backlog` by itself. Do not set `Priority`.
 
-## Chiudere
+## Closing
 
-1. Se il comportamento è cambiato, aggiorna i doc **nella stessa PR**. Un doc
-   rimandato alla PR successiva è un doc che resta indietro.
-2. Apri la PR con il riferimento che chiude la issue:
+1. If behaviour changed, update the docs **in the same PR**. A doc deferred to a
+   later PR is a doc that falls behind.
+2. Open the PR with the reference that closes the issue:
 
    ```sh
-   gh pr create --title "<titolo>" --body "Closes #<N>
+   gh pr create --title "<title>" --body "Closes #<N>
 
-   <cosa cambia e come è stato verificato>"
+   <what changes and how it was verified>"
    ```
 
-3. Porta la issue su `👀 In review` (vedi [Stati](#stati)).
-4. Non chiudere la issue a mano, e non metterla su `✅ Done`: ci pensa il merge.
+3. Move the issue to `👀 In review` (see [Statuses](#statuses)).
+4. Do not close the issue by hand, and do not set it to `✅ Done`: the merge takes
+   care of it.
 
-## Documentazione
+## Documentation
 
-- `AGENTS.md` resta **sottile**: cos'è il progetto, comandi, convenzioni, e un
-  indice di una riga per ogni pagina di `docs/`.
-- Il resto sta in `docs/`, versionato insieme al codice. Niente wiki: vive in un
-  repo separato, non passa dalla review, e i riferimenti al codice si rompono in
-  silenzio.
+- `AGENTS.md` stays **thin**: what the project is, commands, conventions, and a
+  one-line index entry per `docs/` page.
+- Everything else lives in `docs/`, versioned alongside the code. No wiki: it
+  lives in a separate repo, skips review, and its links into the code break
+  silently.
 
-## Note
+## Notes
 
-- I TODO nel codice restano nel codice. Se ne trasformi uno in issue, cita file e
-  riga nella issue e **non rimuovere il commento** senza che sia stato chiesto.
-- I worktree per ora si gestiscono a mano: non sono parte di questo flusso.
+- TODOs in the code stay in the code. If you turn one into an issue, cite file and
+  line in the issue and **do not remove the comment** unless asked.
+- Worktrees are handled manually for now: they are not part of this flow.
