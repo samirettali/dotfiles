@@ -37,15 +37,15 @@ in {
       ".pi/pi-source".source = piPackageDir;
 
       ".pi/agent/settings.json".text = builtins.toJSON {
-        defaultProvider = "openai-codex";
-        defaultModel = "gpt-5.6-sol";
-        defaultThinkingLevel = "medium";
         packages = [
           "${piMcpAdapter}"
           "${piProviderKimiCode}"
         ];
         theme = "dark";
         hideThinkingBlock = false;
+        defaultProvider = "openai-codex";
+        defaultModel = "gpt-5.6-sol";
+        defaultThinkingLevel = "medium";
         enabledModels = [
           "openai-codex/gpt-5.6-sol"
           "openai-codex/gpt-5.6-terra"
@@ -70,6 +70,7 @@ in {
           "openrouter/google/gemini-3.5-flash-lite"
           "openrouter/xiaomi/mimo-v2.5"
           "openrouter/tencent/hy3"
+          "openrouter/stepfun/step-3.7-flash"
         ];
       };
 
