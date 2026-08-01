@@ -51,7 +51,7 @@ in {
           "openai-codex/gpt-5.6-terra"
           "openai-codex/gpt-5.6-luna"
           "kimi-coding/k3"
-          "kimi-coding/k3-256"
+          "kimi-coding/k3-256k"
           "xai/grok-4.5"
           "openrouter/minimax/minimax-m3"
           "openrouter/qwen/qwen3.7-max"
