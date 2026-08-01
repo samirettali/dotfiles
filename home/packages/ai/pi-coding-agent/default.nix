@@ -71,6 +71,8 @@ in {
           "openrouter/xiaomi/mimo-v2.5"
           "openrouter/tencent/hy3"
           "openrouter/stepfun/step-3.7-flash"
+          "openrouter/thinkingmachines/inkling"
+          "openrouter/thinkingmachines/inkling-small"
         ];
       };
 
