@@ -5,6 +5,7 @@
 
 import argparse
 import base64
+import math
 import mimetypes
 import os
 from pathlib import Path
@@ -13,19 +14,15 @@ import tempfile
 
 ASPECT_RATIOS = ["1:1", "3:2", "2:3", "4:3", "3:4", "16:9", "9:16", "21:9", "5:4", "4:5"]
 
-OPENAI_SIZES = {
-    "1:1": "1024x1024",
-    "16:9": "1536x1024",
-    "3:2": "1536x1024",
-    "4:3": "1536x1024",
-    "9:16": "1024x1536",
-    "2:3": "1024x1536",
-    "3:4": "1024x1536",
-}
+# gpt-image-2 takes a free-form size: edges are multiples of 16, at most 3840px,
+# and the total pixel count must stay between these bounds.
+OPENAI_PIXELS = {"1K": 1024 * 1024, "2K": 2048 * 2048, "4K": 3840 * 2160}
+OPENAI_MAX_EDGE = 3840
+OPENAI_PIXEL_RANGE = (655_360, 8_294_400)
 
 DEFAULT_MODELS = {
     "gemini": "gemini-3-pro-image",
-    "openai": "gpt-image-1",
+    "openai": "gpt-image-2",
 }
 
 SUFFIXES = {
@@ -46,7 +43,13 @@ def parse_args() -> argparse.Namespace:
         "--size",
         choices=["1K", "2K", "4K"],
         default="1K",
-        help="Gemini resolution; mapped to OpenAI quality low/medium/high",
+        help="Long-edge resolution tier",
+    )
+    parser.add_argument(
+        "--quality",
+        choices=["low", "medium", "high", "auto"],
+        default="high",
+        help="OpenAI rendering quality; ignored by Gemini",
     )
     parser.add_argument(
         "--reference",
@@ -97,6 +100,28 @@ def generate_gemini(args: argparse.Namespace, references: list[tuple[bytes, str]
     raise SystemExit("Gemini returned no image; the prompt may have been blocked")
 
 
+def openai_size(aspect_ratio: str, tier: str) -> str:
+    width_ratio, height_ratio = (int(part) for part in aspect_ratio.split(":"))
+    ratio = width_ratio / height_ratio
+    pixels = OPENAI_PIXELS[tier]
+
+    def snap(value: float) -> int:
+        return max(256, min(OPENAI_MAX_EDGE, int(round(value / 16)) * 16))
+
+    width = snap(math.sqrt(pixels * ratio))
+    height = snap(width / ratio)
+    if width == OPENAI_MAX_EDGE:
+        height = snap(OPENAI_MAX_EDGE / ratio)
+
+    minimum, maximum = OPENAI_PIXEL_RANGE
+    while width * height > maximum and width > 256:
+        width -= 16
+        height = snap(width / ratio)
+    if not minimum <= width * height <= maximum:
+        raise SystemExit(f"{aspect_ratio} at {tier} is outside the sizes OpenAI accepts")
+    return f"{width}x{height}"
+
+
 def generate_openai(args: argparse.Namespace, references: list[tuple[bytes, str]]) -> tuple[bytes, str]:
     import httpx
 
@@ -104,18 +129,13 @@ def generate_openai(args: argparse.Namespace, references: list[tuple[bytes, str]
     if not api_key:
         raise SystemExit("OPENAI_API_KEY is not set")
 
-    size = OPENAI_SIZES.get(args.aspect_ratio)
-    if size is None:
-        raise SystemExit(f"--aspect-ratio {args.aspect_ratio} is not supported by OpenAI")
-    quality = {"1K": "low", "2K": "medium", "4K": "high"}[args.size]
-
     output_format = args.output.suffix.lstrip(".").lower().replace("jpg", "jpeg")
     headers = {"Authorization": f"Bearer {api_key}"}
     data = {
         "model": args.model or DEFAULT_MODELS["openai"],
         "prompt": args.prompt,
-        "size": size,
-        "quality": quality,
+        "size": openai_size(args.aspect_ratio, args.size),
+        "quality": args.quality,
         "n": "1",
         "output_format": output_format,
     }

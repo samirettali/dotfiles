@@ -10,7 +10,7 @@ Create images from a prompt, or edit existing ones by passing them as references
 ## Generate
 
 1. Require `GEMINI_API_KEY` in the environment (`OPENAI_API_KEY` for `--provider openai`). Never print or store it.
-2. Pick a model from [references/models.md](references/models.md). The default `gemini-3-pro-image` is the right choice unless the user wants cheap drafts.
+2. Pick a model from [references/models.md](references/models.md), which also lists the Nano Banana names. The default `gemini-3-pro-image` (Nano Banana Pro) is the right choice unless the user wants cheap drafts.
 3. Use an output path that does not already exist.
 4. Run the bundled script:
 
@@ -37,7 +37,7 @@ uv run scripts/generate_image.py \
 
 ## Variations
 
-Run the script once per variation with a distinct output path and a different model or prompt (`hero-a.png`, `hero-b.png`). Draft with `gemini-3.1-flash-image`, then regenerate the chosen direction with `gemini-3-pro-image`.
+Run the script once per variation with a distinct output path and a different model or prompt (`hero-a.png`, `hero-b.png`). Draft with `gemini-3.1-flash-image` (Nano Banana 2), then regenerate the chosen direction with `gemini-3-pro-image` (Nano Banana Pro).
 
 ## Constraints
 
