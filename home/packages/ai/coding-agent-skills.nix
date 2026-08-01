@@ -34,10 +34,12 @@ in {
   better-ui = "${inputs.jakubkrehel-skills}/skills/better-ui";
   commit = "${inputs.agent-stuff}/skills/commit";
   frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
+  generate-image = ./skills/generate-image;
   generate-speech = ./skills/generate-speech;
   github = "${inputs.agent-stuff}/skills/github";
   hallmark = "${inputs.hallmark}/skills/hallmark";
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
+  project-workflow = ./skills/project-workflow;
   remotion-best-practices = "${inputs.remotion-skills}/skills/remotion-best-practices";
   spotify = "${spotifySkill}";
   uv = "${inputs.agent-stuff}/skills/uv";
