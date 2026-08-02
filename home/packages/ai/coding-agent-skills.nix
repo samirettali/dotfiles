@@ -42,6 +42,7 @@ in {
   generate-speech = ./skills/generate-speech;
   github = "${inputs.agent-stuff}/skills/github";
   hallmark = "${inputs.hallmark}/skills/hallmark";
+  i-have-adhd = ./skills/i-have-adhd;
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   project-workflow = ./skills/project-workflow;
   remotion-best-practices = "${inputs.remotion-skills}/skills/remotion-best-practices";
