@@ -1,0 +1,54 @@
+onboarding = false
+
+[theme]
+name = "terminal"
+
+[theme.custom]
+panel_bg = "reset"
+accent = "green"
+overlay0 = "#858585"
+
+[terminal]
+shell_mode = "auto"
+new_cwd = "follow"
+
+[keys]
+prefix = "ctrl+b"
+reload_config = "prefix+r"
+resize_mode = "prefix+shift+r"
+previous_tab = ["prefix+p", "prefix+ctrl+p"]
+next_tab = ["prefix+n", "prefix+ctrl+n"]
+focus_pane_left = ["prefix+h", "prefix+ctrl+h"]
+focus_pane_down = ["prefix+j", "prefix+ctrl+j"]
+focus_pane_up = ["prefix+k", "prefix+ctrl+k"]
+focus_pane_right = ["prefix+l", "prefix+ctrl+l"]
+# Prevent tmux's Shift-HJKL resize keys from swapping Herdr panes.
+swap_pane_left = ""
+swap_pane_down = ""
+swap_pane_up = ""
+swap_pane_right = ""
+cycle_pane_next = ""
+# Closest equivalent to tmux's last-window binding.
+last_pane = "prefix+tab"
+
+[ui]
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"
+mouse_capture = true
+copy_on_select = true
+confirm_close = true
+prompt_new_tab_name = false
+prompt_new_workspace_name = false
+pane_borders = true
+pane_gaps = false
+hide_tab_bar_when_single_tab = false
+accent = "green"
+
+[ui.toast]
+delivery = "off"
+
+[ui.sound]
+enabled = false
+
+[advanced]
+scrollback_limit_bytes = 10000000
