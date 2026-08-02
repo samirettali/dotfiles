@@ -57,6 +57,24 @@ The `warning: Git tree ... is dirty` line during eval is benign.
 - Repo-local skills live in `.agents/skills/<name>/` (the standard path pi reads) with a
   symlink from `.claude/skills/<name>` for Claude Code. See `.agents/skills/add-skill`.
 
+## Agent bus (cross-session messaging)
+
+`home/packages/ai/agent-bus/` lets one agent session message another (pi ↔ Claude Code).
+`bus.ts` is shared verbatim by both sides — nix copies it into the pi extension dir *and*
+into the CLI's store dir, so edit it in one place only.
+
+- **Delivery is end-of-turn, by design.** pi uses `sendUserMessage(..., deliverAs: "followUp")`;
+  flip `DELIVER_AS` to `"steer"` for mid-turn interrupts. Claude has no mid-turn equivalent
+  short of a PostToolUse hook on every tool call.
+- **Claude Stop hook must use `hookSpecificOutput.additionalContext`, not `decision: "block"`** —
+  `block` shows the reason to the *user* and ends the turn; Claude never sees it.
+- **Session ids are sha256-hashed, not sliced.** pi session files are
+  `<timestamp>_<uuid>.jsonl`, so any raw prefix collides across all sessions started the same day.
+- **Liveness is by pid**, walked up the process tree from the hook (hooks are short-lived
+  grandchildren, so their own pid is useless). SessionEnd unregisters the clean case.
+- `pi --list-models` does *not* load extensions — a broken extension produces no error there.
+  Test extension changes with a real `pi -p` session.
+
 ## Gotchas
 
 - **`xps` full eval / `nix flake check` currently fails** on a pre-existing nixpkgs

@@ -96,6 +96,9 @@ in {
         exclude = ["./node_modules"];
       };
 
+      ".pi/agent/extensions/agent-bus/index.ts".source = ../agent-bus/pi-extension.ts;
+      ".pi/agent/extensions/agent-bus/bus.ts".source = ../agent-bus/bus.ts;
+
       ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
       ".pi/agent/extensions/memory.ts".source = ./extensions/memory.ts;
       ".pi/agent/extensions/permission-gate.ts".source = ./extensions/permission-gate.ts;
