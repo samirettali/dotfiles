@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./colima.nix
     ./gpg.nix
     ./hammerspoon.nix
     ./sketchybar.nix
@@ -14,7 +15,6 @@
 
   home.packages = with pkgs; [
     betterdisplay
-    docker
     hidden-bar
     maccy
     pika
