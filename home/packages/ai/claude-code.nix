@@ -6,6 +6,17 @@
 }: {
   programs.claude-code = {
     enable = lib.mkDefault true;
+    # tmux names panes after the resolved executable, which would be the
+    # `.claude-wrapped` binary makeBinaryWrapper leaves behind.
+    package = pkgs.claude-code.overrideAttrs (old: {
+      postInstall =
+        (old.postInstall or "")
+        + ''
+          mkdir -p $out/libexec
+          mv $out/bin/.claude-wrapped $out/libexec/claude
+          ln -s ../libexec/claude $out/bin/.claude-wrapped
+        '';
+    });
     enableMcpIntegration = true;
     skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
     settings = {
