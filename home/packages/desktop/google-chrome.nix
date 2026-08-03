@@ -8,16 +8,14 @@
     enable = lib.elem pkgs.stdenv.hostPlatform.system ["aarch64-darwin" "x86_64-linux"];
     package = pkgs.google-chrome;
     extensions = [
-      {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock
+      {id = "ddkjiahejlhfcafbddmgiahcphecmpfh";} # ublock origin lite
       {id = "dbepggeogbaibhgnhhndojpepiihcmeb";} # vimium
-      {id = "oboonakemofpalcgghocfoadofidjkkk";} # keepassxc
-      {id = "niloccemoadcdkdjlinkgdfekeahmflj";} # pocket
       {id = "gbmdgpbipfallnflgajpaliibnhdgobh";} # json viewer
       {id = "mnjggcdmjocbbbhaepdhchncahnbgone";} # sponsorship block
       {id = "acmacodkjbdgmoleebolmdjonilkdbch";} # rabby
       {id = "bfnaelmomeimhlpmgjnjophhpkkoljpa";} # phantom
-      {id = "hnfanknocfeofbddgcijnmhnfnkdnaad";} # coinbase
       {id = "dmkamcknogkgcdfhhbddcghachkejeap";} # keplr
+      {id = "nngceckbapebfimnlniiiahkandclblb";} # bitwarden
     ];
   };
 
