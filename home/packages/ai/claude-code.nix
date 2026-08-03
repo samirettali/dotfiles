@@ -8,11 +8,6 @@
     enable = lib.mkDefault true;
     # tmux names panes after the resolved executable, which would be the
     # `.claude-wrapped` binary makeBinaryWrapper leaves behind.
-    #
-    # The extra wrapper adds `--allow-dangerously-skip-permissions`, which only
-    # makes `bypassPermissions` reachable in the shift+tab cycle without
-    # enabling it by default. There is no settings.json equivalent: the cycle
-    # checks a session flag that only these CLI flags set.
     package = pkgs.claude-code.overrideAttrs (old: {
       postInstall =
         (old.postInstall or "")
@@ -33,6 +28,7 @@
       feedbackSurveyRate = 0;
       theme = "auto";
       effortLevel = "medium";
+      skipDangerousModePermissionPrompt = true;
       tui = "fullscreen";
       env = {
         CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL = "1";
