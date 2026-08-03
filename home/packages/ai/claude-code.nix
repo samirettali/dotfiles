@@ -8,6 +8,11 @@
     enable = lib.mkDefault true;
     # tmux names panes after the resolved executable, which would be the
     # `.claude-wrapped` binary makeBinaryWrapper leaves behind.
+    #
+    # The extra wrapper adds `--allow-dangerously-skip-permissions`, which only
+    # makes `bypassPermissions` reachable in the shift+tab cycle without
+    # enabling it by default. There is no settings.json equivalent: the cycle
+    # checks a session flag that only these CLI flags set.
     package = pkgs.claude-code.overrideAttrs (old: {
       postInstall =
         (old.postInstall or "")
@@ -15,6 +20,9 @@
           mkdir -p $out/libexec
           mv $out/bin/.claude-wrapped $out/libexec/claude
           ln -s ../libexec/claude $out/bin/.claude-wrapped
+          mv $out/bin/claude $out/libexec/claude-env
+          makeBinaryWrapper $out/libexec/claude-env $out/bin/claude \
+            --add-flags "--allow-dangerously-skip-permissions"
         '';
     });
     enableMcpIntegration = true;
