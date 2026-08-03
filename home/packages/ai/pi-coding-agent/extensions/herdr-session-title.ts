@@ -44,6 +44,7 @@ function cleanTitle(raw: string): string {
 
 export default function herdrSessionTitle(pi: ExtensionAPI) {
 	let done = false;
+	let reported: string | undefined;
 
 	async function generate(text: string, ctx: ExtensionContext): Promise<string> {
 		const model = ctx.modelRegistry.find(PROVIDER, MODEL_ID);
@@ -75,8 +76,11 @@ export default function herdrSessionTitle(pi: ExtensionAPI) {
 	}
 
 	async function report(title: string): Promise<void> {
-		const paneId = process.env.HERDR_ACTIVE_PANE_ID;
-		if (!paneId) return;
+		// Pane shells get HERDR_PANE_ID; HERDR_ACTIVE_PANE_ID only exists for
+		// commands Herdr itself invokes.
+		const paneId = process.env.HERDR_PANE_ID || process.env.HERDR_ACTIVE_PANE_ID;
+		if (!paneId || title === reported) return;
+		reported = title;
 		await pi.exec("herdr", [
 			"pane",
 			"report-metadata",
@@ -88,21 +92,25 @@ export default function herdrSessionTitle(pi: ExtensionAPI) {
 		]);
 	}
 
-	pi.on("input", async (event, ctx) => {
+	pi.on("input", (event, ctx) => {
 		if (done || event.source !== "interactive") return;
 		const text = event.text.trim();
 		if (!text || text.startsWith("/")) return;
 		done = true;
 
-		let title = fallbackTitle(text);
-		try {
-			title = cleanTitle(await generate(text, ctx)) || title;
-		} catch {
-			// Keep the truncated first message.
-		}
+		// Detached on purpose: awaiting here would delay the first turn by a
+		// full model round-trip.
+		void (async () => {
+			let title = fallbackTitle(text);
+			try {
+				title = cleanTitle(await generate(text, ctx)) || title;
+			} catch {
+				// Keep the truncated first message.
+			}
 
-		pi.setSessionName(title);
-		await report(title);
+			pi.setSessionName(title);
+			await report(title);
+		})();
 	});
 
 	pi.on("session_info_changed", async (event) => {
