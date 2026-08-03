@@ -28,6 +28,8 @@ in {
     PI_PACKAGE_DIR = "${config.home.homeDirectory}/.pi/pi-source";
     PI_TELEMETRY = "0";
     PI_SKIP_VERSION_CHECK = "1";
+    HERDR_TITLE_PROVIDER = "openai-codex";
+    HERDR_TITLE_MODEL = "gpt-5.6-luna";
     PI_AI_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/index.js";
     PI_AI_OAUTH_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/oauth.js";
   };
@@ -100,6 +102,7 @@ in {
       ".pi/agent/extensions/agent-bus/bus.ts".source = ../agent-bus/bus.ts;
 
       ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
+      ".pi/agent/extensions/herdr-session-title.ts".source = ./extensions/herdr-session-title.ts;
       ".pi/agent/extensions/memory.ts".source = ./extensions/memory.ts;
       ".pi/agent/extensions/permission-gate.ts".source = ./extensions/permission-gate.ts;
       ".pi/agent/extensions/protected-paths.ts".source = ./extensions/protected-paths.ts;
@@ -107,6 +110,7 @@ in {
       ".pi/agent/extensions/x-search.ts".source = ./extensions/x-search.ts;
 
       ".pi/agent/extensions/node_modules/@earendil-works/pi-coding-agent".source = piRuntimeRoot;
+      ".pi/agent/extensions/node_modules/@earendil-works/pi-ai".source = piNodeModules + "/@earendil-works/pi-ai";
       ".pi/agent/extensions/node_modules/@earendil-works/pi-tui".source = piNodeModules + "/@earendil-works/pi-tui";
       ".pi/agent/extensions/node_modules/typebox".source = piNodeModules + "/typebox";
       ".pi/agent/extensions/node_modules/@mariozechner/pi-coding-agent".source = piRuntimeRoot;
