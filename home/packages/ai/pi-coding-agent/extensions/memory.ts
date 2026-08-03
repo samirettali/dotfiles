@@ -9,8 +9,8 @@
  * - When inactive, does nothing at all
  */
 
-import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
-import { Key } from "@mariozechner/pi-tui";
+import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { Key } from "@earendil-works/pi-tui";
 import { existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
