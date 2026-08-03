@@ -1,6 +1,5 @@
-{config, ...}: let
-  base = builtins.readFile ./agents-memory.md;
-  content = base + config.dotfiles.agentsMemory.extra;
+_: let
+  content = builtins.readFile ./agents.md;
 in {
   # Claude Code reads CLAUDE.md, not AGENTS.md.
   home.file = {

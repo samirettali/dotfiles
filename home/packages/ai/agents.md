@@ -45,15 +45,21 @@ that project's `AGENTS.md` to capture it.
 - **dotfiles** — `~/dev/dotfiles` (this repo). NixOS + home-manager config.
 - **selfhosted** — `~/dev/selfhosted`. Self-hosted stack (Docker Compose + Ansible), deployed on the `andromeda` host.
 - **nur** — `~/dev/nur`. Personal NUR repository (samirettali/nur); dotfiles consumes it via the `nurPkgs` specialArg.
+- **sottocasa** — `~/dev/sottocasa`. Multi-tenant booking product (Go API + React
+  owner panel). Dev runs on `andromeda` (air + pnpm dev), served tailnet-only at
+  https://sottocasa-dev.samirettali.com via the side-projects proxy. ZITADEL
+  identity managed by OpenTofu under infra/.
+- **side-projects** — `~/dev/side-projects`. Small personal projects plus the
+  shared tailnet-only Caddy that fronts host-run dev servers at
+  *.samirettali.com. Deployed by the selfhosted Ansible playbook.
 
 ## Memory
 
 - This very file lives in the dotfiles repo: to update these memories, edit
-  `~/dev/dotfiles/home/packages/ai/agents-memory.md` (host-specific extras come
-  from `config.dotfiles.agentsMemory.extra`). The deployed copies
-  (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.pi/agent/AGENTS.md`) are
-  read-only home-manager symlinks into the nix store; changes land on the next
-  home-manager switch.
+  `~/dev/dotfiles/home/packages/ai/agents.md`. It is identical on every host. The
+  deployed copies (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`,
+  `~/.pi/agent/AGENTS.md`) are read-only home-manager symlinks into the nix
+  store; changes land on the next home-manager switch.
 - Never use a built-in "memory" tool or feature. I use multiple agents (Claude
   Code, Codex, pi) and per-tool memories aren't shared — they drift and get lost.
   `AGENTS.md` is the single source of persistent project knowledge.

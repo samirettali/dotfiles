@@ -10,12 +10,6 @@
         type = with lib.types; listOf str;
         default = [];
       };
-
-      agentsMemory.extra = lib.mkOption {
-        type = lib.types.lines;
-        default = "";
-        description = "Host-specific text appended to the global agent memory files.";
-      };
     };
 
     features = {
