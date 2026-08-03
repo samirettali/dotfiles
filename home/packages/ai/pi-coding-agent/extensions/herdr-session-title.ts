@@ -13,7 +13,8 @@
  */
 
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { completeSimple } from "@earendil-works/pi-ai";
+import type { TextContent } from "@earendil-works/pi-ai";
+import { completeSimple } from "@earendil-works/pi-ai/compat";
 
 const PROVIDER = process.env.HERDR_TITLE_PROVIDER || "openai-codex";
 const MODEL_ID = process.env.HERDR_TITLE_MODEL || "gpt-5.6-luna";
@@ -68,8 +69,8 @@ export default function herdrSessionTitle(pi: ExtensionAPI) {
 		if (message.stopReason === "error") throw new Error(message.errorMessage ?? "title request failed");
 
 		return message.content
-			.filter((part): part is { type: "text"; text: string } => part.type === "text")
-			.map((part) => part.text)
+			.filter((part): part is TextContent => part.type === "text")
+			.map((part: TextContent) => part.text)
 			.join(" ");
 	}
 
