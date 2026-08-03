@@ -43,6 +43,7 @@ in {
   github = "${inputs.agent-stuff}/skills/github";
   hallmark = "${inputs.hallmark}/skills/hallmark";
   i-have-adhd = ./skills/i-have-adhd;
+  live-ui-variants = ./skills/live-ui-variants;
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   project-workflow = ./skills/project-workflow;
   remotion-best-practices = "${inputs.remotion-skills}/skills/remotion-best-practices";
