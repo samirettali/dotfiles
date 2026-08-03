@@ -1,6 +1,5 @@
 {nurPkgs, ...}: {
   imports = [
-    ./agent-bus
     ./agents.nix
     ./antigravity-cli.nix
     ./claude-code.nix

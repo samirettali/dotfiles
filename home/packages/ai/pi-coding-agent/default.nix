@@ -98,13 +98,10 @@ in {
         exclude = ["./node_modules"];
       };
 
-      ".pi/agent/extensions/agent-bus/index.ts".source = ../agent-bus/pi-extension.ts;
-      ".pi/agent/extensions/agent-bus/bus.ts".source = ../agent-bus/bus.ts;
-
       ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
       ".pi/agent/extensions/herdr-session-title.ts".source = ./extensions/herdr-session-title.ts;
       ".pi/agent/extensions/memory.ts".source = ./extensions/memory.ts;
-      ".pi/agent/extensions/permission-gate.ts".source = ./extensions/permission-gate.ts;
+      # ".pi/agent/extensions/permission-gate.ts".source = ./extensions/permission-gate.ts;
       ".pi/agent/extensions/protected-paths.ts".source = ./extensions/protected-paths.ts;
       ".pi/agent/extensions/system-prompt.ts".source = ./extensions/system-prompt.ts;
       ".pi/agent/extensions/x-search.ts".source = ./extensions/x-search.ts;

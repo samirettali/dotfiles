@@ -29,6 +29,7 @@
     cat ${./skills/spotify/listening-profile.md} >> $out/SKILL.md
   '';
 in {
+  agent-messaging = ./skills/agent-messaging;
   better-accessibility = "${inputs.jakubkrehel-skills}/skills/better-accessibility";
   better-colors = "${inputs.jakubkrehel-skills}/skills/better-colors";
   better-interface = "${inputs.jakubkrehel-skills}/skills/better-interface";
