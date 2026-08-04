@@ -16,6 +16,8 @@
 
   herdrEnabled = builtins.elem nurPkgs.herdr config.home.packages;
 
+  modelsConfig = builtins.fromJSON (builtins.readFile ./models.json);
+
   skills = import ../coding-agent-skills.nix {inherit inputs pkgs;};
   skillFiles =
     lib.mapAttrs'
@@ -55,34 +57,11 @@ in {
         defaultProvider = "openai-codex";
         defaultModel = "gpt-5.6-sol";
         defaultThinkingLevel = "medium";
-        enabledModels = [
-          "openai-codex/gpt-5.6-sol"
-          "openai-codex/gpt-5.6-terra"
-          "openai-codex/gpt-5.6-luna"
-          "kimi-coding/k3"
-          "kimi-coding/k3-256k"
-          "xai/grok-4.5"
-          "openrouter/minimax/minimax-m3"
-          "openrouter/qwen/qwen3.8-max"
-          "openrouter/qwen/qwen3.7-plus"
-          "openrouter/qwen/qwen3.7-flash"
-          "openrouter/qwen/qwen3.6-35b-a3b"
-          "openrouter/qwen/qwen3.6-27b"
-          "openrouter/deepseek/deepseek-v4-pro"
-          "openrouter/deepseek/deepseek-v4-flash-0731"
-          "openrouter/z-ai/glm-5.2"
-          "openrouter/anthropic/claude-fable-5"
-          "openrouter/anthropic/claude-opus-5"
-          "openrouter/anthropic/claude-sonnet-5"
-          "openrouter/google/gemini-3.1-pro-preview"
-          "openrouter/google/gemini-3.6-flash"
-          "openrouter/google/gemini-3.5-flash-lite"
-          "openrouter/xiaomi/mimo-v2.5"
-          "openrouter/tencent/hy3"
-          "openrouter/stepfun/step-3.7-flash"
-          "openrouter/thinkingmachines/inkling"
-          "openrouter/thinkingmachines/inkling-small"
-        ];
+        enabledModels = modelsConfig.enabledModels;
+      };
+
+      ".pi/agent/models.json".text = builtins.toJSON {
+        inherit (modelsConfig) providers;
       };
 
       ".pi/agent/extensions/package.json".text = builtins.toJSON {

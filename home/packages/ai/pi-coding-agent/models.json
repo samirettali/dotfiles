@@ -1,0 +1,180 @@
+{
+  "enabledModels": [
+    "openai-codex/gpt-5.6-sol",
+    "openai-codex/gpt-5.6-terra",
+    "openai-codex/gpt-5.6-luna",
+    "kimi-coding/k3",
+    "kimi-coding/k3-256k",
+    "xai/grok-4.5",
+    "openrouter/minimax/minimax-m3",
+    "openrouter/qwen/qwen3.8-max",
+    "openrouter/qwen/qwen3.7-plus",
+    "openrouter/qwen/qwen3.7-flash",
+    "openrouter/qwen/qwen3.6-35b-a3b",
+    "openrouter/qwen/qwen3.6-27b",
+    "openrouter/deepseek/deepseek-v4-pro",
+    "openrouter/deepseek/deepseek-v4-flash-0731",
+    "openrouter/z-ai/glm-5.2",
+    "openrouter/anthropic/claude-fable-5",
+    "openrouter/anthropic/claude-opus-5",
+    "openrouter/anthropic/claude-sonnet-5",
+    "openrouter/google/gemini-3.1-pro-preview",
+    "openrouter/google/gemini-3.6-flash",
+    "openrouter/google/gemini-3.5-flash-lite",
+    "openrouter/xiaomi/mimo-v2.5",
+    "openrouter/tencent/hy3",
+    "openrouter/stepfun/step-3.7-flash",
+    "openrouter/thinkingmachines/inkling",
+    "openrouter/thinkingmachines/inkling-small",
+    "openrouter/poolside/laguna-s-2.1",
+    "openrouter/meta/muse-spark-1.1",
+    "openrouter/inclusionai/ling-3.0-flash:free"
+  ],
+  "providers": {
+    "openrouter": {
+      "baseUrl": "https://openrouter.ai/api/v1",
+      "api": "openai-completions",
+      "modelOverrides": {
+        "z-ai/glm-5.2": {
+          "name": "OpenRouter GLM 5.2",
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "data_collection": "deny",
+              "only": [
+                "novita"
+              ]
+            }
+          }
+        },
+        "moonshotai/kimi-k2.7-code": {
+          "name": "OpenRouter Kimi K2.7 Code",
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "data_collection": "deny",
+              "only": [
+                "siliconflow"
+              ]
+            }
+          }
+        },
+        "deepseek/deepseek-v4-pro": {
+          "name": "OpenRouter DeepSeek V4 Pro",
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "deepseek"
+              ]
+            }
+          }
+        },
+        "deepseek/deepseek-v4-flash-0731": {
+          "name": "OpenRouter DeepSeek V4 Flash",
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "deepseek"
+              ]
+            }
+          }
+        },
+        "qwen/qwen3.7-max": {
+          "name": "OpenRouter Qwen 3.7 Max",
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "data_collection": "deny",
+              "only": [
+                "alibaba"
+              ]
+            }
+          }
+        },
+        "minimax/minimax-m3": {
+          "name": "OpenRouter Minimax M3",
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "data_collection": "deny",
+              "only": [
+                "minimax"
+              ]
+            }
+          }
+        },
+        "xiaomi/mimo-v2.5-pro": {
+          "name": "OpenRouter MiMo-V2.5-Pro",
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "data_collection": "deny",
+              "only": [
+                "xiaomi"
+              ]
+            }
+          }
+        },
+        "poolside/laguna-s-2.1": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "poolside/fp4"
+              ]
+            }
+          },
+          "contextWindow": 1048576,
+          "maxTokens": 131072
+        },
+        "meta/muse-spark-1.1": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "meta"
+              ]
+            }
+          },
+          "contextWindow": 1048576
+        }
+      }
+    },
+    "lmstudio": {
+      "baseUrl": "http://127.0.0.1:1234/v1",
+      "api": "openai-completions",
+      "apiKey": "required",
+      "models": [
+        {
+          "id": "yuxinlu1/gemma-4-12B-coder-fable5-composer2.5-v1-GGUF",
+          "input": [
+            "text"
+          ]
+        },
+        {
+          "id": "unsloth/Qwen3.6-35B-A3B-MTP-GGUF",
+          "input": [
+            "text",
+            "image"
+          ]
+        },
+        {
+          "id": "unsloth/Qwen3.6-27B-MTP-GGUF",
+          "input": [
+            "text",
+            "image"
+          ]
+        },
+        {
+          "id": "lmstudio-community/qwen3.6-27b",
+          "input": [
+            "text",
+            "image"
+          ]
+        }
+      ]
+    }
+  }
+}
