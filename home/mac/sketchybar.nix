@@ -6,14 +6,6 @@
 }: let
   sketchybarExe = lib.getExe config.programs.sketchybar.package;
 
-  cryptoMonitor = pkgs.buildGoModule {
-    pname = "crypto-monitor";
-    version = "0.1.0";
-    src = ./crypto-monitor;
-    vendorHash = "sha256-epDYl6RAigGv6hSQW7vqKjQ6mXy+vxAMNOgbZgG29+0=";
-    GOEXPERIMENT = "jsonv2";
-  };
-
   luaPackage =
     pkgs.lua5_4.withPackages
     (ps:
@@ -51,25 +43,6 @@ in {
         package.cpath = package.cpath .. ";${pkgs.lua54Packages.getLuaCPath pkgs.sbarlua}"
         require("init")
       '';
-    };
-  };
-
-  launchd.agents.crypto-monitor = {
-    enable = config.programs.sketchybar.enable;
-    config = {
-      ProgramArguments = [
-        (lib.getExe cryptoMonitor)
-        "--sketchybar"
-        sketchybarExe
-        "--pair"
-        "BTCUSDT"
-        "--pair"
-        "ETHUSDT"
-      ];
-      KeepAlive = true;
-      RunAtLoad = true;
-      StandardOutPath = "/tmp/crypto-monitor.log";
-      StandardErrorPath = "/tmp/crypto-monitor.error.log";
     };
   };
 }
