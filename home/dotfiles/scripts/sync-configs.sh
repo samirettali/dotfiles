@@ -23,6 +23,7 @@ for command in git rsync ssh; do
 done
 
 files=(
+    .config/herdr/config.toml
     .config/tmux/tmux.conf
     .claude/CLAUDE.md
     .claude/settings.json
@@ -81,13 +82,18 @@ for path in "${files[@]}"; do
     rsync -aL "$HOME/$path" "$tmpdir/after/$path"
 done
 
-remote_paths=$(ssh -n "$target" "/bin/sh -c 'for path in \
-	.config/nvim .config/tmux/tmux.conf .hammerspoon \
-	.claude/CLAUDE.md .claude/settings.json .claude/skills \
-	.codex/AGENTS.md .codex/config.toml .codex/skills \
-	.pi/agent/AGENTS.md .pi/agent/mcp.json .pi/agent/settings.json \
-	.pi/agent/extensions .pi/agent/skills revive.toml; do \
-	[ ! -e \"\$HOME/\$path\" ] || printf \"%s\\n\" \"\$path\"; done'")
+quote_remote() {
+    printf "'%s'" "${1//\'/\'\\\'\'}"
+}
+
+remote_path_args=
+for path in "${files[@]}" "${directories[@]}"; do
+    remote_path_args+=" $(quote_remote "$path")"
+done
+
+remote_paths_command="for path in$remote_path_args; do \
+    [ ! -e \"\$HOME/\$path\" ] || printf '%s\\n' \"\$path\"; done"
+remote_paths=$(ssh -n "$target" "/bin/sh -c $(quote_remote "$remote_paths_command")")
 
 printf 'Fetching remote configuration snapshot...\n'
 for path in "${directories[@]}"; do
@@ -132,14 +138,17 @@ y | Y | yes | YES) ;;
     ;;
 esac
 
-ssh -n "$target" "/bin/sh -c 'mkdir -p \
-	\"\$HOME/.config/nvim\" \
-	\"\$HOME/.config/tmux\" \
-	\"\$HOME/.hammerspoon\" \
-	\"\$HOME/.claude/skills\" \
-	\"\$HOME/.codex/skills\" \
-	\"\$HOME/.pi/agent/extensions\" \
-	\"\$HOME/.pi/agent/skills\"'"
+required_directories=("${directories[@]}")
+for path in "${files[@]}"; do
+    parent=${path%/*}
+    [[ $parent == "$path" ]] || required_directories+=("$parent")
+done
+
+remote_directory_args=
+for path in "${required_directories[@]}"; do
+    remote_directory_args+=" $(quote_remote "$remote_home/$path")"
+done
+ssh -n "$target" "/bin/sh -c $(quote_remote "mkdir -p$remote_directory_args")"
 
 for path in "${directories[@]}"; do
     if [[ $path == .pi/agent/extensions ]]; then
@@ -154,21 +163,10 @@ for path in "${files[@]}"; do
     rsync -aL "$HOME/$path" "$target:$remote_home/$path"
 done
 
-ssh -n "$target" "/bin/sh -c 'chmod -R u+w \
-	\"\$HOME/.config/nvim\" \
-	\"\$HOME/.config/tmux/tmux.conf\" \
-	\"\$HOME/.hammerspoon\" \
-	\"\$HOME/.claude/CLAUDE.md\" \
-	\"\$HOME/.claude/settings.json\" \
-	\"\$HOME/.claude/skills\" \
-	\"\$HOME/.codex/AGENTS.md\" \
-	\"\$HOME/.codex/config.toml\" \
-	\"\$HOME/.codex/skills\" \
-	\"\$HOME/.pi/agent/AGENTS.md\" \
-	\"\$HOME/.pi/agent/mcp.json\" \
-	\"\$HOME/.pi/agent/settings.json\" \
-	\"\$HOME/.pi/agent/extensions\" \
-	\"\$HOME/.pi/agent/skills\" \
-	\"\$HOME/revive.toml\"'"
+remote_chmod_args=
+for path in "${files[@]}" "${directories[@]}"; do
+    remote_chmod_args+=" $(quote_remote "$remote_home/$path")"
+done
+ssh -n "$target" "/bin/sh -c $(quote_remote "chmod -R u+w$remote_chmod_args")"
 
 printf 'Configurations synced to %s.\n' "$target"
