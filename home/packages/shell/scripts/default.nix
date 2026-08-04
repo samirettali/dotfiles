@@ -13,6 +13,7 @@ in {
       (pkgs.callPackage ./nhash.nix {
         inherit copy;
       })
+      (pkgs.callPackage ./speak.nix {})
       (pkgs.writeShellScriptBin "glc" (builtins.readFile "${scriptsDir}/glc.sh"))
       (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
       (pkgs.writeShellScriptBin "ticker" (builtins.readFile "${scriptsDir}/ticker.sh"))
