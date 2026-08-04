@@ -54,7 +54,6 @@
     p7zip
     nurPkgs.go-qo
     nurPkgs.hunk
-    nurPkgs.herdr
     scc
     snitch
     sqlite
