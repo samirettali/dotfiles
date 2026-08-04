@@ -59,7 +59,7 @@ in {
           "kimi-coding/k3-256k"
           "xai/grok-4.5"
           "openrouter/minimax/minimax-m3"
-          "openrouter/qwen/qwen3.7-max"
+          "openrouter/qwen/qwen3.8-max"
           "openrouter/qwen/qwen3.7-plus"
           "openrouter/qwen/qwen3.7-flash"
           "openrouter/qwen/qwen3.6-35b-a3b"
