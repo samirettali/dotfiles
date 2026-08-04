@@ -135,7 +135,7 @@
         AppleKeyboardUIMode = 3;
         AppleShowScrollBars = "Always";
         AppleInterfaceStyle = "Dark";
-        _HIHideMenuBar = false;
+        _HIHideMenuBar = true;
         NSWindowShouldDragOnGesture = true;
         NSAutomaticWindowAnimationsEnabled = false;
         NSAutomaticInlinePredictionEnabled = false;

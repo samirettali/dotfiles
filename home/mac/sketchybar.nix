@@ -25,7 +25,7 @@
       ]);
 in {
   programs.sketchybar = {
-    enable = lib.mkDefault false;
+    enable = true;
     inherit luaPackage;
     extraPackages = with pkgs; [
       sketchybar-app-font

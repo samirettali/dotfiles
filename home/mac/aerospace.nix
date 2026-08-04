@@ -17,7 +17,14 @@
         outer.left = 0;
         outer.bottom = 0;
         outer.right = 0;
-        outer.top = 0;
+        outer.top = [
+          {
+            monitor = {
+              "^built-in retina display$" = 0;
+            };
+          }
+          32
+        ];
       };
       mode.main.binding = {
         alt-h = "focus left";
