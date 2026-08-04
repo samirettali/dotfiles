@@ -8,6 +8,8 @@ Hosts: `mbp` (darwin), `xps` (nixos), `andromeda` (server, home-manager only).
 - `make build` — rebuild current host (`nh darwin switch .` on macOS, `nixos-rebuild` on NixOS).
 - `make fmt` — format all nix with `alejandra`. Run before committing.
 - `make check` — `nix flake check`.
+- `make models` — refresh the pinned OpenRouter provider limits in
+  `home/packages/ai/pi-coding-agent/models.json` (see below); writes the file, then `make build`.
 - `make update` — `nix flake update`.
 
 Eval a single option without building:
@@ -56,6 +58,33 @@ The `warning: Git tree ... is dirty` line during eval is benign.
 - External skills are pinned as `flake = false` inputs; `nix flake update` bumps them.
 - Repo-local skills live in `.agents/skills/<name>/` (the standard path pi reads) with a
   symlink from `.claude/skills/<name>` for Claude Code. See `.agents/skills/add-skill`.
+
+## pi model configuration (`pi-models`)
+
+`home/packages/ai/pi-coding-agent/models.json` is the single source of truth. `default.nix`
+reads it with `fromJSON` and renders two files: `enabledModels` into `~/.pi/agent/settings.json`
+and `providers` into `~/.pi/agent/models.json`. Both are store symlinks, so edit the repo file
+and `make build` — never the deployed copies.
+
+`pi-models` (`home/packages/shell/scripts/pi-models/`) edits that file: a Node server on a
+random localhost port serving a single `app.html`, opened in the browser and stopped with
+ctrl-c. Saving writes the repo file only; applying is still `make build`.
+
+`pi-models --sync` (wired as `make models`) re-fetches the endpoints of every model that pins a
+provider and rewrites only the limits that changed, printing a diff. It is the answer to
+per-provider limits going stale: a pinned `contextWindow`/`maxTokens` is a snapshot, and nothing
+in pi or OpenRouter refreshes it. If the pinned provider is gone it says so and changes nothing,
+rather than silently falling back to another one.
+
+Per pi's `docs/models.md`, a custom model in `models[]` with the same id *replaces* the built-in
+entry and drops its pricing and metadata, while `modelOverrides` merges on top. Built-in
+providers (those in `~/.pi/agent/models-store.json`) therefore use `modelOverrides`; `models[]`
+is only for genuinely custom ones like lmstudio.
+
+Per-provider limits come from the per-model `endpoints` call, not `/api/v1/models` — the latter's
+`top_provider` describes whichever provider OpenRouter ranks first, which is wrong as soon as
+`openRouterRouting.only` pins a different one. The endpoint `tag` is `provider/quant`
+(`novita/fp8`); a bare `only: ["novita"]` accepts any quantization from that provider.
 
 ## Spoken responses (`speak`)
 
