@@ -1,9 +1,20 @@
 {
+  config,
   lib,
   inputs,
+  nurPkgs,
   pkgs,
   ...
-}: {
+}: let
+  herdrHook = "${config.home.homeDirectory}/.claude/hooks/herdr-agent-state.sh";
+  herdrEnabled = builtins.elem nurPkgs.herdr config.home.packages;
+in {
+  # Herdr identifies agents by the pane's foreground process, which breaks as
+  # soon as Claude spawns MCP servers. The hook reports the agent explicitly.
+  home.file.".claude/hooks/herdr-agent-state.sh" = lib.mkIf herdrEnabled {
+    source = ./claude-code-herdr-agent-state.sh;
+  };
+
   programs.claude-code = {
     enable = lib.mkDefault true;
     # tmux names panes after the resolved executable, which would be the
@@ -30,6 +41,20 @@
       effortLevel = "medium";
       skipDangerousModePermissionPrompt = true;
       tui = "fullscreen";
+      hooks = lib.mkIf herdrEnabled {
+        SessionStart = [
+          {
+            matcher = "*";
+            hooks = [
+              {
+                type = "command";
+                command = "bash '${herdrHook}' session";
+                timeout = 10;
+              }
+            ];
+          }
+        ];
+      };
       env = {
         CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL = "1";
         CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";

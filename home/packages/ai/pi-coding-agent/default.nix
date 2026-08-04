@@ -14,6 +14,8 @@
   piMcpAdapter = nurPkgs.pi-mcp-adapter;
   piProviderKimiCode = nurPkgs.pi-provider-kimi-code;
 
+  herdrEnabled = builtins.elem nurPkgs.herdr config.home.packages;
+
   skills = import ../coding-agent-skills.nix {inherit inputs pkgs;};
   skillFiles =
     lib.mapAttrs'
@@ -24,18 +26,20 @@ in {
     piCodingAgent
   ];
 
-  home.sessionVariables = lib.mkIf (builtins.elem piCodingAgent config.home.packages) {
-    PI_PACKAGE_DIR = "${config.home.homeDirectory}/.pi/pi-source";
-    PI_TELEMETRY = "0";
-    PI_SKIP_VERSION_CHECK = "1";
-    HERDR_TITLE_PROVIDER = "openai-codex";
-    HERDR_TITLE_MODEL = "gpt-5.6-luna";
-    PI_PERMS_MODE = "auto";
-    PI_PERMS_PROVIDER = "openai-codex";
-    PI_PERMS_MODEL = "gpt-5.6-luna";
-    PI_AI_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/index.js";
-    PI_AI_OAUTH_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/oauth.js";
-  };
+  home.sessionVariables = lib.mkIf (builtins.elem piCodingAgent config.home.packages) ({
+      PI_PACKAGE_DIR = "${config.home.homeDirectory}/.pi/pi-source";
+      PI_TELEMETRY = "0";
+      PI_SKIP_VERSION_CHECK = "1";
+      PI_PERMS_MODE = "auto";
+      PI_PERMS_PROVIDER = "openai-codex";
+      PI_PERMS_MODEL = "gpt-5.6-luna";
+      PI_AI_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/index.js";
+      PI_AI_OAUTH_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/oauth.js";
+    }
+    // lib.optionalAttrs herdrEnabled {
+      HERDR_TITLE_PROVIDER = "openai-codex";
+      HERDR_TITLE_MODEL = "gpt-5.6-luna";
+    });
 
   home.file = lib.mkIf (builtins.elem piCodingAgent config.home.packages) (skillFiles
     // {
@@ -102,7 +106,6 @@ in {
       };
 
       ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
-      ".pi/agent/extensions/herdr-session-title.ts".source = ./extensions/herdr-session-title.ts;
       ".pi/agent/extensions/permission-gate.ts".source = ./extensions/permission-gate.ts;
       ".pi/agent/extensions/protected-paths.ts".source = ./extensions/protected-paths.ts;
       ".pi/agent/extensions/system-prompt.ts".source = ./extensions/system-prompt.ts;
@@ -114,5 +117,8 @@ in {
       ".pi/agent/extensions/node_modules/typebox".source = piNodeModules + "/typebox";
       ".pi/agent/extensions/node_modules/@sinclair/typebox".source = piNodeModules + "/@sinclair/typebox";
       ".pi/agent/extensions/node_modules/@types/node".source = piNodeModules + "/@types/node";
+    }
+    // lib.optionalAttrs herdrEnabled {
+      ".pi/agent/extensions/herdr-session-title.ts".source = ./extensions/herdr-session-title.ts;
     });
 }
