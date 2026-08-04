@@ -14,6 +14,7 @@ in {
         inherit copy;
       })
       (pkgs.callPackage ./speak.nix {})
+      (pkgs.callPackage ./pi-models.nix {})
       (pkgs.writeShellScriptBin "glc" (builtins.readFile "${scriptsDir}/glc.sh"))
       (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
       (pkgs.writeShellScriptBin "ticker" (builtins.readFile "${scriptsDir}/ticker.sh"))

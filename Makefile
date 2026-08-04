@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := build
-.PHONY: build update clean fmt check
+.PHONY: build update clean fmt check models
 
 OS := $(shell uname -s)
 USERNAME := $(shell whoami)
@@ -9,6 +9,7 @@ FMT_CMD = alejandra .
 DEADNIX_CMD = deadnix --fail --exclude=machines/xps/hardware-configuration.nix .
 STATIX_CMD = statix check .
 CHECK_CMD = nix flake check
+MODELS_CMD = pi-models --sync --config $(CURDIR)/home/packages/ai/pi-coding-agent/models.json
 
 ifeq ($(OS),Linux)
     ifneq ($(wildcard /etc/NIXOS),)
@@ -40,6 +41,10 @@ clean:
 fmt:
 	@echo "Running command: $(FMT_CMD)"
 	@$(FMT_CMD)
+
+models:
+	@echo "Running command: $(MODELS_CMD)"
+	@$(MODELS_CMD)
 
 check:
 	@echo "Running command: $(DEADNIX_CMD)"
