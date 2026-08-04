@@ -57,6 +57,31 @@ The `warning: Git tree ... is dirty` line during eval is benign.
 - Repo-local skills live in `.agents/skills/<name>/` (the standard path pi reads) with a
   symlink from `.claude/skills/<name>` for Claude Code. See `.agents/skills/add-skill`.
 
+## Spoken responses (`speak`)
+
+`speak` (`home/packages/shell/scripts/speak.py`) streams text to ElevenLabs and plays audio
+while it is still being generated. The pi extension `speak.ts` is a thin pipe: it forwards
+assistant `text_delta` events into `speak --stream` and owns nothing else. Toggle with
+`/speak`; defaults from `PI_SPEAK`, voice/model from `SPEAK_VOICE` / `SPEAK_MODEL`.
+
+Decisions worth not re-deriving:
+
+- **Websocket `stream-input` with `auto_mode=true`**, not the HTTP `/stream` endpoint. One
+  connection per turn gives gapless audio; a request per sentence would produce audible seams
+  and re-pay latency each time. `auto_mode` lets ElevenLabs pick sentence boundaries, so the
+  client never has to buffer for prosody.
+- **One process per turn, not per assistant message** — the model resumes talking after tool
+  calls, and a process per message overlaps. The child is respawned on demand because a long
+  turn can outlive the websocket's 180s inactivity cap.
+- **Markdown is stripped before speaking** (`Sanitizer`), statefully, because fenced code
+  blocks span lines and are unlistenable; a fence becomes the words "code block".
+- **`mpv --no-terminal` is mandatory** — `speak` runs inside TUIs and mpv otherwise grabs the
+  terminal and corrupts the interface.
+- **Thinking blocks are not read out**; the first one per turn plays a cached earcon instead,
+  generated once into `~/.cache/speak/` since it never changes.
+- The ElevenLabs MCP server and the `generate-speech` skill are unrelated to this — they exist
+  for producing audio assets (demo videos), not for listening to responses.
+
 ## Cross-session agent messaging
 
 Handled entirely by Herdr's socket API (`herdr agent list` / `herdr agent prompt`), documented

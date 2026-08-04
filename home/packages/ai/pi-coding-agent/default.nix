@@ -108,6 +108,7 @@ in {
       ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
       ".pi/agent/extensions/permission-gate.ts".source = ./extensions/permission-gate.ts;
       ".pi/agent/extensions/protected-paths.ts".source = ./extensions/protected-paths.ts;
+      ".pi/agent/extensions/speak.ts".source = ./extensions/speak.ts;
       ".pi/agent/extensions/system-prompt.ts".source = ./extensions/system-prompt.ts;
       ".pi/agent/extensions/x-search.ts".source = ./extensions/x-search.ts;
 
