@@ -107,13 +107,6 @@
           };
           run = ["move-node-to-workspace 4"];
         }
-        {
-          check-further-callbacks = true;
-          "if" = {
-            app-id = "com.apple.Preview";
-          };
-          run = ["move-node-to-workspace 4"];
-        }
         # floating (mirrors rift app_rules floating = true)
         {
           check-further-callbacks = true;
