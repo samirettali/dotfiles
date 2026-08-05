@@ -17,8 +17,12 @@ in {
 
   programs.claude-code = {
     enable = lib.mkDefault true;
-    # tmux names panes after the resolved executable, which would be the
+    # tmux and herdr name panes after the process, which would be the
     # `.claude-wrapped` binary makeBinaryWrapper leaves behind.
+    #
+    # `--inherit-argv0` is what keeps the process named `claude`: the upstream
+    # wrapper (now `claude-env`) already inherits argv0, so without it here the
+    # whole chain reports `claude-env` and herdr stops detecting the agent.
     package = pkgs.claude-code.overrideAttrs (old: {
       postInstall =
         (old.postInstall or "")
@@ -28,6 +32,7 @@ in {
           ln -s ../libexec/claude $out/bin/.claude-wrapped
           mv $out/bin/claude $out/libexec/claude-env
           makeBinaryWrapper $out/libexec/claude-env $out/bin/claude \
+            --inherit-argv0 \
             --add-flags "--allow-dangerously-skip-permissions"
         '';
     });
