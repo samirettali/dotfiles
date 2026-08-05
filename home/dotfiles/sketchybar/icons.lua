@@ -1,4 +1,5 @@
 local icons = {
+	keyboard = "󰌌",
 	clock = "󰥔",
 	error = " ",
 

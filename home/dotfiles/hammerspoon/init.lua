@@ -7,6 +7,7 @@ end
 require("bindings")
 require("hammerspoon_config")
 require("recursive_binder")
+pcall(require, "sketchybar")
 
 -- hs.loadSpoon("EmmyLua"):init() -- TODO: clone
 hs.loadSpoon("ControlEscape"):start()

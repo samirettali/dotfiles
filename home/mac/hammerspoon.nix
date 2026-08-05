@@ -48,6 +48,30 @@
       source = ../dotfiles/hammerspoon;
       recursive = true;
     };
+    # sketchybar has no built-in event for input source changes, so hammerspoon
+    # pushes one: it already owns the layout toggle bound to cmd+ctrl+l
+    ".hammerspoon/sketchybar.lua".text =
+      lib.optionalString config.programs.sketchybar.enable
+      /*
+      lua
+      */
+      ''
+        local sketchybar = "${lib.getExe config.programs.sketchybar.package}"
+
+        local function push()
+            hs.task
+                .new(sketchybar, nil, {
+                    "--trigger",
+                    "keyboard_layout_change",
+                    "SOURCE_ID=" .. (hs.keycodes.currentSourceID() or ""),
+                })
+                :start()
+        end
+
+        hs.keycodes.inputSourceChanged(push)
+        push()
+      '';
+
     ".hammerspoon/spotify.lua".text =
       lib.optionalString config.programs.spotify-player.enable
       /*
