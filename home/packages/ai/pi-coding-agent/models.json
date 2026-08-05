@@ -45,7 +45,9 @@
                 "novita"
               ]
             }
-          }
+          },
+          "contextWindow": 1048576,
+          "maxTokens": 131072
         },
         "moonshotai/kimi-k2.7-code": {
           "name": "OpenRouter Kimi K2.7 Code",
@@ -79,7 +81,8 @@
                 "deepseek"
               ]
             }
-          }
+          },
+          "maxTokens": 384000
         },
         "qwen/qwen3.7-max": {
           "name": "OpenRouter Qwen 3.7 Max",
@@ -125,9 +128,7 @@
                 "poolside/fp4"
               ]
             }
-          },
-          "contextWindow": 1048576,
-          "maxTokens": 131072
+          }
         },
         "meta/muse-spark-1.1": {
           "compat": {
@@ -137,8 +138,7 @@
                 "meta"
               ]
             }
-          },
-          "contextWindow": 1048576
+          }
         }
       }
     },
