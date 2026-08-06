@@ -5,3 +5,11 @@
 #tabbrowser-tabbox {
   transition: none !important;
 }
+
+/* gwfox.toolbar's hover strip at the top of the window reveals the bookmarks
+   toolbar, which is disabled here — so it only opens an empty band. Drop the
+   strip, not the pref: the same block holds the margin-top that keeps the
+   content flush with the top. */
+#vertical-spacer::before {
+  display: none !important;
+}
