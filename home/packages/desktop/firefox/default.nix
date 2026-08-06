@@ -202,6 +202,7 @@ in {
           "layers.acceleration.force-enabled" = true;
           "svg.context-properties.content.enabled" = true;
           "ui.useOverlayScrollbars" = 1;
+          "browser.newtabpage.activity-stream.nova.enabled" = false;
 
           # Actual settings
           "app.update.auto" = false;
@@ -221,15 +222,15 @@ in {
           "sidebar.animation.enabled" = false;
 
           "widget.macos.native-context-menus" = false;
-          "gwfox.icons" = true;
-          "gwfox.blur" = false;
           "gwfox.toolbar" = true;
           "gwfox.urlbar" = true;
+          "gwfox.blur" = false;
+          "gwfox.ac" = false;
+          "gwfox.atbc" = true;
           "gwfox.newtab" = false;
           "gwfox.noborder" = true;
-          "gwfox.atbc" = true;
-          "gwfox.db" = true;
-          # "gwfox.plus" = true;
+          "gwfox.icons" = true;
+          "gwfox.msc" = true;
           "gwfox.sidebar" = 3;
 
           # Disable Activity Stream
@@ -292,7 +293,7 @@ in {
           "browser.urlbar.suggest.bookmark" = true;
           "browser.urlbar.suggest.openpage" = true;
           "browser.urlbar.suggest.topsites" = true;
-          "browser.urlbar.shortcuts.bookmarks" = true;
+          "browser.urlbar.shortcuts.bookmarks" = false;
           "browser.urlbar.shortcuts.history" = true;
           "browser.urlbar.shortcuts.tabs" = true;
           "browser.urlbar.showSearchSuggestionsFirst" = true;
