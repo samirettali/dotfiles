@@ -59,6 +59,14 @@ The `warning: Git tree ... is dirty` line during eval is benign.
 - Repo-local skills live in `.agents/skills/<name>/` (the standard path pi reads) with a
   symlink from `.claude/skills/<name>` for Claude Code. See `.agents/skills/add-skill`.
 
+## MCP servers
+
+`home/packages/ai/mcp.nix` is the single place to declare an MCP server: home-manager's
+`programs.mcp` feeds Claude Code (`enableMcpIntegration`), Codex (`mcp_servers` in
+`config.toml`), and pi (`pi-mcp-adapter` reads `~/.config/mcp/mcp.json`). So a vendor's
+"install our Claude Code plugin" instructions are usually just an MCP entry plus skills —
+declare both here instead of running `/plugin install`, and all three agents get them.
+
 ## pi model configuration (`pi-models`)
 
 `home/packages/ai/pi-coding-agent/models.json` is the single source of truth. `default.nix`

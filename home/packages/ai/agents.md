@@ -35,6 +35,23 @@ Curated, always-on facts about the user
 - Prefer the simplest solution that meets the requirement; if something is
   over-engineered, say so.
 
+## Web search
+
+Two surfaces: the agent's built-in web search, and Exa (`web_search_exa` /
+`web_fetch_exa`, from the `exa` MCP server; in pi they sit behind the generic
+`mcp` tool).
+
+- Default to the built-in search. It is cheaper in context by an order of
+  magnitude (3-5 KB vs 60 KB) and it wins whenever the query has an exact
+  keyword: an issue number, a version, a setting name, release notes.
+- Reach for Exa when the query is a description rather than keywords ("the post
+  where an engineer explains why they went back to a monolith"), when the
+  primary source matters more than commentary about it, or for recent security
+  writeups and CVEs. Measured on an 8-query benchmark, that is where the gap is
+  real; elsewhere the two tie.
+- Ask Exa for ~5 results unless more are needed; cost in context scales with
+  `numResults`, and each result carries long highlight extracts.
+
 ## Projects
 
 Projects live under `~/dev`, each with its own `AGENTS.md`. Read that file before
