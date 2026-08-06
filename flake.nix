@@ -77,6 +77,11 @@
       url = "github:samirettali/spotctl";
       flake = false;
     };
+
+    exa-mcp-server = {
+      url = "github:exa-labs/exa-mcp-server";
+      flake = false;
+    };
   };
 
   outputs = {

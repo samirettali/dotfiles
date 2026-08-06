@@ -52,6 +52,22 @@
         "type": "github"
       }
     },
+    "exa-mcp-server": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785617590,
+        "narHash": "sha256-95taPkpxuyvRtNwyFfXgJxZtMY/vUo5HPFFZrAAM7C0=",
+        "owner": "exa-labs",
+        "repo": "exa-mcp-server",
+        "rev": "a664592b5dd7c5598b70158c771dcc5c2a4fb2c1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "exa-labs",
+        "repo": "exa-mcp-server",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -294,6 +310,7 @@
         "agent-stuff": "agent-stuff",
         "control-escape-spoon": "control-escape-spoon",
         "darwin": "darwin",
+        "exa-mcp-server": "exa-mcp-server",
         "gwfox": "gwfox",
         "hallmark": "hallmark",
         "home-manager": "home-manager",

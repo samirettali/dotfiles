@@ -21,6 +21,15 @@
     '';
   };
 
+  # Upstream calls it `search`, which is far too generic once it sits next to
+  # every other skill in the shared set.
+  exaSearchSkill = pkgs.runCommand "exa-search-skill" {} ''
+    mkdir -p $out
+    cp -R ${inputs.exa-mcp-server}/skills/search/. $out/
+    chmod -R u+w $out
+    substituteInPlace $out/SKILL.md --replace-fail 'name: search' 'name: exa-search'
+  '';
+
   spotifySkill = pkgs.runCommand "spotify-skill" {} ''
     mkdir -p $out
     cp -R ${inputs.spotctl}/.agents/skills/spotify/. $out/
@@ -38,6 +47,7 @@ in {
   better-ui = "${inputs.jakubkrehel-skills}/skills/better-ui";
   better-writing = "${inputs.jakubkrehel-skills}/skills/better-writing";
   commit = "${inputs.agent-stuff}/skills/commit";
+  exa-search = "${exaSearchSkill}";
   frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
   generate-image = ./skills/generate-image;
   generate-speech = ./skills/generate-speech;
