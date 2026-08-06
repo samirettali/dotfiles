@@ -3,18 +3,14 @@
   inputs,
   ...
 }: let
-  gwfox = pkgs.applyPatches {
-    src = inputs.gwfox;
-    name = "gwfox-collapsed-sidebar";
-    patches = [./gwfox-collapsed-sidebar.patch];
-  };
-
+  # Appended rather than patched: gwfox is one nested tree, so a patch hunk's
+  # context lands wherever it happens to sit after an update.
   gwfoxUserChrome = pkgs.runCommand "gwfox-userChrome.css" {} ''
-    ln -s ${gwfox}/userChrome.css $out
+    cat ${inputs.gwfox}/userChrome.css ${./gwfox-overrides.css} > $out
   '';
 
   gwfoxUserContent = pkgs.runCommand "gwfox-userContent.css" {} ''
-    ln -s ${gwfox}/userContent.css $out
+    ln -s ${inputs.gwfox}/userContent.css $out
   '';
 in {
   programs = {
@@ -217,6 +213,9 @@ in {
           # Vertical tabs
           "sidebar.revamp" = true;
           "sidebar.verticalTabs" = true;
+          # gwfox only styles the collapsed sidebar (and the floating urlbar that
+          # `gwfox.urlbar` moves into it) under this visibility mode.
+          "sidebar.visibility" = "hide-sidebar";
           "sidebar.revamp.round-content-area" = false;
           "sidebar.main.tools" = null;
           "sidebar.animation.enabled" = false;

@@ -1,0 +1,7 @@
+/* gwfox animates #tabbrowser-tabbox's margin-top when the sidebar toggles (.25s,
+   after a .25s delay), but the toolbar space that margin compensates for collapses
+   instantly — so the page content visibly slides. Both states line up, so drop it. */
+.browserStack,
+#tabbrowser-tabbox {
+  transition: none !important;
+}

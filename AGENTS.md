@@ -140,3 +140,13 @@ The trade-off accepted: this only works inside Herdr. Outside it, there is no me
 - **Verify tool config against the installed version, not memory** — e.g. lazygit moved
   `git.paging` → `git.pagers` (array); difftastic's HM module writes `programs.git.enable`,
   so gating `difftastic.enable` on `config.programs.git.enable` causes infinite recursion.
+- **Firefox/gwfox needs `sidebar.visibility = "hide-sidebar"`.** gwfox styles the collapsed
+  vertical-tabs sidebar — and the floating urlbar that `gwfox.urlbar` moves into it — only
+  inside `@media -moz-pref("sidebar.visibility", "hide-sidebar")`. Under the default
+  `always-show` the collapsed state has no rules at all: Firefox keeps reserving the launcher
+  strip and cmd+L focuses an urlbar that is positioned nowhere.
+- **Never patch gwfox's `userChrome.css`** — it is one deeply nested CSS-nesting tree, so a
+  patch hunk's context lands wherever it happens to sit after an update; a previous
+  collapsed-sidebar patch silently ended up nested inside the `hide-sidebar` media query and
+  never applied. Overrides go in `gwfox-overrides.css`, appended by the `gwfoxUserChrome`
+  derivation, so they are always top-level.
