@@ -15,6 +15,8 @@ Curated, always-on facts about the user
 - When committing, prefers one commit per logical change.
 - When asked to commit, commit only changes made by the current agent/task; leave
   all unrelated pre-existing changes unstaged and uncommitted.
+- Pull request titles follow Conventional Commits too, exactly like commit
+  subjects: `<type>(<scope>): <summary>`, imperative, no trailing period.
 - Sharp eye for visual detail: immediately notices micro-asymmetries, misalignments,
   spacing imbalances, and inconsistent animation/transition timings. In UI work,
   sweat these details proactively (consistent motion durations, symmetric edges,
