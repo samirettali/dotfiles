@@ -22,30 +22,3 @@
 #sidebar-button {
   display: none !important;
 }
-
-/* gwfox parks the app menu and its neighbours at the bottom of the sidebar, but
-   only while it is hidden — with the sidebar shown they fall back into the top
-   row. Keep them at the bottom in both states, in the empty area under the tabs.
-   Downloads and overflow tag along so nothing is left stranded up top. */
-:root:has(#tabbrowser-tabs[expanded]) {
-#PanelUI-menu-button,
-#nav-bar-overflow-button,
-#unified-extensions-button,
-#downloads-button {
-  position: fixed !important;
-  bottom: 16px;
-  scale: 0.9;
-}
-#PanelUI-menu-button {
-  left: 8px;
-}
-#nav-bar-overflow-button {
-  left: 46px;
-}
-#unified-extensions-button {
-  left: 84px;
-}
-#downloads-button {
-  left: 122px;
-}
-}
