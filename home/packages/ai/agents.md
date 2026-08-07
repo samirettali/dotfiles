@@ -71,6 +71,16 @@ that project's `AGENTS.md` to capture it.
 - **side-projects** — `~/dev/side-projects`. Small personal projects plus the
   shared tailnet-only Caddy that fronts host-run dev servers at
   *.samirettali.com. Deployed by the selfhosted Ansible playbook.
+- **sottovoce** — `~/dev/sottovoce`. macOS menu bar dictation app (SwiftPM, no
+  Xcode project). Distributed as a signed, notarised DMG built locally with
+  `make release`; a Homebrew cask in samirettali/homebrew-tap is bumped by CI.
+- **pulse** — `~/dev/pulse`. macOS menu bar app for live prices (Binance,
+  Hyperliquid, Yahoo) and timezone clocks. Same build and release setup as
+  sottovoce.
+
+Both macOS apps sign with `Developer ID Application: Samir Ettali (22K9H4B864)`
+and use `com.samirettali.<app>` bundle ids. Signing keys and notarisation
+credentials never go to CI — releases are built on the laptop.
 
 ## Memory
 
