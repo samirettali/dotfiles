@@ -14,7 +14,8 @@
   piMcpAdapter = nurPkgs.pi-mcp-adapter;
   piProviderKimiCode = nurPkgs.pi-provider-kimi-code;
 
-  herdrEnabled = builtins.elem nurPkgs.herdr config.home.packages;
+  # Matched by pname: herdr ships patched, so it is not the nurPkgs derivation.
+  herdrEnabled = lib.any (p: (p.pname or "") == "herdr") config.home.packages;
 
   modelsConfig = builtins.fromJSON (builtins.readFile ./models.json);
 

@@ -7,7 +7,8 @@
   ...
 }: let
   herdrHook = "${config.home.homeDirectory}/.claude/hooks/herdr-agent-state.sh";
-  herdrEnabled = builtins.elem nurPkgs.herdr config.home.packages;
+  # Matched by pname: herdr ships patched, so it is not the nurPkgs derivation.
+  herdrEnabled = lib.any (p: (p.pname or "") == "herdr") config.home.packages;
 in {
   # Herdr identifies agents by the pane's foreground process, which breaks as
   # soon as Claude spawns MCP servers. The hook reports the agent explicitly.

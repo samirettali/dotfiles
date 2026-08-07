@@ -1,0 +1,321 @@
+diff --git i/src/app/mod.rs w/src/app/mod.rs
+index d049c0f..4f53663 100644
+--- i/src/app/mod.rs
++++ w/src/app/mod.rs
+@@ -298,6 +298,14 @@ fn theme_runtime_config(
+         .clone()
+         .unwrap_or_else(|| "catppuccin".to_string());
+     let (default_dark, default_light) = sibling_theme_names(&manual_name);
++    let sidebar_override = |pick: fn(&crate::config::CustomThemeColors) -> Option<&String>| {
++        config
++            .theme
++            .custom
++            .as_ref()
++            .and_then(pick)
++            .map(|c| crate::config::parse_color(c))
++    };
+     state::ThemeRuntimeConfig {
+         manual_name,
+         dark_name: config.theme.dark_name.clone().unwrap_or(default_dark),
+@@ -313,6 +321,16 @@ fn theme_runtime_config(
+                 .and_then(|c| c.accent.as_ref())
+                 .is_none())
+         .then(|| config.ui.accent.clone()),
++        space_active_bg: sidebar_override(|c| c.space_active_bg.as_ref()),
++        space_active_fg: sidebar_override(|c| c.space_active_fg.as_ref()),
++        sidebar_divider: sidebar_override(|c| c.sidebar_divider.as_ref()),
++        space_inactive_fg: sidebar_override(|c| c.space_inactive_fg.as_ref()),
++        space_selected_bg: sidebar_override(|c| c.space_selected_bg.as_ref()),
++        space_selected_fg: sidebar_override(|c| c.space_selected_fg.as_ref()),
++        tab_active_bg: sidebar_override(|c| c.tab_active_bg.as_ref()),
++        tab_active_fg: sidebar_override(|c| c.tab_active_fg.as_ref()),
++        tab_inactive_bg: sidebar_override(|c| c.tab_inactive_bg.as_ref()),
++        tab_inactive_fg: sidebar_override(|c| c.tab_inactive_fg.as_ref()),
+     }
+ }
+ 
+diff --git i/src/app/state.rs w/src/app/state.rs
+index e6c23c4..9aafae8 100644
+--- i/src/app/state.rs
++++ w/src/app/state.rs
+@@ -1099,6 +1099,18 @@ pub struct ThemeRuntimeConfig {
+     pub auto_switch: bool,
+     pub custom: Option<crate::config::CustomThemeColors>,
+     pub legacy_accent: Option<String>,
++    /// Sidebar-specific overrides, resolved once at config load.
++    /// `None` keeps the palette token the sidebar used before.
++    pub space_active_bg: Option<Color>,
++    pub space_active_fg: Option<Color>,
++    pub sidebar_divider: Option<Color>,
++    pub space_inactive_fg: Option<Color>,
++    pub space_selected_bg: Option<Color>,
++    pub space_selected_fg: Option<Color>,
++    pub tab_active_bg: Option<Color>,
++    pub tab_active_fg: Option<Color>,
++    pub tab_inactive_bg: Option<Color>,
++    pub tab_inactive_fg: Option<Color>,
+ }
+ 
+ pub struct SettingsState {
+@@ -1574,6 +1586,74 @@ pub struct AppState {
+ }
+ 
+ impl AppState {
++    /// Background of the active space row. Falls back to the palette token
++    /// the sidebar used before these overrides existed.
++    pub(crate) fn space_active_bg(&self) -> Color {
++        self.theme_runtime
++            .space_active_bg
++            .unwrap_or(self.palette.surface_dim)
++    }
++
++    /// Foreground of the active space name.
++    pub(crate) fn space_active_fg(&self) -> Color {
++        self.theme_runtime
++            .space_active_fg
++            .unwrap_or(self.palette.text)
++    }
++
++    /// Sidebar dividers and section rules.
++    pub(crate) fn sidebar_divider(&self) -> Color {
++        self.theme_runtime
++            .sidebar_divider
++            .unwrap_or(self.palette.surface_dim)
++    }
++
++    /// Foreground of space names that are neither active nor selected.
++    pub(crate) fn space_inactive_fg(&self) -> Color {
++        self.theme_runtime
++            .space_inactive_fg
++            .unwrap_or(self.palette.subtext0)
++    }
++
++    /// Background of the space under the cursor in navigate mode.
++    pub(crate) fn space_selected_bg(&self) -> Color {
++        self.theme_runtime
++            .space_selected_bg
++            .unwrap_or(self.palette.surface0)
++    }
++
++    /// Foreground of the space under the cursor in navigate mode.
++    pub(crate) fn space_selected_fg(&self) -> Color {
++        self.theme_runtime
++            .space_selected_fg
++            .unwrap_or(self.palette.text)
++    }
++
++    /// Background of the active tab.
++    pub(crate) fn tab_active_bg(&self) -> Color {
++        self.theme_runtime.tab_active_bg.unwrap_or(self.palette.accent)
++    }
++
++    /// Foreground of the active tab label. `None` keeps the contrast color
++    /// derived from the active background.
++    pub(crate) fn tab_active_fg_override(&self) -> Option<Color> {
++        self.theme_runtime.tab_active_fg
++    }
++
++    /// Background of inactive tabs and the tab bar scroll arrows.
++    pub(crate) fn tab_inactive_bg(&self) -> Color {
++        self.theme_runtime
++            .tab_inactive_bg
++            .unwrap_or(self.palette.surface0)
++    }
++
++    /// Foreground of inactive tab labels.
++    pub(crate) fn tab_inactive_fg(&self) -> Color {
++        self.theme_runtime
++            .tab_inactive_fg
++            .unwrap_or(self.palette.overlay1)
++    }
++
+     pub(crate) fn mark_session_dirty(&mut self) {
+         self.session_dirty = true;
+     }
+@@ -1894,6 +1974,16 @@ impl AppState {
+                 auto_switch: false,
+                 custom: None,
+                 legacy_accent: None,
++                space_active_bg: None,
++                space_active_fg: None,
++                sidebar_divider: None,
++                space_inactive_fg: None,
++                space_selected_bg: None,
++                space_selected_fg: None,
++                tab_active_bg: None,
++                tab_active_fg: None,
++                tab_inactive_bg: None,
++                tab_inactive_fg: None,
+             },
+             host_terminal_appearance: None,
+             host_terminal_appearance_explicit: false,
+diff --git i/src/config/theme.rs w/src/config/theme.rs
+index fc601d3..c9ba0c0 100644
+--- i/src/config/theme.rs
++++ w/src/config/theme.rs
+@@ -46,6 +46,26 @@ pub struct CustomThemeColors {
+     pub blue: Option<String>,
+     pub teal: Option<String>,
+     pub peach: Option<String>,
++    /// Background of the active space row in the sidebar. Defaults to `surface_dim`.
++    pub space_active_bg: Option<String>,
++    /// Foreground of the active space name in the sidebar. Defaults to `text`.
++    pub space_active_fg: Option<String>,
++    /// Sidebar dividers and section rules. Defaults to `surface_dim`.
++    pub sidebar_divider: Option<String>,
++    /// Foreground of inactive space names in the sidebar. Defaults to `subtext0`.
++    pub space_inactive_fg: Option<String>,
++    /// Background of the space under the cursor in navigate mode. Defaults to `surface0`.
++    pub space_selected_bg: Option<String>,
++    /// Foreground of the space under the cursor in navigate mode. Defaults to `text`.
++    pub space_selected_fg: Option<String>,
++    /// Background of the active tab. Defaults to `accent`.
++    pub tab_active_bg: Option<String>,
++    /// Foreground of the active tab label. Defaults to the panel contrast color.
++    pub tab_active_fg: Option<String>,
++    /// Background of inactive tabs and the tab bar scroll arrows. Defaults to `surface0`.
++    pub tab_inactive_bg: Option<String>,
++    /// Foreground of inactive tab labels. Defaults to `overlay1`.
++    pub tab_inactive_fg: Option<String>,
+ }
+ 
+ /// Parse a color string into a ratatui Color.
+diff --git i/src/ui/sidebar.rs w/src/ui/sidebar.rs
+index d9f6197..0db31d0 100644
+--- i/src/ui/sidebar.rs
++++ w/src/ui/sidebar.rs
+@@ -760,7 +760,7 @@ pub(super) fn render_sidebar_collapsed(app: &AppState, frame: &mut Frame, area:
+     let sep_style = if is_navigating {
+         Style::default().fg(p.accent)
+     } else {
+-        Style::default().fg(p.surface_dim)
++        Style::default().fg(app.sidebar_divider())
+     };
+     let sep_x = area.x + area.width.saturating_sub(1);
+     let buf = frame.buffer_mut();
+@@ -964,7 +964,7 @@ pub(super) fn render_sidebar(
+     let sep_style = if is_navigating {
+         Style::default().fg(p.accent)
+     } else {
+-        Style::default().fg(p.surface_dim)
++        Style::default().fg(app.sidebar_divider())
+     };
+ 
+     let sep_x = area.x + area.width.saturating_sub(1);
+@@ -1224,16 +1224,19 @@ fn render_workspace_list(
+         let selected = i == app.selected && is_navigating;
+         let is_active = Some(i) == app.active;
+         let is_dragged = dragged_ws_idx == Some(i);
+-        let highlighted = selected || is_active || is_dragged;
++        // In navigate mode the cursor is the only marked row: the active space
++        // drops to the inactive styling so there is never a second highlight.
++        let show_active = is_active && !is_navigating;
++        let highlighted = selected || show_active || is_dragged;
+         let (agg_state, agg_seen) = ws.aggregate_state(&app.terminals);
+ 
+         if highlighted {
+             let bg = if selected {
+-                p.surface0
++                app.space_selected_bg()
+             } else if is_dragged {
+                 p.surface1
+             } else {
+-                p.surface_dim
++                app.space_active_bg()
+             };
+             let buf = frame.buffer_mut();
+             for y in row_y..row_y + row_height {
+@@ -1246,10 +1249,16 @@ fn render_workspace_list(
+             }
+         }
+ 
+-        let name_style = if selected || is_active || is_dragged {
+-            Style::default().fg(p.text).add_modifier(Modifier::BOLD)
++        let name_style = if selected {
++            Style::default()
++                .fg(app.space_selected_fg())
++                .add_modifier(Modifier::BOLD)
++        } else if show_active || is_dragged {
++            Style::default()
++                .fg(app.space_active_fg())
++                .add_modifier(Modifier::BOLD)
+         } else {
+-            Style::default().fg(p.subtext0)
++            Style::default().fg(app.space_inactive_fg())
+         };
+ 
+         let label = ws.display_name_from(&app.terminals, terminal_runtimes);
+@@ -1415,7 +1424,10 @@ fn render_agent_detail(
+ 
+     let sep_line = "─".repeat(area.width as usize);
+     frame.render_widget(
+-        Paragraph::new(Span::styled(&sep_line, Style::default().fg(p.surface_dim))),
++        Paragraph::new(Span::styled(
++            &sep_line,
++            Style::default().fg(app.sidebar_divider()),
++        )),
+         Rect::new(area.x, area.y, area.width, 1),
+     );
+ 
+diff --git i/src/ui/tabs.rs w/src/ui/tabs.rs
+index 0228958..f00b40d 100644
+--- i/src/ui/tabs.rs
++++ w/src/ui/tabs.rs
+@@ -285,11 +285,11 @@ pub(super) fn render_tab_bar(app: &AppState, frame: &mut Frame, area: Rect) {
+ 
+     if app.mouse_capture && app.view.tab_scroll_left_hit_area.width > 0 {
+         let style = if can_scroll_left {
+-            Style::default().fg(p.overlay1).bg(p.surface0)
++            Style::default().fg(p.overlay1).bg(app.tab_inactive_bg())
+         } else {
+             Style::default()
+                 .fg(p.overlay0)
+-                .bg(p.surface0)
++                .bg(app.tab_inactive_bg())
+                 .add_modifier(Modifier::DIM)
+         };
+         frame.render_widget(
+@@ -300,11 +300,11 @@ pub(super) fn render_tab_bar(app: &AppState, frame: &mut Frame, area: Rect) {
+ 
+     if app.mouse_capture && app.view.tab_scroll_right_hit_area.width > 0 {
+         let style = if can_scroll_right {
+-            Style::default().fg(p.overlay1).bg(p.surface0)
++            Style::default().fg(p.overlay1).bg(app.tab_inactive_bg())
+         } else {
+             Style::default()
+                 .fg(p.overlay0)
+-                .bg(p.surface0)
++                .bg(app.tab_inactive_bg())
+                 .add_modifier(Modifier::DIM)
+         };
+         frame.render_widget(
+@@ -322,7 +322,11 @@ pub(super) fn render_tab_bar(app: &AppState, frame: &mut Frame, area: Rect) {
+         }
+         let active = idx == ws.active_tab;
+         let style = if active {
+-            let base = Style::default().fg(panel_contrast_fg(p)).bg(p.accent);
++            let active_bg = app.tab_active_bg();
++            let active_fg = app
++                .tab_active_fg_override()
++                .unwrap_or_else(|| panel_contrast_fg(p));
++            let base = Style::default().fg(active_fg).bg(active_bg);
+             if tab.is_auto_named() {
+                 base
+             } else {
+@@ -330,11 +334,13 @@ pub(super) fn render_tab_bar(app: &AppState, frame: &mut Frame, area: Rect) {
+             }
+         } else if tab.is_auto_named() {
+             Style::default()
+-                .fg(p.overlay0)
+-                .bg(p.surface0)
++                .fg(app.tab_inactive_fg())
++                .bg(app.tab_inactive_bg())
+                 .add_modifier(Modifier::DIM)
+         } else {
+-            Style::default().fg(p.overlay1).bg(p.surface0)
++            Style::default()
++                .fg(app.tab_inactive_fg())
++                .bg(app.tab_inactive_bg())
+         };
+         let width = rect.width as usize;
+         let name = tab_chrome_label(ws, idx);
