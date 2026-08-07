@@ -22,3 +22,16 @@
 #sidebar-button {
   display: none !important;
 }
+
+/* gwfox collapses grouped tabs by animating max-height to 0 and forcing
+   `display: block` on a XUL <tab>. Mid-transition a tab takes no layout height
+   but still paints its label, so it lands on top of the next one, and a tab the
+   rule skips ([busy]) keeps its 42px slot and leaves a gap. Give up the animation
+   and let Firefox lay grouped tabs out itself. */
+#tabbrowser-tabs[orient="vertical"] tab-group > .tabbrowser-tab {
+  max-height: none !important;
+  transition: none !important;
+}
+#tabbrowser-tabs[orient="vertical"] tab-group[collapsed] > .tabbrowser-tab:not([selected], [visuallyselected]) {
+  display: none !important;
+}
