@@ -54,6 +54,7 @@ in {
   github = "${inputs.agent-stuff}/skills/github";
   hallmark = "${inputs.hallmark}/skills/hallmark";
   live-ui-variants = ./skills/live-ui-variants;
+  macos-app-release = ./skills/macos-app-release;
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   project-workflow = ./skills/project-workflow;
   remotion-best-practices = "${inputs.remotion-skills}/skills/remotion-best-practices";
