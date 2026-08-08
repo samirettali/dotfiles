@@ -47,8 +47,9 @@ local severity_color = {
 	[3] = colors.red,
 }
 
-local UPDATE_FREQ = 120
+local UPDATE_FREQ = 15
 local MAX_LABELS = 3
+local CACHE_DIR = (os.getenv("HOME") or "") .. "/.cache/sketchybar"
 
 for _, provider in ipairs(providers) do
 	local watched = {}
@@ -64,16 +65,38 @@ for _, provider in ipairs(providers) do
 		updates = "on",
 		update_freq = UPDATE_FREQ,
 		icon = { string = provider.icon },
+		label = { font = { style = "Bold" } },
 		click_script = ("open %q"):format(provider.page),
 	})
 
-	local function refresh()
-		local command = ("curl -sfL --max-time 10 %q"):format(provider.api)
+	-- Conditional GET: curl sends If-None-Match from the file and rewrites it on
+	-- a 200. A 304 comes back with an empty body, which we read as "unchanged".
+	local etag_file = ("%s/status-%s.etag"):format(CACHE_DIR, provider.key)
 
-		sbar.exec(command, function(out)
-			local ok, summary = pcall(cjson.decode, out or "")
-			if not ok or type(summary) ~= "table" or type(summary.components) ~= "table" then
-				item:set({ drawing = false })
+	local conditional = ("mkdir -p %q && curl -sfL --max-time 10 --etag-compare %q --etag-save %q %q")
+		:format(CACHE_DIR, etag_file, etag_file, provider.api)
+
+	-- The etag file outlives the process while the item state does not, so the
+	-- first fetch has to be unconditional or a restart during an outage would
+	-- get a 304 and leave the item hidden.
+	local unconditional = ("mkdir -p %q && curl -sfL --max-time 10 --etag-save %q %q")
+		:format(CACHE_DIR, etag_file, provider.api)
+
+	local function refresh(force)
+		sbar.exec(force and unconditional or conditional, function(out)
+			-- SbarLua decodes JSON stdout into a table before invoking the
+			-- callback; anything else (an empty 304 body, a failed request)
+			-- arrives as a string and leaves the current state alone.
+			local summary = out
+			if type(summary) == "string" then
+				local ok, decoded = pcall(cjson.decode, summary)
+				if not ok then
+					return
+				end
+				summary = decoded
+			end
+
+			if type(summary) ~= "table" or type(summary.components) ~= "table" then
 				return
 			end
 
@@ -121,5 +144,13 @@ for _, provider in ipairs(providers) do
 		end)
 	end
 
-	item:subscribe({ "forced", "routine", "system_woke" }, refresh)
+	-- Wrapped: the event handler is called with an env table, which would
+	-- otherwise be read as the `force` argument.
+	item:subscribe({ "forced", "routine", "system_woke" }, function()
+		refresh()
+	end)
+
+	-- "routine" only fires after the first update_freq window, so resolve the
+	-- initial state at startup.
+	refresh(true)
 end

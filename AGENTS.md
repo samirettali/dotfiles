@@ -143,6 +143,11 @@ The trade-off accepted: this only works inside Herdr. Outside it, there is no me
 
 ## Gotchas
 
+- **SbarLua's `sbar.exec` callback receives a *table*, not a string, when the command's
+  stdout is valid JSON** (`callback_function` in `sketchybar.c` runs it through
+  `json_to_lua_table` first). Calling `cjson.decode` on it silently raises inside the
+  callback — the bar keeps running, nothing is logged, the item just never updates.
+  Handle both types.
 - **`xps` full eval / `nix flake check` currently fails** on a pre-existing nixpkgs
   insecure-package gate (`nodejs-slim`), unrelated to most changes. `mbp` evaluates clean.
 - **Verify tool config against the installed version, not memory** — e.g. lazygit moved

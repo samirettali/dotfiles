@@ -3,6 +3,11 @@ local icons = {
 	clock = "󰥔",
 	error = " ",
 
+	status = {
+		github = "\u{f09b}",
+		claude = "\u{f06c4}",
+	},
+
 	volume = {
 		_100 = "",
 		_66 = "",
