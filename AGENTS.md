@@ -43,6 +43,32 @@ The `warning: Git tree ... is dirty` line during eval is benign.
 - **NUR packages:** use the `nurPkgs` specialArg (`nurPkgs.<pkg>`), not the long
   `samirettali-nur.packages.${system}` expression.
 
+## andromeda: this repo vs `selfhosted`
+
+`andromeda` is the only host where nix does **not** own the machine: it's an
+Ubuntu ARM server, so this repo owns only the user profile
+(`homeConfigurations.andromeda`, no `machines/` entry) while `~/dev/selfhosted`
+owns the machine and the services through Ansible and Compose.
+
+| Layer | Owner | What |
+| --- | --- | --- |
+| System | selfhosted, roles `common` + `docker` | OS packages, Docker, ssh — anything needing root |
+| Services | selfhosted, `docker-compose.yml` + role `selfhosted` | containers, mounted configs, rendered env files |
+| User profile | **this repo**, home-manager | shell, neovim, CLI tools, agents |
+| The bridge | selfhosted, role `dotfiles` | installs nix, clones this repo, runs `nix build …#homeConfigurations.andromeda.activationPackage` and activates it |
+
+That last role is confusingly named: it manages no dotfiles, it is the glue that
+gets home-manager onto a non-NixOS host. `home-manager` would be the honest name.
+
+**The rule: does it need root? Ansible. Does it live in `/home/samir`? here.**
+Anything that has to exist *before* nix works is necessarily Ansible.
+
+**Secrets follow the same split.** A secret consumed by a service goes in
+selfhosted's ansible-vault, because it ends up in an env file Docker reads as
+root. A secret consumed by a tool *of yours* goes in sops here (`secrets/`,
+age key at `~/.config/sops/age/keys.txt`), because it has to reach your profile
+on every host — the OpenTofu state passphrases are the example.
+
 ## Adding packages
 
 - If a package has a home-manager `programs.<name>` / `services.<name>` module, **prefer the
