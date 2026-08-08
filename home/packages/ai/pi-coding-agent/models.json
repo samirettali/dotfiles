@@ -28,7 +28,7 @@
     "openrouter/thinkingmachines/inkling-small",
     "openrouter/poolside/laguna-s-2.1",
     "openrouter/meta/muse-spark-1.1",
-    "openrouter/inclusionai/ling-3.0-flash:free"
+    "openrouter/inclusionai/ling-3.0-flash"
   ],
   "providers": {
     "openrouter": {
