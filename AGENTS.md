@@ -55,10 +55,7 @@ owns the machine and the services through Ansible and Compose.
 | System | selfhosted, roles `common` + `docker` | OS packages, Docker, ssh — anything needing root |
 | Services | selfhosted, `docker-compose.yml` + role `selfhosted` | containers, mounted configs, rendered env files |
 | User profile | **this repo**, home-manager | shell, neovim, CLI tools, agents |
-| The bridge | selfhosted, role `dotfiles` | installs nix, clones this repo, runs `nix build …#homeConfigurations.andromeda.activationPackage` and activates it |
-
-That last role is confusingly named: it manages no dotfiles, it is the glue that
-gets home-manager onto a non-NixOS host. `home-manager` would be the honest name.
+| The bridge | selfhosted, role `home-manager` | installs nix, clones this repo, runs `nix build …#homeConfigurations.andromeda.activationPackage` and activates it |
 
 **The rule: does it need root? Ansible. Does it live in `/home/samir`? here.**
 Anything that has to exist *before* nix works is necessarily Ansible.
