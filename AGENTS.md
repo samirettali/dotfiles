@@ -142,54 +142,23 @@ Decisions worth not re-deriving:
 - The ElevenLabs MCP server and the `generate-speech` skill are unrelated to this — they exist
   for producing audio assets (demo videos), not for listening to responses.
 
-## Vault picker (`rbw` + Hammerspoon)
+## Hammerspoon pickers
 
-`rbw` (`home/packages/shell/rbw.nix`, every host) is the Bitwarden client for everything the
-browser extension can't reach: native app clients, installers, the terminal. Its **agent keeps
-the vault key in memory**, which is the whole reason it works behind a hotkey — the official
-`bw` CLI is Node, starts in ~1s and needs `BW_SESSION` juggling. The Bitwarden desktop app is
-not an option: system-wide auto-type on macOS has been "🔜" since 2018 and Windows is going
-first.
+Three plain modules under `home/dotfiles/hammerspoon/` back every picker, so the awkward parts
+exist once:
 
-`.hammerspoon/rbw.lua` (rendered by `home/mac/hammerspoon.nix`, mac only) feeds `rbw list --raw`
-into `canvas.picker`, bound at `cmd+space v` in `recursive_binder.lua` — `p` password, `t`
-type, `u` username, `o` otp. The binder guards it with `pcall(require, "rbw")` so the file's
-absence is not an error.
+- **`canvas.lua`** — the UI. `hs.chooser` was dropped because it is a native `NSTableView` in
+  system font, clashing with the alerts and prompt drawn from `hs.alert.defaultStyle`;
+  `canvas.picker` is the same rounded box, font and border as everything else. Only one modal
+  exists at a time — `prompt` and `picker` share the canvas, the keyDown tap and the editing
+  keys.
+- **`task.lua`** — `task.run(path, args, done, onError)`, the only place that spawns processes.
+- **`frecency.lua`** — `frecency.new(settingsKey)` giving `scores()` and `remember(id)`.
 
-`canvas.lua` owns the UI. `hs.chooser` was dropped because it is a native `NSTableView` in
-system font, which clashes with the alerts and prompt drawn from `hs.alert.defaultStyle`;
-`canvas.picker` is the same rounded box, font and border as everything else. Only one modal
-exists at a time — `prompt` and `picker` share the canvas, the keyDown tap and the editing
-keys. Notes on it:
+Consumers are rendered by nix because they need store paths: `.hammerspoon/rbw.lua` and
+`.hammerspoon/spotctl.lua` in `home/mac/hammerspoon.nix`. `recursive_binder.lua` wires them with
+`pcall(require, …)`, so a module that was not rendered is simply absent rather than an error.
 
-- **`hs.canvas` pins text to the top of its frame**, it does not centre vertically. Anything
-  that should look centred has to have its frame's `y` computed from the leftover space.
-- **The box is one `strokeAndFill` rectangle over the whole canvas, exactly like `hs.alert`.**
-  A canvas stroke is centred on its path, so the outer half is clipped and `strokeWidth = 4`
-  reads as 2 — which is what every alert and the RecursiveBinder helper look like. Insetting
-  the stroke to make it fully visible draws a border twice as thick as the rest of the UI.
-- **Frecency is the caller's business:** a choice may carry a numeric `boost` that is added to
-  its score, and with an empty query it *is* the ordering. `rbw.lua` fills it from a decaying
-  use count in `hs.settings` (zoxide-style: ×4 within the hour, ×2 within the day, ×0.5 within
-  the week, ×0.25 after), capped at 30 so it breaks ties between comparable matches without
-  ever outranking a plainly better one.
-- Equal scores are broken by name length before alphabetically — `google.com` and
-  `google cloud` score identically for "google", and the shorter one is the better answer.
-- **The keyDown tap swallows every keystroke while a modal is up**, so its handler runs inside
-  a `pcall` that tears the modal down on error — otherwise a Lua bug locks the keyboard until
-  Hammerspoon is reloaded.
-- Backspace is utf8-aware (walks back over `10xxxxxx` continuation bytes); `sub(1, -2)` would
-  cut accented characters in half.
-- Fuzzy matching is a local subsequence scorer (consecutive hits and early matches score
-  higher, a hit on the name outranks one that needed the subtext). `string.find` is called with
-  `plain = true`, so `.` and `%` in a query stay literal.
-- The picker's box grows downwards from a fixed top edge, so the list does not jump as the
-  query narrows it.
-
-- **The config is a read-only store symlink, so `rbw config set` fails** — edit `rbw.nix` and
-  `make build`. This is safe only because rbw persists `device_id` in its *data* dir
-  (`dirs::device_id_file()`), not back into `config.json`; a client that wrote to its own
-  config would break under this module.
 - **`hs.task` needs a stream callback for anything over 64k.** Without one it only drains the
   pipe after the process exits, so a child that fills the 64k pipe buffer blocks in `write()`
   and never terminates — the completion callback never fires and *nothing* is reported, since
@@ -197,9 +166,52 @@ keys. Notes on it:
   every time. Diagnosis: `ps` shows the stuck children under Hammerspoon's pid, and
   `sample <pid>` puts `write` at the top of the stack. The final stream call can arrive after
   the completion one, hence the `hs.timer.doAfter(0, deliver)` handshake.
-- **The `hs.task` and the `hs.chooser` are held in module-level variables.** Both are userdata
-  with a `__gc` and can be collected mid-flight if the only reference is a local that goes out
-  of scope. (Not what caused the deadlock above, but still required.)
+- **`hs.task` is held in a module-level table.** It is userdata with a `__gc` and can be
+  collected mid-flight if the only reference is a local that goes out of scope.
+- **`hs.canvas` pins text to the top of its frame**, it does not centre vertically. Anything
+  that should look centred has to have its frame's `y` computed from the leftover space.
+- **The box is one `strokeAndFill` rectangle over the whole canvas, exactly like `hs.alert`.**
+  A canvas stroke is centred on its path, so the outer half is clipped and `strokeWidth = 4`
+  reads as 2 — which is what every alert and the RecursiveBinder helper look like. Insetting
+  the stroke to make it fully visible draws a border twice as thick as the rest of the UI.
+- **The keyDown tap swallows every keystroke while a modal is up**, so its handler runs inside
+  a `pcall` that tears the modal down on error — otherwise a Lua bug locks the keyboard until
+  Hammerspoon is reloaded.
+- Backspace is utf8-aware (walks back over `10xxxxxx` continuation bytes); `sub(1, -2)` would
+  cut accented characters in half.
+- Fuzzy matching is a local subsequence scorer (consecutive hits and early matches score
+  higher, a hit on the name outranks one that needed the subtext). `string.find` is called with
+  `plain = true`, so `.` and `%` in a query stay literal. Equal scores break on name length
+  before alphabetically — `google.com` and `google cloud` score identically for "google", and
+  the shorter one is the better answer.
+- **Frecency is the caller's business:** a choice may carry a numeric `boost` added to its
+  score, and with an empty query it *is* the ordering. `frecency.lua` supplies it from a
+  decaying use count in `hs.settings` (zoxide-style: ×4 within the hour, ×2 within the day,
+  ×0.5 within the week, ×0.25 after), capped at 30 so it breaks ties between comparable
+  matches without ever outranking a plainly better one. `scores()` snapshots the counts once
+  per picker rather than reading settings per candidate.
+- The picker's box grows downwards from a fixed top edge, so the list does not jump as the
+  query narrows it.
+
+### Vault picker (`rbw`)
+
+`rbw` (`home/packages/shell/rbw.nix`, every host) is the Bitwarden client for everything the
+browser extension can't reach: native app clients, installers, the terminal. Its **agent keeps
+the vault key in memory**, which is the whole reason it works behind a hotkey — the official
+`bw` CLI is Node, starts in ~1s and needs `BW_SESSION` juggling. The Bitwarden desktop app is
+not an option: system-wide auto-type on macOS has been "🔜" since 2018 and Windows is going
+first. Bound at `cmd+space v` — `p` password, `t` type, `u` username, `o` otp.
+
+- **The config is a read-only store symlink, so `rbw config set` fails** — edit `rbw.nix` and
+  `make build`. This is safe only because rbw persists `device_id` in its *data* dir
+  (`dirs::device_id_file()`), not back into `config.json`; a client that wrote to its own
+  config would break under this module. It also means `sync_interval` cannot be set from nix:
+  the home-manager module only exposes `email`, `base_url`, `identity_url`, `lock_timeout` and
+  `pinentry`.
+- **The picker reads the local db, and the agent only syncs every `sync_interval` (an hour by
+  default)**, so an entry added from the browser would be invisible until then. `rbw sync` is
+  fired in the background right after the picker opens, which costs nothing and means the next
+  invocation is current.
 - **`rbw list --raw` names the type field `type`, not `entry_type`** (there's a `serde(rename)`),
   and its values are `Login` / `Note` / `Card` / `Identity` / `SSH Key`. The picker filters to
   `Login` and keys choices on `id`, so duplicate entry names stay unambiguous — `rbw get`
@@ -211,8 +223,25 @@ keys. Notes on it:
   `org.nspasteboard.ConcealedType`** — Maccy and other clipboard managers honour that type and
   skip the item, so passwords never enter the history.
 - **The "type" action exists because many native clients and installers refuse a paste.** It
-  needs the 0.2s delay: the chooser had focus, and `hs.eventtap.keyStrokes` fires before macOS
-  has handed it back to the app underneath.
+  keeps a 0.2s delay so the picker's keyDown tap has fully stopped before `keyStrokes` posts
+  its synthetic events.
+
+### Playlist picker (`spotctl`)
+
+Bound at `cmd+space m`. `spotctl playlist list` reads spotctl's sqlite cache without touching
+the network — ~5ms, against ~1.1s for the three API pages 123 playlists need. spotctl keeps
+Spotify's envelope, so the array is `items` (not `playlists`), holding trimmed
+`{id, name, tracks, owner, public}` objects. Selecting runs `spotctl play playlist <id>`.
+
+- **The read deliberately never checks freshness**, because a freshness test that reaches the
+  network is exactly the latency the cache exists to remove. `spotctl playlist list --refresh`
+  runs behind the picker instead: this invocation stays instant, the next one is current.
+- **Requires spotctl newer than v0.9.0.** `playlist list` was an API passthrough until then, so
+  the picker breaks until the tool is released and `nurPkgs.spotctl` is bumped.
+- **Every spotctl command answers in JSON, errors included** (`{"error": …}`), so the error path
+  decodes it rather than showing raw JSON in an alert.
+- This replaces the old `spotify.lua` playlist picker, which cached to a JSON file on a timer
+  because `spotify-player` was too slow to call interactively. `spotify.lua` is now unused.
 
 ## Herdr patches
 
