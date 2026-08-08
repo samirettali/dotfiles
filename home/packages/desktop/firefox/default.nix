@@ -250,6 +250,9 @@ in {
           "extensions.htmlaboutaddons.recommendations.enabled" = false;
           "extensions.update.autoUpdateDefault" = false;
           "extensions.update.enabled" = false;
+          # Extensions here are symlinked into the profile by home-manager, which
+          # Firefox counts as a foreign install and disables by default.
+          "extensions.autoDisableScopes" = 0;
           "browser.tabs.insertAfterCurrent" = true;
           "browser.tabs.insertAfterCurrentExceptPinned" = true;
 
