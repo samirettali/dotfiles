@@ -26,6 +26,7 @@
     ./neovim.nix
     ./nh.nix
     ./posting.nix
+    ./rbw.nix
     ./ripgrep.nix
     ./scripts
     ./sesh.nix

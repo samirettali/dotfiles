@@ -2,6 +2,9 @@
 local canvas = require("canvas")
 local display = require("display")
 
+-- rbw.lua is only rendered when programs.rbw is enabled
+local hasRbw, rbw = pcall(require, "rbw")
+
 hs.loadSpoon("RecursiveBinder")
 
 spoon.RecursiveBinder.helperFormat = hs.alert.defaultStyle
@@ -188,6 +191,19 @@ local config = {
 		},
 	},
 }
+
+if hasRbw then
+	table.insert(config, {
+		"v",
+		"[vault]",
+		{
+			{ "p", "password", rbw.password },
+			{ "t", "type", rbw.type_password },
+			{ "u", "username", rbw.username },
+			{ "o", "otp", rbw.code },
+		},
+	})
+end
 
 local function parseConfig(c)
 	local result = {}
