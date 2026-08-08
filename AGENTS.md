@@ -164,3 +164,16 @@ Decisions worth not re-deriving:
   collapsed-sidebar patch silently ended up nested inside the `hide-sidebar` media query and
   never applied. Overrides go in `gwfox-overrides.css`, appended by the `gwfoxUserChrome`
   derivation, so they are always top-level.
+- **Firefox never notices a bumped extension.** `XPIProvider` decides whether to re-read an
+  XPI with `xpiState.getModTime(entry) || entry.path != xpiState.path`. The profile path is a
+  stable symlink and every store file carries the same mtime of 1000ms, which is exactly the
+  `updateDate` recorded in `extensions.json` — so an extension keeps running new code against
+  the manifest of whatever version was installed first. It surfaces as absurd bugs (an options
+  page 404ing on a path from three versions ago, Bitwarden autofill dead with an empty vault),
+  not as a version number anyone would think to check. To fix: quit Firefox, delete
+  `extensions.json` *and* `addonStartup.json.lz4` (backing both up), restart. Deleting only the
+  latter does nothing — it is rebuilt from the former. `extensions.autoDisableScopes = 0` is
+  set so the rebuild does not come back with every extension disabled. Audit with:
+  compare each `extensions/*.xpi` manifest `version` against its `extensions.json` entry.
+  The real fix, if this gets tiring, is declaring extensions through enterprise policies whose
+  `install_url` is a store path, since that changes on every update.
