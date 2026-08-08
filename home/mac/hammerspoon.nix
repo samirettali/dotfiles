@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  nurPkgs,
   pkgs,
   ...
 }: {
@@ -81,6 +82,8 @@
       */
       ''
         local canvas = require("canvas")
+        local frecency = require("frecency")
+        local task = require("task")
 
         local rbw = "${lib.getExe config.programs.rbw.package}"
 
@@ -88,69 +91,12 @@
 
         local M = {}
 
-        -- hs.task is userdata with a __gc: dropping the only reference lets it
-        -- be collected mid-flight, so it has to be held onto
-        local running = {}
+        local uses = frecency.new("rbw.uses")
 
-        -- Without a stream callback hs.task only drains the pipe once the
-        -- process has exited, so anything over the 64k pipe buffer deadlocks:
-        -- the child blocks in write() and never terminates. A vault dump is
-        -- well past that, hence the streaming reader.
         local function run(args, done)
-            local task
-            local out, err = {}, {}
-            local exitCode = nil
-            local delivered = false
-
-            local function collect(stdout, stderr)
-                if stdout and stdout ~= "" then
-                    table.insert(out, stdout)
-                end
-
-                if stderr and stderr ~= "" then
-                    table.insert(err, stderr)
-                end
-            end
-
-            local function deliver()
-                if delivered or exitCode == nil then
-                    return
-                end
-
-                delivered = true
-                running[task] = nil
-
-                if exitCode ~= 0 then
-                    hs.alert.show("rbw: " .. (table.concat(err):gsub("%s+$", "")))
-                    return
-                end
-
-                done((table.concat(out):gsub("%s+$", "")))
-            end
-
-            task = hs.task.new(rbw, function(code, stdout, stderr)
-                collect(stdout, stderr)
-                exitCode = code
-                -- the stream callback gets one last call after this one, so
-                -- let it land before consuming the output
-                hs.timer.doAfter(0, deliver)
-            end, function(t, stdout, stderr)
-                collect(stdout, stderr)
-
-                if t == nil then
-                    deliver()
-                end
-
-                return true
-            end, args)
-
-            if not task then
-                hs.alert.show("rbw: could not spawn " .. rbw)
-                return
-            end
-
-            running[task] = true
-            task:start()
+            task.run(rbw, args, done, function(message)
+                hs.alert.show("rbw: " .. message)
+            end)
         end
 
         -- ConcealedType keeps the secret out of clipboard managers, and the
@@ -171,49 +117,6 @@
             end)
 
             hs.alert.show(label .. " copied, cleared in " .. CLEAR_AFTER .. "s")
-        end
-
-        -- Frecency, zoxide style: a decaying use count kept in hs.settings
-        -- (NSUserDefaults), so it survives reloads and restarts.
-        local USES_KEY = "rbw.uses"
-
-        local function uses()
-            return hs.settings.get(USES_KEY) or {}
-        end
-
-        local function remember(id)
-            local stats = uses()
-            local entry = stats[id] or { count = 0 }
-
-            entry.count = entry.count + 1
-            entry.last = os.time()
-            stats[id] = entry
-
-            hs.settings.set(USES_KEY, stats)
-        end
-
-        -- Capped so frecency only ever breaks ties between comparable matches:
-        -- an entry you use daily should win over one you never touch, but it
-        -- should not outrank a plainly better match on the name.
-        local function boost(entry)
-            if not entry or not entry.last then
-                return 0
-            end
-
-            local age = os.time() - entry.last
-            local factor
-
-            if age < 3600 then
-                factor = 4
-            elseif age < 86400 then
-                factor = 2
-            elseif age < 604800 then
-                factor = 0.5
-            else
-                factor = 0.25
-            end
-
-            return math.min(entry.count * factor * 3, 30)
         end
 
         local function subText(entry)
@@ -240,7 +143,7 @@
                         return
                     end
 
-                    local stats = uses()
+                    local score = uses.scores()
                     local choices = {}
 
                     for _, entry in ipairs(entries) do
@@ -249,7 +152,7 @@
                                 ["text"] = entry.name,
                                 ["subText"] = subText(entry),
                                 ["uuid"] = entry.id,
-                                ["boost"] = boost(stats[entry.id]),
+                                ["boost"] = score(entry.id),
                             })
                         end
                     end
@@ -263,10 +166,16 @@
                         prompt = "vault",
                         choices = choices,
                         onSelect = function(choice)
-                            remember(choice.uuid)
+                            uses.remember(choice.uuid)
                             action(choice.uuid)
                         end,
                     })
+
+                    -- the picker reads the local db and the agent only syncs
+                    -- every sync_interval (an hour), so an entry added from the
+                    -- browser would not show up until then; refresh behind the
+                    -- picker so the next invocation has it
+                    run({ "sync" }, function() end)
                 end)
 
                 return true
@@ -301,6 +210,86 @@
                 copy(code, "code")
             end)
         end)
+
+        return M
+      '';
+
+    # `playlist list` reads the sqlite cache without touching the network (~5ms
+    # against ~1.1s for the three API pages), and refreshes behind the picker
+    ".hammerspoon/spotctl.lua".text =
+      /*
+      lua
+      */
+      ''
+        local canvas = require("canvas")
+        local frecency = require("frecency")
+        local task = require("task")
+
+        local spotctl = "${lib.getExe nurPkgs.spotctl}"
+
+        local M = {}
+
+        local uses = frecency.new("spotctl.uses")
+
+        -- every spotctl command answers in JSON, errors included
+        local function reason(text)
+            local decoded = hs.json.decode(text)
+
+            if decoded and decoded.error then
+                return decoded.error
+            end
+
+            return text
+        end
+
+        local function run(args, done)
+            task.run(spotctl, args, done, function(message)
+                hs.alert.show("spotctl: " .. reason(message))
+            end)
+        end
+
+        function M.play_playlist()
+            run({ "playlist", "list" }, function(stdout)
+                local result = hs.json.decode(stdout)
+
+                if not result or not result.items then
+                    hs.alert.show("spotctl: could not read the playlist cache")
+                    return
+                end
+
+                local score = uses.scores()
+                local choices = {}
+
+                for _, playlist in ipairs(result.items) do
+                    table.insert(choices, {
+                        ["text"] = playlist.name,
+                        ["subText"] = playlist.tracks .. " tracks",
+                        ["uuid"] = playlist.id,
+                        ["boost"] = score(playlist.id),
+                    })
+                end
+
+                if #choices == 0 then
+                    hs.alert.show("spotctl: no playlists cached")
+                    return
+                end
+
+                canvas.picker({
+                    prompt = "playlist",
+                    choices = choices,
+                    onSelect = function(choice)
+                        uses.remember(choice.uuid)
+                        run({ "play", "playlist", choice.uuid })
+                    end,
+                })
+
+                -- the read never checks freshness, by design, so refresh behind
+                -- the picker: this run stays instant, the next one is current
+                run({ "playlist", "list", "--refresh" })
+            end)
+
+            return true
+        end
 
         return M
       '';

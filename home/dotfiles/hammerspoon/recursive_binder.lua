@@ -1,9 +1,9 @@
--- local spotify = require("spotify")
 local canvas = require("canvas")
 local display = require("display")
 
 -- rbw.lua is only rendered when programs.rbw is enabled
 local hasRbw, rbw = pcall(require, "rbw")
+local hasSpotctl, spotctl = pcall(require, "spotctl")
 
 hs.loadSpoon("RecursiveBinder")
 
@@ -109,10 +109,7 @@ local function uuid()
 	return cmd("uuidgen")
 end
 
--- hs.timer.doEvery(60, spotify.fetch_playlists)
-
 local config = {
-	-- { "m", "music", spotify.play_playlist },
 	{ "b", "browser", openDefaultBrowser() },
 	{ "t", "terminal", launch("Ghostty") },
 	{
@@ -191,6 +188,10 @@ local config = {
 		},
 	},
 }
+
+if hasSpotctl then
+	table.insert(config, { "m", "music", spotctl.play_playlist })
+end
 
 if hasRbw then
 	table.insert(config, {
