@@ -289,6 +289,22 @@
         "type": "github"
       }
     },
+    "pi-automode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786122273,
+        "narHash": "sha256-A5KyQTuHLn7MGNaZbxjsaO1AkcyWLcrnJiGAawd5jV8=",
+        "owner": "czottmann",
+        "repo": "pi-automode",
+        "rev": "bd82e29e0d91443054eeef0f0a8175b02d962d43",
+        "type": "github"
+      },
+      "original": {
+        "owner": "czottmann",
+        "repo": "pi-automode",
+        "type": "github"
+      }
+    },
     "remotion-skills": {
       "flake": false,
       "locked": {
@@ -319,6 +335,7 @@
         "nix4vscode": "nix4vscode",
         "nixpkgs": "nixpkgs_2",
         "nur": "nur",
+        "pi-automode": "pi-automode",
         "remotion-skills": "remotion-skills",
         "samirettali-nur": "samirettali-nur",
         "sops-nix": "sops-nix",
