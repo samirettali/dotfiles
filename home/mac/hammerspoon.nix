@@ -73,6 +73,18 @@
         push()
       '';
 
+    # Lets the plain lua files branch on what nix decided, without them having
+    # to be rendered themselves.
+    ".hammerspoon/features.lua".text =
+      /*
+      lua
+      */
+      ''
+        return {
+            aerospace = ${lib.boolToString config.programs.aerospace.enable},
+        }
+      '';
+
     # rbw's agent keeps the vault key in memory, so every call after the first
     # unlock is instant enough to sit behind a hotkey
     ".hammerspoon/rbw.lua".text =
