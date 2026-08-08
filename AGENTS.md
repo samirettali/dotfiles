@@ -142,28 +142,6 @@ Decisions worth not re-deriving:
 - The ElevenLabs MCP server and the `generate-speech` skill are unrelated to this — they exist
   for producing audio assets (demo videos), not for listening to responses.
 
-## Cross-session agent messaging
-
-Handled entirely by Herdr's socket API (`herdr agent list` / `herdr agent prompt`), documented
-for agents in the `agent-messaging` skill. There is no custom bus, hook, or pi extension.
-
-A hand-rolled bus (presence files, per-session inboxes, a Claude `Stop` hook, a pi inbox
-watcher) was built first and then deleted — Herdr already did all of it, and did the one
-thing the bus could not: **`herdr agent prompt` wakes an idle Claude session.** Claude Code
-has no supported way to start a turn in an idle TUI session on its own. `Stop` only fires at
-turn end, `initialUserMessage` only at session start, and `FileChanged` is side-effect-only
-("exit code and output are ignored"), so it can detect an incoming message but not deliver it.
-
-Verified behaviour, worth not re-deriving:
-
-- Target **idle** → prompt starts a turn immediately. Target **working** → queued, delivered
-  at end of turn. Target **not running** → nothing is queued, message lost.
-- `herdr agent prompt --wait` reports `timeout` even on success when the turn finishes before
-  Herdr observes the state change. Send without `--wait`; poll with `herdr agent wait`.
-- `herdr pane current` self-identifies the calling pane, so no env plumbing is needed.
-
-The trade-off accepted: this only works inside Herdr. Outside it, there is no messaging.
-
 ## Gotchas
 
 - **SbarLua's `sbar.exec` callback receives a *table*, not a string, when the command's
