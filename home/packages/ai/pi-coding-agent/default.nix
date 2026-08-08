@@ -54,7 +54,8 @@ in {
           "${piMcpAdapter}"
           "${piProviderKimiCode}"
         ];
-        theme = "dark";
+        theme = "light/dark";
+        quietStartup = true;
         hideThinkingBlock = false;
         defaultProvider = "openai-codex";
         defaultModel = "gpt-5.6-sol";
