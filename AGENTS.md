@@ -142,6 +142,118 @@ Decisions worth not re-deriving:
 - The ElevenLabs MCP server and the `generate-speech` skill are unrelated to this — they exist
   for producing audio assets (demo videos), not for listening to responses.
 
+## Vault picker (`rbw` + Hammerspoon)
+
+`rbw` (`home/packages/shell/rbw.nix`, every host) is the Bitwarden client for everything the
+browser extension can't reach: native app clients, installers, the terminal. Its **agent keeps
+the vault key in memory**, which is the whole reason it works behind a hotkey — the official
+`bw` CLI is Node, starts in ~1s and needs `BW_SESSION` juggling. The Bitwarden desktop app is
+not an option: system-wide auto-type on macOS has been "🔜" since 2018 and Windows is going
+first.
+
+`.hammerspoon/rbw.lua` (rendered by `home/mac/hammerspoon.nix`, mac only) feeds `rbw list --raw`
+into `canvas.picker`, bound at `cmd+space v` in `recursive_binder.lua` — `p` password, `t`
+type, `u` username, `o` otp. The binder guards it with `pcall(require, "rbw")` so the file's
+absence is not an error.
+
+`canvas.lua` owns the UI. `hs.chooser` was dropped because it is a native `NSTableView` in
+system font, which clashes with the alerts and prompt drawn from `hs.alert.defaultStyle`;
+`canvas.picker` is the same rounded box, font and border as everything else. Only one modal
+exists at a time — `prompt` and `picker` share the canvas, the keyDown tap and the editing
+keys. Notes on it:
+
+- **`hs.canvas` pins text to the top of its frame**, it does not centre vertically. Anything
+  that should look centred has to have its frame's `y` computed from the leftover space.
+- **The box is one `strokeAndFill` rectangle over the whole canvas, exactly like `hs.alert`.**
+  A canvas stroke is centred on its path, so the outer half is clipped and `strokeWidth = 4`
+  reads as 2 — which is what every alert and the RecursiveBinder helper look like. Insetting
+  the stroke to make it fully visible draws a border twice as thick as the rest of the UI.
+- **Frecency is the caller's business:** a choice may carry a numeric `boost` that is added to
+  its score, and with an empty query it *is* the ordering. `rbw.lua` fills it from a decaying
+  use count in `hs.settings` (zoxide-style: ×4 within the hour, ×2 within the day, ×0.5 within
+  the week, ×0.25 after), capped at 30 so it breaks ties between comparable matches without
+  ever outranking a plainly better one.
+- Equal scores are broken by name length before alphabetically — `google.com` and
+  `google cloud` score identically for "google", and the shorter one is the better answer.
+- **The keyDown tap swallows every keystroke while a modal is up**, so its handler runs inside
+  a `pcall` that tears the modal down on error — otherwise a Lua bug locks the keyboard until
+  Hammerspoon is reloaded.
+- Backspace is utf8-aware (walks back over `10xxxxxx` continuation bytes); `sub(1, -2)` would
+  cut accented characters in half.
+- Fuzzy matching is a local subsequence scorer (consecutive hits and early matches score
+  higher, a hit on the name outranks one that needed the subtext). `string.find` is called with
+  `plain = true`, so `.` and `%` in a query stay literal.
+- The picker's box grows downwards from a fixed top edge, so the list does not jump as the
+  query narrows it.
+
+- **The config is a read-only store symlink, so `rbw config set` fails** — edit `rbw.nix` and
+  `make build`. This is safe only because rbw persists `device_id` in its *data* dir
+  (`dirs::device_id_file()`), not back into `config.json`; a client that wrote to its own
+  config would break under this module.
+- **`hs.task` needs a stream callback for anything over 64k.** Without one it only drains the
+  pipe after the process exits, so a child that fills the 64k pipe buffer blocks in `write()`
+  and never terminates — the completion callback never fires and *nothing* is reported, since
+  every error path runs through that callback. `rbw list --raw` is ~128k, so it deadlocked
+  every time. Diagnosis: `ps` shows the stuck children under Hammerspoon's pid, and
+  `sample <pid>` puts `write` at the top of the stack. The final stream call can arrive after
+  the completion one, hence the `hs.timer.doAfter(0, deliver)` handshake.
+- **The `hs.task` and the `hs.chooser` are held in module-level variables.** Both are userdata
+  with a `__gc` and can be collected mid-flight if the only reference is a local that goes out
+  of scope. (Not what caused the deadlock above, but still required.)
+- **`rbw list --raw` names the type field `type`, not `entry_type`** (there's a `serde(rename)`),
+  and its values are `Login` / `Note` / `Card` / `Identity` / `SSH Key`. The picker filters to
+  `Login` and keys choices on `id`, so duplicate entry names stay unambiguous — `rbw get`
+  accepts a uuid as its needle.
+- **Clipboard clearing is guarded by `hs.pasteboard.changeCount()`**, captured right after the
+  write and re-checked after 30s: macOS bumps that counter on every write by anyone, so if
+  something else was copied in the meantime the timer is a no-op instead of eating it.
+- **Secrets are written with `writeAllData` under both `public.utf8-plain-text` and
+  `org.nspasteboard.ConcealedType`** — Maccy and other clipboard managers honour that type and
+  skip the item, so passwords never enter the history.
+- **The "type" action exists because many native clients and installers refuse a paste.** It
+  needs the 0.2s delay: the chooser had focus, and `hs.eventtap.keyStrokes` fires before macOS
+  has handed it back to the app underneath.
+
+## Herdr patches
+
+`home/packages/shell/herdr.nix` applies local patches to `nurPkgs.herdr`, in list order:
+`herdr-theme-tokens.patch` (per-component `[theme.custom]` tokens: `space_*`, `agent_*`,
+`tab_*`, `sidebar_divider` — the `*_bg`/`*_fg` pairs for active vs the rest, each falling back
+to the palette token that component used before, and an unset `agent_inactive_bg` leaves those
+rows unpainted) then
+`herdr-token-align.patch` (a `spacer` sidebar token that eats the row's leftover width, so
+whatever follows it renders flush right — used for the branch in spaces and the tab in the
+agents panel, leaving one column of gutter to mirror the left one), then
+`herdr-tab-geometry.patch` (`[ui.tab_bar]` with `label_padding`, `gap` and `min_width`; the
+padding default of 2 is symmetric, where vanilla spent 1 column left and 3 right), then
+`herdr-pane-outer-border.patch` (`[ui] pane_outer_border`: there is no frame widget in Herdr,
+what reads as the outer border is the perimeter of the per-pane boxes, so `false` drops every
+border edge that faces no other pane. It also drops *all* border titles, agent and manual
+alike: titles live inside a top border, and without the frame only some panes still have one,
+which would show titles on a subset of the splits).
+
+- **The patches are exported from `~/dev/herdr`, branch `local-patches`, one commit per patch
+  on top of the released tag** (`git diff <tag>..<commit>` per commit). Rebase that branch on
+  the new tag when NUR bumps the version, then re-export — do not hand-edit the patch files.
+  The checkout's working tree is *not* a reliable source: it once held a stale, partial version
+  of the theme-tokens patch.
+- **Herdr can't be built with a bare `cargo build` on darwin**: `build.rs` runs `zig build` for
+  the vendored libghostty-vt, and nixpkgs' zig cannot link natively outside the nix stdenv (it
+  fails on undefined libc symbols like `_malloc`, with or without `SDKROOT`/`ZIG_LIBC`). To run
+  Herdr's test suite, build the package with `doCheck = true` via `overrideAttrs` instead:
+  `nix build --impure --expr` over `overrideAttrs (old: { patches = …; doCheck = true;
+  cargoTestFlags = ["--bin" "herdr"]; checkFlags = ["<filter>"]; })`. Failing assertions print
+  in the nix log, which is the only feedback loop available. Compile errors too — there is no
+  fast `cargo check`, so a missed call site costs a full four-minute build.
+- **Run the suite unfiltered and diff the failures against unpatched herdr.** In the nix sandbox
+  ~44 tests fail on their own (read-only `$HOME`, git, sockets, network — hence upstream's
+  `doCheck = false`), plus a couple of `server::*` async tests that flake between runs, so a
+  raw failure count says nothing. Filtering hides real breakage: `checkFlags = ["sidebar"]`
+  passed clean while the theme-tokens patch was silently failing two tab bar tests.
+- Herdr's own `config.toml` is deliberately **not** managed by nix (it changes too often); it
+  lives at `~/.config/herdr/config.toml` and the `xdg.configFile` block in `herdr.nix` stays
+  commented out.
+
 ## Gotchas
 
 - **SbarLua's `sbar.exec` callback receives a *table*, not a string, when the command's
