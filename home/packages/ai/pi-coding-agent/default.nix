@@ -59,6 +59,7 @@ in {
         defaultModel = "gpt-5.6-sol";
         defaultThinkingLevel = "medium";
         enabledModels = modelsConfig.enabledModels;
+        tuiMode = "fullscreen";
       };
 
       ".pi/agent/models.json".text = builtins.toJSON {
