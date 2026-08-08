@@ -60,7 +60,6 @@ end
 
 local function search(template)
 	return function()
-		local focusedWindow = hs.window.focusedWindow()
 		local domain = string.match(template, "https?://([^/]+)")
 		local prompt = ("search %s"):format(domain)
 
@@ -68,21 +67,12 @@ local function search(template)
 			prompt = prompt,
 			height = 150,
 			onSubmit = function(userInput)
-				if focusedWindow then
-					focusedWindow:focus()
-				end
-
 				if userInput == "" then
 					return
 				end
 
 				local url = string.gsub(template, "{input}", userInput)
 				hs.urlevent.openURL(url)
-			end,
-			onCancel = function()
-				if focusedWindow then
-					focusedWindow:focus()
-				end
 			end,
 		})
 	end
