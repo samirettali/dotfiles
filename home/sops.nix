@@ -23,6 +23,10 @@
       "gemini_api_key" = {};
       "openai_api_key" = {};
       "openrouter_api_key" = {};
+      # OpenTofu state encryption, one per state bucket rather than per
+      # workspace — see the tofu-encryption script.
+      "tofu_passphrase_infra" = {};
+      "tofu_passphrase_sottocasa" = {};
     };
   };
 

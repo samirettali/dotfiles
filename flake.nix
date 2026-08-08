@@ -231,6 +231,9 @@
         modules = [
           ./home/ai.nix
           ./home/server.nix
+          # Needs ~/.config/sops/age/keys.txt on the server: activation fails if
+          # it can't decrypt. Same key as the other hosts, single recipient.
+          ./home/sops.nix
           ({pkgs, ...}: {
             features = {
               c = "minimal";

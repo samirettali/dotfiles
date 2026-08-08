@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   neovimPackage,
@@ -15,6 +16,12 @@ in {
       })
       (pkgs.callPackage ./speak.nix {})
       (pkgs.callPackage ./pi-models.nix {})
+      (pkgs.callPackage ./tofu-encryption.nix {
+        passphraseFiles = {
+          infra = config.sops.secrets."tofu_passphrase_infra".path;
+          sottocasa = config.sops.secrets."tofu_passphrase_sottocasa".path;
+        };
+      })
       (pkgs.writeShellScriptBin "glc" (builtins.readFile "${scriptsDir}/glc.sh"))
       (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
       (pkgs.writeShellScriptBin "ticker" (builtins.readFile "${scriptsDir}/ticker.sh"))
