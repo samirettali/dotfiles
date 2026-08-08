@@ -240,8 +240,6 @@ Spotify's envelope, so the array is `items` (not `playlists`), holding trimmed
   the picker breaks until the tool is released and `nurPkgs.spotctl` is bumped.
 - **Every spotctl command answers in JSON, errors included** (`{"error": …}`), so the error path
   decodes it rather than showing raw JSON in an alert.
-- This replaces the old `spotify.lua` playlist picker, which cached to a JSON file on a timer
-  because `spotify-player` was too slow to call interactively. `spotify.lua` is now unused.
 
 ## Herdr patches
 
