@@ -26,6 +26,17 @@ The `warning: Git tree ... is dirty` line during eval is benign.
 - **Format edited `.nix` files with `alejandra` before committing** (`make fmt`).
 - **New files are invisible to the flake until staged** (flake reads the git tree).
   Run `git add -N <file>` before `nix eval`/`flake lock`, or eval fails to find it.
+  For the same reason, **always commit with an explicit pathspec**
+  (`git commit -m … -- <paths>`): files are often staged only so the flake can see
+  them, and a bare `git commit` carries them along.
+- **Iterating through the flake is slow — get out of it while iterating.** A rebuild
+  plus an app restart per attempt is fine once, punishing on the fourth. After a few
+  rounds on the same thing, stop paying it: take that tool's config out of nix
+  temporarily, write it straight to the path it belongs at, iterate there, and move
+  the settled version back into the flake. Same idea one level up — when the answer
+  needs measuring rather than guessing, build the instrument instead of trying again:
+  the `firefox` skill exists because reading gwfox's CSS could not answer which rule
+  was winning, and a debugging client could.
 - **Never use `mkOutOfStoreSymlink` or symlinks to non-store paths** unless Samir agrees —
   use standard in-store `home.file` / module options.
 - Keep comments sparse; the user dislikes noise.
@@ -325,3 +336,23 @@ on an fd handoff).
   switch that changes them needs Firefox restarted from `~/Applications/Home Manager Apps`;
   relaunching a bundle macOS still has cached leaves the extensions gone, since the profile
   symlinks are removed immediately but nothing installs them.
+- **Never lock a pref through the `Preferences` policy.** `Policies.sys.mjs` calls
+  `lockPref` outside the `try` that writes the value, so a write that fails still locks the
+  pref — at Firefox's own default. Locking
+  `toolkit.legacyUserProfileCustomizations.stylesheets` this way left it locked to `false`:
+  `userChrome.css` was never loaded and the whole theme vanished, vertical tabs included.
+  Prefs belong in `settings`, which renders `user.js`.
+- **`extensions.settings` is inert**, and `sidebar.main.tools` has to name the extension.
+  Declaring any extension setting makes home-manager force
+  `extensions.webextensions.ExtensionStorageIDB.enabled = false` for *every* extension —
+  Bitwarden then keeps its whole vault in one 2MB JSON file — so the pref is overridden back
+  to `true`, which in turn means `browser-extension-data` is never read. See issue #11.
+  Separately, Firefox appends any extension declaring a `sidebar_action` to
+  `sidebar.main.tools`, so leaving that pref unset lets a rebuild drop Bitwarden's panel.
+- **Debug Firefox's chrome by measuring it, not by reading gwfox.** The `firefox` skill
+  drives the browser over its remote debugging protocol; `rdp.py rules <sel> <prop>` names
+  every rule setting a property and which one wins, and `measure` prints the box chain. Two
+  traps that look like specificity but are not: descendant combinators never cross a shadow
+  boundary, so rules for anything inside `sidebar-main` must be top-level, and
+  `visibility: hidden` makes an element unfocusable — hiding the urlbar that way breaks
+  cmd+L.
