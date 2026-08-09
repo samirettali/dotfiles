@@ -36,7 +36,7 @@ return {
 					vim.env.VIMRUNTIME,
 					-- '${3rd}/luv/library'
 					-- '${3rd}/busted/library'
-					-- "/Users/s.ettali/.hammerspoon/Spoons/EmmyLua.spoon/annotations",
+					vim.env.HOME .. "/.hammerspoon/annotations",
 				},
 			},
 			telemetry = {

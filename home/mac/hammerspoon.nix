@@ -36,6 +36,21 @@
             end
       """
       path.write_text(text.replace(old, new))
+
+      # EmmyLua writes its generated annotations next to itself, which here is a
+      # read-only store path, and the destination lives in a file-local table it
+      # never exposes. ~/.hammerspoon is a real directory — home-manager symlinks
+      # the files inside it, not the directory — so it can be written to.
+      path = Path(os.environ["TMP"]) / "EmmyLua.spoon" / "init.lua"
+      text = path.read_text()
+      old = """local options = {
+        annotations = hs.spoons.resourcePath("annotations"),
+        timestampsFilename = hs.spoons.resourcePath("annotations").."/timestamps.json","""
+      new = """local options = {
+        annotations = hs.configdir .. "/annotations",
+        timestampsFilename = hs.configdir .. "/annotations/timestamps.json","""
+      assert old in text, "EmmyLua annotations path moved"
+      path.write_text(text.replace(old, new))
       PY
 
             mkdir -p "$out"

@@ -9,7 +9,9 @@ require("hammerspoon_config")
 require("recursive_binder")
 pcall(require, "sketchybar")
 
--- hs.loadSpoon("EmmyLua"):init() -- TODO: clone
+-- generates type annotations for the whole hs API into ~/.hammerspoon/annotations,
+-- which lua_ls reads; loadSpoon calls its init() itself
+hs.loadSpoon("EmmyLua")
 hs.loadSpoon("ControlEscape"):start()
 
 hs.alert.show("Hammerspoon loaded")
