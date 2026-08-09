@@ -7,7 +7,6 @@
     lib.optionals config.features.security [
       # burpsuite
       amass
-      android-tools
       apksigner
       apktool
       cent

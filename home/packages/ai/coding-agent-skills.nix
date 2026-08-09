@@ -39,6 +39,7 @@
   '';
 in {
   agent-messaging = ./skills/agent-messaging;
+  android = ./skills/android;
   better-accessibility = "${inputs.jakubkrehel-skills}/skills/better-accessibility";
   better-colors = "${inputs.jakubkrehel-skills}/skills/better-colors";
   better-interface = "${inputs.jakubkrehel-skills}/skills/better-interface";

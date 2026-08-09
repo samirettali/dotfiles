@@ -127,6 +127,7 @@
       rust = true;
       dart = false;
       security = false;
+      android = false;
       web3 = false;
       zig = false;
       java = false;
@@ -296,12 +297,13 @@
             home-manager = mkHomeManagerConfig {
               inherit pkgs;
               user = users.personal;
-              features = defaultFeatures;
+              features = defaultFeatures // {android = true;};
               extraModules = [
                 ./home/mac
                 ./home/packages/desktop
                 ./home/packages/dev
                 ./home/packages/security.nix
+                ./home/packages/android.nix
               ];
             };
           })
