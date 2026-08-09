@@ -205,9 +205,7 @@ simply absent rather than an error.
 - **`onAlternate` is a variant of the main action on the highlighted row, bound to shift+return.**
   The binder cannot express it: which row it applies to is only known once something is
   selected, so unlike the vault's type/username/otp it cannot be a key chosen before the picker
-  opens. Used to drill from a playlist into its tracks. **tab is deliberately unused**, reserved
-  for switching what a picker is listing — playlists against liked songs against whatever else
-  — so music keeps a single binder key.
+  opens. Used to drill from a playlist into its tracks.
 - The picker's box grows downwards from a fixed top edge, so the list does not jump as the
   query narrows it.
 
