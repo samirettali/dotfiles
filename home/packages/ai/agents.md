@@ -19,6 +19,16 @@ Curated, always-on facts about the user
   all unrelated pre-existing changes unstaged and uncommitted.
 - Pull request titles follow Conventional Commits too, exactly like commit
   subjects: `<type>(<scope>): <summary>`, imperative, no trailing period.
+- Many of the tools he uses are his own (spotctl, sottovoce, pulse, the herdr
+  fork, the NUR packages). When one of them is the limitation, changing the tool
+  is as legitimate an option as working around it — often the one he prefers.
+- Conceptual consistency weighs as much as visual consistency: he will reject a
+  design that works if it diverges from the convention around it — a JSON
+  envelope shaped differently from the API it mirrors, or a keyboard shortcut
+  whose letter is arbitrary instead of a mnemonic for what it opens.
+- Asks why before accepting a change. The reasoning is part of the deliverable
+  rather than an extra: prefer a short, concrete justification to a change
+  presented as self-evident.
 - Sharp eye for visual detail: immediately notices micro-asymmetries, misalignments,
   spacing imbalances, and inconsistent animation/transition timings. In UI work,
   sweat these details proactively (consistent motion durations, symmetric edges,
