@@ -220,6 +220,11 @@ in {
           # "privacy.webrtc.legacyGlobalIndicator" = false;
           # "privacy.webrtc.hideGlobalIndicator" = true;
 
+          # Browser Toolbox and the RDP client behind the firefox-ui-debug skill.
+          # Neither opens a port by itself — that needs --start-debugger-server.
+          "devtools.chrome.enabled" = true;
+          "devtools.debugger.remote-enabled" = true;
+
           # Enable custom theming
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "layers.acceleration.force-enabled" = true;

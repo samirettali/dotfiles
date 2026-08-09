@@ -48,7 +48,7 @@ in {
   better-writing = "${inputs.jakubkrehel-skills}/skills/better-writing";
   commit = "${inputs.agent-stuff}/skills/commit";
   exa-search = "${exaSearchSkill}";
-  firefox-ui-debug = ./skills/firefox-ui-debug;
+  firefox = ./skills/firefox;
   frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
   generate-image = ./skills/generate-image;
   generate-speech = ./skills/generate-speech;
