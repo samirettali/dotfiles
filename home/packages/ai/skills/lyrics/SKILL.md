@@ -77,11 +77,11 @@ means there are more**, and `annotations.count` says how many in total. Do not
 infer this from the number of items you can see: a song with exactly fifteen
 annotations is not truncated, and `truncated` is the only honest signal.
 
-When it is set, answer with what you have and close by offering the rest — "ci
-sono altre N annotazioni, vuoi che approfondisca?" — rather than fetching them
-unasked. Getting them is `--max-annotations 0`, which is served from the cache
-and needs no `--refresh`: every annotation is stored, the limit only trims the
-output.
+When it is set, answer with what you have and close by offering the rest —
+saying how many more there are and asking whether to go deeper — rather than
+fetching them unasked. Getting them is `--max-annotations 0`, which is served
+from the cache and needs no `--refresh`: every annotation is stored, the limit
+only trims the output.
 
 ## Answering
 

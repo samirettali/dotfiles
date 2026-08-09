@@ -99,17 +99,18 @@ restate what this profile already says.
 ### Two modes
 
 Queue requests come in two shapes and only one of them is expensive. Pick
-by what he asks for, not by habit.
+by what he asks for, not by habit. He usually asks in Italian; judge the
+request by what it means, not by matching English words.
 
-**Extend** — *metti roba simile, continua così, altre così, allunga la
-coda, more like this*. He is asking for continuity, not novelty. Resolve
-and queue, nothing else: no playlist cache, no familiarity check, no
-`contains` filtering. **Tracks he already has in his playlists are
-welcome here** — a song he loves is a good answer to "more like this".
+**Extend** — *more like this, keep it going, more of the same, extend the
+queue*. He is asking for continuity, not novelty. Resolve and queue,
+nothing else: no playlist cache, no familiarity check, no `contains`
+filtering. **Tracks he already has in his playlists are welcome here** —
+a song he loves is a good answer to "more like this".
 
-**Discovery** — *nuovo, che non conosco, scopri, roba nuova, fammi
-scoprire, artisti nuovi*. He is asking for things absent from his
-library, so the filtering is the point:
+**Discovery** — *something new, stuff I don't know, surprise me, new
+artists, let me discover something*. He is asking for things absent from
+his library, so the filtering is the point:
 
 1. `spotctl playlist cache --max-age 24h` once; never force a full
    refresh unless his playlists just changed.
@@ -129,7 +130,8 @@ library, so the filtering is the point:
    only those where it is false, then report or queue exactly the
    requested number in the chosen order.
 
-**When the request is ambiguous, treat it as Extend** and say so in one
-line ("ho accodato anche roba che hai già — dimmi *nuove* se vuoi solo
-cose che non conosci"). It is the cheap, reversible mode: guessing wrong
-costs a sentence, while guessing wrong the other way costs minutes.
+**When the request is ambiguous, treat it as Extend**, and say in one
+line that the queue may include tracks he already owns and that he should
+ask for new ones if he wanted only unfamiliar music. It is the cheap,
+reversible mode: guessing wrong costs a sentence, while guessing wrong
+the other way costs minutes.
