@@ -25,6 +25,9 @@
       "linkding_api_token" = {};
       "openai_api_key" = {};
       "openrouter_api_key" = {};
+      # sottotesto's Client Credentials grant, used server-side for search only.
+      # The client id is not a secret and stays in the clear in its .envrc.
+      "spotify_client_secret" = {};
       # OpenTofu state encryption, one per state bucket rather than per
       # workspace — see the tofu-encryption script.
       "tofu_passphrase_infra" = {};
