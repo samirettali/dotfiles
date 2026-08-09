@@ -36,21 +36,6 @@
     })
     extensions);
 
-  # The theme reads these at load: an about:config edit silently breaks the
-  # sidebar layout. gwfox.* cannot be locked — the Preferences policy only
-  # accepts an allowlist of prefixes, and custom ones are not on it.
-  lockedPrefs =
-    builtins.mapAttrs (_: v: {
-      Value = v;
-      Status = "locked";
-    }) {
-      "sidebar.revamp" = true;
-      "sidebar.verticalTabs" = true;
-      "sidebar.visibility" = "hide-sidebar";
-      "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-      "svg.context-properties.content.enabled" = true;
-    };
-
   # Appended rather than patched: gwfox is one nested tree, so a patch hunk's
   # context lands wherever it happens to sit after an update.
   gwfoxUserChrome = pkgs.runCommand "gwfox-userChrome.css" {} ''
@@ -88,7 +73,6 @@ in {
           OfferToSaveLoginsDefault = false;
           SearchBar = "unified";
           ExtensionSettings = extensionSettings;
-          Preferences = lockedPrefs;
         };
       });
       profiles.samir = {
@@ -236,9 +220,10 @@ in {
           # "privacy.webrtc.legacyGlobalIndicator" = false;
           # "privacy.webrtc.hideGlobalIndicator" = true;
 
-          # Enable custom theming — the two prefs the theme cannot survive without
-          # are locked in `lockedPrefs` instead.
+          # Enable custom theming
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "layers.acceleration.force-enabled" = true;
+          "svg.context-properties.content.enabled" = true;
           "ui.useOverlayScrollbars" = 1;
           "browser.newtabpage.activity-stream.nova.enabled" = false;
 
@@ -249,7 +234,12 @@ in {
           "browser.ctrlTab.recentlyUsedOrder" = false;
           "browser.laterrun.enabled" = false;
 
-          # Vertical tabs — revamp, verticalTabs and visibility are in `lockedPrefs`.
+          # Vertical tabs
+          "sidebar.revamp" = true;
+          "sidebar.verticalTabs" = true;
+          # gwfox only styles the collapsed sidebar (and the floating urlbar that
+          # `gwfox.urlbar` moves into it) under this visibility mode.
+          "sidebar.visibility" = "hide-sidebar";
           "sidebar.revamp.round-content-area" = false;
           # Which tools the bottom of the sidebar lists. Firefox appends any
           # extension declaring a sidebar_action, so leaving this unset lets a
