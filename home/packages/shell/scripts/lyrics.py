@@ -28,6 +28,10 @@ UA = "lyrics/1.0 (personal skill; +https://github.com/samirettali)"
 LRCLIB = "https://lrclib.net/api"
 GENIUS = "https://api.genius.com"
 
+# Genius's own page size, and a stop so a pathological song cannot loop forever.
+PER_PAGE = 50
+MAX_PAGES = 20
+
 CACHE_DIR = os.path.expanduser("~/.cache/lyrics")
 CACHE_DB = os.path.join(CACHE_DIR, "lyrics.db")
 
@@ -317,22 +321,39 @@ def find_annotations(track, token):
         "items": [],
     }
 
-    refs = genius_api(
-        "/referents",
-        {"song_id": song["id"], "text_format": "plain", "per_page": 50},
-        token,
-    )
-    for ref in ((refs or {}).get("response", {}) or {}).get("referents", []):
-        frag = (ref.get("fragment") or "").strip()
-        for ann in ref.get("annotations", []):
-            body = ((ann.get("body") or {}).get("plain") or "").strip()
-            if not body:
-                continue
-            out["items"].append({
-                "fragment": frag,
-                "annotation": body,
-                "votes": ann.get("votes_total", 0),
-            })
+    # Genius pages referents at 50. A single request silently stopped there and
+    # then reported its own 50 as the total: LE PIÈGE has 68, so 18 annotations
+    # were missing while count claimed completeness.
+    page = 1
+    while True:
+        refs = genius_api(
+            "/referents",
+            {
+                "song_id": song["id"],
+                "text_format": "plain",
+                "per_page": PER_PAGE,
+                "page": page,
+            },
+            token,
+        )
+        referents = ((refs or {}).get("response", {}) or {}).get("referents", [])
+        for order, ref in enumerate(referents):
+            frag = (ref.get("fragment") or "").strip()
+            for ann in ref.get("annotations", []):
+                body = ((ann.get("body") or {}).get("plain") or "").strip()
+                if not body:
+                    continue
+                out["items"].append({
+                    "fragment": frag,
+                    "annotation": body,
+                    "votes": ann.get("votes_total", 0),
+                    # Genius returns referents in the order they appear in the
+                    # text, which the vote sort below would otherwise destroy.
+                    "position": (page - 1) * PER_PAGE + order,
+                })
+        if len(referents) < PER_PAGE or page >= MAX_PAGES:
+            break
+        page += 1
 
     out["items"].sort(key=lambda a: -a["votes"])
     out["count"] = len(out["items"])
