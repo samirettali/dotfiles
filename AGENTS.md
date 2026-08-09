@@ -325,7 +325,10 @@ on an fd handoff).
   `nix build --impure --expr` over `overrideAttrs (_: { src = …; doCheck = true;
   cargoTestFlags = ["--bin" "herdr"]; })`. Failing assertions print
   in the nix log, which is the only feedback loop available. Compile errors too — there is no
-  fast `cargo check`, so a missed call site costs a full four-minute build.
+  fast `cargo check`, so a missed call site costs a full four-minute build. **Before changing a
+  signature, `grep -rn "the_function(" src/` and fix every hit in one pass**, tests included:
+  adding one argument to `expanded_sidebar_toggle_rect` took three builds because the compiler
+  reports them one file at a time.
 - **Run the suite unfiltered and diff the failures against unpatched herdr.** In the nix sandbox
   ~44 tests fail on their own (read-only `$HOME`, git, sockets, network — hence upstream's
   `doCheck = false`), plus a couple of `server::*` async tests that flake between runs, so a
