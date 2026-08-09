@@ -12,6 +12,8 @@ Curated, always-on facts about the user
   Publishes his own tools via NUR (samirettali/nur).
 - Uses AI tools primarily in the terminal; in Neovim, prefers only lightweight inline-edit helpers, not full AI assistants.
 - Prefers Neovim to stay editing-first/minimal, using native features and small focused plugins over big IDE-like plugins.
+- Opens GitHub issues on his own repos as to-dos, not only for defects, which is
+  why Issues stay enabled everywhere.
 - When committing, prefers one commit per logical change.
 - When asked to commit, commit only changes made by the current agent/task; leave
   all unrelated pre-existing changes unstaged and uncommitted.
@@ -77,6 +79,9 @@ that project's `AGENTS.md` to capture it.
 - **pulse** — `~/dev/pulse`. macOS menu bar app for live prices (Binance,
   Hyperliquid, Yahoo) and timezone clocks. Same build and release setup as
   sottovoce.
+- **infra** — `~/dev/infra`. OpenTofu for the accounts rather than for a
+  project: GitHub repository settings, Actions secrets, and the R2 bucket the
+  states live in. Per-project infrastructure stays with its project.
 - **spotctl** — `~/dev/spotctl`. Agent-friendly Spotify CLI in Go, shipped
   through NUR and consumed by the `spotify` skill (whose SKILL.md lives in the
   repo) and by the Hammerspoon playlist picker. Released by bumping `version`
