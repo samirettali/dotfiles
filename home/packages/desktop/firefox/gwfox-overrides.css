@@ -50,6 +50,81 @@
 
 /* Unused: everything is on a shortcut. */
 #PanelUI-menu-button,
-#unified-extensions-button {
+#unified-extensions-button,
+.titlebar-buttonbox-container,
+#reload-button,
+#stop-button,
+#vertical-tabs-newtab-button,
+#tabs-newtab-button,
+#new-tab-button,
+#firefox-view-button {
   display: none !important;
+}
+
+/* The toolbar is empty but 47px tall, so it reads as a band above the sidebar.
+   Lift the sidebar over all but 8px of it, matching the inset on its sides, and
+   give the height back. Collapsing the toolbar instead needs the page's own
+   compensation retuned, and getting that wrong clips pages. The urlbar keeps an
+   offset for when cmd+L brings it back. */
+:root:not([inDOMFullscreen], [customizing], [taskbartab]):has(#tabbrowser-tabs[expanded]) {
+#sidebar-main,
+#sidebar-container {
+  margin-top: -39px !important;
+  height: calc(100% + 39px) !important;
+}
+#urlbar-container {
+  top: 6.5px !important;
+}
+#urlbar:not([open]) {
+  top: 13px !important;
+}
+}
+
+/* Resize handle of the sidebar's tools section, along with the 15px of margin
+   it contributed above the tools. */
+#sidebar-tools-and-extensions-splitter {
+  display: none !important;
+}
+
+/* Hidden until focused or opened. `opacity` rather than `visibility`, which
+   makes the input unfocusable: cmd+L asks for focus while the bar is still
+   hidden, the request is refused, and the bar opens with nothing focused. */
+#urlbar:not([focused], [open]) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* No hover reveal: the sidebar is either toggled open or not there. Keeping it
+   parked also keeps it from being hovered into view by accident. */
+:root:not([inDOMFullscreen], [chromehidden~="toolbar"], [chromehidden~="location"], [customizing], [taskbartab]):has(#tabbrowser-tabs:not([expanded])) {
+#sidebar-main,
+#sidebar-container {
+  left: -295px !important;
+  pointer-events: none !important;
+}
+}
+
+/* Opening a sidebar panel makes gwfox drop the content's negative margin back to
+   0, uncovering the 47px toolbar as an empty band above both the panel and the
+   page. Moving #browser lifts the panel and the page together — #tabbrowser-tabbox
+   ignores the same rule that #sidebar-box obeys, for reasons I could not pin
+   down. Lift to the same 8px inset the tab sidebar uses. The repeated
+   `:root` is specificity: gwfox's rule for this state is `!important` too, and a
+   single one loses to it. */
+:root:root:root:root:root:root:has(#sidebar-box[sidebar-panel-open]) #browser {
+  margin-top: -47px !important;
+  height: 100% !important;
+}
+/* Inside #browser, which now sits flush: give the two panels back the 8px, so
+   only the page runs edge to edge. */
+:root:root:root:root:root:root:has(#sidebar-box[sidebar-panel-open]) #sidebar-container,
+:root:root:root:root:root:root:has(#sidebar-box[sidebar-panel-open]) #sidebar-box {
+  margin-top: 8px !important;
+  height: calc(100% - 8px) !important;
+}
+
+/* The scroller is inside the arrowscrollbox's shadow tree and exposes no part,
+   but Firefox colours it through this variable (tabs.css). */
+:root {
+  --tab-vertical-scrollbar-color: transparent transparent !important;
 }
