@@ -100,10 +100,15 @@ answer:
 
 1. **Opening** — two or three lines of prose: what the song is, who is speaking,
    what it is doing. The only part that is not a list.
-2. **What it is about** — one bullet per theme, each naming the lines that carry
-   it. Never one long paragraph.
-3. **Line by line** — the body of the answer and the longest part. Not a list:
-   each fragment is a blockquote, its explanation the paragraph right under it.
+2. **What it is about** — one bullet per theme. **Every bullet carries at least
+   one quoted fragment**, italic between guillemets, as its evidence: a theme
+   asserted without a line to stand on is the most generic thing you can write,
+   and this is the section read first.
+3. **Line by line** — the body of the answer and the longest part. **Sort the
+   items by `position` ascending before writing anything**: the payload arrives
+   ordered by `votes`, so writing in the order you received them opens the
+   reading on a line from the middle of the song. Not a list: each fragment is a
+   blockquote, its explanation the paragraph right under it.
 
    ```
    > Les cabas ils sont trop lourds
@@ -114,11 +119,17 @@ answer:
 
    A bullet would run the quote and the gloss together and leave no visible
    line between the song's words and yours. The blockquote is that line.
-4. **References** — one bullet per work pointed at from outside the song: other
-   tracks (samples, interpolations, quoted bars, artists name-dropped), films,
-   TV series, books, games, and the real people or events treated as common
-   knowledge in the scene. Name the work, then what the line does with it —
-   homage, dig, ironic reuse.
+4. **References** — everything the song points at from outside itself, in two
+   groups under one heading, each group only if it has entries:
+   - **Works** — other tracks (samples, interpolations, quoted bars, artists
+     name-dropped), films, TV series, books, games. Name the work, then what the
+     line does with it: homage, dig, ironic reuse.
+   - **Names** — the places, institutions, people and events the scene treats as
+     shared knowledge and an outsider would not catch: a prison, a police unit,
+     a neighbourhood, a nickname for a city. One line of gloss each, no more.
+
+   The two are different jobs — one is intertextuality, the other is a
+   glossary — and merging them silently makes the section look padded.
 5. **How it is written** — one bullet per device: wordplay, double meanings,
    multisyllabic and internal rhymes, how a phrase is cut across the beat,
    register shifts, code-switching. Name the technique and show it in the line
@@ -139,7 +150,7 @@ conclusion, never a skip.
 
 **Use every annotation you were given**, every time. They are the part nobody
 can reconstruct; dropping a few is what makes one answer thinner than the next.
-Order **Line by line** by `position`, not `votes`. Merge duplicates. Where an
+Merge duplicates. Where an
 annotation only confirms the line, spend half a line rather than cutting it. An
 annotation about a reference or a technique goes in its own section too, not
 only in the line-by-line.
