@@ -1,15 +1,17 @@
 {
-  config,
+  inputs,
   nurPkgs,
   ...
 }: {
-  # Herdr's [theme.custom] only exposes palette-wide tokens, so restyling one
-  # component drags every other user of that token along. The patch adds
-  # per-component tokens for the sidebar spaces and the tab bar. It lives here
-  # rather than in NUR so that package stays vanilla upstream.
+  # samirettali/herdr, branch `patched`: five commits on top of the released tag
+  # adding per-component theme tokens, a `spacer` sidebar token, tab row
+  # spacing, borderless outer panes and command restore. The NUR package stays
+  # vanilla upstream and only its source is swapped, so `cargoDeps` still comes
+  # from upstream — which is fine while the fork leaves `Cargo.lock` alone, and
+  # fails loudly if it ever does not.
   home.packages = [
-    (nurPkgs.herdr.overrideAttrs (old: {
-      patches = (old.patches or []) ++ [./herdr-theme-tokens.patch];
+    (nurPkgs.herdr.overrideAttrs (_: {
+      src = inputs.herdr-fork;
     }))
   ];
 

@@ -38,6 +38,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    herdr-fork = {
+      url = "github:samirettali/herdr?ref=patched";
+      flake = false;
+    };
+
     gwfox = {
       url = "github:akkva/gwfox?ref=main";
       flake = false;

@@ -243,33 +243,38 @@ Spotify's envelope, so the array is `items` (not `playlists`), holding trimmed
 
 ## Herdr patches
 
-`home/packages/shell/herdr.nix` applies local patches to `nurPkgs.herdr`, in list order:
-`herdr-theme-tokens.patch` (per-component `[theme.custom]` tokens: `space_*`, `agent_*`,
-`tab_*`, `sidebar_divider` — the `*_bg`/`*_fg` pairs for active vs the rest, each falling back
-to the palette token that component used before, and an unset `agent_inactive_bg` leaves those
-rows unpainted) then
-`herdr-token-align.patch` (a `spacer` sidebar token that eats the row's leftover width, so
-whatever follows it renders flush right — used for the branch in spaces and the tab in the
-agents panel, leaving one column of gutter to mirror the left one), then
-`herdr-tab-geometry.patch` (`[ui.tab_bar]` with `label_padding`, `gap` and `min_width`; the
-padding default of 2 is symmetric, where vanilla spent 1 column left and 3 right), then
-`herdr-pane-outer-border.patch` (`[ui] pane_outer_border`: there is no frame widget in Herdr,
-what reads as the outer border is the perimeter of the per-pane boxes, so `false` drops every
-border edge that faces no other pane. It also drops *all* border titles, agent and manual
-alike: titles live inside a top border, and without the frame only some panes still have one,
-which would show titles on a subset of the splits).
+Herdr runs from a **fork**, `samirettali/herdr` branch `patched`: one commit per feature on top
+of the released tag, checked out at `~/dev/herdr` (`origin` is upstream, `fork` is the fork).
+`herdr.nix` keeps the NUR package vanilla and only swaps its `src` for the `herdr-fork` flake
+input, so the rev is pinned in `flake.lock` and `nix flake update` bumps it. The fork's README
+documents every option.
 
-- **The patches are exported from `~/dev/herdr`, branch `local-patches`, one commit per patch
-  on top of the released tag** (`git diff <tag>..<commit>` per commit). Rebase that branch on
-  the new tag when NUR bumps the version, then re-export — do not hand-edit the patch files.
-  The checkout's working tree is *not* a reliable source: it once held a stale, partial version
-  of the theme-tokens patch.
+The five commits add: per-component `[theme.custom]` tokens (`space_*`, `agent_*`, `tab_*`,
+`sidebar_divider`, each falling back to the palette token that component used before, with an
+unset `agent_inactive_bg` leaving those rows unpainted); a `spacer` sidebar token that eats the
+row's leftover width so what follows renders flush right, one column in; `[ui.tab_bar]` with
+`label_padding`, `gap` and `min_width`, where the padding default of 2 is symmetric against
+vanilla's 1 left and 3 right; `[ui] pane_outer_border`, which drops every border edge facing no
+other pane — there is no frame widget, the outer border *is* the perimeter of the per-pane
+boxes — and with it every border title, since titles live inside a top border and only some
+panes keep one; and `[session] restore_commands`, which records a pane's foreground argv when
+its executable is allowlisted and re-runs it through the deferred agent-resume path, because a
+cold restore otherwise hands every pane a bare shell (`launch_argv` is saved but only replayed
+on an fd handoff).
+
+- **Release bump:** rebase `patched` on the new tag, push, `nix flake update`. Nothing is
+  exported into this repo any more — the branch is the only source of truth. There used to be
+  five `.patch` files here and the two copies did drift once, with the checkout holding a
+  stale, partial version of the theme-tokens work.
+- **Only `src` is overridden, not `cargoDeps`**, which the NUR derivation still computes from
+  upstream's source. That works while the fork leaves `Cargo.lock` untouched, and fails loudly
+  (the vendor hook compares the lock) if a commit ever adds a dependency.
 - **Herdr can't be built with a bare `cargo build` on darwin**: `build.rs` runs `zig build` for
   the vendored libghostty-vt, and nixpkgs' zig cannot link natively outside the nix stdenv (it
   fails on undefined libc symbols like `_malloc`, with or without `SDKROOT`/`ZIG_LIBC`). To run
   Herdr's test suite, build the package with `doCheck = true` via `overrideAttrs` instead:
-  `nix build --impure --expr` over `overrideAttrs (old: { patches = …; doCheck = true;
-  cargoTestFlags = ["--bin" "herdr"]; checkFlags = ["<filter>"]; })`. Failing assertions print
+  `nix build --impure --expr` over `overrideAttrs (_: { src = …; doCheck = true;
+  cargoTestFlags = ["--bin" "herdr"]; })`. Failing assertions print
   in the nix log, which is the only feedback loop available. Compile errors too — there is no
   fast `cargo check`, so a missed call site costs a full four-minute build.
 - **Run the suite unfiltered and diff the failures against unpatched herdr.** In the nix sandbox
@@ -277,6 +282,10 @@ which would show titles on a subset of the splits).
   `doCheck = false`), plus a couple of `server::*` async tests that flake between runs, so a
   raw failure count says nothing. Filtering hides real breakage: `checkFlags = ["sidebar"]`
   passed clean while the theme-tokens patch was silently failing two tab bar tests.
+- **`herdr server live-handoff` swaps the binary without killing the panes** — the old server
+  passes its pane fds to the new one, so agents keep running. Check `capabilities.live_handoff`
+  in `herdr status --json` first; `herdr server stop` is the destructive alternative. Untested
+  here. Max 64 panes per handoff.
 - Herdr's own `config.toml` is deliberately **not** managed by nix (it changes too often); it
   lives at `~/.config/herdr/config.toml` and the `xdg.configFile` block in `herdr.nix` stays
   commented out.
