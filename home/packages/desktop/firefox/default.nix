@@ -253,6 +253,12 @@ in {
           # Extensions here are symlinked into the profile by home-manager, which
           # Firefox counts as a foreign install and disables by default.
           "extensions.autoDisableScopes" = 0;
+          # home-manager turns this off for any non-empty extensions.settings,
+          # since browser-extension-data is only read by the legacy JSON backend.
+          # It is global, so every extension loses Firefox's default storage —
+          # Bitwarden kept its whole vault in one 2MB file. Keeping the default
+          # is what makes extensions.settings inert (see issue #11).
+          "extensions.webextensions.ExtensionStorageIDB.enabled" = true;
           "browser.tabs.insertAfterCurrent" = true;
           "browser.tabs.insertAfterCurrentExceptPinned" = true;
 
