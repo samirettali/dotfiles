@@ -166,9 +166,10 @@ exist once:
 - **`task.lua`** — `task.run(path, args, done, onError)`, the only place that spawns processes.
 - **`frecency.lua`** — `frecency.new(settingsKey)` giving `scores()` and `remember(id)`.
 
-Consumers are rendered by nix because they need store paths: `.hammerspoon/rbw.lua` and
-`.hammerspoon/spotctl.lua` in `home/mac/hammerspoon.nix`. `recursive_binder.lua` wires them with
-`pcall(require, …)`, so a module that was not rendered is simply absent rather than an error.
+Consumers are rendered by nix because they need store paths: `.hammerspoon/rbw.lua`,
+`.hammerspoon/spotctl.lua` and `.hammerspoon/bookmarks.lua` in `home/mac/hammerspoon.nix`.
+`recursive_binder.lua` wires them with `pcall(require, …)`, so a module that was not rendered is
+simply absent rather than an error.
 
 - **`hs.task` needs a stream callback for anything over 64k.** Without one it only drains the
   pipe after the process exits, so a child that fills the 64k pipe buffer blocks in `write()`
@@ -257,6 +258,39 @@ Spotify's envelope, so the array is `items` (not `playlists`), holding trimmed
   the picker breaks until the tool is released and `nurPkgs.spotctl` is bumped.
 - **Every spotctl command answers in JSON, errors included** (`{"error": …}`), so the error path
   decodes it rather than showing raw JSON in an alert.
+
+### Bookmark picker (`linkding`)
+
+Bound at `cmd+space l`, where a submenu of seven hardcoded `openURL` entries used to be. Those
+seven live in linkding tagged `daily`, and frecency floats them back to the top within days.
+`bookmarks.lua` talks to linkding over `hs.http` with the token from
+`sops.secrets.linkding_api_token`, caching rows in `~/.cache/hammerspoon/bookmarks.json`.
+
+- **Archived means kept, not done.** linkding carries two collections that are the same thing
+  for us: the active endpoint is the read-later firehose (~10k, 87% of it YouTube), and
+  archiving is how a link is promoted to a real bookmark. The picker therefore reads
+  `/api/bookmarks/archived/` — 410 rows and 233KB in one request against 10k rows, 12MB and 11
+  pages. The inversion is deliberate: the archive was completely unused (1 entry in 10,095), so
+  spending it costs nothing, and it is the only *structural* split linkding offers. Tags could
+  not do the job — the auto-tagger produced 2177 of them, and the large ones are 100% YouTube.
+- **Never turn the refresh into a `modified_since` delta.** Archiving and unarchiving move a
+  bookmark *between* endpoints rather than editing it, so a delta on either one never reports
+  it and the cache drifts until something forces a full pass. The collection is small enough to
+  refetch whole, which cannot drift. This was a real bug in the first version.
+- **The cost is `hs.json.decode`, not the matching.** Measured on 10k rows: reading the cache
+  0.5ms, building the rows 6.8ms, ranking per keystroke 14ms — but decoding ~2MB into Lua
+  tables one element at a time through the ObjC bridge is what made the picker take seconds to
+  appear. Rows are built once by `prime()`, scheduled with `hs.timer.doAfter(0, …)` so it lands
+  off the critical path, and a keypress only reapplies frecency boosts to rows that already
+  exist.
+- **linkding's `q=` cannot negate.** `-youtube.com` matches nothing (it is read as a literal
+  term), `!unread` means *is* unread rather than the opposite, `!untagged` does work, and
+  `!archived` is not a filter at all. Archive state is an endpoint, not a query parameter —
+  `?is_archived=true` is silently ignored.
+- **Bundles are saved filters** (`search`, `any_tags`, `all_tags`, `excluded_tags`), and
+  `?bundle=<id>` composes with either endpoint. Unused so far: if the archived collection ever
+  grows unwieldy, a bundle on a positive tag is the escape hatch. A *negative* bundle is not
+  expressible, which is why the split is the endpoint rather than a filter.
 
 ## Herdr patches
 
