@@ -341,6 +341,37 @@ on an fd handoff).
   lives at `~/.config/herdr/config.toml` and the `xdg.configFile` block in `herdr.nix` stays
   commented out.
 
+### Pending agents in sketchybar
+
+`items/herdr.lua` shows the agents waiting for you — `blocked` and `done`, never `working` or
+`idle` — as two counts, and opens a popup with one clickable row per agent. The counts are
+pushed by `herdr-sketchybar` (`home/packages/shell/scripts/`), a LaunchAgent declared in
+`home/mac/sketchybar.nix` that holds Herdr's socket open and triggers the `herdr_agents` event.
+Nothing polls.
+
+- **`pane.agent_status_changed` requires a `pane_id`; there is no global variant.** So the
+  watcher subscribes once per agent pane, plus the parameterless lifecycle events
+  (`pane.created/closed/exited/agent_detected`), and **reconnects whenever the set of agent
+  panes changes** — which also avoids depending on whether a second `events.subscribe` on the
+  same connection is additive, something that was never confirmed. The global alternative,
+  `pane.updated`, measured ~10 messages a second on a busy session: a timer in disguise.
+- **Counts come from `herdr agent list` on every event, not from the payload.** An event says
+  one pane changed, not how many are waiting, so totals accumulated from events drift after any
+  missed message.
+- **The per-row detail goes through `~/.cache/sketchybar/herdr-agents.json`, not the event.**
+  Pane ids contain `:` and titles arbitrary punctuation, so packing them into `--trigger`
+  variables would mean inventing an encoding. Written before the trigger, so the item can never
+  read rows that disagree with the count.
+- **`herdr agent focus <pane_id>` jumps to a pane, `herdr pane focus` is directional**
+  (`--direction left|right|up|down`) and just prints usage when handed an id — silently, since
+  a `click_script`'s stderr goes nowhere. The row also runs `open -a Ghostty`: focusing only
+  moves Herdr's own focus, which is invisible if the terminal is not in front.
+- **A LaunchAgent inherits almost no environment, and with `useUserPackages` the user profile
+  is `/etc/profiles/per-user/$USER/bin`, not `~/.nix-profile/bin`.** Guessing the latter left
+  the watcher counting zero forever. Both `herdr` and `sketchybar` are on `PATH` by store path
+  now, which is why the patched package lives in its own `herdr-package.nix` — and every
+  failure is logged, because this one was mute.
+
 ## Gotchas
 
 - **SbarLua's `sbar.exec` callback receives a *table*, not a string, when the command's

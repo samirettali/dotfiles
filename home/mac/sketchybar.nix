@@ -2,6 +2,8 @@
   config,
   lib,
   pkgs,
+  inputs,
+  nurPkgs,
   ...
 }: let
   sketchybarExe = lib.getExe config.programs.sketchybar.package;
@@ -23,6 +25,13 @@
         luaposixPackage
         luasimdjsonPackage
       ]);
+
+  herdrPackage = import ../packages/shell/herdr-package.nix {inherit inputs nurPkgs;};
+
+  herdrSketchybar = pkgs.callPackage ../packages/shell/scripts/herdr-sketchybar.nix {
+    sketchybar = config.programs.sketchybar.package;
+    herdr = herdrPackage;
+  };
 in {
   programs.sketchybar = {
     enable = true;
@@ -30,6 +39,21 @@ in {
     extraPackages = with pkgs; [
       sketchybar-app-font
     ];
+  };
+
+  # Holds Herdr's socket open and triggers the `herdr_agents` event, so the item
+  # is pushed rather than polled. Runs as a LaunchAgent because SbarLua cannot
+  # keep a socket of its own; it survives Herdr restarts by reconnecting.
+  launchd.agents.herdr-sketchybar = {
+    enable = config.programs.sketchybar.enable;
+    config = {
+      ProgramArguments = [(lib.getExe herdrSketchybar)];
+      RunAtLoad = true;
+      KeepAlive = true;
+      ProcessType = "Background";
+      StandardOutPath = "${config.home.homeDirectory}/Library/Logs/herdr-sketchybar.log";
+      StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/herdr-sketchybar.err.log";
+    };
   };
 
   programs.aerospace.settings.exec-on-workspace-change = lib.mkIf (config.programs.aerospace.enable && config.programs.sketchybar.enable) [
@@ -55,6 +79,7 @@ in {
         package.cpath = package.cpath .. ";${pkgs.lua55Packages.getLuaCPath luaposixPackage}"
         package.cpath = package.cpath .. ";${pkgs.lua55Packages.getLuaCPath luasimdjsonPackage}"
         AEROSPACE_BIN = "${lib.getExe config.programs.aerospace.package}"
+        HERDR_BIN = "${lib.getExe herdrPackage}"
         require("init")
       '';
     };
