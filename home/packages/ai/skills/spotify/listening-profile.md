@@ -80,20 +80,56 @@ His playlists are a deliberate taxonomy — treat them as one:
   from the known canon in roughly equal measure, with canon adjacency as
   the bridge to new names.
 
-### Recommendation workflow
+### When to read his listening data
 
-When asked to recommend or queue tracks he does not already have:
+This profile is durable, so neither of these is part of the default flow.
+Reach for them only when the request points at them:
 
-1. Run `spotctl playlist cache --max-age 24h` once; never force a full
+- `spotctl top tracks|artists` — when he refers to his **favourites**:
+  what he likes most, his top artists, what he listens to the most.
+  `long_term` for "always", `medium_term` for "lately", `short_term`
+  for "these weeks".
+- `spotctl history recent` — when he refers to what he has **just been
+  playing**: what he is on lately, what he was listening to before, more
+  like what is playing now.
+
+Otherwise skip both. They cost two network calls and a lot of context to
+restate what this profile already says.
+
+### Two modes
+
+Queue requests come in two shapes and only one of them is expensive. Pick
+by what he asks for, not by habit.
+
+**Extend** — *metti roba simile, continua così, altre così, allunga la
+coda, more like this*. He is asking for continuity, not novelty. Resolve
+and queue, nothing else: no playlist cache, no familiarity check, no
+`contains` filtering. **Tracks he already has in his playlists are
+welcome here** — a song he loves is a good answer to "more like this".
+
+**Discovery** — *nuovo, che non conosco, scopri, roba nuova, fammi
+scoprire, artisti nuovi*. He is asking for things absent from his
+library, so the filtering is the point:
+
+1. `spotctl playlist cache --max-age 24h` once; never force a full
    refresh unless his playlists just changed.
-2. Use current top items, recent history, and this profile to guide
-   discovery, applying any genre, language, mood, or artist constraints.
-3. Gauge familiarity with a bulk `spotctl playlist artists "NAME" ...`
+2. Pick candidates from this profile, plus his listening data only if
+   the request calls for it (see above), applying any genre, language,
+   mood, or artist constraints.
+3. Gauge familiarity with one bulk `spotctl playlist artists "NAME" ...`
    call: high track and playlist counts mean a well-known artist. When
    he asks for artists he knows less, prefer candidates with zero or low
    counts; when he asks for deep cuts, do the opposite.
-4. Search for more candidates than requested and resolve each to an
-   exact track ID, then bulk-check them with one
-   `spotctl playlist contains` call.
-5. Keep only tracks where `contains` is false, then report or queue
-   exactly the requested number in the chosen order.
+4. Pick more candidates than requested and resolve them all with a
+   single `spotctl resolve "artist title" ...` call — never one search
+   per candidate, which is what made this flow take minutes. Verify each
+   match is really the track asked for; Spotify's search returns a
+   plausible wrong answer rather than nothing.
+5. Bulk-check the IDs with one `spotctl playlist contains` call, keep
+   only those where it is false, then report or queue exactly the
+   requested number in the chosen order.
+
+**When the request is ambiguous, treat it as Extend** and say so in one
+line ("ho accodato anche roba che hai già — dimmi *nuove* se vuoi solo
+cose che non conosci"). It is the cheap, reversible mode: guessing wrong
+costs a sentence, while guessing wrong the other way costs minutes.
