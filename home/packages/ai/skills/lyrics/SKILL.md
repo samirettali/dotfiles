@@ -89,6 +89,12 @@ The deliverable is the **reading, not the transcript**. Never reproduce the
 lyrics in full or in long runs: quote only the fragment being commented on, a
 line or two at most. The user has the text.
 
+**Quotes stay in the original language, always, verbatim** — French stays
+French, Arabic stays Arabic, verlan and slang keep their spelling. Never
+translate a quoted line, not even in passing, and never quote a translation as
+if it were the lyric. Saying what a line means is the job; replacing its words
+is not.
+
 **Always the same shape**, in this order, so two songs read as the same kind of
 answer:
 
@@ -125,5 +131,6 @@ annotation only confirms the line, spend half a line rather than cutting it. An
 annotation about a reference or a technique goes in its own section too, not
 only in the line-by-line.
 
-Slang, regional expressions and scene references beat surface paraphrase. Answer
-in the user's language.
+Slang, regional expressions and scene references beat surface paraphrase.
+Everything you write is in the user's language; everything you quote is in the
+song's.
