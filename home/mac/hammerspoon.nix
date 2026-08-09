@@ -359,5 +359,271 @@
 
         return M
       '';
+
+    # linkding answers a search in ~490ms over the tailnet, which is the whole
+    # problem behind an interactive picker, so this keeps spotctl's shape: read
+    # the local cache, refresh behind it. The cache is a JSON file rather than
+    # sqlite because the data layer here is one GET with a static token — a CLI
+    # like spotctl earns its keep on OAuth and playback, not on this.
+    ".hammerspoon/bookmarks.lua".text =
+      /*
+      lua
+      */
+      ''
+        local canvas = require("canvas")
+        local frecency = require("frecency")
+
+        local BASE = "https://links.samirettali.com"
+        local TOKEN_PATH = "${config.sops.secrets."linkding_api_token".path}"
+        local CACHE_DIR = os.getenv("HOME") .. "/.cache/hammerspoon"
+        local CACHE_PATH = CACHE_DIR .. "/bookmarks.json"
+
+        -- Archived is not "done" here, it is the curated half: the read-later
+        -- firehose stays on the active endpoint, and a bookmark worth keeping
+        -- gets archived. That makes the split structural rather than a tag
+        -- convention, and it is why this list is small enough to refetch whole.
+        local COLLECTION = "/api/bookmarks/archived/"
+
+        local PAGE = 1000
+
+        local M = {}
+
+        local uses = frecency.new("bookmarks.uses")
+
+        local token = nil
+
+        local function readToken()
+            if token then
+                return token
+            end
+
+            local file = io.open(TOKEN_PATH, "r")
+
+            if not file then
+                hs.alert.show("bookmarks: no token at " .. TOKEN_PATH)
+                return nil
+            end
+
+            token = (file:read("*a"):gsub("%s+$", ""))
+            file:close()
+
+            return token
+        end
+
+        -- only what the picker draws or opens, so the cache stays small enough
+        -- to decode without the delay being noticeable
+        local function trim(bookmark)
+            local title = bookmark.title
+
+            if title == nil or title == "" then
+                title = bookmark.website_title
+            end
+
+            if title == nil or title == "" then
+                title = bookmark.url
+            end
+
+            return {
+                -- linkding ids are integers, and frecency uses them as keys in
+                -- hs.settings, which is NSUserDefaults and takes strings only
+                id = tostring(bookmark.id),
+                url = bookmark.url,
+                title = title,
+                tags = bookmark.tag_names or {},
+            }
+        end
+
+        local function get(path, done)
+            local auth = readToken()
+
+            if not auth then
+                return
+            end
+
+            hs.http.asyncGet(BASE .. path, { Authorization = "Token " .. auth }, function(status, body)
+                if status ~= 200 then
+                    hs.alert.show("bookmarks: linkding answered " .. tostring(status))
+                    return
+                end
+
+                local decoded = hs.json.decode(body)
+
+                if not decoded or not decoded.results then
+                    hs.alert.show("bookmarks: could not parse the response")
+                    return
+                end
+
+                done(decoded)
+            end)
+        end
+
+        local function collect(offset, acc, done)
+            get(COLLECTION .. "?limit=" .. PAGE .. "&offset=" .. offset, function(page)
+                for _, bookmark in ipairs(page.results) do
+                    acc[#acc + 1] = trim(bookmark)
+                end
+
+                if page.next then
+                    collect(offset + PAGE, acc, done)
+                else
+                    done(acc)
+                end
+            end)
+        end
+
+        -- Everything the picker needs, decoded once and kept for the life of the
+        -- config. hs.json.decode walks the payload into Lua tables one element
+        -- at a time through the ObjC bridge, which is what made the picker slow
+        -- to appear back when this read the whole 10k collection. None of it
+        -- depends on the keypress, so none of it belongs behind one.
+        local state = nil
+
+        local function load()
+            local file = io.open(CACHE_PATH, "r")
+
+            if not file then
+                return nil
+            end
+
+            local body = file:read("*a")
+            file:close()
+
+            local cache = hs.json.decode(body)
+
+            if not cache or not cache.items then
+                return nil
+            end
+
+            return cache
+        end
+
+        -- takes the two fields rather than the state table, which also carries
+        -- the built rows: those are derived from the items and would double the
+        -- file, and the decode of that file is the cost being avoided here
+        local function save(syncedAt, items)
+            hs.fs.mkdir(os.getenv("HOME") .. "/.cache")
+            hs.fs.mkdir(CACHE_DIR)
+
+            local file = io.open(CACHE_PATH, "w")
+
+            if not file then
+                hs.alert.show("bookmarks: could not write the cache")
+                return
+            end
+
+            file:write(hs.json.encode({ synced_at = syncedAt, items = items }))
+            file:close()
+        end
+
+        local function subText(item)
+            local parts = {}
+            local host = item.url:match("^https?://([^/]+)")
+
+            if host then
+                parts[#parts + 1] = (host:gsub("^www%.", ""))
+            end
+
+            if #item.tags > 0 then
+                parts[#parts + 1] = table.concat(item.tags, " ")
+            end
+
+            return table.concat(parts, " · ")
+        end
+
+        local function build(items)
+            local choices = {}
+
+            for _, item in ipairs(items) do
+                choices[#choices + 1] = {
+                    ["text"] = item.title,
+                    ["subText"] = subText(item),
+                    ["uuid"] = item.id,
+                    ["url"] = item.url,
+                    ["boost"] = 0,
+                }
+            end
+
+            return choices
+        end
+
+        local function adopt(syncedAt, items)
+            state = { synced_at = syncedAt, items = items, choices = build(items) }
+        end
+
+        local function prime()
+            if state then
+                return true
+            end
+
+            local cache = load()
+
+            if not cache or #cache.items == 0 then
+                return false
+            end
+
+            adopt(cache.synced_at, cache.items)
+
+            return true
+        end
+
+        -- A whole refetch rather than a modified_since delta: the collection is
+        -- a few hundred rows in one request, and archiving or unarchiving moves
+        -- a bookmark between endpoints instead of editing it, so a delta on this
+        -- one would never see either. Refetching cannot drift.
+        local function refresh()
+            local started = os.time()
+
+            collect(0, {}, function(items)
+                adopt(started, items)
+                save(started, items)
+            end)
+        end
+
+        local function show()
+            -- the rows themselves are already built; only the ranking they get
+            -- ordered by can have moved since the last time
+            local score = uses.scores()
+
+            for _, choice in ipairs(state.choices) do
+                choice.boost = score(choice.uuid)
+            end
+
+            canvas.picker({
+                prompt = "bookmarks",
+                choices = state.choices,
+                onSelect = function(choice)
+                    uses.remember(choice.uuid)
+                    hs.urlevent.openURL(choice.url)
+                end,
+            })
+        end
+
+        function M.open()
+            if prime() then
+                show()
+
+                -- the read never checks freshness, by design, so refresh behind
+                -- the picker: this run stays instant, the next one is current
+                refresh()
+            else
+                hs.alert.show("bookmarks: first sync")
+
+                collect(0, {}, function(items)
+                    local started = os.time()
+                    adopt(started, items)
+                    save(started, items)
+                    show()
+                end)
+            end
+
+            return true
+        end
+
+        -- Off the critical path rather than at require time: the config keeps
+        -- loading, and the decode lands long before the first keypress.
+        hs.timer.doAfter(0, prime)
+
+        return M
+      '';
   };
 }

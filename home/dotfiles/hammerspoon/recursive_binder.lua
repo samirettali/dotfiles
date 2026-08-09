@@ -4,6 +4,7 @@ local display = require("display")
 -- rbw.lua is only rendered when programs.rbw is enabled
 local hasRbw, rbw = pcall(require, "rbw")
 local hasSpotctl, spotctl = pcall(require, "spotctl")
+local hasBookmarks, bookmarks = pcall(require, "bookmarks")
 
 hs.loadSpoon("RecursiveBinder")
 
@@ -32,13 +33,6 @@ local function openDefaultBrowser()
 		end
 
 		return true -- This closes the RecursiveBinder popup immediately
-	end
-end
-
-local function openURL(url)
-	return function()
-		hs.urlevent.openURL(url)
-		return true
 	end
 end
 
@@ -125,27 +119,6 @@ local config = {
 		},
 	},
 	{
-		"l",
-		"[links]",
-		{
-			{
-				-- both start with c, so the branch is their second letter:
-				-- cHat, cLaude
-				"c",
-				"[c]",
-				{
-					{ "h", "chatgpt", openURL("https://chat.openai.com") },
-					{ "l", "claude", openURL("https://claude.ai") },
-				},
-			},
-			{ "y", "youtube", openURL("youtube.com") },
-			{ "t", "twitter", openURL("https://twitter.com") },
-			{ "g", "google", openURL("https://google.com") },
-			{ "w", "whatsapp", openURL("https://web.whatsapp.com") },
-			{ "m", "mail", openURL("https://fastmail.com") },
-		},
-	},
-	{
 		"p",
 		"[paste]",
 		{
@@ -185,6 +158,12 @@ local config = {
 
 if hasSpotctl then
 	table.insert(config, { "m", "music", spotctl.play_playlist })
+end
+
+-- this replaced a submenu of seven hardcoded openURL entries: they are all in
+-- linkding now, tagged daily, and frecency floats them back to the top
+if hasBookmarks then
+	table.insert(config, { "l", "bookmarks", bookmarks.open })
 end
 
 if hasRbw then
