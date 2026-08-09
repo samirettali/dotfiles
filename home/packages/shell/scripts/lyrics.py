@@ -287,7 +287,7 @@ def genius_api(path, params, token):
     )
 
 
-def find_annotations(track, token, limit):
+def find_annotations(track, token):
     res = genius_api("/search", {"q": f"{track['artist']} {track['name']}"}, token)
     if not res:
         return {"available": False, "reason": "song not found on Genius"}
@@ -336,9 +336,18 @@ def find_annotations(track, token, limit):
 
     out["items"].sort(key=lambda a: -a["votes"])
     out["count"] = len(out["items"])
-    if limit:
-        out["items"] = out["items"][:limit]
     return out
+
+
+def limit_annotations(ann, limit):
+    """Truncate for output only. The cache holds every annotation, so raising
+    --max-annotations answers from disk instead of needing --refresh."""
+    if not ann.get("available") or not limit:
+        return ann
+    items = ann.get("items", [])
+    if len(items) <= limit:
+        return ann
+    return {**ann, "items": items[:limit], "truncated": True}
 
 
 # --------------------------------------------------------------------------
@@ -367,10 +376,17 @@ def run(track, args):
 
     result = {"track": track, **payload}
 
+    # The timestamped text is the plain one with [mm:ss.xx] in front of every
+    # line, so shipping both doubles the lyrics for a reader that does not need
+    # to follow along. The cache keeps it either way.
+    lyrics = result.get("lyrics")
+    if lyrics and not args.synced:
+        result["lyrics"] = {k: v for k, v in lyrics.items() if k != "synced_text"}
+
     if args.annotations:
         ann_hit = None if args.refresh else cache_get(db, "annotations", key)
         if ann_hit:
-            result["annotations"] = ann_hit[0]
+            result["annotations"] = limit_annotations(ann_hit[0], args.max_annotations)
         else:
             token = genius_token()
             if not token:
@@ -380,7 +396,7 @@ def run(track, args):
                 }
             else:
                 try:
-                    ann = find_annotations(track, token, args.max_annotations)
+                    ann = find_annotations(track, token)
                     cache_put(db, "annotations", key, ann)
                 except urllib.error.HTTPError as e:
                     ann = {
@@ -388,7 +404,7 @@ def run(track, args):
                         "reason": f"Genius rejected the token (HTTP {e.code}): "
                                   "regenerate it at genius.com/api-clients",
                     }
-                result["annotations"] = ann
+                result["annotations"] = limit_annotations(ann, args.max_annotations)
 
     json.dump(result, sys.stdout, ensure_ascii=False, indent=2)
     sys.stdout.write("\n")
@@ -407,8 +423,10 @@ def main():
     p.add_argument("--duration", type=int, help="duration in seconds")
     p.add_argument("--no-annotations", dest="annotations", action="store_false",
                    help="lyrics only, no call to Genius")
-    p.add_argument("--max-annotations", type=int, default=40,
-                   help="how many annotations to return (default 40, 0 = all)")
+    p.add_argument("--max-annotations", type=int, default=15,
+                   help="how many annotations to return (default 15, 0 = all)")
+    p.add_argument("--synced", action="store_true",
+                   help="include the timestamped text alongside the plain one")
     p.add_argument("--refresh", action="store_true", help="ignore the cache")
     args = p.parse_args()
 

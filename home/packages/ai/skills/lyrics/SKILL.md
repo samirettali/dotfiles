@@ -14,11 +14,19 @@ lyrics --now                                  # the track playing right now
 lyrics "Caparezza" "Limiti"                   # by artist and title
 lyrics "Nekfeu" "Vinyle" --album "Cyborg" --duration 245
 lyrics "IAM" "Petit frère" --no-annotations   # skip Genius
+lyrics --now --max-annotations 0              # every annotation, not the top 15
+lyrics --now --synced                         # add the timestamped text
 lyrics --now --refresh                        # ignore the cache
 ```
 
 Output is JSON on stdout. Results are cached in `~/.cache/lyrics/lyrics.db`
 forever, because lyrics do not change; `--refresh` re-fetches.
+
+Two defaults keep the answer small, since the whole payload has to be read
+before a word of it is useful. Only the plain text is returned — `--synced` adds
+the timestamped copy, which is the same words with `[mm:ss.xx]` in front and is
+worth asking for only to follow along with playback. And annotations stop at the
+15 best-voted; see below.
 
 ## Read `match.exactness` before you answer
 
@@ -61,6 +69,19 @@ rejected it can be regenerated at genius.com/api-clients.
 Annotations are user-contributed and occasionally wrong or joking. Where one
 makes a strong factual claim worth relying on, say it comes from Genius rather
 than asserting it yourself.
+
+### When there are more than you were given
+
+Only the 15 best-voted come back by default. **`annotations.truncated: true`
+means there are more**, and `annotations.count` says how many in total. Do not
+infer this from the number of items you can see: a song with exactly fifteen
+annotations is not truncated, and `truncated` is the only honest signal.
+
+When it is set, answer with what you have and close by offering the rest — "ci
+sono altre N annotazioni, vuoi che approfondisca?" — rather than fetching them
+unasked. Getting them is `--max-annotations 0`, which is served from the cache
+and needs no `--refresh`: every annotation is stored, the limit only trims the
+output.
 
 ## Answering
 
