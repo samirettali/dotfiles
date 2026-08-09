@@ -35,11 +35,7 @@ local function openDefaultBrowser()
 	end
 end
 
-urls = {}
-
 local function openURL(url)
-	table.insert(urls, url)
-
 	return function()
 		hs.urlevent.openURL(url)
 		return true

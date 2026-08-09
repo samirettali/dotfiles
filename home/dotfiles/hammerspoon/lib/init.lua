@@ -228,6 +228,5 @@ M.focus_next_screen = function()
 	end
 end
 
-M.log = hs.logger.new("lib", "debug")
 
 return M
