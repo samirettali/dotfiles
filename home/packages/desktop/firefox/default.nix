@@ -11,7 +11,6 @@
     consent-o-matic
     darkreader
     linkding-extension
-    multi-account-containers
     sponsorblock
     violentmonkey
     ublock-origin
@@ -23,14 +22,34 @@
   # is a store path, so it changes on every bump and Firefox reinstalls, instead
   # of deciding from an mtime that is 1000ms on every store file and therefore
   # never differs. `normal_installed` only blocks uninstalling, not disabling.
+  # `private_browsing` and `updates_disabled` are otherwise profile state: the
+  # first is lost whenever extensions.json is rebuilt, the second would let AMO
+  # replace the pinned XPI.
   extensionSettings = builtins.listToAttrs (map (e: {
       name = e.addonId;
       value = {
         installation_mode = "normal_installed";
         install_url = "file://${e}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/${e.addonId}.xpi";
+        private_browsing = true;
+        updates_disabled = true;
       };
     })
     extensions);
+
+  # The theme reads these at load: an about:config edit silently breaks the
+  # sidebar layout. gwfox.* cannot be locked — the Preferences policy only
+  # accepts an allowlist of prefixes, and custom ones are not on it.
+  lockedPrefs =
+    builtins.mapAttrs (_: v: {
+      Value = v;
+      Status = "locked";
+    }) {
+      "sidebar.revamp" = true;
+      "sidebar.verticalTabs" = true;
+      "sidebar.visibility" = "hide-sidebar";
+      "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+      "svg.context-properties.content.enabled" = true;
+    };
 
   # Appended rather than patched: gwfox is one nested tree, so a patch hunk's
   # context lands wherever it happens to sit after an update.
@@ -69,6 +88,7 @@ in {
           OfferToSaveLoginsDefault = false;
           SearchBar = "unified";
           ExtensionSettings = extensionSettings;
+          Preferences = lockedPrefs;
         };
       });
       profiles.samir = {
@@ -216,10 +236,9 @@ in {
           # "privacy.webrtc.legacyGlobalIndicator" = false;
           # "privacy.webrtc.hideGlobalIndicator" = true;
 
-          # Enable custom theming
-          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          # Enable custom theming — the two prefs the theme cannot survive without
+          # are locked in `lockedPrefs` instead.
           "layers.acceleration.force-enabled" = true;
-          "svg.context-properties.content.enabled" = true;
           "ui.useOverlayScrollbars" = 1;
           "browser.newtabpage.activity-stream.nova.enabled" = false;
 
@@ -230,14 +249,12 @@ in {
           "browser.ctrlTab.recentlyUsedOrder" = false;
           "browser.laterrun.enabled" = false;
 
-          # Vertical tabs
-          "sidebar.revamp" = true;
-          "sidebar.verticalTabs" = true;
-          # gwfox only styles the collapsed sidebar (and the floating urlbar that
-          # `gwfox.urlbar` moves into it) under this visibility mode.
-          "sidebar.visibility" = "hide-sidebar";
+          # Vertical tabs — revamp, verticalTabs and visibility are in `lockedPrefs`.
           "sidebar.revamp.round-content-area" = false;
-          "sidebar.main.tools" = null;
+          # Which tools the bottom of the sidebar lists. Firefox appends any
+          # extension declaring a sidebar_action, so leaving this unset lets a
+          # rebuild drop Bitwarden's panel.
+          "sidebar.main.tools" = addons.bitwarden.addonId;
           "sidebar.animation.enabled" = false;
 
           "widget.macos.native-context-menus" = false;

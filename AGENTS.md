@@ -190,10 +190,12 @@ Consumers are rendered by nix because they need store paths: `.hammerspoon/rbw.l
   ×0.5 within the week, ×0.25 after), capped at 30 so it breaks ties between comparable
   matches without ever outranking a plainly better one. `scores()` snapshots the counts once
   per picker rather than reading settings per candidate.
-- **`onAlternate` is a second action on the highlighted row, bound to tab.** The binder cannot
-  express it: which row it applies to is only known once something is selected, so unlike the
-  vault's type/username/otp it cannot be a key chosen before the picker opens. Used to drill
-  from a playlist into its tracks.
+- **`onAlternate` is a variant of the main action on the highlighted row, bound to shift+return.**
+  The binder cannot express it: which row it applies to is only known once something is
+  selected, so unlike the vault's type/username/otp it cannot be a key chosen before the picker
+  opens. Used to drill from a playlist into its tracks. **tab is deliberately unused**, reserved
+  for switching what a picker is listing — playlists against liked songs against whatever else
+  — so music keeps a single binder key.
 - The picker's box grows downwards from a fixed top edge, so the list does not jump as the
   query narrows it.
 

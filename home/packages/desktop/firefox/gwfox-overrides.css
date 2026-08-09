@@ -47,3 +47,9 @@
   transition: var(--tab-dragover-transition) !important;
 }
 }
+
+/* Unused: everything is on a shortcut. */
+#PanelUI-menu-button,
+#unified-extensions-button {
+  display: none !important;
+}

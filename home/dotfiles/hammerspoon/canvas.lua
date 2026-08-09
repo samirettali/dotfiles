@@ -462,10 +462,11 @@ function M.picker(opts)
 			return
 		end
 
-		-- tab is a second action on the highlighted row, for the cases the
-		-- binder cannot express: which one it applies to is only known once
-		-- something is selected, so it cannot be a key chosen beforehand
-		if keyCode == map["tab"] and opts.onAlternate then
+		-- shift+return is a variant of what return does to the highlighted row,
+		-- for the cases the binder cannot express: which row it applies to is
+		-- only known once something is selected. tab is deliberately left free
+		-- for switching what the picker is listing.
+		if keyCode == map["return"] and flags.shift and opts.onAlternate then
 			local choice = matches[selected]
 
 			if not choice then
