@@ -275,6 +275,42 @@
             end)
         end
 
+        -- reached with tab from the playlist picker: reads the cached items of
+        -- that one playlist, so it costs no network either
+        local function pickTrack(playlistID, playlistName)
+            run({ "playlist", "items", playlistID }, function(stdout)
+                local result = hs.json.decode(stdout)
+
+                if not result or not result.items then
+                    hs.alert.show("spotctl: could not read the playlist tracks")
+                    return
+                end
+
+                local choices = {}
+
+                for _, track in ipairs(result.items) do
+                    table.insert(choices, {
+                        ["text"] = track.name,
+                        ["subText"] = table.concat(track.artists or {}, ", "),
+                        ["uuid"] = track.id,
+                    })
+                end
+
+                if #choices == 0 then
+                    hs.alert.show("spotctl: no cached tracks for " .. playlistName)
+                    return
+                end
+
+                canvas.picker({
+                    prompt = playlistName,
+                    choices = choices,
+                    onSelect = function(choice)
+                        run({ "play", "track", choice.uuid })
+                    end,
+                })
+            end)
+        end
+
         function M.play_playlist()
             run({ "playlist", "list" }, function(stdout)
                 local result = hs.json.decode(stdout)
@@ -307,6 +343,9 @@
                     onSelect = function(choice)
                         uses.remember(choice.uuid)
                         run({ "play", "playlist", choice.uuid })
+                    end,
+                    onAlternate = function(choice)
+                        pickTrack(choice.uuid, choice.text)
                     end,
                 })
 

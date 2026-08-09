@@ -462,6 +462,23 @@ function M.picker(opts)
 			return
 		end
 
+		-- tab is a second action on the highlighted row, for the cases the
+		-- binder cannot express: which one it applies to is only known once
+		-- something is selected, so it cannot be a key chosen beforehand
+		if keyCode == map["tab"] and opts.onAlternate then
+			local choice = matches[selected]
+
+			if not choice then
+				return
+			end
+
+			local alternate = opts.onAlternate
+			close()
+			alternate(choice)
+
+			return
+		end
+
 		if keyCode == map["return"] then
 			local choice = matches[selected]
 
