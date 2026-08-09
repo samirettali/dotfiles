@@ -359,9 +359,8 @@ in {
 
           "dom.storage.default_quota" = 25600;
 
-          permissions = {
-            "default.desktop-notification" = false;
-          };
+          # 0 ask, 1 allow, 2 block
+          "permissions.default.desktop-notification" = 2;
         };
       };
     };
