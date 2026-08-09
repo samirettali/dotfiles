@@ -5,9 +5,9 @@ description: Read and interpret the lyrics of a song — what it is about, its t
 
 # Lyrics
 
-`lyrics` fetches a song's text and its community annotations so you can explain
-the song. It never talks to Spotify itself: for the current track it shells out
-to `spotctl`, which stays the only Spotify client.
+`lyrics` fetches a song's text and its community annotations. Never talks to
+Spotify itself: for the current track it shells out to `spotctl`, which stays the
+only Spotify client.
 
 ```sh
 lyrics --now                                  # the track playing right now
@@ -19,19 +19,19 @@ lyrics --now --synced                         # add the timestamped text
 lyrics --now --refresh                        # ignore the cache
 ```
 
-Output is JSON on stdout. Results are cached in `~/.cache/lyrics/lyrics.db`
-forever, because lyrics do not change; `--refresh` re-fetches.
+JSON on stdout. Cached forever in `~/.cache/lyrics/lyrics.db`, since lyrics do
+not change; `--refresh` re-fetches.
 
-Two defaults keep the answer small, since the whole payload has to be read
-before a word of it is useful. Only the plain text is returned — `--synced` adds
-the timestamped copy, which is the same words with `[mm:ss.xx]` in front and is
-worth asking for only to follow along with playback. And annotations stop at the
-15 best-voted; see below.
+Two defaults keep the payload small — all of it must be read before any of it is
+useful:
 
-## Read `match.exactness` before you answer
+- Plain text only. `--synced` adds the timestamped copy: same words, `[mm:ss.xx]`
+  in front. Worth it only to follow along with playback.
+- Annotations stop at the 15 best-voted. See below.
 
-This is the field that matters. The lyrics you got back may not be the lyrics of
-the exact recording that was asked about:
+## Read `match.exactness` first
+
+The text you got may not belong to the recording asked about:
 
 | value | meaning |
 | --- | --- |
@@ -43,56 +43,50 @@ the exact recording that was asked about:
 | `fuzzy` | matched through search; `match.note` says how confident |
 | `not_found` | nothing found; `match.tried` lists the steps attempted |
 
-Anything other than `exact` or `no-album` must be **stated to the user in one
-short sentence** before the analysis. `original-of-remix` especially: a remix
-usually carries the original vocal, but a freestyle over the same beat is a
-completely different text, and no API can tell them apart. Never present a
-fallback match as if it were the song asked about.
+Anything but `exact` or `no-album`: **state it in one short sentence before the
+analysis**. `original-of-remix` especially — a remix usually carries the original
+vocal, but a freestyle over the same beat is a completely different text, and no
+API tells them apart. Never present a fallback match as the song asked about.
 
-On `not_found`, say so plainly. Do not reconstruct lyrics from memory and do not
-guess — a confidently wrong reading of a song is worse than no reading. The
-gaps are concentrated in cyphers, freestyles, live sessions and very small
-artists, which is worth mentioning as the likely reason.
+On `not_found`, say so plainly. Do not reconstruct lyrics from memory, do not
+guess: a confidently wrong reading is worse than none. Gaps concentrate in
+cyphers, freestyles, live sessions and very small artists — worth naming as the
+likely reason.
 
 ## Annotations are the good part
 
-`annotations.items` holds Genius's crowd-sourced annotations, each with the
-`fragment` it comments and the annotation text, sorted by votes. These are where
-references, slang, place names, in-scene allusions and factual context actually
-live — the things nobody can reconstruct from the bare text.
+`annotations.items`: Genius's crowd-sourced annotations, each carrying the
+`fragment` it comments and the annotation text, sorted by votes. Where the
+references, slang, place names, in-scene allusions and factual context live —
+none of it reconstructable from the bare text.
 
-Roughly 71% of tracks have at least one and 55% have three or more, so treat
-their absence as normal, not as a failure. `annotations.available: false` carries
-a `reason`; the token lives in sops as `genius_access_token`, and if it was
-rejected it can be regenerated at genius.com/api-clients.
+~71% of tracks carry at least one, 55% carry three or more. Absence is normal,
+not failure. `annotations.available: false` carries a `reason`; the token lives
+in sops as `genius_access_token` and can be regenerated at
+genius.com/api-clients if rejected.
 
-Annotations are user-contributed and occasionally wrong or joking. Where one
-makes a strong factual claim worth relying on, say it comes from Genius rather
-than asserting it yourself.
+Annotations are user-contributed, occasionally wrong or joking. Attribute any
+strong factual claim to Genius instead of asserting it yourself.
 
-### When there are more than you were given
+### When more exist than you were given
 
-Only the 15 best-voted come back by default. **`annotations.truncated: true`
-means there are more**, and `annotations.count` says how many in total. Do not
-infer this from the number of items you can see: a song with exactly fifteen
-annotations is not truncated, and `truncated` is the only honest signal.
+**`annotations.truncated: true` means there are more**; `annotations.count` is
+the total. Never infer this from the items you can see — a song with exactly
+fifteen annotations is not truncated, and `truncated` is the only honest signal.
 
-When it is set, answer with what you have and close by offering the rest —
-saying how many more there are and asking whether to go deeper — rather than
-fetching them unasked. Getting them is `--max-annotations 0`, which is served
-from the cache and needs no `--refresh`: every annotation is stored, the limit
-only trims the output.
+When set: answer with what you have, then say how many more there are and ask
+whether to go deeper. Do not fetch them unasked. `--max-annotations 0` returns
+them from the cache, no `--refresh` needed — every annotation is stored and the
+limit only trims the output.
 
 ## Answering
 
-The deliverable is the **reading, not the transcript**. Explain what the song is
-about, its themes, structure and register; unpack the references, wordplay and
-double meanings; give the context a listener would miss. Quote only the
-individual lines you are actually commenting on, and never reproduce the lyrics
-in full or in long runs — the user wants the interpretation, and has the text in
-front of them anyway.
+The deliverable is the **reading, not the transcript**. What the song is about,
+its themes, structure and register; the references, wordplay and double meanings
+unpacked; the context a listener would miss. Quote only the lines you actually
+comment on. Never reproduce the lyrics in full or in long runs — the user wants
+the interpretation and has the text in front of them.
 
-The catalogue this is used on is mostly Italian and French rap, much of it
-underground, and often multilingual within a single verse. Slang, regional
-expressions and scene references matter more than surface paraphrase. Answer in
-the language the user used.
+The catalogue is mostly Italian and French rap, much of it underground, often
+multilingual within one verse. Slang, regional expressions and scene references
+matter more than surface paraphrase. Answer in the user's language.
