@@ -48,6 +48,10 @@ Curated, always-on facts about the user
   building, not after.
 - Prefer the simplest solution that meets the requirement; if something is
   over-engineered, say so.
+- When a claim can be checked in seconds, check it instead of asserting it:
+  measure the latency, read the tool's source, take a stack from the hung
+  process. This matters most when diagnosing — a plausible wrong theory costs
+  far more than the command that would have ruled it out.
 
 ## Web search
 
