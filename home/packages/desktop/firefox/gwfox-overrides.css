@@ -48,6 +48,46 @@
 }
 }
 
+/* gwfox tints every row of a group with the group colour and the selected one
+   eight points more, which reads as noise and hides the current tab. Put one
+   faint band behind the whole group instead, leave the rows bare, and let the
+   selected tab keep the neutral pill it has everywhere else.
+
+   Firefox gives tab-group `display: contents` so the tab strip's flexbox can
+   size grouped and ungrouped rows alike; it therefore paints nothing, hence the
+   flex column. The band hugs the pill column exactly: the pills sit 8.5px in, so
+   the group takes that inset and hands it back through the inner margin, and the
+   4px the label adds above and the 5px the last tab adds below move from the
+   children to the group so nothing shifts.
+
+   The selectors mirror gwfox's own, `[selected]` on the background rather than
+   the tab included: written the tidier way they are one step less specific and
+   lose in silence. */
+:root #tabbrowser-tabs[orient="vertical"] tab-group:not([collapsed]) {
+  display: flex !important;
+  flex-direction: column;
+  margin-inline: 8.5px;
+  margin-block: 4px 5px;
+  --tab-inner-inline-margin: 0;
+  background-color: color-mix(in srgb, light-dark(var(--tab-group-color), var(--tab-group-color-invert)) 10%, transparent);
+  border-radius: var(--br2);
+}
+:root #tabbrowser-tabs tab-group:not([collapsed]) > .tab-group-label-container {
+  margin-block-start: 0 !important;
+}
+:root #tabbrowser-tabs tab-group:not([collapsed]) > tab:last-of-type {
+  margin-block-end: -5px !important;
+}
+:root #tabbrowser-tabs tab-group:not([collapsed]) > .tabbrowser-tab > .tab-stack > .tab-background {
+  background: transparent !important;
+}
+:root #tabbrowser-tabs tab-group:not([collapsed]) > .tabbrowser-tab:not([selected]):hover > .tab-stack > .tab-background {
+  background: var(--button-active-bgcolor) !important;
+}
+:root #tabbrowser-tabs tab-group:not([collapsed]) > .tabbrowser-tab[selected] > .tab-stack > .tab-background[selected] {
+  background: light-dark(rgba(70, 70, 70, 0.18), rgba(170, 170, 170, 0.4)) !important;
+}
+
 /* Unused: everything is on a shortcut. */
 #PanelUI-menu-button,
 #unified-extensions-button,
