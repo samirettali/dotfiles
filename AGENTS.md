@@ -331,6 +331,12 @@ on an fd handoff).
   `doCheck = false`), plus a couple of `server::*` async tests that flake between runs, so a
   raw failure count says nothing. Filtering hides real breakage: `checkFlags = ["sidebar"]`
   passed clean while the theme-tokens patch was silently failing two tab bar tests.
+- **`PoisonError { .. }` failures are collateral, not breakage.** Herdr's tests share a mutex
+  around the process environment, so one of the sandbox-broken tests panicking while holding it
+  poisons the lock for every later test that takes it — once seen as 20 extra failures across
+  `config::io` and `detect::manifest` that all passed when run in isolation. Which tests get hit
+  varies between runs. Re-run the suspicious modules on their own with `checkFlags` before
+  believing them.
 - **`herdr server live-handoff` swaps the binary without killing the panes** — the old server
   passes its pane fds to the new one, so agents keep running. Check `capabilities.live_handoff`
   in `herdr status --json` first; `herdr server stop` is the destructive alternative. Untested
