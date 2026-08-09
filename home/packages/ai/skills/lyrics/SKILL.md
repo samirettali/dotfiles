@@ -102,8 +102,18 @@ answer:
    what it is doing. The only part that is not a list.
 2. **What it is about** — one bullet per theme, each naming the lines that carry
    it. Never one long paragraph.
-3. **Line by line** — one bullet per fragment worth explaining: the quoted
-   fragment, then what it means. The body of the answer and the longest part.
+3. **Line by line** — the body of the answer and the longest part. Not a list:
+   each fragment is a blockquote, its explanation the paragraph right under it.
+
+   ```
+   > Les cabas ils sont trop lourds
+
+   The trip back to the bled with suitcases full of presents: the weight is
+   the obligation to the family that stayed.
+   ```
+
+   A bullet would run the quote and the gloss together and leave no visible
+   line between the song's words and yours. The blockquote is that line.
 4. **References** — one bullet per work pointed at from outside the song: other
    tracks (samples, interpolations, quoted bars, artists name-dropped), films,
    TV series, books, games, and the real people or events treated as common
@@ -114,8 +124,11 @@ answer:
    register shifts, code-switching. Name the technique and show it in the line
    that uses it.
 
-Bullets everywhere except the opening: they make the separation between things
-visible at a glance, which prose does not.
+Bullets in sections 2, 4 and 5: they make the separation between things visible
+at a glance, which prose does not. Blockquotes in section 3, for the same reason
+one level down. Inside a bullet, where a blockquote would break the list, a
+quoted fragment goes in italics between guillemets — *« comme ça »* — so the
+song's words are still never flush against yours.
 
 **Sections 4 and 5 only when the song has that material.** No empty heading, no
 "there are no references here". Judge from the text and the annotations, not
