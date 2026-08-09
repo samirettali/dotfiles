@@ -3,6 +3,35 @@
   inputs,
   ...
 }: let
+  addons = inputs.nur.legacyPackages.${pkgs.stdenv.hostPlatform.system}.repos.rycee.firefox-addons;
+
+  extensions = with addons; [
+    adaptive-tab-bar-colour
+    bitwarden
+    consent-o-matic
+    darkreader
+    linkding-extension
+    multi-account-containers
+    sponsorblock
+    violentmonkey
+    ublock-origin
+    vimium-c
+    web-clipper-obsidian
+  ];
+
+  # Installed through policy rather than symlinked into the profile: `install_url`
+  # is a store path, so it changes on every bump and Firefox reinstalls, instead
+  # of deciding from an mtime that is 1000ms on every store file and therefore
+  # never differs. `normal_installed` only blocks uninstalling, not disabling.
+  extensionSettings = builtins.listToAttrs (map (e: {
+      name = e.addonId;
+      value = {
+        installation_mode = "normal_installed";
+        install_url = "file://${e}/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/${e.addonId}.xpi";
+      };
+    })
+    extensions);
+
   # Appended rather than patched: gwfox is one nested tree, so a patch hunk's
   # context lands wherever it happens to sit after an update.
   gwfoxUserChrome = pkgs.runCommand "gwfox-userChrome.css" {} ''
@@ -39,6 +68,7 @@ in {
           };
           OfferToSaveLoginsDefault = false;
           SearchBar = "unified";
+          ExtensionSettings = extensionSettings;
         };
       });
       profiles.samir = {
@@ -46,20 +76,9 @@ in {
         userContent = gwfoxUserContent;
         extensions = {
           force = true;
-          packages = with inputs.nur.legacyPackages.${pkgs.stdenv.hostPlatform.system}.repos.rycee.firefox-addons; [
-            adaptive-tab-bar-colour
-            bitwarden
-            consent-o-matic
-            darkreader
-            linkding-extension
-            multi-account-containers
-            sponsorblock
-            violentmonkey
-            ublock-origin
-            vimium-c
-            web-clipper-obsidian
-          ];
-          settings = with inputs.nur.legacyPackages.${pkgs.stdenv.hostPlatform.system}.repos.rycee.firefox-addons; {
+          # Inert while ExtensionStorageIDB is on — kept as a record of what was
+          # applied by hand. See issue #11.
+          settings = with addons; {
             "${adaptive-tab-bar-colour.addonId}" = {
               settings = {
                 tabbar = 10;
