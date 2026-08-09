@@ -517,9 +517,13 @@ class RDP:
         raise RDPError(f"{selector!r} never appeared")
 
     def apply_css(self, path):
-        """Register a stylesheet now. AUTHOR_SHEET so the cascade matches
-        userChrome.css; a USER_SHEET would outrank author !important and hide
-        specificity problems until the next rebuild."""
+        """Register a stylesheet now, at the same cascade origin as userChrome.css.
+
+        USER_SHEET, not AUTHOR_SHEET: userChrome.css is a *user* sheet, and a user
+        `!important` outranks an author one whatever the specificity. Registered as
+        an author sheet, an override silently loses to the theme it is meant to
+        beat — which looks like the rule not matching at all.
+        """
         uri = f"file://{path}?v=" + str(int(time.time() * 1000))
         return self.js(
             f"""(() => {{
@@ -527,10 +531,10 @@ class RDP:
               const sss = Cc['@mozilla.org/content/style-sheet-service;1']
                 .getService(Ci.nsIStyleSheetService);
               if (w.__rdp_sheet) {{
-                try {{ sss.unregisterSheet(w.__rdp_sheet, sss.AUTHOR_SHEET); }} catch (e) {{}}
+                try {{ sss.unregisterSheet(w.__rdp_sheet, sss.USER_SHEET); }} catch (e) {{}}
               }}
               const uri = Services.io.newURI({json.dumps(uri)});
-              sss.loadAndRegisterSheet(uri, sss.AUTHOR_SHEET);
+              sss.loadAndRegisterSheet(uri, sss.USER_SHEET);
               w.__rdp_sheet = uri;
               return 'applied';
             }})()"""

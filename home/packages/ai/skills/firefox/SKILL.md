@@ -158,8 +158,10 @@ made this way are not persisted by the config that owns them, so treat them as
 experiments and put the answer in the repo.
 
 `css` registers a stylesheet immediately, so a change can be seen without a rebuild. It
-uses `AUTHOR_SHEET`: a `USER_SHEET` outranks author `!important`, so rules that would
-lose to the theme in production would appear to work while testing.
+registers it as a `USER_SHEET`, because that is what `userChrome.css` is. Register it as an
+`AUTHOR_SHEET` instead and every override silently loses to the theme: a user `!important`
+outranks an author one regardless of specificity, so the rule matches, appears in `rules`,
+and still does not apply.
 
 ## What bites
 
@@ -173,8 +175,12 @@ lose to the theme in production would appear to work while testing.
 - **Actor ids belong to one connection.** A descriptor from an earlier `RDP()` is invalid in
   the next one, and fails with `tabDestroyed`, which reads like the tab closed.
 - **A live-registered sheet is additive.** It stacks on the `userChrome.css` loaded at
-  startup: additions apply at once, a *changed* value can still lose to the original, and a
-  *removed* rule stays until restart. Test additions live, verify removals after a rebuild.
+  startup: additions and changes apply, but a *removed* rule stays in force until restart.
+  Test additions and edits live; verify removals after a rebuild.
+- **`rules` reads longhands, and themes often declare shorthands.** A rule setting
+  `margin-block` will not show up when asking about `margin-top`, so a property can look
+  unset while something is plainly setting it. When the computed value has no rule behind
+  it, ask again for the shorthand.
 - **Descendant combinators do not cross shadow boundaries.** `:root:has(…) .buttons-wrapper`
   never matches inside a shadow tree, at any specificity. Write those rules top-level.
 - **`visibility: hidden` makes an element unfocusable.** Hiding the urlbar that way means
