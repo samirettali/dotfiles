@@ -56,9 +56,13 @@ likely reason.
 ## Annotations are the good part
 
 `annotations.items`: Genius's crowd-sourced annotations, each carrying the
-`fragment` it comments and the annotation text, sorted by votes. Where the
-references, slang, place names, in-scene allusions and factual context live —
-none of it reconstructable from the bare text.
+`fragment` it comments, the annotation text, its `votes` and its `position`.
+Where the references, slang, place names, in-scene allusions and factual context
+live — none of it reconstructable from the bare text.
+
+**Sorted by `votes` descending, which is not the order of the song.** `position`
+is: it is where Genius places the fragment in the text. Rank by `votes` when
+deciding what matters, read by `position` when writing the answer.
 
 ~71% of tracks carry at least one, 55% carry three or more. Absence is normal,
 not failure. `annotations.available: false` carries a `reason`; the token lives
@@ -81,12 +85,45 @@ limit only trims the output.
 
 ## Answering
 
-The deliverable is the **reading, not the transcript**. What the song is about,
-its themes, structure and register; the references, wordplay and double meanings
-unpacked; the context a listener would miss. Quote only the lines you actually
-comment on. Never reproduce the lyrics in full or in long runs — the user wants
-the interpretation and has the text in front of them.
+The deliverable is the **reading, not the transcript**. Never reproduce the
+lyrics in full or in long runs: quote only the fragment being commented on, a
+line or two at most. The user has the text.
 
-The catalogue is mostly Italian and French rap, much of it underground, often
-multilingual within one verse. Slang, regional expressions and scene references
-matter more than surface paraphrase. Answer in the user's language.
+**Always the same shape**, in this order, so two songs read as the same kind of
+answer:
+
+1. **Opening** — two or three lines of prose: what the song is, who is speaking,
+   what it is doing. The only part that is not a list.
+2. **What it is about** — one bullet per theme, each naming the lines that carry
+   it. Never one long paragraph.
+3. **Line by line** — one bullet per fragment worth explaining: the quoted
+   fragment, then what it means. The body of the answer and the longest part.
+4. **References** — one bullet per work pointed at from outside the song: other
+   tracks (samples, interpolations, quoted bars, artists name-dropped), films,
+   TV series, books, games, and the real people or events treated as common
+   knowledge in the scene. Name the work, then what the line does with it —
+   homage, dig, ironic reuse.
+5. **How it is written** — one bullet per device: wordplay, double meanings,
+   multisyllabic and internal rhymes, how a phrase is cut across the beat,
+   register shifts, code-switching. Name the technique and show it in the line
+   that uses it.
+
+Bullets everywhere except the opening: they make the separation between things
+visible at a glance, which prose does not.
+
+**Sections 4 and 5 only when the song has that material.** No empty heading, no
+"there are no references here". Judge from the text and the annotations, not
+from expectation. Both are usually present here — Italian and French rap, mostly
+underground, dense in references, and built on craft: rhyme schemes, assonance
+across several syllables, a punchline set up two bars earlier. Absence is a
+conclusion, never a skip.
+
+**Use every annotation you were given**, every time. They are the part nobody
+can reconstruct; dropping a few is what makes one answer thinner than the next.
+Order **Line by line** by `position`, not `votes`. Merge duplicates. Where an
+annotation only confirms the line, spend half a line rather than cutting it. An
+annotation about a reference or a technique goes in its own section too, not
+only in the line-by-line.
+
+Slang, regional expressions and scene references beat surface paraphrase. Answer
+in the user's language.
