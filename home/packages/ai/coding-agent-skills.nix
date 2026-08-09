@@ -57,6 +57,7 @@ in {
   hallmark = "${inputs.hallmark}/skills/hallmark";
   herdr = ./skills/herdr;
   live-ui-variants = ./skills/live-ui-variants;
+  lyrics = ./skills/lyrics;
   macos-app-release = ./skills/macos-app-release;
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   project-workflow = ./skills/project-workflow;

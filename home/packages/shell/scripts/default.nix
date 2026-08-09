@@ -3,6 +3,7 @@
   pkgs,
   lib,
   neovimPackage,
+  nurPkgs,
   ...
 }: let
   copy = pkgs.callPackage ./copy.nix {};
@@ -15,6 +16,10 @@ in {
         inherit copy;
       })
       (pkgs.callPackage ./speak.nix {})
+      (pkgs.callPackage ./lyrics.nix {
+        spotctl = nurPkgs.spotctl;
+        tokenFile = config.sops.secrets."genius_access_token".path;
+      })
       (pkgs.callPackage ./pi-models.nix {})
       (pkgs.callPackage ./tofu-encryption.nix {
         passphraseFiles = {

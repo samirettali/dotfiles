@@ -21,6 +21,7 @@
       "elevenlabs_api_key" = {};
       "exa_api_key" = {};
       "gemini_api_key" = {};
+      "genius_access_token" = {};
       "linkding_api_token" = {};
       "openai_api_key" = {};
       "openrouter_api_key" = {};
