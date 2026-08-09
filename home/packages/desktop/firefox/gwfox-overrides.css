@@ -80,6 +80,13 @@
 }
 }
 
+/* The tab list starts 7px below the sidebar panel beside it: 3px of margin here,
+   4px more from the first group label's own margin-block. Pull the list up by
+   both so the first pill and the panel share a top edge. */
+#tabbrowser-tabs[orient="vertical"] {
+  margin-top: -4px !important;
+}
+
 /* Resize handle of the sidebar's tools section, along with the 15px of margin
    it contributed above the tools. */
 #sidebar-tools-and-extensions-splitter {
