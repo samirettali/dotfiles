@@ -103,6 +103,15 @@ local config = {
 	{ "b", "browser", openDefaultBrowser() },
 	{ "t", "terminal", launch("Ghostty") },
 	{
+		-- both start with c, so the branch is their second letter: cHat, cLaude
+		"c",
+		"[ai]",
+		{
+			{ "h", "chatgpt", openURL("https://chat.openai.com") },
+			{ "l", "claude", openURL("https://claude.ai") },
+		},
+	},
+	{
 		"o",
 		"[open]",
 		{
@@ -132,10 +141,8 @@ local config = {
 		"l",
 		"[links]",
 		{
-			{ "c", "claude", openURL("https://claude.ai") },
 			{ "y", "youtube", openURL("youtube.com") },
 			{ "t", "twitter", openURL("https://twitter.com") },
-			{ "c", "chat", openURL("https://chat.openai.com") },
 			{ "g", "google", openURL("https://google.com") },
 			{ "w", "whatsapp", openURL("https://web.whatsapp.com") },
 			{ "m", "mail", openURL("https://fastmail.com") },
