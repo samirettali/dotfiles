@@ -46,6 +46,7 @@
   home.packages = with pkgs; [
     coreutils
     curl
+    gnumake
     gnused
     iredis
     kcat

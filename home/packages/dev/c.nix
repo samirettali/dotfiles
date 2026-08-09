@@ -12,6 +12,5 @@
       cmake
       cppcheck
       cpplint
-      gnumake
     ];
 }
