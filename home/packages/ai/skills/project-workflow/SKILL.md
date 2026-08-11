@@ -29,23 +29,22 @@ Backlog and Done are automatic (Project workflows: *item added* and *pull reques
 merged* / *item closed*). The two middle transitions are yours to make:
 
 ```sh
-ITEM=$(gh project item-list 1 --owner samirettali --format json \
-  | jq -r '.items[] | select(.content.number == <N>
-      and (.content.repository | test("/<repo>$"))) | .id')
-
-gh project item-edit --project-id PVT_kwHOALClx84AFfr4 --id "$ITEM" \
-  --field-id PVTSSF_lAHOALClx84AFfr4zgDKqo8 \
-  --single-select-option-id <OPTION>
+gh project item-edit 1 --owner samirettali \
+  --url https://github.com/samirettali/<repo>/issues/<N> \
+  --field Status --value "🏗 In progress"
 ```
 
-`<OPTION>`: `In progress` = `4ddd38ae`, `In review` = `f78a3bae`.
+The value is the option's **exact name, emoji included**: `"In progress"` is
+rejected. That is not a trap, though — the error lists every valid option, so a
+wrong one corrects itself.
 
-The IDs above are hardcoded because `item-edit` does not accept names. If they
-ever stop working — Project or field recreated — look them up again with:
+`--owner` selects the *Project*, not the repo: the issue is named by its URL and
+may live under a different owner.
 
-```sh
-gh project field-list 1 --owner samirettali --format json
-```
+Verified on gh 2.97. Older versions had neither `--url` nor `--field`/`--value`
+and needed the item's node id, looked up by listing the board — which silently
+returned only its first 30 items, so an issue further down came back empty.
+Nothing here needs an id any more.
 
 ## Picking up an issue
 
