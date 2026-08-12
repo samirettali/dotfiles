@@ -39,7 +39,7 @@ in {
   better-ui = "${inputs.jakubkrehel-skills}/skills/better-ui";
   better-writing = "${inputs.jakubkrehel-skills}/skills/better-writing";
   code-review = ./skills/code-review;
-  commit = "${inputs.agent-stuff}/skills/commit";
+  commit = ./skills/commit;
   firefox = ./skills/firefox;
   frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
   generate-image = ./skills/generate-image;
