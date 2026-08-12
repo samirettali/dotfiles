@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -157,4 +158,15 @@
       keepAlive = true;
     };
   };
+
+  # Launch the copy at a stable path, not the store path. AeroSpace is ad-hoc
+  # signed with no Team ID, so TCC pins the accessibility grant to the binary's
+  # path — a store path grant dies on any rebuild that moves it, even one that
+  # doesn't change AeroSpace, and the tiling silently stops. targets.darwin.copyApps
+  # rsyncs a real (non-symlink) copy here, and --checksum leaves the file alone
+  # while the binary is unchanged, so the grant survives. Upgrading AeroSpace
+  # itself still needs it re-granted once.
+  launchd.agents.aerospace.config.Program =
+    lib.mkForce
+    "${config.home.homeDirectory}/${config.targets.darwin.copyApps.directory}/AeroSpace.app/Contents/MacOS/AeroSpace";
 }

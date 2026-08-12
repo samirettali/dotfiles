@@ -414,6 +414,41 @@ time the exact number matters. Clicking opens the provider's usage page.
   providers, and hanging it off either of the visible items would poll twice as often as
   needed once both are drawn.
 
+## macOS permissions (TCC) and store paths
+
+An app's accessibility/screen-recording grant survives a rebuild only if macOS can still
+recognise the binary. For a properly signed app it recognises the **signature**, so the store
+path can move freely. For an **ad-hoc signed app with no Team ID** it falls back to the
+**path**, and every rebuild that moves the store path silently revokes the grant — the app
+keeps running and just stops working. Here that is AeroSpace, NeoHtop, Obsidian, Pika and
+Spotify; everything else in `Home Manager Apps` carries a Team ID and is immune.
+
+`targets.darwin.copyApps` (enabled, `~/Applications/Home Manager Apps`) is what makes this
+survivable: it rsyncs **real, non-symlink** copies to a fixed path, and `--checksum` leaves a
+file untouched while its bytes are unchanged — so a grant given there outlives every rebuild
+that doesn't actually change the app. Launching from Spotlight, the Dock or `open -a` goes
+through that copy, which is why the GUI apps never had the problem.
+
+**The rule: anything that launches an ad-hoc app by store path defeats this.** A launchd agent
+is the case that bites, since the HM module hardcodes `${cfg.package}/Applications/…` —
+`aerospace.nix` therefore overrides `launchd.agents.aerospace.config.Program` with `mkForce`
+to the `copyApps` path. AeroSpace is the only `.app` run by an agent; the others
+(`sketchybar`, `herdr-sketchybar`, `sops-nix`, `tldr-update`, `nh-clean`) run CLI binaries,
+which `copyApps` doesn't cover and which take no such permission. A store-path CLI wrapper
+does it too — `BROWSER_BIN` in `google-chrome.nix` is why Chrome runs from the store — but
+that is harmless for Team-ID apps.
+
+- **Diagnose by capability, not by the panel.** `aerospace list-apps` works without the grant
+  (NSWorkspace), `aerospace list-windows --all` returns nothing without it (AX API). Zero
+  windows with a live server and a loaded config *is* the missing-permission signature.
+- **Toggling the checkbox off and on does not fix it.** The entry is pinned to a dead store
+  path, and Launch Services accumulates one registration per past build (nine here, all
+  `bobko.aerospace`), so the panel shows indistinguishable "AeroSpace" rows.
+  `tccutil reset Accessibility bobko.aerospace` clears them all without touching anything
+  else; the app then asks again on next launch and pins the path it actually runs from.
+- Upgrading the app itself still costs one re-grant, since the bytes — and so the cdhash —
+  change. That is unavoidable without a real signing identity.
+
 ## Gotchas
 
 - **SbarLua's `sbar.exec` callback receives a *table*, not a string, when the command's
