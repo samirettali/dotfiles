@@ -21,6 +21,9 @@ in {
         tokenFile = config.sops.secrets."genius_access_token".path;
       })
       (pkgs.callPackage ./pi-models.nix {})
+      (pkgs.callPackage ./ai-usage.nix {
+        codex = nurPkgs.codex;
+      })
       (pkgs.callPackage ./tofu-encryption.nix {
         passphraseFiles = {
           infra = config.sops.secrets."tofu_passphrase_infra".path;

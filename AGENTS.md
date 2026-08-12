@@ -379,6 +379,41 @@ Nothing polls.
   now, which is why the patched package lives in its own `herdr-package.nix` — and every
   failure is logged, because this one was mute.
 
+## Subscription usage in sketchybar
+
+`items/ai_usage.lua` shows how much of the Claude and Codex plans is spent, hidden until a
+window crosses 70% (red at 90%) — an alert, like the status items, not a gauge. `ai-usage`
+(`home/packages/shell/scripts/`) prints both providers as JSON; the item polls it every 5
+minutes, dropping to 1 minute while something is above the threshold, since that is the only
+time the exact number matters. Clicking opens the provider's usage page.
+
+- **Neither provider has a public endpoint for this; the credentials are borrowed from the
+  CLIs.** Claude Code keeps its OAuth token in the login keychain
+  (`security find-generic-password -s "Claude Code-credentials"`) and
+  `GET api.anthropic.com/api/oauth/usage` with `anthropic-beta: oauth-2025-04-20` returns
+  exactly what `/usage` draws. Codex keeps its token in `~/.codex/auth.json` and answers on
+  `chatgpt.com/backend-api/wham/usage`.
+- **Codex reports one window, not two.** On `plus` its `primary_window` is 604800s — weekly —
+  and `secondary_window` is `null`, so the 5h bucket that used to be primary is gone. The
+  parser labels windows from `limit_window_seconds` rather than from their position, so a
+  second one reappearing is handled. Claude still has both (`kind: session` / `weekly_all`,
+  plus a `weekly_scoped` per model).
+- **The Codex token expires within the hour and nothing here renews it**, so an expired one
+  falls back to `codex app-server`, whose `account/rateLimits/read` refreshes the token on
+  the way and returns the same numbers (~0.5s against ~0.2s for the HTTP call). An expired
+  token comes back as Cloudflare's **403 HTML**, not a JSON 401 — probing the endpoint with a
+  stale token looks exactly like the endpoint not existing. `codex app-server
+  generate-json-schema --out <dir>` is how to find the method names; the server keeps the
+  connection open and interleaves notifications, so a client reads until its id comes back
+  rather than waiting for EOF.
+- **The Claude token is not refreshed either, and there is no fallback**: Claude Code owns it
+  and writing a new one back into the keychain would race with it. A failed fetch leaves the
+  item as it was rather than clearing it, so a renewal in flight never reads as "back under
+  the cap".
+- **The timer lives on an invisible `usage.poller` item.** One fetch answers for both
+  providers, and hanging it off either of the visible items would poll twice as often as
+  needed once both are drawn.
+
 ## Gotchas
 
 - **SbarLua's `sbar.exec` callback receives a *table*, not a string, when the command's

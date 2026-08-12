@@ -32,6 +32,10 @@
     sketchybar = config.programs.sketchybar.package;
     herdr = herdrPackage;
   };
+
+  aiUsage = pkgs.callPackage ../packages/shell/scripts/ai-usage.nix {
+    codex = nurPkgs.codex;
+  };
 in {
   programs.sketchybar = {
     enable = true;
@@ -80,6 +84,7 @@ in {
         package.cpath = package.cpath .. ";${pkgs.lua55Packages.getLuaCPath luasimdjsonPackage}"
         AEROSPACE_BIN = "${lib.getExe config.programs.aerospace.package}"
         HERDR_BIN = "${lib.getExe herdrPackage}"
+        AI_USAGE_BIN = "${lib.getExe aiUsage}"
         require("init")
       '';
     };
