@@ -18,7 +18,7 @@ Create a git commit for the current changes using a concise Conventional Commits
 - Body is OPTIONAL. When there is one, it says *why*: the motivation, why this solution, and the alternatives you rejected. Never restate the diff. Wrap it at 72 columns, because `git log` indents by four.
 - If the work has an issue or a ticket, reference it the way the repository already does.
 - Commit with an explicit pathspec (`git commit -m … -- <paths>`), so that files staged for another reason do not ride along.
-- Do NOT include breaking-change markers or footers.
+- Mark a breaking change with a `!` before the colon: `feat!:`, or `feat(api)!:`. Do NOT add footers, `BREAKING CHANGE:` included.
 - Do NOT add sign-offs (no `Signed-off-by`).
 - Only commit; do NOT push.
 - If it is unclear whether a file should be included, ask the user which files to commit.
