@@ -1,122 +1,115 @@
-# MEMORY
-
-Curated, always-on facts about the user
-
 ## About me
 
-- Samir Ettali — backend engineer, based in Turin, Italy.
-- Works at a crypto exchange (Young Platform); backend + blockchain/fintech.
-- Primary languages: Go (production backend) and .NET/C#; also Rust and Solidity/web3.
-- Security background; active bug-bounty / CTF practice.
-- Dev-tools obsessive: NixOS + nix-darwin, Neovim, keyboard-driven ("Mouseless").
-  Publishes his own tools via NUR (samirettali/nur).
-- Uses AI tools primarily in the terminal; in Neovim, prefers only lightweight inline-edit helpers, not full AI assistants.
-- Prefers Neovim to stay editing-first/minimal, using native features and small focused plugins over big IDE-like plugins.
-- Opens GitHub issues on his own repos as to-dos, not only for defects, which is
-  why Issues stay enabled everywhere.
-- When committing, prefers one commit per logical change.
-- When asked to commit, commit only changes made by the current agent/task; leave
-  all unrelated pre-existing changes unstaged and uncommitted.
-- Pull request titles follow Conventional Commits too, exactly like commit
-  subjects: `<type>(<scope>): <summary>`, imperative, no trailing period.
-- Many of the tools he uses are his own (spotctl, sottovoce, pulse, the herdr
-  fork, the NUR packages). When one of them is the limitation, changing the tool
-  is as legitimate an option as working around it — often the one he prefers.
-- Conceptual consistency weighs as much as visual consistency: he will reject a
-  design that works if it diverges from the convention around it — a JSON
-  envelope shaped differently from the API it mirrors, or a keyboard shortcut
-  whose letter is arbitrary instead of a mnemonic for what it opens.
-- Asks why before accepting a change. The reasoning is part of the deliverable
-  rather than an extra: prefer a short, concrete justification to a change
-  presented as self-evident.
-- Sharp eye for visual detail: immediately notices micro-asymmetries, misalignments,
-  spacing imbalances, and inconsistent animation/transition timings. In UI work,
-  sweat these details proactively (consistent motion durations, symmetric edges,
-  aligned rhythms) — he will spot them anyway.
+- Samir Ettali, backend engineer in Turin, Italy.
+- I work at a crypto exchange, Young Platform: backend, blockchain, fintech.
+- I come from security, though I no longer do bug bounties or CTFs.
+- I keep Neovim editing-first: native features and small plugins over IDE-like ones.
+- I open issues on my own repos as to-dos, not only for defects, so Issues stay enabled everywhere.
+- I reject a design that works but breaks the convention around it.
+- I notice micro-asymmetries and inconsistent timings in a UI.
 
-## Interaction
+## What I know
 
-- Address me as Samir in conversation.
-- Don't take initiative beyond what we've agreed: do exactly what was asked and
-  nothing more. If something else seems worth doing, ask first before doing it —
-  unless I explicitly say you can do whatever you want, in which case go ahead.
-- If a request is unclear or ambiguous, ask questions until it's clear. Don't
-  assume or take anything for granted.
-- Modify and write files only through the editing tools, never with
-  python/perl/sed/awk/echo or other shell text-munging.
-- Surface non-obvious problems, gotchas, or "this won't work" early — before
-  building, not after.
-- Prefer the simplest solution that meets the requirement; if something is
-  over-engineered, say so.
-- When a claim can be checked in seconds, check it instead of asserting it:
-  measure the latency, read the tool's source, take a stack from the hung
-  process. This matters most when diagnosing — a plausible wrong theory costs
-  far more than the command that would have ruled it out.
+Pitch explanations with this, not the work itself. Go as technical as you like on the first block. On the last, compare the unfamiliar thing to something I already know. Never turn a request to build something into a lesson about it.
 
-## Web search
+Deep, and daily:
 
-Two surfaces: the agent's built-in web search, and Exa (`web_search_exa` /
-`web_fetch_exa`, from the `exa` MCP server; in pi they sit behind the generic
-`mcp` tool).
+- Go: services, gRPC and protobuf
+- .NET/C# with EF Core
+- Kafka, Redis, MongoDB, SQL Server
+- Nix, NixOS and nix-darwin
 
-- Default to the built-in search. It is cheaper in context by an order of
-  magnitude (3-5 KB vs 60 KB) and it wins whenever the query has an exact
-  keyword: an issue number, a version, a setting name, release notes.
-- Reach for Exa when the query is a description rather than keywords ("the post
-  where an engineer explains why they went back to a monolith"), when the
-  primary source matters more than commentary about it, or for recent security
-  writeups and CVEs. Measured on an 8-query benchmark, that is where the gap is
-  real; elsewhere the two tie.
-- Ask Exa for ~5 results unless more are needed; cost in context scales with
-  `numResults`, and each result carries long highlight extracts.
+Enough to ship something whole:
+
+- React and TypeScript
+- EVM and account abstraction
+- Python
+
+Enough to change something that exists:
+
+- Rust and Solidity
+- Terraform
+- Lambda, S3, KMS
+
+Never written a line myself, only through agents:
+
+- Swift and SwiftUI
+- Ansible
+
+## Tools I use daily
+
+I work on a Mac (nix-darwin). `andromeda` is my Linux server. `xps` is a NixOS laptop I barely use any more.
+
+- Hammerspoon — global hotkeys and pickers
+- sketchybar — the menu bar
+- aerospace — tiling window manager
+- Ghostty — terminal
+- herdr — terminal multiplexer
+- Neovim — editor
+- fish — shell
+- fzf — fuzzy finder
+- zoxide — directory jumping
+- ripgrep — search in files
+- fd — find files
+- lazygit — git
+- lazydocker — docker
+- gh — GitHub CLI
+- direnv — per-project environments
+- rbw — Bitwarden CLI
+- spotctl — Spotify CLI
+- linkding — bookmarks
+- sops — secrets
+- nix and home-manager — everything declared
+- NUR — where I publish my own packages
+- uv — Python
+
+## Working with me
+
+- Do what was asked and nothing more. Ask before doing anything else, unless I say you have a free hand.
+- Ask until an unclear request is clear. Assume nothing.
+- I dictate, so expect mangled words: read them by sound, and ask whenever a name or an identifier is at stake.
+- Say what will not work before building it, not after.
+- Prefer the simplest solution that meets the requirement, and say so when something is over-engineered.
+- Verify in seconds what you would otherwise assert: measure the latency, read the source, take a stack from the hung process, whatever settles it. A wrong theory costs more than the command that rules it out.
+
+## Writing
+
+- Structure your writing to be scanned
+- Write one statement per sentence
+- Keep a sentence under about 25 words
+- Declare the intent of a sentence in its first words
+- State a consequence before the mechanism that produces it
+- Give the reason for a choice the reader did not ask for
+- Do not write a paragraph where a sentence does
+- Never let the length of an answer reflect the work it cost you to find it
+- Never ask the reader to hold more than two or three things at once
+- Do not stack more than three nouns
+- Never use the passive where you can use the active
+- Name the actor: "the scheduler retries", not "it is retried"
+
+## Conventions
+
+- Write files only through the editing tools, never with sed, awk, python or echo
+- One commit per logical change, and only what this task changed
+- Title a pull request like a commit subject
 
 ## Projects
 
-Projects live under `~/dev`, each with its own `AGENTS.md`. Read that file before
-working on, or answering questions about, the project. When a change introduces a
-non-obvious decision or context that wouldn't be clear from the code alone, update
-that project's `AGENTS.md` to capture it.
+Each lives under `~/dev` with its own `AGENTS.md`. Read it before working on the project, and add to it any decision the code alone would not reveal.
 
-- **dotfiles** — `~/dev/dotfiles` (this repo). NixOS + home-manager config.
-- **selfhosted** — `~/dev/selfhosted`. Self-hosted stack (Docker Compose + Ansible), deployed on the `andromeda` host.
-- **nur** — `~/dev/nur`. Personal NUR repository (samirettali/nur); dotfiles consumes it via the `nurPkgs` specialArg.
-- **sottocasa** — `~/dev/sottocasa`. Multi-tenant booking product (Go API + React
-  owner panel). Dev runs on `andromeda` (air + pnpm dev), served tailnet-only at
-  https://sottocasa-dev.samirettali.com via the side-projects proxy. ZITADEL
-  identity managed by OpenTofu under infra/.
-- **side-projects** — `~/dev/side-projects`. Small personal projects plus the
-  shared tailnet-only Caddy that fronts host-run dev servers at
-  *.samirettali.com. Deployed by the selfhosted Ansible playbook.
-- **sottovoce** — `~/dev/sottovoce`. macOS menu bar dictation app (SwiftPM, no
-  Xcode project). Distributed as a signed, notarised DMG built locally with
-  `make release`; a Homebrew cask in samirettali/homebrew-tap is bumped by CI.
-- **pulse** — `~/dev/pulse`. macOS menu bar app for live prices (Binance,
-  Hyperliquid, Yahoo) and timezone clocks. Same build and release setup as
-  sottovoce.
-- **infra** — `~/dev/infra`. OpenTofu for the accounts rather than for a
-  project: GitHub repository settings, Actions secrets, and the R2 bucket the
-  states live in. Per-project infrastructure stays with its project.
-- **spotctl** — `~/dev/spotctl`. Agent-friendly Spotify CLI in Go, shipped
-  through NUR and consumed by the `spotify` skill (whose SKILL.md lives in the
-  repo) and by the Hammerspoon playlist picker. Released by bumping `version`
-  in `main.go` in a `chore: release vX.Y.Z` commit, then a signed annotated tag.
-- **sottotesto** — `~/dev/sottotesto`. Search a song and read an LLM reading of
-  its lyrics: what it is about, the references, the slang.
-Both macOS apps sign with `Developer ID Application: Samir Ettali (22K9H4B864)`
-and use `com.samirettali.<app>` bundle ids. Signing keys and notarisation
-credentials never go to CI — releases are built on the laptop.
+- dotfiles — NixOS + home-manager config.
+- selfhosted — self-hosted stack, Docker Compose + Ansible, on `andromeda`.
+- nur — personal NUR repository.
+- sottocasa — multi-tenant booking product: Go API, React owner panel.
+- side-projects — small personal projects, and the Caddy fronting them on the tailnet.
+- sottovoce — macOS menu bar dictation app.
+- pulse — macOS menu bar app for live prices and timezone clocks.
+- infra — OpenTofu for the accounts: GitHub settings, Actions secrets, the state bucket.
+- spotctl — agent-friendly Spotify CLI in Go.
+- sottotesto — search a song, read an LLM reading of its lyrics.
 
 ## Memory
 
-- This very file lives in the dotfiles repo: to update these memories, edit
-  `~/dev/dotfiles/home/packages/ai/agents.md`. It is identical on every host. The
-  deployed copies (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`,
-  `~/.pi/agent/AGENTS.md`) are read-only home-manager symlinks into the nix
-  store; changes land on the next home-manager switch.
-- Never use a built-in "memory" tool or feature. I use multiple agents (Claude
-  Code, Codex, pi) and per-tool memories aren't shared — they drift and get lost.
-  `AGENTS.md` is the single source of persistent project knowledge.
-- Put durable facts and decisions in the relevant project's `AGENTS.md`.
-- If something is long or only occasionally relevant, put it in a separate file
-  and link it from `AGENTS.md` with a one-line description — so it's discoverable
-  without bloating always-loaded context.
+- Edit this file at `~/dev/dotfiles/home/packages/ai/agents.md`. The deployed copies (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.pi/agent/AGENTS.md`) are read-only store symlinks and land on the next switch.
+- Never use a built-in memory tool. I run Claude Code, Codex and pi, and per-tool memories drift apart; `AGENTS.md` is the only store.
+- Put durable facts in the relevant project's `AGENTS.md`. Anything long or rarely needed gets its own file, linked from there in one line.
