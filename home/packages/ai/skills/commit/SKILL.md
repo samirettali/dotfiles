@@ -15,7 +15,9 @@ Create a git commit for the current changes using a concise Conventional Commits
 
 ## Notes
 
-- Body is OPTIONAL. If needed, add a blank line after the subject and write short paragraphs.
+- Body is OPTIONAL. When there is one, it says *why*: the motivation, why this solution, and the alternatives you rejected. Never restate the diff. Wrap it at 72 columns, because `git log` indents by four.
+- If the work has an issue or a ticket, reference it the way the repository already does.
+- Commit with an explicit pathspec (`git commit -m … -- <paths>`), so that files staged for another reason do not ride along.
 - Do NOT include breaking-change markers or footers.
 - Do NOT add sign-offs (no `Signed-off-by`).
 - Only commit; do NOT push.
@@ -29,7 +31,7 @@ Create a git commit for the current changes using a concise Conventional Commits
 
 1. Infer from the prompt if the user provided specific file paths/globs and/or additional instructions.
 2. Review `git status` and `git diff` to understand the current changes (limit to argument-specified files if provided).
-3. (Optional) Run `git log -n 50 --pretty=format:%s` to see commonly used scopes.
+3. Run `git log -n 50 --pretty=format:%s` to see the types and scopes this repository already uses, and reuse them.
 4. If there are ambiguous extra files, ask the user for clarification before committing.
 5. Stage only the intended files (all changes if no files specified).
 6. Run `git commit -m "<subject>"` (and `-m "<body>"` if needed).
