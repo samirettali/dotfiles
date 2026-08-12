@@ -1,3 +1,16 @@
+-- Herdr forwards ctrl+hjkl to us instead of moving pane focus, because nvim is
+-- in its keys.passthrough_commands. Move between windows here, and hand the key
+-- back to Herdr only when there is no window left in that direction.
+for key, direction in pairs({ h = "left", j = "down", k = "up", l = "right" }) do
+	vim.keymap.set("n", "<C-" .. key .. ">", function()
+		local from = vim.api.nvim_get_current_win()
+		vim.cmd.wincmd(key)
+		if vim.api.nvim_get_current_win() == from and vim.env.HERDR_PANE_ID then
+			vim.system({ "herdr", "pane", "focus", "--direction", direction })
+		end
+	end, { desc = "Focus window or pane " .. direction })
+end
+
 vim.keymap.set("n", "<leader>g", "<cmd>Grep <cword><cr>", { desc = "Grep word under cursor" })
 vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist()" })
 vim.keymap.set("n", "<leader>lc", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist()" })

@@ -298,7 +298,7 @@ of the released tag, checked out at `~/dev/herdr` (`origin` is upstream, `fork` 
 input, so the rev is pinned in `flake.lock` and `nix flake update` bumps it. The fork's README
 documents every option.
 
-The five commits add: per-component `[theme.custom]` tokens (`space_*`, `agent_*`, `tab_*`,
+The commits add: per-component `[theme.custom]` tokens (`space_*`, `agent_*`, `tab_*`,
 `sidebar_divider`, each falling back to the palette token that component used before, with an
 unset `agent_inactive_bg` leaving those rows unpainted); a `spacer` sidebar token that eats the
 row's leftover width so what follows renders flush right, one column in; `[ui.tab_bar]` with
@@ -306,10 +306,10 @@ row's leftover width so what follows renders flush right, one column in; `[ui.ta
 vanilla's 1 left and 3 right; `[ui] pane_outer_border`, which drops every border edge facing no
 other pane — there is no frame widget, the outer border *is* the perimeter of the per-pane
 boxes — and with it every border title, since titles live inside a top border and only some
-panes keep one; and `[session] restore_commands`, which records a pane's foreground argv when
+panes keep one; `[session] restore_commands`, which records a pane's foreground argv when
 its executable is allowlisted and re-runs it through the deferred agent-resume path, because a
 cold restore otherwise hands every pane a bare shell (`launch_argv` is saved but only replayed
-on an fd handoff).
+on an fd handoff); and `[keys] passthrough_commands`, described below.
 
 - **Release bump:** rebase `patched` on the new tag, push, `nix flake update`. Nothing is
   exported into this repo any more — the branch is the only source of truth. There used to be
@@ -347,6 +347,28 @@ on an fd handoff).
 - Herdr's own `config.toml` is deliberately **not** managed by nix (it changes too often); it
   lives at `~/.config/herdr/config.toml` and the `xdg.configFile` block in `herdr.nix` stays
   commented out.
+
+### ctrl+hjkl between panes and nvim splits
+
+`focus_pane_*` is bound to `ctrl+hjkl` without prefix, which Herdr would otherwise swallow before
+nvim ever saw it. `[keys] passthrough_commands = ["nvim"]` forwards those four chords to the pane
+while its foreground process is one of the listed executables; `keymaps.lua` moves between nvim
+windows and calls `herdr pane focus --direction …` only when there is no window left that way.
+That split is the whole design, and it is the same one `vim-tmux-navigator` gets from tmux's
+`#{pane_current_command}` conditional.
+
+- **The check runs on the keystroke and is not cached.** `foreground_process_group_id` plus the
+  group leader is two process queries, so a `:sh` or a `Ctrl-Z` inside nvim changes the answer
+  immediately. A cached foreground name would be wrong exactly when it matters.
+- **Only the four directional keys pass through.** A direct `ctrl+alt+g` custom command or
+  `prefix+h` still belongs to Herdr from inside nvim, so there is always a way out that does not
+  depend on nvim behaving.
+- **The nvim side is fire-and-forget**: `vim.system{}` without `:wait()`. Waiting on the CLI would
+  put its ~13ms on the edge hop, and there is nothing to read back from it.
+- **It is guarded on `HERDR_PANE_ID`**, so the same keymap in a plain terminal does nothing rather
+  than talking to whatever Herdr server happens to be running.
+- The tradeoff is deliberate: shells and agent panes lose `ctrl+l`, `ctrl+k` and `ctrl+j` — the
+  same price tmux charges for the plugin.
 
 ### Pending agents in sketchybar
 
