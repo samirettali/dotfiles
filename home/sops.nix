@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
   ...
 }: {
@@ -38,4 +39,10 @@
   home.sessionVariables = {
     SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
   };
+
+  # The upstream Darwin activation races Home Manager's LaunchAgent reload:
+  # bootout is asynchronous, so the immediate bootstrap can fail with EIO.
+  home.activation.sops-nix = lib.mkIf pkgs.stdenv.isDarwin (lib.mkForce ''
+    PATH=/usr/bin:/bin:/usr/sbin:/sbin ${config.launchd.agents.sops-nix.config.Program}
+  '');
 }
