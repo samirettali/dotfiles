@@ -180,6 +180,22 @@
         "type": "github"
       }
     },
+    "humanlayer-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786308517,
+        "narHash": "sha256-13OR6Qw7JDJDmAyrpzL8RMCgQ6iIkDh2InjjQac7z68=",
+        "owner": "humanlayer",
+        "repo": "skills",
+        "rev": "d3138e5898ff1bd98aeaf11c79a8c5880e917a52",
+        "type": "github"
+      },
+      "original": {
+        "owner": "humanlayer",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "jakubkrehel-skills": {
       "flake": false,
       "locked": {
@@ -348,6 +364,7 @@
         "hallmark": "hallmark",
         "herdr-fork": "herdr-fork",
         "home-manager": "home-manager",
+        "humanlayer-skills": "humanlayer-skills",
         "jakubkrehel-skills": "jakubkrehel-skills",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",

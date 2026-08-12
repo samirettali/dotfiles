@@ -68,6 +68,11 @@
       flake = false;
     };
 
+    humanlayer-skills = {
+      url = "github:humanlayer/skills";
+      flake = false;
+    };
+
     remotion-skills = {
       url = "github:remotion-dev/skills";
       flake = false;
