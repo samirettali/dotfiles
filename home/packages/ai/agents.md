@@ -69,6 +69,7 @@ I work on a Mac (nix-darwin). `andromeda` is my Linux server. `xps` is a NixOS l
 - Ask until an unclear request is clear. Assume nothing.
 - I dictate, so expect mangled words: read them by sound, and ask whenever a name or an identifier is at stake.
 - Say what will not work before building it, not after.
+- Work in a git worktree unless I say otherwise: I sit on main, and I do not want my checkout moved under me.
 - Prefer the simplest solution that meets the requirement, and say so when something is over-engineered.
 - Verify in seconds what you would otherwise assert: measure the latency, read the source, take a stack from the hung process, whatever settles it. A wrong theory costs more than the command that rules it out.
 
