@@ -100,7 +100,8 @@ that project's `AGENTS.md` to capture it.
   through NUR and consumed by the `spotify` skill (whose SKILL.md lives in the
   repo) and by the Hammerspoon playlist picker. Released by bumping `version`
   in `main.go` in a `chore: release vX.Y.Z` commit, then a signed annotated tag.
-
+- **sottotesto** — `~/dev/sottotesto`. Search a song and read an LLM reading of
+  its lyrics: what it is about, the references, the slang.
 Both macOS apps sign with `Developer ID Application: Samir Ettali (22K9H4B864)`
 and use `com.samirettali.<app>` bundle ids. Signing keys and notarisation
 credentials never go to CI — releases are built on the laptop.
