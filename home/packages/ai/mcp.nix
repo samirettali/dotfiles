@@ -6,14 +6,6 @@
         command = "uvx";
         args = ["elevenlabs-mcp"];
       };
-      # Same hosted endpoint the official Exa plugin installs into Claude Code,
-      # but declared once here so pi and Codex get it too. `tools` pins the two
-      # non-deprecated defaults; everything else Exa ships is either deprecated
-      # or needs an API key. `login` forces the OAuth handshake, which is what
-      # buys a real quota without a secret in the world-readable nix store.
-      exa = {
-        url = "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa&login";
-      };
       chrome-devtools = {
         command = "npx";
         args = [

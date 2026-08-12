@@ -20,7 +20,6 @@
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     secrets = {
       "elevenlabs_api_key" = {};
-      "exa_api_key" = {};
       "gemini_api_key" = {};
       "genius_access_token" = {};
       "linkding_api_token" = {};
