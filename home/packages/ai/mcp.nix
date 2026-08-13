@@ -2,10 +2,6 @@
   programs.mcp = {
     enable = true;
     servers = {
-      elevenlabs = {
-        command = "uvx";
-        args = ["elevenlabs-mcp"];
-      };
       chrome-devtools = {
         command = "npx";
         args = [

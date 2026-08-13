@@ -372,9 +372,10 @@
       ''
         local canvas = require("canvas")
         local frecency = require("frecency")
+        local task = require("task")
 
         local BASE = "https://links.samirettali.com"
-        local TOKEN_PATH = "${config.sops.secrets."linkding_api_token".path}"
+        local rbw = "${lib.getExe config.programs.rbw.package}"
         local CACHE_DIR = os.getenv("HOME") .. "/.cache/hammerspoon"
         local CACHE_PATH = CACHE_DIR .. "/bookmarks.json"
 
@@ -392,22 +393,19 @@
 
         local token = nil
 
-        local function readToken()
+        -- One call per Hammerspoon session: the token is cached here, so the
+        -- vault is asked when the first refresh runs and never again.
+        local function readToken(done)
             if token then
-                return token
+                return done(token)
             end
 
-            local file = io.open(TOKEN_PATH, "r")
-
-            if not file then
-                hs.alert.show("bookmarks: no token at " .. TOKEN_PATH)
-                return nil
-            end
-
-            token = (file:read("*a"):gsub("%s+$", ""))
-            file:close()
-
-            return token
+            task.run(rbw, { "get", "linkding" }, function(out)
+                token = (out:gsub("%s+$", ""))
+                done(token)
+            end, function(message)
+                hs.alert.show("bookmarks: no token from the vault (" .. message .. ")")
+            end)
         end
 
         -- only what the picker draws or opens, so the cache stays small enough
@@ -434,26 +432,22 @@
         end
 
         local function get(path, done)
-            local auth = readToken()
+            readToken(function(auth)
+                hs.http.asyncGet(BASE .. path, { Authorization = "Token " .. auth }, function(status, body)
+                    if status ~= 200 then
+                        hs.alert.show("bookmarks: linkding answered " .. tostring(status))
+                        return
+                    end
 
-            if not auth then
-                return
-            end
+                    local decoded = hs.json.decode(body)
 
-            hs.http.asyncGet(BASE .. path, { Authorization = "Token " .. auth }, function(status, body)
-                if status ~= 200 then
-                    hs.alert.show("bookmarks: linkding answered " .. tostring(status))
-                    return
-                end
+                    if not decoded or not decoded.results then
+                        hs.alert.show("bookmarks: could not parse the response")
+                        return
+                    end
 
-                local decoded = hs.json.decode(body)
-
-                if not decoded or not decoded.results then
-                    hs.alert.show("bookmarks: could not parse the response")
-                    return
-                end
-
-                done(decoded)
+                    done(decoded)
+                end)
             end)
         end
 

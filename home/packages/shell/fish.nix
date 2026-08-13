@@ -119,10 +119,6 @@
           # Skips the ttyname lookup rbw does per request, a second on darwin.
           set -gx RBW_TTY (tty)
         ''}
-        if test -f ${lib.escapeShellArg config.sops.secrets.elevenlabs_api_key.path}
-            set -gx ELEVENLABS_API_KEY (string collect < ${lib.escapeShellArg config.sops.secrets.elevenlabs_api_key.path})
-        end
-
         if test -f ${lib.escapeShellArg config.sops.secrets.gemini_api_key.path}
             set -gx GEMINI_API_KEY (string collect < ${lib.escapeShellArg config.sops.secrets.gemini_api_key.path})
         end

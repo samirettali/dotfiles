@@ -15,7 +15,12 @@ in {
       (pkgs.callPackage ./nhash.nix {
         inherit copy;
       })
-      (pkgs.callPackage ./speak.nix {})
+      (pkgs.callPackage ./speak.nix {
+        rbw =
+          if config.programs.rbw.enable
+          then config.programs.rbw.package
+          else null;
+      })
       (pkgs.callPackage ./lyrics.nix {
         spotctl = nurPkgs.spotctl;
         tokenFile = config.sops.secrets."genius_access_token".path;
