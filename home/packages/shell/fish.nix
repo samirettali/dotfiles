@@ -115,7 +115,10 @@
       */
       ''
         set -g fish_transient_prompt 1
-
+        ${lib.optionalString config.programs.rbw.enable ''
+          # Skips the ttyname lookup rbw does per request, a second on darwin.
+          set -gx RBW_TTY (tty)
+        ''}
         if test -f ${lib.escapeShellArg config.sops.secrets.elevenlabs_api_key.path}
             set -gx ELEVENLABS_API_KEY (string collect < ${lib.escapeShellArg config.sops.secrets.elevenlabs_api_key.path})
         end
