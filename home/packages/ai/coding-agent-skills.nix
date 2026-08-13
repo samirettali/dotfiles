@@ -44,7 +44,6 @@ in {
   frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
   generate-image = ./skills/generate-image;
   generate-speech = ./skills/generate-speech;
-  github = "${inputs.agent-stuff}/skills/github";
   hallmark = "${inputs.hallmark}/skills/hallmark";
   herdr = ./skills/herdr;
   live-ui-variants = ./skills/live-ui-variants;
