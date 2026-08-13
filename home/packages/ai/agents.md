@@ -103,7 +103,6 @@ Each lives under `~/dev` with its own `AGENTS.md`. Read it before working on the
 - servers — the machines I own and what runs on them, Docker Compose + Ansible. `andromeda` today.
 - nur — personal NUR repository.
 - sottocasa — multi-tenant booking product: Go API, React owner panel.
-- side-projects — small personal projects, and the Caddy fronting them on the tailnet.
 - sottovoce — macOS menu bar dictation app.
 - pulse — macOS menu bar app for live prices and timezone clocks.
 - infra — OpenTofu for the accounts: GitHub settings, Actions secrets, the state bucket.

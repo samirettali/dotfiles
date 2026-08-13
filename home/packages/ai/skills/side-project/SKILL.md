@@ -91,15 +91,25 @@ Decide by what is being protected, not by which environment it is.
   One-time PIN provider: they get a code by email, and access is withdrawn by
   removing the address. Use it when knowing *who* came in matters, which for a
   side project usually means showing it to a business.
-- **Whoever holds the link** — `basic_auth` in the shared dev proxy, one
-  password per project kept in the vault, plus an access log for that hostname:
-  reading leaves no other trace. There is no shared-password login in Cloudflare
-  Access; a Worker could render one, at the price of code at the edge.
+- **A few named people, and the product already has an identity provider** —
+  use *that* one, and keep a list of accounts in an env var. sottotesto is the
+  worked example: it talks to Spotify anyway, so the login is Spotify and the
+  allowlist is Spotify account emails, checked per request so that removing an
+  address takes effect at the next click. Cheaper than Cloudflare Access and
+  than ZITADEL, and it avoids asking one person for two logins.
+- **Whoever holds the link** — `basic_auth` in the shared proxy, one password
+  per project kept in the vault, plus an access log for that hostname: reading
+  leaves no other trace. There is no shared-password login in Cloudflare Access;
+  a Worker could render one, at the price of code at the edge. **The weakest
+  option**, and the one to leave behind first: a password has to be sent to each
+  person by hand, it says nothing about who came in, and it cannot be revoked for
+  one of them.
 - **A public site with one expensive action** — do not wall the site.
   A model call that spends credits is an authorization problem on that endpoint,
   not a reason to lock out readers of content that is not secret. Wrapping the
   whole thing in a password is the shortcut taken when there is no time to write
   the check, and it is worth undoing once the project has any notion of a user.
+  sottotesto did exactly that, in the direction of the tier above.
 
 ## Hostnames
 
