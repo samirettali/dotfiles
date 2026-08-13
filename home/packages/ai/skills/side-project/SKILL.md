@@ -58,30 +58,48 @@ prototype stage below. When real auth arrives: ZITADEL (OIDC + PKCE), with
 the client app managed declaratively in OpenTofu (`infra/<env>/`), redirect
 URIs included.
 
-## Staged infrastructure
+## Environments
 
-Infrastructure follows validation, not the other way around. Most side
-projects die young; don't pay for infra they will never need.
+Infrastructure follows validation, not the other way around. Most side projects
+die young; don't pay for infra they will never need.
 
-1. **Prototype** — run directly on the dev host (andromeda), reach it via
-   SSH port-forward from the laptop. No proxy, no secrets management, no
-   OpenTofu, no deploy. `localhost` is a secure context, so anything that
-   needs `crypto.subtle` works through the forward.
+1. **Prototype** — run directly on the dev host (andromeda), reach it over an
+   SSH port-forward. No proxy, no secrets management, no OpenTofu, no deploy.
+   `localhost` is a secure context, so anything needing `crypto.subtle` works
+   through the forward.
    **Auth is stubbed**: the current-user lookup lives in exactly one seam
    (verifier/middleware) and an env-gated mode (`AUTH_MODE=stub`) resolves a
-   fixed seeded user. The server must **refuse to start** in stub mode
-   outside dev environments. Limitation: multi-user flows (roles, invites)
-   cannot be validated in stub mode — if multi-user *is* the product, bring
-   real auth forward.
-2. **Dev** — once the idea is validated and worth a comfortable loop:
-   tailnet-only HTTPS hostname via the shared Caddy in `side-projects/proxy`
-   (deployed by the selfhosted Ansible playbook), real ZITADEL app managed
-   in `infra/dev/` with OpenTofu, `.envrc` filled in.
-3. **Staging** — when friends/acquaintances get access for feedback rounds:
-   separate database, migrations applied by a `migrate` service on deploy,
-   **Cloudflare Access** in front. Separate `infra/staging/`.
-4. **Prod** — only when the project is complete or functional enough to
-   stand on its own. Not before.
+   fixed seeded user. The server must **refuse to start** in stub mode outside
+   dev environments. Multi-user flows cannot be validated this way — if
+   multi-user *is* the product, bring real auth forward.
+2. **Dev** — a tailnet-only HTTPS hostname through the shared dev proxy in
+   `selfhosted/dev-proxy`, and a real identity provider managed in `infra/dev/`.
+3. **Staging** — **only when it needs its own data.** Payments to exercise with
+   test cards, a migration to rehearse, a demo that must not touch real records.
+   Separate database, migrations applied by a `migrate` service on deploy,
+   separate `infra/staging/`. It is not a rung everything climbs: plenty of
+   projects go from dev to prod, and adding a staging is adding a second
+   database and a second set of credentials to keep alive.
+4. **Prod** — when the project stands on its own.
+
+## Letting people in
+
+Decide by what is being protected, not by which environment it is.
+
+- **Only me** — the tailnet is the boundary. No authentication at all.
+- **A few named people, revocably** — Cloudflare Access with the account's
+  One-time PIN provider: they get a code by email, and access is withdrawn by
+  removing the address. Use it when knowing *who* came in matters, which for a
+  side project usually means showing it to a business.
+- **Whoever holds the link** — `basic_auth` in the shared dev proxy, one
+  password per project kept in the vault, plus an access log for that hostname:
+  reading leaves no other trace. There is no shared-password login in Cloudflare
+  Access; a Worker could render one, at the price of code at the edge.
+- **A public site with one expensive action** — do not wall the site.
+  A model call that spends credits is an authorization problem on that endpoint,
+  not a reason to lock out readers of content that is not secret. Wrapping the
+  whole thing in a password is the shortcut taken when there is no time to write
+  the check, and it is worth undoing once the project has any notion of a user.
 
 ## Where infrastructure lives
 
