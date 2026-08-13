@@ -90,6 +90,7 @@ I work on a Mac (nix-darwin). `andromeda` is my Linux server. `xps` is a NixOS l
 
 ## Conventions
 
+- Write everything that lands in a repository in English, whatever language we are speaking: issues, pull requests, commit messages, docs and code comments
 - Write files only through the editing tools, never with sed, awk, python or echo
 - One commit per logical change, and only what this task changed
 - Title a pull request like a commit subject

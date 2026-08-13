@@ -11,13 +11,6 @@ Tasks for personal projects are **GitHub issues**, collected in the `dev` Projec
 
 `Priority` (P0–P3) and `Status` are **Project fields**, not labels.
 
-## Language
-
-**Everything written into the repo is in English**: issue titles and bodies, issue
-comments, PR titles and descriptions, commit messages, `AGENTS.md` and `docs/`,
-and code comments. This holds regardless of the language of the conversation.
-Only an explicit request for another language changes it.
-
 ## Statuses
 
 **Never decide `Priority` on your own**: Samir does the triage. If he tells you
