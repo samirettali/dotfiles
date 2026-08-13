@@ -279,7 +279,7 @@ def find_lyrics(track):
 
 
 def genius_token():
-    """Only GENIUS_ACCESS_TOKEN: filling it from the sops secret is the nix
+    """Only GENIUS_ACCESS_TOKEN: filling it from the vault is the nix
     wrapper's job. With no token the annotations are simply skipped."""
     return os.environ.get("GENIUS_ACCESS_TOKEN", "").strip() or None
 

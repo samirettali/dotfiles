@@ -23,7 +23,10 @@ in {
       })
       (pkgs.callPackage ./lyrics.nix {
         spotctl = nurPkgs.spotctl;
-        tokenFile = config.sops.secrets."genius_access_token".path;
+        rbw =
+          if config.programs.rbw.enable
+          then config.programs.rbw.package
+          else null;
       })
       (pkgs.callPackage ./pi-models.nix {})
       (pkgs.callPackage ./ai-usage.nix {
