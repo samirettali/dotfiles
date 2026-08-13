@@ -61,9 +61,6 @@ Ubuntu ARM server, so this repo owns only the user profile
 (`homeConfigurations.andromeda`, no `machines/` entry) while `~/dev/servers`
 owns the machine and the services through Ansible and Compose.
 
-`servers/MAP.md` is the searchable inventory of all of it — hostnames, services,
-which secret lives in which of the three vaults, and what each deploy touches.
-
 | Layer | Owner | What |
 | --- | --- | --- |
 | System | servers, roles `common` + `docker` | OS packages, Docker, ssh — anything needing root |
