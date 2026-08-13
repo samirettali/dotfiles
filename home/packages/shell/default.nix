@@ -49,7 +49,7 @@
     gnumake
     gnused
     iredis
-    kcat
+    # kcat # TODO: upstream is broken
     moreutils
     ncdu
     ngrok
