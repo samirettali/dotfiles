@@ -26,13 +26,17 @@ in
     set -euo pipefail
 
     enforced=true
+    migrate=false
     name=""
 
     for arg in "$@"; do
       case "$arg" in
-        # For migrating an already-unencrypted state: OpenTofu has to be allowed
-        # to read the plaintext once before it can rewrite it encrypted.
-        --no-enforce) enforced=false ;;
+        # For a state that is still plaintext. `enforced = false` is not enough:
+        # it only lets OpenTofu write in the clear, while reading an unencrypted
+        # payload needs the unencrypted method as an explicit fallback. Without
+        # it, init fails with "encountered unencrypted payload without
+        # unencrypted method configured". Drop the flag after the first apply.
+        --migrate) migrate=true; enforced=false ;;
         -*) echo "tofu-encryption: unknown option $arg" >&2; exit 2 ;;
         *) name="$arg" ;;
       esac
@@ -64,7 +68,15 @@ in
         ;;
     esac
 
+    fallback=""
+    unencrypted=""
+    if [ "$migrate" = true ]; then
+      unencrypted='method "unencrypted" "migrate" {}'
+      fallback='  fallback { method = method.unencrypted.migrate }'
+    fi
+
     cat <<EOF
+    $unencrypted
     key_provider "pbkdf2" "passphrase" {
       passphrase = "$passphrase"
     }
@@ -74,6 +86,7 @@ in
     state {
       method   = method.aes_gcm.default
       enforced = $enforced
+    $fallback
     }
     EOF
   ''
