@@ -25,9 +25,9 @@ in {
         codex = nurPkgs.codex;
       })
       (pkgs.callPackage ./tofu-encryption.nix {
-        passphraseFiles = {
-          infra = config.sops.secrets."tofu_passphrase_infra".path;
-          sottocasa = config.sops.secrets."tofu_passphrase_sottocasa".path;
+        entries = {
+          infra = "tofu-infra";
+          sottocasa = "tofu-sottocasa";
         };
       })
       (pkgs.writeShellScriptBin "glc" (builtins.readFile "${scriptsDir}/glc.sh"))

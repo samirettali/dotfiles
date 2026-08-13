@@ -1,19 +1,24 @@
 {
   pkgs,
   lib,
-  passphraseFiles,
+  entries,
   ...
 }: let
-  cat = lib.getExe' pkgs.coreutils "cat";
-  known = lib.concatStringsSep " " (lib.attrNames passphraseFiles);
+  rbw = lib.getExe pkgs.rbw;
+  known = lib.concatStringsSep " " (lib.attrNames entries);
   cases =
     lib.concatStringsSep "\n"
-    (lib.mapAttrsToList (name: path: ''${name}) file=${path} ;;'') passphraseFiles);
+    (lib.mapAttrsToList (name: entry: ''${name}) vault_entry=${entry} ;;'') entries);
 in
   # Prints the OpenTofu state encryption configuration for TF_ENCRYPTION, with
-  # the passphrase read from sops at call time so it never lands in a file.
+  # the passphrase read from the vault at call time so it never lands in a file.
   #
   #   export TF_ENCRYPTION="$(tofu-encryption infra)"
+  #
+  # The vault rather than sops: this passphrase protects state that carries live
+  # credentials, and the dotfiles repo is public — encrypted, but the ciphertext
+  # and the names stay in its history forever. Tofu is only ever run by hand, so
+  # needing an unlocked agent costs nothing.
   #
   # One passphrase per state bucket, not per workspace: they share a bucket, and
   # a bucket is the unit that could be handed to someone else.
@@ -35,21 +40,20 @@ in
 
     case "$name" in
     ${cases}
-      "") echo "usage: tofu-encryption <${lib.concatStringsSep "|" (lib.attrNames passphraseFiles)}> [--no-enforce]" >&2; exit 2 ;;
+      "") echo "usage: tofu-encryption <${lib.concatStringsSep "|" (lib.attrNames entries)}> [--no-enforce]" >&2; exit 2 ;;
       *) echo "tofu-encryption: no passphrase named '$name' (known: ${known})" >&2; exit 2 ;;
     esac
 
-    if [ ! -r "$file" ]; then
-      echo "tofu-encryption: $file is missing — run home-manager and check the sops age key" >&2
+    if ! passphrase=$(${rbw} get "$vault_entry" 2>&1); then
+      echo "tofu-encryption: cannot read '$vault_entry' from the vault:" >&2
+      echo "$passphrase" >&2
       exit 1
     fi
-
-    passphrase=$(${cat} "$file")
 
     # pbkdf2 refuses anything shorter, with a message that is easy to misread as
     # a configuration error.
     if [ "''${#passphrase}" -lt 16 ]; then
-      echo "tofu-encryption: the passphrase in $file is shorter than 16 characters" >&2
+      echo "tofu-encryption: the passphrase in '$vault_entry' is shorter than 16 characters" >&2
       exit 1
     fi
 
