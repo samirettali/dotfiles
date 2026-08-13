@@ -24,12 +24,6 @@ in {
       (pkgs.callPackage ./ai-usage.nix {
         codex = nurPkgs.codex;
       })
-      (pkgs.callPackage ./tofu-encryption.nix {
-        entries = {
-          infra = "tofu-infra";
-          sottocasa = "tofu-sottocasa";
-        };
-      })
       (pkgs.writeShellScriptBin "glc" (builtins.readFile "${scriptsDir}/glc.sh"))
       (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
       (pkgs.writeShellScriptBin "ticker" (builtins.readFile "${scriptsDir}/ticker.sh"))
