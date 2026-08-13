@@ -53,6 +53,7 @@ in {
   project-workflow = ./skills/project-workflow;
   remotion-best-practices = "${inputs.remotion-skills}/skills/remotion-best-practices";
   show-me = "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me";
+  side-project = ./skills/side-project;
   spotify = "${spotifySkill}";
   terse = ./skills/terse;
   uv = "${inputs.agent-stuff}/skills/uv";
