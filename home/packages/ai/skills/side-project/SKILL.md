@@ -101,6 +101,22 @@ Decide by what is being protected, not by which environment it is.
   whole thing in a password is the shortcut taken when there is no time to write
   the check, and it is worth undoing once the project has any notion of a user.
 
+## Hostnames
+
+Buy the product's domain when an audience appears, not when an environment does.
+
+Dev stays on the personal domain for good — it is tailnet-only and nobody else
+sees it: `<project>-dev.samirettali.com`. Previews stay there too, they are
+throwaway by nature. Once there is a domain, staging is a subdomain of it and
+prod is the apex, so what a visitor reads matches the product rather than its
+author.
+
+Moving later costs more than a DNS record, in two specific ways. OIDC redirect
+URIs, cookies and Access applications are all per-hostname, so a late move means
+redoing the identity configuration on both sides. And the dev proxy's Cloudflare
+token carries `DNS:Edit` on `samirettali.com` alone: a new zone needs it widened
+or a second token, and the symptom is a certificate that never issues.
+
 ## Where infrastructure lives
 
 Split by ownership, not by convenience. Anything that is born and dies with the
