@@ -168,6 +168,7 @@
     # Common Home Manager configuration
     mkHomeManagerConfig = {
       user,
+      hostname,
       extraModules ? [],
       features ? defaultFeatures,
       pkgs,
@@ -182,6 +183,7 @@
         neovimPackage = mkNeovimPackage pkgs.stdenv.hostPlatform.system;
         vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
         vars = {
+          inherit hostname;
           inherit (user) email;
           font = {
             name = "JetBrainsMono Nerd Font";
@@ -231,7 +233,10 @@
           inherit inputs;
           nurPkgs = inputs.samirettali-nur.packages.${systems.server};
           neovimPackage = mkNeovimPackage systems.server;
-          vars.email = users.personal.email;
+          vars = {
+            hostname = "andromeda";
+            inherit (users.personal) email;
+          };
         };
 
         modules = [
@@ -297,6 +302,7 @@
             home-manager = mkHomeManagerConfig {
               inherit pkgs;
               user = users.personal;
+              hostname = "mbp";
               features = defaultFeatures // {android = true;};
               extraModules = [
                 ./home/mac
@@ -348,6 +354,7 @@
             home-manager = mkHomeManagerConfig {
               inherit pkgs;
               user = users.personal;
+              hostname = "xps";
               features = defaultFeatures;
               extraModules = [
                 ./home/linux
