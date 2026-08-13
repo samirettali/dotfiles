@@ -54,28 +54,38 @@ The `warning: Git tree ... is dirty` line during eval is benign.
 - **NUR packages:** use the `nurPkgs` specialArg (`nurPkgs.<pkg>`), not the long
   `samirettali-nur.packages.${system}` expression.
 
-## andromeda: this repo vs `selfhosted`
+## andromeda: this repo vs `servers`
 
 `andromeda` is the only host where nix does **not** own the machine: it's an
 Ubuntu ARM server, so this repo owns only the user profile
-(`homeConfigurations.andromeda`, no `machines/` entry) while `~/dev/selfhosted`
+(`homeConfigurations.andromeda`, no `machines/` entry) while `~/dev/servers`
 owns the machine and the services through Ansible and Compose.
 
 | Layer | Owner | What |
 | --- | --- | --- |
-| System | selfhosted, roles `common` + `docker` | OS packages, Docker, ssh — anything needing root |
-| Services | selfhosted, `docker-compose.yml` + role `selfhosted` | containers, mounted configs, rendered env files |
+| System | servers, roles `common` + `docker` | OS packages, Docker, ssh — anything needing root |
+| Services | servers, `docker-compose.yml` + role `selfhosted` | containers, mounted configs, rendered env files |
 | User profile | **this repo**, home-manager | shell, neovim, CLI tools, agents |
-| The bridge | selfhosted, role `home-manager` | installs nix, clones this repo, runs `nix build …#homeConfigurations.andromeda.activationPackage` and activates it |
+| The bridge | servers, role `home-manager` | installs nix, clones this repo, runs `nix build …#homeConfigurations.andromeda.activationPackage` and activates it |
 
 **The rule: does it need root? Ansible. Does it live in `/home/samir`? here.**
 Anything that has to exist *before* nix works is necessarily Ansible.
 
+The repo was called `selfhosted` until it also grew the proxy for the side
+projects, which is not self-hosted and not tailnet-only. Hosts are named after
+stellar objects, so the repo that holds them all is plain and plural.
+
 **Secrets follow the same split.** A secret consumed by a service goes in
-selfhosted's ansible-vault, because it ends up in an env file Docker reads as
-root. A secret consumed by a tool *of yours* goes in sops here (`secrets/`,
-age key at `~/.config/sops/age/keys.txt`), because it has to reach your profile
-on every host — the OpenTofu state passphrases are the example.
+servers' ansible-vault, because it ends up in an env file Docker reads as root.
+A secret consumed by a tool *of yours* goes in sops here (`secrets/`, age key at
+`~/.config/sops/age/keys.txt`), because it has to reach your profile on every
+host — the OpenTofu state passphrases are the example.
+
+**A third owner, for things on machines you do not own.** `infra` declares the
+GitHub account and the Cloudflare state bucket in OpenTofu, and each project's
+own `infra/` declares what dies with that project. Neither Ansible nor nix can
+do that job: on somebody else's servers there is no file to write, only an API
+to call, which is also why OpenTofu keeps state and the other two do not.
 
 ## Adding packages
 

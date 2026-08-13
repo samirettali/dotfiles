@@ -73,7 +73,7 @@ die young; don't pay for infra they will never need.
    dev environments. Multi-user flows cannot be validated this way — if
    multi-user *is* the product, bring real auth forward.
 2. **Dev** — a tailnet-only HTTPS hostname through the shared dev proxy in
-   `selfhosted/dev-proxy`, and a real identity provider managed in `infra/dev/`.
+   `servers/dev-proxy`, and a real identity provider managed in `infra/dev/`.
 3. **Staging** — **only when it needs its own data.** Payments to exercise with
    test cards, a migration to rehearse, a demo that must not touch real records.
    Separate database, migrations applied by a `migrate` service on deploy,

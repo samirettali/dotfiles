@@ -100,7 +100,7 @@ I work on a Mac (nix-darwin). `andromeda` is my Linux server. `xps` is a NixOS l
 Each lives under `~/dev` with its own `AGENTS.md`. Read it before working on the project, and add to it any decision the code alone would not reveal.
 
 - dotfiles — NixOS + home-manager config.
-- selfhosted — self-hosted stack, Docker Compose + Ansible, on `andromeda`.
+- servers — the machines I own and what runs on them, Docker Compose + Ansible. `andromeda` today.
 - nur — personal NUR repository.
 - sottocasa — multi-tenant booking product: Go API, React owner panel.
 - side-projects — small personal projects, and the Caddy fronting them on the tailnet.
