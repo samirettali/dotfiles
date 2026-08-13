@@ -47,7 +47,24 @@ site, when one exists: **Astro with React islands**.
 
 **Tooling** — nix devshell + Makefile as the entry point (`make generate`
 regenerates oapi-codegen + sqlc + TS clients), `air` for backend live
-reload, `direnv` with an untracked `.envrc` for environment, `pnpm`.
+reload, `direnv`, `pnpm`.
+
+**The `.envrc` is committed, and there is no `.envrc.example`.** It holds no
+secret: every one is read from rbw at call time, `$(rbw get <entry>)`, so the
+file is configuration and belongs in the repo like any other. An example file is
+a second copy of the same thing that drifts from the first, and it makes every
+checkout start with a copy step for values that are not secret anyway.
+
+Two things that decide what may go in it:
+
+- **A value that grants nothing is not automatically publishable.** Other
+  people's data — an allowlist of email addresses, say — is theirs, and git
+  history outlives any edit. Either keep it in the vault, or accept it knowing
+  that making the repo public takes the history with it.
+- **rbw needs an unlocked agent, sops does not.** sops-nix decrypts at profile
+  activation and leaves files on disk, so a long-lived service can start
+  unattended after a reboot. Prefer sops when something must come back up on its
+  own; rbw is right for anything you launch in a session you are sitting in.
 
 **Testing** — Go table tests at the application layer with stubbed ports;
 domain logic tested pure. No frontend test framework by default: typecheck,

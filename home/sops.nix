@@ -20,12 +20,11 @@
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
     secrets = {
       "gemini_api_key" = {};
+      # Still here for the `lyrics` command's wrapper in packages/shell/scripts.
+      # sottotesto reads its own copy from rbw now; drop this once that wrapper
+      # moves too, and not before — the reference is what makes the build fail.
       "genius_access_token" = {};
       "openai_api_key" = {};
-      "openrouter_api_key" = {};
-      # sottotesto's Client Credentials grant, used server-side for search only.
-      # The client id is not a secret and stays in the clear in its .envrc.
-      "spotify_client_secret" = {};
     };
   };
 
