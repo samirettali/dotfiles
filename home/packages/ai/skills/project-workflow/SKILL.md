@@ -18,10 +18,11 @@ comments, PR titles and descriptions, commit messages, `AGENTS.md` and `docs/`,
 and code comments. This holds regardless of the language of the conversation.
 Only an explicit request for another language changes it.
 
+## Statuses
+
 **Never decide `Priority` on your own**: Samir does the triage. If he tells you
 what it should be, set it.
 
-## Statuses
 
 `📋 Backlog` → `🏗 In progress` → `👀 In review` → `✅ Done`
 
@@ -41,10 +42,7 @@ wrong one corrects itself.
 `--owner` selects the *Project*, not the repo: the issue is named by its URL and
 may live under a different owner.
 
-Verified on gh 2.97. Older versions had neither `--url` nor `--field`/`--value`
-and needed the item's node id, looked up by listing the board — which silently
-returned only its first 30 items, so an issue further down came back empty.
-Nothing here needs an id any more.
+Verified on gh 2.97.
 
 ## Picking up an issue
 
@@ -57,7 +55,8 @@ Nothing here needs an id any more.
 
 2. Read the project context: `AGENTS.md`, the `docs/` index, and `JOURNAL.md` if
    it exists.
-3. Create a dedicated branch: `git switch -c issue-<N>-<slug>`.
+3. Create a worktree on a new `issue-<N>-<slug>` branch and work there (see
+   [Worktrees](#worktrees)).
 4. Move the issue to `🏗 In progress` (see [Statuses](#statuses)).
 5. If anything in the issue does not add up or is ambiguous, **ask before writing
    code**. An issue written months ago may describe a problem that has since
@@ -105,7 +104,9 @@ Nothing here needs an id any more.
    ```
 
 3. Move the issue to `👀 In review` (see [Statuses](#statuses)).
-4. Do not close the issue by hand, and do not set it to `✅ Done`: the merge takes
+4. Watch the checks: `gh pr checks <N>`. On a failure, `gh run view <run-id>
+   --log-failed` prints the logs of the failed steps only.
+5. Do not close the issue by hand, and do not set it to `✅ Done`: the merge takes
    care of it.
 
 ## Documentation
@@ -116,8 +117,29 @@ Nothing here needs an id any more.
   lives in a separate repo, skips review, and its links into the code break
   silently.
 
+## Worktrees
+
+Work in a worktree, outside the repo, so the main checkout stays on `main`.
+`EnterWorktree` does it on Claude Code, `git worktree add` everywhere else.
+
+A worktree carries only the tracked files, so:
+
+- run `make worktree` if the repo has that target — it is the repo's own bootstrap;
+- otherwise symlink what cannot be regenerated (`.env`, local config), regenerate
+  what can (`pnpm install`), and **ask** about live state, like a local database:
+  copying it forks it, sharing it means two processes on one file;
+- on dotfiles there is nothing to carry, but `direnv allow` the new directory, and
+  remember that a new file is invisible to the flake until `git add -N`.
+
+Run your own processes there, and **never touch a process you did not start** —
+it is probably his. With two worktrees open the default port is taken, so bind
+another one and **say which URL you bound**.
+
+Samir does not need the branch in his own checkout to look at the work: the
+worktree is a directory, he can enter it. Git refuses the same branch in two
+worktrees anyway.
+
 ## Notes
 
 - TODOs in the code stay in the code. If you turn one into an issue, cite file and
   line in the issue and **do not remove the comment** unless asked.
-- Worktrees are handled manually for now: they are not part of this flow.

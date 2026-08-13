@@ -1,8 +1,10 @@
 # Worktree per agenti
 
-Ricerca del 1 agosto 2026. Per ora i worktree si gestiscono **a mano**: niente
-tooling, niente skill. Queste sono le opzioni valutate, da riprendere quando il
-flusso manuale mostra un attrito concreto.
+Ricerca del 1 agosto 2026. Dal 13 agosto il worktree è il default — la regola sta
+in `agents.md` e la procedura in `project-workflow` — ma **senza tooling**: il
+bootstrap resta a mano, o dietro un `make worktree` nei repo che ne hanno bisogno.
+Queste sono le opzioni valutate allora, da riprendere quando il manuale mostra un
+attrito concreto.
 
 ## Il flusso da supportare
 
