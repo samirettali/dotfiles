@@ -9,13 +9,13 @@ Create images from a prompt, or edit existing ones by passing them as references
 
 ## Generate
 
-1. Require `GEMINI_API_KEY` in the environment (`OPENAI_API_KEY` for `--provider openai`). Never print or store it.
+1. The `generate-image` command carries the keys: it reads them from the vault when the environment has none. Never print or store one.
 2. Pick a model from [references/models.md](references/models.md), which also lists the Nano Banana names. The default `gemini-3-pro-image` (Nano Banana Pro) is the right choice unless the user wants cheap drafts.
 3. Use an output path that does not already exist.
-4. Run the bundled script:
+4. Run it:
 
    ```sh
-   uv run scripts/generate_image.py \
+   generate-image \
      --output /absolute/path/hero.png \
      --aspect-ratio 16:9 \
      --prompt 'Flat vector illustration of a terminal window, soft pastel palette, centered composition'
@@ -28,7 +28,7 @@ Create images from a prompt, or edit existing ones by passing them as references
 Pass each source image with `--reference` (repeatable) and describe only the change:
 
 ```sh
-uv run scripts/generate_image.py \
+generate-image \
   --output /absolute/path/hero-fox.png \
   --reference /absolute/path/hero.png \
   --aspect-ratio 16:9 \

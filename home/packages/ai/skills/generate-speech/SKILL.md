@@ -9,13 +9,13 @@ Use Gemini TTS to create multilingual voice-overs. Preserve the supplied script 
 
 ## Generate audio
 
-1. Require `GEMINI_API_KEY` in the environment. Never print or store it.
+1. The `generate-speech` command carries the key: it reads it from the vault when the environment has none. Never print or store it.
 2. Choose a voice from [references/voices.md](references/voices.md). Default to `Kore` only when the user has no preference and does not want auditions.
 3. Use a `.wav` output path that does not already exist.
 4. Run the bundled script:
 
    ```sh
-   uv run scripts/generate_speech.py \
+   generate-speech \
      --output /absolute/path/voice-over.wav \
      --voice Kore \
      --text 'Testo da leggere'
@@ -24,7 +24,7 @@ Use Gemini TTS to create multilingual voice-overs. Preserve the supplied script 
    Use `--file` for longer scripts and `--instructions` for delivery guidance:
 
    ```sh
-   uv run scripts/generate_speech.py \
+   generate-speech \
      --output /absolute/path/voice-over.wav \
      --voice Sulafat \
      --instructions 'Speak warmly, at a measured pace, in a natural Italian accent.' \

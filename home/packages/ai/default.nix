@@ -8,6 +8,7 @@
     ./mcp.nix
     ./opencode.nix
     ./pi-coding-agent
+    ./skill-scripts.nix
   ];
 
   home.packages = [
