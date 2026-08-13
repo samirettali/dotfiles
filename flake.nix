@@ -4,11 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable"; # TODO: should use nixos-unstable for NixOS?
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -242,9 +237,6 @@
         modules = [
           ./home/ai.nix
           ./home/server.nix
-          # Needs ~/.config/sops/age/keys.txt on the server: activation fails if
-          # it can't decrypt. Same key as the other hosts, single recipient.
-          ./home/sops.nix
           ({pkgs, ...}: {
             features = {
               c = "minimal";

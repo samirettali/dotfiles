@@ -13,7 +13,7 @@ pkgs.writeShellScriptBin "lyrics" ''
     # lyrics.py only reads the environment; where the token is kept is decided
     # here. A locked vault is not an error: the script skips Genius without one.
     if [ -z "''${GENIUS_ACCESS_TOKEN:-}" ] && ${lib.getExe rbw} unlocked 2>/dev/null; then
-      GENIUS_ACCESS_TOKEN="$(${lib.getExe rbw} get genius)"
+      GENIUS_ACCESS_TOKEN="$(${lib.getExe rbw} get genius-access-token)"
       export GENIUS_ACCESS_TOKEN
     fi
   ''}

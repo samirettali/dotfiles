@@ -400,7 +400,7 @@
                 return done(token)
             end
 
-            task.run(rbw, { "get", "linkding" }, function(out)
+            task.run(rbw, { "get", "linkding-api-key" }, function(out)
                 token = (out:gsub("%s+$", ""))
                 done(token)
             end, function(message)

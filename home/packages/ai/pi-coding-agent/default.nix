@@ -78,7 +78,7 @@ in {
           # Hard-denied for the file tools, reads included.
           deniedPaths = [
             "~/.ssh/*"
-            "~/.config/sops/age/keys.txt"
+            "~/Library/Application Support/rbw/*"
             "~/.pi/agent/auth.json"
             "**/.env"
             "**/.env.*"

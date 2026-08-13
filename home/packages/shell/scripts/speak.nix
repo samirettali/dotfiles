@@ -16,7 +16,7 @@ in
       # exported one already.
       if [ -z "''${ELEVENLABS_API_KEY-}" ]; then
         if ${lib.getExe rbw} unlocked 2>/dev/null; then
-          ELEVENLABS_API_KEY="$(${lib.getExe rbw} get elevenlabs)"
+          ELEVENLABS_API_KEY="$(${lib.getExe rbw} get elevenlabs-api-key)"
           export ELEVENLABS_API_KEY
         else
           # Locked mid-turn: a pinentry nobody is watching would block the agent

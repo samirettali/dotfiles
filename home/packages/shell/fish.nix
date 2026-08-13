@@ -119,14 +119,6 @@
           # Skips the ttyname lookup rbw does per request, a second on darwin.
           set -gx RBW_TTY (tty)
         ''}
-        if test -f ${lib.escapeShellArg config.sops.secrets.gemini_api_key.path}
-            set -gx GEMINI_API_KEY (string collect < ${lib.escapeShellArg config.sops.secrets.gemini_api_key.path})
-        end
-
-        if test -f ${lib.escapeShellArg config.sops.secrets.openai_api_key.path}
-            set -gx OPENAI_API_KEY (string collect < ${lib.escapeShellArg config.sops.secrets.openai_api_key.path})
-        end
-
         set fish_color_command green
         set fish_color_valid_path normal
 
