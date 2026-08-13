@@ -66,6 +66,30 @@ Two things that decide what may go in it:
   unattended after a reboot. Prefer sops when something must come back up on its
   own; rbw is right for anything you launch in a session you are sitting in.
 
+**Guard every `rbw` call in a `.envrc`, or entering the directory will hang.**
+With the agent locked, `rbw get` asks pinentry for the password, and direnv gives
+pinentry no terminal to ask on — so it waits rather than failing, and the shell
+stops on `cd` with a message about direnv being slow and nothing about the vault.
+Check first, warn, and leave the variables unset so the program refuses to start
+and says which ones are missing:
+
+```sh
+vault() {
+  if rbw unlocked >/dev/null 2>&1; then
+    rbw get "$1"
+  fi
+}
+
+if ! rbw unlocked >/dev/null 2>&1; then
+  echo "rbw is locked: run 'rbw unlock' outside this directory, then 'direnv reload'" >&2
+fi
+
+export SOME_TOKEN="$(vault some-entry)"
+```
+
+The check costs about 18ms when the vault is locked. It is the difference between
+a message and a hang.
+
 **Testing** — Go table tests at the application layer with stubbed ports;
 domain logic tested pure. No frontend test framework by default: typecheck,
 lint, and live browser verification carry the frontend.
