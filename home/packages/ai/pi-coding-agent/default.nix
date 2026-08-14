@@ -68,6 +68,11 @@ in {
         inherit (modelsConfig) providers;
       };
 
+      ".pi/agent/keybindings.json".text = builtins.toJSON {
+        "tui.altScreen.halfPageUp" = "ctrl+u";
+        "tui.altScreen.halfPageDown" = "ctrl+d";
+      };
+
       ".pi/agent/automode.json".text = builtins.toJSON {
         autoMode = {
           enabled = true;
