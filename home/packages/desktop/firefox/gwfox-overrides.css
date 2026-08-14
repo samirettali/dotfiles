@@ -90,7 +90,6 @@
 
 /* Unused: everything is on a shortcut. */
 #PanelUI-menu-button,
-#unified-extensions-button,
 .titlebar-buttonbox-container,
 #reload-button,
 #stop-button,
@@ -99,6 +98,14 @@
 #new-tab-button,
 #firefox-view-button {
   display: none !important;
+}
+
+/* Firefox anchors unpinned extension action popups to this button. Keep its box
+   available for keyboard shortcuts, but make the unused control invisible and
+   non-interactive. `display: none` leaves the panel without an anchor box. */
+#unified-extensions-button {
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* The toolbar is empty but 47px tall, so it reads as a band above the sidebar.
