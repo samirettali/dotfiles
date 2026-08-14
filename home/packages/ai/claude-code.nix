@@ -48,6 +48,7 @@ in {
       skipDangerousModePermissionPrompt = true;
       tui = "fullscreen";
       permissions.defaultMode = "bypassPermissions";
+      autoMemoryEnabled = false;
       hooks = lib.mkIf herdrEnabled {
         SessionStart = [
           {
