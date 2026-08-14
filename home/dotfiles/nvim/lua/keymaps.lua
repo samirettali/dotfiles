@@ -11,6 +11,14 @@ for key, direction in pairs({ h = "left", j = "down", k = "up", l = "right" }) d
 	end, { desc = "Focus window or pane " .. direction })
 end
 
+vim.keymap.set("i", "<C-n>", function()
+	return vim.fn.pumvisible() == 1 and "<Down>" or "<C-n>"
+end, { expr = true, desc = "Select next completion without inserting" })
+
+vim.keymap.set("i", "<C-p>", function()
+	return vim.fn.pumvisible() == 1 and "<Up>" or "<C-p>"
+end, { expr = true, desc = "Select previous completion without inserting" })
+
 vim.keymap.set("n", "<leader>g", "<cmd>Grep <cword><cr>", { desc = "Grep word under cursor" })
 vim.keymap.set("n", "<leader>lq", vim.diagnostic.setqflist, { desc = "vim.diagnostic.setqflist()" })
 vim.keymap.set("n", "<leader>lc", vim.diagnostic.setloclist, { desc = "vim.diagnostic.setloclist()" })
@@ -39,4 +47,3 @@ vim.keymap.set("n", "<leader>tv", function()
 		virtual_lines = not vim.diagnostic.config().virtual_lines,
 	})
 end, { desc = "Toggle diagnostic virtual lines" })
-

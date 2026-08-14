@@ -23,7 +23,6 @@ vim.opt.completeopt = {
 	"menu",
 	"menuone",
 	"noselect",
-	"noinsert",
 	"fuzzy",
 	"popup",
 }
@@ -36,4 +35,3 @@ vim.opt.shortmess:append("I")
 vim.opt.fillchars = { eob = " " }
 vim.opt.winborder = "rounded"
 vim.opt.pumborder = "rounded"
-

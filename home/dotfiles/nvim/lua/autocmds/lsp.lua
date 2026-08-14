@@ -45,21 +45,32 @@ local on_lsp_attach = function(ev)
 					kind = "Buffer"
 				end
 
-				local hl = kind_hl[kind] or "Normal"
-
-				return {
+				local converted = {
 					abbr = item.label,
-					kind = kind,
 					menu = "",
-					kind_hlgroup = hl,
 				}
+
+				if kind ~= "Color" then
+					converted.kind = kind
+					converted.kind_hlgroup = kind_hl[kind] or "Normal"
+				end
+
+				return converted
 			end,
 		})
 	end
 
 	if client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange) then
 		local win = vim.api.nvim_get_current_win()
-		vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+		vim.wo[win].foldexpr = vim.lsp.foldexpr
+	end
+
+	if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentColor) then
+		vim.lsp.document_color.enable(true, { client_id = client.id, bufnr = ev.buf }, { style = "background" })
+	end
+
+	if client:supports_method(vim.lsp.protocol.Methods.textDocument_linkedEditingRange) then
+		vim.lsp.linked_editing_range.enable(true, { client_id = client.id, bufnr = ev.buf })
 	end
 
 	if client:supports_method(vim.lsp.protocol.Methods.textDocument_onTypeFormatting) then
@@ -97,7 +108,7 @@ local function on_lsp_detach(ev)
 
 	if client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange) then
 		local win = vim.api.nvim_get_current_win()
-		vim.wo[win].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+		vim.wo[win].foldexpr = vim.treesitter.foldexpr
 	end
 end
 
