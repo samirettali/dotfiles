@@ -1,6 +1,13 @@
 # Sketchybar integrations
 
-Read this before changing the pending-agent or AI-usage items.
+Read this before changing the workspace, pending-agent, or AI-usage items.
+
+## AeroSpace workspaces
+
+`items/aerospace.lua` discovers workspaces through AeroSpace's Unix socket.
+Launchd does not guarantee that AeroSpace starts before Sketchybar.
+Keep the hidden bootstrap item retrying once per second until discovery succeeds, then disable its timer.
+Do not replace this with launch ordering or a fixed startup delay.
 
 ## Pending Herdr agents
 
