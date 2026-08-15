@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   imports = [
     ./dotfiles.nix
     ./options.nix
@@ -16,4 +16,8 @@
   };
 
   programs.fish.enable = false;
+
+  home.packages = [
+    (pkgs.callPackage ./packages/shell/scripts/sync-dev.nix {})
+  ];
 }
