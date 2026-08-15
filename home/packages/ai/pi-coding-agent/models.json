@@ -7,11 +7,6 @@
     "kimi-coding/k3-256k",
     "xai/grok-4.6",
     "openrouter/minimax/minimax-m3",
-    "openrouter/qwen/qwen3.8-max",
-    "openrouter/qwen/qwen3.7-plus",
-    "openrouter/qwen/qwen3.7-flash",
-    "openrouter/qwen/qwen3.6-35b-a3b",
-    "openrouter/qwen/qwen3.6-27b",
     "openrouter/deepseek/deepseek-v4-pro",
     "openrouter/deepseek/deepseek-v4-flash-0731",
     "openrouter/z-ai/glm-5.2",
@@ -28,7 +23,12 @@
     "openrouter/thinkingmachines/inkling-small",
     "openrouter/poolside/laguna-s-2.1",
     "openrouter/meta/muse-spark-1.1",
-    "openrouter/inclusionai/ling-3.0-flash"
+    "openrouter/inclusionai/ling-3.0-flash",
+    "openrouter/qwen/qwen3.8-27b",
+    "openrouter/google/gemini-3.7-flash",
+    "openrouter/qwen/qwen3.8-2.4t-a95b",
+    "openrouter/meta/muse-spark-1.2",
+    "openrouter/meta/muse-glimmer-30b"
   ],
   "providers": {
     "openrouter": {
@@ -168,7 +168,7 @@
           ]
         },
         {
-          "id": "lmstudio-community/qwen3.6-27b",
+          "id": "lmstudio-community/qwen3.8-27b",
           "input": [
             "text",
             "image"
