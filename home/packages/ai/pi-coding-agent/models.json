@@ -168,7 +168,7 @@
           ]
         },
         {
-          "id": "lmstudio-community/qwen3.8-27b",
+          "id": "qwen/qwen3.8-27b",
           "input": [
             "text",
             "image"
