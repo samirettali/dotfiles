@@ -15,8 +15,9 @@ Three modules under `home/dotfiles/hammerspoon/` back every picker:
 Only one modal exists at once; prompts and pickers share the canvas, key tap, and editing keys.
 
 Nix renders consumers that need store paths in `home/mac/hammerspoon.nix`.
-The current consumers are `.hammerspoon/rbw.lua`, `.hammerspoon/spotctl.lua`, and `.hammerspoon/bookmarks.lua`.
+The rendered consumers are `.hammerspoon/rbw.lua`, `.hammerspoon/spotctl.lua`, and `.hammerspoon/bookmarks.lua`.
 `recursive_binder.lua` loads them through `pcall(require, ...)`, so an absent rendered module is harmless.
+The application picker needs no store path, so `bindings.lua` loads its plain module directly.
 
 ## Framework invariants
 
@@ -46,6 +47,20 @@ The current consumers are `.hammerspoon/rbw.lua`, `.hammerspoon/spotctl.lua`, an
 - Keep `onAlternate` on the highlighted row and bind it to shift+return.
   The binder cannot select a row-specific alternate action before the picker opens.
 - Grow the box downward from a fixed top edge so narrowing the query never moves the list.
+- Keep row images optional and reserve one shared gutter when any choice has one.
+  Use `imageProvider` for expensive images; the canvas resolves only visible rows and caches each result on the choice.
+
+## Application picker
+
+The application picker is bound to `alt+space`.
+It launches the selected application by its bundle path.
+It shows the native bundle icon from `hs.image.iconForFile`.
+
+It reads Spotlight's application index asynchronously with `mdfind`.
+It includes the user-facing application roots under `/Applications`, `/System/Applications`, `~/Applications`, and CoreServices Applications, plus Finder.
+It excludes nested app bundles and internal CoreServices helpers.
+The previous result stays cached while the picker refreshes for the next invocation.
+Frecency uses the bundle path so identically named installations remain distinct.
 
 ## Vault picker
 

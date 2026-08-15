@@ -288,7 +288,17 @@ function M.picker(opts)
 	local subHeight = subSize * 1.35
 	local rowPad = 5
 	local rowHeight = rowPad * 2 + nameHeight + subHeight
+	local iconSize = math.min(38, rowHeight - rowPad * 2)
+	local iconGap = 10
 	local gap = 10
+	local hasImages = false
+
+	for _, choice in ipairs(choices) do
+		if choice.image or choice.imageProvider then
+			hasImages = true
+			break
+		end
+	end
 
 	local query = ""
 	local matches = {}
@@ -316,6 +326,14 @@ function M.picker(opts)
 		end
 
 		offset = math.max(0, math.min(offset, math.max(0, #matches - maxRows)))
+	end
+
+	local function choiceImage(choice)
+		if not choice.image and choice.imageProvider then
+			choice.image = choice.imageProvider()
+		end
+
+		return choice.image
 	end
 
 	local function render()
@@ -368,6 +386,7 @@ function M.picker(opts)
 			local choice = matches[index]
 			local y = top + (i - 1) * rowHeight
 			local isSelected = index == selected
+			local textX = pad + 6
 
 			if isSelected then
 				table.insert(elements, {
@@ -379,6 +398,28 @@ function M.picker(opts)
 				})
 			end
 
+			if hasImages then
+				local image = choiceImage(choice)
+
+				if image then
+					table.insert(elements, {
+						type = "image",
+						image = image,
+						imageScaling = "scaleProportionally",
+						frame = {
+							x = textX,
+							y = y + (rowHeight - iconSize) / 2,
+							w = iconSize,
+							h = iconSize,
+						},
+					})
+				end
+
+				textX = textX + iconSize + iconGap
+			end
+
+			local textWidth = width - textX - pad - 6
+
 			table.insert(elements, {
 				type = "text",
 				text = choice.text,
@@ -386,7 +427,7 @@ function M.picker(opts)
 				textSize = s.size,
 				textFont = s.font,
 				textLineBreak = "truncateTail",
-				frame = { x = pad + 6, y = y + rowPad, w = width - (pad + 6) * 2, h = nameHeight },
+				frame = { x = textX, y = y + rowPad, w = textWidth, h = nameHeight },
 			})
 
 			if choice.subText and choice.subText ~= "" then
@@ -397,7 +438,7 @@ function M.picker(opts)
 					textSize = subSize,
 					textFont = s.font,
 					textLineBreak = "truncateTail",
-					frame = { x = pad + 6, y = y + rowPad + nameHeight, w = width - (pad + 6) * 2, h = subHeight },
+					frame = { x = textX, y = y + rowPad + nameHeight, w = textWidth, h = subHeight },
 				})
 			end
 		end
