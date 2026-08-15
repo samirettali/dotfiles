@@ -353,6 +353,8 @@
         local M = {}
 
         local uses = frecency.new("spotctl.uses")
+        local images = {}
+        local imageWaiters = {}
 
         -- every spotctl command answers in JSON, errors included
         local function reason(text)
@@ -369,6 +371,45 @@
             task.run(spotctl, args, done, function(message)
                 hs.alert.show("spotctl: " .. reason(message))
             end)
+        end
+
+        local function imageProvider(playlistImages)
+            if not playlistImages or #playlistImages == 0 then
+                return nil
+            end
+
+            -- Spotify orders playlist images largest first. The smallest one
+            -- is still larger than the row and avoids downloading a 640px
+            -- mosaic for a 38px slot.
+            local url = playlistImages[#playlistImages].url
+
+            if not url then
+                return nil
+            end
+
+            return function(done)
+                if images[url] ~= nil then
+                    return images[url] or nil
+                end
+
+                if imageWaiters[url] then
+                    table.insert(imageWaiters[url], done)
+                    return nil
+                end
+
+                imageWaiters[url] = { done }
+                hs.image.imageFromURL(url, function(image)
+                    images[url] = image or false
+                    local waiters = imageWaiters[url]
+                    imageWaiters[url] = nil
+
+                    for _, waiter in ipairs(waiters) do
+                        waiter(image)
+                    end
+                end)
+
+                return nil
+            end
         end
 
         -- reached with tab from the playlist picker: reads the cached items of
@@ -408,7 +449,7 @@
         end
 
         function M.play_playlist()
-            run({ "playlist", "list" }, function(stdout)
+            run({ "playlist", "list", "--full" }, function(stdout)
                 local result = hs.json.decode(stdout)
 
                 if not result or not result.items then
@@ -422,9 +463,10 @@
                 for _, playlist in ipairs(result.items) do
                     table.insert(choices, {
                         ["text"] = playlist.name,
-                        ["subText"] = playlist.tracks .. " tracks",
+                        ["subText"] = playlist.tracks.total .. " tracks",
                         ["uuid"] = playlist.id,
                         ["boost"] = score(playlist.id),
+                        ["imageProvider"] = imageProvider(playlist.images),
                     })
                 end
 

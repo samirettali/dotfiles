@@ -87,8 +87,11 @@ The picker is bound to `cmd+space v`: `p` copies a password, `t` types it, `u` c
 ## Playlist picker
 
 The playlist picker is bound to `cmd+space m`.
-It reads `spotctl playlist list` from the local SQLite cache and plays the selected playlist by ID.
+It reads `spotctl playlist list --full` from the local SQLite cache and plays the selected playlist by ID.
+The full shape supplies Spotify's playlist images and nested track total.
 
+- Load only the smallest playlist image and fetch it asynchronously for visible rows.
+  Keep decoded images in memory so reopening the picker does not fetch them again.
 - Never put a network freshness check on the read path.
   Open the picker from cached data, then run `spotctl playlist list --refresh` in the background.
 - Spotify's response envelope uses `items`, not `playlists`.

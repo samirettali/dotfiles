@@ -328,15 +328,36 @@ function M.picker(opts)
 		offset = math.max(0, math.min(offset, math.max(0, #matches - maxRows)))
 	end
 
+	local render
+
 	local function choiceImage(choice)
-		if not choice.image and choice.imageProvider then
-			choice.image = choice.imageProvider()
+		if choice.imageResolved or choice.imageLoading or not choice.imageProvider then
+			return choice.image
+		end
+
+		choice.imageLoading = true
+		local image = choice.imageProvider(function(resolved)
+			choice.image = resolved
+			choice.imageLoading = false
+			choice.imageResolved = true
+
+			hs.timer.doAfter(0, function()
+				if active and active.canvas == canvas then
+					render()
+				end
+			end)
+		end)
+
+		if image then
+			choice.image = image
+			choice.imageLoading = false
+			choice.imageResolved = true
 		end
 
 		return choice.image
 	end
 
-	local function render()
+	render = function()
 		local rows = math.max(shown(), 1)
 		local height = pad + titleHeight + queryHeight + gap + rows * rowHeight + pad
 
