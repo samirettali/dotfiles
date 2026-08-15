@@ -346,6 +346,7 @@
       ''
         local canvas = require("canvas")
         local frecency = require("frecency")
+        local remoteImage = require("remote_image")
         local task = require("task")
 
         local spotctl = "${lib.getExe nurPkgs.spotctl}"
@@ -353,8 +354,6 @@
         local M = {}
 
         local uses = frecency.new("spotctl.uses")
-        local images = {}
-        local imageWaiters = {}
 
         -- every spotctl command answers in JSON, errors included
         local function reason(text)
@@ -381,35 +380,7 @@
             -- Spotify orders playlist images largest first. The smallest one
             -- is still larger than the row and avoids downloading a 640px
             -- mosaic for a 38px slot.
-            local url = playlistImages[#playlistImages].url
-
-            if not url then
-                return nil
-            end
-
-            return function(done)
-                if images[url] ~= nil then
-                    return images[url] or nil
-                end
-
-                if imageWaiters[url] then
-                    table.insert(imageWaiters[url], done)
-                    return nil
-                end
-
-                imageWaiters[url] = { done }
-                hs.image.imageFromURL(url, function(image)
-                    images[url] = image or false
-                    local waiters = imageWaiters[url]
-                    imageWaiters[url] = nil
-
-                    for _, waiter in ipairs(waiters) do
-                        waiter(image)
-                    end
-                end)
-
-                return nil
-            end
+            return remoteImage.provider(playlistImages[#playlistImages].url)
         end
 
         -- reached with tab from the playlist picker: reads the cached items of
@@ -510,6 +481,7 @@
       ''
         local canvas = require("canvas")
         local frecency = require("frecency")
+        local remoteImage = require("remote_image")
         local task = require("task")
 
         local BASE = "https://links.samirettali.com"
@@ -566,6 +538,7 @@
                 url = bookmark.url,
                 title = title,
                 tags = bookmark.tag_names or {},
+                favicon_url = bookmark.favicon_url,
             }
         end
 
@@ -672,6 +645,7 @@
                     ["uuid"] = item.id,
                     ["url"] = item.url,
                     ["boost"] = 0,
+                    ["imageProvider"] = remoteImage.provider(item.favicon_url),
                 }
             end
 

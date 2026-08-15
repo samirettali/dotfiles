@@ -4,11 +4,12 @@ Read this before changing a Hammerspoon picker or its shared framework.
 
 ## Shared framework
 
-Three modules under `home/dotfiles/hammerspoon/` back every picker:
+Four modules under `home/dotfiles/hammerspoon/` back the pickers:
 
 - `canvas.lua` draws the interface.
 - `task.lua` exposes `task.run(path, args, done, onError)` and owns process spawning.
 - `frecency.lua` exposes `frecency.new(settingsKey)`, `scores()`, and `remember(id)`.
+- `remote_image.lua` provides asynchronous URL-backed images with an in-memory cache.
 
 `hs.chooser` was rejected because its native table and system font clash with the existing alerts.
 `canvas.picker` matches the rounded box, font, and border from `hs.alert.defaultStyle`.
@@ -108,6 +109,8 @@ Archived bookmarks are the curated collection here, not completed read-later ite
 The active endpoint is the much larger read-later feed.
 The picker therefore reads `/api/bookmarks/archived/` as a structural split rather than relying on tags.
 
+- Read `favicon_url` from Linkding and cache it with each bookmark.
+  The URL points back to Linkding, so rendering a favicon never contacts the bookmarked site.
 - Never turn refresh into a `modified_since` delta.
   Archiving moves a bookmark between endpoints without producing a usable delta on either collection.
   Refetch the full archived collection so the cache cannot drift.
