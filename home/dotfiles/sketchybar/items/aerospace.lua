@@ -63,11 +63,14 @@ local function initialize()
 		occupied[window.workspace] = true
 	end
 
+	local item_names = {}
 	for _, entry in ipairs(state.workspaces) do
 		local workspace = entry.workspace
+		local item_name = "workspace." .. workspace
 		local is_focused = workspace == state.focused
 
-		items[workspace] = sbar.add("item", "workspace." .. workspace, {
+		table.insert(item_names, item_name)
+		items[workspace] = sbar.add("item", item_name, {
 			position = "left",
 			drawing = is_focused or occupied[workspace] or false,
 			icon = { drawing = false },
@@ -80,6 +83,12 @@ local function initialize()
 			click_script = AEROSPACE_BIN .. " workspace " .. workspace,
 		})
 	end
+
+	local moves = {}
+	for _, item_name in ipairs(item_names) do
+		table.insert(moves, "--move " .. item_name .. " before front_app")
+	end
+	sbar.exec(SKETCHYBAR_BIN .. " " .. table.concat(moves, " "))
 
 	initialized = true
 	bootstrap:set({ update_freq = 0 })

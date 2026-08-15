@@ -83,6 +83,7 @@ in {
         package.cpath = package.cpath .. ";${pkgs.lua55Packages.getLuaCPath luaposixPackage}"
         package.cpath = package.cpath .. ";${pkgs.lua55Packages.getLuaCPath luasimdjsonPackage}"
         AEROSPACE_BIN = "${lib.getExe config.programs.aerospace.package}"
+        SKETCHYBAR_BIN = "${sketchybarExe}"
         HERDR_BIN = "${lib.getExe herdrPackage}"
         AI_USAGE_BIN = "${lib.getExe aiUsage}"
         require("init")
