@@ -2,6 +2,7 @@ local colors = require("colors")
 local Aerospace = require("aerospace")
 
 local initialized = false
+local items = {}
 local bootstrap = sbar.add("item", "workspace.bootstrap", {
 	position = "left",
 	drawing = false,
@@ -9,50 +10,95 @@ local bootstrap = sbar.add("item", "workspace.bootstrap", {
 	update_freq = 1,
 })
 
-local function initialize()
-	if initialized then
-		return
-	end
-
+local function query(include_workspaces, focused)
 	local aerospace
 	local ok, state = pcall(function()
 		aerospace = Aerospace.new()
 		return {
-			focused = aerospace:list_current():match("[^\r\n]+") or "",
-			workspaces = aerospace:query_workspaces(),
+			focused = focused or aerospace:list_current():match("[^\r\n]+") or "",
+			windows = aerospace:list_all_windows(),
+			workspaces = include_workspaces and aerospace:query_workspaces() or nil,
 		}
 	end)
 
 	if aerospace then
 		aerospace:close()
 	end
-	if not ok then
+
+	return ok and state or nil
+end
+
+local function refresh(focused)
+	local state = query(false, focused)
+	if not state then
 		return
+	end
+
+	local occupied = {}
+	for _, window in ipairs(state.windows) do
+		occupied[window.workspace] = true
+	end
+
+	for workspace, item in pairs(items) do
+		local is_focused = workspace == state.focused
+		item:set({
+			drawing = is_focused or occupied[workspace] or false,
+			label = { highlight = is_focused },
+		})
+	end
+end
+
+local function initialize()
+	if initialized then
+		return
+	end
+
+	local state = query(true)
+	if not state then
+		return
+	end
+
+	local occupied = {}
+	for _, window in ipairs(state.windows) do
+		occupied[window.workspace] = true
 	end
 
 	for _, entry in ipairs(state.workspaces) do
 		local workspace = entry.workspace
+		local is_focused = workspace == state.focused
 
-		local item = sbar.add("item", "workspace." .. workspace, {
+		items[workspace] = sbar.add("item", "workspace." .. workspace, {
 			position = "left",
+			drawing = is_focused or occupied[workspace] or false,
 			icon = { drawing = false },
 			label = {
 				string = workspace,
-				highlight = workspace == state.focused,
+				highlight = is_focused,
 				color = colors.grey,
 				highlight_color = colors.white,
 			},
 			click_script = AEROSPACE_BIN .. " workspace " .. workspace,
 		})
-
-		item:subscribe("aerospace_workspace_change", function(env)
-			item:set({ label = { highlight = workspace == env.FOCUSED_WORKSPACE } })
-		end)
 	end
 
 	initialized = true
 	bootstrap:set({ update_freq = 0 })
 end
 
-bootstrap:subscribe({ "forced", "routine", "system_woke" }, initialize)
+bootstrap:subscribe({ "forced", "routine" }, initialize)
+bootstrap:subscribe("aerospace_workspace_change", function(env)
+	if initialized then
+		refresh(env.FOCUSED_WORKSPACE)
+	else
+		initialize()
+	end
+end)
+bootstrap:subscribe({ "front_app_switched", "space_windows_change", "system_woke" }, function()
+	if initialized then
+		refresh()
+	else
+		initialize()
+	end
+end)
+
 initialize()
