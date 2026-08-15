@@ -39,7 +39,7 @@
   };
 
   launchd.agents.spotify-player = lib.mkIf (config.programs.spotify-player.enable
-    && pkgs.stdenv.isDarwin) {
+    && pkgs.stdenv.hostPlatform.isDarwin) {
     enable = true;
     config = {
       ProgramArguments = [

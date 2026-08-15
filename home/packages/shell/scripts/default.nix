@@ -53,7 +53,7 @@ in {
         ${lib.getExe neovimPackage} .
       '')
     ]
-    ++ lib.optionals pkgs.stdenv.isLinux [
+    ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       (pkgs.writeShellScriptBin "passbemenu" (builtins.readFile "${scriptsDir}/passbemenu.sh"))
       (pkgs.writeShellScriptBin "screenshot" (builtins.readFile "${scriptsDir}/screenshot.sh"))
     ];

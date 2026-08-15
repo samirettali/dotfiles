@@ -183,18 +183,18 @@
           font = {
             name = "JetBrainsMono Nerd Font";
             size =
-              if pkgs.stdenv.isDarwin
+              if pkgs.stdenv.hostPlatform.isDarwin
               then 16
               else 10;
           };
           commands = {
             # TODO: find a better way
             copy =
-              if pkgs.stdenv.isDarwin
+              if pkgs.stdenv.hostPlatform.isDarwin
               then "pbcopy"
               else "xclip -selection clipboard";
             paste =
-              if pkgs.stdenv.isDarwin
+              if pkgs.stdenv.hostPlatform.isDarwin
               then "pbpaste"
               else "xclip -o -selection clipboard";
           };

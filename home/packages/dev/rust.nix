@@ -6,7 +6,7 @@
 }: {
   programs.cargo = {
     enable = config.features.rust;
-    # targets = lib.optionals pkgs.stdenv.isLinux ["x86_64-unknown-linux-gnu"]; # TODO: is this needed?
+    # targets = lib.optionals pkgs.stdenv.hostPlatform.isLinux ["x86_64-unknown-linux-gnu"]; # TODO: is this needed?
   };
 
   home.packages = with pkgs;
