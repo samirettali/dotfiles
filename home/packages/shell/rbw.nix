@@ -5,10 +5,7 @@
       email = "samir@ettali.com";
       base_url = "https://vw.samirettali.com";
       lock_timeout = 3600;
-      pinentry =
-        if pkgs.stdenv.hostPlatform.isDarwin
-        then pkgs.pinentry_mac
-        else pkgs.pinentry-curses;
+      pinentry = pkgs.pinentry-curses;
     };
   };
 }

@@ -52,6 +52,8 @@ The picker is bound to `cmd+space v`: `p` copies a password, `t` types it, `u` c
 
 - The generated rbw configuration is a read-only store symlink.
   Change `rbw.nix` instead of running `rbw config set`.
+- rbw uses `pinentry-curses` because `pinentry-mac` crashes while registering with AppKit on macOS 26.
+  Run `rbw unlock` once in a terminal after login; Hammerspoon can then use the in-memory key.
 - rbw safely stores `device_id` in its data directory, not its configuration file.
 - The home-manager module cannot set `sync_interval`.
   The picker reads the local database immediately and starts `rbw sync` in the background for the next invocation.
