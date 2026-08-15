@@ -28,6 +28,7 @@ in {
           then config.programs.rbw.package
           else null;
       })
+      (pkgs.callPackage ./dev-sync.nix {})
       (pkgs.callPackage ./pi-models.nix {})
       (pkgs.callPackage ./ai-usage.nix {
         codex = nurPkgs.codex;
@@ -37,7 +38,6 @@ in {
       (pkgs.writeShellScriptBin "ticker" (builtins.readFile "${scriptsDir}/ticker.sh"))
       (pkgs.writeShellScriptBin "extract" (builtins.readFile "${scriptsDir}/extract.sh"))
       (pkgs.writeShellScriptBin "sync-configs" (builtins.readFile "${scriptsDir}/sync-configs.sh"))
-      (pkgs.writeShellScriptBin "dev-sync" (builtins.readFile "${scriptsDir}/dev-sync.sh"))
       (pkgs.writeShellScriptBin "zv" ''
         set -euo pipefail
 

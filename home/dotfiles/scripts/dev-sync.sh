@@ -43,11 +43,6 @@ if [[ ! -d $root ]]; then
     exit 1
 fi
 
-if ! command -v git >/dev/null 2>&1; then
-    printf 'Required command not found: git\n' >&2
-    exit 1
-fi
-
 if [[ -t 1 ]]; then
     green=$'\033[32m'
     yellow=$'\033[33m'
@@ -137,7 +132,9 @@ for path in "$root"/*/; do
     fi
 
     if [[ $behind -gt 0 ]]; then
-        if ! git -C "$path" pull --quiet --rebase "$remote" >/dev/null 2>&1; then
+        # Rebase onto the ref just fetched, not onto whatever branch.<name>.merge
+        # resolves to: the two differ when the tracking config is unusual.
+        if ! git -C "$path" rebase --quiet "$upstream" >/dev/null 2>&1; then
             git -C "$path" rebase --abort >/dev/null 2>&1 || true
             report "$red" "$name" "rebase onto $upstream failed, left untouched"
             ((failed += 1))
