@@ -31,6 +31,9 @@ The current consumers are `.hammerspoon/rbw.lua`, `.hammerspoon/spotctl.lua`, an
   The clipped outer half of the centred stroke is intentional.
 - Wrap the key tap handler in `pcall` and tear down the modal on failure.
   The tap swallows all keys while active, so an unhandled error can lock the keyboard.
+- Activate Finder while a RecursiveBinder or canvas modal is open, then restore the caller before a leaf action or cancellation.
+  This makes clients such as Riot release macOS Secure Input without hiding them or switching AeroSpace workspaces.
+  Canvas repeats the handoff after an asynchronous picker opens, because the binder restores the caller before running its leaf action.
 - Keep backspace UTF-8 aware by walking over continuation bytes.
 - Keep fuzzy matching literal and local.
   Consecutive and early matches score higher, while name matches outrank subtext-only matches.

@@ -1,3 +1,5 @@
+local modalFocus = require("modal_focus")
+
 local M = {}
 
 -- one modal at a time: prompt and picker share the canvas and the keyboard tap
@@ -77,7 +79,9 @@ local function close()
 		active.canvas:delete()
 	end
 
+	local focus = active.focus
 	active = nil
+	modalFocus.restore(focus)
 end
 
 -- the tap swallows every keyDown while a modal is up, so an error inside the
@@ -190,9 +194,10 @@ function M.prompt(opts)
 	local inputIndex = #elements
 
 	canvas:replaceElements(table.unpack(elements))
+	local focus = modalFocus.take()
 	canvas:show()
 
-	active = { canvas = canvas }
+	active = { canvas = canvas, focus = focus }
 
 	active.tap = startTap(function(event)
 		local keyCode = event:getKeyCode()
@@ -442,9 +447,10 @@ function M.picker(opts)
 	end
 
 	refresh()
+	local focus = modalFocus.take()
 	canvas:show()
 
-	active = { canvas = canvas }
+	active = { canvas = canvas, focus = focus }
 
 	active.tap = startTap(function(event)
 		local keyCode = event:getKeyCode()

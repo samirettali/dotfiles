@@ -35,6 +35,102 @@
                newEntry = newEntry..string.rep(' ', obj.helperEntryLengthInChar - string.len(newEntry))
             end
       """
+      text = text.replace(old, new)
+      text = text.replace("local obj={}", 'local modalFocus = require("modal_focus")\n\nlocal obj={}')
+
+      # Secure Input prevents Hammerspoon from receiving the unmodified keys
+      # used inside the modal. Let modal_focus move focus away from the caller,
+      # then restore it before running a leaf action or cancelling.
+      text = text.replace("key, i.e. 'f' \n", "key, i.e. 'f'\n")
+      old = """function obj.recursiveBind(keymap, modals)
+         if not modals then modals = {} end
+         if type(keymap) == 'function' then
+            -- in this case "keymap" is actuall a function
+            return keymap
+         end
+         local modal = hs.hotkey.modal.new()
+         table.insert(modals, modal)
+         local keyFuncNameTable = {}
+         for key, map in pairs(keymap) do
+            local func = obj.recursiveBind(map, modals)
+            -- key[1] is modifiers, i.e. {'shift'}, key[2] is key, i.e. 'f'
+            modal:bind(key[1], key[2], function() modal:exit() killHelper() func() end)
+            modal:bind(obj.escapeKey[1], obj.escapeKey[2], function() modal:exit() killHelper() end)
+            if #key >= 3 then
+               keyFuncNameTable[createKeyName(key)] = key[3]
+            end
+         end
+         return function()
+            -- exit all modals, accounts for pressing the trigger key while
+            -- a modal is already open
+            for _, modal in pairs(modals) do
+               modal:exit()
+            end
+            modal:enter()
+            killHelper()
+            if obj.showBindHelper then
+               showHelper(keyFuncNameTable)
+            end
+         end
+      end
+      """
+      new = """function obj.recursiveBind(keymap, modals, state)
+         if not modals then
+            modals = {}
+            state = {}
+         end
+         if type(keymap) == 'function' then
+            -- in this case "keymap" is actuall a function
+            return keymap
+         end
+
+         local function restoreFocus()
+            local focus = state.focus
+            state.focus = nil
+            state.active = false
+            modalFocus.restore(focus)
+         end
+
+         local modal = hs.hotkey.modal.new()
+         table.insert(modals, modal)
+         local keyFuncNameTable = {}
+         for key, map in pairs(keymap) do
+            local func = obj.recursiveBind(map, modals, state)
+            -- key[1] is modifiers, i.e. {'shift'}, key[2] is key, i.e. 'f'
+            modal:bind(key[1], key[2], function()
+               modal:exit()
+               killHelper()
+               if type(map) == 'function' then restoreFocus() end
+               func()
+            end)
+            modal:bind(obj.escapeKey[1], obj.escapeKey[2], function()
+               modal:exit()
+               killHelper()
+               restoreFocus()
+            end)
+            if #key >= 3 then
+               keyFuncNameTable[createKeyName(key)] = key[3]
+            end
+         end
+         return function()
+            -- exit all modals, accounts for pressing the trigger key while
+            -- a modal is already open
+            for _, modal in pairs(modals) do
+               modal:exit()
+            end
+            if not state.active then
+               state.focus = modalFocus.take()
+               state.active = true
+            end
+            modal:enter()
+            killHelper()
+            if obj.showBindHelper then
+               showHelper(keyFuncNameTable)
+            end
+         end
+      end
+      """
+      assert old in text, "RecursiveBinder implementation moved"
       path.write_text(text.replace(old, new))
 
       # EmmyLua writes its generated annotations next to itself, which here is a
