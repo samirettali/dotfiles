@@ -172,7 +172,9 @@
           "input": [
             "text",
             "image"
-          ]
+          ],
+          "contextWindow": 262144,
+          "maxTokens": 131072
         }
       ]
     }
