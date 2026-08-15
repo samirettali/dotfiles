@@ -24,7 +24,6 @@
     "openrouter/poolside/laguna-s-2.1",
     "openrouter/meta/muse-spark-1.1",
     "openrouter/inclusionai/ling-3.0-flash",
-    "openrouter/qwen/qwen3.8-27b",
     "openrouter/google/gemini-3.7-flash",
     "openrouter/qwen/qwen3.8-2.4t-a95b",
     "openrouter/meta/muse-spark-1.2",
@@ -140,35 +139,7 @@
             }
           }
         }
-      },
-      "models": [
-        {
-          "id": "qwen/qwen3.8-27b",
-          "name": "OpenRouter Qwen 3.8 27B",
-          "reasoning": true,
-          "input": [
-            "text",
-            "image"
-          ],
-          "contextWindow": 262144,
-          "maxTokens": 131072,
-          "cost": {
-            "input": 0.45,
-            "output": 3.2,
-            "cacheRead": 0,
-            "cacheWrite": 0
-          },
-          "compat": {
-            "openRouterRouting": {
-              "allow_fallbacks": false,
-              "data_collection": "deny",
-              "only": [
-                "akashml"
-              ]
-            }
-          }
-        }
-      ]
+      }
     },
     "lmstudio": {
       "baseUrl": "http://127.0.0.1:1234/v1",
