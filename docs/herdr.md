@@ -56,6 +56,12 @@ Check `capabilities.live_handoff` in `herdr status --json` first.
 `herdr server stop` is the destructive alternative.
 The handoff supports at most 64 panes.
 
+## Pane border colours
+
+The focused pane border uses `accent`.
+`[theme.custom] pane_inactive_border` changes only unfocused pane borders and falls back to
+`overlay0`, which remains available for the other muted interface elements.
+
 ## Navigation between Herdr and Neovim
 
 Herdr binds `focus_pane_*` to `ctrl+hjkl` without a prefix.
