@@ -717,10 +717,12 @@ function M.helper(entries, opts)
 			type = "rectangle",
 			action = "fill",
 			fillColor = fade(s.stroke, 0.25),
+			-- full bleed: the rule runs into the border either side of it, so it
+			-- reads as one division of the panel rather than a line drawn in it
 			frame = {
-				x = pad,
+				x = 0,
 				y = pad + (ruleAt - 1) * lineHeight + ruleGap / 2,
-				w = width - pad * 2,
+				w = width,
 				h = 1,
 			},
 		})
