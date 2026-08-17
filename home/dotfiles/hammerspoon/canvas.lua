@@ -46,6 +46,23 @@ local function chrome(_, _, s)
 	}
 end
 
+local function textWidth(text, font, size)
+	if text == "" then
+		return 0
+	end
+
+	local styled = hs.styledtext.new(text, { font = { name = font, size = size } })
+	local box = hs.drawing.getTextDrawingSize(styled)
+
+	if box and box.w then
+		return box.w
+	end
+
+	-- an unmeasurable string would collapse the panel, so fall back to the
+	-- advance of the monospace face rather than to zero
+	return (utf8.len(text) or #text) * size * 0.6
+end
+
 local function geometry(width, height, y)
 	local screen = hs.screen.mainScreen():fullFrame()
 
@@ -588,6 +605,124 @@ function M.picker(opts)
 	end)
 
 	return true
+end
+
+-- the helper is not modal: RecursiveBinder owns the keyboard and the focus
+-- while it is up, so it keeps its own slot rather than sharing `active`
+local helperCanvas = nil
+
+function M.hideHelper()
+	if helperCanvas then
+		helperCanvas:delete()
+		helperCanvas = nil
+	end
+end
+
+-- entries maps a key name to { name = ..., layer = ... }, as the patched
+-- RecursiveBinder builds it
+function M.helper(entries, opts)
+	opts = opts or {}
+	M.hideHelper()
+
+	local s = resolveStyle(opts)
+	local rows = {}
+
+	for key, entry in pairs(entries) do
+		table.insert(rows, { key = key, name = entry.name, layer = entry.layer })
+	end
+
+	if #rows == 0 then
+		return
+	end
+
+	-- layers first, then leaf actions: where I go above what I do. Alphabetical
+	-- by key inside each block, so a row holds its position across reloads
+	table.sort(rows, function(a, b)
+		if a.layer ~= b.layer then
+			return a.layer
+		end
+
+		return a.key < b.key
+	end)
+
+	local pad = opts.padding or 22
+	local gap = 10
+	local arrow = "→"
+	local lineHeight = s.size * 1.35
+	local keyWidth, nameWidth = 0, 0
+
+	for _, row in ipairs(rows) do
+		keyWidth = math.max(keyWidth, textWidth(row.key, s.font, s.size))
+		nameWidth = math.max(nameWidth, textWidth(row.name, s.font, s.size))
+	end
+
+	-- canvas clips a text element to its frame, and the measured width can land
+	-- a fraction under what it draws, so every column carries a point of slack
+	keyWidth, nameWidth = keyWidth + 1, nameWidth + 1
+
+	local arrowWidth = textWidth(arrow, s.font, s.size) + 1
+	local width = pad * 2 + keyWidth + gap + arrowWidth + gap + nameWidth
+	local nameX = pad + keyWidth + gap + arrowWidth + gap
+
+	-- the first leaf action, and so where the rule goes; nil when the layer
+	-- holds only one of the two kinds and there is nothing to separate
+	local ruleAt = nil
+
+	for i, row in ipairs(rows) do
+		if not row.layer then
+			ruleAt = i > 1 and i or nil
+			break
+		end
+	end
+
+	local ruleGap = ruleAt and 13 or 0
+	local height = pad * 2 + #rows * lineHeight + ruleGap
+	local screen = hs.screen.mainScreen():fullFrame()
+
+	helperCanvas = newCanvas(width, height, screen.y + (screen.h - height) / 2)
+
+	local elements = chrome(width, height, s)
+
+	if ruleAt then
+		table.insert(elements, {
+			type = "rectangle",
+			action = "fill",
+			fillColor = fade(s.stroke, 0.25),
+			frame = {
+				x = pad,
+				y = pad + (ruleAt - 1) * lineHeight + ruleGap / 2,
+				w = width - pad * 2,
+				h = 1,
+			},
+		})
+	end
+
+	for i, row in ipairs(rows) do
+		local y = pad + (i - 1) * lineHeight + (ruleAt and i >= ruleAt and ruleGap or 0)
+
+		-- the key is the only thing to read, so it alone is at full white; the
+		-- arrow is punctuation, and a leaf action needs less weight than the
+		-- layer it sits under
+		local columns = {
+			{ text = row.key, x = pad, w = keyWidth, color = s.color },
+			{ text = arrow, x = pad + keyWidth + gap, w = arrowWidth, color = fade(s.color, 0.3) },
+			{ text = row.name, x = nameX, w = nameWidth, color = row.layer and s.color or fade(s.color, 0.7) },
+		}
+
+		for _, column in ipairs(columns) do
+			table.insert(elements, {
+				type = "text",
+				text = column.text,
+				textColor = column.color,
+				textSize = s.size,
+				textFont = s.font,
+				frame = { x = column.x, y = y, w = column.w, h = lineHeight },
+			})
+		end
+	end
+
+	helperCanvas:replaceElements(table.unpack(elements))
+	helperCanvas:show()
 end
 
 return M

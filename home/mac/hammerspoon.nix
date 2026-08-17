@@ -23,36 +23,27 @@
 
       path = Path(os.environ["TMP"]) / "RecursiveBinder.spoon" / "init.lua"
       text = path.read_text()
-      old = """      if string.len(newEntry) > obj.helperEntryLengthInChar then
-               newEntry = string.sub(newEntry, 1, obj.helperEntryLengthInChar - 2)..'..'
-            elseif string.len(newEntry) < obj.helperEntryLengthInChar then
-               newEntry = newEntry..string.rep(' ', obj.helperEntryLengthInChar - string.len(newEntry))
-            end
-      """
-      new = """      if obj.helperEntryLengthInChar > 0 and string.len(newEntry) > obj.helperEntryLengthInChar then
-               newEntry = string.sub(newEntry, 1, obj.helperEntryLengthInChar - 2)..'..'
-            elseif obj.helperEntryLengthInChar > 0 and string.len(newEntry) < obj.helperEntryLengthInChar then
-               newEntry = newEntry..string.rep(' ', obj.helperEntryLengthInChar - string.len(newEntry))
-            end
-      """
-      text = text.replace(old, new)
+      # canvas.helper() draws the helper instead of hs.alert: the alert is one
+      # string in one colour, which cannot dim the arrow, align the columns or
+      # rule off the layers from the leaf actions. Cut the whole of showHelper
+      # rather than match its body, which carries trailing whitespace.
+      start = text.index("local function showHelper(keyFuncNameTable)")
+      end_ = text.index("local function killHelper()")
+      text = text[:start] + """local function showHelper(keyFuncNameTable)
+         obj.helperShow(keyFuncNameTable)
+      end
 
-      # The helper walks keyFuncNameTable with pairs(), so the rows come out in
-      # hash order: not the order of the config, and not stable across reloads.
-      # Sort by key so the position of an entry is something to remember.
-      old = """   local count = 0
-         for keyName, funcName in pairs(keyFuncNameTable) do
+      """ + text[end_:]
+
+      old = """local function killHelper()
+         hs.alert.closeSpecific(previousHelperID)
+      end
       """
-      new = """   local count = 0
-         local keyNames = {}
-         for keyName in pairs(keyFuncNameTable) do
-            table.insert(keyNames, keyName)
-         end
-         table.sort(keyNames)
-         for _, keyName in ipairs(keyNames) do
-            local funcName = keyFuncNameTable[keyName]
+      new = """local function killHelper()
+         obj.helperHide()
+      end
       """
-      assert old in text, "RecursiveBinder helper loop moved"
+      assert old in text, "RecursiveBinder killHelper moved"
       text = text.replace(old, new)
 
       text = text.replace("local obj={}", 'local modalFocus = require("modal_focus")\n\nlocal obj={}')
@@ -128,7 +119,9 @@
                restoreFocus()
             end)
             if #key >= 3 then
-               keyFuncNameTable[createKeyName(key)] = key[3]
+               -- the helper dims a leaf action against the layer it sits with,
+               -- so it has to know which of the two this entry is
+               keyFuncNameTable[createKeyName(key)] = {name = key[3], layer = type(map) == 'table'}
             end
          end
          return function()

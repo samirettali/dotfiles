@@ -8,9 +8,8 @@ local hasBookmarks, bookmarks = pcall(require, "bookmarks")
 
 hs.loadSpoon("RecursiveBinder")
 
-spoon.RecursiveBinder.helperFormat = hs.alert.defaultStyle
-spoon.RecursiveBinder.helperEntryEachLine = 1
-spoon.RecursiveBinder.helperEntryLengthInChar = 0
+spoon.RecursiveBinder.helperShow = canvas.helper
+spoon.RecursiveBinder.helperHide = canvas.hideHelper
 
 local singleKey = spoon.RecursiveBinder.singleKey
 
@@ -94,7 +93,7 @@ local config = {
 	{ "t", "terminal", launch("Ghostty") },
 	{
 		"o",
-		"[open]",
+		"open",
 		{
 			{ "c", "code", launch("Visual Studio Code") },
 			{ "d", "discord", launch("Discord") },
@@ -109,7 +108,7 @@ local config = {
 	},
 	{
 		"w",
-		"[work]",
+		"work",
 		{
 			{ "c", "compass", launch("MongoDB Compass") },
 			{ "d", "datagrip", launch("Datagrip") },
@@ -120,7 +119,7 @@ local config = {
 	},
 	{
 		"p",
-		"[paste]",
+		"paste",
 		{
 			{ "e", "email", paste("samir@ettali.com") },
 			{ "u", "username", paste("samirettali") },
@@ -131,7 +130,7 @@ local config = {
 	},
 	{
 		"s",
-		"[search]",
+		"search",
 		{
 			{ "c", "code", search("https://github.com/search?q={input}&type=code") },
 			{ "g", "google", search("https://google.com/search?q={input}") },
@@ -147,7 +146,7 @@ local config = {
 	},
 	{
 		"d",
-		"[display]",
+		"display",
 		{
 			{ "d", "docked", display.docked },
 			{ "s", "side by side", display.side_by_side },
@@ -169,7 +168,7 @@ end
 if hasRbw then
 	table.insert(config, {
 		"v",
-		"[vault]",
+		"vault",
 		{
 			{ "p", "password", rbw.password },
 			{ "t", "type", rbw.type_password },
