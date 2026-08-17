@@ -4,6 +4,7 @@ local popup = require("popup")
 
 local volume = sbar.add("item", "widgets.volume", {
 	position = "right",
+	padding_left = 6,
 	icon = { width = 16, align = "center" },
 	label = { drawing = false },
 	popup = {
@@ -19,10 +20,31 @@ local volume = sbar.add("item", "widgets.volume", {
 	},
 })
 
-local detail = sbar.add("item", "widgets.volume.detail", {
+-- The popup slider both reports the level and sets it, so the popup needs no
+-- separate line of text.
+local detail = sbar.add("slider", "widgets.volume.detail", 120, {
 	position = "popup.widgets.volume",
 	icon = { drawing = false },
+	label = { align = "right", width = 44, padding_left = 6 },
+	slider = {
+		highlight_color = colors.white,
+		background = {
+			color = colors.grey23,
+			height = 10,
+			corner_radius = 2,
+		},
+		knob = { drawing = false },
+	},
 })
+
+-- A slider click arrives as PERCENTAGE, not inside INFO.
+detail:subscribe("mouse.clicked", function(env)
+	local percentage = tonumber(env.PERCENTAGE)
+	if not percentage then
+		return
+	end
+	sbar.exec(("osascript -e 'set volume output volume %d'"):format(percentage))
+end)
 
 local function update(level, muted)
 	local icon = icons.volume._0
@@ -42,10 +64,19 @@ local function update(level, muted)
 			color = muted and colors.grey70 or colors.white,
 		},
 	})
-	detail:set({ label = { string = ("%s · %d%%"):format(muted and "Muted" or "Volume", level) } })
+	detail:set({
+		slider = {
+			percentage = level,
+			highlight_color = muted and colors.grey50 or colors.white,
+		},
+		label = {
+			string = muted and "Muted" or ("%d%%"):format(level),
+			color = muted and colors.grey70 or colors.white,
+		},
+	})
 end
 
-volume:subscribe("volume_change", function()
+local function query()
 	sbar.exec("osascript -e 'get volume settings'", function(settings)
 		local level = tonumber(settings:match("output volume:(%d+)"))
 		local muted = settings:match("output muted:(%a+)")
@@ -53,11 +84,14 @@ volume:subscribe("volume_change", function()
 			update(level, muted == "true")
 		end
 	end)
-end)
+end
 
-popup.setup(volume)
+volume:subscribe("volume_change", query)
 
-volume:subscribe("mouse.scrolled", function(env)
+popup.setup(volume, query)
+query()
+
+local function scroll(env)
 	local delta = env.INFO.delta
 	if env.INFO.modifier ~= "ctrl" then
 		delta = delta * 10.0
@@ -67,4 +101,10 @@ volume:subscribe("mouse.scrolled", function(env)
 		delta
 	)
 	sbar.exec(command)
-end)
+end
+
+volume:subscribe("mouse.scrolled", scroll)
+-- Sketchybar reports a slider once per click, never during the drag, so the
+-- wheel is what gives continuous feedback: each step fires volume_change and
+-- the bar redraws itself.
+detail:subscribe("mouse.scrolled", scroll)
