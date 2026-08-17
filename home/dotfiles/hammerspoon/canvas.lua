@@ -197,7 +197,7 @@ function M.prompt(opts)
 	local s = resolveStyle(opts)
 	local width = snap(opts.width or 600)
 	local height = snap(opts.height or 100)
-	local pad = 16
+	local pad = s.padding
 	local titleSize = opts.promptTextSize or math.max(12, s.size - 4)
 	local titleHeight = titleSize + 6
 	local lineHeight = snap(s.size * 1.35)
@@ -324,7 +324,7 @@ function M.picker(opts)
 	local choices = opts.choices or {}
 	local maxRows = opts.rows or 8
 	local width = snap(opts.width or 620)
-	local pad = 16
+	local pad = s.padding
 	local titleSize = math.max(12, s.size - 4)
 	local titleHeight = titleSize + 6
 	local queryHeight = snap(s.size * 1.35)
