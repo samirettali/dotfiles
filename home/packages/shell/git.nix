@@ -48,7 +48,7 @@ in {
         log.date = "iso";
         merge.conflictStyle = "zdiff3";
         merge.tool = "nvimdiff";
-        pull.ff = "only";
+        pull.rebase = true;
         push.autoSetupRemote = true;
         push.default = "simple";
         push.followtags = true;
