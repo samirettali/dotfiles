@@ -1,14 +1,16 @@
+local icons = require("icons")
+
 sbar.add("event", "keyboard_layout_change")
 
 local item = sbar.add("item", "keyboard_layout", {
 	position = "right",
-	icon = { drawing = false },
+	icon = { string = icons.keyboard },
 })
 
 local labels = {
-	["com.apple.keylayout.US"] = "🇺🇸",
-	["com.apple.keylayout.Italian-Pro"] = "🇮🇹",
-	["com.apple.keylayout.Italian"] = "🇮🇹",
+	["com.apple.keylayout.US"] = "US",
+	["com.apple.keylayout.Italian-Pro"] = "IT",
+	["com.apple.keylayout.Italian"] = "IT",
 }
 
 local function set(source_id)
@@ -23,7 +25,7 @@ end)
 -- the current source once at startup. Text Input Services is the authoritative
 -- answer, unlike the com.apple.HIToolbox prefs.
 local read_source_id = table.concat({
-	"osascript -l JavaScript -e 'ObjC.import(\"Carbon\");",
+	'osascript -l JavaScript -e \'ObjC.import("Carbon");',
 	"ObjC.unwrap($.NSString.stringWithString(ObjC.castRefToObject(",
 	"$.TISGetInputSourceProperty($.TISCopyCurrentKeyboardInputSource(),",
 	"$.kTISPropertyInputSourceID))))'",
