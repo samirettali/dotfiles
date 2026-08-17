@@ -14,7 +14,7 @@ local defaultStyle = {
 	atScreenEdge = 0,
 	fadeInDuration = 0.0,
 	fadeOutDuration = 0.0,
-	padding = 18,
+	padding = 24,
 }
 
 hs.alert.defaultStyle = defaultStyle
