@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import os
+import select
 import subprocess
 import sys
 import time
@@ -133,37 +134,50 @@ def codex_from_app_server() -> dict:
         process.stdin.write("".join(json.dumps(request) + "\n" for request in requests))
         process.stdin.flush()
         deadline = time.monotonic() + TIMEOUT
-        # The server keeps the connection open and interleaves notifications, so
-        # read until the answer to id 2 shows up rather than waiting for EOF.
-        for line in process.stdout:
-            if time.monotonic() > deadline:
+        buffer = b""
+        # stdout stays open for the lifetime of app-server. Wait for readable
+        # bytes with the remaining deadline instead of blocking in readline().
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return {"key": "codex", "name": "Codex", "error": "app-server timed out"}
+            ready, _, _ = select.select([process.stdout], [], [], remaining)
+            if not ready:
+                return {"key": "codex", "name": "Codex", "error": "app-server timed out"}
+            chunk = os.read(process.stdout.fileno(), 65536)
+            if not chunk:
                 break
-            try:
-                message = json.loads(line)
-            except ValueError:
-                continue
-            if message.get("id") != 2:
-                continue
-            limits = (message.get("result") or {}).get("rateLimits") or {}
-            windows = []
-            for key in ("primary", "secondary"):
-                window = limits.get(key)
-                if not window:
+            buffer += chunk
+            while b"\n" in buffer:
+                line, buffer = buffer.split(b"\n", 1)
+                try:
+                    message = json.loads(line)
+                except ValueError:
                     continue
-                converted = codex_window(
-                    {
-                        "limit_window_seconds": (window.get("windowDurationMins") or 0) * 60,
-                        "used_percent": window.get("usedPercent"),
-                        "reset_at": window.get("resetsAt"),
-                    }
-                )
-                if converted:
-                    windows.append(converted)
-            return {"key": "codex", "name": "Codex", "windows": windows}
+                if message.get("id") != 2:
+                    continue
+                limits = (message.get("result") or {}).get("rateLimits") or {}
+                windows = []
+                for key in ("primary", "secondary"):
+                    window = limits.get(key)
+                    if not window:
+                        continue
+                    converted = codex_window(
+                        {
+                            "limit_window_seconds": (window.get("windowDurationMins") or 0) * 60,
+                            "used_percent": window.get("usedPercent"),
+                            "reset_at": window.get("resetsAt"),
+                        }
+                    )
+                    if converted:
+                        windows.append(converted)
+                return {"key": "codex", "name": "Codex", "windows": windows}
     except (OSError, ValueError) as error:
         return {"key": "codex", "name": "Codex", "error": str(error)}
     finally:
-        process.kill()
+        if process.poll() is None:
+            process.kill()
+        process.wait()
 
     return {"key": "codex", "name": "Codex", "error": "no answer from app-server"}
 

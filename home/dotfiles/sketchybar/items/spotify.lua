@@ -36,11 +36,14 @@ local function update(info)
 end
 
 local function refresh()
-	sbar.exec([[/usr/bin/osascript -l JavaScript -e 'const spotify = Application("Spotify"); if (!spotify.running()) { JSON.stringify({}); } else { const state = spotify.playerState(); if (state === "stopped") { JSON.stringify({ state }); } else { const track = spotify.currentTrack; JSON.stringify({ state, title: track.name(), artist: track.artist(), id: track.spotifyUrl() }); } }']], function(info)
-		if type(info) == "table" then
-			update(info)
+	sbar.exec(
+		[[/usr/bin/osascript -l JavaScript -e 'const spotify = Application("Spotify"); if (!spotify.running()) { JSON.stringify({}); } else { const state = spotify.playerState(); if (state === "stopped") { JSON.stringify({ state }); } else { const track = spotify.currentTrack; JSON.stringify({ state, title: track.name(), artist: track.artist(), id: track.spotifyUrl() }); } }']],
+		function(info)
+			if type(info) == "table" then
+				update(info)
+			end
 		end
-	end)
+	)
 end
 
 spotify:subscribe("media_change", refresh)
