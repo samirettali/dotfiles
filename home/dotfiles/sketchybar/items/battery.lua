@@ -4,6 +4,7 @@ local popup = require("popup")
 
 local battery = sbar.add("item", "widgets.battery", {
 	position = "right",
+	padding_left = 6,
 	update_freq = 180,
 	label = { drawing = false },
 	popup = {
@@ -40,10 +41,10 @@ battery:subscribe({ "routine", "power_source_change", "system_woke" }, function(
 
 		if charging then
 			icon = icons.battery.charging
-			color = colors.green
+			color = colors.white
 		elseif charged then
 			icon = icons.battery._100
-			color = colors.green
+			color = colors.white
 		elseif charge > 80 then
 			icon = icons.battery._100
 			color = colors.white
