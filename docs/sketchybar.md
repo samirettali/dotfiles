@@ -54,13 +54,12 @@ Clicking a component opens the corresponding provider status page.
 
 ## AI subscription usage
 
-`items/ai_usage.lua` shows Claude and Codex plan usage.
-It stays hidden below 70% and turns red at 90%.
+`items/ai_usage.lua` keeps one usage icon visible and puts every Claude and Codex limit in its popup.
+The icon and popup rows turn yellow at 70% and red at 90%.
 `ai-usage` under `home/packages/shell/scripts/` prints both providers as JSON.
 
 Poll every five minutes below the threshold and every minute above it.
-The exact percentage only matters while the item is visible.
-Clicking opens the provider's usage page.
+Opening the popup refreshes it immediately.
 
 Neither provider exposes a public usage API.
 The script borrows credentials owned by the corresponding CLI:

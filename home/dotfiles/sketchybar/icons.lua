@@ -1,6 +1,7 @@
 local icons = {
 	error = " ",
 	spotify = "",
+	usage = "󰄧",
 
 	herdr = "\u{f0a0b}",
 
