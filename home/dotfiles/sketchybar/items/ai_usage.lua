@@ -67,7 +67,7 @@ local function rebuild_sections(limits_by_provider)
 				},
 				label = {
 					drawing = false,
-					string = "· cached",
+					string = "(cached)",
 					color = colors.grey70,
 					padding_left = 2,
 				},
