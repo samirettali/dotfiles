@@ -62,9 +62,6 @@ in {
         defaultThinkingLevel = "medium";
         enabledModels = modelsConfig.enabledModels;
         tuiMode = "fullscreen";
-        autoMode = {
-          enabled = false;
-        };
       };
 
       ".pi/agent/models.json".text = builtins.toJSON {
@@ -78,7 +75,7 @@ in {
 
       ".pi/agent/automode.json".text = builtins.toJSON {
         autoMode = {
-          enabled = true;
+          enabled = false;
           classifierModel = "openai-codex/gpt-5.6-luna";
           classifierReasoningLevel = "low";
           # In-tree file work skips the classifier; out-of-tree access is classified.
