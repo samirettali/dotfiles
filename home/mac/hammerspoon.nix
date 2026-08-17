@@ -36,6 +36,25 @@
             end
       """
       text = text.replace(old, new)
+
+      # The helper walks keyFuncNameTable with pairs(), so the rows come out in
+      # hash order: not the order of the config, and not stable across reloads.
+      # Sort by key so the position of an entry is something to remember.
+      old = """   local count = 0
+         for keyName, funcName in pairs(keyFuncNameTable) do
+      """
+      new = """   local count = 0
+         local keyNames = {}
+         for keyName in pairs(keyFuncNameTable) do
+            table.insert(keyNames, keyName)
+         end
+         table.sort(keyNames)
+         for _, keyName in ipairs(keyNames) do
+            local funcName = keyFuncNameTable[keyName]
+      """
+      assert old in text, "RecursiveBinder helper loop moved"
+      text = text.replace(old, new)
+
       text = text.replace("local obj={}", 'local modalFocus = require("modal_focus")\n\nlocal obj={}')
 
       # Secure Input prevents Hammerspoon from receiving the unmodified keys

@@ -31,7 +31,7 @@ end
 
 -- Same geometry as hs.alert, so this matches the RecursiveBinder helper: one
 -- stroked-and-filled path over the whole canvas. The stroke is centred on that
--- path, so the outer half is clipped away and a strokeWidth of 4 reads as 2.
+-- path, so the outer half is clipped away and a strokeWidth of 2 reads as 1.
 -- Insetting it instead would draw a border twice as thick as every alert.
 local function chrome(_, _, s)
 	return {
