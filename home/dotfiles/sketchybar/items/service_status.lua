@@ -2,15 +2,13 @@ local cjson = require("cjson")
 local colors = require("colors")
 local icons = require("icons")
 
--- Statuspage (Atlassian) pages, one item per provider. The item is hidden while
--- every watched component is operational, so it only ever shows up as an alert.
--- Components are listed explicitly: a GitHub Pages outage is not interesting.
+-- Statuspage (Atlassian) pages, one item per provider. Each item stays hidden
+-- while every watched component is operational and becomes an icon-only alert.
 local providers = {
 	{
 		key = "github",
 		icon = icons.status.github,
 		api = "https://www.githubstatus.com/api/v2/summary.json",
-		page = "https://www.githubstatus.com",
 		components = {
 			{ "Actions", "Actions" },
 			{ "Git Operations", "Git" },
@@ -25,7 +23,6 @@ local providers = {
 		icon = icons.status.claude,
 		-- status.anthropic.com 302s here; hitting it directly avoids the redirect.
 		api = "https://status.claude.com/api/v2/summary.json",
-		page = "https://status.claude.com",
 		components = {
 			{ "Claude API (api.anthropic.com)", "API" },
 			{ "Claude Code", "Code" },
@@ -41,6 +38,12 @@ local severity = {
 	major_outage = 3,
 }
 
+local severity_label = {
+	degraded_performance = "Degraded",
+	partial_outage = "Partial outage",
+	major_outage = "Major outage",
+}
+
 local severity_color = {
 	[1] = colors.yellow,
 	[2] = colors.orange,
@@ -48,7 +51,6 @@ local severity_color = {
 }
 
 local UPDATE_FREQ = 15
-local MAX_LABELS = 3
 local CACHE_DIR = (os.getenv("HOME") or "") .. "/.cache/sketchybar"
 
 for _, provider in ipairs(providers) do
@@ -60,33 +62,67 @@ for _, provider in ipairs(providers) do
 	local item = sbar.add("item", "status." .. provider.key, {
 		position = "right",
 		drawing = false,
-		-- Not "when_shown": the item spends most of its life hidden and would
-		-- otherwise stop polling and never come back.
 		updates = "on",
 		update_freq = UPDATE_FREQ,
 		icon = { string = provider.icon },
-		label = { font = { style = "Bold" } },
-		click_script = ("open %q"):format(provider.page),
+		label = { drawing = false },
+		popup = {
+			align = "right",
+			background = {
+				color = colors.black,
+				border_color = colors.grey,
+				border_width = 1,
+				corner_radius = 6,
+				padding_left = 6,
+				padding_right = 6,
+			},
+		},
 	})
 
-	-- Conditional GET: curl sends If-None-Match from the file and rewrites it on
-	-- a 200. A 304 comes back with an empty body, which we read as "unchanged".
+	local rows = {}
+	for index = 1, #provider.components do
+		rows[index] = sbar.add("item", ("status.%s.row.%d"):format(provider.key, index), {
+			position = "popup.status." .. provider.key,
+			drawing = false,
+			icon = { string = "●", padding_right = 6 },
+		})
+	end
+
 	local etag_file = ("%s/status-%s.etag"):format(CACHE_DIR, provider.key)
+	local conditional = ("mkdir -p %q && curl -sfL --max-time 10 --etag-compare %q --etag-save %q %q"):format(
+		CACHE_DIR,
+		etag_file,
+		etag_file,
+		provider.api
+	)
+	local unconditional = ("mkdir -p %q && curl -sfL --max-time 10 --etag-save %q %q"):format(
+		CACHE_DIR,
+		etag_file,
+		provider.api
+	)
 
-	local conditional = ("mkdir -p %q && curl -sfL --max-time 10 --etag-compare %q --etag-save %q %q")
-		:format(CACHE_DIR, etag_file, etag_file, provider.api)
+	local function close_popup()
+		item:set({ popup = { drawing = false } })
+	end
 
-	-- The etag file outlives the process while the item state does not, so the
-	-- first fetch has to be unconditional or a restart during an outage would
-	-- get a 304 and leave the item hidden.
-	local unconditional = ("mkdir -p %q && curl -sfL --max-time 10 --etag-save %q %q")
-		:format(CACHE_DIR, etag_file, provider.api)
+	local function set_rows(affected)
+		for index, row in ipairs(rows) do
+			local component = affected[index]
+			if component then
+				local color = severity_color[component.level]
+				row:set({
+					drawing = true,
+					icon = { color = color },
+					label = { string = ("%s · %s"):format(component.label, component.status) },
+				})
+			else
+				row:set({ drawing = false })
+			end
+		end
+	end
 
 	local function refresh(force)
 		sbar.exec(force and unconditional or conditional, function(out)
-			-- SbarLua decodes JSON stdout into a table before invoking the
-			-- callback; anything else (an empty 304 body, a failed request)
-			-- arrives as a string and leaves the current state alone.
 			local summary = out
 			if type(summary) == "string" then
 				local ok, decoded = pcall(cjson.decode, summary)
@@ -108,12 +144,18 @@ for _, provider in ipairs(providers) do
 				local level = short and severity[component.status] or nil
 				if level then
 					worst = math.max(worst, level)
-					affected[#affected + 1] = { order = #affected, label = short, level = level }
+					affected[#affected + 1] = {
+						order = #affected,
+						label = short,
+						level = level,
+						status = severity_label[component.status],
+					}
 				end
 			end
 
 			if worst == 0 then
-				item:set({ drawing = false })
+				set_rows({})
+				item:set({ drawing = false, popup = { drawing = false } })
 				return
 			end
 
@@ -124,33 +166,25 @@ for _, provider in ipairs(providers) do
 				return a.order < b.order
 			end)
 
-			local shown = {}
-			for i = 1, math.min(#affected, MAX_LABELS) do
-				shown[i] = affected[i].label
-			end
-
-			local label = table.concat(shown, ", ")
-			if #affected > MAX_LABELS then
-				label = ("%s +%d"):format(label, #affected - MAX_LABELS)
-			end
-
-			local color = severity_color[worst]
-
+			set_rows(affected)
 			item:set({
 				drawing = true,
-				icon = { color = color },
-				label = { string = label, color = color },
+				icon = { color = severity_color[worst] },
 			})
 		end)
 	end
 
-	-- Wrapped: the event handler is called with an env table, which would
-	-- otherwise be read as the `force` argument.
 	item:subscribe({ "forced", "routine", "system_woke" }, function()
 		refresh()
 	end)
 
-	-- "routine" only fires after the first update_freq window, so resolve the
-	-- initial state at startup.
+	item:subscribe("mouse.clicked", function()
+		local current = item:query()
+		local open = current and current.popup and current.popup.drawing == "on"
+		item:set({ popup = { drawing = not open } })
+	end)
+
+	item:subscribe("mouse.exited.global", close_popup)
+
 	refresh(true)
 end

@@ -42,6 +42,15 @@ On each event it queries Spotify locally through JXA because MediaRemote omits t
 The same query runs once at startup, while later events cover Spotify opening after Sketchybar.
 Keep the item hidden when Spotify has no track, and derive Sottotesto links from Spotify's track URI.
 
+## Compact system widgets
+
+Battery and volume keep only their state icon in the bar.
+Clicking either icon opens a one-line popup with its state and percentage.
+Battery color stays neutral normally, turns yellow or red when low, and green while charging or charged.
+
+Service-status items stay hidden while healthy and show only their severity-colored icon during an incident.
+Clicking an incident icon opens the affected components and their individual states.
+
 ## AI subscription usage
 
 `items/ai_usage.lua` shows Claude and Codex plan usage.
