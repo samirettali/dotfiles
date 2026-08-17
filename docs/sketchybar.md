@@ -91,6 +91,10 @@ One command serves both providers; attaching it to visible items would duplicate
 
 ## SbarLua callbacks
 
+Keep SbarLua hotloading disabled.
+Sketchybar starts a new Lua event loop on every hotload without stopping the old one, so click callbacks accumulate and toggle popups repeatedly.
+The Home Manager file hook restarts the LaunchAgent after configuration changes instead.
+
 `sbar.exec` passes decoded JSON to its callback as a Lua table.
 It passes plain command output as a string.
 Handle both types.

@@ -72,6 +72,9 @@ in {
       force = true;
       source = ../dotfiles/sketchybar;
       recursive = true;
+      onChange = ''
+        /bin/launchctl kickstart -k "gui/$UID/org.nix-community.home.sketchybar" 2>/dev/null || true
+      '';
     };
     "sketchybar/sketchybarrc" = {
       enable = config.programs.sketchybar.enable;
