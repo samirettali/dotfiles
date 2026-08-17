@@ -37,9 +37,10 @@ Nothing polls.
 
 ## Spotify now playing
 
-`items/spotify.lua` listens to Spotify's distributed playback notification, so track changes need no polling.
-It queries Spotify once through JXA when Sketchybar starts because distributed notifications carry no retained state.
-Keep the item hidden when Spotify has no track, and derive Sottotesto links from the notification's track URI.
+`items/spotify.lua` listens to Sketchybar's `media_change` event, so track changes need no polling.
+On each event it queries Spotify locally through JXA because MediaRemote omits the Spotify track ID.
+The same query runs once at startup, while later events cover Spotify opening after Sketchybar.
+Keep the item hidden when Spotify has no track, and derive Sottotesto links from Spotify's track URI.
 
 ## AI subscription usage
 

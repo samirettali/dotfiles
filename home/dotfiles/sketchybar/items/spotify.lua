@@ -35,11 +35,15 @@ local function update(info)
 	})
 end
 
-sbar.add("event", "spotify_change", "com.spotify.client.PlaybackStateChanged")
+local function refresh()
+	sbar.exec([[/usr/bin/osascript -l JavaScript -e 'const spotify = Application("Spotify"); if (!spotify.running()) { JSON.stringify({}); } else { const state = spotify.playerState(); if (state === "stopped") { JSON.stringify({ state }); } else { const track = spotify.currentTrack; JSON.stringify({ state, title: track.name(), artist: track.artist(), id: track.spotifyUrl() }); } }']], function(info)
+		if type(info) == "table" then
+			update(info)
+		end
+	end)
+end
 
-spotify:subscribe("spotify_change", function(env)
-	update(env.INFO)
-end)
+spotify:subscribe("media_change", refresh)
 
 spotify:subscribe("mouse.clicked", function(_)
 	if current_track_id then
@@ -47,8 +51,4 @@ spotify:subscribe("mouse.clicked", function(_)
 	end
 end)
 
-sbar.exec([[/usr/bin/osascript -l JavaScript -e 'const spotify = Application("Spotify"); if (!spotify.running()) { JSON.stringify({}); } else { const track = spotify.currentTrack; JSON.stringify({ state: spotify.playerState(), title: track.name(), artist: track.artist(), id: track.spotifyUrl() }); }']], function(info)
-	if type(info) == "table" then
-		update(info)
-	end
-end)
+refresh()
