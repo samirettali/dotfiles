@@ -1,8 +1,7 @@
-local icons = require("icons")
-
 local cal = sbar.add("item", {
 	position = "right",
 	update_freq = 1,
+	icon = { drawing = false },
 })
 
 cal:subscribe({ "forced", "routine", "system_woke" }, function(_)
@@ -11,9 +10,6 @@ cal:subscribe({ "forced", "routine", "system_woke" }, function(_)
 	local label = ("%s - %s"):format(date, time)
 
 	local item = {
-		icon = {
-			string = icons.clock,
-		},
 		label = {
 			string = label,
 		},
