@@ -31,43 +31,43 @@ local usage = sbar.add("item", "usage", {
 local provider_order = { "claude", "codex" }
 local provider_names = { claude = "Claude", codex = "Codex" }
 local sections = {}
-for _, key in ipairs(provider_order) do
-	sections[key] = {
-		header = sbar.add("item", "usage." .. key .. ".header", {
-			position = "popup.usage",
-			icon = { drawing = false },
-			label = { string = provider_names[key], font = { style = "Bold" } },
-		}),
-		rows = {},
-	}
-end
 
-local function ensure_rows(key, count)
-	local rows = sections[key].rows
-	for index = #rows + 1, count do
-		rows[index] = sbar.add("item", ("usage.%s.row.%d"):format(key, index), {
-			position = "popup.usage",
-			drawing = false,
-			icon = { drawing = false },
-		})
-	end
-end
-
-local function order_popup()
-	local names = {}
+local function rebuild_sections(limits_by_provider)
+	local changed = false
 	for _, key in ipairs(provider_order) do
-		names[#names + 1] = sections[key].header.name
-		for _, row in ipairs(sections[key].rows) do
-			names[#names + 1] = row.name
+		local count = #(limits_by_provider[key] or {})
+		if not sections[key] or #sections[key].rows ~= count then
+			changed = true
+		end
+	end
+	if not changed then
+		return
+	end
+
+	for _, section in pairs(sections) do
+		section.header:remove()
+		for _, row in ipairs(section.rows) do
+			row:remove()
 		end
 	end
 
-	local moves = {}
-	for index = 2, #names do
-		moves[#moves + 1] = ("--move %s after %s"):format(names[index], names[index - 1])
-	end
-	if #moves > 0 then
-		sbar.exec(SKETCHYBAR_BIN .. " " .. table.concat(moves, " "))
+	sections = {}
+	for _, key in ipairs(provider_order) do
+		local section = {
+			header = sbar.add("item", "usage." .. key .. ".header", {
+				position = "popup.usage",
+				icon = { drawing = false },
+				label = { string = provider_names[key], font = { style = "Bold" } },
+			}),
+			rows = {},
+		}
+		for index = 1, #(limits_by_provider[key] or {}) do
+			section.rows[index] = sbar.add("item", ("usage.%s.row.%d"):format(key, index), {
+				position = "popup.usage",
+				icon = { drawing = false },
+			})
+		end
+		sections[key] = section
 	end
 end
 
@@ -136,6 +136,7 @@ end
 
 local function render()
 	local worst = 0
+	rebuild_sections(limits_by_provider)
 
 	for _, key in ipairs(provider_order) do
 		local limits = limits_by_provider[key] or {}
@@ -149,7 +150,6 @@ local function render()
 			},
 		})
 
-		ensure_rows(key, #limits)
 		for index, row in ipairs(section.rows) do
 			local limit = limits[index]
 			if limit then
@@ -167,7 +167,6 @@ local function render()
 		end
 	end
 
-	order_popup()
 	usage:set({ icon = { color = color_for(worst) } })
 	poller:set({ update_freq = worst >= WARN and ALERT_FREQ or IDLE_FREQ })
 end
