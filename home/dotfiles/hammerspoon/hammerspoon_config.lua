@@ -9,7 +9,7 @@ local defaultStyle = {
 	fillColor = { white = 0, alpha = 1 },
 	textColor = { white = 1, alpha = 1 },
 	textFont = "JetBrainsMono Nerd Font",
-	textSize = 15,
+	textSize = 17,
 	radius = 12,
 	atScreenEdge = 0,
 	fadeInDuration = 0.0,
