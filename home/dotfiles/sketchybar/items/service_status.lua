@@ -40,12 +40,6 @@ local severity = {
 	major_outage = 3,
 }
 
-local severity_label = {
-	degraded_performance = "Degraded",
-	partial_outage = "Partial outage",
-	major_outage = "Major outage",
-}
-
 local severity_color = {
 	[1] = colors.yellow,
 	[2] = colors.orange,
@@ -86,7 +80,7 @@ for _, provider in ipairs(providers) do
 		rows[index] = sbar.add("item", ("status.%s.row.%d"):format(provider.key, index), {
 			position = "popup.status." .. provider.key,
 			drawing = false,
-			icon = { string = "●", padding_right = 6 },
+			icon = { drawing = false },
 			click_script = ("open %q"):format(provider.page),
 		})
 	end
@@ -115,8 +109,7 @@ for _, provider in ipairs(providers) do
 				local color = severity_color[component.level]
 				row:set({
 					drawing = true,
-					icon = { color = color },
-					label = { string = ("%s · %s"):format(component.label, component.status) },
+					label = { string = component.label, color = color },
 				})
 			else
 				row:set({ drawing = false })
@@ -151,7 +144,6 @@ for _, provider in ipairs(providers) do
 						order = #affected,
 						label = short,
 						level = level,
-						status = severity_label[component.status],
 					}
 				end
 			end

@@ -49,7 +49,7 @@ Clicking either icon opens a one-line popup with its state and percentage.
 Battery color stays neutral normally, turns yellow or red when low, and green while charging or charged.
 
 Service-status items stay hidden while healthy and show only their severity-colored icon during an incident.
-Clicking an incident icon opens the affected components and their individual states.
+Clicking an incident icon opens the affected component names, colored by severity.
 Clicking a component opens the corresponding provider status page.
 
 ## AI subscription usage
