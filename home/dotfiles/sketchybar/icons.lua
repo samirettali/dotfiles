@@ -1,5 +1,4 @@
 local icons = {
-	keyboard = "󰌌",
 	error = " ",
 	spotify = "",
 

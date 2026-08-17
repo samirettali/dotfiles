@@ -1,10 +1,8 @@
-local icons = require("icons")
-
 sbar.add("event", "keyboard_layout_change")
 
 local item = sbar.add("item", "keyboard_layout", {
 	position = "right",
-	icon = { string = icons.keyboard },
+	icon = { drawing = false },
 })
 
 local labels = {
