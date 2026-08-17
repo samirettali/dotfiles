@@ -4,7 +4,7 @@ local canvas = require("canvas")
 -- what is left, so a width of 2 lands as the 1pt hairline that frames a panel
 -- without competing with the text inside it
 local defaultStyle = {
-	strokeWidth = 2,
+	strokeWidth = 4,
 	strokeColor = { white = 1, alpha = 0.4 },
 	fillColor = { white = 0, alpha = 1 },
 	textColor = { white = 1, alpha = 1 },
