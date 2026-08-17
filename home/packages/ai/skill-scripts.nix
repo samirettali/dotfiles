@@ -57,5 +57,15 @@ in {
         }
       ];
     })
+    (wrap {
+      name = "x-search";
+      script = ./skills/x-search/scripts/x_search.py;
+      vars = [
+        {
+          env = "XAI_API_KEY";
+          entry = "xai-api-key";
+        }
+      ];
+    })
   ];
 }

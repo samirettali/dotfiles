@@ -58,4 +58,5 @@ in {
   terse = ./skills/terse;
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
+  x-search = ./skills/x-search;
 }
