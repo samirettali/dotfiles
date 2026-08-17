@@ -62,6 +62,9 @@ in {
         defaultThinkingLevel = "medium";
         enabledModels = modelsConfig.enabledModels;
         tuiMode = "fullscreen";
+        autoMode = {
+          enabled = false;
+        };
       };
 
       ".pi/agent/models.json".text = builtins.toJSON {
