@@ -45,9 +45,9 @@ local function rebuild_sections(limits_by_provider)
 	end
 
 	for _, section in pairs(sections) do
-		section.header:remove()
+		sbar.remove(section.header)
 		for _, row in ipairs(section.rows) do
-			row:remove()
+			sbar.remove(row)
 		end
 	end
 
