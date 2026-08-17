@@ -8,6 +8,7 @@ Codex in ~/.codex/auth.json.
 
 from __future__ import annotations
 
+import datetime
 import json
 import os
 import select
@@ -22,9 +23,24 @@ TIMEOUT = 10
 CLAUDE_USAGE_URL = "https://api.anthropic.com/api/oauth/usage"
 CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage"
 
+CLAUDE_PAGE = "https://claude.ai/settings/usage"
+CODEX_PAGE = "https://chatgpt.com/codex/settings/usage"
+
 # Claude names its buckets by kind; `weekly_scoped` carries the model it applies
 # to (an Opus-only weekly cap, say) and is labelled with it instead.
 CLAUDE_LABELS = {"session": "5h", "weekly_all": "7d"}
+
+
+def epoch(value: object) -> int | None:
+    """Reset instants leave here as Unix seconds, whatever shape the API sent."""
+    if isinstance(value, (int, float)):
+        return int(value)
+    if isinstance(value, str):
+        try:
+            return int(datetime.datetime.fromisoformat(value.replace("Z", "+00:00")).timestamp())
+        except ValueError:
+            return None
+    return None
 
 
 def get_json(url: str, headers: dict[str, str]) -> dict:
@@ -51,10 +67,10 @@ def claude_token() -> str | None:
         return None
 
 
-def claude() -> dict:
+def claude() -> list[dict]:
     token = claude_token()
     if not token:
-        return {"key": "claude", "name": "Claude", "error": "no credentials"}
+        return [{"key": "claude", "name": "Claude", "url": CLAUDE_PAGE, "error": "no credentials"}]
 
     try:
         # The endpoint is the one Claude Code's own /usage draws, and needs the
@@ -66,30 +82,40 @@ def claude() -> dict:
     except urllib.error.HTTPError as error:
         # Nothing here refreshes the token: Claude Code owns it, and writing a
         # new one back to the keychain would race with it.
-        return {"key": "claude", "name": "Claude", "error": f"http {error.code}"}
+        return [{"key": "claude", "name": "Claude", "url": CLAUDE_PAGE, "error": f"http {error.code}"}]
     except (urllib.error.URLError, TimeoutError, ValueError) as error:
-        return {"key": "claude", "name": "Claude", "error": str(error)}
+        return [{"key": "claude", "name": "Claude", "url": CLAUDE_PAGE, "error": str(error)}]
 
     windows = []
+    # A model-scoped cap belongs to that model, not to the plan: it becomes its
+    # own provider section so its percentage never reads as overall usage.
+    scoped: dict[str, list[dict]] = {}
     for limit in payload.get("limits") or []:
         kind = limit.get("kind")
         label = CLAUDE_LABELS.get(kind)
+        model = None
         if label is None:
             if kind != "weekly_scoped":
                 continue
             model = ((limit.get("scope") or {}).get("model") or {}).get("display_name")
             if not model:
                 continue
-            label = model.lower()
-        windows.append(
-            {
-                "label": label,
-                "percent": limit.get("percent") or 0,
-                "resets_at": limit.get("resets_at"),
-            }
-        )
+            label = "7d"
+        window = {
+            "label": label,
+            "percent": limit.get("percent") or 0,
+            "resets_at": epoch(limit.get("resets_at")),
+        }
+        if model:
+            scoped.setdefault(model, []).append(window)
+        else:
+            windows.append(window)
 
-    return {"key": "claude", "name": "Claude", "windows": windows}
+    providers = [{"key": "claude", "name": "Claude", "url": CLAUDE_PAGE, "windows": windows}]
+    for model, model_windows in scoped.items():
+        key = "claude." + model.lower().replace(" ", "-")
+        providers.append({"key": key, "name": model, "url": CLAUDE_PAGE, "windows": model_windows})
+    return providers
 
 
 def codex_window(window: dict | None) -> dict | None:
@@ -101,7 +127,7 @@ def codex_window(window: dict | None) -> dict | None:
     return {
         "label": "7d" if hours >= 144 else "1d" if hours >= 24 else f"{hours}h",
         "percent": window.get("used_percent") or 0,
-        "resets_at": time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(reset)) if reset else None,
+        "resets_at": epoch(reset),
     }
 
 
@@ -140,10 +166,10 @@ def codex_from_app_server() -> dict:
         while True:
             remaining = deadline - time.monotonic()
             if remaining <= 0:
-                return {"key": "codex", "name": "Codex", "error": "app-server timed out"}
+                return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "error": "app-server timed out"}
             ready, _, _ = select.select([process.stdout], [], [], remaining)
             if not ready:
-                return {"key": "codex", "name": "Codex", "error": "app-server timed out"}
+                return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "error": "app-server timed out"}
             chunk = os.read(process.stdout.fileno(), 65536)
             if not chunk:
                 break
@@ -171,15 +197,15 @@ def codex_from_app_server() -> dict:
                     )
                     if converted:
                         windows.append(converted)
-                return {"key": "codex", "name": "Codex", "windows": windows}
+                return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "windows": windows}
     except (OSError, ValueError) as error:
-        return {"key": "codex", "name": "Codex", "error": str(error)}
+        return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "error": str(error)}
     finally:
         if process.poll() is None:
             process.kill()
         process.wait()
 
-    return {"key": "codex", "name": "Codex", "error": "no answer from app-server"}
+    return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "error": "no answer from app-server"}
 
 
 def codex() -> dict:
@@ -192,7 +218,7 @@ def codex() -> dict:
 
     token = tokens.get("access_token")
     if not token:
-        return {"key": "codex", "name": "Codex", "error": "no credentials"}
+        return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "error": "no credentials"}
 
     headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
     if tokens.get("account_id"):
@@ -204,9 +230,9 @@ def codex() -> dict:
         # An expired token comes back as Cloudflare's 403 HTML, not a JSON 401.
         if error.code in (401, 403):
             return codex_from_app_server()
-        return {"key": "codex", "name": "Codex", "error": f"http {error.code}"}
+        return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "error": f"http {error.code}"}
     except (urllib.error.URLError, TimeoutError, ValueError) as error:
-        return {"key": "codex", "name": "Codex", "error": str(error)}
+        return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "error": str(error)}
 
     rate_limit = payload.get("rate_limit") or {}
     windows = [
@@ -217,7 +243,7 @@ def codex() -> dict:
         )
         if window
     ]
-    return {"key": "codex", "name": "Codex", "windows": windows}
+    return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "windows": windows}
 
 
 def main() -> int:
@@ -228,7 +254,12 @@ def main() -> int:
         print(f"unknown provider: {', '.join(unknown)}", file=sys.stderr)
         return 2
 
-    json.dump({"providers": [providers[key]() for key in requested]}, sys.stdout)
+    fetched = []
+    for key in requested:
+        result = providers[key]()
+        fetched.extend(result if isinstance(result, list) else [result])
+
+    json.dump({"providers": fetched}, sys.stdout)
     sys.stdout.write("\n")
     return 0
 
