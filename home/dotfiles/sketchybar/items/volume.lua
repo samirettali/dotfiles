@@ -3,6 +3,7 @@ local icons = require("icons")
 
 local volume = sbar.add("item", "widgets.volume", {
 	position = "right",
+	icon = { width = 16, align = "center" },
 	label = { drawing = false },
 	popup = {
 		align = "right",
