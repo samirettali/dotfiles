@@ -9,6 +9,7 @@ local providers = {
 		key = "github",
 		icon = icons.status.github,
 		api = "https://www.githubstatus.com/api/v2/summary.json",
+		page = "https://www.githubstatus.com",
 		components = {
 			{ "Actions", "Actions" },
 			{ "Git Operations", "Git" },
@@ -23,6 +24,7 @@ local providers = {
 		icon = icons.status.claude,
 		-- status.anthropic.com 302s here; hitting it directly avoids the redirect.
 		api = "https://status.claude.com/api/v2/summary.json",
+		page = "https://status.claude.com",
 		components = {
 			{ "Claude API (api.anthropic.com)", "API" },
 			{ "Claude Code", "Code" },
@@ -85,6 +87,7 @@ for _, provider in ipairs(providers) do
 			position = "popup.status." .. provider.key,
 			drawing = false,
 			icon = { string = "●", padding_right = 6 },
+			click_script = ("open %q"):format(provider.page),
 		})
 	end
 

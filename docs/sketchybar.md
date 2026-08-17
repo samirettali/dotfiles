@@ -50,6 +50,7 @@ Battery color stays neutral normally, turns yellow or red when low, and green wh
 
 Service-status items stay hidden while healthy and show only their severity-colored icon during an incident.
 Clicking an incident icon opens the affected components and their individual states.
+Clicking a component opens the corresponding provider status page.
 
 ## AI subscription usage
 
