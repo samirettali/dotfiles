@@ -60,7 +60,8 @@ Poll each provider every minute while healthy and every 15 seconds during an inc
 `items/ai_usage.lua` keeps one usage icon visible and puts every Claude and Codex limit in its popup.
 The icon and popup rows turn yellow at 70% and red at 90%.
 Round fractional usage up and add popup rows as providers expose them.
-Each provider has its own header, which marks only that section as cached after a failed refresh.
+Each provider has its own header, separated from the next section by a subtle rule.
+Only the `cached` suffix turns grey after that provider fails to refresh.
 `ai-usage` under `home/packages/shell/scripts/` prints both providers as JSON.
 
 Poll every five minutes below the threshold and every minute above it.

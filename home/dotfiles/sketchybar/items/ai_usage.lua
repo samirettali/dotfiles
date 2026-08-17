@@ -49,15 +49,28 @@ local function rebuild_sections(limits_by_provider)
 		for _, row in ipairs(section.rows) do
 			sbar.remove(row)
 		end
+		if section.separator then
+			sbar.remove(section.separator)
+		end
 	end
 
 	sections = {}
-	for _, key in ipairs(provider_order) do
+	for provider_index, key in ipairs(provider_order) do
 		local section = {
 			header = sbar.add("item", "usage." .. key .. ".header", {
 				position = "popup.usage",
-				icon = { drawing = false },
-				label = { string = provider_names[key], font = { style = "Bold" } },
+				icon = {
+					string = provider_names[key],
+					color = colors.white,
+					font = { family = "JetBrainsMonoNL Nerd Font", style = "Bold" },
+					padding_right = 2,
+				},
+				label = {
+					drawing = false,
+					string = "· cached",
+					color = colors.grey70,
+					padding_left = 2,
+				},
 			}),
 			rows = {},
 		}
@@ -65,6 +78,14 @@ local function rebuild_sections(limits_by_provider)
 			section.rows[index] = sbar.add("item", ("usage.%s.row.%d"):format(key, index), {
 				position = "popup.usage",
 				icon = { drawing = false },
+			})
+		end
+		if provider_index < #provider_order then
+			section.separator = sbar.add("item", "usage.separator." .. provider_index, {
+				position = "popup.usage",
+				icon = { drawing = false },
+				label = { string = "", width = 120 },
+				background = { drawing = true, color = colors.grey27, height = 1 },
 			})
 		end
 		sections[key] = section
@@ -143,12 +164,7 @@ local function render()
 		local section = sections[key]
 		local stale = stale_providers[key] or false
 
-		section.header:set({
-			label = {
-				string = stale and (provider_names[key] .. " · cached") or provider_names[key],
-				color = stale and colors.grey70 or colors.white,
-			},
-		})
+		section.header:set({ label = { drawing = stale } })
 
 		for index, row in ipairs(section.rows) do
 			local limit = limits[index]
