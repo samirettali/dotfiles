@@ -16,6 +16,7 @@ local function resolveStyle(opts)
 		font = opts.textFont or base.textFont or "JetBrainsMono Nerd Font",
 		size = opts.textSize or base.textSize or 18,
 		radius = opts.borderRadius or base.radius or 27,
+		padding = opts.padding or base.padding or 18,
 	}
 end
 
@@ -75,6 +76,20 @@ end
 -- on a display at 1x is the whole of what makes it look soft, so snap first.
 local function snap(value)
 	return math.floor(value + 0.5)
+end
+
+-- hs.canvas centres text inside the frame it is given, and lands it on half a
+-- point whenever the space left over is odd. Centre it here instead, on a whole
+-- pixel, and hand canvas a frame that already fits the text.
+local function centred(text, font, size, left, innerWidth, y, height)
+	local width = math.min(math.ceil(textWidth(text, font, size)) + 1, innerWidth)
+
+	return {
+		x = left + math.max(0, snap((innerWidth - width) / 2)),
+		y = y,
+		w = width,
+		h = height,
+	}
 end
 
 local function geometry(width, height, y)
@@ -183,9 +198,9 @@ function M.prompt(opts)
 	local width = snap(opts.width or 600)
 	local height = snap(opts.height or 100)
 	local pad = 16
-	local titleSize = opts.promptTextSize or math.max(14, s.size - 4)
+	local titleSize = opts.promptTextSize or math.max(12, s.size - 4)
 	local titleHeight = titleSize + 6
-	local lineHeight = s.size * 1.35
+	local lineHeight = snap(s.size * 1.35)
 	local buffer = opts.initialText or ""
 
 	local canvas = newCanvas(width, height, opts.y)
@@ -197,8 +212,7 @@ function M.prompt(opts)
 		textColor = opts.promptTextColor or fade(s.color, 0.7),
 		textSize = titleSize,
 		textFont = s.font,
-		textAlignment = "center",
-		frame = { x = pad, y = pad, w = width - pad * 2, h = titleHeight },
+		frame = centred(opts.prompt or "", s.font, titleSize, pad, width - pad * 2, pad, titleHeight),
 	})
 
 	-- hs.canvas pins text to the top of its frame, so the input has to be
@@ -215,7 +229,7 @@ function M.prompt(opts)
 		textLineBreak = "truncateHead",
 		frame = {
 			x = pad,
-			y = inputTop + (height - inputTop - pad - lineHeight) / 2,
+			y = snap(inputTop + (height - inputTop - pad - lineHeight) / 2),
 			w = width - pad * 2,
 			h = lineHeight,
 		},
@@ -311,12 +325,12 @@ function M.picker(opts)
 	local maxRows = opts.rows or 8
 	local width = snap(opts.width or 620)
 	local pad = 16
-	local titleSize = math.max(14, s.size - 4)
+	local titleSize = math.max(12, s.size - 4)
 	local titleHeight = titleSize + 6
-	local queryHeight = s.size * 1.35
+	local queryHeight = snap(s.size * 1.35)
 	local subSize = math.max(11, s.size - 6)
-	local nameHeight = s.size * 1.3
-	local subHeight = subSize * 1.35
+	local nameHeight = snap(s.size * 1.3)
+	local subHeight = snap(subSize * 1.35)
 	local rowPad = 5
 	local rowHeight = rowPad * 2 + nameHeight + subHeight
 	local iconSize = math.min(38, rowHeight - rowPad * 2)
@@ -404,8 +418,7 @@ function M.picker(opts)
 			textColor = fade(s.color, 0.7),
 			textSize = titleSize,
 			textFont = s.font,
-			textAlignment = "center",
-			frame = { x = pad, y = pad, w = width - pad * 2, h = titleHeight },
+			frame = centred(opts.prompt or "", s.font, titleSize, pad, width - pad * 2, pad, titleHeight),
 		})
 
 		table.insert(elements, {
@@ -428,8 +441,7 @@ function M.picker(opts)
 				textColor = fade(s.color, 0.4),
 				textSize = s.size,
 				textFont = s.font,
-				textAlignment = "center",
-				frame = { x = pad, y = top + rowPad, w = width - pad * 2, h = nameHeight },
+				frame = centred(opts.emptyText or "no matches", s.font, s.size, pad, width - pad * 2, top + rowPad, nameHeight),
 			})
 		end
 
@@ -460,7 +472,7 @@ function M.picker(opts)
 						imageScaling = "scaleProportionally",
 						frame = {
 							x = textX,
-							y = y + (rowHeight - iconSize) / 2,
+							y = snap(y + (rowHeight - iconSize) / 2),
 							w = iconSize,
 							h = iconSize,
 						},
@@ -659,10 +671,10 @@ function M.helper(entries, opts)
 		return a.key < b.key
 	end)
 
-	local pad = opts.padding or 22
+	local pad = s.padding
 	local gap = 10
 	local arrow = "→"
-	local lineHeight = s.size * 1.35
+	local lineHeight = snap(s.size * 1.35)
 	local keyWidth, nameWidth = 0, 0
 
 	for _, row in ipairs(rows) do
@@ -670,11 +682,13 @@ function M.helper(entries, opts)
 		nameWidth = math.max(nameWidth, textWidth(row.name, s.font, s.size))
 	end
 
-	-- canvas clips a text element to its frame, and the measured width can land
-	-- a fraction under what it draws, so every column carries a point of slack
-	keyWidth, nameWidth = keyWidth + 1, nameWidth + 1
+	-- measured widths carry fractions, and a column laid out from them starts on
+	-- a fraction too, which softens the glyphs exactly as it softened the border.
+	-- Round up rather than snap: canvas clips a text element to its frame, so a
+	-- column has to be at least as wide as what it draws, plus a point of slack.
+	keyWidth, nameWidth = math.ceil(keyWidth) + 1, math.ceil(nameWidth) + 1
 
-	local arrowWidth = textWidth(arrow, s.font, s.size) + 1
+	local arrowWidth = math.ceil(textWidth(arrow, s.font, s.size)) + 1
 	local width = snap(pad * 2 + keyWidth + gap + arrowWidth + gap + nameWidth)
 	local nameX = pad + keyWidth + gap + arrowWidth + gap
 
@@ -689,7 +703,8 @@ function M.helper(entries, opts)
 		end
 	end
 
-	local ruleGap = ruleAt and 13 or 0
+	-- even, so the rule sits on a whole pixel halfway through the gap
+	local ruleGap = ruleAt and 12 or 0
 	local height = snap(pad * 2 + #rows * lineHeight + ruleGap)
 	local screen = hs.screen.mainScreen():fullFrame()
 
@@ -704,7 +719,7 @@ function M.helper(entries, opts)
 			fillColor = fade(s.stroke, 0.25),
 			frame = {
 				x = pad,
-				y = snap(pad + (ruleAt - 1) * lineHeight + ruleGap / 2),
+				y = pad + (ruleAt - 1) * lineHeight + ruleGap / 2,
 				w = width - pad * 2,
 				h = 1,
 			},
@@ -712,7 +727,7 @@ function M.helper(entries, opts)
 	end
 
 	for i, row in ipairs(rows) do
-		local y = snap(pad + (i - 1) * lineHeight + (ruleAt and i >= ruleAt and ruleGap or 0))
+		local y = pad + (i - 1) * lineHeight + (ruleAt and i >= ruleAt and ruleGap or 0)
 
 		-- the key is the only thing to read, so it alone is at full white; the
 		-- arrow is punctuation, and a leaf action needs less weight than the
@@ -737,6 +752,102 @@ function M.helper(entries, opts)
 
 	helperCanvas:replaceElements(table.unpack(elements))
 	helperCanvas:show()
+end
+
+-- toasts, stacked in the middle of the screen the way hs.alert stacks its own.
+-- hammerspoon_config points hs.alert.show here so that every panel on screen
+-- is drawn by chrome() and none of them keeps hs.alert's clipped corners.
+local toasts = {}
+local lastToastID = 0
+
+local function layoutToasts()
+	local gap = 8
+	local total = 0
+
+	for _, toast in ipairs(toasts) do
+		total = total + toast.height + gap
+	end
+
+	local screen = hs.screen.mainScreen():fullFrame()
+	local y = screen.y + (screen.h - (total - gap)) / 2
+
+	for _, toast in ipairs(toasts) do
+		toast.canvas:frame(geometry(toast.width, toast.height, y))
+		y = y + toast.height + gap
+	end
+end
+
+function M.closeToast(id)
+	for i, toast in ipairs(toasts) do
+		if toast.id == id then
+			if toast.timer then
+				toast.timer:stop()
+			end
+
+			toast.canvas:delete()
+			table.remove(toasts, i)
+			layoutToasts()
+
+			return
+		end
+	end
+end
+
+function M.closeToasts()
+	while #toasts > 0 do
+		M.closeToast(toasts[1].id)
+	end
+end
+
+-- seconds of nil holds the toast until something closes it, as hs.alert does
+-- when it is passed true in place of a duration
+function M.toast(message, seconds, opts)
+	opts = opts or {}
+
+	local s = resolveStyle(opts)
+	local pad = s.padding
+	local lineHeight = snap(s.size * 1.35)
+	local lines = {}
+	local widest = 0
+
+	for line in (tostring(message) .. "\n"):gmatch("([^\n]*)\n") do
+		table.insert(lines, line)
+		widest = math.max(widest, textWidth(line, s.font, s.size))
+	end
+
+	local width = snap(pad * 2 + widest + 1)
+	local height = snap(pad * 2 + #lines * lineHeight)
+	local canvas = newCanvas(width, height)
+	local elements = chrome(width, height, s)
+
+	for i, line in ipairs(lines) do
+		table.insert(elements, {
+			type = "text",
+			text = line,
+			textColor = s.color,
+			textSize = s.size,
+			textFont = s.font,
+			frame = centred(line, s.font, s.size, pad, width - pad * 2, pad + (i - 1) * lineHeight, lineHeight),
+		})
+	end
+
+	canvas:replaceElements(table.unpack(elements))
+
+	lastToastID = lastToastID + 1
+
+	local toast = { id = lastToastID, canvas = canvas, width = width, height = height }
+
+	table.insert(toasts, toast)
+	layoutToasts()
+	canvas:show()
+
+	if seconds then
+		toast.timer = hs.timer.doAfter(seconds, function()
+			M.closeToast(toast.id)
+		end)
+	end
+
+	return toast.id
 end
 
 return M
