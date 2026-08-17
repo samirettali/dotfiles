@@ -7,6 +7,8 @@ local CRITICAL = 90
 local IDLE_FREQ = 300
 local ALERT_FREQ = 60
 local MAX_ROWS = 8
+local CACHE_DIR = (os.getenv("HOME") or "") .. "/.cache/sketchybar"
+local CACHE_FILE = CACHE_DIR .. "/ai-usage.json"
 
 local usage = sbar.add("item", "usage", {
 	position = "right",
@@ -47,6 +49,29 @@ local poller = sbar.add("item", "usage.poller", {
 -- must not empty half of an open popup.
 local limits_by_provider = {}
 local provider_order = { "claude", "codex" }
+
+local function load_cache()
+	local handle = io.open(CACHE_FILE, "r")
+	if not handle then
+		return
+	end
+	local contents = handle:read("a")
+	handle:close()
+	local ok, cached = pcall(cjson.decode, contents)
+	if ok and type(cached) == "table" then
+		limits_by_provider = cached
+	end
+end
+
+local function save_cache()
+	os.execute(("mkdir -p %q"):format(CACHE_DIR))
+	local handle = io.open(CACHE_FILE, "w")
+	if not handle then
+		return
+	end
+	handle:write(cjson.encode(limits_by_provider))
+	handle:close()
+end
 
 local function color_for(percent)
 	if percent >= CRITICAL then
@@ -104,6 +129,7 @@ local function refresh()
 			return
 		end
 
+		local updated = false
 		for _, provider in ipairs(payload.providers) do
 			if not provider.error then
 				local limits = {}
@@ -115,9 +141,13 @@ local function refresh()
 					}
 				end
 				limits_by_provider[provider.key] = limits
+				updated = true
 			end
 		end
 
+		if updated then
+			save_cache()
+		end
 		render()
 	end)
 end
@@ -140,4 +170,6 @@ usage:subscribe("mouse.exited.global", function()
 	usage:set({ popup = { drawing = false } })
 end)
 
+load_cache()
+render()
 refresh()

@@ -83,7 +83,8 @@ Read until the response with the requested ID arrives instead of waiting for EOF
 
 Do not refresh or rewrite Claude's token.
 Claude Code owns it, and another writer would race with the CLI.
-Leave the existing item unchanged after a failed fetch so a temporary renewal never looks like reduced usage.
+Cache each provider's last successful limits across Sketchybar restarts.
+A failed fetch must keep those values so a temporary renewal or rate limit never empties the popup.
 
 Keep the timer on the invisible `usage.poller` item.
 One command serves both providers; attaching it to visible items would duplicate polling.
