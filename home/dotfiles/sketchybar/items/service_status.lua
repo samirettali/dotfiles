@@ -32,6 +32,20 @@ local providers = {
 			{ "Claude Console (platform.claude.com)", "Console" },
 		},
 	},
+	{
+		key = "openai",
+		icon = icons.status.openai,
+		icon_font = "sketchybar-app-font",
+		api = "https://status.openai.com/api/v2/summary.json",
+		page = "https://status.openai.com",
+		components = {
+			{ "Responses", "API" },
+			{ "Login", "Login" },
+			{ "Codex in ChatGPT Desktop", "Codex desktop" },
+			{ "Codex Web", "Codex web" },
+			{ "Agent", "Agent" },
+		},
+	},
 }
 
 local severity = {
@@ -60,7 +74,10 @@ for _, provider in ipairs(providers) do
 		drawing = false,
 		updates = "on",
 		update_freq = UPDATE_FREQ,
-		icon = { string = provider.icon },
+		icon = {
+			string = provider.icon,
+			font = provider.icon_font and { family = provider.icon_font } or nil,
+		},
 		label = { drawing = false },
 		popup = {
 			align = "right",
@@ -134,11 +151,13 @@ for _, provider in ipairs(providers) do
 
 			local worst = 0
 			local affected = {}
+			local seen = {}
 
 			for _, component in ipairs(summary.components) do
 				local short = watched[component.name]
 				local level = short and severity[component.status] or nil
-				if level then
+				if level and not seen[short] then
+					seen[short] = true
 					worst = math.max(worst, level)
 					affected[#affected + 1] = {
 						order = #affected,
