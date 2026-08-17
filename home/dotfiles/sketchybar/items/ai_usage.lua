@@ -92,13 +92,15 @@ local function rebuild_sections(limits_by_provider)
 	end
 end
 
--- One fetch answers for both providers, so a hidden item owns the timer.
-local poller = sbar.add("item", "usage.poller", {
-	position = "right",
-	drawing = false,
-	updates = "on",
-	update_freq = IDLE_FREQ,
-})
+local pollers = {}
+for _, key in ipairs(provider_order) do
+	pollers[key] = sbar.add("item", "usage.poller." .. key, {
+		position = "right",
+		drawing = false,
+		updates = "on",
+		update_freq = IDLE_FREQ,
+	})
+end
 
 local limits_by_provider = {}
 local updated_at_by_provider = {}
@@ -163,12 +165,14 @@ local function render()
 		local limits = limits_by_provider[key] or {}
 		local section = sections[key]
 		local stale = stale_providers[key] or false
+		local provider_worst = 0
 
 		section.header:set({ label = { drawing = stale } })
 
 		for index, row in ipairs(section.rows) do
 			local limit = limits[index]
 			if limit then
+				provider_worst = math.max(provider_worst, limit.percent)
 				worst = math.max(worst, limit.percent)
 				row:set({
 					drawing = true,
@@ -181,33 +185,33 @@ local function render()
 				row:set({ drawing = false })
 			end
 		end
+		pollers[key]:set({ update_freq = provider_worst >= WARN and ALERT_FREQ or IDLE_FREQ })
 	end
 
 	usage:set({ icon = { color = color_for(worst) } })
-	poller:set({ update_freq = worst >= WARN and ALERT_FREQ or IDLE_FREQ })
 end
 
-local function mark_all_stale()
-	for key in pairs(limits_by_provider) do
+local function mark_stale(key)
+	if limits_by_provider[key] then
 		stale_providers[key] = true
 	end
 	render()
 end
 
-local function refresh()
-	sbar.exec(AI_USAGE_BIN, function(out)
+local function refresh(key)
+	sbar.exec(("%s %s"):format(AI_USAGE_BIN, key), function(out)
 		local payload = out
 		if type(payload) == "string" then
 			local ok, decoded = pcall(cjson.decode, payload)
 			if not ok then
-				mark_all_stale()
+				mark_stale(key)
 				return
 			end
 			payload = decoded
 		end
 
 		if type(payload) ~= "table" or type(payload.providers) ~= "table" then
-			mark_all_stale()
+			mark_stale(key)
 			return
 		end
 
@@ -238,10 +242,20 @@ local function refresh()
 	end)
 end
 
-poller:subscribe({ "forced", "routine", "system_woke" }, refresh)
+for _, key in ipairs(provider_order) do
+	pollers[key]:subscribe({ "forced", "routine", "system_woke" }, function()
+		refresh(key)
+	end)
+end
 
-popup.setup(usage, refresh)
+popup.setup(usage, function()
+	for _, key in ipairs(provider_order) do
+		refresh(key)
+	end
+end)
 
 load_cache()
 render()
-refresh()
+for _, key in ipairs(provider_order) do
+	refresh(key)
+end

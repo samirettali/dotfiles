@@ -221,7 +221,14 @@ def codex() -> dict:
 
 
 def main() -> int:
-    json.dump({"providers": [claude(), codex()]}, sys.stdout)
+    providers = {"claude": claude, "codex": codex}
+    requested = sys.argv[1:] or list(providers)
+    unknown = [key for key in requested if key not in providers]
+    if unknown:
+        print(f"unknown provider: {', '.join(unknown)}", file=sys.stderr)
+        return 2
+
+    json.dump({"providers": [providers[key]() for key in requested]}, sys.stdout)
     sys.stdout.write("\n")
     return 0
 

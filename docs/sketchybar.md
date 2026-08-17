@@ -64,8 +64,8 @@ Each provider has its own header, separated from the next section by a subtle ru
 Only the `cached` suffix turns grey after that provider fails to refresh.
 `ai-usage` under `home/packages/shell/scripts/` prints both providers as JSON.
 
-Poll every five minutes below the threshold and every minute above it.
-Opening the popup refreshes it immediately.
+Poll each provider every five minutes below its own threshold and every minute above it.
+Opening the popup refreshes both providers immediately.
 
 Neither provider exposes a public usage API.
 The script borrows credentials owned by the corresponding CLI:
@@ -93,8 +93,8 @@ Claude Code owns it, and another writer would race with the CLI.
 Cache each provider's last successful limits and update time across Sketchybar restarts.
 A failed fetch must keep those values and mark that provider's header as cached so a temporary renewal or rate limit never empties the popup or looks fresh.
 
-Keep the timer on the invisible `usage.poller` item.
-One command serves both providers; attaching it to visible items would duplicate polling.
+Keep one invisible poller per provider.
+A high Codex window must not make the Claude endpoint run every minute, because their rate limits are independent.
 
 ## SbarLua callbacks
 
