@@ -2,6 +2,7 @@ sbar.add("event", "keyboard_layout_change")
 
 local item = sbar.add("item", "keyboard_layout", {
 	position = "right",
+	padding_left = 3,
 	icon = { drawing = false },
 })
 

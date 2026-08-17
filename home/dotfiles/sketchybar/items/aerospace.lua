@@ -79,6 +79,9 @@ local function initialize()
 				highlight = is_focused,
 				color = colors.grey,
 				highlight_color = colors.white,
+				-- Paddings are trimmed per item so every ink gap on the bar is 14.
+				padding_left = 3,
+				padding_right = 3,
 			},
 			click_script = AEROSPACE_BIN .. " workspace " .. workspace,
 		})
