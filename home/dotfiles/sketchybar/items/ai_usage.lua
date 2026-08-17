@@ -31,7 +31,7 @@ for index = 1, MAX_ROWS do
 	rows[index] = sbar.add("item", "usage.row." .. index, {
 		position = "popup.usage",
 		drawing = false,
-		icon = { string = "●", padding_right = 6 },
+		icon = { drawing = false },
 	})
 end
 
@@ -75,9 +75,9 @@ local function render()
 			local color = color_for(limit.percent)
 			row:set({
 				drawing = true,
-				icon = { color = color },
 				label = {
-					string = ("%s · %s · %d%%"):format(limit.provider, limit.label, limit.percent),
+					string = ("%-6s · %-5s · %3d%%"):format(limit.provider, limit.label, limit.percent),
+					color = color,
 				},
 			})
 		else
