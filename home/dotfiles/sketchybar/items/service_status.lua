@@ -1,6 +1,7 @@
 local cjson = require("cjson")
 local colors = require("colors")
 local icons = require("icons")
+local popup = require("popup")
 
 -- Statuspage (Atlassian) pages, one item per provider. Each item stays hidden
 -- while every watched component is operational and becomes an icon-only alert.
@@ -115,10 +116,6 @@ for _, provider in ipairs(providers) do
 		provider.api
 	)
 
-	local function close_popup()
-		item:set({ popup = { drawing = false } })
-	end
-
 	local function set_rows(affected)
 		for index, row in ipairs(rows) do
 			local component = affected[index]
@@ -192,13 +189,7 @@ for _, provider in ipairs(providers) do
 		refresh()
 	end)
 
-	item:subscribe("mouse.clicked", function()
-		local current = item:query()
-		local open = current and current.popup and current.popup.drawing == "on"
-		item:set({ popup = { drawing = not open } })
-	end)
-
-	item:subscribe("mouse.exited.global", close_popup)
+	popup.setup(item)
 
 	refresh(true)
 end

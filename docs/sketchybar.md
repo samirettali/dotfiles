@@ -46,6 +46,7 @@ Keep the item hidden when Spotify has no track, and derive Sottotesto links from
 
 Battery and volume keep only their state icon in the bar.
 Clicking either icon opens a one-line popup with its state and percentage.
+All popup items use `popup.lua`, which closes the previous popup before opening another.
 Battery color stays neutral normally, turns yellow or red when low, and green while charging or charged.
 
 GitHub, Anthropic, and OpenAI status items stay hidden while healthy and show only their severity-colored icon during an incident.

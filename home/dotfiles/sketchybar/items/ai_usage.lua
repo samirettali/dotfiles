@@ -1,6 +1,7 @@
 local cjson = require("cjson")
 local colors = require("colors")
 local icons = require("icons")
+local popup = require("popup")
 
 local WARN = 70
 local CRITICAL = 90
@@ -64,13 +65,14 @@ local function load_cache()
 end
 
 local function save_cache()
-	os.execute(("mkdir -p %q"):format(CACHE_DIR))
-	local handle = io.open(CACHE_FILE, "w")
-	if not handle then
-		return
-	end
-	handle:write(cjson.encode(limits_by_provider))
-	handle:close()
+	sbar.exec(("mkdir -p %q"):format(CACHE_DIR), function()
+		local handle = io.open(CACHE_FILE, "w")
+		if not handle then
+			return
+		end
+		handle:write(cjson.encode(limits_by_provider))
+		handle:close()
+	end)
 end
 
 local function color_for(percent)
@@ -154,21 +156,7 @@ end
 
 poller:subscribe({ "forced", "routine", "system_woke" }, refresh)
 
-usage:subscribe("mouse.clicked", function()
-	local current = usage:query()
-	local open = current and current.popup and current.popup.drawing == "on"
-	if open then
-		usage:set({ popup = { drawing = false } })
-		return
-	end
-
-	refresh()
-	usage:set({ popup = { drawing = true } })
-end)
-
-usage:subscribe("mouse.exited.global", function()
-	usage:set({ popup = { drawing = false } })
-end)
+popup.setup(usage, refresh)
 
 load_cache()
 render()

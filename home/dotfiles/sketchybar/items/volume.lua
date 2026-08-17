@@ -1,5 +1,6 @@
 local colors = require("colors")
 local icons = require("icons")
+local popup = require("popup")
 
 local volume = sbar.add("item", "widgets.volume", {
 	position = "right",
@@ -49,15 +50,7 @@ volume:subscribe("volume_change", function(env)
 	detail:set({ label = { string = ("%s · %d%%"):format(level == 0 and "Muted" or "Volume", level) } })
 end)
 
-volume:subscribe("mouse.clicked", function()
-	local current = volume:query()
-	local open = current and current.popup and current.popup.drawing == "on"
-	volume:set({ popup = { drawing = not open } })
-end)
-
-volume:subscribe("mouse.exited.global", function()
-	volume:set({ popup = { drawing = false } })
-end)
+popup.setup(volume)
 
 volume:subscribe("mouse.scrolled", function(env)
 	local delta = env.INFO.delta

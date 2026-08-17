@@ -1,5 +1,6 @@
 local colors = require("colors")
 local icons = require("icons")
+local popup = require("popup")
 
 local battery = sbar.add("item", "widgets.battery", {
 	position = "right",
@@ -66,12 +67,4 @@ battery:subscribe({ "routine", "power_source_change", "system_woke" }, function(
 	end)
 end)
 
-battery:subscribe("mouse.clicked", function()
-	local current = battery:query()
-	local open = current and current.popup and current.popup.drawing == "on"
-	battery:set({ popup = { drawing = not open } })
-end)
-
-battery:subscribe("mouse.exited.global", function()
-	battery:set({ popup = { drawing = false } })
-end)
+popup.setup(battery)

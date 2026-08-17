@@ -1,5 +1,6 @@
 local cjson = require("cjson")
 local colors = require("colors")
+local popup = require("popup")
 
 -- Agents waiting for you: blocked, and finished-but-unseen. Hidden while nothing
 -- is pending, like the status items, so it only shows up as something to act on.
@@ -56,10 +57,6 @@ for index = 1, MAX_ROWS do
 		icon = { string = DOT, padding_right = 6 },
 		label = { max_chars = 40 },
 	})
-end
-
-local function close_popup()
-	item:set({ popup = { drawing = false } })
 end
 
 local function read_pending()
@@ -134,15 +131,4 @@ item:subscribe("herdr_agents", function(env)
 	end
 end)
 
-item:subscribe("mouse.clicked", function()
-	local current = item:query()
-	local open = current and current.popup and current.popup.drawing == "on"
-	if open then
-		close_popup()
-		return
-	end
-	fill_popup()
-	item:set({ popup = { drawing = true } })
-end)
-
-item:subscribe("mouse.exited.global", close_popup)
+popup.setup(item, fill_popup)
