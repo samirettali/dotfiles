@@ -24,7 +24,7 @@ CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage"
 
 # Claude names its buckets by kind; `weekly_scoped` carries the model it applies
 # to (an Opus-only weekly cap, say) and is labelled with it instead.
-CLAUDE_LABELS = {"session": "5h", "weekly_all": "week"}
+CLAUDE_LABELS = {"session": "5h", "weekly_all": "7d"}
 
 
 def get_json(url: str, headers: dict[str, str]) -> dict:
@@ -99,7 +99,7 @@ def codex_window(window: dict | None) -> dict | None:
     hours = round(seconds / 3600)
     reset = window.get("reset_at")
     return {
-        "label": "week" if hours >= 144 else "day" if hours >= 24 else f"{hours}h",
+        "label": "7d" if hours >= 144 else "1d" if hours >= 24 else f"{hours}h",
         "percent": window.get("used_percent") or 0,
         "resets_at": time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(reset)) if reset else None,
     }

@@ -59,7 +59,8 @@ Poll each provider every minute while healthy and every 15 seconds during an inc
 
 `items/ai_usage.lua` keeps one usage icon visible and puts every Claude and Codex limit in its popup.
 The icon and popup rows turn yellow at 70% and red at 90%.
-Round fractional usage up, add popup rows as providers expose them, and show cached-value age after a failed refresh.
+Round fractional usage up and add popup rows as providers expose them.
+A single header marks the popup as cached after a failed refresh, without adding metadata to every row.
 `ai-usage` under `home/packages/shell/scripts/` prints both providers as JSON.
 
 Poll every five minutes below the threshold and every minute above it.
@@ -73,7 +74,7 @@ The script borrows credentials owned by the corresponding CLI:
 - Codex stores its token in `~/.codex/auth.json`.
   Fetch `chatgpt.com/backend-api/wham/usage`.
 
-Label Codex windows from `limit_window_seconds`, not from primary or secondary position.
+Label windows by duration (`5h`, `1d`, or `7d`), not from primary or secondary position.
 The number and order of returned windows can change.
 
 Codex tokens expire quickly.
@@ -89,7 +90,7 @@ Read until the response with the requested ID arrives instead of waiting for EOF
 Do not refresh or rewrite Claude's token.
 Claude Code owns it, and another writer would race with the CLI.
 Cache each provider's last successful limits and update time across Sketchybar restarts.
-A failed fetch must keep those values and mark their age so a temporary renewal or rate limit never empties the popup or looks fresh.
+A failed fetch must keep those values and mark the popup header as cached so a temporary renewal or rate limit never empties the popup or looks fresh.
 
 Keep the timer on the invisible `usage.poller` item.
 One command serves both providers; attaching it to visible items would duplicate polling.

@@ -28,6 +28,12 @@ local usage = sbar.add("item", "usage", {
 	},
 })
 
+local header = sbar.add("item", "usage.header", {
+	position = "popup.usage",
+	icon = { drawing = false },
+	label = { string = "AI usage", font = { style = "Bold" } },
+})
+
 local rows = {}
 local function ensure_rows(count)
 	for index = #rows + 1, count do
@@ -72,6 +78,9 @@ local function load_cache()
 		stale_providers[key] = true
 		for _, limit in ipairs(limits) do
 			limit.percent = math.ceil(tonumber(limit.percent) or 0)
+			if limit.label == "week" then
+				limit.label = "7d"
+			end
 		end
 	end
 end
@@ -100,46 +109,38 @@ local function color_for(percent)
 	return colors.white
 end
 
-local function age(updated_at)
-	if not updated_at or updated_at == 0 then
-		return "stale"
-	end
-	local seconds = math.max(0, os.time() - updated_at)
-	if seconds < 60 then
-		return "<1m old"
-	end
-	if seconds < 3600 then
-		return ("%dm old"):format(math.floor(seconds / 60))
-	end
-	return ("%dh old"):format(math.floor(seconds / 3600))
-end
-
 local function render()
 	local limits = {}
 	local worst = 0
+	local any_stale = false
 
 	for _, key in ipairs(provider_order) do
+		any_stale = any_stale or stale_providers[key] or false
 		for _, limit in ipairs(limits_by_provider[key] or {}) do
 			limits[#limits + 1] = {
 				provider = limit.provider,
 				label = limit.label,
 				percent = limit.percent,
-				stale = stale_providers[key],
-				updated_at = updated_at_by_provider[key],
 			}
 			worst = math.max(worst, limit.percent)
 		end
 	end
 
+	header:set({
+		label = {
+			string = any_stale and "AI usage · cached" or "AI usage",
+			color = any_stale and colors.grey70 or colors.white,
+		},
+	})
+
 	ensure_rows(#limits)
 	for index, row in ipairs(rows) do
 		local limit = limits[index]
 		if limit then
-			local suffix = limit.stale and (" · %s"):format(age(limit.updated_at)) or ""
 			row:set({
 				drawing = true,
 				label = {
-					string = ("%-6s · %-5s · %3d%%%s"):format(limit.provider, limit.label, limit.percent, suffix),
+					string = ("%-6s · %-5s · %3d%%"):format(limit.provider, limit.label, limit.percent),
 					color = color_for(limit.percent),
 				},
 			})
@@ -185,7 +186,7 @@ local function refresh()
 				for _, window in ipairs(provider.windows or {}) do
 					limits[#limits + 1] = {
 						provider = provider.name,
-						label = window.label,
+						label = window.label == "week" and "7d" or window.label,
 						-- Conservative display: never show less usage than the API returned.
 						percent = math.ceil(tonumber(window.percent) or 0),
 					}
