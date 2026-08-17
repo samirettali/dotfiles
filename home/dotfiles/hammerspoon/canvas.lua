@@ -29,19 +29,26 @@ local function fade(color, alpha)
 	return faded
 end
 
--- Same geometry as hs.alert, so this matches the RecursiveBinder helper: one
--- stroked-and-filled path over the whole canvas. The stroke is centred on that
--- path, so the outer half is clipped away and a strokeWidth of 2 reads as 1.
--- Insetting it instead would draw a border twice as thick as every alert.
-local function chrome(_, _, s)
+-- One stroked-and-filled path, drawn fully inside the canvas. Over the whole
+-- canvas instead, the stroke would be centred on its edge and the outer half
+-- clipped away: along the sides that clip is straight, but across the corner
+-- arc it cuts on the diagonal and leaves the curve thinner and softer than the
+-- run of border either side of it. Half the declared width is what survived
+-- that clip, so drawing that half inset keeps the weight it used to read at.
+local function chrome(width, height, s)
+	local line = s.strokeWidth / 2
+
 	return {
 		{
 			type = "rectangle",
 			action = "strokeAndFill",
 			fillColor = s.fill,
 			strokeColor = s.stroke,
-			strokeWidth = s.strokeWidth,
+			strokeWidth = line,
 			roundedRectRadii = { xRadius = s.radius, yRadius = s.radius },
+			-- centred on line/2 the stroke lands between two whole pixels, so
+			-- on a 1x display it covers one of them rather than half of each
+			frame = { x = line / 2, y = line / 2, w = width - line, h = height - line },
 		},
 	}
 end
@@ -63,14 +70,21 @@ local function textWidth(text, font, size)
 	return (utf8.len(text) or #text) * size * 0.6
 end
 
+-- widths come from measuring text and land on fractions of a point. A panel
+-- placed on one renders every edge across two pixels at half strength, which
+-- on a display at 1x is the whole of what makes it look soft, so snap first.
+local function snap(value)
+	return math.floor(value + 0.5)
+end
+
 local function geometry(width, height, y)
 	local screen = hs.screen.mainScreen():fullFrame()
 
 	return {
-		x = screen.x + (screen.w - width) / 2,
-		y = y or (screen.y + screen.h * (1 - 1 / 1.55) + 55),
-		w = width,
-		h = height,
+		x = snap(screen.x + (screen.w - width) / 2),
+		y = snap(y or (screen.y + screen.h * (1 - 1 / 1.55) + 55)),
+		w = snap(width),
+		h = snap(height),
 	}
 end
 
@@ -166,8 +180,8 @@ function M.prompt(opts)
 	end
 
 	local s = resolveStyle(opts)
-	local width = opts.width or 600
-	local height = opts.height or 100
+	local width = snap(opts.width or 600)
+	local height = snap(opts.height or 100)
 	local pad = 16
 	local titleSize = opts.promptTextSize or math.max(14, s.size - 4)
 	local titleHeight = titleSize + 6
@@ -295,7 +309,7 @@ function M.picker(opts)
 	local s = resolveStyle(opts)
 	local choices = opts.choices or {}
 	local maxRows = opts.rows or 8
-	local width = opts.width or 620
+	local width = snap(opts.width or 620)
 	local pad = 16
 	local titleSize = math.max(14, s.size - 4)
 	local titleHeight = titleSize + 6
@@ -376,7 +390,7 @@ function M.picker(opts)
 
 	render = function()
 		local rows = math.max(shown(), 1)
-		local height = pad + titleHeight + queryHeight + gap + rows * rowHeight + pad
+		local height = snap(pad + titleHeight + queryHeight + gap + rows * rowHeight + pad)
 
 		-- the top edge stays put and the box grows downwards, so the list
 		-- does not jump around as the query narrows it
@@ -661,7 +675,7 @@ function M.helper(entries, opts)
 	keyWidth, nameWidth = keyWidth + 1, nameWidth + 1
 
 	local arrowWidth = textWidth(arrow, s.font, s.size) + 1
-	local width = pad * 2 + keyWidth + gap + arrowWidth + gap + nameWidth
+	local width = snap(pad * 2 + keyWidth + gap + arrowWidth + gap + nameWidth)
 	local nameX = pad + keyWidth + gap + arrowWidth + gap
 
 	-- the first leaf action, and so where the rule goes; nil when the layer
@@ -676,7 +690,7 @@ function M.helper(entries, opts)
 	end
 
 	local ruleGap = ruleAt and 13 or 0
-	local height = pad * 2 + #rows * lineHeight + ruleGap
+	local height = snap(pad * 2 + #rows * lineHeight + ruleGap)
 	local screen = hs.screen.mainScreen():fullFrame()
 
 	helperCanvas = newCanvas(width, height, screen.y + (screen.h - height) / 2)
@@ -690,7 +704,7 @@ function M.helper(entries, opts)
 			fillColor = fade(s.stroke, 0.25),
 			frame = {
 				x = pad,
-				y = pad + (ruleAt - 1) * lineHeight + ruleGap / 2,
+				y = snap(pad + (ruleAt - 1) * lineHeight + ruleGap / 2),
 				w = width - pad * 2,
 				h = 1,
 			},
@@ -698,7 +712,7 @@ function M.helper(entries, opts)
 	end
 
 	for i, row in ipairs(rows) do
-		local y = pad + (i - 1) * lineHeight + (ruleAt and i >= ruleAt and ruleGap or 0)
+		local y = snap(pad + (i - 1) * lineHeight + (ruleAt and i >= ruleAt and ruleGap or 0))
 
 		-- the key is the only thing to read, so it alone is at full white; the
 		-- arrow is punctuation, and a leaf action needs less weight than the
