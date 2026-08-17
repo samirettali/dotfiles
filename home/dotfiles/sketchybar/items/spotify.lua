@@ -1,9 +1,13 @@
+local colors = require("colors")
 local icons = require("icons")
 
 local spotify = sbar.add("item", "spotify", {
 	position = "right",
 	drawing = false,
-	icon = { string = icons.spotify },
+	icon = {
+		string = icons.spotify,
+		color = colors.spotify,
+	},
 })
 
 local current_track_id
