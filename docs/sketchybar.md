@@ -46,17 +46,20 @@ Keep the item hidden when Spotify has no track, and derive Sottotesto links from
 
 Battery and volume keep only their state icon in the bar.
 Clicking either icon opens a one-line popup with its state and percentage.
+The volume popup queries macOS separately so muting does not erase the configured percentage.
 All popup items use `popup.lua`, which closes the previous popup before opening another.
 Battery color stays neutral normally, turns yellow or red when low, and green while charging or charged.
 
 GitHub, Anthropic, and OpenAI status items stay hidden while healthy and show only their severity-colored icon during an incident.
 Clicking an incident icon opens the affected component names, colored by severity.
 Clicking a component opens the corresponding provider status page.
+Poll each provider every minute while healthy and every 15 seconds during an incident.
 
 ## AI subscription usage
 
 `items/ai_usage.lua` keeps one usage icon visible and puts every Claude and Codex limit in its popup.
 The icon and popup rows turn yellow at 70% and red at 90%.
+Round fractional usage up, add popup rows as providers expose them, and show cached-value age after a failed refresh.
 `ai-usage` under `home/packages/shell/scripts/` prints both providers as JSON.
 
 Poll every five minutes below the threshold and every minute above it.
@@ -76,6 +79,7 @@ The number and order of returned windows can change.
 Codex tokens expire quickly.
 When the direct request fails, fall back to `codex app-server` and call `account/rateLimits/read`.
 The app server refreshes the token and returns equivalent data.
+Read its long-lived stdout with a real deadline and always reap the process.
 A stale token can produce Cloudflare 403 HTML rather than a JSON 401.
 
 Discover app-server methods with `codex app-server generate-json-schema --out <dir>`.
@@ -84,8 +88,8 @@ Read until the response with the requested ID arrives instead of waiting for EOF
 
 Do not refresh or rewrite Claude's token.
 Claude Code owns it, and another writer would race with the CLI.
-Cache each provider's last successful limits across Sketchybar restarts.
-A failed fetch must keep those values so a temporary renewal or rate limit never empties the popup.
+Cache each provider's last successful limits and update time across Sketchybar restarts.
+A failed fetch must keep those values and mark their age so a temporary renewal or rate limit never empties the popup or looks fresh.
 
 Keep the timer on the invisible `usage.poller` item.
 One command serves both providers; attaching it to visible items would duplicate polling.

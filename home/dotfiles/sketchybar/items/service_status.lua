@@ -61,7 +61,8 @@ local severity_color = {
 	[3] = colors.red,
 }
 
-local UPDATE_FREQ = 15
+local HEALTHY_FREQ = 60
+local INCIDENT_FREQ = 15
 local CACHE_DIR = (os.getenv("HOME") or "") .. "/.cache/sketchybar"
 
 for _, provider in ipairs(providers) do
@@ -74,7 +75,7 @@ for _, provider in ipairs(providers) do
 		position = "right",
 		drawing = false,
 		updates = "on",
-		update_freq = UPDATE_FREQ,
+		update_freq = HEALTHY_FREQ,
 		icon = {
 			string = provider.icon,
 			font = provider.icon_font and { family = provider.icon_font } or nil,
@@ -166,7 +167,11 @@ for _, provider in ipairs(providers) do
 
 			if worst == 0 then
 				set_rows({})
-				item:set({ drawing = false, popup = { drawing = false } })
+				item:set({
+					drawing = false,
+					update_freq = HEALTHY_FREQ,
+					popup = { drawing = false },
+				})
 				return
 			end
 
@@ -180,6 +185,7 @@ for _, provider in ipairs(providers) do
 			set_rows(affected)
 			item:set({
 				drawing = true,
+				update_freq = INCIDENT_FREQ,
 				icon = { color = severity_color[worst] },
 			})
 		end)

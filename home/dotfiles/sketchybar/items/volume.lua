@@ -24,30 +24,35 @@ local detail = sbar.add("item", "widgets.volume.detail", {
 	icon = { drawing = false },
 })
 
-volume:subscribe("volume_change", function(env)
-	local level = tonumber(env.INFO)
-	if not level then
-		return
-	end
-
+local function update(level, muted)
 	local icon = icons.volume._0
-	if level > 60 then
+	if not muted and level > 60 then
 		icon = icons.volume._100
-	elseif level > 30 then
+	elseif not muted and level > 30 then
 		icon = icons.volume._66
-	elseif level > 10 then
+	elseif not muted and level > 10 then
 		icon = icons.volume._33
-	elseif level > 0 then
+	elseif not muted and level > 0 then
 		icon = icons.volume._10
 	end
 
 	volume:set({
 		icon = {
 			string = icon,
-			color = level == 0 and colors.grey70 or colors.white,
+			color = muted and colors.grey70 or colors.white,
 		},
 	})
-	detail:set({ label = { string = ("%s · %d%%"):format(level == 0 and "Muted" or "Volume", level) } })
+	detail:set({ label = { string = ("%s · %d%%"):format(muted and "Muted" or "Volume", level) } })
+end
+
+volume:subscribe("volume_change", function()
+	sbar.exec("osascript -e 'get volume settings'", function(settings)
+		local level = tonumber(settings:match("output volume:(%d+)"))
+		local muted = settings:match("output muted:(%a+)")
+		if level and muted then
+			update(level, muted == "true")
+		end
+	end)
 end)
 
 popup.setup(volume)
