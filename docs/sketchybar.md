@@ -35,6 +35,12 @@ Nothing polls.
   `/etc/profiles/per-user/$USER/bin`.
 - Log every watcher failure because click scripts and background agents otherwise fail silently.
 
+## Spotify now playing
+
+`items/spotify.lua` listens to Spotify's distributed playback notification, so track changes need no polling.
+It queries Spotify once through JXA when Sketchybar starts because distributed notifications carry no retained state.
+Keep the item hidden when Spotify has no track, and derive Sottotesto links from the notification's track URI.
+
 ## AI subscription usage
 
 `items/ai_usage.lua` shows Claude and Codex plan usage.

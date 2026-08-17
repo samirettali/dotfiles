@@ -2,6 +2,7 @@ local icons = {
 	keyboard = "󰌌",
 	clock = "󰥔",
 	error = " ",
+	spotify = "",
 
 	herdr = "\u{f0a0b}",
 
