@@ -45,10 +45,14 @@ Keep the item hidden when Spotify has no track, and derive Sottotesto links from
 ## Compact system widgets
 
 Battery and volume keep only their state icon in the bar.
-Clicking either icon opens a one-line popup with its state and percentage.
+Clicking either icon opens its popup.
+The volume popup is a single slider: it reports the level and sets it where you click.
+Sketchybar delivers a slider click in `PERCENTAGE`, not inside `INFO`, and reports nothing during a drag.
+Subscribe the slider to `mouse.scrolled` as well, because the wheel is what gives continuous feedback.
 The volume popup queries macOS separately so muting does not erase the configured percentage.
 All popup items use `popup.lua`, which closes the previous popup before opening another.
-Battery color stays neutral normally, turns yellow or red when low, and green while charging or charged.
+Battery color stays neutral normally and turns yellow or red when low.
+Charging needs no colour of its own: the glyph already carries the bolt.
 
 GitHub, Anthropic, and OpenAI status items stay hidden while healthy and show only their severity-colored icon during an incident.
 Clicking an incident icon opens the affected component names, colored by severity.
@@ -58,14 +62,24 @@ Poll each provider every minute while healthy and every 15 seconds during an inc
 ## AI subscription usage
 
 `items/ai_usage.lua` keeps one usage icon visible and puts every Claude and Codex limit in its popup.
-The icon and popup rows turn yellow at 70% and red at 90%.
+Each row is a Sketchybar slider: window on the left, filled bar, percentage on the right.
+The icon, the bar and the percentage turn yellow at 70% and red at 90%.
 Round fractional usage up and add popup rows as providers expose them.
-Each provider has its own header, separated from the next section by a subtle rule.
-Only the `cached` suffix turns grey after that provider fails to refresh.
-`ai-usage` under `home/packages/shell/scripts/` prints both providers as JSON.
+Each provider has its own header, and only its `(cached)` suffix turns grey after that provider fails to refresh.
+`ai-usage` under `home/packages/shell/scripts/` prints the providers as JSON.
 
-Poll each provider every five minutes below its own threshold and every minute above it.
-Opening the popup refreshes both providers immediately.
+Rows carry the reset instant, right-aligned in a fixed field so the times stack in one column.
+The weekday appears only beyond twenty hours, which keeps the short windows narrow.
+Clicking a row or a header opens that provider's usage page, taken from the `url` the script returns.
+
+Poll each credential source every five minutes below its own threshold and every minute above it.
+Opening the popup refreshes both sources immediately.
+
+One poller may own several providers.
+A model-scoped Claude cap becomes its own section, keyed `claude.<model>` and named after the model,
+because its percentage is not overall plan usage and reading it as such is wrong.
+Sections, names and URLs come from the data and are cached, so a new scoped model needs no code change.
+A failed fetch marks every provider of that poller as cached and empties nothing.
 
 Neither provider exposes a public usage API.
 The script borrows credentials owned by the corresponding CLI:
@@ -95,6 +109,18 @@ A failed fetch must keep those values and mark that provider's header as cached 
 
 Keep one invisible poller per provider.
 A high Codex window must not make the Claude endpoint run every minute, because their rate limits are independent.
+
+## Spacing and separators
+
+`separator.lua` adds a thin `|` between groups, and `items/init.lua` places one between the `require` calls.
+Right-side items render in creation order, rightmost first, so the position follows from where the call sits.
+Give the separator label an explicit width: Sketchybar sizes a label from the glyph's tight bounding box,
+and the pipe's is two pixels wide, so without a width the character is clipped away entirely.
+
+Every visible gap on the bar is 14 points, measured on ink rather than on item boxes.
+Equal padding still looks unequal, because each glyph leaves a different amount of empty box around itself.
+Balance a gap by trimming the padding of one neighbour, and check the result on a screenshot instead of guessing.
+Digits stay one point apart even in a monospace font, which guarantees equal advance, not equal ink.
 
 ## SbarLua callbacks
 
