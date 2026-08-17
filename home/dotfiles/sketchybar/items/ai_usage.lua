@@ -28,20 +28,46 @@ local usage = sbar.add("item", "usage", {
 	},
 })
 
-local header = sbar.add("item", "usage.header", {
-	position = "popup.usage",
-	icon = { drawing = false },
-	label = { string = "AI usage", font = { style = "Bold" } },
-})
+local provider_order = { "claude", "codex" }
+local provider_names = { claude = "Claude", codex = "Codex" }
+local sections = {}
+for _, key in ipairs(provider_order) do
+	sections[key] = {
+		header = sbar.add("item", "usage." .. key .. ".header", {
+			position = "popup.usage",
+			icon = { drawing = false },
+			label = { string = provider_names[key], font = { style = "Bold" } },
+		}),
+		rows = {},
+	}
+end
 
-local rows = {}
-local function ensure_rows(count)
+local function ensure_rows(key, count)
+	local rows = sections[key].rows
 	for index = #rows + 1, count do
-		rows[index] = sbar.add("item", "usage.row." .. index, {
+		rows[index] = sbar.add("item", ("usage.%s.row.%d"):format(key, index), {
 			position = "popup.usage",
 			drawing = false,
 			icon = { drawing = false },
 		})
+	end
+end
+
+local function order_popup()
+	local names = {}
+	for _, key in ipairs(provider_order) do
+		names[#names + 1] = sections[key].header.name
+		for _, row in ipairs(sections[key].rows) do
+			names[#names + 1] = row.name
+		end
+	end
+
+	local moves = {}
+	for index = 2, #names do
+		moves[#moves + 1] = ("--move %s after %s"):format(names[index], names[index - 1])
+	end
+	if #moves > 0 then
+		sbar.exec(SKETCHYBAR_BIN .. " " .. table.concat(moves, " "))
 	end
 end
 
@@ -56,7 +82,6 @@ local poller = sbar.add("item", "usage.poller", {
 local limits_by_provider = {}
 local updated_at_by_provider = {}
 local stale_providers = {}
-local provider_order = { "claude", "codex" }
 
 local function load_cache()
 	local handle = io.open(CACHE_FILE, "r")
@@ -110,45 +135,39 @@ local function color_for(percent)
 end
 
 local function render()
-	local limits = {}
 	local worst = 0
-	local any_stale = false
 
 	for _, key in ipairs(provider_order) do
-		any_stale = any_stale or stale_providers[key] or false
-		for _, limit in ipairs(limits_by_provider[key] or {}) do
-			limits[#limits + 1] = {
-				provider = limit.provider,
-				label = limit.label,
-				percent = limit.percent,
-			}
-			worst = math.max(worst, limit.percent)
+		local limits = limits_by_provider[key] or {}
+		local section = sections[key]
+		local stale = stale_providers[key] or false
+
+		section.header:set({
+			label = {
+				string = stale and (provider_names[key] .. " · cached") or provider_names[key],
+				color = stale and colors.grey70 or colors.white,
+			},
+		})
+
+		ensure_rows(key, #limits)
+		for index, row in ipairs(section.rows) do
+			local limit = limits[index]
+			if limit then
+				worst = math.max(worst, limit.percent)
+				row:set({
+					drawing = true,
+					label = {
+						string = ("%-5s · %3d%%"):format(limit.label, limit.percent),
+						color = color_for(limit.percent),
+					},
+				})
+			else
+				row:set({ drawing = false })
+			end
 		end
 	end
 
-	header:set({
-		label = {
-			string = any_stale and "AI usage · cached" or "AI usage",
-			color = any_stale and colors.grey70 or colors.white,
-		},
-	})
-
-	ensure_rows(#limits)
-	for index, row in ipairs(rows) do
-		local limit = limits[index]
-		if limit then
-			row:set({
-				drawing = true,
-				label = {
-					string = ("%-6s · %-5s · %3d%%"):format(limit.provider, limit.label, limit.percent),
-					color = color_for(limit.percent),
-				},
-			})
-		else
-			row:set({ drawing = false })
-		end
-	end
-
+	order_popup()
 	usage:set({ icon = { color = color_for(worst) } })
 	poller:set({ update_freq = worst >= WARN and ALERT_FREQ or IDLE_FREQ })
 end
@@ -185,7 +204,6 @@ local function refresh()
 				local limits = {}
 				for _, window in ipairs(provider.windows or {}) do
 					limits[#limits + 1] = {
-						provider = provider.name,
 						label = window.label == "week" and "7d" or window.label,
 						-- Conservative display: never show less usage than the API returned.
 						percent = math.ceil(tonumber(window.percent) or 0),

@@ -60,7 +60,7 @@ Poll each provider every minute while healthy and every 15 seconds during an inc
 `items/ai_usage.lua` keeps one usage icon visible and puts every Claude and Codex limit in its popup.
 The icon and popup rows turn yellow at 70% and red at 90%.
 Round fractional usage up and add popup rows as providers expose them.
-A single header marks the popup as cached after a failed refresh, without adding metadata to every row.
+Each provider has its own header, which marks only that section as cached after a failed refresh.
 `ai-usage` under `home/packages/shell/scripts/` prints both providers as JSON.
 
 Poll every five minutes below the threshold and every minute above it.
@@ -90,7 +90,7 @@ Read until the response with the requested ID arrives instead of waiting for EOF
 Do not refresh or rewrite Claude's token.
 Claude Code owns it, and another writer would race with the CLI.
 Cache each provider's last successful limits and update time across Sketchybar restarts.
-A failed fetch must keep those values and mark the popup header as cached so a temporary renewal or rate limit never empties the popup or looks fresh.
+A failed fetch must keep those values and mark that provider's header as cached so a temporary renewal or rate limit never empties the popup or looks fresh.
 
 Keep the timer on the invisible `usage.poller` item.
 One command serves both providers; attaching it to visible items would duplicate polling.
