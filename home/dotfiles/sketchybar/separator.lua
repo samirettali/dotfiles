@@ -8,7 +8,7 @@ local separator = {}
 -- unequal because each neighbour leaves a different amount of empty box around
 -- its glyph, so the gaps are balanced by ink, measured from a screenshot.
 function separator.add(name, nudge)
-	sbar.add("item", "separator." .. name, {
+	return sbar.add("item", "separator." .. name, {
 		position = "right",
 		icon = { drawing = false },
 		-- Sketchybar sizes a label from the glyph's tight bounding box, and the
