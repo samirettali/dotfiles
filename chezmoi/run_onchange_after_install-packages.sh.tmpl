@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Install what the Brewfile declares. chezmoi runs this only when the Brewfile
+# changes, because its hash is part of this script.
+# Brewfile hash: {{ include "dot_Brewfile" | sha256sum }}
+
+set -eu
+
+command -v brew >/dev/null 2>&1 || PATH=/opt/homebrew/bin:$PATH
+export PATH
+
+if ! command -v brew >/dev/null 2>&1; then
+    echo "Homebrew is not installed, skipping the Brewfile." >&2
+    exit 0
+fi
+
+# --no-upgrade keeps apply predictable. Run `brew bundle --global` by hand to
+# move every package to its latest version.
+brew bundle --global --no-upgrade

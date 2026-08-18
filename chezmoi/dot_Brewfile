@@ -1,0 +1,145 @@
+tap "common-fate/granted"
+tap "hashicorp/tap"
+tap "homebrew/bundle"
+tap "homebrew/services"
+tap "marcfrederick/tap"
+tap "modem-dev/tap"
+tap "ngrok/ngrok"
+tap "samirettali/tap", trusted: true
+# Apple Intelligence from the command-line, with OpenAi-compatible API server
+brew "apfel"
+# Command-line interface for SQLite
+brew "sqlite"
+# Official Amazon AWS command-line interface
+brew "awscli"
+# Incredibly fast JavaScript runtime, bundler, test runner, and package manager
+brew "bun"
+# Manage your dotfiles across multiple diverse machines, securely
+brew "chezmoi"
+# Dependency manager for Cocoa projects
+brew "cocoapods"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Load/unload environment variables based on $PWD
+brew "direnv"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# User-friendly command-line shell for UNIX-like operating systems
+brew "fish"
+# Blazing fast, portable and modular toolkit for Ethereum application development
+brew "foundry"
+# Manage Flutter SDK versions per project
+brew "fvm"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GitHub command-line tool
+brew "gh"
+# Distributed revision control system
+brew "git"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
+# Agent multiplexer that lives in your terminal
+brew "herdr"
+# Textual User Interface for interacting with Atlassian Jira from your shell
+brew "jiratui"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Generic command-line non-JVM Apache Kafka producer and consumer
+brew "kcat"
+# Simple terminal UI for git commands
+brew "lazygit"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
+# MongoDB Shell to connect, configure, query, and work with your MongoDB database
+brew "mongosh"
+# Collection of tools that nobody wrote when UNIX was young
+brew "moreutils"
+# NCurses Disk Usage
+brew "ncdu"
+# Incremental parsing library
+brew "tree-sitter"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim", args: ["HEAD"]
+# Package manager for Microsoft development platform including .NET
+brew "nuget"
+# Development kit for the Java programming language
+brew "openjdk@17"
+# Fast, disk space efficient package manager
+brew "pnpm"
+# Persistent key-value database, with built-in net interface
+brew "redis"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Fast and accurate code counter with complexity and COCOMO estimates
+brew "scc"
+# Smart session manager for the terminal
+brew "sesh"
+# Microsoft SQL Server command-line interface
+brew "sqlcmd"
+# Easiest, most secure way to use WireGuard and 2FA
+brew "tailscale", restart_service: :changed
+# Terminal multiplexer
+brew "tmux"
+# CLI tool that moves files or folder to the trash
+brew "trash"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Extraction utility for .zip compressed archives
+brew "unzip"
+# Extremely fast Python package installer and resolver, written in Rust
+brew "uv"
+# Execute commands when watched files change
+brew "watchexec"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# Desktop-inspired terminal diff viewer for agent-authored changesets
+brew "modem-dev/tap/hunk", trusted: true
+# Command-line tools for building and debugging Android apps
+cask "android-commandlinetools"
+# Android SDK component
+cask "android-platform-tools"
+# Developer platform
+cask "dotnet-sdk"
+# System-wide audio equaliser
+cask "eqmac"
+# UI toolkit for building applications for mobile, web and desktop
+cask "flutter"
+cask "font-jetbrains-mono-nerd-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
+# Desktop automation application
+cask "hammerspoon"
+# Reverse proxy, secure introspectable tunnels to localhost
+cask "ngrok"
+# Menu bar live prices and clocks
+cask "samirettali/tap/pulse", trusted: true
+# GUI for streamlined Redis application development
+cask "redis-insight"
+# Minimal menu bar dictation
+cask "samirettali/tap/sottovoce", trusted: true
+go "github.com/air-verse/air"
+go "github.com/go-delve/delve/cmd/dlv"
+go "mvdan.cc/gofumpt"
+go "golang.org/x/tools/cmd/goimports"
+go "github.com/golangci/golangci-lint/cmd/golangci-lint"
+go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
+go "github.com/haya14busa/goplay/cmd/goplay"
+go "golang.org/x/tools/gopls"
+go "github.com/josharian/impl"
+go "go.uber.org/mock/mockgen"
+go "github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen"
+go "google.golang.org/protobuf/cmd/protoc-gen-go"
+go "google.golang.org/grpc/cmd/protoc-gen-go-grpc"
+go "github.com/mgechev/revive"
+go "github.com/samirettali/spotctl"
+go "github.com/swaggo/swag/cmd/swag"
+npm "@github/copilot-language-server"
+npm "bash-language-server"
+npm "eslint_d"
+npm "eslint"
+npm "prettier"
+npm "typescript-language-server"
+npm "typescript"
+npm "vscode-langservers-extracted"
