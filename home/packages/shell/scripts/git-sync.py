@@ -39,7 +39,8 @@ def git(*args: str, cwd: Path | None = None) -> str:
         text=True,
     )
     if done.returncode != 0:
-        raise Failure((done.stderr or done.stdout).strip().splitlines()[-1])
+        lines = (done.stderr or done.stdout).strip().splitlines()
+        raise Failure(lines[-1] if lines else f"git {args[0]} exited with {done.returncode}")
     return done.stdout.strip()
 
 
