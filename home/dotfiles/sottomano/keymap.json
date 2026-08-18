@@ -1,0 +1,58 @@
+{
+  "hotkey": { "key": "space", "modifiers": ["command"] },
+  "entries": [
+    { "key": "b", "name": "browser", "launch": "Firefox" },
+    { "key": "t", "name": "terminal", "launch": "Ghostty" },
+    {
+      "key": "o",
+      "name": "open",
+      "entries": [
+        { "key": "c", "name": "code", "launch": "Visual Studio Code" },
+        { "key": "d", "name": "discord", "launch": "Discord" },
+        { "key": "e", "name": "eqMac", "launch": "eqMac" },
+        { "key": "f", "name": "finder", "launch": "Finder" },
+        { "key": "m", "name": "monitor", "launch": "Activity Monitor" },
+        { "key": "o", "name": "obsidian", "launch": "Obsidian" },
+        { "key": "p", "name": "preferences", "launch": "System Settings" },
+        { "key": "s", "name": "spotify", "launch": "Spotify" },
+        { "key": "z", "name": "zed", "launch": "Zed" }
+      ]
+    },
+    {
+      "key": "w",
+      "name": "work",
+      "entries": [
+        { "key": "c", "name": "compass", "launch": "MongoDB Compass" },
+        { "key": "d", "name": "datagrip", "launch": "DataGrip" },
+        { "key": "p", "name": "postman", "launch": "Postman" },
+        { "key": "r", "name": "redis", "launch": "Redis Insight" },
+        { "key": "s", "name": "slack", "launch": "Slack" }
+      ]
+    },
+    {
+      "key": "p",
+      "name": "paste",
+      "entries": [
+        { "key": "e", "name": "email", "type": "samir@ettali.com" },
+        { "key": "u", "name": "username", "type": "samirettali" },
+        { "key": "t", "name": "timestamp", "typeOutput": ["/bin/date", "+%s"] },
+        { "key": "d", "name": "date", "typeOutput": ["/bin/date", "-u", "+%Y-%m-%d %H:%M:%S"] },
+        { "key": "g", "name": "uuid", "typeOutput": ["/usr/bin/uuidgen"] }
+      ]
+    },
+    {
+      "key": "s",
+      "name": "search",
+      "entries": [
+        { "key": "c", "name": "code", "search": "https://github.com/search?q={}&type=code" },
+        { "key": "g", "name": "google", "search": "https://google.com/search?q={}" },
+        { "key": "m", "name": "maps", "search": "https://www.google.com/maps/search/{}" },
+        { "key": "n", "name": "nixos", "search": "https://mynixos.com/search?q={}" },
+        { "key": "p", "name": "perplexity", "search": "https://perplexity.ai/search?q={}" },
+        { "key": "r", "name": "repos", "search": "https://github.com/search?q={}&type=repositories" },
+        { "key": "t", "name": "twitter", "search": "https://x.com/search?q={}&src=typed_query" },
+        { "key": "y", "name": "youtube", "search": "https://www.youtube.com/results?search_query={}" }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,7 @@
     ./gpg.nix
     ./hammerspoon.nix
     ./sketchybar.nix
+    ./sottomano.nix
     ./desktoppr.nix
     ./aerospace.nix
     # ./rift.nix # temporarily disabled in favor of aerospace
