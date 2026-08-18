@@ -84,7 +84,7 @@
          end
       end
       """
-      new = """function obj.recursiveBind(keymap, modals, state)
+      new = """function obj.recursiveBind(keymap, modals, state, back)
          if not modals then
             modals = {}
             state = {}
@@ -93,6 +93,11 @@
             -- in this case "keymap" is actuall a function
             return keymap
          end
+
+         -- the layer this one was opened from, so delete can drop back into it.
+         -- Declared here because the children below close over it and it is only
+         -- built once the loop that creates them has run.
+         local enter
 
          local function restoreFocus()
             local focus = state.focus
@@ -105,7 +110,7 @@
          table.insert(modals, modal)
          local keyFuncNameTable = {}
          for key, map in pairs(keymap) do
-            local func = obj.recursiveBind(map, modals, state)
+            local func = obj.recursiveBind(map, modals, state, function() enter() end)
             -- key[1] is modifiers, i.e. {'shift'}, key[2] is key, i.e. 'f'
             modal:bind(key[1], key[2], function()
                modal:exit()
@@ -124,7 +129,18 @@
                keyFuncNameTable[createKeyName(key)] = {name = key[3], layer = type(map) == 'table'}
             end
          end
-         return function()
+
+         -- delete goes back a layer instead of out. The root has nothing above
+         -- it, so there it stays unbound and does nothing.
+         if back then
+            modal:bind({}, 'delete', function()
+               modal:exit()
+               killHelper()
+               back()
+            end)
+         end
+
+         enter = function()
             -- exit all modals, accounts for pressing the trigger key while
             -- a modal is already open
             for _, modal in pairs(modals) do
@@ -140,6 +156,8 @@
                showHelper(keyFuncNameTable)
             end
          end
+
+         return enter
       end
       """
       assert old in text, "RecursiveBinder implementation moved"
