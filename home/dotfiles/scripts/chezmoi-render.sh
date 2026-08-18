@@ -20,6 +20,7 @@ fi
 files=(
     .config/herdr/config.toml
     .config/tmux/tmux.conf
+    .claude/hooks/herdr-agent-state.sh
     .codex/config.toml
     revive.toml
 )
@@ -39,10 +40,11 @@ templates=(
     .config/nvim/lua/plugins/init.lua:nvim-plugins-init.lua
 )
 
-# Paths the render must leave alone: files written by hand for the work Mac, and
-# the templates that replace a copied file.
-declare -A preserved=(
-    [.config/nvim]='lua/plugins/roslyn.lua lua/plugins/flutter.lua lua/plugins/init.lua lua/plugins/init.lua.tmpl'
+# Paths the render neither copies nor deletes: files written by hand for the
+# work Mac, the templates that replace a copied file, and the plugin lock, since
+# the work Mac resolves its own plugin versions.
+declare -A skipped=(
+    [.config/nvim]='lua/plugins/roslyn.lua lua/plugins/flutter.lua lua/plugins/init.lua lua/plugins/init.lua.tmpl nvim-pack-lock.json'
 )
 
 # .claude/CLAUDE.md and .codex/AGENTS.md are chezmoi templates, not copies.
@@ -71,7 +73,7 @@ printf 'Rendering into %s...\n' "$source_dir"
 for path in "${directories[@]}"; do
     target=$source_dir/$(source_name "$path")
     excludes=()
-    for kept in ${preserved[$path]:-}; do
+    for kept in ${skipped[$path]:-}; do
         excludes+=("--exclude=/$kept")
     done
     mkdir -p "$target"

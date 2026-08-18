@@ -1,11 +1,10 @@
-{{- $settings := includeTemplate "claude-settings.json" . | fromJson -}}
+{{/* The base is exported on mbp, so absolute paths carry that home. */ -}}
+{{- $base := includeTemplate "claude-settings.json" . | replace "/Users/samir/" (printf "%s/" .chezmoi.homeDir) -}}
+{{- $settings := $base | fromJson -}}
 {{- if eq .profile "work" -}}
 {{-   $_ := set $settings.env "MDB_MCP_READ_ONLY" "true" -}}
 {{-   $_ := set $settings "enabledPlugins" (dict
         "mongodb@claude-plugins-official" true
         "datadog@claude-plugins-official" true) -}}
-{{/*  The hook script and the permission default belong to my own Mac. */}}
-{{-   $_ := unset $settings "hooks" -}}
-{{-   $_ := unset $settings "permissions" -}}
 {{- end -}}
 {{ toPrettyJson $settings }}
