@@ -90,6 +90,7 @@
       // command;
   };
 
+  # kept so the settled version can go straight back in
   keymap = {
     # classic, keyboard, depth or columns
     theme = "classic";
@@ -339,7 +340,11 @@ in {
   # The launcher reads its bindings from here and nothing else, so the keymap is
   # declared like the rest of the configuration rather than edited in place.
   xdg.configFile = {
-    "sottomano/keymap.json".source = (pkgs.formats.json {}).generate "keymap.json" keymap;
+    # TEMPORARILY OFF while the keymap is being tried out: nix owns this path, so
+    # every change meant a rebuild and an activation before it could be seen.
+    # ~/.config/sottomano/keymap.json is a plain file for now. Put this back —
+    # and copy whatever the file ended up saying into `keymap` — once it settles.
+    # "sottomano/keymap.json".source = (pkgs.formats.json {}).generate "keymap.json" keymap;
 
     # The emojione data ships inside Emojis.spoon, which is already pinned for
     # Hammerspoon. Reduce it here rather than at every open: display drops the
