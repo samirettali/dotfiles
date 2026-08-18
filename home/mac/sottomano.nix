@@ -152,6 +152,11 @@
           launch = "Ghostty";
         }
         {
+          key = "f";
+          name = "files";
+          browse = "~";
+        }
+        {
           key = "c";
           name = "clipboard";
           pick = {
