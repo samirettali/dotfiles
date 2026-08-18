@@ -2,7 +2,6 @@
   config,
   lib,
   inputs,
-  nurPkgs,
   pkgs,
   ...
 }: let
@@ -18,12 +17,7 @@ in {
 
   programs.claude-code = {
     enable = lib.mkDefault true;
-    # tmux and herdr name panes after the process, which would be the
-    # `.claude-wrapped` binary makeBinaryWrapper leaves behind.
-    #
-    # `--inherit-argv0` is what keeps the process named `claude`: the upstream
-    # wrapper (now `claude-env`) already inherits argv0, so without it here the
-    # whole chain reports `claude-env` and herdr stops detecting the agent.
+    # Hack for tmux and herdr panel names
     package = pkgs.claude-code.overrideAttrs (old: {
       postInstall =
         (old.postInstall or "")
@@ -53,6 +47,7 @@ in {
         mode = "replace";
         verbs = ["Thinking" "Processing" "Working"];
       };
+      spinnerTipsEnabled = false;
       hooks = lib.mkIf herdrEnabled {
         SessionStart = [
           {

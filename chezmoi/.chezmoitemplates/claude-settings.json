@@ -32,6 +32,15 @@
     "defaultMode": "bypassPermissions"
   },
   "skipDangerousModePermissionPrompt": true,
+  "spinnerTipsEnabled": false,
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "Thinking",
+      "Processing",
+      "Working"
+    ]
+  },
   "theme": "auto",
   "tui": "fullscreen"
 }
