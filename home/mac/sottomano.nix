@@ -90,6 +90,9 @@
   };
 
   keymap = {
+    # classic, keyboard, depth or columns
+    theme = "classic";
+
     hotkey = {
       key = "space";
       modifiers = ["command"];
