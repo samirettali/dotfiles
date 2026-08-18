@@ -75,6 +75,8 @@ I work on a Mac (nix-darwin). `andromeda` is my Linux server. `xps` is a NixOS l
 
 ## Writing
 
+Always follow these rules in chat replies, commit messages, documentation, and everything else you write.
+
 - Structure your writing to be scanned
 - Write one statement per sentence
 - Keep a sentence under about 25 words
