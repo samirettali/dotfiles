@@ -26,7 +26,8 @@
     "openrouter/google/gemini-3.7-flash",
     "openrouter/qwen/qwen3.8-2.4t-a95b",
     "openrouter/meta/muse-spark-1.2",
-    "openrouter/meta/muse-glimmer-30b"
+    "openrouter/meta/muse-glimmer-30b",
+    "openrouter/qwen/qwen3.8-27b"
   ],
   "providers": {
     "openrouter": {
@@ -137,6 +138,17 @@
               ]
             }
           }
+        },
+        "qwen/qwen3.8-27b": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "venice/fp8"
+              ]
+            }
+          },
+          "maxTokens": 65536
         }
       }
     },
