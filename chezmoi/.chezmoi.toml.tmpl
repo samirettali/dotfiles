@@ -1,3 +1,5 @@
 {{- $profile := promptStringOnce . "profile" "Profile (personal or work)" -}}
+sourceDir = {{ .chezmoi.sourceDir | quote }}
+
 [data]
 profile = {{ $profile | quote }}
