@@ -266,11 +266,6 @@
           name = "activity monitor";
           launch = "Activity Monitor";
         }
-        {
-          key = ",";
-          name = "preferences";
-          launch = "System Settings";
-        }
         # insert rather than paste: it types text, and it is the letter vim uses
         # for exactly that. paste wanted the p that password already has.
         {
