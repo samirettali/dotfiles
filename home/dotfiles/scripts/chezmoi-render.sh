@@ -20,7 +20,6 @@ fi
 files=(
     .config/herdr/config.toml
     .config/tmux/tmux.conf
-    .claude/settings.json
     .codex/config.toml
     revive.toml
 )
@@ -31,6 +30,19 @@ directories=(
     .claude/skills/code-review
     .codex/skills/commit
     .codex/skills/code-review
+)
+
+# A template merges the work-only additions into these, so they land among the
+# templates instead of the targets.
+templates=(
+    .claude/settings.json:claude-settings.json
+    .config/nvim/lua/plugins/init.lua:nvim-plugins-init.lua
+)
+
+# Paths the render must leave alone: files written by hand for the work Mac, and
+# the templates that replace a copied file.
+declare -A preserved=(
+    [.config/nvim]='lua/plugins/roslyn.lua lua/plugins/flutter.lua lua/plugins/init.lua lua/plugins/init.lua.tmpl'
 )
 
 # .claude/CLAUDE.md and .codex/AGENTS.md are chezmoi templates, not copies.
@@ -47,7 +59,7 @@ source_name() {
     printf '%s\n' "$out"
 }
 
-for path in "${files[@]}" "${directories[@]}"; do
+for path in "${files[@]}" "${directories[@]}" "${templates[@]%%:*}"; do
     if [[ ! -e $HOME/$path ]]; then
         printf 'Configured source does not exist: %s\n' "$HOME/$path" >&2
         exit 1
@@ -58,15 +70,24 @@ printf 'Rendering into %s...\n' "$source_dir"
 
 for path in "${directories[@]}"; do
     target=$source_dir/$(source_name "$path")
-    rm -rf "$target"
+    excludes=()
+    for kept in ${preserved[$path]:-}; do
+        excludes+=("--exclude=/$kept")
+    done
     mkdir -p "$target"
-    rsync -aL --delete "$HOME/$path/" "$target/"
+    rsync -aL --delete "${excludes[@]}" "$HOME/$path/" "$target/"
 done
 
 for path in "${files[@]}"; do
     target=$source_dir/$(source_name "$path")
     mkdir -p "${target%/*}"
     rsync -aL "$HOME/$path" "$target"
+done
+
+for entry in "${templates[@]}"; do
+    target=$source_dir/.chezmoitemplates/${entry#*:}
+    mkdir -p "${target%/*}"
+    rsync -aL "$HOME/${entry%%:*}" "$target"
 done
 
 chmod -R u+w "$source_dir"

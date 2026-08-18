@@ -1,0 +1,5 @@
+{{ includeTemplate "nvim-plugins-init.lua" . | trim }}
+{{ if eq .profile "work" -}}
+require("plugins.roslyn")
+require("plugins.flutter")
+{{ end -}}
