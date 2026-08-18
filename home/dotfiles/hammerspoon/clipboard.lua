@@ -22,6 +22,7 @@ local IGNORED_TYPES = {
 
 local timer = nil
 local lastChange = nil
+local paused = false
 
 local function history()
 	return hs.settings.get(KEY) or {}
@@ -66,7 +67,7 @@ end
 local function poll()
 	local count = hs.pasteboard.changeCount()
 
-	if count == lastChange then
+	if paused or count == lastChange then
 		return
 	end
 
@@ -75,6 +76,18 @@ local function poll()
 	if not isIgnored() then
 		record()
 	end
+end
+
+-- Something that borrows the pasteboard rather than writing to it wraps the
+-- borrowing in these, and the history never sees it. resume() takes the count
+-- as it stands, so nothing that happened while paused is picked up afterwards.
+function M.pause()
+	paused = true
+end
+
+function M.resume()
+	lastChange = hs.pasteboard.changeCount()
+	paused = false
 end
 
 local function ago(at)
