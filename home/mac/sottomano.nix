@@ -258,7 +258,7 @@
         }
         {
           key = "n";
-          name = "obsidian";
+          name = "notes";
           launch = "Obsidian";
         }
         {
@@ -271,9 +271,11 @@
           name = "preferences";
           launch = "System Settings";
         }
+        # insert rather than paste: it types text, and it is the letter vim uses
+        # for exactly that. paste wanted the p that password already has.
         {
-          key = "v";
-          name = "paste";
+          key = "i";
+          name = "insert";
           entries = [
             {
               key = "e";
