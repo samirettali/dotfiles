@@ -162,7 +162,7 @@ end
 -- this replaced a submenu of seven hardcoded openURL entries: they are all in
 -- linkding now, tagged daily, and frecency floats them back to the top
 if hasBookmarks then
-	table.insert(config, { "l", "bookmarks", bookmarks.open })
+	table.insert(config, { "l", "links", bookmarks.open })
 end
 
 if hasRbw then
