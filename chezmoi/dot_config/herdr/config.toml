@@ -1,0 +1,107 @@
+onboarding = false
+
+[theme]
+name = "terminal"
+auto_switch = false
+
+[theme.custom]
+# panel_bg = "reset"
+# accent = "white"
+pane_inactive_border = "#444444"
+space_active_bg = "#000000"
+space_active_fg = "#ffffff"
+space_inactive_fg = "#888888"
+space_selected_bg = "#000000"
+space_selected_fg = "green"
+
+agent_active_bg = "#000000"
+agent_active_fg = "#ffffff"
+agent_inactive_bg = "#000000"
+agent_inactive_fg = "#888888"
+
+tab_active_bg = "#000000"
+tab_active_fg = "#ffffff"
+tab_inactive_bg = "#000000"
+tab_inactive_fg = "#888888"
+
+
+
+[keys]
+prefix = "ctrl+b"
+reload_config = "prefix+r"
+resize_mode = "prefix+shift+r"
+detach = "prefix+d"
+rename_workspace = "prefix+$"
+rename_tab = "prefix+,"
+previous_tab = ["prefix+p", "prefix+ctrl+p"]
+next_tab = ["prefix+n", "prefix+ctrl+n"]
+last_pane = "prefix+tab"
+split_vertical = "prefix+%"
+split_horizontal = 'prefix+"'
+
+# ctrl+hjkl tra i pane; dentro nvim passano a nvim, che richiama
+# `herdr pane focus` quando è al bordo dei suoi split
+focus_pane_left = "ctrl+h"
+focus_pane_down = "ctrl+j"
+focus_pane_up = "ctrl+k"
+focus_pane_right = "ctrl+l"
+passthrough_commands = ["nvim"]
+
+# navigate mode (prefix+w): j/k tra gli space, frecce tra i pane
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
+navigate_pane_up = "up"
+navigate_pane_down = "down"
+
+[ui]
+# sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"
+confirm_close = true
+prompt_new_tab_name = false
+prompt_new_workspace_name = false
+pane_borders = true
+pane_outer_border = false
+pane_gaps = false
+hide_tab_bar_when_single_tab = false
+accent = "#858585"
+pane_scrollbars = false
+tab_bar_position = "bottom"
+show_agent_labels_on_pane_borders = false
+agent_panel_sort = "spaces"
+prefix_hint = false
+sidebar_position = "left"
+hide_pane_borders_when_zoomed = true
+mobile_width_threshold = 68
+
+[ui.tab_bar]
+label_padding = 0   # simmetrico; vanilla era 1 a sinistra e 3 a destra
+gap = 2
+min_width = 0
+
+
+[ui.toast]
+delivery = "off"
+
+[ui.sound]
+enabled = true
+
+[ui.sidebar.agents.rows_by_agent]
+# claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
+
+# claude = [["state_icon", "workspace", "tab"], ["agent"]]
+# pi = [["state_icon", "workspace", "tab"], ["agent"]]
+
+claude = [["state_icon", "workspace", "spacer", "tab"]]
+pi = [["state_icon", "workspace", "spacer", "tab"]]
+
+# claude = [["state_icon", "workspace"], ["tab"]]
+# pi = [["state_icon", "workspace"], ["tab"]]
+
+[ui.sidebar.spaces]
+rows = [["state_icon", "workspace", "spacer", { token = "branch", fg = "#888888", dim = true }]]
+
+[experimental]
+pane_history = false
+
+[session]
+restore_commands = ["nvim", "lazygit"]

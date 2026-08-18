@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := build
-.PHONY: build update clean fmt check models
+.PHONY: build update clean fmt check models chezmoi
 
 OS := $(shell uname -s)
 USERNAME := $(shell whoami)
@@ -10,6 +10,7 @@ DEADNIX_CMD = deadnix --fail --exclude=machines/xps/hardware-configuration.nix .
 STATIX_CMD = statix check .
 CHECK_CMD = nix flake check
 MODELS_CMD = pi-models --sync --config $(CURDIR)/home/packages/ai/pi-coding-agent/models.json
+CHEZMOI_CMD = chezmoi-render $(CURDIR)/chezmoi
 
 ifeq ($(OS),Linux)
     ifneq ($(wildcard /etc/NIXOS),)
@@ -45,6 +46,10 @@ fmt:
 models:
 	@echo "Running command: $(MODELS_CMD)"
 	@$(MODELS_CMD)
+
+chezmoi:
+	@echo "Running command: $(CHEZMOI_CMD)"
+	@$(CHEZMOI_CMD)
 
 check:
 	@echo "Running command: $(DEADNIX_CMD)"

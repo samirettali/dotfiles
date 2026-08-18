@@ -1,0 +1,4 @@
+{{ if ne .profile "work" }}
+# Nix owns these machines, so chezmoi must not touch them.
+*
+{{ end }}

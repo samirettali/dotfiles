@@ -38,6 +38,7 @@ in {
       (pkgs.writeShellScriptBin "ticker" (builtins.readFile "${scriptsDir}/ticker.sh"))
       (pkgs.writeShellScriptBin "extract" (builtins.readFile "${scriptsDir}/extract.sh"))
       (pkgs.writeShellScriptBin "sync-configs" (builtins.readFile "${scriptsDir}/sync-configs.sh"))
+      (pkgs.writeShellScriptBin "chezmoi-render" (builtins.readFile "${scriptsDir}/chezmoi-render.sh"))
       (pkgs.writeShellScriptBin "zv" ''
         set -euo pipefail
 

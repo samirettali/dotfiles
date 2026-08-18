@@ -1,0 +1,5 @@
+{{ include (joinPath .chezmoi.sourceDir ".." "home" "packages" "ai" "agents.md") | trim }}
+
+## This machine
+
+{{ include (joinPath .chezmoi.sourceDir ".." "home" "packages" "ai" "machines" (printf "%s.md" .profile)) | trim }}

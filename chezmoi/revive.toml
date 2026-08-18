@@ -1,0 +1,30 @@
+ignoreGeneratedHeader = true
+severity = "warning"
+confidence = 0.8
+errorCode = 1
+warningCode = 0
+enableAllRules = true
+
+[rule.exported]
+Disabled = true
+
+[rule.unhandled-error]
+arguments = ["fmt.Println", "fmt.Printf"]
+
+[rule.line-length-limit]
+arguments = [120]
+
+[rule.add-constant]
+Disabled = true
+
+[rule.max-public-structs]
+Disabled = true
+
+[rule.cognitive-complexity]
+Disabled = true
+
+[rule.cyclomatic]
+Disabled = true
+
+[rule.function-length]
+Disabled = true

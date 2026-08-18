@@ -1,0 +1,124 @@
+{
+  "plugins": {
+    "actions-preview.nvim": {
+      "rev": "0ac9c2aa3cfc8c885321c0862b50b6b1c3392405",
+      "src": "https://github.com/aznhe21/actions-preview.nvim"
+    },
+    "auto-dark-mode.nvim": {
+      "rev": "54058b4fe414bd64bd2904a6f8a63f1f14e3d8df",
+      "src": "https://github.com/f-person/auto-dark-mode.nvim"
+    },
+    "codediff.nvim": {
+      "rev": "76ff1b13f0bcba655dca85cea1ef0df877a53c0f",
+      "src": "https://github.com/esmuellert/codediff.nvim"
+    },
+    "copilot.lua": {
+      "rev": "407349117f176789df6ec1c23bca72f34e15b4e8",
+      "src": "https://github.com/zbirenbaum/copilot.lua"
+    },
+    "csvview.nvim": {
+      "rev": "5c22774c3ecc7f8883af5d143b366e45b1f0875d",
+      "src": "https://github.com/hat0uma/csvview.nvim"
+    },
+    "fleet-theme-nvim": {
+      "rev": "45c300c31485def326db00d9c857760d50e5c728",
+      "src": "https://github.com/felipeagc/fleet-theme-nvim"
+    },
+    "fluoride": {
+      "rev": "df30862c6144f250250a340d183d0d324fe6f075",
+      "src": "https://github.com/Sang-it/fluoride"
+    },
+    "gitsigns.nvim": {
+      "rev": "dd3f588bacbeb041be6facf1742e42097f62165d",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "mini.splitjoin": {
+      "rev": "146aef247d9bfc58bab20dd921ba6b75ac4b8cf9",
+      "src": "https://github.com/nvim-mini/mini.splitjoin"
+    },
+    "nvim-dap": {
+      "rev": "531771530d4f82ad2d21e436e3cc052d68d7aebb",
+      "src": "https://github.com/mfussenegger/nvim-dap"
+    },
+    "nvim-dap-cs": {
+      "rev": "16e5debe8cb7fb73c8799d20969ee00883586602",
+      "src": "https://github.com/NicholasMata/nvim-dap-cs"
+    },
+    "nvim-dap-go": {
+      "rev": "b4421153ead5d726603b02743ea40cf26a51ed5f",
+      "src": "https://github.com/leoluz/nvim-dap-go"
+    },
+    "nvim-dap-python": {
+      "rev": "1808458eba2b18f178f990e01376941a42c7f93b",
+      "src": "https://github.com/mfussenegger/nvim-dap-python"
+    },
+    "nvim-dap-view": {
+      "rev": "2fe10567913fca43f352791ac83d19b9fdeacc95",
+      "src": "https://github.com/igorlfs/nvim-dap-view"
+    },
+    "nvim-nio": {
+      "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
+      "src": "https://github.com/nvim-neotest/nvim-nio"
+    },
+    "nvim-redraft": {
+      "rev": "a954507d60108d34f53c94ae4a4548bc9d96b7c1",
+      "src": "https://github.com/jim-at-jibba/nvim-redraft"
+    },
+    "nvim-treesitter": {
+      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "nvim-treesitter-textobjects": {
+      "rev": "851e865342e5a4cb1ae23d31caf6e991e1c99f1e",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+    },
+    "nvim-web-devicons": {
+      "rev": "7d8dad2c837fcdf2e65997e68657c1a21c568074",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "obsidian.nvim": {
+      "rev": "47e64962dbc5e84e53c8f90b79b50cefeac9a01a",
+      "src": "https://github.com/obsidian-nvim/obsidian.nvim"
+    },
+    "oil.nvim": {
+      "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "persistence.nvim": {
+      "rev": "b20b2a7887bd39c1a356980b45e03250f3dce49c",
+      "src": "https://github.com/folke/persistence.nvim"
+    },
+    "pi.nvim": {
+      "rev": "4ba6db0dd30406995a2e46e4f1ae39377e66e733",
+      "src": "https://github.com/pablopunk/pi.nvim"
+    },
+    "quicker.nvim": {
+      "rev": "1c9322b7e2967472548ba9bccd1ccd40e49d0a49",
+      "src": "https://github.com/stevearc/quicker.nvim"
+    },
+    "shannon": {
+      "rev": "f392c5cdce17999cf63adf075e49ac9ad6d9daca",
+      "src": "https://github.com/wincent/shannon"
+    },
+    "snacks.nvim": {
+      "rev": "0770753c88228f7f15449c6a5b242e3f7cd0d71c",
+      "src": "https://github.com/folke/snacks.nvim"
+    },
+    "vim-moonfly-colors": {
+      "rev": "4ed07bc0c6083cdd547c63f5c245e02c068b0c45",
+      "src": "https://github.com/bluz71/vim-moonfly-colors"
+    },
+    "vim-nightfly-colors": {
+      "rev": "4980ccc6de5f361fc9da116240ce7592e7d9a53a",
+      "src": "https://github.com/bluz71/vim-nightfly-colors"
+    },
+    "wayfinder.nvim": {
+      "rev": "2ce480d35626ddb533ba594fa7ca865d61184ec6",
+      "src": "https://github.com/error311/wayfinder.nvim"
+    },
+    "xeno.nvim": {
+      "rev": "f0b5a9299c18d9a8e3cf915b7aea257520e6028e",
+      "src": "https://github.com/kyzabuilds/xeno.nvim"
+    }
+  }
+}
