@@ -112,6 +112,6 @@ Each lives under `~/dev` with its own `AGENTS.md`. Read it before working on the
 ## Memory
 
 - Edit this file at `~/dev/dotfiles/home/packages/ai/agents.md`. The deployed copies (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.pi/agent/AGENTS.md`) are read-only store symlinks and land on the next switch.
-- The "This machine" section is not in this file: `agents.nix` appends it per host, from `vars.hostname`.
+- The "This machine" section is not in this file: it lives in `home/packages/ai/machines/<host>.md`. `agents.nix` appends it from `vars.hostname`, and chezmoi appends it from `.profile` on the work Mac.
 - Never use a built-in memory tool. I run Claude Code, Codex and pi, and per-tool memories drift apart; `AGENTS.md` is the only store.
 - Put durable facts in the relevant project's `AGENTS.md`. Anything long or rarely needed gets its own file, linked from there in one line.
