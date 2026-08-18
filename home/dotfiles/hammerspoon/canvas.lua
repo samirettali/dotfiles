@@ -334,8 +334,6 @@ function M.picker(opts)
 	local maxRows = opts.rows or 8
 	local width = snap(opts.width or 620)
 	local pad = s.padding
-	local titleSize = math.max(12, s.size - 4)
-	local titleHeight = titleSize + 6
 	local queryHeight = snap(s.size * 1.35)
 	local subSize = math.max(11, s.size - 6)
 	local nameHeight = snap(s.size * 1.3)
@@ -359,7 +357,7 @@ function M.picker(opts)
 	local selected = 1
 	local offset = 0
 
-	local canvas = newCanvas(width, pad + titleHeight + queryHeight + gap + rowHeight + pad, opts.y)
+	local canvas = newCanvas(width, pad + queryHeight + gap + rowHeight + pad, opts.y)
 
 	local function shown()
 		return math.min(#matches, maxRows)
@@ -413,7 +411,7 @@ function M.picker(opts)
 
 	render = function()
 		local rows = math.max(shown(), 1)
-		local height = snap(pad + titleHeight + queryHeight + gap + rows * rowHeight + pad)
+		local height = snap(pad + queryHeight + gap + rows * rowHeight + pad)
 
 		-- the top edge stays put and the box grows downwards, so the list
 		-- does not jump around as the query narrows it
@@ -423,25 +421,16 @@ function M.picker(opts)
 
 		table.insert(elements, {
 			type = "text",
-			text = opts.prompt or "",
-			textColor = fade(s.color, 0.7),
-			textSize = titleSize,
-			textFont = s.font,
-			frame = centred(opts.prompt or "", s.font, titleSize, pad, width - pad * 2, pad, titleHeight),
-		})
-
-		table.insert(elements, {
-			type = "text",
 			text = query .. "|",
 			textColor = s.color,
 			textSize = s.size,
 			textFont = s.font,
 			textAlignment = "center",
 			textLineBreak = "truncateHead",
-			frame = { x = pad, y = pad + titleHeight, w = width - pad * 2, h = queryHeight },
+			frame = { x = pad, y = pad, w = width - pad * 2, h = queryHeight },
 		})
 
-		local top = pad + titleHeight + queryHeight + gap
+		local top = pad + queryHeight + gap
 
 		if #matches == 0 then
 			table.insert(elements, {
