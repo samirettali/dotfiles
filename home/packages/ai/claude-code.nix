@@ -49,6 +49,10 @@ in {
       tui = "fullscreen";
       permissions.defaultMode = "bypassPermissions";
       autoMemoryEnabled = false;
+      spinnerVerbs = {
+        mode = "replace";
+        verbs = ["Thinking" "Processing" "Working"];
+      };
       hooks = lib.mkIf herdrEnabled {
         SessionStart = [
           {
