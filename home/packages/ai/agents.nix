@@ -3,6 +3,7 @@
     builtins.readFile ./agents.md
     + ''
 
+      ${builtins.readFile ./projects.md}
       ## This machine
 
       ${builtins.readFile ./machines/${vars.hostname}.md}'';

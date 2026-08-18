@@ -38,7 +38,7 @@ Never written a line myself, only through agents:
 
 ## Tools I use daily
 
-I work on a Mac (nix-darwin). `andromeda` is my Linux server. `xps` is a NixOS laptop I barely use any more.
+`mbp` is my own Mac (nix-darwin), where I do everything that is mine. `settali` is my work Mac, where company policy forbids nix. `andromeda` is my Linux server. `xps` is a NixOS laptop I barely use any more.
 
 - Hammerspoon — global hotkeys and pickers
 - sketchybar — the menu bar
@@ -97,23 +97,10 @@ Always follow these rules in chat replies, commit messages, documentation, and e
 - One commit per logical change, and only what this task changed
 - Title a pull request like a commit subject
 
-## Projects
-
-Each lives under `~/dev` with its own `AGENTS.md`. Read it before working on the project, and add to it any decision the code alone would not reveal.
-
-- dotfiles — NixOS + home-manager config.
-- servers — the machines I own and what runs on them, Docker Compose + Ansible. `andromeda` today.
-- nur — personal NUR repository.
-- sottocasa — multi-tenant booking product: Go API, React owner panel.
-- sottovoce — macOS menu bar dictation app.
-- pulse — macOS menu bar app for live prices and timezone clocks.
-- infra — OpenTofu for the accounts: GitHub settings, Actions secrets, the state bucket.
-- spotctl — agent-friendly Spotify CLI in Go.
-- sottotesto — search a song, read an LLM reading of its lyrics.
-
 ## Memory
 
 - Edit this file at `~/dev/dotfiles/home/packages/ai/agents.md`. The deployed copies (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.pi/agent/AGENTS.md`) are read-only store symlinks and land on the next switch.
 - The "This machine" section is not in this file: it lives in `home/packages/ai/machines/<host>.md`. `agents.nix` appends it from `vars.hostname`, and chezmoi appends it from `.profile` on the work Mac.
+- The "Projects" section is not in this file either: it lives in `home/packages/ai/projects.md`, and the work Mac does not get it.
 - Never use a built-in memory tool. I run Claude Code, Codex and pi, and per-tool memories drift apart; `AGENTS.md` is the only store.
 - Put durable facts in the relevant project's `AGENTS.md`. Anything long or rarely needed gets its own file, linked from there in one line.
