@@ -1,4 +1,5 @@
 local canvas = require("canvas")
+local clipboard = require("clipboard")
 local display = require("display")
 
 -- rbw.lua is only rendered when programs.rbw is enabled
@@ -90,6 +91,7 @@ end
 
 local config = {
 	{ "b", "browser", openDefaultBrowser() },
+	{ "c", "clipboard", clipboard.open },
 	{ "t", "terminal", launch("Ghostty") },
 	{
 		"o",

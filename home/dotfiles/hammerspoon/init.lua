@@ -6,6 +6,7 @@ end
 
 require("bindings")
 require("hammerspoon_config")
+require("clipboard").start()
 require("recursive_binder")
 pcall(require, "sketchybar")
 
