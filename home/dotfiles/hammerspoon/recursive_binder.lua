@@ -1,6 +1,7 @@
 local canvas = require("canvas")
 local clipboard = require("clipboard")
 local display = require("display")
+local transform = require("transform")
 
 -- rbw.lua is only rendered when programs.rbw is enabled
 local hasRbw, rbw = pcall(require, "rbw")
@@ -144,6 +145,21 @@ local config = {
 			{ "r", "repos", search("https://github.com/search?q={input}&type=repositories") },
 			{ "t", "twitter", search("https://x.com/search?q={input}&src=typed_query") },
 			{ "y", "youtube", search("https://www.youtube.com/results?search_query={input}") },
+		},
+	},
+	{
+		"x",
+		"transform",
+		{
+			{ "d", "base64 decode", transform.base64Decode },
+			{ "e", "base64 encode", transform.base64Encode },
+			{ "h", "hex decode", transform.hexDecode },
+			{ "x", "hex encode", transform.hexEncode },
+			{ "u", "url decode", transform.urlDecode },
+			{ "p", "url encode", transform.urlEncode },
+			{ "j", "jwt", transform.jwt },
+			{ "f", "format json", transform.formatJSON },
+			{ "t", "timestamp", transform.fromTimestamp },
 		},
 	},
 	{
