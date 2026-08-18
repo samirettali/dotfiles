@@ -92,12 +92,21 @@ local function centred(text, font, size, left, innerWidth, y, height)
 	}
 end
 
+-- every panel hangs from this one line, a third of the way down the screen, and
+-- grows downwards from it. Centring them instead moved the top edge with the
+-- height, so the launcher sat somewhere else for each layer it opened.
+local TOP_FRACTION = 0.32
+
+local function anchor(screen)
+	return screen.y + snap(screen.h * TOP_FRACTION)
+end
+
 local function geometry(width, height, y)
 	local screen = hs.screen.mainScreen():fullFrame()
 
 	return {
 		x = snap(screen.x + (screen.w - width) / 2),
-		y = snap(y or (screen.y + screen.h * (1 - 1 / 1.55) + 55)),
+		y = snap(y or anchor(screen)),
 		w = snap(width),
 		h = snap(height),
 	}
@@ -706,9 +715,8 @@ function M.helper(entries, opts)
 	-- even, so the rule sits on a whole pixel halfway through the gap
 	local ruleGap = ruleAt and 12 or 0
 	local height = snap(pad * 2 + #rows * lineHeight + ruleGap)
-	local screen = hs.screen.mainScreen():fullFrame()
 
-	helperCanvas = newCanvas(width, height, screen.y + (screen.h - height) / 2)
+	helperCanvas = newCanvas(width, height)
 
 	local elements = chrome(width, height, s)
 
@@ -766,14 +774,7 @@ local lastToastID = 0
 
 local function layoutToasts()
 	local gap = 8
-	local total = 0
-
-	for _, toast in ipairs(toasts) do
-		total = total + toast.height + gap
-	end
-
-	local screen = hs.screen.mainScreen():fullFrame()
-	local y = screen.y + (screen.h - (total - gap)) / 2
+	local y = anchor(hs.screen.mainScreen():fullFrame())
 
 	for _, toast in ipairs(toasts) do
 		toast.canvas:frame(geometry(toast.width, toast.height, y))
