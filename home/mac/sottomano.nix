@@ -13,6 +13,7 @@
   jq = lib.getExe pkgs.jq;
   curl = lib.getExe pkgs.curl;
   sh = "/bin/sh";
+  sketchybar = lib.getExe config.programs.sketchybar.package;
 
   # AppleScript rather than spotctl for transport: it talks to the running app
   # instead of the Web API, which is what bindings.lua did and what keeps a
@@ -93,6 +94,18 @@
     # classic, keyboard, depth or columns
     theme = "classic";
 
+    # control tapped on its own is escape, control held is control — macOS
+    # already maps caps lock to control, so this is what gives caps both roles.
+    # It replaces ControlEscape.spoon and, like it, needs Accessibility and
+    # stops while macOS holds Secure Input.
+    capsEscape = true;
+
+    hooks = {
+      # sketchybar has no event of its own for a layout change, so it is pushed
+      # one. Both when the launcher switches and when anything else does.
+      inputSourceChanged = [sketchybar "--trigger" "keyboard_layout_change" "SOURCE_ID={}"];
+    };
+
     hotkey = {
       key = "space";
       modifiers = ["command"];
@@ -111,6 +124,39 @@
             run = ["/usr/bin/open" "-a" "{}"];
           };
         };
+      }
+      {
+        key = "l";
+        modifiers = ["command" "control"];
+        entry = {
+          key = "l";
+          layout = "next";
+        };
+      }
+      {
+        key = "l";
+        modifiers = ["command" "shift"];
+        entry = {
+          key = "l";
+          shell = ["/usr/bin/open" "-a" "ScreenSaverEngine"];
+        };
+      }
+      # Registering a hotkey consumes the key, so an entry that does nothing is
+      # how cmd+m and cmd+h stop minimising and hiding windows.
+      {
+        key = "m";
+        modifiers = ["command"];
+        entry = {key = "m";};
+      }
+      {
+        key = "h";
+        modifiers = ["command"];
+        entry = {key = "h";};
+      }
+      {
+        key = "h";
+        modifiers = ["command" "option"];
+        entry = {key = "h";};
       }
       # the media keys bindings.lua had, so Hammerspoon is not needed for them
       {
