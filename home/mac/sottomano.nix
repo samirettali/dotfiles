@@ -222,6 +222,9 @@
           key = "l";
           name = "links";
           pick = {
+            # kept on disk under this name: linkding answers over the tailnet in
+            # about half a second, and the panel should not wait for it
+            cache = "links";
             list = [
               sh
               "-c"
@@ -234,6 +237,7 @@
           key = "m";
           name = "music";
           pick = {
+            cache = "playlists";
             list = [
               sh
               "-c"
@@ -243,89 +247,32 @@
           };
         }
         {
-          key = "o";
-          name = "open";
-          entries = [
-            {
-              key = "c";
-              name = "code";
-              launch = "Visual Studio Code";
-            }
-            {
-              key = "d";
-              name = "discord";
-              launch = "Discord";
-            }
-            {
-              key = "e";
-              name = "eqMac";
-              launch = "eqMac";
-            }
-            {
-              key = "f";
-              name = "finder";
-              launch = "Finder";
-            }
-            {
-              key = "m";
-              name = "monitor";
-              launch = "Activity Monitor";
-            }
-            {
-              key = "o";
-              name = "obsidian";
-              launch = "Obsidian";
-            }
-            {
-              key = "p";
-              name = "preferences";
-              launch = "System Settings";
-            }
-            {
-              key = "s";
-              name = "spotify";
-              launch = "Spotify";
-            }
-            {
-              key = "z";
-              name = "zed";
-              launch = "Zed";
-            }
-          ];
+          key = "s";
+          name = "spotify";
+          launch = "Spotify";
         }
         {
-          key = "w";
-          name = "work";
-          entries = [
-            {
-              key = "c";
-              name = "compass";
-              launch = "MongoDB Compass";
-            }
-            {
-              key = "d";
-              name = "datagrip";
-              launch = "DataGrip";
-            }
-            {
-              key = "p";
-              name = "postman";
-              launch = "Postman";
-            }
-            {
-              key = "r";
-              name = "redis";
-              launch = "Redis Insight";
-            }
-            {
-              key = "s";
-              name = "slack";
-              launch = "Slack";
-            }
-          ];
+          key = "z";
+          name = "zed";
+          launch = "Zed";
         }
         {
-          key = "p";
+          key = "n";
+          name = "obsidian";
+          launch = "Obsidian";
+        }
+        {
+          key = "a";
+          name = "activity monitor";
+          launch = "Activity Monitor";
+        }
+        {
+          key = ",";
+          name = "preferences";
+          launch = "System Settings";
+        }
+        {
+          key = "v";
           name = "paste";
           entries = [
             {
@@ -356,8 +303,8 @@
           ];
         }
         {
-          key = "s";
-          name = "search";
+          key = "q";
+          name = "query";
           entries = searchLayer;
         }
         {
@@ -381,72 +328,15 @@
             }
           ];
         }
-        {
-          key = "x";
-          name = "transform";
-          entries = [
-            {
-              key = "d";
-              name = "base64 decode";
-              transform = "base64-decode";
-            }
-            {
-              key = "e";
-              name = "base64 encode";
-              transform = "base64-encode";
-            }
-            {
-              key = "h";
-              name = "hex decode";
-              transform = "hex-decode";
-            }
-            {
-              key = "x";
-              name = "hex encode";
-              transform = "hex-encode";
-            }
-            {
-              key = "u";
-              name = "url decode";
-              transform = "url-decode";
-            }
-            {
-              key = "p";
-              name = "url encode";
-              transform = "url-encode";
-            }
-            {
-              key = "j";
-              name = "jwt";
-              transform = "jwt";
-            }
-            {
-              key = "f";
-              name = "format json";
-              transform = "json";
-            }
-            {
-              key = "t";
-              name = "timestamp";
-              transform = "timestamp";
-            }
-          ];
-        }
       ]
-      ++ lib.optional config.programs.rbw.enable {
-        key = "v";
-        name = "vault";
-        entries = [
-          (vaultEntry "password" {run = [sh "-c" "${rbw} get \"$1\" | /usr/bin/pbcopy" "sh" "{}"];}
-            // {key = "p";})
-          (vaultEntry "type" {typeOutput = [sh "-c" "${rbw} get \"$1\"" "sh" "{}"];}
-            // {key = "t";})
-          (vaultEntry "username" {run = [sh "-c" "${rbw} get --field username \"$1\" | /usr/bin/pbcopy" "sh" "{}"];}
-            // {key = "u";})
-          (vaultEntry "otp" {run = [sh "-c" "${rbw} code \"$1\" | /usr/bin/pbcopy" "sh" "{}"];}
-            // {key = "o";})
-        ];
-      };
+      ++ lib.optionals config.programs.rbw.enable [
+        (vaultEntry "password" {run = [sh "-c" "${rbw} get \"$1\" | /usr/bin/pbcopy" "sh" "{}"];}
+          // {key = "p";})
+        (vaultEntry "username" {run = [sh "-c" "${rbw} get --field username \"$1\" | /usr/bin/pbcopy" "sh" "{}"];}
+          // {key = "u";})
+        (vaultEntry "otp" {run = [sh "-c" "${rbw} code \"$1\" | /usr/bin/pbcopy" "sh" "{}"];}
+          // {key = "o";})
+      ];
   };
 in {
   # The launcher reads its bindings from here and nothing else, so the keymap is
