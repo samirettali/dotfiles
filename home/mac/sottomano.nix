@@ -14,6 +14,11 @@
   curl = lib.getExe pkgs.curl;
   sh = "/bin/sh";
 
+  # AppleScript rather than spotctl for transport: it talks to the running app
+  # instead of the Web API, which is what bindings.lua did and what keeps a
+  # skip instant. spotctl still owns anything that needs the library.
+  spotify = command: ["/usr/bin/osascript" "-e" "tell application \"Spotify\" to ${command}"];
+
   engines = [
     {
       key = "c";
@@ -104,6 +109,31 @@
           };
         };
       }
+      # the media keys bindings.lua had, so Hammerspoon is not needed for them
+      {
+        key = "delete";
+        modifiers = ["option"];
+        entry = {
+          key = "delete";
+          shell = spotify "playpause";
+        };
+      }
+      {
+        key = "[";
+        modifiers = ["option"];
+        entry = {
+          key = "[";
+          shell = spotify "previous track";
+        };
+      }
+      {
+        key = "]";
+        modifiers = ["option"];
+        entry = {
+          key = "]";
+          shell = spotify "next track";
+        };
+      }
     ];
 
     entries =
@@ -153,7 +183,7 @@
             list = [
               sh
               "-c"
-              "${spotctl} playlist list --full | ${jq} -r '(.playlists? // .) | .[] | [.id, .name] | @tsv'"
+              "${spotctl} playlist list --full | ${jq} -r '.items[] | [.id, .name, (.owner.display_name // \"\")] | @tsv'"
             ];
             run = [sh "-c" "${spotctl} play playlist \"$1\"" "sh" "{}"];
           };
