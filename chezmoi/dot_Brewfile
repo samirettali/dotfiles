@@ -117,6 +117,8 @@ cask "ngrok"
 cask "samirettali/tap/pulse", trusted: true
 # GUI for streamlined Redis application development
 cask "redis-insight"
+# Launcher driven by one leader key
+cask "samirettali/tap/sottomano", trusted: true
 # Minimal menu bar dictation
 cask "samirettali/tap/sottovoce", trusted: true
 go "github.com/air-verse/air"
