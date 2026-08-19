@@ -4,6 +4,7 @@
   lib,
   nurPkgs,
   pkgs,
+  vars,
   ...
 }: let
   # An app launched by `open` inherits launchd's PATH, not the shell's, so every
@@ -305,6 +306,8 @@
       }
     ];
     theme = {
+      font = vars.font.name;
+      # font = "Avenir Next";
       shape = "list";
       flow = "columns";
       key = "column";
