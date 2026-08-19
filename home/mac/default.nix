@@ -19,7 +19,6 @@
     betterdisplay
     hidden-bar
     maccy
-    pika
     nurPkgs.mole
     nurPkgs.sol
     nurPkgs.eqmac
