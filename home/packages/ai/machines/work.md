@@ -5,5 +5,6 @@ repo is applied by home-manager on this machine.
   `~/dev/dotfiles/chezmoi`. Every file is a plain writable copy, not a symlink.
 - A file you edit here is lost at the next `chezmoi apply`. Run `chezmoi diff`
   before applying, and `chezmoi add <file>` to keep an edit.
-- Work code is not mine: never push, never open a pull request, and keep
-  anything company-specific out of `~/dev/dotfiles`.
+- Keep anything company-specific out of `~/dev/dotfiles`.
+- Work repositories are the job here: commit, push and open the pull request
+  when I ask for it. Never on your own initiative.
