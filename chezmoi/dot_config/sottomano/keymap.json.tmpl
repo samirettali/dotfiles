@@ -1,0 +1,251 @@
+{
+  "capsEscape": true,
+  "entries": [
+    {
+      "browse": "~",
+      "key": "f",
+      "name": "files"
+    },
+    {
+      "key": "c",
+      "name": "clipboard",
+      "pick": {
+        "source": "clipboard",
+        "type": true
+      }
+    },
+    {
+      "key": "e",
+      "name": "emoji",
+      "pick": {
+        "source": "emoji",
+        "type": true
+      }
+    },
+    {
+      "key": "m",
+      "name": "music",
+      "pick": {
+        "cache": "playlists",
+        "list": [
+          "/bin/sh",
+          "-c",
+          "{{ .chezmoi.homeDir }}/go/bin/spotctl playlist list --full | /opt/homebrew/bin/jq -r '.items[] | [.id, .name, (.owner.display_name // \"\"), (.images[-1].url // \"\")] | @tsv'"
+        ],
+        "run": [
+          "/bin/sh",
+          "-c",
+          "{{ .chezmoi.homeDir }}/go/bin/spotctl play playlist \"$1\"",
+          "sh",
+          "{}"
+        ]
+      }
+    },
+    {
+      "entries": [
+        {
+          "key": "e",
+          "name": "email",
+          "type": "samir@ettali.com"
+        },
+        {
+          "key": "u",
+          "name": "username",
+          "type": "samirettali"
+        },
+        {
+          "key": "t",
+          "name": "timestamp",
+          "typeOutput": [
+            "/bin/date",
+            "+%s"
+          ]
+        },
+        {
+          "key": "d",
+          "name": "date",
+          "typeOutput": [
+            "/bin/date",
+            "-u",
+            "+%Y-%m-%d %H:%M:%S"
+          ]
+        },
+        {
+          "key": "g",
+          "name": "guid",
+          "typeOutput": [
+            "/usr/bin/uuidgen"
+          ]
+        }
+      ],
+      "key": "i",
+      "name": "insert"
+    },
+    {
+      "entries": [
+        {
+          "key": "c",
+          "name": "code",
+          "search": "https://github.com/search?q={}&type=code"
+        },
+        {
+          "key": "c",
+          "search": "https://github.com/search?q={}&type=code",
+          "shift": true
+        },
+        {
+          "key": "g",
+          "name": "google",
+          "search": "https://google.com/search?q={}"
+        },
+        {
+          "key": "g",
+          "search": "https://google.com/search?q={}",
+          "shift": true
+        },
+        {
+          "key": "m",
+          "name": "maps",
+          "search": "https://www.google.com/maps/search/{}"
+        },
+        {
+          "key": "m",
+          "search": "https://www.google.com/maps/search/{}",
+          "shift": true
+        },
+        {
+          "key": "n",
+          "name": "nixos",
+          "search": "https://mynixos.com/search?q={}"
+        },
+        {
+          "key": "n",
+          "search": "https://mynixos.com/search?q={}",
+          "shift": true
+        },
+        {
+          "key": "p",
+          "name": "perplexity",
+          "search": "https://perplexity.ai/search?q={}"
+        },
+        {
+          "key": "p",
+          "search": "https://perplexity.ai/search?q={}",
+          "shift": true
+        },
+        {
+          "key": "r",
+          "name": "repos",
+          "search": "https://github.com/search?q={}&type=repositories"
+        },
+        {
+          "key": "r",
+          "search": "https://github.com/search?q={}&type=repositories",
+          "shift": true
+        },
+        {
+          "key": "t",
+          "name": "twitter",
+          "search": "https://x.com/search?q={}&src=typed_query"
+        },
+        {
+          "key": "t",
+          "search": "https://x.com/search?q={}&src=typed_query",
+          "shift": true
+        },
+        {
+          "key": "y",
+          "name": "youtube",
+          "search": "https://www.youtube.com/results?search_query={}"
+        },
+        {
+          "key": "y",
+          "search": "https://www.youtube.com/results?search_query={}",
+          "shift": true
+        }
+      ],
+      "key": "q",
+      "name": "query"
+    },
+    {
+      "entries": [
+        {
+          "display": "docked",
+          "key": "d",
+          "name": "docked"
+        },
+        {
+          "display": "side-by-side",
+          "key": "s",
+          "name": "side by side"
+        },
+        {
+          "display": "external",
+          "key": "e",
+          "name": "external"
+        }
+      ],
+      "key": "d",
+      "name": "display"
+    },
+    {
+      "key": "o",
+      "name": "open",
+      "pick": {
+        "run": [
+          "/usr/bin/open",
+          "-a",
+          "{}"
+        ],
+        "source": "applications"
+      }
+    },
+    {
+      "key": "b",
+      "launch": "Safari",
+      "name": "browser"
+    },
+    {
+      "key": "t",
+      "launch": "Ghostty",
+      "name": "terminal"
+    },
+    {
+      "color": "hex",
+      "key": "p",
+      "name": "color"
+    },
+    {
+      "key": "k",
+      "layout": "next",
+      "name": "keyboard"
+    }
+  ],
+  "hotkey": {
+    "key": "space",
+    "modifiers": [
+      "command"
+    ]
+  },
+  "theme": {
+    "animation": 0,
+    "arrow": true,
+    "background": "#000000",
+    "border": "#ffffff4d",
+    "borderWidth": 0,
+    "flow": "columns",
+    "group": true,
+    "iconSize": 38,
+    "key": "column",
+    "muted": "#ffffffae",
+    "padding": 24,
+    "radius": 14,
+    "rule": "#ffffff24",
+    "selection": "#ffffff1f",
+    "shape": "list",
+    "size": 18,
+    "text": "#ffffff",
+    "title": false,
+    "top": 0.25
+  }
+}

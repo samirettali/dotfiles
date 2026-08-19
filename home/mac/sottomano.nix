@@ -225,6 +225,11 @@
         launch = "Ghostty";
       }
       {
+        key = "p";
+        name = "color";
+        color = "hex";
+      }
+      {
         key = "k";
         name = "keyboard";
         layout = "next";
