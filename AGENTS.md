@@ -3,6 +3,10 @@
 Nix flake dotfiles managing macOS with nix-darwin and NixOS with home-manager.
 Hosts are `mbp` (darwin), `xps` (nixos), and `andromeda` (home-manager only).
 
+This repository also carries `settali`, the work Mac, which company policy keeps
+off nix: it is configured from `chezmoi/` with Homebrew, and it appears in no
+flake output. See "The work Mac" below.
+
 ## Commands
 
 - `make build` — rebuild the current host with nix-darwin or NixOS.
@@ -62,6 +66,26 @@ Store secrets consumed by Samir's tools in this repository with sops.
 
 Use `infra` for account-wide resources on third-party systems.
 Use each project's `infra/` directory for resources that share that project's lifecycle.
+
+## The work Mac
+
+`settali` cannot run nix, so Homebrew installs the tools from `chezmoi/dot_Brewfile`
+and chezmoi copies the configuration from `chezmoi/`. A file that needs a value
+from the machine ends in `.tmpl`.
+
+An app of Samir's that runs on both machines is therefore configured twice:
+
+- `mbp` gets the copy nix generates — `home/mac/sottomano.nix` writes
+  `~/.config/sottomano/keymap.json` from a literal attribute set.
+- `settali` gets `chezmoi/dot_config/<app>/`, kept in step by hand.
+
+Two rules for the work copy:
+
+- Name every command by absolute path: `/opt/homebrew/bin/jq`,
+  `{{ .chezmoi.homeDir }}/go/bin/spotctl`. Store paths do not exist there, and an
+  app launched by launchd has neither Homebrew nor `~/go/bin` on its PATH.
+- Leave out whatever that machine has not got — the rbw vault, the sketchybar
+  hooks — and keep anything company-specific out of this repository.
 
 ## Adding packages
 
