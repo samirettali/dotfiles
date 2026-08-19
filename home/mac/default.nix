@@ -23,6 +23,7 @@
     nurPkgs.mole
     nurPkgs.sol
     nurPkgs.eqmac
+    nurPkgs.sottomano
     shottr
     the-unarchiver
     slack
