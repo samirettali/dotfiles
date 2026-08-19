@@ -112,54 +112,9 @@
       modifiers = ["command"];
     };
 
-    # The applications picker keeps the binding it had under Hammerspoon, so it
-    # opens straight onto the list rather than through the panel.
+    # Only what has to happen without the panel: the transport keys, which are
+    # pressed while looking at something else.
     hotkeys = [
-      {
-        key = "space";
-        modifiers = ["option"];
-        entry = {
-          key = "space";
-          pick = {
-            source = "applications";
-            run = ["/usr/bin/open" "-a" "{}"];
-          };
-        };
-      }
-      {
-        key = "l";
-        modifiers = ["command" "control"];
-        entry = {
-          key = "l";
-          layout = "next";
-        };
-      }
-      {
-        key = "l";
-        modifiers = ["command" "shift"];
-        entry = {
-          key = "l";
-          shell = ["/usr/bin/open" "-a" "ScreenSaverEngine"];
-        };
-      }
-      # Registering a hotkey consumes the key, so an entry that does nothing is
-      # how cmd+m and cmd+h stop minimising and hiding windows.
-      {
-        key = "m";
-        modifiers = ["command"];
-        entry = {key = "m";};
-      }
-      {
-        key = "h";
-        modifiers = ["command"];
-        entry = {key = "h";};
-      }
-      {
-        key = "h";
-        modifiers = ["command" "option"];
-        entry = {key = "h";};
-      }
-      # the media keys bindings.lua had, so Hammerspoon is not needed for them
       {
         key = "delete";
         modifiers = ["option"];
