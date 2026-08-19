@@ -65,6 +65,7 @@ Never written a line myself, only through agents:
 
 ## Working with me
 
+- Write files only through the editing tools, never with sed, awk, python or echo. A script that writes at the end loses every earlier edit when an assert fails halfway, and running it again duplicates what did land.
 - Do what was asked and nothing more. Ask before doing anything else, unless I say you have a free hand.
 - Ask until an unclear request is clear. Assume nothing.
 - I dictate, so expect mangled words: read them by sound, and ask whenever a name or an identifier is at stake.
@@ -93,8 +94,8 @@ Always follow these rules in chat replies, commit messages, documentation, and e
 ## Conventions
 
 - Write everything that lands in a repository in English, whatever language we are speaking: issues, pull requests, commit messages, docs and code comments
-- Write files only through the editing tools, never with sed, awk, python or echo
 - One commit per logical change, and only what this task changed
+- Never pass `-c user.name` or `-c user.email` to git: the repository already knows who I am, and a name taken from the session context signs the commit as somebody else
 - Title a pull request like a commit subject
 
 ## Memory
