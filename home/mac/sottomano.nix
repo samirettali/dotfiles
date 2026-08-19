@@ -20,286 +20,312 @@
   # skip instant. spotctl still owns anything that needs the library.
   spotify = command: ["/usr/bin/osascript" "-e" "tell application \"Spotify\" to ${command}"];
 
-  engines = [
-    {
-      key = "c";
-      name = "code";
-      url = "https://github.com/search?q={}&type=code";
-    }
-    {
-      key = "g";
-      name = "google";
-      url = "https://google.com/search?q={}";
-    }
-    {
-      key = "m";
-      name = "maps";
-      url = "https://www.google.com/maps/search/{}";
-    }
-    {
-      key = "n";
-      name = "nixos";
-      url = "https://mynixos.com/search?q={}";
-    }
-    {
-      key = "p";
-      name = "perplexity";
-      url = "https://perplexity.ai/search?q={}";
-    }
-    {
-      key = "r";
-      name = "repos";
-      url = "https://github.com/search?q={}&type=repositories";
-    }
-    {
-      key = "t";
-      name = "twitter";
-      url = "https://x.com/search?q={}&src=typed_query";
-    }
-    {
-      key = "y";
-      name = "youtube";
-      url = "https://www.youtube.com/results?search_query={}";
-    }
-  ];
-
-  # shift searches whatever is selected instead of asking for it. It carries no
-  # name, so it binds without listing every engine in the panel a second time.
-  searchLayer =
-    lib.concatMap (engine: [
-      {
-        inherit (engine) key name;
-        search = engine.url;
-      }
-      {
-        inherit (engine) key;
-        shift = true;
-        search = engine.url;
-      }
-    ])
-    engines;
-
-  # rbw takes the entry name as an argument rather than in the command line, so
-  # a name with a space or a quote in it cannot break out of the shell.
-  vaultEntry = name: command: {
-    inherit name;
-    pick =
-      {
-        list = [sh "-c" "${rbw} list"];
-      }
-      // command;
-  };
-
-  # kept so the settled version can go straight back in
+  # The keymap as it settled, taken back from the file it was tried out in.
   keymap = {
-    # classic, keyboard, depth or columns
-    theme = "classic";
-
-    # control tapped on its own is escape, control held is control — macOS
-    # already maps caps lock to control, so this is what gives caps both roles.
-    # It replaces ControlEscape.spoon and, like it, needs Accessibility and
-    # stops while macOS holds Secure Input.
     capsEscape = true;
-
+    entries = [
+      {
+        browse = "~";
+        key = "f";
+        name = "files";
+      }
+      {
+        key = "c";
+        name = "clipboard";
+        pick = {
+          source = "clipboard";
+          type = true;
+        };
+      }
+      {
+        key = "e";
+        name = "emoji";
+        pick = {
+          source = "emoji";
+          type = true;
+        };
+      }
+      {
+        key = "l";
+        name = "links";
+        pick = {
+          cache = "vault";
+          list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
+          run = ["/usr/bin/open" "{}"];
+        };
+      }
+      {
+        key = "m";
+        name = "music";
+        pick = {
+          cache = "playlists";
+          list = ["/bin/sh" "-c" "${spotctl} playlist list --full | ${jq} -r '.items[] | [.id, .name, (.owner.display_name // \"\"), (.images[-1].url // \"\")] | @tsv'"];
+          run = ["/bin/sh" "-c" "${spotctl} play playlist \"$1\"" "sh" "{}"];
+        };
+      }
+      {
+        entries = [
+          {
+            key = "e";
+            name = "email";
+            type = "samir@ettali.com";
+          }
+          {
+            key = "u";
+            name = "username";
+            type = "samirettali";
+          }
+          {
+            key = "t";
+            name = "timestamp";
+            typeOutput = ["/bin/date" "+%s"];
+          }
+          {
+            key = "d";
+            name = "date";
+            typeOutput = ["/bin/date" "-u" "+%Y-%m-%d %H:%M:%S"];
+          }
+          {
+            key = "g";
+            name = "guid";
+            typeOutput = ["/usr/bin/uuidgen"];
+          }
+        ];
+        key = "i";
+        name = "insert";
+      }
+      {
+        entries = [
+          {
+            key = "c";
+            name = "code";
+            search = "https://github.com/search?q={}&type=code";
+          }
+          {
+            key = "c";
+            search = "https://github.com/search?q={}&type=code";
+            shift = true;
+          }
+          {
+            key = "g";
+            name = "google";
+            search = "https://google.com/search?q={}";
+          }
+          {
+            key = "g";
+            search = "https://google.com/search?q={}";
+            shift = true;
+          }
+          {
+            key = "m";
+            name = "maps";
+            search = "https://www.google.com/maps/search/{}";
+          }
+          {
+            key = "m";
+            search = "https://www.google.com/maps/search/{}";
+            shift = true;
+          }
+          {
+            key = "n";
+            name = "nixos";
+            search = "https://mynixos.com/search?q={}";
+          }
+          {
+            key = "n";
+            search = "https://mynixos.com/search?q={}";
+            shift = true;
+          }
+          {
+            key = "p";
+            name = "perplexity";
+            search = "https://perplexity.ai/search?q={}";
+          }
+          {
+            key = "p";
+            search = "https://perplexity.ai/search?q={}";
+            shift = true;
+          }
+          {
+            key = "r";
+            name = "repos";
+            search = "https://github.com/search?q={}&type=repositories";
+          }
+          {
+            key = "r";
+            search = "https://github.com/search?q={}&type=repositories";
+            shift = true;
+          }
+          {
+            key = "t";
+            name = "twitter";
+            search = "https://x.com/search?q={}&src=typed_query";
+          }
+          {
+            key = "t";
+            search = "https://x.com/search?q={}&src=typed_query";
+            shift = true;
+          }
+          {
+            key = "y";
+            name = "youtube";
+            search = "https://www.youtube.com/results?search_query={}";
+          }
+          {
+            key = "y";
+            search = "https://www.youtube.com/results?search_query={}";
+            shift = true;
+          }
+        ];
+        key = "q";
+        name = "query";
+      }
+      {
+        entries = [
+          {
+            display = "docked";
+            key = "d";
+            name = "docked";
+          }
+          {
+            display = "side-by-side";
+            key = "s";
+            name = "side by side";
+          }
+          {
+            display = "external";
+            key = "e";
+            name = "external";
+          }
+        ];
+        key = "d";
+        name = "display";
+      }
+      {
+        key = "o";
+        name = "open";
+        pick = {
+          run = ["/usr/bin/open" "-a" "{}"];
+          source = "applications";
+        };
+      }
+      {
+        key = "b";
+        name = "browser";
+        launch = "Firefox";
+      }
+      {
+        key = "s";
+        name = "spotify";
+        launch = "Spotify";
+      }
+      {
+        key = "t";
+        name = "terminal";
+        launch = "Ghostty";
+      }
+      {
+        key = "k";
+        name = "keyboard";
+        layout = "next";
+      }
+      {
+        key = "v";
+        name = "vault";
+        entries = [
+          {
+            key = "o";
+            name = "otp";
+            pick = {
+              list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
+              run = ["/bin/sh" "-c" "${rbw} code \"$1\" | /usr/bin/pbcopy" "sh" "{}"];
+              typeOutput = ["/bin/sh" "-c" "${rbw} code \"$1\"" "sh" "{}"];
+              cache = "vault";
+            };
+          }
+          {
+            key = "p";
+            name = "password";
+            pick = {
+              list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
+              run = ["/bin/sh" "-c" "${rbw} get \"$1\" | /usr/bin/pbcopy" "sh" "{}"];
+              typeOutput = ["/bin/sh" "-c" "${rbw} get \"$1\"" "sh" "{}"];
+              cache = "vault";
+            };
+          }
+          {
+            key = "u";
+            name = "username";
+            pick = {
+              list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
+              run = ["/bin/sh" "-c" "${rbw} get --field username \"$1\" | /usr/bin/pbcopy" "sh" "{}"];
+              typeOutput = ["/bin/sh" "-c" "${rbw} get --field username \"$1\"" "sh" "{}"];
+              cache = "vault";
+            };
+          }
+        ];
+      }
+    ];
     hooks = {
-      # sketchybar has no event of its own for a layout change, so it is pushed
-      # one. Both when the launcher switches and when anything else does.
-      inputSourceChanged = [sketchybar "--trigger" "keyboard_layout_change" "SOURCE_ID={}"];
+      inputSourceChanged = ["${sketchybar}" "--trigger" "keyboard_layout_change" "SOURCE_ID={}"];
     };
-
     hotkey = {
       key = "space";
       modifiers = ["command"];
     };
-
-    # Only what has to happen without the panel: the transport keys, which are
-    # pressed while looking at something else.
     hotkeys = [
       {
-        key = "delete";
-        modifiers = ["option"];
         entry = {
           key = "delete";
-          shell = spotify "playpause";
+          shell = ["/usr/bin/osascript" "-e" "tell application \"Spotify\" to playpause"];
         };
+        key = "delete";
+        modifiers = ["option"];
       }
       {
-        key = "[";
-        modifiers = ["option"];
         entry = {
           key = "[";
-          shell = spotify "previous track";
+          shell = ["/usr/bin/osascript" "-e" "tell application \"Spotify\" to previous track"];
         };
+        key = "[";
+        modifiers = ["option"];
       }
       {
-        key = "]";
-        modifiers = ["option"];
         entry = {
           key = "]";
-          shell = spotify "next track";
+          shell = ["/usr/bin/osascript" "-e" "tell application \"Spotify\" to next track"];
         };
+        key = "]";
+        modifiers = ["option"];
       }
     ];
-
-    entries =
-      [
-        {
-          key = "b";
-          name = "browser";
-          launch = "Firefox";
-        }
-        {
-          key = "t";
-          name = "terminal";
-          launch = "Ghostty";
-        }
-        {
-          key = "f";
-          name = "files";
-          browse = "~";
-        }
-        {
-          key = "c";
-          name = "clipboard";
-          pick = {
-            source = "clipboard";
-            type = true;
-          };
-        }
-        {
-          key = "e";
-          name = "emoji";
-          pick = {
-            source = "emoji";
-            type = true;
-          };
-        }
-        {
-          key = "l";
-          name = "links";
-          pick = {
-            # kept on disk under this name: linkding answers over the tailnet in
-            # about half a second, and the panel should not wait for it
-            cache = "links";
-            list = [
-              sh
-              "-c"
-              "${curl} -sf -H \"Authorization: Token $(${rbw} get linkding-api-key)\" 'https://links.samirettali.com/api/bookmarks/?limit=500' | ${jq} -r '.results[] | [.url, (.title // .website_title // .url), .url] | @tsv'"
-            ];
-            run = ["/usr/bin/open" "{}"];
-          };
-        }
-        {
-          key = "m";
-          name = "music";
-          pick = {
-            cache = "playlists";
-            list = [
-              sh
-              "-c"
-              "${spotctl} playlist list --full | ${jq} -r '.items[] | [.id, .name, (.owner.display_name // \"\")] | @tsv'"
-            ];
-            run = [sh "-c" "${spotctl} play playlist \"$1\"" "sh" "{}"];
-          };
-        }
-        {
-          key = "s";
-          name = "spotify";
-          launch = "Spotify";
-        }
-        {
-          key = "z";
-          name = "zed";
-          launch = "Zed";
-        }
-        {
-          key = "n";
-          name = "notes";
-          launch = "Obsidian";
-        }
-        {
-          key = "a";
-          name = "activity monitor";
-          launch = "Activity Monitor";
-        }
-        # insert rather than paste: it types text, and it is the letter vim uses
-        # for exactly that. paste wanted the p that password already has.
-        {
-          key = "i";
-          name = "insert";
-          entries = [
-            {
-              key = "e";
-              name = "email";
-              type = "samir@ettali.com";
-            }
-            {
-              key = "u";
-              name = "username";
-              type = "samirettali";
-            }
-            {
-              key = "t";
-              name = "timestamp";
-              typeOutput = ["/bin/date" "+%s"];
-            }
-            {
-              key = "d";
-              name = "date";
-              typeOutput = ["/bin/date" "-u" "+%Y-%m-%d %H:%M:%S"];
-            }
-            {
-              key = "g";
-              name = "uuid";
-              typeOutput = ["/usr/bin/uuidgen"];
-            }
-          ];
-        }
-        {
-          key = "q";
-          name = "query";
-          entries = searchLayer;
-        }
-        {
-          key = "d";
-          name = "display";
-          entries = [
-            {
-              key = "d";
-              name = "docked";
-              display = "docked";
-            }
-            {
-              key = "s";
-              name = "side by side";
-              display = "side-by-side";
-            }
-            {
-              key = "e";
-              name = "external";
-              display = "external";
-            }
-          ];
-        }
-      ]
-      ++ lib.optionals config.programs.rbw.enable [
-        (vaultEntry "password" {run = [sh "-c" "${rbw} get \"$1\" | /usr/bin/pbcopy" "sh" "{}"];}
-          // {key = "p";})
-        (vaultEntry "username" {run = [sh "-c" "${rbw} get --field username \"$1\" | /usr/bin/pbcopy" "sh" "{}"];}
-          // {key = "u";})
-        (vaultEntry "otp" {run = [sh "-c" "${rbw} code \"$1\" | /usr/bin/pbcopy" "sh" "{}"];}
-          // {key = "o";})
-      ];
+    theme = {
+      shape = "list";
+      flow = "columns";
+      key = "column";
+      arrow = true;
+      title = false;
+      group = true;
+      size = 18;
+      padding = 24;
+      radius = 14;
+      borderWidth = 0;
+      animation = 0;
+      background = "#000000";
+      border = "#ffffff4d";
+      text = "#ffffff";
+      muted = "#ffffffae";
+      rule = "#ffffff24";
+      selection = "#ffffff1f";
+      top = 0.25;
+      iconSize = 38;
+    };
   };
 in {
   # The launcher reads its bindings from here and nothing else, so the keymap is
   # declared like the rest of the configuration rather than edited in place.
   xdg.configFile = {
-    # TEMPORARILY OFF while the keymap is being tried out: nix owns this path, so
-    # every change meant a rebuild and an activation before it could be seen.
-    # ~/.config/sottomano/keymap.json is a plain file for now. Put this back —
-    # and copy whatever the file ended up saying into `keymap` — once it settles.
-    # "sottomano/keymap.json".source = (pkgs.formats.json {}).generate "keymap.json" keymap;
+    "sottomano/keymap.json".source = (pkgs.formats.json {}).generate "keymap.json" keymap;
 
     # The emojione data ships inside Emojis.spoon, which is already pinned for
     # Hammerspoon. Reduce it here rather than at every open: display drops the
