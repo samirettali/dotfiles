@@ -8,20 +8,20 @@ auto_switch = false
 # panel_bg = "reset"
 # accent = "white"
 pane_inactive_border = "#444444"
-space_active_bg = "#000000"
+space_active_bg = "default"
 space_active_fg = "#ffffff"
 space_inactive_fg = "#888888"
-space_selected_bg = "#000000"
+space_selected_bg = "default"
 space_selected_fg = "green"
 
-agent_active_bg = "#000000"
+agent_active_bg = "default"
 agent_active_fg = "#ffffff"
-agent_inactive_bg = "#000000"
+agent_inactive_bg = "default"
 agent_inactive_fg = "#888888"
 
-tab_active_bg = "#000000"
+tab_active_bg = "default"
 tab_active_fg = "#ffffff"
-tab_inactive_bg = "#000000"
+tab_inactive_bg = "default"
 tab_inactive_fg = "#888888"
 
 
@@ -77,7 +77,7 @@ mobile_width_threshold = 68
 label_padding = 0   # simmetrico; vanilla era 1 a sinistra e 3 a destra
 gap = 2
 min_width = 0
-
+label = ["index", { text = ":" }, "name"]
 
 [ui.toast]
 delivery = "off"

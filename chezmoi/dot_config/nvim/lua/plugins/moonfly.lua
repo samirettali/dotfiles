@@ -1,7 +1,8 @@
 vim.pack.add({ "https://github.com/bluz71/vim-moonfly-colors" })
 
+vim.g.moonflyTransparent = true
 local moonfly = require("moonfly")
-moonfly.custom_colors({ bg = "#000000" })
+-- moonfly.custom_colors({ bg = "#000000" })
 
 local palette = moonfly.palette
 
@@ -18,40 +19,31 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 	pattern = "moonfly",
 	callback = function()
 		vim.api.nvim_set_hl(0, "WinBar", {
-			bg = palette.bg,
 			fg = palette.grey39,
 		})
 
 		vim.api.nvim_set_hl(0, "WinBarNC", {
-			bg = palette.bg,
 			fg = palette.grey39,
 		})
 
 		vim.api.nvim_set_hl(0, "BqfSign", {
-			bg = palette.bg,
 			fg = palette.emerald,
 		})
 
 		vim.api.nvim_set_hl(0, "TablineSel", {
-			bg = palette.bg,
 			fg = palette.white,
 		})
 
 		vim.api.nvim_set_hl(0, "Tabline", {
-			bg = palette.bg,
 			fg = palette.grey39,
 		})
 
-		vim.api.nvim_set_hl(0, "TablineFill", {
-			bg = palette.bg,
-		})
-
 		vim.api.nvim_set_hl(0, "TreesitterContext", {
-			bg = palette.bg,
+			bg = "NONE",
 		})
 
 		vim.api.nvim_set_hl(0, "StatusLine", {
-			bg = palette.bg,
+			bg = "NONE",
 		})
 
 		vim.api.nvim_set_hl(0, "NormalFloatPreview", {
@@ -95,11 +87,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		})
 
 		vim.api.nvim_set_hl(0, "CursorLine", {
-			bg = palette.black,
+			-- bg = palette.black,
 		})
 
 		vim.api.nvim_set_hl(0, "CursorLineNr", {
-			bg = palette.black,
+			-- bg = palette.black,
 		})
 	end,
 })
