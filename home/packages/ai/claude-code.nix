@@ -17,20 +17,7 @@ in {
 
   programs.claude-code = {
     enable = lib.mkDefault true;
-    # Hack for tmux and herdr panel names
-    package = pkgs.claude-code.overrideAttrs (old: {
-      postInstall =
-        (old.postInstall or "")
-        + ''
-          mkdir -p $out/libexec
-          mv $out/bin/.claude-wrapped $out/libexec/claude
-          ln -s ../libexec/claude $out/bin/.claude-wrapped
-          mv $out/bin/claude $out/libexec/claude-env
-          makeBinaryWrapper $out/libexec/claude-env $out/bin/claude \
-            --inherit-argv0 \
-            --add-flags "--allow-dangerously-skip-permissions"
-        '';
-    });
+    package = pkgs.callPackage "${inputs.samirettali-nur}/pkgs/claude-code" {}; # TODO: fix
     enableMcpIntegration = true;
     skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
     settings = {
