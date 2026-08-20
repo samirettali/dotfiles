@@ -226,6 +226,11 @@
         launch = "Ghostty";
       }
       {
+        key = ",";
+        name = "settings";
+        launch = "System Settings";
+      }
+      {
         key = "p";
         name = "color";
         color = "hex";
