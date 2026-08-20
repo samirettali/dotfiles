@@ -25,10 +25,6 @@ Only `src` is overridden, not `cargoDeps`.
 The NUR derivation still computes dependencies from upstream.
 This works while the fork leaves `Cargo.lock` unchanged and fails loudly when it does not.
 
-Herdr's `config.toml` is deliberately unmanaged because it changes frequently.
-It lives at `~/.config/herdr/config.toml`.
-Keep the corresponding `xdg.configFile` block in `herdr.nix` commented out.
-
 ## Building and testing on Darwin
 
 A bare `cargo build` does not work on Darwin.
