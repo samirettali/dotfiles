@@ -14,6 +14,7 @@
   jq = lib.getExe pkgs.jq;
   curl = lib.getExe pkgs.curl;
   sh = "/bin/sh";
+  linkding = "https://links.samirettali.com";
   sketchybar = lib.getExe config.programs.sketchybar.package;
 
   # AppleScript rather than spotctl for transport: it talks to the running app
@@ -50,8 +51,8 @@
         key = "l";
         name = "links";
         pick = {
-          cache = "vault";
-          list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
+          cache = "links";
+          list = ["/bin/sh" "-c" "${curl} -sS -H \"Authorization: Token $(${rbw} get linkding-api-key)\" '${linkding}/api/bookmarks/archived/?limit=1000' | ${jq} -r '.results[] | [.url, ([.title, .website_title, .url] | map(select(. != null and . != \"\")) | first), (.tag_names // [] | join(\" \")), (.favicon_url // \"\")] | @tsv'"];
           run = ["/usr/bin/open" "{}"];
         };
       }
