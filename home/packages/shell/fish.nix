@@ -64,6 +64,14 @@
               end
           end
         '';
+      rbw =
+        /*
+        fish
+        */
+        ''
+          set -lx PINENTRY_USER_DATA rbw-interactive
+          command rbw $argv
+        '';
       fish_right_prompt =
         /*
         fish
