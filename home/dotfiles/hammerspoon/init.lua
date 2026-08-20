@@ -7,7 +7,6 @@ end
 require("bindings")
 require("hammerspoon_config")
 require("clipboard").start()
-require("recursive_binder")
 pcall(require, "sketchybar")
 
 -- generates type annotations for the whole hs API into ~/.hammerspoon/annotations,

@@ -1,7 +1,5 @@
-local applications = require("applications")
 local lib = require("lib")
 
-hs.hotkey.bind({ "alt" }, "space", applications.show)
 hs.hotkey.bind({ "alt", "shift" }, "R", hs.reload)
 
 hs.hotkey.bind({ "cmd", "shift" }, "l", hs.caffeinate.startScreensaver)
