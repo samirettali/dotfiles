@@ -1,21 +1,28 @@
 #!/usr/bin/env bash
 
-# Copy the configuration home-manager deployed in $HOME into the chezmoi source
-# tree, so the work Mac gets the same files without Nix. Run it after a build.
+# Copy the configuration home-manager builds for mbp into the chezmoi source
+# tree, so the work Mac gets the same files without Nix.
+#
+# The source is the built file tree, not $HOME: a render then needs no
+# activation, runs on any Mac and in CI, and cannot pick up a file edited by
+# hand that nix does not own — which is how the herdr config drifted.
 
 set -euo pipefail
 
 source_dir=${1:-$HOME/dev/dotfiles/chezmoi}
+flake_dir=${2:-${source_dir%/*}}
 
 if [[ ! -d $source_dir ]]; then
     printf 'chezmoi source directory not found: %s\n' "$source_dir" >&2
     exit 1
 fi
 
-if ! command -v rsync >/dev/null 2>&1; then
-    printf 'Required command not found: rsync\n' >&2
-    exit 1
-fi
+for tool in rsync nix; do
+    if ! command -v "$tool" >/dev/null 2>&1; then
+        printf 'Required command not found: %s\n' "$tool" >&2
+        exit 1
+    fi
+done
 
 files=(
     .config/herdr/config.toml
@@ -61,9 +68,19 @@ source_name() {
     printf '%s\n' "$out"
 }
 
+attribute=darwinConfigurations.mbp.config.home-manager.users.samir.home-files
+
+printf 'Building %s#%s...\n' "$flake_dir" "$attribute"
+
+if ! root=$(nix build --no-link --print-out-paths "$flake_dir#$attribute"); then
+    printf 'The file tree did not build, so there is nothing to render.\n' >&2
+    exit 1
+fi
+
 for path in "${files[@]}" "${directories[@]}" "${templates[@]%%:*}"; do
-    if [[ ! -e $HOME/$path ]]; then
-        printf 'Configured source does not exist: %s\n' "$HOME/$path" >&2
+    if [[ ! -e $root/$path ]]; then
+        printf 'Not owned by nix, so the render cannot reach it: %s\n' "$path" >&2
+        printf 'Declare it in home-manager, or drop it from this script.\n' >&2
         exit 1
     fi
 done
@@ -77,19 +94,19 @@ for path in "${directories[@]}"; do
         excludes+=("--exclude=/$kept")
     done
     mkdir -p "$target"
-    rsync -aL --delete "${excludes[@]}" "$HOME/$path/" "$target/"
+    rsync -aL --delete "${excludes[@]}" "$root/$path/" "$target/"
 done
 
 for path in "${files[@]}"; do
     target=$source_dir/$(source_name "$path")
     mkdir -p "${target%/*}"
-    rsync -aL "$HOME/$path" "$target"
+    rsync -aL "$root/$path" "$target"
 done
 
 for entry in "${templates[@]}"; do
     target=$source_dir/.chezmoitemplates/${entry#*:}
     mkdir -p "${target%/*}"
-    rsync -aL "$HOME/${entry%%:*}" "$target"
+    rsync -aL "$root/${entry%%:*}" "$target"
 done
 
 chmod -R u+w "$source_dir"
