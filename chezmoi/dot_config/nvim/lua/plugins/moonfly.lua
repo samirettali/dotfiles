@@ -2,7 +2,6 @@ vim.pack.add({ "https://github.com/bluz71/vim-moonfly-colors" })
 
 vim.g.moonflyTransparent = true
 local moonfly = require("moonfly")
--- moonfly.custom_colors({ bg = "#000000" })
 
 local palette = moonfly.palette
 
@@ -84,14 +83,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		vim.api.nvim_set_hl(0, "PounceCursorAcceptBest", {
 			bg = palette.red,
 			fg = palette.grey11,
-		})
-
-		vim.api.nvim_set_hl(0, "CursorLine", {
-			-- bg = palette.black,
-		})
-
-		vim.api.nvim_set_hl(0, "CursorLineNr", {
-			-- bg = palette.black,
 		})
 	end,
 })

@@ -1,3 +1,42 @@
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
 [mcp_servers.chrome-devtools]
 args = ["-y", "chrome-devtools-mcp@latest", "--browserUrl=http://127.0.0.1:9222"]
 command = "npx"
+
+[projects."/Users/samir"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/dotfiles"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/herdr"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/homebrew-tap"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/infra"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/nur"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/pulse"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/servers"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/sottomano"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/sottotesto"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/sottovoce"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/spotctl"]
+trust_level = "trusted"
