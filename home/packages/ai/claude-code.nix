@@ -31,6 +31,7 @@ in {
       permissions.defaultMode = "bypassPermissions";
       autoMemoryEnabled = false;
       disableClaudeAiConnectors = true;
+      toolSearchEnabled = true;
       spinnerVerbs = {
         mode = "replace";
         verbs = ["Thinking" "Processing" "Working"];
