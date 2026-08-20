@@ -18,7 +18,6 @@
   home.packages = with pkgs; [
     betterdisplay
     hidden-bar
-    maccy
     nurPkgs.mole
     nurPkgs.sol
     nurPkgs.eqmac
