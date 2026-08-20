@@ -86,7 +86,7 @@ local on_lsp_attach = function(ev)
 
 		vim.keymap.set(
 			"i",
-			"<tab>",
+			"<c-f>",
 			vim.lsp.inline_completion.get,
 			{ desc = "LSP: accept inline completion", buffer = ev.buf }
 		)
