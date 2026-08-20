@@ -60,6 +60,7 @@ in {
         DISABLE_FEEDBACK_COMMAND = "1";
         CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1";
         DISABLE_AUTOUPDATER = "1";
+        ENABLE_TOOL_SEARCH = "true";
       };
     };
   };
