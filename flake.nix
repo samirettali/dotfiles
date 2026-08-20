@@ -43,13 +43,9 @@
       flake = false;
     };
 
+    # Only for the emoji data sottomano reads; see samirettali/sottomano#3.
     spoons = {
       url = "github:Hammerspoon/Spoons";
-      flake = false;
-    };
-
-    control-escape-spoon = {
-      url = "github:jasonrudolph/ControlEscape.spoon";
       flake = false;
     };
 

@@ -310,6 +310,16 @@
         key = "]";
         modifiers = ["option"];
       }
+      # The keyboard layout also sits under the leader on k, but this is the one
+      # binding Hammerspoon still had when it went, and it is used mid-sentence.
+      {
+        entry = {
+          key = "l";
+          layout = "next";
+        };
+        key = "l";
+        modifiers = ["command" "control"];
+      }
     ];
     theme = {
       font = vars.font.name;
@@ -341,10 +351,11 @@ in {
   xdg.configFile = {
     "sottomano/keymap.json".source = (pkgs.formats.json {}).generate "keymap.json" keymap;
 
-    # The emojione data ships inside Emojis.spoon, which is already pinned for
-    # Hammerspoon. Reduce it here rather than at every open: display drops the
-    # duplicate encodings, and an entry with a diversity is one skin tone of
-    # another already in the list.
+    # The emojione data ships inside Emojis.spoon, so the Spoons input outlived
+    # Hammerspoon by itself; samirettali/sottomano#3 is about ending that.
+    # Reduce it here rather than at every open: display drops the duplicate
+    # encodings, and an entry with a diversity is one skin tone of another
+    # already in the list.
     "sottomano/emoji.json".source = pkgs.runCommandLocal "sottomano-emoji" {} ''
       ${pkgs.python3}/bin/python3 - <<'PY'
       import json, os

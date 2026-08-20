@@ -55,7 +55,7 @@ declare -A skipped=(
 )
 
 # .claude/CLAUDE.md and .codex/AGENTS.md are chezmoi templates, not copies.
-# Everything under .pi and .hammerspoon stays on this machine.
+# Everything under .pi stays on this machine.
 
 # chezmoi names a dotfile after its target with the leading dot spelled out.
 source_name() {
