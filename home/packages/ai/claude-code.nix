@@ -35,6 +35,7 @@ in {
         verbs = ["Thinking" "Processing" "Working"];
       };
       spinnerTipsEnabled = false;
+      outputStyle = "Concise";
       hooks = lib.mkIf herdrEnabled {
         SessionStart = [
           {
