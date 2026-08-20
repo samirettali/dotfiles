@@ -1,4 +1,5 @@
 require("plugins.nvim-treesitter")
+require("plugins.nvim-treesitter-context")
 require("plugins.nvim-treesitter-textobjects")
 require("plugins.oil")
 require("plugins.gitsigns")
