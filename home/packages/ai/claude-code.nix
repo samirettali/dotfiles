@@ -30,6 +30,7 @@ in {
       tui = "fullscreen";
       permissions.defaultMode = "bypassPermissions";
       autoMemoryEnabled = false;
+      disableClaudeAiConnectors = true;
       spinnerVerbs = {
         mode = "replace";
         verbs = ["Thinking" "Processing" "Working"];
