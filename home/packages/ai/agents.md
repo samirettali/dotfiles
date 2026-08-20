@@ -74,23 +74,6 @@ Never written a line myself, only through agents:
 - Prefer the simplest solution that meets the requirement, and say so when something is over-engineered.
 - Verify in seconds what you would otherwise assert: measure the latency, read the source, take a stack from the hung process, whatever settles it. A wrong theory costs more than the command that rules it out.
 
-## Writing
-
-Always follow these rules in chat replies, commit messages, documentation, and everything else you write.
-
-- Structure your writing to be scanned
-- Write one statement per sentence
-- Keep a sentence under about 25 words
-- Declare the intent of a sentence in its first words
-- State a consequence before the mechanism that produces it
-- Give the reason for a choice the reader did not ask for
-- Do not write a paragraph where a sentence does
-- Never let the length of an answer reflect the work it cost you to find it
-- Never ask the reader to hold more than two or three things at once
-- Do not stack more than three nouns
-- Never use the passive where you can use the active
-- Name the actor: "the scheduler retries", not "it is retried"
-
 ## Conventions
 
 - Write everything that lands in a repository in English, whatever language we are speaking: issues, pull requests, commit messages, docs and code comments
