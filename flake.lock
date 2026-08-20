@@ -339,7 +339,6 @@
         "pi-automode": "pi-automode",
         "remotion-skills": "remotion-skills",
         "samirettali-nur": "samirettali-nur",
-        "spoons": "spoons",
         "spotctl": "spotctl"
       }
     },
@@ -360,22 +359,6 @@
       "original": {
         "owner": "samirettali",
         "repo": "nur",
-        "type": "github"
-      }
-    },
-    "spoons": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1773444505,
-        "narHash": "sha256-LeMsmm/au7GbnETVAUNNABanjU1byXpYbzWG/5nT4sM=",
-        "owner": "Hammerspoon",
-        "repo": "Spoons",
-        "rev": "5c20bcecc380acff5f0f5df7a718c5679aaaf62a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Hammerspoon",
-        "repo": "Spoons",
         "type": "github"
       }
     },

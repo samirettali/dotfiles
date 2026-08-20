@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   nurPkgs,
   pkgs,
@@ -310,16 +309,6 @@
         key = "]";
         modifiers = ["option"];
       }
-      # The keyboard layout also sits under the leader on k, but this is the one
-      # binding Hammerspoon still had when it went, and it is used mid-sentence.
-      {
-        entry = {
-          key = "l";
-          layout = "next";
-        };
-        key = "l";
-        modifiers = ["command" "control"];
-      }
     ];
     theme = {
       font = vars.font.name;
@@ -349,40 +338,8 @@ in {
   # The launcher reads its bindings from here and nothing else, so the keymap is
   # declared like the rest of the configuration rather than edited in place.
   xdg.configFile = {
+    # The emoji picker has no data until sottomano ships its own:
+    # samirettali/sottomano#3.
     "sottomano/keymap.json".source = (pkgs.formats.json {}).generate "keymap.json" keymap;
-
-    # The emojione data ships inside Emojis.spoon, so the Spoons input outlived
-    # Hammerspoon by itself; samirettali/sottomano#3 is about ending that.
-    # Reduce it here rather than at every open: display drops the duplicate
-    # encodings, and an entry with a diversity is one skin tone of another
-    # already in the list.
-    "sottomano/emoji.json".source = pkgs.runCommandLocal "sottomano-emoji" {} ''
-      ${pkgs.python3}/bin/python3 - <<'PY'
-      import json, os
-
-      source = "${inputs.spoons}/Source/Emojis.spoon/emojis/emojis.json"
-      out = []
-
-      for entry in json.load(open(source)).values():
-          if entry.get("display") != 1 or entry.get("diversity"):
-              continue
-
-          points = entry["code_points"]["fully_qualified"]
-
-          out.append({
-              "glyph": "".join(chr(int(p, 16)) for p in points.split("-")),
-              "name": entry["name"],
-              "keywords": " ".join(
-                  [entry.get("shortname", "").strip(":")] + (entry.get("keywords") or [])
-              ).strip(),
-              "order": entry.get("order", 0),
-          })
-
-      out.sort(key=lambda item: item["order"])
-
-      with open(os.environ["out"], "w") as handle:
-          json.dump(out, handle, ensure_ascii=False)
-      PY
-    '';
   };
 }

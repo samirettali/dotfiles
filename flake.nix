@@ -43,12 +43,6 @@
       flake = false;
     };
 
-    # Only for the emoji data sottomano reads; see samirettali/sottomano#3.
-    spoons = {
-      url = "github:Hammerspoon/Spoons";
-      flake = false;
-    };
-
     hallmark = {
       url = "github:nutlope/hallmark";
       flake = false;
