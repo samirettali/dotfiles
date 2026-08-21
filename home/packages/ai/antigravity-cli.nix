@@ -1,6 +1,13 @@
-{lib, ...}: {
+{
+  lib,
+  inputs,
+  pkgs,
+  ...
+}: {
   programs.antigravity-cli = {
     enable = lib.mkDefault true;
+    enableMcpIntegration = true;
+    skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
     settings = {
       preferredEditor = "vim";
       vimMode = true;
