@@ -5,10 +5,7 @@
   ...
 }: {
   programs.zed-editor = {
-    enable = lib.mkDefault false;
-    extraPackages = with pkgs; [
-      claude-agent-acp
-    ];
+    enable = lib.mkDefault true;
     mutableUserSettings = false;
     mutableUserTasks = false;
     mutableUserKeymaps = false;
@@ -105,9 +102,19 @@
         default_view = "thread";
         default_model = {
           provider = "anthropic";
-          model = "claude-sonnet-4-6";
+          model = "claude-opus-5";
+        };
+        tool_permissions = {
+          default = "allow";
         };
         single_file_review = true;
+      };
+      agent_servers = {
+        "Claude Code" = {
+          type = "custom";
+          command = lib.getExe pkgs.claude-agent-acp;
+          args = [];
+        };
       };
       file_types = {
         Dockerfile = ["Dockerfile" "Dockerfile.*"];
