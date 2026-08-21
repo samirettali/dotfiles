@@ -7,9 +7,11 @@
   programs.aerospace = {
     enable = true;
     settings = {
+      config-version = 2;
       start-at-login = true;
       accordion-padding = 30;
       automatically-unhide-macos-hidden-apps = false;
+      persistent-workspaces = ["1" "2" "3" "4"];
 
       default-root-container-layout = "tiles"; # TODO: this is not working
       gaps = {
@@ -78,77 +80,56 @@
         alt-shift-l = ["join-with right" "mode main"];
       };
       on-window-detected = [
-        # TODO: https://github.com/nix-community/home-manager/commit/7f619d2a72061c24c5ef184aa9f89a4b6c6a2e70
         # workspace assignments (mirrors rift app_rules; rift is 0-indexed)
         {
           check-further-callbacks = true;
-          "if" = {
-            app-id = "com.mitchellh.ghostty";
-          };
+          "if" = "test %{app-bundle-id} = com.mitchellh.ghostty";
           run = ["move-node-to-workspace 3"];
         }
         {
           check-further-callbacks = true;
-          "if" = {
-            app-id = "com.hnc.discord";
-          };
+          "if" = "test %{app-bundle-id} = com.hnc.discord";
           run = ["move-node-to-workspace 4"];
         }
         {
           check-further-callbacks = true;
-          "if" = {
-            app-id = "ru.keepcoder.Telegram";
-          };
+          "if" = "test %{app-bundle-id} = ru.keepcoder.Telegram";
           run = ["move-node-to-workspace 4"];
         }
         {
           check-further-callbacks = true;
-          "if" = {
-            app-id = "com.spotify.client";
-          };
+          "if" = "test %{app-bundle-id} = com.spotify.client";
           run = ["move-node-to-workspace 4"];
         }
         # floating (mirrors rift app_rules floating = true)
         {
           check-further-callbacks = true;
-          "if" = {
-            app-id = "com.apple.calculator";
-          };
+          "if" = "test %{app-bundle-id} = com.apple.calculator";
           run = ["layout floating"];
         }
         {
           check-further-callbacks = true;
-          "if" = {
-            app-id = "com.apple.systempreferences";
-          };
+          "if" = "test %{app-bundle-id} = com.apple.systempreferences";
           run = ["layout floating"];
         }
         {
           check-further-callbacks = true;
-          "if" = {
-            app-id = "com.apple.finder";
-          };
+          "if" = "test %{app-bundle-id} = com.apple.finder";
           run = ["layout floating"];
         }
         {
           check-further-callbacks = true;
-          "if" = {
-            app-name-regex-substring = "Archive Utility";
-          };
+          "if" = "test %{app-name} ~= 'Archive Utility'";
           run = ["layout floating"];
         }
         {
           check-further-callbacks = true;
-          "if" = {
-            app-id = "cc.ffitch.shottr";
-          };
+          "if" = "test %{app-bundle-id} = cc.ffitch.shottr";
           run = ["layout floating"];
         }
         {
           check-further-callbacks = true;
-          "if" = {
-            app-id = "com.riotgames.LeagueofLegends.LeagueClientUx";
-          };
+          "if" = "test %{app-bundle-id} = com.riotgames.LeagueofLegends.LeagueClientUx";
           run = ["layout floating"];
         }
       ];
