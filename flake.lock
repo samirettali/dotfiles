@@ -394,6 +394,22 @@
         "repo": "default",
         "type": "github"
       }
+    },
+    "wincent-agent-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1785925577,
+        "narHash": "sha256-L1DjeqY2L9GXOu+gmZWXj7+BKg+flC//QW4/k+0RAC8=",
+        "owner": "wincent",
+        "repo": "wincent-agent-plugins",
+        "rev": "2de8424ad771cf81a1647b7dfc7d955a69b7a09f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wincent",
+        "repo": "wincent-agent-plugins",
+        "type": "github"
+      }
     }
   },
   "root": "root",
