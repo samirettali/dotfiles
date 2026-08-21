@@ -68,6 +68,11 @@
       flake = false;
     };
 
+    wincent-agent-plugins = {
+      url = "github:wincent/wincent-agent-plugins";
+      flake = false;
+    };
+
     spotctl = {
       url = "github:samirettali/spotctl";
       flake = false;
