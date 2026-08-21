@@ -114,11 +114,11 @@
     "herdr-fork": {
       "flake": false,
       "locked": {
-        "lastModified": 1786908977,
-        "narHash": "sha256-+N1SQYjnlpuwN8juKZZ8AONvIzR9xZX6OckUjcJdBr4=",
+        "lastModified": 1787332454,
+        "narHash": "sha256-YKzCZj3iHqPAX/oBbytKG2AwF2KSf11PHaIzbBCGmIs=",
         "owner": "samirettali",
         "repo": "herdr",
-        "rev": "d5b95699a217f3e1f0c897fd35c2342e9d066deb",
+        "rev": "b4f46b786db9e4a73b4e121db0d4cbabbfa32d75",
         "type": "github"
       },
       "original": {
