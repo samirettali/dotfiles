@@ -5,8 +5,6 @@ name = "terminal"
 auto_switch = false
 
 [theme.custom]
-# panel_bg = "reset"
-# accent = "white"
 pane_inactive_border = "#444444"
 space_active_bg = "default"
 space_active_fg = "#ffffff"
@@ -38,23 +36,17 @@ next_tab = ["prefix+n", "prefix+ctrl+n"]
 last_pane = "prefix+tab"
 split_vertical = "prefix+%"
 split_horizontal = 'prefix+"'
-
-# ctrl+hjkl tra i pane; dentro nvim passano a nvim, che richiama
-# `herdr pane focus` quando è al bordo dei suoi split
 focus_pane_left = "ctrl+h"
 focus_pane_down = "ctrl+j"
 focus_pane_up = "ctrl+k"
 focus_pane_right = "ctrl+l"
 passthrough_commands = ["nvim"]
-
-# navigate mode (prefix+w): j/k tra gli space, frecce tra i pane
 navigate_workspace_up = "k"
 navigate_workspace_down = "j"
 navigate_pane_up = "up"
 navigate_pane_down = "down"
 
 [ui]
-# sidebar_start_collapsed = true
 sidebar_collapsed_mode = "hidden"
 confirm_close = true
 prompt_new_tab_name = false
@@ -74,7 +66,7 @@ hide_pane_borders_when_zoomed = true
 mobile_width_threshold = 68
 
 [ui.tab_bar]
-label_padding = 0   # simmetrico; vanilla era 1 a sinistra e 3 a destra
+label_padding = 0
 gap = 2
 min_width = 0
 label = ["index", { text = ":" }, "name"]
@@ -86,16 +78,8 @@ delivery = "off"
 enabled = true
 
 [ui.sidebar.agents.rows_by_agent]
-# claude = [["state_icon", "workspace", "tab"], ["terminal_title_stripped"], ["agent"]]
-
-# claude = [["state_icon", "workspace", "tab"], ["agent"]]
-# pi = [["state_icon", "workspace", "tab"], ["agent"]]
-
 claude = [["state_icon", "workspace", "spacer", "tab"]]
 pi = [["state_icon", "workspace", "spacer", "tab"]]
-
-# claude = [["state_icon", "workspace"], ["tab"]]
-# pi = [["state_icon", "workspace"], ["tab"]]
 
 [ui.sidebar.spaces]
 rows = [["state_icon", "workspace", "spacer", { token = "branch", fg = "#888888", dim = true }]]
