@@ -13,9 +13,6 @@
     "openrouter/anthropic/claude-fable-5",
     "openrouter/anthropic/claude-opus-5",
     "openrouter/anthropic/claude-sonnet-5",
-    "openrouter/google/gemini-3.1-pro-preview",
-    "openrouter/google/gemini-3.6-flash",
-    "openrouter/google/gemini-3.5-flash-lite",
     "openrouter/xiaomi/mimo-v2.5",
     "openrouter/tencent/hy3",
     "openrouter/stepfun/step-3.7-flash",
@@ -149,6 +146,16 @@
             }
           },
           "maxTokens": 65536
+        },
+        "google/gemini-3.7-flash": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "google-ai-studio"
+              ]
+            }
+          }
         }
       }
     },
