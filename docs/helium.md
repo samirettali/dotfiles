@@ -109,7 +109,15 @@ Two things that machine cannot do by itself, both settled in that module:
   `--no-sandbox`.
 - Fonts. `fc-list` found nothing at all, so rendered text came out as empty
   boxes. The module installs DejaVu, Liberation and the Noto emoji font and
-  turns on home-manager's fontconfig.
+  turns on home-manager's fontconfig, with the generic families pinned —
+  without that, `sans-serif` resolved to a serif face.
+
+Chromium reads the home-manager fontconfig through XDG. Do not "fix" the
+`Cannot load default config file` warning from `fc-list` by setting
+`FONTCONFIG_FILE` to the store's `fonts.conf`: that config replaces the
+home-manager one instead of adding to it, and rendering falls back to serif.
+`fc-list` sees all the fonts despite the warning; `fc-match` does not, and lies
+about which family wins. Trust a screenshot.
 
 Before it existed, every session built its own chromium with `nix build
 nixpkgs#ungoogled-chromium`, used it by store path and lost it to the next
