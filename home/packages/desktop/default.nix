@@ -3,6 +3,7 @@
     ./discord.nix
     ./firefox
     ./ghostty.nix
+    ./helium.nix
     ./keepassxc.nix
     ./mpv.nix
     ./obsidian.nix
