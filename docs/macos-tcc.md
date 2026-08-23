@@ -22,7 +22,11 @@ AeroSpace is the only application bundle currently launched by an agent.
 Other agents run CLI binaries, which do not need these GUI grants.
 
 Store-path wrappers are harmless for applications signed with a stable Team ID.
-`BROWSER_BIN` can therefore point at the Nix store for signed Chrome builds.
+
+Helium is not one of them: it is re-signed ad-hoc so it can load the Widevine CDM,
+which leaves it with path identity. `BROWSER_BIN` therefore points at the copied
+application, and a version bump costs its camera, microphone and screen recording
+grants. See `docs/helium.md`.
 
 ## Diagnosis and recovery
 
