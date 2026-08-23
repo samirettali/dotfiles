@@ -7,7 +7,6 @@
     ./packages/dev/js.nix
     ./packages/dev/python.nix
     ./packages/shell
-    ./packages/desktop/google-chrome.nix
   ];
 
   dotfiles.programs = {
