@@ -20,9 +20,23 @@ in {
     pkgs.dejavu_fonts
     pkgs.liberation_ttf
     pkgs.noto-fonts-color-emoji
+
+    # fc-list, to tell "no fonts installed" from "fonts installed, not found".
+    pkgs.fontconfig
   ];
 
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig = {
+    enable = true;
+
+    # Without these, a page asking for sans-serif gets whatever fontconfig
+    # prefers, which here was a serif face.
+    defaultFonts = {
+      sansSerif = ["DejaVu Sans"];
+      serif = ["DejaVu Serif"];
+      monospace = ["DejaVu Sans Mono"];
+      emoji = ["Noto Color Emoji"];
+    };
+  };
 
   home.sessionVariables = {
     BROWSER_BIN = "${chromium}/bin/chromium";
