@@ -93,6 +93,28 @@ Nothing in the agent tooling knows or cares that this is not Chrome:
 - The `chrome-devtools` MCP server attaches to `--browserUrl=127.0.0.1:9222`, so
   it needs a browser started with `--remote-debugging-port=9222`, whichever one.
 
+## The server
+
+`andromeda` has its own browser, and it is not this one: Helium on Linux is an
+AppImage, and headless it would only be the Chromium underneath it without the
+extensions or the CDM that justify it here. `home/packages/dev/headless-browser.nix`
+installs `ungoogled-chromium` from nixpkgs instead, which is substitutable for
+aarch64-linux — 200 MB fetched, nothing built.
+
+Two things that machine cannot do by itself, both settled in that module:
+
+- The sandbox. nixpkgs points `CHROME_DEVEL_SANDBOX` at a setuid helper only a
+  root-owned installation can provide, so chromium finds it, refuses to run
+  unsandboxed and aborts. The `chromium` on `PATH` is a wrapper that passes
+  `--no-sandbox`.
+- Fonts. `fc-list` found nothing at all, so rendered text came out as empty
+  boxes. The module installs DejaVu, Liberation and the Noto emoji font and
+  turns on home-manager's fontconfig.
+
+Before it existed, every session built its own chromium with `nix build
+nixpkgs#ungoogled-chromium`, used it by store path and lost it to the next
+garbage collection — roughly 5,800 chrome-devtools MCP calls' worth of that.
+
 ## Changing any of this
 
 The packages live in the NUR repo, which dotfiles pins as a flake input. Merge
