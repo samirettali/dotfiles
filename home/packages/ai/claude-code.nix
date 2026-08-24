@@ -19,10 +19,6 @@ in {
     enable = lib.mkDefault true;
     package = pkgs.callPackage "${inputs.samirettali-nur}/pkgs/claude-code" {}; # TODO: fix
     enableMcpIntegration = true;
-    mcpServers.claude-design = {
-      type = "http";
-      url = "https://api.anthropic.com/v1/design/mcp";
-    };
     skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
     settings = {
       model = "claude-opus-5";
