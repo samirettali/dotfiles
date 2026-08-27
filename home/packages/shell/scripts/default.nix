@@ -29,6 +29,7 @@ in {
           else null;
       })
       (pkgs.callPackage ./dev-sync.nix {})
+      (pkgs.callPackage ./ccexport.nix {})
       (pkgs.callPackage ./pi-models.nix {})
       (pkgs.callPackage ./ai-usage.nix {
         codex = nurPkgs.codex;
