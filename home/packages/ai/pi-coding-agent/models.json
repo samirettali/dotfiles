@@ -8,8 +8,6 @@
     "xai/grok-4.6",
     "openrouter/minimax/minimax-m3",
     "openrouter/deepseek/deepseek-v4-pro",
-    "openrouter/deepseek/deepseek-v4-flash-0731",
-    "openrouter/z-ai/glm-5.2",
     "openrouter/anthropic/claude-fable-5",
     "openrouter/anthropic/claude-opus-5",
     "openrouter/anthropic/claude-sonnet-5",
@@ -22,9 +20,13 @@
     "openrouter/inclusionai/ling-3.0-flash",
     "openrouter/google/gemini-3.7-flash",
     "openrouter/qwen/qwen3.8-2.4t-a95b",
-    "openrouter/meta/muse-spark-1.2",
     "openrouter/meta/muse-glimmer-30b",
-    "openrouter/qwen/qwen3.8-27b"
+    "openrouter/qwen/qwen3.8-27b",
+    "openrouter/z-ai/glm-5.3",
+    "openrouter/z-ai/glm-5.3-flash",
+    "openrouter/deepseek/deepseek-v4-flash-vision-exp",
+    "openrouter/qwen/qwen3.8-flash",
+    "openrouter/meta/muse-spark-1.2-contributor"
   ],
   "providers": {
     "openrouter": {
@@ -141,11 +143,11 @@
             "openRouterRouting": {
               "allow_fallbacks": false,
               "only": [
-                "venice/fp8"
+                "alibaba"
               ]
             }
           },
-          "maxTokens": 65536
+          "contextWindow": 1000000
         },
         "google/gemini-3.7-flash": {
           "compat": {
@@ -156,6 +158,72 @@
               ]
             }
           }
+        },
+        "z-ai/glm-5.3-flash": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "z-ai/fp8"
+              ]
+            }
+          },
+          "contextWindow": 1048576,
+          "maxTokens": 131072
+        },
+        "z-ai/glm-5.3": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "z-ai/fp8"
+              ]
+            }
+          }
+        },
+        "deepseek/deepseek-v4-flash-vision-exp": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "deepseek"
+              ]
+            }
+          }
+        },
+        "qwen/qwen3.8-flash": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "alibaba"
+              ]
+            }
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 131072
+        },
+        "qwen/qwen3.8-2.4t-a95b": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "alibaba"
+              ]
+            }
+          },
+          "maxTokens": 131072
+        },
+        "meta/muse-glimmer-30b": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "parasail/bf16"
+              ]
+            }
+          },
+          "maxTokens": 117964
         }
       }
     },
