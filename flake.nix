@@ -72,11 +72,6 @@
       url = "github:samirettali/spotctl";
       flake = false;
     };
-
-    pi-automode = {
-      url = "github:czottmann/pi-automode";
-      flake = false;
-    };
   };
 
   outputs = {

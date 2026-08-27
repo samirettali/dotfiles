@@ -33,10 +33,6 @@ in {
       PI_PACKAGE_DIR = "${config.home.homeDirectory}/.pi/pi-source";
       PI_TELEMETRY = "0";
       PI_SKIP_VERSION_CHECK = "1";
-      # Disabled while trying pi-automode.
-      # PI_PERMS_MODE = "auto";
-      # PI_PERMS_PROVIDER = "openai-codex";
-      # PI_PERMS_MODEL = "gpt-5.6-luna";
       PI_AI_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/index.js";
       PI_AI_OAUTH_MODULE_PATH = piNodeModules + "/@earendil-works/pi-ai/dist/oauth.js";
     }
@@ -73,29 +69,6 @@ in {
         "tui.altScreen.halfPageDown" = "ctrl+d";
       };
 
-      ".pi/agent/automode.json".text = builtins.toJSON {
-        autoMode = {
-          enabled = false;
-          classifierModel = "openai-codex/gpt-5.6-luna";
-          classifierReasoningLevel = "low";
-          # In-tree file work skips the classifier; out-of-tree access is classified.
-          allowInsideWorkingDirectory = true;
-          # Hard-denied for the file tools, reads included.
-          deniedPaths = [
-            "~/.ssh/*"
-            "~/Library/Application Support/rbw/*"
-            "~/.pi/agent/auth.json"
-            "**/.env"
-            "**/.env.*"
-          ];
-          environment = ["$defaults"];
-          allow = ["$defaults"];
-          protectedPaths = ["$defaults"];
-          soft_deny = ["$defaults"];
-          hard_deny = ["$defaults"];
-        };
-      };
-
       ".pi/agent/extensions/package.json".text = builtins.toJSON {
         name = "pi-agent-extensions";
         private = true;
@@ -117,11 +90,6 @@ in {
       };
 
       ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
-      # Superseded by pi-automode while it is on trial.
-      # ".pi/agent/extensions/permission-gate.ts".source = ./extensions/permission-gate.ts;
-      # ".pi/agent/extensions/protected-paths.ts".source = ./extensions/protected-paths.ts;
-      ".pi/agent/extensions/auto-mode.ts".source = "${inputs.pi-automode}/extensions/auto-mode.ts";
-      ".pi/agent/extensions/auto-mode".source = "${inputs.pi-automode}/extensions/auto-mode";
       ".pi/agent/extensions/speak.ts".source = ./extensions/speak.ts;
       ".pi/agent/extensions/system-prompt.ts".source = ./extensions/system-prompt.ts;
       ".pi/agent/extensions/x-search.ts".source = ./extensions/x-search.ts;
