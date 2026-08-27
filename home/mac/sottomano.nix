@@ -213,7 +213,7 @@
       {
         key = "b";
         name = "browser";
-        launch = "Firefox";
+        launch = "Helium";
       }
       {
         key = "s";

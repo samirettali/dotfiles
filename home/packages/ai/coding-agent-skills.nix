@@ -53,7 +53,6 @@ in {
   better-writing = "${inputs.jakubkrehel-skills}/skills/better-writing";
   code-review = ./skills/code-review;
   commit = ./skills/commit;
-  firefox = ./skills/firefox;
   frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
   generate-image = ./skills/generate-image;
   generate-speech = ./skills/generate-speech;

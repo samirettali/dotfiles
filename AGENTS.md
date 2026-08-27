@@ -102,7 +102,6 @@ Read the matching document before changing that subsystem:
 - `docs/herdr.md` — patched fork, builds, testing, and Neovim navigation.
 - `docs/sketchybar.md` — pending agents and AI subscription usage.
 - `docs/macos-tcc.md` — permissions, application signatures, and stable launch paths.
-- `docs/firefox.md` — gwfox, extensions, preferences, and browser chrome debugging.
 - `docs/helium.md` — the Chromium side: re-signing, Widevine, pinned extensions.
 
 ## Skills

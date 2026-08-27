@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   imports = [
     ./discord.nix
-    ./firefox
     ./ghostty.nix
     ./helium.nix
     ./keepassxc.nix

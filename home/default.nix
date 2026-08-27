@@ -30,7 +30,7 @@
   };
 
   home.sessionVariables = {
-    DEFAULT_BROWSER = "firefox";
+    DEFAULT_BROWSER = "helium";
     MANPAGER = "${lib.getExe neovimPackage} -c 'Man!' -";
   };
 

@@ -3,7 +3,6 @@
 - [x] code-review (nuova)
 - [ ] android
 - [ ] live-ui-variants
-- [ ] firefox
 - [ ] agent-messaging
 - [ ] herdr
 - [ ] macos-app-release

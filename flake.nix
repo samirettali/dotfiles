@@ -38,11 +38,6 @@
       flake = false;
     };
 
-    gwfox = {
-      url = "github:akkva/gwfox?ref=main";
-      flake = false;
-    };
-
     hallmark = {
       url = "github:nutlope/hallmark";
       flake = false;
