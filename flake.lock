@@ -78,23 +78,6 @@
         "type": "github"
       }
     },
-    "gwfox": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1786199037,
-        "narHash": "sha256-8xJ70UscbR0wxhPOmmPS68VIzDN4WiRCapszCoz1tXQ=",
-        "owner": "akkva",
-        "repo": "gwfox",
-        "rev": "f0760b9be419a932fb6b7dd0666fd0144bc03e72",
-        "type": "github"
-      },
-      "original": {
-        "owner": "akkva",
-        "ref": "main",
-        "repo": "gwfox",
-        "type": "github"
-      }
-    },
     "hallmark": {
       "flake": false,
       "locked": {
@@ -326,7 +309,6 @@
       "inputs": {
         "agent-stuff": "agent-stuff",
         "darwin": "darwin",
-        "gwfox": "gwfox",
         "hallmark": "hallmark",
         "herdr-fork": "herdr-fork",
         "home-manager": "home-manager",
@@ -350,11 +332,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787749387,
-        "narHash": "sha256-NQM+1bcn1+BKd46BdCh2H281n0V0x5oUNGmDhoUv+h0=",
+        "lastModified": 1787869059,
+        "narHash": "sha256-s4KLoadgxFsS0Y5OyWtUA1SuRXfmgsVAwudCQJi5Y3E=",
         "owner": "samirettali",
         "repo": "nur",
-        "rev": "4a570e49b52e5553ce89b3e7784d757990398810",
+        "rev": "cdccce48b2e46578a141fb71e8e092a1abecc663",
         "type": "github"
       },
       "original": {

@@ -81,9 +81,11 @@ Store's update response.
 To add one, put its ID and a short name in `pkgs/chrome-extensions/extensions.json`
 in the NUR repo and run that package's `update.sh`.
 
-Helium already ships uBlock Origin as a component extension, so uBlock Origin
-Lite in the list is redundant. It stays because it costs nothing and keeps the
-list the same as everywhere else.
+Do not put a content blocker in that list: Helium loads uBlock Origin itself as
+a component extension, and a second one only doubles the work on every page.
+
+Firefox's list came over except `adaptive-tab-bar-colour`, which themes
+Firefox's own chrome and has no Chromium counterpart.
 
 ## Agents
 
