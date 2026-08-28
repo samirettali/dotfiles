@@ -163,6 +163,18 @@
         "type": "github"
       }
     },
+    "monid-skill": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-HiWOhTRnkpeELzKK2KWfkK9VuTLZ1+7C5ZpTbVVR2cY=",
+        "type": "file",
+        "url": "https://monid.ai/SKILL.md"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://monid.ai/SKILL.md"
+      }
+    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -298,6 +310,7 @@
         "home-manager": "home-manager",
         "humanlayer-skills": "humanlayer-skills",
         "jakubkrehel-skills": "jakubkrehel-skills",
+        "monid-skill": "monid-skill",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",
         "nixpkgs": "nixpkgs_2",

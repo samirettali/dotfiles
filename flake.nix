@@ -68,6 +68,11 @@
       flake = false;
     };
 
+    monid-skill = {
+      url = "file+https://monid.ai/SKILL.md";
+      flake = false;
+    };
+
     spotctl = {
       url = "github:samirettali/spotctl";
       flake = false;

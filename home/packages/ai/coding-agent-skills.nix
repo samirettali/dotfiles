@@ -41,6 +41,11 @@
     printf '\n' >> $out/SKILL.md
     cat ${./skills/spotify/listening-profile.md} >> $out/SKILL.md
   '';
+
+  monidSkill = pkgs.runCommand "monid-skill" {} ''
+    mkdir -p $out
+    cp ${inputs."monid-skill"} $out/SKILL.md
+  '';
 in {
   agent-messaging = ./skills/agent-messaging;
   android = ./skills/android;
@@ -61,6 +66,7 @@ in {
   live-ui-variants = ./skills/live-ui-variants;
   lyrics = ./skills/lyrics;
   macos-app-release = ./skills/macos-app-release;
+  monid = "${monidSkill}";
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   neovim = "${shannonNeovimSkill}";
   project-workflow = ./skills/project-workflow;
