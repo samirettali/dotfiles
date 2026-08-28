@@ -74,7 +74,6 @@ in {
   show-me = "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me";
   side-project = ./skills/side-project;
   spotify = "${spotifySkill}";
-  terse = ./skills/terse;
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
   x-search = ./skills/x-search;
