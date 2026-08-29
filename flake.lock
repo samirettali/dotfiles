@@ -285,6 +285,22 @@
         "type": "github"
       }
     },
+    "pi-autoresearch": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784123435,
+        "narHash": "sha256-yvoKLskgsSJZvPO5rYUNoKVOZfv/OwfDZbIEbBMaAPY=",
+        "owner": "davebcn87",
+        "repo": "pi-autoresearch",
+        "rev": "00062fb9cc425e71d82e75445dc5b6ad31c32f0e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "davebcn87",
+        "repo": "pi-autoresearch",
+        "type": "github"
+      }
+    },
     "remotion-skills": {
       "flake": false,
       "locked": {
@@ -315,6 +331,7 @@
         "nix4vscode": "nix4vscode",
         "nixpkgs": "nixpkgs_2",
         "nur": "nur",
+        "pi-autoresearch": "pi-autoresearch",
         "remotion-skills": "remotion-skills",
         "samirettali-nur": "samirettali-nur",
         "spotctl": "spotctl",

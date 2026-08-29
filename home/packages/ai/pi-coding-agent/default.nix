@@ -49,6 +49,7 @@ in {
         packages = [
           "${piMcpAdapter}"
           "${piProviderKimiCode}"
+          "${inputs.pi-autoresearch}"
         ];
         theme = "light/dark";
         quietStartup = true;

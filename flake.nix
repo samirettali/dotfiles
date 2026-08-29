@@ -63,6 +63,11 @@
       flake = false;
     };
 
+    pi-autoresearch = {
+      url = "github:davebcn87/pi-autoresearch";
+      flake = false;
+    };
+
     wincent-agent-plugins = {
       url = "github:wincent/wincent-agent-plugins";
       flake = false;
