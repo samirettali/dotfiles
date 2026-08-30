@@ -7,7 +7,6 @@
     "kimi-coding/k3-256k",
     "xai/grok-4.6",
     "openrouter/minimax/minimax-m3",
-    "openrouter/deepseek/deepseek-v4-pro",
     "openrouter/anthropic/claude-fable-5",
     "openrouter/anthropic/claude-opus-5",
     "openrouter/anthropic/claude-sonnet-5",
@@ -26,7 +25,8 @@
     "openrouter/z-ai/glm-5.3-flash",
     "openrouter/deepseek/deepseek-v4-flash-vision-exp",
     "openrouter/qwen/qwen3.8-flash",
-    "openrouter/meta/muse-spark-1.2-contributor"
+    "openrouter/meta/muse-spark-1.2-contributor",
+    "openrouter/deepseek/deepseek-v4-pro-0813"
   ],
   "providers": {
     "openrouter": {
