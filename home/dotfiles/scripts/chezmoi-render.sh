@@ -28,6 +28,7 @@ files=(
     .config/herdr/config.toml
     .config/tmux/tmux.conf
     .claude/hooks/herdr-agent-state.sh
+    .claude/output-styles/lean.md
     .codex/config.toml
     revive.toml
 )

@@ -5,6 +5,9 @@ sandbox_mode = "danger-full-access"
 args = ["-y", "chrome-devtools-mcp@latest", "--browserUrl=http://127.0.0.1:9222"]
 command = "npx"
 
+[mcp_servers.claude-design]
+url = "https://api.anthropic.com/v1/design/mcp"
+
 [projects."/Users/samir"]
 trust_level = "trusted"
 
