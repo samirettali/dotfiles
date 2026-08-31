@@ -32,7 +32,7 @@ in {
     settings = {
       email = "samir@ettali.com";
       base_url = "https://vw.samirettali.com";
-      lock_timeout = 3600;
+      lock_timeout = 43200;
       pinentry =
         if pkgs.stdenv.hostPlatform.isDarwin
         then pinentry
