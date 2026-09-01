@@ -66,8 +66,8 @@ hide_pane_borders_when_zoomed = true
 mobile_width_threshold = 68
 
 [ui.tab_bar]
-label_padding = 0
-gap = 2
+label_padding = 1
+gap = 0
 min_width = 0
 label = ["index", { text = ":" }, "name"]
 
