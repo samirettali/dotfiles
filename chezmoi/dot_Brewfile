@@ -78,8 +78,6 @@ brew "scc"
 brew "sesh"
 # Microsoft SQL Server command-line interface
 brew "sqlcmd"
-# Easiest, most secure way to use WireGuard and 2FA
-brew "tailscale", restart_service: :changed
 # Terminal multiplexer
 brew "tmux"
 # CLI tool that moves files or folder to the trash
