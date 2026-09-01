@@ -111,12 +111,18 @@ cask "ghostty"
 cask "hammerspoon"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
+# API development environment
+cask "postman"
 # Menu bar live prices and clocks
 cask "samirettali/tap/pulse", trusted: true
 # GUI for streamlined Redis application development
 cask "redis-insight"
+# Team communication and collaboration software
+cask "slack"
 # Launcher driven by one leader key
 cask "samirettali/tap/sottomano", trusted: true
+# Music streaming service
+cask "spotify"
 # Minimal menu bar dictation
 cask "samirettali/tap/sottovoce", trusted: true
 go "github.com/air-verse/air"
