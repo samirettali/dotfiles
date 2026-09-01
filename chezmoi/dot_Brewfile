@@ -119,6 +119,8 @@ cask "samirettali/tap/pulse", trusted: true
 cask "redis-insight"
 # Team communication and collaboration software
 cask "slack"
+# Screenshot measurement and annotation tool
+cask "shottr"
 # Launcher driven by one leader key
 cask "samirettali/tap/sottomano", trusted: true
 # Music streaming service
