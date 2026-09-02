@@ -5,41 +5,17 @@ description: Drive the Herdr terminal workspace from an agent — split a pane, 
 
 # Driving Herdr
 
-[Herdr](https://herdr.dev) is the terminal workspace the agent runs inside. Every pane and
-tab has an id and can be created, inspected and driven from the CLI. All commands print
-JSON on stdout.
+## Read the official skill first
 
-The reason to reach for it: a process that must outlive one command. Run it in its own
-pane and it keeps going, visible to the user, while you continue working.
-
-## Finding your way
+The installed binary ships its own skill, and it is the authority on syntax:
 
 ```sh
-herdr pane current          # the pane the agent is in, with pane_id, tab_id, workspace_id
-herdr pane list             # every pane
-herdr status                # server and client state, capabilities
+herdr --skill
 ```
 
-`pane_current` gives the `pane_id` — `w1Y:p1H` — that every other command wants.
-
-## Running something beside you
-
-```sh
-herdr pane split --current --direction down --ratio 0.25
-```
-
-The reply contains the new pane's `pane_id`. Capture it: there is no "last created pane".
-
-```sh
-herdr pane run <PANE_ID> <COMMAND>...
-herdr pane read <PANE_ID>          # terminal output, for checking it started
-herdr pane send-keys <PANE_ID> enter
-herdr pane send-text <PANE_ID> "literal text"
-herdr pane close <PANE_ID>
-```
-
-Clean up panes you created once the process is done. Leaving debris in someone's workspace
-is rude in a way a stray background process is not.
+Read it before running anything. Do not take command syntax from memory or from this file
+— a pinned copy drifts from the installed version. The rest of this file is only what that
+skill does not say.
 
 ## What bites
 
@@ -52,20 +28,22 @@ is rude in a way a stray background process is not.
 
   Passing it as separate argv entries produces `fish: Unknown command: /Users/x/Some`.
 
-- **A foreground process owns that pane's shell.** While it runs, further `pane run` calls
-  type the command at a prompt that never executes it — you see the text accumulate in
-  `pane read` with no output and no new prompt. Either wait, or close the pane and split a
-  new one. This is the single most confusing failure: everything succeeds, nothing happens.
+- **A foreground process owns that pane's shell**, and this applies to every pane, not only
+  to the one rule stated for `agent start`. While a foreground process runs, further
+  `pane run` calls type the command at a prompt that never executes it — the text
+  accumulates in `pane read` with no output and no new prompt. Everything succeeds and
+  nothing happens. Either wait, or close the pane and split a new one.
 
-- **Check with `pane read` before concluding a command worked.** The JSON reply from
-  `pane run` says the request was delivered, not that the command ran.
+## When not to use a pane
 
-- **For a process the user does not need to watch**, the agent's own background execution
-  is simpler than a pane, and it survives across turns just as well. Use a pane when the
-  output is worth seeing, or when the process must outlive the agent session.
+For a process the user does not need to watch, the agent's own background execution is
+simpler than a pane, and it survives across turns just as well. Use a pane when the output
+is worth seeing, or when the process must outlive the agent session.
 
-- `herdr pane send-keys` takes key names (`enter`, `esc`, `ctrl-c`); `send-text` sends
-  characters literally. Sending `enter` as text does not submit a command.
+## Housekeeping
+
+The official rule is not to close what you did not create. The converse also holds: close
+the panes you did create, once the process is done.
 
 ## Related
 
