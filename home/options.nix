@@ -29,6 +29,7 @@
         default = false;
       };
       go = lib.mkEnableOption "Go tooling";
+      godot = lib.mkEnableOption "Godot engine";
       python = lib.mkOption {
         type = lib.types.enum [false "minimal" "full"];
         default = false;

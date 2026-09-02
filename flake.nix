@@ -124,6 +124,7 @@
       js = "minimal";
       c = false;
       go = true;
+      godot = false;
       python = "minimal";
     };
 
@@ -290,7 +291,12 @@
               inherit pkgs;
               user = users.personal;
               hostname = "mbp";
-              features = defaultFeatures // {android = true;};
+              features =
+                defaultFeatures
+                // {
+                  android = true;
+                  godot = true;
+                };
               extraModules = [
                 ./home/mac
                 ./home/packages/desktop
