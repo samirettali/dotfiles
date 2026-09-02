@@ -99,6 +99,7 @@ in {
   side-project = ./skills/side-project;
   spotify = "${spotifySkill}";
   subagents = ./skills/subagents;
+  tavily = ./skills/tavily;
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
   x-search = ./skills/x-search;
