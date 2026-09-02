@@ -48,6 +48,16 @@ in {
       ];
     })
     (wrap {
+      name = "generate-music";
+      script = ./skills/generate-music/scripts/generate_music.py;
+      vars = [
+        {
+          env = "GEMINI_API_KEY";
+          entry = "gemini-api-key";
+        }
+      ];
+    })
+    (wrap {
       name = "generate-speech";
       script = ./skills/generate-speech/scripts/generate_speech.py;
       vars = [

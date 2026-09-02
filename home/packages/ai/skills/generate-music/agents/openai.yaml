@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generate Music"
+  short_description: "Generate songs with custom lyrics using Lyria 3"
+  default_prompt: "Use $generate-music to turn these lyrics into a song."

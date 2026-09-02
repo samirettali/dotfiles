@@ -60,6 +60,7 @@ in {
   commit = ./skills/commit;
   frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
   generate-image = ./skills/generate-image;
+  generate-music = ./skills/generate-music;
   generate-speech = ./skills/generate-speech;
   hallmark = "${inputs.hallmark}/skills/hallmark";
   herdr = ./skills/herdr;
