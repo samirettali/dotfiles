@@ -40,8 +40,6 @@ Never written a line myself, only through agents:
 
 `mbp` is my own Mac (nix-darwin), where I do everything that is mine. `settali` is my work Mac, where company policy forbids nix. `andromeda` is my Linux server. `xps` is a NixOS laptop I barely use any more.
 
-- sketchybar — the menu bar
-- aerospace — tiling window manager
 - Ghostty — terminal
 - herdr — terminal multiplexer
 - Neovim — editor
