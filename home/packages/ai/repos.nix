@@ -1,4 +1,6 @@
 {config}: [
+  "${config.home.homeDirectory}"
+  "${config.home.homeDirectory}/dev"
   "${config.home.homeDirectory}/Documents/notes"
   "${config.home.homeDirectory}/dev/bet"
   "${config.home.homeDirectory}/dev/blog"
