@@ -1,9 +1,12 @@
 {
+  config,
   lib,
   inputs,
   pkgs,
   ...
-}: {
+}: let
+  myRepos = import ./repos.nix {inherit config;};
+in {
   programs.antigravity-cli = {
     enable = lib.mkDefault true;
     enableMcpIntegration = true;
@@ -25,6 +28,7 @@
       };
       contextFileName = "AGENTS.md";
       selectedAuthType = "oauth-personal";
+      trustedWorkspaces = [config.home.homeDirectory] ++ myRepos;
     };
   };
 }
