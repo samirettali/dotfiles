@@ -29,6 +29,7 @@
       shell-integration-features = "no-cursor";
       copy-on-select = "clipboard";
       auto-update = "off";
+      window-padding-balance = true;
     };
   };
 
