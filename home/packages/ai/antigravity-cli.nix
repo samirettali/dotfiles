@@ -9,7 +9,7 @@
     enableMcpIntegration = true;
     skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
     settings = {
-      preferredEditor = "vim";
+      preferredEditor = "neovim";
       vimMode = true;
       previewFeatures = true;
       checkpointing = {
