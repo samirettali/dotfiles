@@ -10,6 +10,8 @@
     skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
     settings = {
       preferredEditor = "neovim";
+      allowNonWorkspaceAccess = true;
+      toolPermission = "always-proceed";
       vimMode = true;
       previewFeatures = true;
       checkpointing = {
