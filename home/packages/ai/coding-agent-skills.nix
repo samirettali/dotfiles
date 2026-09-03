@@ -64,6 +64,7 @@ in {
   generate-speech = ./skills/generate-speech;
   hallmark = "${inputs.hallmark}/skills/hallmark";
   herdr = ./skills/herdr;
+  linkding = ./skills/linkding;
   live-ui-variants = ./skills/live-ui-variants;
   lyrics = ./skills/lyrics;
   macos-app-release = ./skills/macos-app-release;
