@@ -4,7 +4,6 @@
     "openai-codex/gpt-5.6-terra",
     "openai-codex/gpt-5.6-luna",
     "kimi-coding/k3",
-    "kimi-coding/k3-256k",
     "xai/grok-4.6",
     "openrouter/minimax/minimax-m3",
     "openrouter/anthropic/claude-opus-5",
