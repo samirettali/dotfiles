@@ -108,7 +108,13 @@ export default function herdrSessionTitle(pi: ExtensionAPI) {
 				// Keep the truncated first message.
 			}
 
-			pi.setSessionName(title);
+			// In -p mode the session can end before the title arrives, and the
+			// captured ctx is then stale: nothing left to name.
+			try {
+				pi.setSessionName(title);
+			} catch {
+				return;
+			}
 			await report(title);
 		})();
 	});
