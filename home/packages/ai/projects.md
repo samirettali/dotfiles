@@ -11,5 +11,6 @@ Each lives under `~/dev` with its own `AGENTS.md`. Read it before working on the
 - infra — OpenTofu for the accounts: GitHub settings, Actions secrets, the state bucket.
 - spotctl — agent-friendly Spotify CLI in Go.
 - sottotesto — search a song, read an LLM reading of its lyrics.
+- sottotrama — search a film, read an LLM reading of its plot, themes and timeline.
 - sottomano — macOS launcher driven by one leader key, in Swift. Replaces the Hammerspoon binder.
 - sottofondo — browser toy that generates seeded algorithmic music across genres.
