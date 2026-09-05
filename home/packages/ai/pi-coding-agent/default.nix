@@ -12,7 +12,6 @@
   piNodeModules = piRuntimeRoot + "/node_modules";
 
   piMcpAdapter = nurPkgs.pi-mcp-adapter;
-  piProviderKimiCode = nurPkgs.pi-provider-kimi-code;
   piAutoresearch = pkgs.runCommand "pi-autoresearch-manual-skills" {nativeBuildInputs = [pkgs.yq-go];} ''
     mkdir -p $out
     cp -R ${inputs.pi-autoresearch}/. $out/
@@ -56,7 +55,6 @@ in {
       ".pi/agent/settings.json".text = builtins.toJSON {
         packages = [
           "${piMcpAdapter}"
-          "${piProviderKimiCode}"
           "${piAutoresearch}"
         ];
         theme = "light/dark";
