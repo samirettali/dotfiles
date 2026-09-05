@@ -8,11 +8,8 @@
     "openrouter/minimax/minimax-m3",
     "openrouter/anthropic/claude-opus-5",
     "openrouter/anthropic/claude-sonnet-5",
-    "openrouter/stepfun/step-3.7-flash",
     "openrouter/thinkingmachines/inkling",
     "openrouter/thinkingmachines/inkling-small",
-    "openrouter/poolside/laguna-s-2.1",
-    "openrouter/inclusionai/ling-3.0-flash",
     "openrouter/qwen/qwen3.8-2.4t-a95b",
     "openrouter/meta/muse-glimmer-30b",
     "openrouter/qwen/qwen3.8-27b",
@@ -26,7 +23,11 @@
     "openrouter/anthropic/claude-fable-5.1",
     "openrouter/tencent/hy4-preview",
     "openrouter/inception/mercury-2.5-preview",
-    "openrouter/xiaomi/mimo-v2.5-pro"
+    "openrouter/xiaomi/mimo-v2.5-pro",
+    "openrouter/openai/gpt-6-astra",
+    "openrouter/openai/gpt-6-astra-pro",
+    "openrouter/inclusionai/ling-3.0-flash-sante:free",
+    "openrouter/qwen/qwen3.8-max-0902"
   ],
   "providers": {
     "openrouter": {
@@ -236,6 +237,30 @@
           },
           "contextWindow": 1048576,
           "maxTokens": 65536
+        },
+        "openai/gpt-6-astra-pro": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "openai"
+              ]
+            }
+          },
+          "contextWindow": 1050000,
+          "maxTokens": 128000
+        },
+        "openai/gpt-6-astra": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "openai"
+              ]
+            }
+          },
+          "contextWindow": 1050000,
+          "maxTokens": 128000
         }
       }
     },
