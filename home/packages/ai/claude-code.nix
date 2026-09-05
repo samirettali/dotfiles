@@ -6,6 +6,7 @@
   ...
 }: let
   herdrHook = "${config.home.homeDirectory}/.claude/hooks/herdr-agent-state.sh";
+  guardHook = "${config.home.homeDirectory}/.claude/hooks/guard-read.py";
   # Matched by pname: herdr ships patched, so it is not the nurPkgs derivation.
   herdrEnabled = lib.any (p: (p.pname or "") == "herdr") config.home.packages;
 in {
@@ -14,6 +15,10 @@ in {
   home.file.".claude/hooks/herdr-agent-state.sh" = lib.mkIf herdrEnabled {
     source = ./claude-code-herdr-agent-state.sh;
   };
+
+  # Whole-file reads are the tokens a session keeps paying for: with the 1M
+  # window nothing compacts them away. The guard bounces them before they land.
+  home.file.".claude/hooks/guard-read.py".source = ./guard-read.py;
 
   programs.claude-code = {
     enable = lib.mkDefault true;
@@ -40,20 +45,35 @@ in {
       };
       spinnerTipsEnabled = false;
       outputStyle = "Lean";
-      hooks = lib.mkIf herdrEnabled {
-        SessionStart = [
-          {
-            matcher = "*";
-            hooks = [
-              {
-                type = "command";
-                command = "bash '${herdrHook}' session";
-                timeout = 10;
-              }
-            ];
-          }
-        ];
-      };
+      hooks =
+        {
+          PreToolUse = [
+            {
+              matcher = "Read|Bash";
+              hooks = [
+                {
+                  type = "command";
+                  command = "python3 '${guardHook}'";
+                  timeout = 10;
+                }
+              ];
+            }
+          ];
+        }
+        // lib.optionalAttrs herdrEnabled {
+          SessionStart = [
+            {
+              matcher = "*";
+              hooks = [
+                {
+                  type = "command";
+                  command = "bash '${herdrHook}' session";
+                  timeout = 10;
+                }
+              ];
+            }
+          ];
+        };
       env = {
         CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL = "1";
         # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1"; # TODO

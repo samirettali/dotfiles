@@ -10,7 +10,34 @@
   codexHome = "${config.home.homeDirectory}/.codex";
   managedConfig = "${codexHome}/config.toml.nix";
   writableConfig = "${codexHome}/config.toml";
+  # Matched by pname: herdr ships patched, so it is not the nurPkgs derivation.
+  herdrEnabled = lib.any (p: (p.pname or "") == "herdr") config.home.packages;
+  hook = command: {
+    type = "command";
+    inherit command;
+    timeout = 10;
+  };
 in {
+  # Codex reads ~/.codex/hooks.json, which `herdr integration install codex`
+  # used to write. Nix owns it now, herdr's entry copied verbatim, so the read
+  # guard can sit beside it; `force` replaces the file herdr left behind.
+  # Codex asks to trust a new hook on first run and records the answer in
+  # config.toml: pin that hash under `hooks.state` below afterwards, or the
+  # question comes back at every switch.
+  home.file.".codex/hooks/guard-read.py".source = ./guard-read.py;
+  home.file.".codex/hooks.json" = {
+    force = true;
+    text = builtins.toJSON {
+      hooks =
+        {
+          PreToolUse = [{hooks = [(hook "python3 '${codexHome}/hooks/guard-read.py'")];}];
+        }
+        // lib.optionalAttrs herdrEnabled {
+          SessionStart = [{hooks = [(hook "bash '${codexHome}/herdr-agent-state.sh' session")];}];
+        };
+    };
+  };
+
   programs.codex = {
     enable = lib.mkDefault true;
     package = nurPkgs.codex;

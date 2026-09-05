@@ -102,6 +102,7 @@ in {
       ".pi/agent/extensions/system-prompt.ts".source = ./extensions/system-prompt.ts;
       ".pi/agent/extensions/theme.ts".source = ./extensions/theme.ts;
       ".pi/agent/extensions/x-search.ts".source = ./extensions/x-search.ts;
+      ".pi/agent/extensions/context-guard.ts".source = ./extensions/context-guard.ts;
 
       ".pi/agent/extensions/node_modules/@earendil-works/pi-coding-agent".source = piRuntimeRoot;
       ".pi/agent/extensions/node_modules/@earendil-works/pi-ai".source = piNodeModules + "/@earendil-works/pi-ai";
