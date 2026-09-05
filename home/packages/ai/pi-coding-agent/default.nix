@@ -55,7 +55,7 @@ in {
         quietStartup = true;
         hideThinkingBlock = false;
         defaultProvider = "openai-codex";
-        defaultModel = "gpt-5.6-sol";
+        defaultModel = "gpt-6-astra";
         defaultThinkingLevel = "medium";
         enabledModels = modelsConfig.enabledModels;
         tuiMode = "fullscreen";
