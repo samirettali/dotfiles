@@ -78,22 +78,6 @@
         "type": "github"
       }
     },
-    "hallmark": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1786033158,
-        "narHash": "sha256-JflLR1ZgJZuqktK8rnYu7P0l0lKbB+MoQzs/SY/gcJs=",
-        "owner": "nutlope",
-        "repo": "hallmark",
-        "rev": "13ac0ec7e148655948100b6396439e481361d690",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nutlope",
-        "repo": "hallmark",
-        "type": "github"
-      }
-    },
     "herdr-fork": {
       "flake": false,
       "locked": {
@@ -143,22 +127,6 @@
       },
       "original": {
         "owner": "humanlayer",
-        "repo": "skills",
-        "type": "github"
-      }
-    },
-    "jakubkrehel-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1788022907,
-        "narHash": "sha256-N0ip9CCwXy1x7707waHQRlitoMT23Yu9NpCA4NFzXmA=",
-        "owner": "jakubkrehel",
-        "repo": "skills",
-        "rev": "267330e1adfc66a718fb65fa6918c1f06d0a689e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jakubkrehel",
         "repo": "skills",
         "type": "github"
       }
@@ -321,11 +289,9 @@
       "inputs": {
         "agent-stuff": "agent-stuff",
         "darwin": "darwin",
-        "hallmark": "hallmark",
         "herdr-fork": "herdr-fork",
         "home-manager": "home-manager",
         "humanlayer-skills": "humanlayer-skills",
-        "jakubkrehel-skills": "jakubkrehel-skills",
         "monid-skill": "monid-skill",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",

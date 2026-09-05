@@ -38,16 +38,6 @@
       flake = false;
     };
 
-    hallmark = {
-      url = "github:nutlope/hallmark";
-      flake = false;
-    };
-
-    jakubkrehel-skills = {
-      url = "github:jakubkrehel/skills";
-      flake = false;
-    };
-
     humanlayer-skills = {
       url = "github:humanlayer/skills";
       flake = false;

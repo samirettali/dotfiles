@@ -49,20 +49,12 @@
 in {
   agent-messaging = ./skills/agent-messaging;
   android = ./skills/android;
-  better-accessibility = "${inputs.jakubkrehel-skills}/skills/better-accessibility";
-  better-colors = "${inputs.jakubkrehel-skills}/skills/better-colors";
-  better-interface = "${inputs.jakubkrehel-skills}/skills/better-interface";
-  better-layout = "${inputs.jakubkrehel-skills}/skills/better-layout";
-  better-typography = "${inputs.jakubkrehel-skills}/skills/better-typography";
-  better-ui = "${inputs.jakubkrehel-skills}/skills/better-ui";
-  better-writing = "${inputs.jakubkrehel-skills}/skills/better-writing";
   code-review = ./skills/code-review;
   commit = ./skills/commit;
-  frontend-design = "${inputs.agent-stuff}/skills/frontend-design";
+  design = ../../../.agents/skills/design;
   generate-image = ./skills/generate-image;
   generate-music = ./skills/generate-music;
   generate-speech = ./skills/generate-speech;
-  hallmark = "${inputs.hallmark}/skills/hallmark";
   herdr = ./skills/herdr;
   linkding = ./skills/linkding;
   live-ui-variants = ./skills/live-ui-variants;
