@@ -59,6 +59,7 @@ Never written a line myself, only through agents:
 - nix and home-manager — everything declared
 - NUR — where I publish my own packages
 - uv — Python
+- agy (Antigravity CLI) — work outside the code: LinkedIn links, notes from podcasts and YouTube tech talks into the Obsidian vault, throwaway scripts that are not meant to stay. On trial: whether it writes code well is still an open question.
 
 ## Working with me
 
@@ -83,5 +84,5 @@ Never written a line myself, only through agents:
 - Edit this file at `~/dev/dotfiles/home/packages/ai/agents.md`. The deployed copies (`~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.pi/agent/AGENTS.md`) are read-only store symlinks and land on the next switch.
 - The "This machine" section is not in this file: it lives in `home/packages/ai/machines/<host>.md`. `agents.nix` appends it from `vars.hostname`, and chezmoi appends it from `.profile` on the work Mac.
 - The "Projects" section is not in this file either: it lives in `home/packages/ai/projects.md`, and the work Mac does not get it.
-- Never use a built-in memory tool. I run Claude Code, Codex and pi, and per-tool memories drift apart; `AGENTS.md` is the only store.
+- Never use a built-in memory tool. I run Claude Code, Codex, pi and agy, and per-tool memories drift apart; `AGENTS.md` is the only store.
 - Put durable facts in the relevant project's `AGENTS.md`. Anything long or rarely needed gets its own file, linked from there in one line.
