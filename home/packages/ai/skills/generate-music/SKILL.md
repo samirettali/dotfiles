@@ -1,5 +1,6 @@
 ---
 name: generate-music
+disable-model-invocation: true
 description: Generate full songs with vocals and custom lyrics using Google Lyria 3 through the Gemini API. Use when the user asks to turn a text into a song, generate a rap or a track from lyrics, make a jingle, or iterate on takes of a generated song. Covers prompt structure, lyric rules that survive generation, the content filter, and the generate-audit-reroll loop.
 ---
 

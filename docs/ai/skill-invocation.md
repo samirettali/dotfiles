@@ -1,0 +1,33 @@
+# Manual skill invocation
+
+Eight skills require explicit invocation rather than automatic discovery:
+
+- `autoresearch-create`, `autoresearch-finalize`, `autoresearch-hooks`
+- `generate-music`, `generate-speech`
+- `live-ui-variants`, `show-me`, `neovim`
+
+In pi, `disable-model-invocation: true` removes the name and description from
+the model's skill catalog. The skill remains available through `/skill:name`.
+Its full instructions still load when invoked. This does not remove content
+already read into a conversation or hide an extension's tools and commands.
+
+The five shared skills also carry `policy.allow_implicit_invocation: false`
+in `agents/openai.yaml` for Codex. The SKILL.md flag covers pi and Claude Code;
+other agents may ignore these fields. Manual invocation is not an access-control
+boundary.
+
+## Where the policy lives
+
+Repository-owned skills declare it in their own metadata. Imported `neovim` and
+`show-me` skills pass through `manualSkill` in
+`home/packages/ai/coding-agent-skills.nix`. That builder preserves their bodies,
+support files, and existing Codex metadata while setting both fields.
+
+Autoresearch stays a pi-only package. Its wrapper in
+`home/packages/ai/pi-coding-agent/default.nix` patches the three skill headers,
+not the manifest, extension, or support files. Filtering the skills out of the
+package would also remove their slash commands, which is not the desired behavior.
+
+After `make build`, use `/reload` or start a new pi session. Verify that the
+eight skills remain discoverable as commands but not in `formatSkillsForPrompt`.
+All other skills retain their existing invocation policy.

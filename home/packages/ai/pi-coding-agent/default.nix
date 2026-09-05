@@ -13,6 +13,14 @@
 
   piMcpAdapter = nurPkgs.pi-mcp-adapter;
   piProviderKimiCode = nurPkgs.pi-provider-kimi-code;
+  piAutoresearch = pkgs.runCommand "pi-autoresearch-manual-skills" {nativeBuildInputs = [pkgs.yq-go];} ''
+    mkdir -p $out
+    cp -R ${inputs.pi-autoresearch}/. $out/
+    chmod -R u+w $out
+    for skill in autoresearch-create autoresearch-finalize autoresearch-hooks; do
+      yq --front-matter=process -i '."disable-model-invocation" = true' "$out/skills/$skill/SKILL.md"
+    done
+  '';
 
   # Matched by pname: herdr ships patched, so it is not the nurPkgs derivation.
   herdrEnabled = lib.any (p: (p.pname or "") == "herdr") config.home.packages;
@@ -49,7 +57,7 @@ in {
         packages = [
           "${piMcpAdapter}"
           "${piProviderKimiCode}"
-          "${inputs.pi-autoresearch}"
+          "${piAutoresearch}"
         ];
         theme = "light/dark";
         quietStartup = true;

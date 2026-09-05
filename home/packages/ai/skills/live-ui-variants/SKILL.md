@@ -1,5 +1,6 @@
 ---
 name: live-ui-variants
+disable-model-invocation: true
 description: Build a temporary development-only variant switcher that lets users compare multiple UI or UX alternatives live in the same app. Use when a user wants to see several design options before choosing one, compare layouts or interactions, or experiment without repeatedly rewriting the implementation. Works for web frontends and native macOS (SwiftUI) apps.
 ---
 

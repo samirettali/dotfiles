@@ -2,3 +2,5 @@ interface:
   display_name: "Generate Speech"
   short_description: "Generate multilingual speech with Gemini TTS"
   default_prompt: "Use $generate-speech to turn this script into a multilingual voice-over."
+policy:
+  allow_implicit_invocation: false

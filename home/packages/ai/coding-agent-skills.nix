@@ -2,6 +2,17 @@
   inputs,
   pkgs,
 }: let
+  manualSkill = name: source:
+    pkgs.runCommand "${name}-manual-skill" {nativeBuildInputs = [pkgs.yq-go];} ''
+      mkdir -p $out
+      cp -R ${source}/. $out/
+      chmod -R u+w $out
+      yq --front-matter=process -i '."disable-model-invocation" = true' $out/SKILL.md
+      mkdir -p $out/agents
+      touch $out/agents/openai.yaml
+      yq -i '.policy.allow_implicit_invocation = false' $out/agents/openai.yaml
+    '';
+
   webBrowserSkill = pkgs.buildNpmPackage {
     pname = "agent-stuff-web-browser-skill";
     version = "unstable";
@@ -62,10 +73,10 @@ in {
   macos-app-release = ./skills/macos-app-release;
   monid = "${monidSkill}";
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
-  neovim = "${shannonNeovimSkill}";
+  neovim = "${manualSkill "neovim" shannonNeovimSkill}";
   project-workflow = ./skills/project-workflow;
   remotion-best-practices = "${inputs.remotion-skills}/skills/remotion-best-practices";
-  show-me = "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me";
+  show-me = "${manualSkill "show-me" "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me"}";
   side-project = ./skills/side-project;
   spotify = "${spotifySkill}";
   uv = "${inputs.agent-stuff}/skills/uv";

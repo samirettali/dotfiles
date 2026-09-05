@@ -1,5 +1,6 @@
 ---
 name: generate-speech
+disable-model-invocation: true
 description: Generate multilingual WAV voice-overs and voice auditions from text with Gemini TTS. Use when the user asks to synthesize speech, narrate a demo video, compare Gemini voices, or create spoken audio in one or more languages.
 ---
 
