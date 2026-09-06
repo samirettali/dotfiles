@@ -69,7 +69,8 @@
     cp -R ${inputs.spotctl}/.agents/skills/spotify/. $out/
     chmod -R u+w $out
     printf '\n' >> $out/SKILL.md
-    cat ${./skills/spotify/listening-profile.md} >> $out/SKILL.md
+    cat ${./skills/spotify/additions.md} >> $out/SKILL.md
+    cp ${./skills/spotify/listening-profile.md} $out/listening-profile.md
   '';
 
   monidSkill = pkgs.runCommand "monid-skill" {} ''
