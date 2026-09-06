@@ -46,8 +46,8 @@ Verified on gh 2.97.
    gh issue view <N> --repo samirettali/<repo> --comments
    ```
 
-2. Read the project context: `AGENTS.md`, the `docs/` index, and `JOURNAL.md` if
-   it exists.
+2. Read the project's `AGENTS.md`. Use the docs index to locate relevant
+   guidance; read journal entries only when the issue depends on that history.
 3. Create a worktree on a new `issue-<N>-<slug>` branch and work there (see
    [Worktrees](#worktrees)).
 4. Move the issue to `🏗 In progress` (see [Statuses](#statuses)).
