@@ -1,6 +1,6 @@
 ---
 name: android
-description: Drive and diagnose an Android app on a physical device or emulator over adb — scope logcat to one process, reproduce a bug from a clean start, install builds without losing data, resolve signature conflicts hiding in another user profile, and navigate the UI by screenshot and input events when no inspector can see into it. Triggers on adb, logcat, Android device, emulator, APK, screencap, "install failed", INSTALL_FAILED_UPDATE_INCOMPATIBLE, uiautomator, driving an app on a phone, Flutter or Compose UI on device.
+description: Diagnose Android apps, drive their UI, and resolve APK installation problems on physical devices or emulators through adb.
 ---
 
 # Debugging an Android app over adb
