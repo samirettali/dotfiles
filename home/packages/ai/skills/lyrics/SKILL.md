@@ -79,10 +79,13 @@ strong factual claim to Genius instead of asserting it yourself.
 the total. Never infer this from the items you can see — a song with exactly
 fifteen annotations is not truncated, and `truncated` is the only honest signal.
 
-When set: answer with what you have, then say how many more there are and ask
-whether to go deeper. Do not fetch them unasked. `--max-annotations 0` returns
-them from the cache, no `--refresh` needed — every annotation is stored and the
-limit only trims the output.
+When set, retrieve additional annotations if the requested analysis needs them,
+for example when a question names a line omitted from the initial payload.
+`--max-annotations 0` returns them from the cache, no `--refresh` needed — every
+annotation is stored and the limit only trims the output. Keep the answer scoped
+to the request rather than expanding it to cover everything fetched. Otherwise,
+answer from the default set, mention how many more exist, and offer a deeper
+reading. Ask before expanding the deliverable, not before relevant cached retrieval.
 
 ## Answering
 
@@ -201,8 +204,10 @@ earlier. Absence is a conclusion, never a skip.
 A term explained in **Slang** does not need explaining again in the
 line-by-line: point at it and move on.
 
-**Use every annotation you were given**, every time. They are the part nobody
-can reconstruct; dropping a few is what makes one answer thinner than the next.
+**For a full-song reading, use every annotation in the selected set.** Additional
+annotations retrieved to answer a focused question do not require a full-song reading.
+They are the part nobody can reconstruct; dropping a few is what makes one answer
+thinner than the next.
 Merge duplicates. Where an
 annotation only confirms the line, spend half a line rather than cutting it. An
 annotation about a reference or a technique goes in its own section too, not
