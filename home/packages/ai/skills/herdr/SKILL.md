@@ -1,6 +1,6 @@
 ---
 name: herdr
-description: Drive the Herdr terminal workspace from an agent — split a pane, run a long-lived process next to yourself, read what another pane printed, send keys to it, close it again. Use when something has to keep running while you carry on (a dev server, a browser with a debug port, a build), or when you need to see or steer another pane. Triggers on herdr, pane, split, tab, terminal workspace, "run this in another pane", "keep it running", "read the output of", "send keys to". For talking to other *agents* rather than panes, use agent-messaging.
+description: Control Herdr terminal panes and run visible long-lived processes. Use for pane creation, input, output inspection, and cleanup; use agent-messaging to communicate with agents.
 ---
 
 # Driving Herdr
