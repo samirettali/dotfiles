@@ -101,6 +101,7 @@ Read the matching document before changing that subsystem:
 - `docs/ai/spoken-responses.md` — streamed ElevenLabs responses from pi.
 - `docs/ai/design-skill.md` — shared UX guidance, project-owned style, sources, and review cases.
 - `docs/ai/skill-invocation.md` — manual skill discovery and per-agent metadata.
+- `docs/ai/browser-skill.md` — shared CDP overlay, action locking, filtered logs and tests.
 - `docs/herdr.md` — patched fork, builds, testing, and Neovim navigation.
 - `docs/sketchybar.md` — pending agents and AI subscription usage.
 - `docs/macos-tcc.md` — permissions, application signatures, and stable launch paths.

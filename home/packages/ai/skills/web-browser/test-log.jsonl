@@ -1,0 +1,6 @@
+{"ts":"2026-01-01T12:00:00Z","targetId":"a","type":"network.request","requestId":"1","method":"GET","url":"https://example.test/api","headers":{"Authorization":"test-secret"}}
+{"ts":"2026-01-01T12:00:01Z","targetId":"a","type":"network.response","requestId":"1","status":401,"url":"https://example.test/api","headers":{"Content-Type":"application/json"}}
+{"ts":"2026-01-01T12:00:02Z","targetId":"a","type":"console","level":"error","args":[{"value":"TypeError: test"}]}
+{"ts":"2026-01-01T12:00:03Z","targetId":"a","type":"network.request","requestId":"2","method":"POST","url":"https://example.test/fail"}
+{"ts":"2026-01-01T12:00:04Z","targetId":"a","type":"network.failure","requestId":"2","errorText":"net::ERR_FAILED"}
+partial

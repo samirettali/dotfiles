@@ -19,6 +19,7 @@
     src = inputs.agent-stuff + "/skills/web-browser/scripts";
     npmDepsHash = "sha256-vQxKChe57on93GAA180X/W36YNeumg7zPlcPhrT+yXQ=";
     dontNpmBuild = true;
+    nativeBuildInputs = [pkgs.makeWrapper];
 
     installPhase = ''
       runHook preInstall
@@ -27,6 +28,24 @@
       cp -R ${inputs.agent-stuff}/skills/web-browser/. $out/
       chmod -R u+w $out
       cp -R node_modules $out/scripts/
+      cp ${./skills/web-browser}/*.js $out/scripts/
+      cat ${./skills/web-browser/additions.md} >> $out/SKILL.md
+
+      substituteInPlace $out/scripts/watch.js \
+        --replace-fail 'import { connect } from "./cdp.js";' 'import { connect } from "./cdp.js"; import { captureHeaders } from "./headers.js";' \
+        --replace-fail 'hasPostData: !!request.hasPostData,' 'hasPostData: !!request.hasPostData, headers: captureHeaders(request.headers),' \
+        --replace-fail 'mimeType: response.mimeType || null,' 'mimeType: response.mimeType || null, headers: captureHeaders(response.headers),'
+
+      for command in nav eval screenshot emulate pick dismiss-cookies; do
+        mv $out/scripts/$command.js $out/scripts/$command.unlocked.js
+        makeWrapper ${pkgs.nodejs}/bin/node $out/scripts/$command.js \
+          --add-flags "$out/scripts/serialized.js $out/scripts/$command.unlocked.js"
+      done
+      for command in click fill; do
+        makeWrapper ${pkgs.nodejs}/bin/node $out/scripts/$command.js \
+          --add-flags "$out/scripts/serialized.js $out/scripts/interact.js $command"
+      done
+      chmod +x $out/scripts/logs.js
 
       runHook postInstall
     '';
