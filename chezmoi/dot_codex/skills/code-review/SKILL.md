@@ -7,8 +7,8 @@ description: Write the findings of a code review — of a pull request, a branch
 
 A review is a list of findings, ordered by severity with the bugs first. Nothing else: no
 summary of what the change does, no restatement of the description. State once, before the
-findings, that the build, the tests and the formatter pass — it tells the reader which
-failures you are *not* reporting.
+findings, which relevant checks actually ran and their outcomes. Include failures and
+checks not run; never imply that a build, test suite, or formatter passed without evidence.
 
 ## Format
 
