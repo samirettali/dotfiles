@@ -1,6 +1,6 @@
 ---
 name: agent-messaging
-description: Message another running agent session (pi, Claude Code, or any agent Herdr detects) to coordinate, hand off work, or notify it that something is ready. Also use to list which agent sessions are currently running and what they are doing. Triggers on "tell the other agent", "hand this off to", "ask the session working on X", "which agents are running", "notify the other Claude".
+description: Discover and message existing agent sessions in Herdr to coordinate work or report status. Use subagents instead when spawning and managing child agents.
 ---
 
 # Messaging other agent sessions
