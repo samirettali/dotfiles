@@ -98,6 +98,7 @@ in {
   show-me = "${manualSkill "show-me" "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me"}";
   side-project = ./skills/side-project;
   spotify = "${spotifySkill}";
+  subagents = ./skills/subagents;
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
   x-search = ./skills/x-search;

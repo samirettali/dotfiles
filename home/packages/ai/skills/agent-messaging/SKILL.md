@@ -9,6 +9,10 @@ Agents run as panes inside [Herdr](https://herdr.dev), a terminal workspace mana
 Herdr's socket API is the transport: it can list every agent it detects and inject a
 prompt into any of them. There is no separate message bus to set up.
 
+For parent–child delegation, load the shared **subagents** skill as well. It defines
+spawn handoffs, inherited model policy, question escalation, and result/release
+messages. This skill remains the transport for those messages.
+
 All commands print JSON on stdout.
 
 ## Find the target
