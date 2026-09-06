@@ -30,7 +30,7 @@
   skillFiles =
     lib.mapAttrs'
     (name: src: lib.nameValuePair ".pi/agent/skills/${name}" {source = src;})
-    skills;
+    (builtins.removeAttrs skills ["x-search"]);
 in {
   home.packages = [
     piCodingAgent

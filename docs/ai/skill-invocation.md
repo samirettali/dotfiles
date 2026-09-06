@@ -31,3 +31,13 @@ package would also remove their slash commands, which is not the desired behavio
 After `make build`, use `/reload` or start a new pi session. Verify that the
 nine skills remain discoverable as commands but not in `formatSkillsForPrompt`.
 All other skills retain their existing invocation policy.
+
+## X search in pi
+
+Pi excludes the shared `x-search` skill because its native `x_search` tool uses
+pi's xAI credentials and carries the search guidance itself. Claude Code and
+Codex keep the CLI skill. Keep the tool and CLI aligned on the model, handle
+limit, retry policy, citation cleanup, and usage reporting.
+
+Run `node --test tests/x-search.test.mjs` with the installed pi runtime to test
+the extension against mocked responses without paid searches.

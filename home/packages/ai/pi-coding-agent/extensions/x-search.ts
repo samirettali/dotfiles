@@ -12,9 +12,10 @@ import { join } from "node:path";
 import { Type } from "typebox";
 
 const XAI_BASE_URL = "https://api.x.ai/v1";
-const X_SEARCH_MODEL = "grok-4.5";
-const MAX_HANDLES = 10;
+const X_SEARCH_MODEL = "grok-4.6";
+const MAX_HANDLES = 20;
 const MAX_RETRIES = 2;
+const RETRYABLE_STATUS_CODES = new Set([408, 429, 500, 502, 503, 504]);
 
 type Citation = string | {
     url?: string;
@@ -102,19 +103,27 @@ function extractText(payload: Record<string, any>): string {
     return parts.filter(Boolean).join("\n\n");
 }
 
-function extractInlineCitations(payload: Record<string, any>): Citation[] {
+function extractCitations(payload: Record<string, any>): Citation[] {
     const citations: Citation[] = [];
+    const seen = new Set<string>();
+    const add = (url?: string, title?: string) => {
+        if (!url || seen.has(url)) return;
+        seen.add(url);
+        citations.push({
+            url,
+            title: title && !/^\d+$/.test(title.trim()) && title.trim() !== url ? title : undefined,
+        });
+    };
+    for (const citation of payload.citations ?? []) {
+        if (typeof citation === "string") add(citation);
+        else if (citation) add(citation.url, citation.title);
+    }
     for (const item of payload.output ?? []) {
         if (item?.type !== "message") continue;
         for (const content of item.content ?? []) {
             for (const annotation of content?.annotations ?? []) {
                 if (annotation?.type !== "url_citation") continue;
-                citations.push({
-                    url: annotation.url,
-                    title: annotation.title,
-                    start_index: annotation.start_index,
-                    end_index: annotation.end_index,
-                });
+                add(annotation.url, annotation.title);
             }
         }
     }
@@ -134,7 +143,19 @@ function errorMessage(status: number, payload: unknown): string {
     return `xAI returned HTTP ${status}`;
 }
 
+function retryDelay(response: Response | undefined, attempt: number): number {
+    const value = response?.headers.get("Retry-After");
+    if (value?.trim()) {
+        const seconds = Number(value);
+        if (Number.isFinite(seconds)) return Math.max(0, seconds * 1000);
+        const date = Date.parse(value);
+        if (Number.isFinite(date)) return Math.max(0, date - Date.now());
+    }
+    return 1000 * 2 ** attempt;
+}
+
 function delay(milliseconds: number, signal?: AbortSignal): Promise<void> {
+    signal?.throwIfAborted();
     return new Promise((resolve, reject) => {
         const onAbort = () => {
             clearTimeout(timer);
@@ -166,7 +187,7 @@ export default function xSearch(pi: ExtensionAPI) {
         name: "x_search",
         label: "X Search",
         description:
-            "Search current X (Twitter) posts, profiles, and threads through xAI's hosted X Search. Supports handle and date filters and returns citation-backed results. Requires /login xai with a SuperGrok or X Premium subscription, or XAI_API_KEY.",
+            "Search current X (Twitter) posts, profiles, and threads through xAI's hosted X Search. Supports handle and date filters and returns citation-backed results. Requires /login xai with a SuperGrok or X Premium subscription, or XAI_API_KEY. Run one focused search per question about what people said, not an explanation of the underlying topic. Each call costs roughly $0.05–$0.08; enable image/video analysis only when media contains the answer, as it costs extra. If filters return no citations, report that no posts were cited and do not present the answer as matching X content. Never print or store credentials. Output is truncated at 50KB or 2000 lines, with the full result saved to a temporary file.",
         promptSnippet: "Search current X posts, profiles, and threads with optional handle and date filters",
         promptGuidelines: [
             "Use x_search instead of general web search when the user asks about current discussion, reactions, accounts, posts, or threads on X.",
@@ -181,6 +202,9 @@ export default function xSearch(pi: ExtensionAPI) {
             const excluded = normalizeHandles(params.excluded_x_handles);
             if (allowed.length && excluded.length) {
                 throw new Error("allowed_x_handles and excluded_x_handles cannot be combined");
+            }
+            if (allowed.length > MAX_HANDLES || excluded.length > MAX_HANDLES) {
+                throw new Error(`At most ${MAX_HANDLES} handles are allowed`);
             }
             validateDates(params.from_date, params.to_date);
 
@@ -204,6 +228,7 @@ export default function xSearch(pi: ExtensionAPI) {
 
             let response: Response | undefined;
             for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+                response = undefined;
                 try {
                     response = await fetch(`${XAI_BASE_URL}/responses`, {
                         method: "POST",
@@ -220,11 +245,13 @@ export default function xSearch(pi: ExtensionAPI) {
                         }),
                         signal,
                     });
-                    if (response.ok || response.status < 500 || attempt === MAX_RETRIES) break;
+                    if (!RETRYABLE_STATUS_CODES.has(response.status) || attempt === MAX_RETRIES) break;
                 } catch (error) {
                     if (signal?.aborted || attempt === MAX_RETRIES) throw error;
                 }
-                await delay(1500 * (attempt + 1), signal);
+                const milliseconds = retryDelay(response, attempt);
+                await response?.body?.cancel();
+                await delay(milliseconds, signal);
             }
 
             if (!response) throw new Error("xAI did not return a response");
@@ -239,15 +266,18 @@ export default function xSearch(pi: ExtensionAPI) {
             if (payload.error) throw new Error(errorMessage(response.status, payload));
 
             const answer = extractText(payload);
-            const citations = [
-                ...(Array.isArray(payload.citations) ? payload.citations : []),
-                ...extractInlineCitations(payload),
-            ] as Citation[];
+            const citations = extractCitations(payload);
+            const usage = {
+                input_tokens: payload.usage?.input_tokens ?? 0,
+                output_tokens: payload.usage?.output_tokens ?? 0,
+                x_search_calls: payload.usage?.server_side_tool_usage_details?.x_search_calls ?? 0,
+            };
             const filtered = Boolean(allowed.length || excluded.length || params.from_date || params.to_date);
             const degraded = filtered && citations.length === 0;
             const result = {
                 answer,
                 citations,
+                usage,
                 degraded,
                 ...(degraded ? { warning: "No citations were returned despite active filters; the answer may not come from matching X posts." } : {}),
             };
