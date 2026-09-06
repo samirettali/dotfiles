@@ -12,12 +12,12 @@ reproduce and diagnose most problems.
 In these dotfiles `adb` comes from `android-tools`, behind the `android` feature — if the
 command is missing, that feature is off for this host rather than the package being absent.
 
-## Attach before building
+## Diagnose the installed failure first
 
-The instinct to rebuild first is usually wrong. A build costs minutes and changes the thing
-being debugged; the installed app is the one showing the bug. Rebuild only once the
-installed app's logs have been read and shown to be insufficient — typically because it is
-a release build with diagnostics stripped.
+When diagnosing a failure in the installed app, prefer its logs and state before
+rebuilding: a build costs minutes and changes the reproduction. Build when the task
+requires changed code or instrumentation, or when the installed diagnostics are
+insufficient; reading those logs is not a prerequisite for every build.
 
 ## Identify what you are talking to
 
