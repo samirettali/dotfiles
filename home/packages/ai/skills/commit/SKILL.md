@@ -27,11 +27,9 @@ Create a git commit for the current changes using a concise Conventional Commits
   - File paths or globs should limit which files to commit. If files are specified, only stage/commit those unless the user explicitly asks otherwise.
   - If arguments combine files and instructions, honor both.
 
-## Steps
+## Scope
 
-1. Infer from the prompt if the user provided specific file paths/globs and/or additional instructions.
-2. Review `git status` and `git diff` to understand the current changes (limit to argument-specified files if provided).
-3. Run `git log -n 50 --pretty=format:%s` to see the types and scopes this repository already uses, and reuse them.
-4. If there are ambiguous extra files, ask the user for clarification before committing.
-5. Stage only the intended files (all changes if no files specified).
-6. Run `git commit -m "<subject>"` (and `-m "<body>"` if needed).
+Inspect the intended diff and staging state before committing. Include only the
+requested changes, preserving unrelated work even when no paths were supplied.
+Follow the repository's documented conventions; consult recent commit subjects
+only when the convention is unclear. Commit with an explicit pathspec.
