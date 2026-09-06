@@ -75,7 +75,7 @@ in {
   native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   neovim = "${manualSkill "neovim" shannonNeovimSkill}";
   project-workflow = ./skills/project-workflow;
-  remotion-best-practices = "${inputs.remotion-skills}/skills/remotion-best-practices";
+  remotion-best-practices = "${manualSkill "remotion-best-practices" "${inputs.remotion-skills}/skills/remotion-best-practices"}";
   show-me = "${manualSkill "show-me" "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me"}";
   side-project = ./skills/side-project;
   spotify = "${spotifySkill}";
