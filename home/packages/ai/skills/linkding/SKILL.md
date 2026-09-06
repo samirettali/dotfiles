@@ -1,5 +1,6 @@
 ---
 name: linkding
+disable-model-invocation: true
 description: Read and write Samir's linkding bookmarks — search saved links, check whether a URL is already bookmarked, save one with tags and notes, retag or archive it, list tags. Use when asked what he has bookmarked about a topic, to save or bookmark a link, to look through his reading list or unread links, or to tidy tags.
 ---
 
