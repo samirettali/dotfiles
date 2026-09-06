@@ -97,6 +97,7 @@ in {
       };
 
       ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
+      ".pi/agent/extensions/prompt-snippets".source = ./extensions/prompt-snippets;
       ".pi/agent/extensions/speak.ts".source = ./extensions/speak.ts;
       ".pi/agent/extensions/system-prompt.ts".source = ./extensions/system-prompt.ts;
       ".pi/agent/extensions/theme.ts".source = ./extensions/theme.ts;
