@@ -172,16 +172,14 @@ Honor `prefers-reduced-motion` / reduced-motion settings and avoid adding animat
 
 ## Validation
 
-Before presenting the experiment:
+Run the project checks relevant to the changed code. Before presenting the
+experiment, establish its specific acceptance criteria:
 
-1. run the project's formatter;
-2. run static type checking / compile;
-3. run relevant tests;
-4. build the production/release configuration;
-5. confirm the switcher is absent from production behavior (with `#if DEBUG` this is guaranteed by construction — still build release once to be sure it compiles without the dev code);
-6. test every variant at the relevant sizes;
-7. confirm selection survives refresh/restart;
-8. confirm all variants operate on the same live state.
+- The production/release configuration compiles without the development code
+  and does not expose the switcher. Build release once; `#if DEBUG` excludes
+  the switcher by construction but does not prove the remaining code compiles.
+- Every variant works at the relevant sizes, using the same live state.
+- The selected variant survives refresh/restart.
 
 Tell the user what each number represents and which option is recommended, but let them evaluate the variants directly.
 
@@ -194,7 +192,7 @@ After the user chooses a variant:
 3. remove the floating switcher;
 4. remove experiment-specific state, storage keys, types, and styles;
 5. remove stale stored values when useful (web: `localStorage.removeItem`; macOS: `defaults delete <bundle-id> <key>`);
-6. rerun formatter, type checking, tests, and the production/release build;
+6. run checks relevant to the cleanup and verify the release implementation no longer depends on experiment code;
 7. commit only when requested.
 
 Do not leave temporary variant infrastructure in the final production implementation unless the user explicitly asks for a permanent feature flag or A/B testing system.
