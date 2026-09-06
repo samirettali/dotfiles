@@ -61,6 +61,7 @@
     opentofu
     tree
     unzip
+    yt-dlp
     # watchexec TODO: upstream is broken
     # nurPkgs.tredis
     # duf
@@ -100,6 +101,5 @@
     # wuzz
     # xan # csv processing
     # yazi # file manager
-    # yt-dlp # TODO: upstream is broken
   ];
 }
