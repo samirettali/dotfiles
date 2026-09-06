@@ -99,6 +99,7 @@ in {
       ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
       ".pi/agent/extensions/speak.ts".source = ./extensions/speak.ts;
       ".pi/agent/extensions/system-prompt.ts".source = ./extensions/system-prompt.ts;
+      ".pi/agent/extensions/theme.ts".source = ./extensions/theme.ts;
       ".pi/agent/extensions/x-search.ts".source = ./extensions/x-search.ts;
 
       ".pi/agent/extensions/node_modules/@earendil-works/pi-coding-agent".source = piRuntimeRoot;
