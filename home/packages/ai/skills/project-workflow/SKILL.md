@@ -51,9 +51,9 @@ Verified on gh 2.97.
 3. Create a worktree on a new `issue-<N>-<slug>` branch and work there (see
    [Worktrees](#worktrees)).
 4. Move the issue to `🏗 In progress` (see [Statuses](#statuses)).
-5. If anything in the issue does not add up or is ambiguous, **ask before writing
-   code**. An issue written months ago may describe a problem that has since
-   changed.
+5. Investigate apparent ambiguity against the current code and issue discussion;
+   an old issue may describe a problem that has since changed. Ask about unresolved
+   requirements or conflicting intent, and continue independent, unblocked work.
 
 ## Opening an issue
 
