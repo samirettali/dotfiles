@@ -1,8 +1,4 @@
-{
-  nurPkgs,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   monid = pkgs.stdenvNoCC.mkDerivation {
     pname = "monid";
     version = "0.1.6";
@@ -34,6 +30,7 @@ in {
     ./codex.nix
     ./fabric.nix
     ./firecrawl.nix
+    ./grok-cli.nix
     ./mcp.nix
     ./mtplx.nix
     ./opencode.nix
@@ -43,6 +40,5 @@ in {
 
   home.packages = [
     monid
-    nurPkgs.grok-cli
   ];
 }
