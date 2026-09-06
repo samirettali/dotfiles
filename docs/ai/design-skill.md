@@ -1,7 +1,7 @@
 # The shared design skill
 
-`design` lives in [`.agents/skills/design`](../../.agents/skills/design/SKILL.md).
-The shared registry installs it for every configured agent. It replaces
+`design` lives in [`home/packages/ai/skills/design`](../../home/packages/ai/skills/design/SKILL.md).
+The shared registry installs it for every configured agent, not as a dotfiles-local skill. It replaces
 `frontend-design`, `hallmark`, and the seven `better-*` skills.
 
 ## Ownership

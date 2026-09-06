@@ -62,7 +62,7 @@ in {
   android = ./skills/android;
   code-review = ./skills/code-review;
   commit = ./skills/commit;
-  design = ../../../.agents/skills/design;
+  design = ./skills/design;
   generate-image = ./skills/generate-image;
   generate-music = ./skills/generate-music;
   generate-speech = ./skills/generate-speech;
