@@ -1,7 +1,7 @@
 ---
 name: lyrics
 disable-model-invocation: true
-description: Read and interpret the lyrics of a song — what it is about, its themes, the references and quotations it makes, its wordplay and slang. Fetches the text from LRCLIB and the community annotations from Genius with the `lyrics` command. Use when asked what a song means, what it talks about, what a line refers to, who or what it name-drops, or to explain the current track. Triggers on "cosa significa questa canzone", "di cosa parla", "quali citazioni", "spiegami il testo", "what does this song mean", song meaning, lyrics analysis, bars, punchlines, references.
+description: Interpret a song or individual lyric, including themes, references, wordplay, and slang. Use for named songs or the currently playing track.
 ---
 
 # Lyrics
