@@ -33,6 +33,7 @@ in {
     ./claude-code.nix
     ./codex.nix
     ./fabric.nix
+    ./firecrawl.nix
     ./mcp.nix
     ./mtplx.nix
     ./opencode.nix

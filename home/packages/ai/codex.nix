@@ -15,7 +15,7 @@ in {
     enable = lib.mkDefault true;
     package = nurPkgs.codex;
     enableMcpIntegration = true;
-    skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
+    skills = import ./coding-agent-skills.nix {inherit inputs pkgs;};
     settings = {
       projects =
         {

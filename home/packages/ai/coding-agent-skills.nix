@@ -82,6 +82,10 @@ in {
   code-review = ./skills/code-review;
   commit = ./skills/commit;
   design = ./skills/design;
+  firecrawl-search = ./skills/firecrawl-search;
+  firecrawl-scrape = ./skills/firecrawl-scrape;
+  firecrawl-developer-index = ./skills/firecrawl-developer-index;
+  firecrawl-research-index = ./skills/firecrawl-research-index;
   generate-image = ./skills/generate-image;
   generate-music = ./skills/generate-music;
   generate-speech = ./skills/generate-speech;
@@ -91,7 +95,6 @@ in {
   lyrics = ./skills/lyrics;
   macos-app-release = ./skills/macos-app-release;
   monid = "${monidSkill}";
-  native-web-search = "${inputs.agent-stuff}/skills/native-web-search";
   neovim = "${manualSkill "neovim" shannonNeovimSkill}";
   project-workflow = ./skills/project-workflow;
   remotion-best-practices = "${manualSkill "remotion-best-practices" "${inputs.remotion-skills}/skills/remotion-best-practices"}";
@@ -99,7 +102,7 @@ in {
   side-project = ./skills/side-project;
   spotify = "${spotifySkill}";
   subagents = ./skills/subagents;
-  tavily = ./skills/tavily;
+  tavily = "${manualSkill "tavily" ./skills/tavily}";
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
   x-search = ./skills/x-search;

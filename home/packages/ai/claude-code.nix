@@ -19,7 +19,7 @@ in {
     enable = lib.mkDefault true;
     package = pkgs.callPackage "${inputs.samirettali-nur}/pkgs/claude-code" {}; # TODO: fix
     enableMcpIntegration = true;
-    skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
+    skills = import ./coding-agent-skills.nix {inherit inputs pkgs;};
     outputStyles.lean = ./output-styles/lean.md;
     settings = {
       model = "claude-opus-5";

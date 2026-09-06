@@ -10,7 +10,7 @@ in {
   programs.antigravity-cli = {
     enable = lib.mkDefault true;
     enableMcpIntegration = true;
-    skills = builtins.removeAttrs (import ./coding-agent-skills.nix {inherit inputs pkgs;}) ["native-web-search"];
+    skills = import ./coding-agent-skills.nix {inherit inputs pkgs;};
     settings = {
       preferredEditor = "neovim";
       allowNonWorkspaceAccess = true;
