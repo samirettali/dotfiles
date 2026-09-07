@@ -108,7 +108,6 @@ in {
       ".pi/agent/extensions/node_modules/@earendil-works/pi-ai".source = piNodeModules + "/@earendil-works/pi-ai";
       ".pi/agent/extensions/node_modules/@earendil-works/pi-tui".source = piNodeModules + "/@earendil-works/pi-tui";
       ".pi/agent/extensions/node_modules/typebox".source = piNodeModules + "/typebox";
-      ".pi/agent/extensions/node_modules/@sinclair/typebox".source = piNodeModules + "/@sinclair/typebox";
       ".pi/agent/extensions/node_modules/@types/node".source = piNodeModules + "/@types/node";
     }
     // lib.optionalAttrs herdrEnabled {
