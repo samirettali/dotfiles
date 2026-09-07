@@ -91,6 +91,7 @@ in {
   generate-music = ./skills/generate-music;
   generate-speech = ./skills/generate-speech;
   herdr = ./skills/herdr;
+  ideas = ./skills/ideas;
   linkding = ./skills/linkding;
   live-ui-variants = ./skills/live-ui-variants;
   lyrics = ./skills/lyrics;

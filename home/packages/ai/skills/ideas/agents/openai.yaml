@@ -1,0 +1,6 @@
+interface:
+  display_name: "Ideas"
+  short_description: "Side-project ideas from the vault and linkding, as runnable prompts"
+  default_prompt: "Use $ideas to propose ten side projects from my notes and bookmarks."
+policy:
+  allow_implicit_invocation: false
