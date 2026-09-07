@@ -71,7 +71,7 @@ Never written a line myself, only through agents:
 - Work in a git worktree unless I say otherwise: I sit on main, and I do not want my checkout moved under me.
 - Prefer the simplest solution that meets the requirement, and say so when something is over-engineered.
 - Verify in seconds what you would otherwise assert: measure the latency, read the source, take a stack from the hung process, whatever settles it. A wrong theory costs more than the command that rules it out.
-- On `andromeda`, dev servers bind to `0.0.0.0`, including through `make dev`, so I reach them at `http://andromeda:<port>` from my Mac without forwarding ports.
+- On `andromeda`, dev servers bind to `0.0.0.0`, including through `make dev`, so I reach them at `http://andromeda:<port>` from my Mac without forwarding ports. Binding is not enough for Vite: it rejects unknown Host headers, so `server.allowedHosts` must always include `andromeda` in dev.
 
 ## Conventions
 

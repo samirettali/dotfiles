@@ -95,9 +95,9 @@ of this conversation. Shape it like the ones already there, and like this:
    open in a real viewer). Name the papers and reference implementations
    and ask for every constant to carry its source.
 5. **Interface**: Italian UI copy, English code and docs, the skill's UX
-   defaults, light and dark, the dev server on `0.0.0.0` so it is reachable
-   at `http://andromeda:<port>` from the tailnet, port in the Makefile and in
-   `AGENTS.md`.
+   defaults, light and dark, the dev server on `0.0.0.0` with `andromeda` in
+   Vite's `server.allowedHosts` so it is reachable at `http://andromeda:<port>`
+   from the tailnet, port in the Makefile and in `AGENTS.md`.
 6. **How to work**: no questions unless two readings lead to materially
    different work, build the thin end-to-end path first and deepen after,
    verify in a real browser at each step, screenshots in `docs/`, `TODO.md`
