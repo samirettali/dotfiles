@@ -21,6 +21,7 @@
     nurPkgs.sol
     nurPkgs.eqmac
     nurPkgs.sottomano
+    nurPkgs.sottovoce
     shottr
     the-unarchiver
     slack
