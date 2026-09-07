@@ -12,8 +12,9 @@ local CACHE_FILE = CACHE_DIR .. "/ai-usage.json"
 local BAR_WIDTH = 90
 
 -- One poller per credential source; a source may expose several providers,
--- because Claude reports model-scoped caps alongside the plan-wide ones.
-local POLL_ORDER = { "claude", "codex" }
+-- because Claude reports model-scoped caps alongside the plan-wide ones and
+-- Antigravity meters its Gemini and third-party models separately.
+local POLL_ORDER = { "claude", "codex", "agy", "grok" }
 local provider_order = { "claude", "codex" }
 local provider_names = { claude = "Claude", codex = "Codex" }
 
@@ -305,7 +306,14 @@ local function refresh(poller_key)
 			provider_names[provider.key] = provider.name or provider.key
 			provider_urls[provider.key] = provider.url
 			if provider.error then
+				-- The error names the poller, not the sections it owns: those
+				-- keep their cached rows, so every one of them turns grey.
 				stale_providers[provider.key] = true
+				for _, key in ipairs(keys_by_owner[poller_key] or {}) do
+					if limits_by_provider[key] then
+						stale_providers[key] = true
+					end
+				end
 			else
 				local limits = {}
 				for _, window in ipairs(provider.windows or {}) do

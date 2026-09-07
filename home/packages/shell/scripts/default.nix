@@ -33,6 +33,8 @@ in {
       (pkgs.callPackage ./pi-models.nix {})
       (pkgs.callPackage ./ai-usage.nix {
         codex = nurPkgs.codex;
+        antigravity-cli = config.programs.antigravity-cli.package;
+        grok-cli = nurPkgs.grok-cli;
       })
       (pkgs.writeShellScriptBin "glc" (builtins.readFile "${scriptsDir}/glc.sh"))
       (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))

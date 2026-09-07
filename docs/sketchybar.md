@@ -61,7 +61,7 @@ Poll each provider every minute while healthy and every 15 seconds during an inc
 
 ## AI subscription usage
 
-`items/ai_usage.lua` keeps one usage icon visible and puts every Claude and Codex limit in its popup.
+`items/ai_usage.lua` keeps one usage icon visible and puts every Claude, Codex, Antigravity and Grok limit in its popup.
 Each row is a Sketchybar slider: window on the left, filled bar, percentage on the right.
 The icon, the bar and the percentage turn yellow at 70% and red at 90%.
 Round fractional usage up and add popup rows as providers expose them.
@@ -81,13 +81,36 @@ because its percentage is not overall plan usage and reading it as such is wrong
 Sections, names and URLs come from the data and are cached, so a new scoped model needs no code change.
 A failed fetch marks every provider of that poller as cached and empties nothing.
 
-Neither provider exposes a public usage API.
+No provider exposes a public usage API.
 The script borrows credentials owned by the corresponding CLI:
 
 - Claude Code stores its OAuth token in the login keychain under `Claude Code-credentials`.
   Fetch `api.anthropic.com/api/oauth/usage` with `anthropic-beta: oauth-2025-04-20`.
 - Codex stores its token in `~/.codex/auth.json`.
   Fetch `chatgpt.com/backend-api/wham/usage`.
+- Antigravity stores its Google OAuth token in the login keychain under service `gemini`, account `antigravity`,
+  as go-keyring base64 JSON with an `expiry`.
+  Post `{}` to `daily-cloudcode-pa.googleapis.com/v1internal:retrieveUserQuotaSummary`
+  with a `User-Agent` that names Antigravity, or the API answers `SUBSCRIPTION_REQUIRED`.
+  That daily host is the one the CLI uses; `cloudcode-pa.googleapis.com` keeps a separate pool with other reset times.
+  Gemini models and the Claude and GPT models are metered apart, so each group is its own section keyed `agy.<group>`.
+  The percentage shown is `1 - remainingFraction`, and the weekly bucket is reordered after the 5-hour one.
+
+The Antigravity token lives about an hour and only the CLI refreshes it.
+When it has expired, or the request comes back 401 or 403, fall back to `agy --log-file /dev/null -p /usage --output-format json`,
+which refreshes the keychain and returns the same groups in snake_case in about four seconds.
+Keep `--log-file /dev/null`: every print-mode run otherwise opens a new log file under `~/.gemini/antigravity-cli/log`.
+
+Grok keeps its OIDC token in `~/.grok/auth.json`, one entry per issuer with the JWT under `key` and an `expires_at`.
+Fetch `cli-chat-proxy.grok.com/v1/billing?format=credits`, the call behind the TUI's `/usage`.
+It returns the plan's billing period and `creditUsagePercent`, which the proxy omits while it is zero.
+`grok.com/rest/rate-limits` refuses that token, and the proxy answers a bare completion request with 426, so this is the only read.
+
+The Grok token lives a few hours and only the CLI refreshes it.
+When it has expired, or the request comes back 401 or 403, fall back to `grok agent --no-leader stdio`:
+send an Agent Client Protocol `initialize`, then the extension method `_x.ai/billing` with no session.
+The underscore prefix is how ACP names extension methods; without it the agent answers "Method not found".
+The agent refreshes the token, answers in half a second and leaves no session or log behind.
 
 Label windows by duration (`5h`, `1d`, or `7d`), not from primary or secondary position.
 The number and order of returned windows can change.
