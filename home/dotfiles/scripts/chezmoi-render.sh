@@ -24,12 +24,14 @@ for tool in rsync nix; do
     fi
 done
 
+# `built:target` where the name in the built tree is not the name the work Mac
+# wants: nix keeps the codex config beside the writable copy codex itself edits.
 files=(
     .config/herdr/config.toml
     .config/tmux/tmux.conf
     .claude/hooks/herdr-agent-state.sh
     .claude/output-styles/lean.md
-    .codex/config.toml
+    .codex/config.toml.nix:.codex/config.toml
     revive.toml
 )
 
@@ -78,7 +80,7 @@ if ! root=$(nix build --no-link --print-out-paths "$flake_dir#$attribute"); then
     exit 1
 fi
 
-for path in "${files[@]}" "${directories[@]}" "${templates[@]%%:*}"; do
+for path in "${files[@]%%:*}" "${directories[@]}" "${templates[@]%%:*}"; do
     if [[ ! -e $root/$path ]]; then
         printf 'Not owned by nix, so the render cannot reach it: %s\n' "$path" >&2
         printf 'Declare it in home-manager, or drop it from this script.\n' >&2
@@ -98,8 +100,9 @@ for path in "${directories[@]}"; do
     rsync -aL --delete "${excludes[@]}" "$root/$path/" "$target/"
 done
 
-for path in "${files[@]}"; do
-    target=$source_dir/$(source_name "$path")
+for entry in "${files[@]}"; do
+    path=${entry%%:*}
+    target=$source_dir/$(source_name "${entry#*:}")
     mkdir -p "${target%/*}"
     rsync -aL "$root/$path" "$target"
 done
