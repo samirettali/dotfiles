@@ -62,6 +62,7 @@
     tree
     unzip
     yt-dlp
+    ffmpeg
     # watchexec TODO: upstream is broken
     # nurPkgs.tredis
     # duf
