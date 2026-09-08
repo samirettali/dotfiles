@@ -21,5 +21,6 @@ vim.lsp.enable({
 	"ruff",
 	"harper",
 	"dartls",
+	"gdscript",
 })
 

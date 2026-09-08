@@ -1,6 +1,13 @@
 approval_policy = "never"
 sandbox_mode = "danger-full-access"
 
+[features.context_management]
+experimental_mode = true
+
+[hooks.state."/Users/samir/.codex/hooks.json:session_start:0:0"]
+enabled = true
+trusted_hash = "sha256:4167dc7691a7b44db36e4b20a0cf5ffae824133f8bfcd02cfa15b2caae716a76"
+
 [mcp_servers.chrome-devtools]
 args = ["-y", "chrome-devtools-mcp@latest", "--browserUrl=http://127.0.0.1:9222"]
 command = "npx"
@@ -9,6 +16,21 @@ command = "npx"
 url = "https://api.anthropic.com/v1/design/mcp"
 
 [projects."/Users/samir"]
+trust_level = "trusted"
+
+[projects."/Users/samir/Documents/notes"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/bet"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/blog"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/bots"]
 trust_level = "trusted"
 
 [projects."/Users/samir/dev/dotfiles"]
@@ -29,7 +51,16 @@ trust_level = "trusted"
 [projects."/Users/samir/dev/pulse"]
 trust_level = "trusted"
 
+[projects."/Users/samir/dev/samirettali"]
+trust_level = "trusted"
+
 [projects."/Users/samir/dev/servers"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/sottocasa"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/sottofondo"]
 trust_level = "trusted"
 
 [projects."/Users/samir/dev/sottomano"]
@@ -38,8 +69,14 @@ trust_level = "trusted"
 [projects."/Users/samir/dev/sottotesto"]
 trust_level = "trusted"
 
+[projects."/Users/samir/dev/sottotrama"]
+trust_level = "trusted"
+
 [projects."/Users/samir/dev/sottovoce"]
 trust_level = "trusted"
 
 [projects."/Users/samir/dev/spotctl"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/userscripts"]
 trust_level = "trusted"
