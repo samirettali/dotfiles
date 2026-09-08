@@ -42,6 +42,7 @@ in {
       disableClaudeAiConnectors = true;
       toolSearchEnabled = true;
       disableWorkflows = true;
+      promptSuggestionEnabled = false;
       spinnerVerbs = {
         mode = "replace";
         verbs = ["Thinking" "Processing" "Working"];
