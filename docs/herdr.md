@@ -6,17 +6,20 @@ Read this before changing the patched Herdr package or its Neovim integration.
 
 Herdr runs from `samirettali/herdr`, branch `patched`.
 The checkout is `~/dev/herdr`, with upstream as `origin` and the fork as `fork`.
-Keep one commit per feature above the released tag.
+Keep one commit per feature above upstream `master`, the commit the NUR package tracks.
 The fork's README is the source of truth for every added option.
+The pre-0.9 branch, with the sidebar and tab patches that were dropped, is `patched-0.8.2`.
 
-`herdr.nix` keeps the NUR derivation and replaces only its `src` with the `herdr-fork` flake input.
+`herdr-package.nix` keeps the NUR derivation and replaces only its `src` with the `herdr-fork` flake input.
 `flake.lock` pins the fork revision.
+The work Mac installs the same revision through `samirettali/tap/herdr`, pinned in `homebrew-tap`.
 
-To update for a release:
+To update:
 
-1. Rebase `patched` onto the new tag.
+1. Rebase `patched` onto the commit the NUR package tracks.
 2. Push the fork branch.
-3. Run `nix flake update` in this repository.
+3. Run `nix flake update herdr-fork` in this repository.
+4. Bump `revision` in the tap formula.
 
 Do not export patch files back into this repository.
 The branch is the only source of truth.
@@ -52,11 +55,12 @@ Check `capabilities.live_handoff` in `herdr status --json` first.
 `herdr server stop` is the destructive alternative.
 The handoff supports at most 64 panes.
 
-## Pane border colours
+## Pane border and tab colours
 
-The focused pane border uses `accent`.
-`[theme.custom] pane_inactive_border` changes only unfocused pane borders and falls back to
-`overlay0`, which remains available for the other muted interface elements.
+`[theme.custom] pane_active_border` and `pane_inactive_border` change only the pane borders and
+fall back to `accent` and `overlay0`, which remain available for the other interface elements.
+`tab_active_bg`, `tab_active_fg`, `tab_inactive_bg` and `tab_inactive_fg` do the same for the
+tab bar. Sidebar tokens take an inline `fg` upstream, and `active_row_bg` paints active rows.
 
 ## Navigation between Herdr and Neovim
 
