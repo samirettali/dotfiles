@@ -38,6 +38,11 @@ in {
         diff.mnemonicPrefix = true;
         diff.renames = true;
         diff.submodule = "log";
+        diff.tool = "nvimdifftool";
+        # Not the builtin nvimdiff: its -R marks the buffers readonly, which
+        # warns on every launch and defeats the write-back of difftool -d.
+        difftool.nvimdifftool.cmd = ''nvim -d "$LOCAL" "$REMOTE"'';
+        difftool.prompt = false;
         fetch.all = true;
         fetch.prune = true;
         fetch.pruneTags = true;
