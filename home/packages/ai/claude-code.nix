@@ -44,35 +44,20 @@ in {
       };
       spinnerTipsEnabled = false;
       outputStyle = "Lean";
-      hooks =
-        {
-          PreToolUse = [
-            {
-              matcher = "Read|Bash";
-              hooks = [
-                {
-                  type = "command";
-                  command = "python3 '${guardHook}'";
-                  timeout = 10;
-                }
-              ];
-            }
-          ];
-        }
-        // lib.optionalAttrs herdrEnabled {
-          SessionStart = [
-            {
-              matcher = "*";
-              hooks = [
-                {
-                  type = "command";
-                  command = "bash '${herdrHook}' session";
-                  timeout = 10;
-                }
-              ];
-            }
-          ];
-        };
+      hooks = lib.optionalAttrs herdrEnabled {
+        SessionStart = [
+          {
+            matcher = "*";
+            hooks = [
+              {
+                type = "command";
+                command = "bash '${herdrHook}' session";
+                timeout = 10;
+              }
+            ];
+          }
+        ];
+      };
       env = {
         CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL = "1";
         # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1"; # TODO
