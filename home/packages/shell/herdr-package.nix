@@ -11,6 +11,8 @@
 #
 # Defined apart from `herdr.nix` so anything that needs the binary by path — the
 # sketchybar watcher — gets this exact build instead of guessing a profile path.
-nurPkgs.herdr.overrideAttrs (_: {
-  src = inputs.herdr-fork;
-})
+# nurPkgs.herdr.overrideAttrs (_: {
+#   src = inputs.herdr-fork;
+# })
+# TODO: what to do with the fork?
+nurPkgs.herdr
