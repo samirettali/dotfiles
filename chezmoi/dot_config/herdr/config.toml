@@ -65,15 +65,23 @@ delivery = "off"
 [ui.sound]
 enabled = true
 
+# Fork: spacer pushes the rest of the row to the right edge, git_status before branch
+# keeps the arrows tight in front of the name.
 [ui.sidebar.spaces]
 rows = [
-  ["state_icon", "workspace", "branch", "git_status"],
+  ["state_icon", "workspace", "spacer", "git_status", "branch"],
 ]
 
 [ui.sidebar.agents]
 rows = [
-    ["state_icon", "machine", { token = "workspace", fg = "#bbbbbb" }, "tab"]
+    ["state_icon", "machine", { token = "workspace", fg = "#bbbbbb" }, "spacer", "tab"]
 ]
+
+# Fork: one Nerd Font glyph per machine so the rows line up, and a collapsed machine
+# takes its agents with it.
+[ui.sidebar.machines]
+labels = { local = "", andromeda = "", work = "" }
+hide_agents_when_collapsed = true
 
 [experimental]
 pane_history = false
