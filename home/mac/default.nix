@@ -17,15 +17,16 @@
   home.packages = with pkgs; [
     betterdisplay
     hidden-bar
+    mongodb-compass
+    nurPkgs.eqmac
     nurPkgs.mole
     nurPkgs.sol
-    nurPkgs.eqmac
     nurPkgs.sottomano
     nurPkgs.sottovoce
+    nurPkgs.t3code
     shottr
-    the-unarchiver
     slack
-    mongodb-compass
+    the-unarchiver
   ];
 
   # LaunchServices caches the store path behind a bundle id, and the old build is
