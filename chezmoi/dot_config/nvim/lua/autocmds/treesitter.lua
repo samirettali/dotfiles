@@ -4,7 +4,15 @@ vim.api.nvim_create_autocmd("FileType", {
 	group = group,
 	pattern = "*",
 	callback = function(args)
-		pcall(vim.treesitter.start, args.buf)
+		if not pcall(vim.treesitter.start, args.buf) then
+			return
+		end
+		-- A language without indents.scm indents everything to column 0, so
+		-- keep the runtime indent script for those.
+		local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+		if lang and vim.treesitter.query.get(lang, "indents") then
+			vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		end
 	end,
 })
 
