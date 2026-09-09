@@ -10,7 +10,7 @@ Create images from a prompt, or edit existing ones by passing them as references
 ## Generate
 
 1. The `generate-image` command carries the keys: it reads them from the vault when the environment has none. Never print or store one.
-2. Pick a model from [references/models.md](references/models.md), which also lists the Nano Banana names. The default `gemini-3-pro-image` (Nano Banana Pro) is the right choice unless the user wants cheap drafts.
+2. Pick a model from [references/models.md](references/models.md), which also lists the Nano Banana names. The default is OpenAI `gpt-image-2.5-sunburst`. Use `--provider gemini` to select Gemini instead.
 3. Use an output path that does not already exist.
 4. Run it:
 
@@ -22,6 +22,10 @@ Create images from a prompt, or edit existing ones by passing them as references
    ```
 
 5. The script prints the absolute path it wrote. Gemini chooses the encoding itself, so the extension can come back as `.jpg` even when `.png` was requested — always report the printed path, not the requested one.
+
+For a near-Full-HD OpenAI image, use `--size 1920x1088 --quality medium`.
+Explicit dimensions override `--aspect-ratio`. Exact 1920×1080 is unsupported:
+OpenAI requires both edges to be divisible by 16. Do not silently resize or crop.
 
 ## Edit an existing image
 
@@ -37,7 +41,7 @@ generate-image \
 
 ## Variations
 
-Run the script once per variation with a distinct output path and a different model or prompt (`hero-a.png`, `hero-b.png`). Draft with `gemini-3.1-flash-image` (Nano Banana 2), then regenerate the chosen direction with `gemini-3-pro-image` (Nano Banana Pro).
+Run the script once per variation with a distinct output path and a different model or prompt (`hero-a.png`, `hero-b.png`). Use `--quality medium` or `--quality low` for OpenAI drafts, then regenerate the chosen direction at `--quality high`. Select older models explicitly with `--model gpt-image-2` when comparing.
 
 ## Constraints
 

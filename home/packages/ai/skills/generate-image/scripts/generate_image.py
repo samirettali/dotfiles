@@ -14,7 +14,7 @@ import tempfile
 
 ASPECT_RATIOS = ["1:1", "3:2", "2:3", "4:3", "3:4", "16:9", "9:16", "21:9", "5:4", "4:5"]
 
-# gpt-image-2 takes a free-form size: edges are multiples of 16, at most 3840px,
+# GPT Image 2 and 2.5 take a free-form size: edges are multiples of 16, at most 3840px,
 # and the total pixel count must stay between these bounds.
 OPENAI_PIXELS = {"1K": 1024 * 1024, "2K": 2048 * 2048, "4K": 3840 * 2160}
 OPENAI_MAX_EDGE = 3840
@@ -22,7 +22,7 @@ OPENAI_PIXEL_RANGE = (655_360, 8_294_400)
 
 DEFAULT_MODELS = {
     "gemini": "gemini-3-pro-image",
-    "openai": "gpt-image-2",
+    "openai": "gpt-image-2.5-sunburst",
 }
 
 SUFFIXES = {
@@ -36,14 +36,13 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate or edit an image with Gemini or OpenAI.")
     parser.add_argument("--prompt", required=True, help="Image description")
     parser.add_argument("--output", type=Path, required=True, help="Output .png, .jpg, or .webp path")
-    parser.add_argument("--provider", choices=sorted(DEFAULT_MODELS), default="gemini")
+    parser.add_argument("--provider", choices=sorted(DEFAULT_MODELS), default="openai")
     parser.add_argument("--model", help="Override the provider default model")
     parser.add_argument("--aspect-ratio", choices=ASPECT_RATIOS, default="1:1")
     parser.add_argument(
         "--size",
-        choices=["1K", "2K", "4K"],
         default="1K",
-        help="Long-edge resolution tier",
+        help="Resolution tier (1K, 2K, 4K), or explicit WIDTHxHEIGHT for OpenAI",
     )
     parser.add_argument(
         "--quality",
@@ -101,6 +100,22 @@ def generate_gemini(args: argparse.Namespace, references: list[tuple[bytes, str]
 
 
 def openai_size(aspect_ratio: str, tier: str) -> str:
+    if tier not in OPENAI_PIXELS:
+        try:
+            width, height = (int(part) for part in tier.split("x"))
+        except ValueError:
+            raise SystemExit("--size must be 1K, 2K, 4K, or WIDTHxHEIGHT") from None
+        minimum, maximum = OPENAI_PIXEL_RANGE
+        if not (
+            0 < width <= OPENAI_MAX_EDGE and 0 < height <= OPENAI_MAX_EDGE
+            and width % 16 == 0 and height % 16 == 0
+            and 1 / 3 <= width / height <= 3
+            and minimum <= width * height <= maximum
+        ):
+            raise SystemExit("OpenAI size needs edges divisible by 16, at most 3840px, "
+                             "a 1:3–3:1 ratio, and 0.65–8.3 MP")
+        return f"{width}x{height}"
+
     width_ratio, height_ratio = (int(part) for part in aspect_ratio.split(":"))
     ratio = width_ratio / height_ratio
     pixels = OPENAI_PIXELS[tier]
@@ -180,6 +195,9 @@ def main() -> None:
         raise SystemExit(f"output directory does not exist: {output.parent}")
     if not args.prompt.strip():
         raise SystemExit("prompt is empty")
+
+    if args.provider == "gemini" and args.size not in OPENAI_PIXELS:
+        raise SystemExit("Gemini --size must be 1K, 2K, or 4K")
 
     references = [read_reference(path) for path in args.reference]
     generate = generate_gemini if args.provider == "gemini" else generate_openai
