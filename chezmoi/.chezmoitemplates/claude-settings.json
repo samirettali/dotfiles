@@ -17,18 +17,6 @@
   },
   "feedbackSurveyRate": 0,
   "hooks": {
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "python3 '/Users/samir/.claude/hooks/guard-read.py'",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": "Read|Bash"
-      }
-    ],
     "SessionStart": [
       {
         "hooks": [
