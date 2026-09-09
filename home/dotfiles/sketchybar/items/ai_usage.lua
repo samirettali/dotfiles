@@ -7,6 +7,11 @@ local WARN = 70
 local CRITICAL = 90
 local IDLE_FREQ = 300
 local ALERT_FREQ = 60
+-- Claude's usage endpoint budgets a handful of calls per access token and then
+-- answers 429 for the rest of the window, so it is polled far more slowly than
+-- the others and never below its own cooldown.
+local IDLE_FREQ_BY_POLLER = { claude = 900 }
+local ALERT_FREQ_BY_POLLER = { claude = 900 }
 local CACHE_DIR = (os.getenv("HOME") or "") .. "/.cache/sketchybar"
 local CACHE_FILE = CACHE_DIR .. "/ai-usage.json"
 local BAR_WIDTH = 90
@@ -39,6 +44,7 @@ local usage = sbar.add("item", "usage", {
 local limits_by_provider = {}
 local updated_at_by_provider = {}
 local stale_providers = {}
+local blocked_until = {}
 local provider_urls = {}
 local keys_by_owner = { claude = { "claude" }, codex = { "codex" } }
 local popup_items = {}
@@ -167,6 +173,13 @@ local function load_cache()
 	if type(cached.urls) == "table" then
 		provider_urls = cached.urls
 	end
+	if type(cached.blocked) == "table" then
+		for key, until_at in pairs(cached.blocked) do
+			if tonumber(until_at) and tonumber(until_at) > os.time() then
+				blocked_until[key] = tonumber(until_at)
+			end
+		end
+	end
 	if type(cached.owners) == "table" then
 		keys_by_owner = cached.owners
 		reorder_providers()
@@ -194,6 +207,7 @@ local function save_cache()
 			names = provider_names,
 			urls = provider_urls,
 			owners = keys_by_owner,
+			blocked = blocked_until,
 		}))
 		handle:close()
 	end)
@@ -227,7 +241,7 @@ for _, key in ipairs(POLL_ORDER) do
 		position = "right",
 		drawing = false,
 		updates = "on",
-		update_freq = IDLE_FREQ,
+		update_freq = IDLE_FREQ_BY_POLLER[key] or IDLE_FREQ,
 	})
 end
 
@@ -266,7 +280,9 @@ local function render()
 				poller_worst = math.max(poller_worst, limit.percent)
 			end
 		end
-		pollers[poller_key]:set({ update_freq = poller_worst >= WARN and ALERT_FREQ or IDLE_FREQ })
+		local freq = poller_worst >= WARN and (ALERT_FREQ_BY_POLLER[poller_key] or ALERT_FREQ)
+			or (IDLE_FREQ_BY_POLLER[poller_key] or IDLE_FREQ)
+		pollers[poller_key]:set({ update_freq = freq })
 	end
 
 	usage:set({ icon = { color = color_for(worst) } })
@@ -282,7 +298,27 @@ local function mark_stale(poller_key)
 	render()
 end
 
+-- A provider that answered 429 stays untouched until its window has passed.
+-- Asking again inside the window cannot succeed and, on Claude, only spends
+-- what little the access token is allowed.
+local function blocked(poller_key)
+	local until_at = blocked_until[poller_key]
+	if not until_at then
+		return false
+	end
+	if os.time() >= until_at then
+		blocked_until[poller_key] = nil
+		return false
+	end
+	return true
+end
+
 local function refresh(poller_key)
+	if blocked(poller_key) then
+		render()
+		return
+	end
+
 	sbar.exec(("%s %s"):format(AI_USAGE_BIN, poller_key), function(out)
 		local payload = out
 		if type(payload) == "string" then
@@ -309,6 +345,13 @@ local function refresh(poller_key)
 				-- The error names the poller, not the sections it owns: those
 				-- keep their cached rows, so every one of them turns grey.
 				stale_providers[provider.key] = true
+				local wait = tonumber(provider.retry_after)
+				if wait and wait > 0 then
+					blocked_until[poller_key] = os.time() + wait
+					-- Persist the window: a rebuild restarts Sketchybar, and a
+					-- forgotten window means asking again straight away.
+					save_cache()
+				end
 				for _, key in ipairs(keys_by_owner[poller_key] or {}) do
 					if limits_by_provider[key] then
 						stale_providers[key] = true
@@ -331,6 +374,7 @@ local function refresh(poller_key)
 		end
 
 		if updated then
+			blocked_until[poller_key] = nil
 			-- Only a successful fetch redefines the poller's providers, so a
 			-- failure keeps the cached sections in place.
 			for _, key in ipairs(keys_by_owner[poller_key] or {}) do

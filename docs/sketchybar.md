@@ -75,6 +75,14 @@ Clicking a row or a header opens that provider's usage page, taken from the `url
 Poll each credential source every five minutes below its own threshold and every minute above it.
 Opening the popup refreshes both sources immediately.
 
+Claude is the exception: `api.anthropic.com/api/oauth/usage` budgets a handful of calls per
+access token and then answers 429 with a `Retry-After` for the rest of the window,
+so it polls every fifteen minutes and never faster, whatever its percentage.
+Carry `retry_after` from the script's 429 into the item, skip every refresh until it has passed —
+the popup's included, because a request inside the window cannot succeed — and persist the
+instant in the cache file so a rebuild does not spend a call reopening the same window.
+Do not work around the limit by refreshing the token: Claude Code owns it.
+
 One poller may own several providers.
 A model-scoped Claude cap becomes its own section, keyed `claude.<model>` and named after the model,
 because its percentage is not overall plan usage and reading it as such is wrong.

@@ -20,6 +20,8 @@ import urllib.error
 import urllib.request
 
 TIMEOUT = 10
+# What to wait when a 429 carries no Retry-After of its own.
+CLAUDE_COOLDOWN = 900
 
 CLAUDE_USAGE_URL = "https://api.anthropic.com/api/oauth/usage"
 CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage"
@@ -53,6 +55,15 @@ def epoch(value: object) -> int | None:
         except ValueError:
             return None
     return None
+
+
+def retry_after(error: urllib.error.HTTPError) -> int | None:
+    raw = error.headers.get("Retry-After") if error.headers else None
+    try:
+        seconds = int(str(raw).strip())
+    except (TypeError, ValueError):
+        return None
+    return seconds if seconds > 0 else None
 
 
 def get_json(url: str, headers: dict[str, str]) -> dict:
@@ -94,7 +105,13 @@ def claude() -> list[dict]:
     except urllib.error.HTTPError as error:
         # Nothing here refreshes the token: Claude Code owns it, and writing a
         # new one back to the keychain would race with it.
-        return [{"key": "claude", "name": "Claude", "url": CLAUDE_PAGE, "error": f"http {error.code}"}]
+        failure = {"key": "claude", "name": "Claude", "url": CLAUDE_PAGE, "error": f"http {error.code}"}
+        # The endpoint budgets a handful of calls per access token and answers
+        # 429 for the rest of the window, so the caller has to stop asking
+        # until Retry-After has passed.
+        if error.code == 429:
+            failure["retry_after"] = retry_after(error) or CLAUDE_COOLDOWN
+        return [failure]
     except (urllib.error.URLError, TimeoutError, ValueError) as error:
         return [{"key": "claude", "name": "Claude", "url": CLAUDE_PAGE, "error": str(error)}]
 
