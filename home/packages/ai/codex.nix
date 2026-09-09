@@ -24,17 +24,12 @@ in {
   # Codex asks to trust a new hook on first run and records the answer in
   # config.toml: pin that hash under `hooks.state` below afterwards, or the
   # question comes back at every switch.
-  home.file.".codex/hooks/guard-read.py".source = ./guard-read.py;
   home.file.".codex/hooks.json" = {
     force = true;
     text = builtins.toJSON {
-      hooks =
-        {
-          PreToolUse = [{hooks = [(hook "python3 '${codexHome}/hooks/guard-read.py'")];}];
-        }
-        // lib.optionalAttrs herdrEnabled {
-          SessionStart = [{hooks = [(hook "bash '${codexHome}/herdr-agent-state.sh' session")];}];
-        };
+      hooks = lib.optionalAttrs herdrEnabled {
+        SessionStart = [{hooks = [(hook "bash '${codexHome}/herdr-agent-state.sh' session")];}];
+      };
     };
   };
 
