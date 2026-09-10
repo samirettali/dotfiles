@@ -6,18 +6,13 @@ auto_switch = false
 
 [theme.custom]
 accent = "gray"
-panel_bg = "#000000"
-overlay1 = "gray"
-# active_row_bg = "#000000"
-text = "white"
-subtext0 = "gray"
-# Fork: pane borders and tab bar colours, each falling back to the token above.
-pane_inactive_border = "#444444"
-# pane_active_border = "gray"
-# tab_active_bg = "#000000"
-# tab_active_fg = "white"
-# tab_inactive_bg = "#000000"
-# tab_inactive_fg = "gray"
+active_row_bg = "#222222"
+pane_active_border = "gray"
+pane_inactive_border = "darkgray"
+tab_active_bg = "#000000"
+tab_active_fg = "white"
+tab_inactive_bg = "#000000"
+tab_inactive_fg = "darkgray"
 
 [keys]
 prefix = "ctrl+b"
@@ -35,12 +30,17 @@ focus_pane_left = "ctrl+h"
 focus_pane_down = "ctrl+j"
 focus_pane_up = "ctrl+k"
 focus_pane_right = "ctrl+l"
-# Fork: nvim keeps ctrl+hjkl for its own splits and calls `herdr pane focus` at its edge.
 passthrough_commands = ["nvim"]
 navigate_workspace_up = "k"
 navigate_workspace_down = "j"
 navigate_pane_up = "up"
 navigate_pane_down = "down"
+previous_agent = "prefix+["
+next_agent = "prefix+]"
+new_worktree = "prefix+shift+t"
+open_worktree = "prefix+shift+w"
+next_workspace = "prefix+j"
+previous_workspace = "prefix+k"
 
 [ui]
 sidebar_collapsed_mode = "hidden"
@@ -55,9 +55,10 @@ pane_scrollbars = false
 tab_bar_position = "bottom"
 show_agent_labels_on_pane_borders = false
 agent_panel_sort = "spaces"
-# Fork: no hint bar flashing over the tab bar on every prefix press.
 prefix_hint = false
 mobile_width_threshold = 68
+detach_effect = "matrix"
+detach_effect_ms = 800
 
 [ui.toast]
 delivery = "off"
@@ -65,11 +66,9 @@ delivery = "off"
 [ui.sound]
 enabled = true
 
-# Fork: spacer pushes the rest of the row to the right edge, git_status before branch
-# keeps the arrows tight in front of the name.
 [ui.sidebar.spaces]
 rows = [
-  ["state_icon", "workspace", "spacer", "git_status", "branch"],
+  ["state_icon", "workspace", "git_status"],
 ]
 
 [ui.sidebar.agents]
@@ -77,12 +76,14 @@ rows = [
     ["state_icon", "machine", { token = "workspace", fg = "#bbbbbb" }, "spacer", "tab"]
 ]
 
-# Fork: one Nerd Font glyph per machine so the rows line up, and a collapsed machine
-# takes its agents with it.
+[experimental]
+pane_history = false
+
 [ui.sidebar.machines]
-labels = { local = { icon = "", name = "mbp" }, andromeda = { icon = "" }, work = { icon = "" } }
 agent_token = "icon"
 hide_agents_when_collapsed = true
 
-[experimental]
-pane_history = false
+[ui.sidebar.machines.labels]
+local = { icon = " ", name = "mbp"}
+andromeda = { icon = " ", name = "andromeda"}
+work = { icon =  "󰃖 ", name = "work"}
