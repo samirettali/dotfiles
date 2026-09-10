@@ -80,7 +80,8 @@ rows = [
 # Fork: one Nerd Font glyph per machine so the rows line up, and a collapsed machine
 # takes its agents with it.
 [ui.sidebar.machines]
-labels = { local = "", andromeda = "", work = "" }
+labels = { local = { icon = "", name = "mbp" }, andromeda = { icon = "" }, work = { icon = "" } }
+agent_token = "icon"
 hide_agents_when_collapsed = true
 
 [experimental]
