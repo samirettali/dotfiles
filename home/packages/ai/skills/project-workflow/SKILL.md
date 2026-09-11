@@ -9,13 +9,19 @@ Tasks for personal projects are **GitHub issues**, collected in the `dev` Projec
 (<https://github.com/users/samirettali/projects/1>). Repos live under
 `samirettali/`, local checkouts in `~/dev/<repo-name>`.
 
-`Priority` (P0–P3) and `Status` are **Project fields**, not labels.
+Read the reference for the operation, relative to this skill:
+
+| Work | Read |
+| --- | --- |
+| Starting on an issue | [Pick up](references/pickup.md) |
+| Filing something found along the way | [Open](references/open.md) |
+| Opening the PR and handing over | [Close](references/close.md) |
 
 ## Statuses
 
-**Never decide `Priority` on your own**: Samir does the triage. If he tells you
-what it should be, set it.
-
+`Priority` (P0–P3) and `Status` are **Project fields**, not labels. **Never
+decide `Priority` on your own**: Samir does the triage. If he tells you what it
+should be, set it.
 
 `📋 Backlog` → `🏗 In progress` → `👀 In review` → `✅ Done`
 
@@ -29,100 +35,6 @@ gh project item-edit 1 --owner samirettali \
 ```
 
 The value is the option's **exact name, emoji included**: `"In progress"` is
-rejected. That is not a trap, though — the error lists every valid option, so a
-wrong one corrects itself.
-
-`--owner` selects the *Project*, not the repo: the issue is named by its URL and
-may live under a different owner.
-
-Verified on gh 2.97.
-
-## Picking up an issue
-
-1. Read the issue **with its comments** — the real context is often there, not in
-   the body:
-
-   ```sh
-   gh issue view <N> --repo samirettali/<repo> --comments
-   ```
-
-2. Read the project's `AGENTS.md`. Use the docs index to locate relevant
-   guidance; read journal entries only when the issue depends on that history.
-3. Create a worktree on a new `issue-<N>-<slug>` branch (see
-   [Worktrees](#worktrees)).
-4. Move the issue to `🏗 In progress` (see [Statuses](#statuses)).
-5. Investigate apparent ambiguity against the current code and issue discussion;
-   an old issue may describe a problem that has since changed. Ask about unresolved
-   requirements or conflicting intent, and continue independent, unblocked work.
-
-## Opening an issue
-
-1. Search for duplicates first:
-
-   ```sh
-   gh issue list --repo samirettali/<repo> --search "<keywords>" --state all
-   ```
-
-2. Write a **self-sufficient** description. The reader is someone — or some agent
-   — picking it up cold months later, with no memory of how it surfaced:
-
-   - what is wrong
-   - **where**: file and function, with the snippet when it helps
-   - why it matters, in concrete terms
-   - what the fix looks like — and if you don't know, say it needs investigating
-     rather than inventing a plausible cause
-   - what to verify afterwards
-   - which docs need updating when it lands
-
-3. Always pass the Project explicitly, don't rely on auto-add (the Free plan
-   allows a single auto-add workflow, on a single repo):
-
-   ```sh
-   gh issue create --repo samirettali/<repo> --project "dev" \
-     --title "<title>" --body "<body>"
-   ```
-
-4. The new issue lands in `📋 Backlog` by itself. Do not set `Priority`.
-
-## Closing
-
-1. If behaviour changed, update the docs **in the same PR**. A doc deferred to a
-   later PR is a doc that falls behind.
-2. Open the PR with the reference that closes the issue:
-
-   ```sh
-   gh pr create --title "<title>" --body "Closes #<N>
-
-   <what changes and how it was verified>"
-   ```
-
-3. Move the issue to `👀 In review` (see [Statuses](#statuses)).
-4. Watch the checks: `gh pr checks <N>`. On a failure, `gh run view <run-id>
-   --log-failed` prints the logs of the failed steps only.
-5. Do not close the issue by hand, and do not set it to `✅ Done`: the merge takes
-   care of it.
-
-## Documentation
-
-- `AGENTS.md` stays **thin**: what the project is, commands, conventions, and a
-  one-line index entry per `docs/` page.
-- Everything else lives in `docs/`, versioned alongside the code. No wiki: it
-  lives in a separate repo, skips review, and its links into the code break
-  silently.
-
-## Worktrees
-
-A worktree carries only the tracked files:
-
-- run `make worktree` if the repo has that target — it is the repo's own bootstrap;
-- otherwise symlink what cannot be regenerated (`.env`, local config), regenerate
-  what can (`pnpm install`), and **ask** about live state, like a local database:
-  copying it forks it, sharing it means two processes on one file.
-
-With two worktrees open the default port is taken, so bind another one and **say
-which URL you bound**.
-
-## Notes
-
-- TODOs in the code stay in the code. If you turn one into an issue, cite file and
-  line in the issue and **do not remove the comment** unless asked.
+rejected, and the error lists every valid option. `--owner` selects the
+*Project*, not the repo: the issue is named by its URL and may live under a
+different owner. Verified on gh 2.97.
