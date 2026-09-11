@@ -15,6 +15,13 @@ Lyric fidelity is non-deterministic. About one take in three drops, echoes or
 garbles a line, so the unit of work is a batch of takes plus an audit, never one
 call. Write the lyrics first, agree them with the user, then generate.
 
+Read the reference for the step, relative to this skill:
+
+| Work | Read |
+| --- | --- |
+| Writing the prompt or the lyrics | [Prompt](references/prompt.md) |
+| A probe or a take is blocked | [Content filter](references/content-filter.md) |
+
 ## Run
 
 ```sh
@@ -35,61 +42,6 @@ generate-music --prompt-file /abs/prompt.txt --output-dir /abs/dir \
   overwritten.
 - Name versions, not numbers, once there are more than two: `--name portrait`,
   `--name debout`. Keep one prompt file per version next to the takes.
-
-## Prompt structure
-
-Three blocks, in this order, in one text.
-
-1. **Musical direction**, prose: genre, BPM, key, instruments, mix character,
-   the vocal (gender, register, timbre, rapping or singing), language, and the
-   fidelity clause verbatim: "no ad-libs, no backing vocals, no repeated lines,
-   perform each line exactly once, in order". State the total length.
-2. **Arrangement**, one line per section with a timestamp window and bar count:
-   `[0:37] Verse 2: full beat, exactly eight bars, one line per bar.` All
-   performance directions live here, never inside the lyrics.
-3. **Lyrics**, prefixed with `Lyrics:` and tagged `[Intro] [Verse] [Chorus]
-   [Bridge] [Outro]`. Only words to perform.
-
-**Make the arrangement window match the bar count.** At 92 BPM one bar is 2.6 s,
-so eight lines need 21 s. Give a verse 26 s and the model fills the gap by
-repeating lines; give it 18 s and it drops them. This was the single largest
-source of repeated lines.
-
-To get close to a beat the user liked in an earlier take, have a Gemini audio
-model describe that take's instrumental in one paragraph and paste it as the
-direction block. There is no seed and no audio input; the beat will still vary.
-
-## Lyric rules that survive generation
-
-- 11 to 14 syllables per line at 90 BPM, never above 15. Three clauses in one
-  bar ("un client, un mois, un coup de fil") get fused or dropped.
-- Everything after `Lyrics:` is performed literally: no parentheses, no
-  quotation marks, no stage notes, no symbols.
-- Spell proper nouns and foreign words phonetically for the song's language.
-  Brand and place names are the words that garble most; a name that does not
-  exist in the language ("Amarigg", "Serre-Ponçon", "Essaouira") is mangled in
-  most takes whatever the spelling. Move it to a chorus line or accept it.
-
-## The content filter
-
-Blocked prompts return `promptFeedback.blockReason: PROHIBITED_CONTENT` with no
-detail and no charge. The filter is cumulative: each section alone can pass while
-the whole fails. Known triggers, all found by bisecting with `--probe`:
-
-- Real artist names and brand names in the lyrics (Hugo TSR, Jeff Mills,
-  Spotify, Chanel, Fleabag). Replace with periphrases.
-- A style cue that points at one artist ("Paris eighteenth arrondissement
-  underground") combined with lyrics that paraphrase that artist's structure.
-  Describe the sound, not the scene.
-- A repeated first name that reads as an artist. "Adee, Adee" in a hook was
-  blocked as Adele; "Adélaïde" passed. Homophony with a famous name is enough.
-- Personal data, sad themes, illness allusions and long lyrics did not trigger
-  it on their own.
-
-Bisect: probe each section alone, then pairs, then halves of the offending pair.
-Six parallel probes settle it in one round. The filter moves: a prompt blocked
-one evening passed unchanged the next morning, so probe the actual text rather
-than reasoning from this list.
 
 ## Workflow
 
