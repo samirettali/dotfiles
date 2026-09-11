@@ -35,11 +35,6 @@ belong with that project; shared account resources belong in `infra`.
 
 ## Repo conventions
 
-- `AGENTS.md` is the single source of persistent project knowledge (shared
-  across Claude Code, pi, codex — never tool-private memory). Deviations
-  from this skill's defaults live there. Long or occasional material goes in
-  linked files (`design.md`, `EXPERIMENTS.md`, …) with one-line pointers.
-- Conventional commits, **one commit per logical change**. No sign-offs.
 - `TODO.md` exists but stays untracked.
 - UI experiments: competing variants may stay committed pre-release behind a
   DEV-only `VariantSwitcher` dock, tracked in `EXPERIMENTS.md` — but only

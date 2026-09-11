@@ -48,7 +48,7 @@ Verified on gh 2.97.
 
 2. Read the project's `AGENTS.md`. Use the docs index to locate relevant
    guidance; read journal entries only when the issue depends on that history.
-3. Create a worktree on a new `issue-<N>-<slug>` branch and work there (see
+3. Create a worktree on a new `issue-<N>-<slug>` branch (see
    [Worktrees](#worktrees)).
 4. Move the issue to `🏗 In progress` (see [Statuses](#statuses)).
 5. Investigate apparent ambiguity against the current code and issue discussion;
@@ -112,25 +112,15 @@ Verified on gh 2.97.
 
 ## Worktrees
 
-Work in a worktree, outside the repo, so the main checkout stays on `main`.
-`EnterWorktree` does it on Claude Code, `git worktree add` everywhere else.
-
-A worktree carries only the tracked files, so:
+A worktree carries only the tracked files:
 
 - run `make worktree` if the repo has that target — it is the repo's own bootstrap;
 - otherwise symlink what cannot be regenerated (`.env`, local config), regenerate
   what can (`pnpm install`), and **ask** about live state, like a local database:
-  copying it forks it, sharing it means two processes on one file;
-- on dotfiles there is nothing to carry, but `direnv allow` the new directory, and
-  remember that a new file is invisible to the flake until `git add -N`.
+  copying it forks it, sharing it means two processes on one file.
 
-Run your own processes there, and **never touch a process you did not start** —
-it is probably his. With two worktrees open the default port is taken, so bind
-another one and **say which URL you bound**.
-
-Samir does not need the branch in his own checkout to look at the work: the
-worktree is a directory, he can enter it. Git refuses the same branch in two
-worktrees anyway.
+With two worktrees open the default port is taken, so bind another one and **say
+which URL you bound**.
 
 ## Notes
 

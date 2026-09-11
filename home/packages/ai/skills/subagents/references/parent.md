@@ -23,8 +23,8 @@ for external facts without gaining permission to recruit more workers. If anothe
 child is needed outside your scope, ask your immediate parent for approval. Avoid
 delegating the same task back to the same role without a distinct, smaller assignment.
 
-Read the project's instructions before assigning work. Keep the user's main checkout
-untouched: editing happens in a task worktree. Children normally share that worktree.
+Read the project's instructions before assigning work. Children normally share the
+task worktree.
 Assign disjoint write ownership to concurrent editors; use separate worktrees when
 parallel edits would overlap. Read-only children inspect their parent's worktree.
 Worktree creation and integration follow the project's workflow.

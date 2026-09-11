@@ -82,10 +82,8 @@ of this conversation. Shape it like the ones already there, and like this:
 
 1. **What to build**, in two sentences, and the name or how to choose one.
 2. **Load the `side-project` skill** and say which shape applies: frontend
-   only, API only, full product. Repo at `~/dev/<name>`, `git init`,
-   Conventional Commits, one commit per logical change, `AGENTS.md` for the
-   decisions the code alone would not reveal, a locked `design.md` when there
-   is a UI.
+   only, API only, full product. Repo at `~/dev/<name>`, `git init`, a locked
+   `design.md` when there is a UI.
 3. **The principles** that make it his: data not code, deterministic from a
    seed with `Math.random` banned outside one file, nothing from wall-clock
    time, state in the URL.
@@ -95,9 +93,7 @@ of this conversation. Shape it like the ones already there, and like this:
    open in a real viewer). Name the papers and reference implementations
    and ask for every constant to carry its source.
 5. **Interface**: Italian UI copy, English code and docs, the skill's UX
-   defaults, light and dark, the dev server on `0.0.0.0` with `andromeda` in
-   Vite's `server.allowedHosts` so it is reachable at `http://andromeda:<port>`
-   from the tailnet, port in the Makefile and in `AGENTS.md`.
+   defaults, light and dark, port in the Makefile and in `AGENTS.md`.
 6. **How to work**: no questions unless two readings lead to materially
    different work, build the thin end-to-end path first and deepen after,
    verify in a real browser at each step, screenshots in `docs/`, `TODO.md`
