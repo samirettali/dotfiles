@@ -10,45 +10,13 @@ Samir has more saved than he has built: a thousand vault notes, hundreds of
 YouTube clippings, a linkding full of links. This skill turns that backlog into
 proposals, then into prompts that an agent on `andromeda` can run without him.
 
-Three steps, and the loop between the last two runs until he says stop.
+Three steps, and the loop between the last two runs until he says stop. Read
+the reference for the step, relative to this skill:
 
-## 1. Mine
-
-Delegate the reading to an `Explore` subagent and keep only its conclusion:
-the vault is large and every line read here is re-sent for the rest of the
-session. Ask for under 500 words: recurring themes, and 12-15 concrete titles
-or quotes that could seed a project.
-
-**Vault** at `~/Documents/Notes` (conventions in its `AGENTS.md`, read them
-first). Where the signal is:
-
-- Root notes: his own writing. `Mindfucks.md`, `Questions that keep me up at
-  night.md`, `Fun challenges.md`, `Trading ideas.md`, the puzzle and paradox
-  notes, the wordplay notes (`Anagrams.md`, `Italian rhymes.md`).
-- `Clippings/`: web and YouTube captures, frontmatter only, almost no notes
-  of his. The `categories` wikilinks and the channels are the signal, not the
-  bodies. About 200 carry a `youtubeId`.
-- Categories are wikilinks in frontmatter, not files. Count them with a
-  script (frontmatter `categories:` across the vault, grouped) rather than
-  reading `Categories/`, which holds one Base and nothing else.
-- `bases/`: `Curiosities.base`, `Most used categories.md`, `todo/` (a long
-  list of YouTube channel URLs).
-- `mysteries/To do.md`: a research backlog of its own.
-
-**Linkding** through the `linkding` skill. Tags carry no counts, so count them
-from a full listing:
-
-```sh
-linkding list --json --limit 5000 | jq -r '.[].tag_names[]' | sort | uniq -c | sort -rn | head -40
-linkding list --tag <top-tag> --limit 100
-linkding list --unread --limit 100
-```
-
-Unread links and the YouTube ones (`jq 'select(.url | test("youtu"))'`) are
-the ones he saved and never got to.
-
-Do not mine what he has already built: check `~/dev` for existing projects and
-skip anything they cover.
+| Step | Read |
+| --- | --- |
+| 1. Mine the vault and linkding | [Sources](references/sources.md) |
+| 3. Write the prompt for a pick | [Prompt](references/prompt.md) |
 
 ## 2. Propose
 
@@ -73,31 +41,3 @@ What lands with him:
 
 The `sotto*` names are a running joke, not a rule. Suggest one when it is
 good; otherwise say the agent picks a short Italian name and records why.
-
-## 3. Write the prompt
-
-For each pick, one Markdown file in `~/dev/prompts/<name>.md`, in English,
-self-contained: he pastes it into an agent on another machine that has none
-of this conversation. Shape it like the ones already there, and like this:
-
-1. **What to build**, in two sentences, and the name or how to choose one.
-2. **Load the `side-project` skill** and say which shape applies: frontend
-   only, API only, full product. Repo at `~/dev/<name>`, `git init`, a locked
-   `design.md` when there is a UI.
-3. **The principles** that make it his: data not code, deterministic from a
-   seed with `Math.random` banned outside one file, nothing from wall-clock
-   time, state in the URL.
-4. **The substance**: stages, families, presets, components, whatever the
-   project is made of, in enough detail that the agent does not have to
-   guess and specific enough to verify (the glider must glide, the file must
-   open in a real viewer). Name the papers and reference implementations
-   and ask for every constant to carry its source.
-5. **Interface**: Italian UI copy, English code and docs, the skill's UX
-   defaults, light and dark, port in the Makefile and in `AGENTS.md`.
-6. **How to work**: no questions unless two readings lead to materially
-   different work, build the thin end-to-end path first and deepen after,
-   verify in a real browser at each step, screenshots in `docs/`, `TODO.md`
-   untracked, and what to print when done.
-
-Keep it under 80 lines. Do not run the prompt yourself and do not create the
-repo: the file is the deliverable. Say where it landed in one line.
