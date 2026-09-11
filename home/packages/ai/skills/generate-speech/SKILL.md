@@ -10,10 +10,9 @@ Use Gemini TTS to create multilingual voice-overs. Preserve the supplied script 
 
 ## Generate audio
 
-1. The `generate-speech` command carries the key: it reads it from the vault when the environment has none. Never print or store it.
-2. Choose a voice from [references/voices.md](references/voices.md). Default to `Kore` only when the user has no preference and does not want auditions.
-3. Use a `.wav` output path that does not already exist.
-4. Run the bundled script:
+1. Choose a voice from [references/voices.md](references/voices.md). Default to `Kore` only when the user has no preference and does not want auditions.
+2. Use a `.wav` output path that does not already exist.
+3. Run the bundled script:
 
    ```sh
    generate-speech \
@@ -32,7 +31,7 @@ Use Gemini TTS to create multilingual voice-overs. Preserve the supplied script 
      --file /absolute/path/script.txt
    ```
 
-5. Verify that the output exists and is a non-empty WAV file, then return its absolute path.
+4. Verify that the output exists and is a non-empty WAV file, then return its absolute path.
 
 ## Audition voices
 

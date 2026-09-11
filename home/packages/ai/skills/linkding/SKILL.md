@@ -6,9 +6,8 @@ description: Read and write Samir's linkding bookmarks — search saved links, c
 
 # Linkding
 
-`linkding` talks to the instance at `https://links.samirettali.com`. It reads
-`LINKDING_TOKEN` from the environment, and the wrapper takes it from the rbw
-vault when the vault is unlocked. Override the host with `LINKDING_URL`.
+`linkding` talks to the instance at `https://links.samirettali.com`. Override
+the host with `LINKDING_URL`.
 
 ## Search
 

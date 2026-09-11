@@ -7,8 +7,7 @@ description: Generate full songs with vocals and custom lyrics using Google Lyri
 # Generate Music
 
 `generate-music` wraps Lyria 3 (`lyria-3-pro-preview`, full songs up to about
-three minutes; `lyria-3-clip-preview`, 30 seconds). It carries the Gemini key
-from the vault: never print or store it. Output is 48 kHz stereo MP3;
+three minutes; `lyria-3-clip-preview`, 30 seconds). Output is 48 kHz stereo MP3;
 `generateContent` rejects every explicit audio format, WAV exists only through
 the Interactions API, which this script does not use.
 
@@ -110,4 +109,3 @@ than reasoning from this list.
   `429 RESOURCE_EXHAUSTED`. Stop, report the error text, and let the user top
   up at https://ai.studio/projects before retrying.
 - Do not generate before the lyrics are agreed; each Pro take is billed.
-- Never put the key in a prompt, a file, or a transcript.

@@ -10,10 +10,9 @@ Create images from a prompt, or edit existing ones by passing them as references
 
 ## Generate
 
-1. The `generate-image` command carries the keys: it reads them from the vault when the environment has none. Never print or store one.
-2. Pick a model from [references/models.md](references/models.md), which also lists the Nano Banana names. The default is OpenAI `gpt-image-2.5-sunburst`. Use `--provider gemini` to select Gemini instead.
-3. Use an output path that does not already exist.
-4. Run it:
+1. Pick a model from [references/models.md](references/models.md), which also lists the Nano Banana names. The default is OpenAI `gpt-image-2.5-sunburst`. Use `--provider gemini` to select Gemini instead.
+2. Use an output path that does not already exist.
+3. Run it:
 
    ```sh
    generate-image \
@@ -22,7 +21,7 @@ Create images from a prompt, or edit existing ones by passing them as references
      --prompt 'Flat vector illustration of a terminal window, soft pastel palette, centered composition'
    ```
 
-5. The script prints the absolute path it wrote. Gemini chooses the encoding itself, so the extension can come back as `.jpg` even when `.png` was requested — always report the printed path, not the requested one.
+4. The script prints the absolute path it wrote. Gemini chooses the encoding itself, so the extension can come back as `.jpg` even when `.png` was requested — always report the printed path, not the requested one.
 
 For a near-Full-HD OpenAI image, use `--size 1920x1088 --quality medium`.
 Explicit dimensions override `--aspect-ratio`. Exact 1920×1080 is unsupported:

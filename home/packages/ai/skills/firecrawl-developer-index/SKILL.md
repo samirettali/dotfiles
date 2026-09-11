@@ -6,10 +6,7 @@ description: Search Firecrawl's Developer Index for library and API behavior, er
 # Firecrawl Developer Index
 
 Use the installed `firecrawl` CLI and run `firecrawl developer --help` first.
-The wrapper supplies credentials from the environment or rbw. Never print or
-persist keys, pass them in arguments, or install/configure another client.
-If authentication is unavailable, ask the user to unlock the vault; do not
-silently switch to keyless access. Do not send feedback or request refunds.
+Do not send feedback or request refunds.
 
 ## Find technical evidence
 

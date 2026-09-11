@@ -6,10 +6,7 @@ description: Read a known web URL as Markdown, including JavaScript-rendered pag
 # Firecrawl Scrape
 
 Use the installed `firecrawl` CLI, not npx or an installer. Run
-`firecrawl scrape --help` for available options. The wrapper supplies credentials
-from the environment or rbw. Never print, persist, or pass keys in arguments.
-If authentication is unavailable, ask the user to unlock the vault rather than
-setting up another credential store or silently using keyless access.
+`firecrawl scrape --help` for available options.
 Feedback and telemetry are disabled; do not send feedback or request refunds.
 
 ## Read a page

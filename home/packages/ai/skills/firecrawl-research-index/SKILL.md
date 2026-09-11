@@ -7,10 +7,7 @@ description: Find scientific papers, inspect metadata, read relevant full-text p
 # Firecrawl Research Index
 
 Use the installed `firecrawl research` CLI. Read each subcommand's `--help`
-before using unfamiliar options. Credentials come from the environment or rbw
-through the wrapper; never expose keys, save them, or pass them in arguments.
-If authentication is unavailable, ask the user to unlock the vault, not to run
-an installer or silently use keyless access. Never send feedback or ask for refunds.
+before using unfamiliar options. Never send feedback or ask for refunds.
 
 ## Search, inspect, verify
 

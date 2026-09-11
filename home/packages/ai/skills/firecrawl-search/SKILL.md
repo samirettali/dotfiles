@@ -6,10 +6,7 @@ description: Search the web for sources, articles, comparisons, and news when no
 # Firecrawl Search
 
 Use the installed `firecrawl` CLI. Read `firecrawl search --help` before using
-unfamiliar flags. Credentials are supplied by the wrapper from the environment or
-rbw; never print keys, pass them in arguments, or save them in files. If credentials
-are unavailable, ask the user to unlock the vault; do not run login/setup/install
-commands or silently switch to keyless access.
+unfamiliar flags.
 
 Feedback and telemetry are disabled. Never send feedback or request refunds,
 including through direct HTTP calls or another executable.
