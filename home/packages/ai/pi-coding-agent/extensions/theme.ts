@@ -135,6 +135,7 @@ function renderFooter(ctx: ExtensionContext, theme: Theme, width: number): strin
 	const left: string[] = [theme.fg("accent", basename(ctx.cwd) || ctx.cwd)];
 	const sessionName = ctx.sessionManager.getSessionName();
 	if (sessionName) left.push(theme.fg("syntaxVariable", sessionName));
+	const right: string[] = [];
 	const model = ctx.model;
 	if (model) {
 		const parts = [theme.fg("syntaxFunction", model.id)];
@@ -145,16 +146,15 @@ function renderFooter(ctx: ExtensionContext, theme: Theme, width: number): strin
 		if (thinking && thinking !== "off") {
 			parts.push(theme.fg("dim", " · ") + theme.fg("muted", thinking));
 		}
-		left.push(parts.join(""));
+		right.push(parts.join(""));
 	}
 
 	const { input, output } = usageTotals(ctx);
 	const usage = ctx.getContextUsage();
 	const percent = usage?.percent;
-	const right: string[] = [
-		theme.fg("success", `↑${formatTokens(input)}`),
-		theme.fg("accent", `↓${formatTokens(output)}`),
-	];
+	right.push(
+		theme.fg("success", `↑${formatTokens(input)}`) + " " + theme.fg("accent", `↓${formatTokens(output)}`),
+	);
 	if (percent !== null && percent !== undefined && Number.isFinite(percent)) {
 		const rounded = Math.round(percent);
 		const color = rounded >= 90 ? "error" : rounded >= 70 ? "warning" : "muted";
