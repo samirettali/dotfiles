@@ -336,7 +336,6 @@
         "samirettali-nur": "samirettali-nur",
         "skills": "skills",
         "spotctl": "spotctl",
-        "stop-slop": "stop-slop",
         "wincent-agent-plugins": "wincent-agent-plugins"
       }
     },
@@ -389,22 +388,6 @@
       "original": {
         "owner": "samirettali",
         "repo": "spotctl",
-        "type": "github"
-      }
-    },
-    "stop-slop": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1773773436,
-        "narHash": "sha256-JMqlCRVEAfwG1TLMDpnamznkBfkmX6e2XyETTTH/TSE=",
-        "owner": "hardikpandya",
-        "repo": "stop-slop",
-        "rev": "8da1f030185bdfe8471220585162991eaeb970e9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hardikpandya",
-        "repo": "stop-slop",
         "type": "github"
       }
     },
