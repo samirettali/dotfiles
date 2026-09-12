@@ -111,4 +111,5 @@ in {
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
   x-search = ./skills/x-search;
+  x-post = "${manualSkill "x-post" "${inputs.skills}/x-post"}";
 }

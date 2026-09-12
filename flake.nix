@@ -77,6 +77,11 @@
       url = "github:samirettali/fluxctl";
       flake = false;
     };
+
+    skills = {
+      url = "git+ssh://git@github.com/samirettali/skills.git";
+      flake = false;
+    };
   };
 
   outputs = {

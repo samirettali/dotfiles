@@ -317,6 +317,7 @@
         "pi-autoresearch": "pi-autoresearch",
         "remotion-skills": "remotion-skills",
         "samirettali-nur": "samirettali-nur",
+        "skills": "skills",
         "spotctl": "spotctl",
         "wincent-agent-plugins": "wincent-agent-plugins"
       }
@@ -339,6 +340,22 @@
         "owner": "samirettali",
         "repo": "nur",
         "type": "github"
+      }
+    },
+    "skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789155918,
+        "narHash": "sha256-6WbTkAgiJhHPCgBgfL1Eikti2m9fiBl6EYVO0FJN6rw=",
+        "ref": "refs/heads/main",
+        "rev": "d520bc6589788471c05286bebd200b256273f7ad",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/samirettali/skills.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/samirettali/skills.git"
       }
     },
     "spotctl": {
