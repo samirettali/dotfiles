@@ -1,5 +1,6 @@
 ---
 name: generate-image
+disable-model-invocation: true
 description: Generate or edit images from a text prompt with Gemini (nano banana) or OpenAI gpt-image. Use when the user asks to create an illustration, icon, logo draft, mockup, hero image, or to edit and restyle an existing image.
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: x-search
+disable-model-invocation: true
 description: Search current X posts, threads, reactions, and specific accounts through xAI. Use for current discussion on X, not documentation or general facts.
 ---
 

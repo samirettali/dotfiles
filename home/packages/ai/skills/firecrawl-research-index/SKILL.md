@@ -1,5 +1,6 @@
 ---
 name: firecrawl-research-index
+disable-model-invocation: true
 description: Find scientific papers, inspect metadata, read relevant full-text passages, and expand to related work through Firecrawl Research Index. Covers PubMed, bioRxiv, medRxiv, and arXiv. Use for literature and paper retrieval, not general web research or Firecrawl's paid Agent product.
 ---
 

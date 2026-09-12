@@ -1,5 +1,6 @@
 ---
 name: android
+disable-model-invocation: true
 description: Diagnose Android apps, drive their UI, and resolve APK installation problems on physical devices or emulators through adb.
 ---
 

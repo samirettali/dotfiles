@@ -81,7 +81,7 @@
   '';
 in {
   agent-messaging = ./skills/agent-messaging;
-  android = "${manualSkill "android" ./skills/android}";
+  android = ./skills/android;
   code-review = ./skills/code-review;
   commit = ./skills/commit;
   design = ./skills/design;
@@ -111,7 +111,7 @@ in {
   side-project = ./skills/side-project;
   spotify = "${manualSkill "spotify" spotifySkill}";
   subagents = ./skills/subagents;
-  tavily = "${manualSkill "tavily" ./skills/tavily}";
+  tavily = ./skills/tavily;
   uv = "${inputs.agent-stuff}/skills/uv";
   web-browser = "${webBrowserSkill}";
   x-search = ./skills/x-search;

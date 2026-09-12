@@ -1,5 +1,6 @@
 ---
 name: tavily
+disable-model-invocation: true
 description: Search the web with a synthesized answer and date-filtered results, or extract the readable content of pages that block a plain fetch. Use when the built-in web search cannot filter by recency, when a page returns 403 or 500 to a normal fetch, or when a search must be restricted to a country or a set of domains.
 ---
 

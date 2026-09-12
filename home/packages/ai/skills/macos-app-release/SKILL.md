@@ -1,5 +1,6 @@
 ---
 name: macos-app-release
+disable-model-invocation: true
 description: Sign, notarise and ship Samir's macOS apps — Developer ID signing, hardened runtime, notarised DMG, Homebrew cask. Use when setting up packaging for a new macOS app, cutting a release of one, or debugging codesign, notarytool, stapler or Gatekeeper failures.
 ---
 
