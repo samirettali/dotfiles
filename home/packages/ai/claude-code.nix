@@ -20,7 +20,6 @@ in {
     package = pkgs.callPackage "${inputs.samirettali-nur}/pkgs/claude-code" {}; # TODO: fix
     enableMcpIntegration = true;
     skills = import ./coding-agent-skills.nix {inherit inputs pkgs;};
-    outputStyles.lean = ./output-styles/lean.md;
     settings = {
       model = "claude-opus-5";
       includeCoAuthoredBy = false;
@@ -61,7 +60,7 @@ in {
         verbs = ["Thinking" "Processing" "Working"];
       };
       spinnerTipsEnabled = false;
-      outputStyle = "Lean";
+      outputStyle = "Concise";
       hooks = lib.optionalAttrs herdrEnabled {
         SessionStart = [
           {
