@@ -147,6 +147,22 @@
         "type": "github"
       }
     },
+    "mattpocock-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788511407,
+        "narHash": "sha256-dF5i37jHnqfcXD1IRSVzSSm/pfCYSUmOsEhhs5Zx340=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "3cca18b368ae95cdbdebbff572ccafa662551015",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "monid-skill": {
       "flake": false,
       "locked": {
@@ -309,6 +325,7 @@
         "herdr-fork": "herdr-fork",
         "home-manager": "home-manager",
         "humanlayer-skills": "humanlayer-skills",
+        "mattpocock-skills": "mattpocock-skills",
         "monid-skill": "monid-skill",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",

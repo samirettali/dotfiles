@@ -85,11 +85,14 @@ in {
   code-review = ./skills/code-review;
   commit = ./skills/commit;
   design = ./skills/design;
+  domain-modeling = "${inputs.mattpocock-skills}/skills/engineering/domain-modeling";
   firecrawl-search = ./skills/firecrawl-search;
   firecrawl-scrape = ./skills/firecrawl-scrape;
   firecrawl-developer-index = ./skills/firecrawl-developer-index;
   firecrawl-research-index = ./skills/firecrawl-research-index;
   generate-image = ./skills/generate-image;
+  grill-with-docs = "${manualSkill "grill-with-docs" "${inputs.mattpocock-skills}/skills/engineering/grill-with-docs"}";
+  grilling = "${inputs.mattpocock-skills}/skills/productivity/grilling";
   generate-music = ./skills/generate-music;
   generate-speech = ./skills/generate-speech;
   herdr = ./skills/herdr;
