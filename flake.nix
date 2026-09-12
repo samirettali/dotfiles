@@ -82,6 +82,11 @@
       url = "git+ssh://git@github.com/samirettali/skills.git";
       flake = false;
     };
+
+    stop-slop = {
+      url = "github:hardikpandya/stop-slop";
+      flake = false;
+    };
   };
 
   outputs = {

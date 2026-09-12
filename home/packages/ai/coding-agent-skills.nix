@@ -109,6 +109,7 @@ in {
   show-me = "${manualSkill "show-me" "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me"}";
   side-project = ./skills/side-project;
   spotify = "${spotifySkill}";
+  stop-slop = "${inputs.stop-slop}";
   subagents = ./skills/subagents;
   tavily = "${manualSkill "tavily" ./skills/tavily}";
   uv = "${inputs.agent-stuff}/skills/uv";
