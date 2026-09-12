@@ -73,27 +73,47 @@ The weekday appears only beyond twenty hours, which keeps the short windows narr
 Clicking a row or a header opens that provider's usage page, taken from the `url` the script returns.
 
 Poll each credential source every five minutes below its own threshold and every minute above it.
-Opening the popup refreshes both sources immediately.
+Opening the popup refreshes every source immediately.
 
-Claude is the exception: `api.anthropic.com/api/oauth/usage` budgets a handful of calls per
-access token and then answers 429 with a `Retry-After` for the rest of the window,
-so it polls every fifteen minutes and never faster, whatever its percentage.
-Carry `retry_after` from the script's 429 into the item, skip every refresh until it has passed —
-the popup's included, because a request inside the window cannot succeed — and persist the
-instant in the cache file so a rebuild does not spend a call reopening the same window.
-Do not work around the limit by refreshing the token: Claude Code owns it.
+Claude arrives in two pieces, because no single source carries both.
+
+The plan's own windows cost nothing. Claude Code's `statusLine` command
+(`home/packages/ai/claude-usage-statusline.py`) receives `rate_limits` on every render,
+writes them to `~/.cache/sketchybar/claude-usage.json` when they change, and triggers `claude_usage`.
+The `ai-usage claude` poller reads that file, so the widget shows what the last active
+Claude Code session saw. The status line prints nothing.
+
+Only the 5-hour and 7-day windows reach the status line, and no amount of work will change that:
+Claude Code builds that payload from the `anthropic-ratelimit-unified-*` response headers,
+which carry `five_hour`, `seven_day`, `seven_day_overage_included` and `overage` and nothing else.
+A model-scoped weekly cap ("Fable", say) exists only in `api.anthropic.com/api/oauth/usage`.
+
+That endpoint allows roughly one call an hour per access token and Claude Code spends them itself,
+so a 429 there is the normal answer rather than a fault, and its `Retry-After` runs to most of an hour.
+The model-scoped sections therefore work on a budget of their own:
+
+- Start from `cachedUsageUtilization` in `~/.claude.json`, which is Claude Code's own copy of that
+  endpoint's last answer, `limits[]` included. Free, but only rewritten when something made it ask.
+- Ask the endpoint when that reading is over five minutes old and no `Retry-After` is still running.
+  The refusal costs one request an hour; `~/.cache/sketchybar/claude-scoped.json` carries the reading
+  and the block across runs.
+- Past ninety minutes without a reading, return the sections with an `error` and no windows.
+  The rows keep their last numbers and turn grey rather than disappearing.
+
+Never refresh the token: Claude Code owns it, and writing a new one back to the keychain would race with it.
+
+A poller can therefore fail on one section and succeed on another.
+Mark only the section the error names; grey out all of a poller's sections only when nothing came back at all.
 
 One poller may own several providers.
-A model-scoped Claude cap becomes its own section, keyed `claude.<model>` and named after the model,
-because its percentage is not overall plan usage and reading it as such is wrong.
-Sections, names and URLs come from the data and are cached, so a new scoped model needs no code change.
-A failed fetch marks every provider of that poller as cached and empties nothing.
+A poller's extra buckets become their own sections, keyed `<poller>.<group>` and named after the group,
+because their percentage is not overall plan usage and reading it as such is wrong.
+Sections, names and URLs come from the data and are cached, so a new group needs no code change.
+A fetch that returns nothing at all marks every provider of that poller as cached and empties nothing.
 
 No provider exposes a public usage API.
 The script borrows credentials owned by the corresponding CLI:
 
-- Claude Code stores its OAuth token in the login keychain under `Claude Code-credentials`.
-  Fetch `api.anthropic.com/api/oauth/usage` with `anthropic-beta: oauth-2025-04-20`.
 - Codex stores its token in `~/.codex/auth.json`.
   Fetch `chatgpt.com/backend-api/wham/usage`.
 - Antigravity stores its Google OAuth token in the login keychain under service `gemini`, account `antigravity`,
@@ -133,13 +153,10 @@ Discover app-server methods with `codex app-server generate-json-schema --out <d
 The server keeps its connection open and interleaves notifications.
 Read until the response with the requested ID arrives instead of waiting for EOF.
 
-Do not refresh or rewrite Claude's token.
-Claude Code owns it, and another writer would race with the CLI.
 Cache each provider's last successful limits and update time across Sketchybar restarts.
 A failed fetch must keep those values and mark that provider's header as cached so a temporary renewal or rate limit never empties the popup or looks fresh.
 
-Keep one invisible poller per provider.
-A high Codex window must not make the Claude endpoint run every minute, because their rate limits are independent.
+Keep one invisible poller per provider, because their rate limits are independent.
 
 ## Spacing and separators
 

@@ -8,6 +8,14 @@
   herdrHook = "${config.home.homeDirectory}/.claude/hooks/herdr-agent-state.sh";
   # Matched by pname: herdr ships patched, so it is not the nurPkgs derivation.
   herdrEnabled = lib.any (p: (p.pname or "") == "herdr") config.home.packages;
+  # The status line prints nothing: its job is to hand Claude Code's own rate
+  # limits to the Sketchybar usage widget, which must not call the usage
+  # endpoint itself. See docs/sketchybar.md.
+  sketchybarEnabled = lib.attrByPath ["programs" "sketchybar" "enable"] false config;
+  usageStatusLine = pkgs.writeShellScriptBin "claude-usage-statusline" ''
+    ${lib.optionalString sketchybarEnabled ''export SKETCHYBAR=${lib.getExe config.programs.sketchybar.package}''}
+    exec ${pkgs.python3}/bin/python3 ${./claude-usage-statusline.py}
+  '';
 in {
   # Herdr identifies agents by the pane's foreground process, which breaks as
   # soon as Claude spawns MCP servers. The hook reports the agent explicitly.
@@ -61,6 +69,10 @@ in {
       };
       spinnerTipsEnabled = false;
       outputStyle = "Concise";
+      statusLine = {
+        type = "command";
+        command = lib.getExe usageStatusLine;
+      };
       hooks = lib.optionalAttrs herdrEnabled {
         SessionStart = [
           {
