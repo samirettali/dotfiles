@@ -132,9 +132,35 @@ Use the project's motion tokens consistently for equivalent interactions. Differ
 interactions may justify different timings; do not impose one duration or curve
 on unrelated products. Preserve interruptibility under rapid repeated input.
 
-Frequent actions should give immediate feedback without repeated choreography.
+Decide whether to animate from how often the person meets the interaction. An
+action repeated dozens of times a day, and anything triggered from the keyboard,
+gets instant feedback and no choreography. Occasional surfaces such as modals,
+drawers, and toasts take the project's standard transition. Only rare moments
+such as onboarding or a completed task can afford delight. Every animation should
+name its purpose: feedback for a press, continuity for a state change, spatial
+consistency between enter and exit, or softening an abrupt appearance. "It looks
+nice" is not a purpose for something seen often.
+
 Use motion to communicate an action or relationship, not to delay access to
 content. New content should not remain invisible until a decorative reveal ends.
+
+Easing follows the direction of the change. Entering and exiting elements
+decelerate, so the person sees movement at once; an element moving on screen
+accelerates then decelerates; hover and color changes use a mild curve; constant
+motion such as progress uses linear. Do not accelerate into a UI transition: it
+delays the first frame the person is watching for and makes the same duration
+feel slower. The project's `DESIGN.md` owns its curves and durations; when it has
+none, propose them as tokens rather than scattering literals. Interface
+transitions usually sit under 300ms, with press feedback near the fast end and
+modals at the slow end, and a person perceives the shorter of two equivalent
+transitions as the faster product.
+
+Pressable controls acknowledge the press, typically with a subtle scale on the
+active state. Elements that appear should arrive from a nearly visible state,
+combining a small scale with opacity, rather than from nothing. Popovers grow
+from their trigger; centered dialogs stay centered. A deliberate hold can be
+slow, but the release and the system's response are always quick. Once one
+tooltip in a group is open, its siblings open without the initial delay.
 
 Prefer compositor-friendly properties when they achieve the result. Layout
 animation can cause reflow, target movement, and painting delays; measure any
@@ -145,5 +171,7 @@ Name transition properties explicitly. Avoid `transition: all`, indiscriminate
 `will-change`, scroll handlers that repeatedly update component state, and adding
 an animation library for a transition the platform can express.
 
-Check enter, exit, reversal, interruption, and reduced motion. Keep focus indicators
-immediately visible. Avoid a page-wide transition flash when switching themes.
+Check enter, exit, reversal, interruption, and reduced motion. Reduced motion
+means removing movement, not removing feedback: keep the opacity or color change
+that explains the state. Keep focus indicators immediately visible. Avoid a
+page-wide transition flash when switching themes.
