@@ -33,10 +33,28 @@ in {
       skipDangerousModePermissionPrompt = true;
       tui = "fullscreen";
       permissions.defaultMode = "bypassPermissions";
+      # a denied tool is dropped from the model's tool list, not only refused
+      permissions.deny = ["ReportFindings"];
+      # Artifact has its own switch (also drops the artifact-* skills)
+      enableArtifact = false;
       autoMemoryEnabled = false;
       disableClaudeAiConnectors = true;
       toolSearchEnabled = true;
       disableWorkflows = true;
+      # bundled skills: "user-invocable-only" leaves the model's prompt but
+      # keeps /name, "off" removes both; dataviz stays, it must self-trigger
+      skillOverrides = {
+        claude-api = "user-invocable-only";
+        init = "user-invocable-only";
+        loop = "user-invocable-only";
+        run = "user-invocable-only";
+        security-review = "user-invocable-only";
+        simplify = "user-invocable-only";
+        fewer-permission-prompts = "off";
+        keybindings-help = "off";
+        schedule = "off";
+        update-config = "off";
+      };
       promptSuggestionEnabled = false;
       spinnerVerbs = {
         mode = "replace";

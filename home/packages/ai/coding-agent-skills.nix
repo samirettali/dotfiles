@@ -81,7 +81,7 @@
   '';
 in {
   agent-messaging = ./skills/agent-messaging;
-  android = ./skills/android;
+  android = "${manualSkill "android" ./skills/android}";
   code-review = ./skills/code-review;
   commit = ./skills/commit;
   design = ./skills/design;
@@ -102,13 +102,13 @@ in {
   lyrics = ./skills/lyrics;
   miniflux = "${manualSkill "miniflux" minifluxSkill}";
   macos-app-release = ./skills/macos-app-release;
-  monid = "${monidSkill}";
+  monid = "${manualSkill "monid" monidSkill}";
   neovim = "${manualSkill "neovim" shannonNeovimSkill}";
   project-workflow = ./skills/project-workflow;
   remotion-best-practices = "${manualSkill "remotion-best-practices" "${inputs.remotion-skills}/skills/remotion-best-practices"}";
   show-me = "${manualSkill "show-me" "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me"}";
   side-project = ./skills/side-project;
-  spotify = "${spotifySkill}";
+  spotify = "${manualSkill "spotify" spotifySkill}";
   stop-slop = "${inputs.stop-slop}";
   subagents = ./skills/subagents;
   tavily = "${manualSkill "tavily" ./skills/tavily}";

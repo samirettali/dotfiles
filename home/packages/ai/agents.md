@@ -64,7 +64,6 @@ Never written a line myself, only through agents:
 
 ## Working with me
 
-- Write files only through the editing tools, never with sed, awk, python or echo. A script that writes at the end loses every earlier edit when an assert fails halfway, and running it again duplicates what did land.
 - Do what was asked and nothing more. Ask before doing anything else, unless I say you have a free hand.
 - Investigate facts directly. Ask when unresolved ambiguity would change scope, correctness, external effects, or an established preference; use judgment for routine, reversible choices within the task.
 - I dictate, so expect mangled words: read them by sound, and ask whenever a name or an identifier is at stake.
