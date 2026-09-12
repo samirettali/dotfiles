@@ -14,11 +14,14 @@ The pre-0.9 branch, with the sidebar and tab patches that were dropped, is `patc
 `flake.lock` pins the fork revision.
 The work Mac installs the same revision through `samirettali/tap/herdr`, pinned in `homebrew-tap`.
 
+The NUR package always tracks upstream `master` HEAD, never a lagging commit: it is the vanilla
+Herdr for anyone else, and the fork rebases on top of the same commit.
+
 To update:
 
-1. Rebase `patched` onto the commit the NUR package tracks.
-2. Push the fork branch.
-3. Run `nix flake update herdr-fork` in this repository.
+1. Run `pkgs/herdr/update.sh` in the NUR, build it, and push.
+2. Rebase `patched` onto that commit and push the fork branch.
+3. Run `nix flake update herdr-fork samirettali-nur` in this repository.
 4. Bump `revision` in the tap formula.
 
 Do not export patch files back into this repository.
