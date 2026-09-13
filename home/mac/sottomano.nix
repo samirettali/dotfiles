@@ -12,18 +12,13 @@
   spotctl = lib.getExe nurPkgs.spotctl;
   jq = lib.getExe pkgs.jq;
   curl = lib.getExe pkgs.curl;
-  sh = "/bin/sh";
   linkding = "https://links.samirettali.com";
   sketchybar = lib.getExe config.programs.sketchybar.package;
 
-  # AppleScript rather than spotctl for transport: it talks to the running app
-  # instead of the Web API, which is what bindings.lua did and what keeps a
-  # skip instant. spotctl still owns anything that needs the library.
-  spotify = command: ["/usr/bin/osascript" "-e" "tell application \"Spotify\" to ${command}"];
-
   # The keymap as it settled, taken back from the file it was tried out in.
   keymap = {
-    capsEscape = true;
+    capsEscape = false;
+    controlBracketEscape = true;
     entries = [
       {
         browse = "~";
