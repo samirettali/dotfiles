@@ -41,6 +41,7 @@ new_worktree = "prefix+shift+t"
 open_worktree = "prefix+shift+w"
 next_workspace = "prefix+j"
 previous_workspace = "prefix+k"
+tab_picker = "prefix+t"
 
 [ui]
 sidebar_collapsed_mode = "hidden"
@@ -51,6 +52,7 @@ pane_borders = true
 pane_outer_borders = false
 pane_gaps = false
 hide_tab_bar_when_single_tab = false
+hide_tab_bar_with_tree_sidebar = true
 pane_scrollbars = false
 tab_bar_position = "bottom"
 show_agent_labels_on_pane_borders = false
@@ -66,10 +68,21 @@ delivery = "off"
 [ui.sound]
 enabled = true
 
+[ui.sidebar]
+layout = "tree"
+new_button = false
+menu_button = false
+
 [ui.sidebar.spaces]
 rows = [
-  ["state_icon", "workspace", "git_status"],
+  ["workspace", "git_status"],
 ]
+
+[ui.sidebar.tabs]
+rows = [
+  ["state_icon", "tab", "spacer", "agent"],
+]
+guides = "indent"
 
 [ui.sidebar.agents]
 rows = [
