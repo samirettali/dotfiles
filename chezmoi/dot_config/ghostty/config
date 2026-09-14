@@ -12,6 +12,7 @@ font-feature = -liga
 font-size = 16
 font-thicken = true
 font-thicken-strength = 32
+gtk-titlebar = false
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = hidden
 shell-integration-features = no-cursor

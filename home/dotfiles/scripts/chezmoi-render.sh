@@ -27,10 +27,10 @@ done
 # `built:target` where the name in the built tree is not the name the work Mac
 # wants: nix keeps the codex config beside the writable copy codex itself edits.
 files=(
+    .config/ghostty/config
     .config/herdr/config.toml
     .config/tmux/tmux.conf
     .claude/hooks/herdr-agent-state.sh
-    .claude/output-styles/lean.md
     .codex/config.toml.nix:.codex/config.toml
     revive.toml
 )
