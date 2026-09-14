@@ -92,10 +92,6 @@ in {
   generate-image = ./skills/generate-image;
   generate-music = ./skills/generate-music;
   generate-speech = ./skills/generate-speech;
-  grill-with-docs = "${manualSkill "grill-with-docs" "${inputs.mattpocock-skills}/skills/engineering/grill-with-docs"}";
-  grilling = "${inputs.mattpocock-skills}/skills/productivity/grilling";
-  generate-music = ./skills/generate-music;
-  generate-speech = ./skills/generate-speech;
   herdr = ./skills/herdr;
   ideas = ./skills/ideas;
   linkding = ./skills/linkding;
