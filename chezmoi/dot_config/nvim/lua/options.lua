@@ -16,6 +16,9 @@ vim.opt.relativenumber = true
 vim.opt.laststatus = 3
 vim.opt.cmdheight = 1
 vim.opt.clipboard = "unnamedplus"
+if os.getenv("SSH_TTY") then
+	vim.g.clipboard = "osc52"
+end
 vim.opt.signcolumn = "yes"
 -- vim.opt.diffopt = "internal,filler,closeoff,algorithm:histogram,context:5,linematch:60" -- TODO: read docs
 -- vim.opt.statusline = '[%n] %<%f %h%w%m%r%=%-14.(%l,%c%V%) %P' -- https://github.com/y9san9/y9san9.nvim/blob/main/init.lua
