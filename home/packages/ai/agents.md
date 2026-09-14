@@ -54,6 +54,7 @@ Never written a line myself, only through agents:
 - direnv — per-project environments
 - rbw — Bitwarden CLI
 - spotctl — Spotify CLI
+- fluxctl — Miniflux CLI, my RSS reader
 - linkding — bookmarks
 - sops — secrets
 - nix and home-manager — everything declared

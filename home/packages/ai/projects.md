@@ -10,6 +10,7 @@ Each lives under `~/dev` with its own `AGENTS.md`. Read it before working on the
 - pulse — macOS menu bar app for live prices and timezone clocks.
 - infra — OpenTofu for the accounts: GitHub settings, Actions secrets, the state bucket.
 - spotctl — agent-friendly Spotify CLI in Go.
+- fluxctl — agent-friendly Miniflux CLI in Go, for recaps of what I follow.
 - sottotesto — search a song, read an LLM reading of its lyrics.
 - sottotrama — search a film, read an LLM reading of its plot, themes and timeline.
 - sottomano — macOS launcher driven by one leader key, in Swift. Replaces the Hammerspoon binder.

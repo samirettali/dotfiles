@@ -72,6 +72,11 @@
       url = "github:samirettali/spotctl";
       flake = false;
     };
+
+    fluxctl = {
+      url = "github:samirettali/fluxctl";
+      flake = false;
+    };
   };
 
   outputs = {
