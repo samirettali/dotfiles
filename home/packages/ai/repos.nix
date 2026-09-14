@@ -6,6 +6,7 @@
   "${config.home.homeDirectory}/dev/blog"
   "${config.home.homeDirectory}/dev/bots"
   "${config.home.homeDirectory}/dev/dotfiles"
+  "${config.home.homeDirectory}/dev/fluxctl"
   "${config.home.homeDirectory}/dev/herdr"
   "${config.home.homeDirectory}/dev/homebrew-tap"
   "${config.home.homeDirectory}/dev/infra"

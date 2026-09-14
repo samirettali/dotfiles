@@ -73,6 +73,8 @@
     cp ${./skills/spotify/listening-profile.md} $out/listening-profile.md
   '';
 
+  minifluxSkill = "${inputs.fluxctl}/.agents/skills/miniflux";
+
   monidSkill = pkgs.runCommand "monid-skill" {} ''
     mkdir -p $out
     cp ${inputs."monid-skill"} $out/SKILL.md
@@ -95,6 +97,7 @@ in {
   linkding = ./skills/linkding;
   live-ui-variants = ./skills/live-ui-variants;
   lyrics = ./skills/lyrics;
+  miniflux = "${manualSkill "miniflux" minifluxSkill}";
   macos-app-release = ./skills/macos-app-release;
   monid = "${monidSkill}";
   neovim = "${manualSkill "neovim" shannonNeovimSkill}";
