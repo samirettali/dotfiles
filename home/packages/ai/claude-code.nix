@@ -48,6 +48,7 @@ in {
       disableClaudeAiConnectors = true;
       toolSearchEnabled = true;
       disableWorkflows = true;
+      cleanupPeriodDays = 3650;
       # bundled skills: "user-invocable-only" leaves the model's prompt but
       # keeps /name, "off" removes both; dataviz stays, it must self-trigger
       skillOverrides = {
