@@ -17,7 +17,7 @@ if [[ ! -d $source_dir ]]; then
     exit 1
 fi
 
-for tool in rsync nix; do
+for tool in rsync nix jq; do
     if ! command -v "$tool" >/dev/null 2>&1; then
         printf 'Required command not found: %s\n' "$tool" >&2
         exit 1
@@ -112,6 +112,10 @@ for entry in "${templates[@]}"; do
     mkdir -p "${target%/*}"
     rsync -aL "$root/${entry%%:*}" "$target"
 done
+
+# The status line is a script nix builds, so the work Mac has not got it.
+template=$source_dir/.chezmoitemplates/claude-settings.json
+jq "del(.statusLine)" "$template" > "$template.tmp" && mv "$template.tmp" "$template"
 
 chmod -R u+w "$source_dir"
 
