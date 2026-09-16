@@ -43,7 +43,7 @@ carries no sender identity, so **always say who you are and where you are** in t
 message itself:
 
 ```bash
-herdr agent prompt wV:pB "From the Claude session in ~/dev/dotfiles (pane wV:p1): the API schema is merged, you can regenerate the client."
+herdr agent prompt wV:pB "From the Claude session in ~/dev/dotfiles (pane wV:p1 on mbp): the API schema is merged, you can regenerate the client."
 ```
 
 Without that prefix the receiving agent has no way to tell a relayed message from
@@ -60,6 +60,28 @@ something Samir typed, and cannot reply to you.
 
 Messaging is one-way and fire-and-forget. The other session decides whether to reply;
 do not block waiting for an answer unless Samir asked you to.
+
+## Agents on another machine
+
+Herdr forwards commands to a saved SSH machine with a global `--machine` prefix, using
+that profile's remote session without an open TUI. Use it for discovery and for every
+later command on that machine:
+
+```bash
+herdr machine list
+herdr --machine andromeda agent list
+herdr --machine andromeda agent prompt <pane_id> "<text>"
+```
+
+The selector is the saved profile's label or ID, not a hostname. IDs and agent names
+are scoped to one server: `w1:p1` and `reviewer` can exist on every machine, so
+discover them on the target and never reuse a local one. `--current` and the
+inherited `HERDR_*` IDs are local too. Say which machine you are on in the sender
+prefix, and ask the receiver to reply with the same `--machine` towards yours.
+
+Forwarding needs a running, API-compatible server on both sides and never falls
+back to Local. A connection error does not prove the prompt was not delivered: read
+the remote agent before sending again.
 
 ## Optional: wait and read
 

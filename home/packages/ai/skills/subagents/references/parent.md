@@ -23,6 +23,12 @@ for external facts without gaining permission to recruit more workers. If anothe
 child is needed outside your scope, ask your immediate parent for approval. Avoid
 delegating the same task back to the same role without a distinct, smaller assignment.
 
+A child may run on a saved SSH machine when the task lives there. Then every
+command towards it carries `herdr --machine <label>`, from the split to the
+release, and the handoff names the machine next to the pane ID. Discover IDs on
+that machine: local IDs, `--current` and the inherited `HERDR_*` values do not
+resolve there. A remote child's worktree path must be absolute or start with `~`.
+
 Read the project's instructions before assigning work. Children normally share the
 task worktree.
 Assign disjoint write ownership to concurrent editors; use separate worktrees when
@@ -50,9 +56,9 @@ Worktree creation and integration follow the project's workflow.
 Include all of the following in the initial handoff, using concrete values:
 
 ```text
-From: <parent name if assigned>, pane <parent pane ID>
-To: <child name>, pane <child pane ID>
-Root orchestrator: <root name if assigned>, pane <root pane ID>
+From: <parent name if assigned>, pane <parent pane ID> on <machine label>
+To: <child name>, pane <child pane ID> on <machine label>
+Root orchestrator: <root name if assigned>, pane <root pane ID> on <machine label>
 Task ID: <unique short task label>
 Role: <role or ad-hoc responsibility>
 Working directory: <absolute task worktree path>

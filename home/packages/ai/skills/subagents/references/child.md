@@ -15,6 +15,10 @@ current turn without exiting the harness. Do not repeatedly ping or poll for an
 answer. The incoming Herdr prompt starts or queues the follow-up turn. A waiting
 child is not a failed child, and silence is not permission to decide.
 
+If the handoff placed your parent on another machine, every message to it goes
+through `herdr --machine <label>`, and the pane IDs in your own messages are the
+ones of the machine you run on.
+
 If the parent address no longer resolves to the expected occupant, inspect live
 agents rather than sending to a stale pane. Report an orphan to the known root
 if reachable; otherwise stop and expose the blocker locally.
