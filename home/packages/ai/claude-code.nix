@@ -30,6 +30,14 @@ in {
     skills = import ./coding-agent-skills.nix {inherit inputs pkgs;};
     settings = {
       model = "claude-opus-5";
+      modelSettings = {
+        claude-fable-5-1 = {
+          effortLevel = "medium";
+        };
+        claude-opus-5 = {
+          effortLevel = "high";
+        };
+      };
       includeCoAuthoredBy = false;
       # Remote Control sessions otherwise append a Claude-Session trailer to
       # every commit and a session link to every pull request body.
