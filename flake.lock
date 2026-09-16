@@ -346,11 +346,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789405180,
-        "narHash": "sha256-YXuZ248WPdRvDe7FayRWmC9FqtsUbsEx+Hi0pb+TZdA=",
+        "lastModified": 1789601868,
+        "narHash": "sha256-nDgebQhH44Lz2bQqG3hlTwUNI6S6n7eoKBaw+FmN8is=",
         "owner": "samirettali",
         "repo": "nur",
-        "rev": "98d0e0f53d4b8ae6a5a3e2b3e0d055bb696984ce",
+        "rev": "87aa2a8454aa777e38f17bdd1302bb5da0554134",
         "type": "github"
       },
       "original": {
