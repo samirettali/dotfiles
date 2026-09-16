@@ -296,6 +296,7 @@
                 // {
                   android = true;
                   godot = true;
+                  python = "full";
                 };
               extraModules = [
                 ./home/mac
