@@ -75,6 +75,8 @@
 
   minifluxSkill = "${inputs.fluxctl}/.agents/skills/miniflux";
 
+  linkdingSkill = "${inputs.linkctl}/.agents/skills/linkding";
+
   monidSkill = pkgs.runCommand "monid-skill" {} ''
     mkdir -p $out
     cp ${inputs."monid-skill"} $out/SKILL.md
@@ -94,7 +96,7 @@ in {
   generate-speech = ./skills/generate-speech;
   herdr = ./skills/herdr;
   ideas = ./skills/ideas;
-  linkding = ./skills/linkding;
+  linkding = "${manualSkill "linkding" linkdingSkill}";
   live-ui-variants = ./skills/live-ui-variants;
   lyrics = ./skills/lyrics;
   miniflux = "${manualSkill "miniflux" minifluxSkill}";

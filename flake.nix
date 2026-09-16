@@ -78,6 +78,11 @@
       flake = false;
     };
 
+    linkctl = {
+      url = "github:samirettali/linkctl";
+      flake = false;
+    };
+
     skills = {
       url = "git+ssh://git@github.com/samirettali/skills.git";
       flake = false;

@@ -32,6 +32,7 @@
     ./sesh.nix
     ./spotctl.nix
     ./fluxctl.nix
+    ./linkctl.nix
     ./spotify-player.nix
     ./tealdeer.nix
     ./tmux.nix

@@ -68,16 +68,6 @@ in {
       ];
     })
     (wrap {
-      name = "linkding";
-      script = ./skills/linkding/scripts/linkding.py;
-      vars = [
-        {
-          env = "LINKDING_TOKEN";
-          entry = "linkding-api-key";
-        }
-      ];
-    })
-    (wrap {
       name = "tavily";
       script = ./skills/tavily/scripts/tavily.py;
       vars = [
