@@ -6,30 +6,25 @@ Read this before changing the patched Herdr package or its Neovim integration.
 
 Herdr runs from `samirettali/herdr`, branch `patched`.
 The checkout is `~/dev/herdr`, with upstream as `origin` and the fork as `fork`.
-Keep one commit per feature above upstream `master`, the commit the NUR package tracks.
+Keep one commit per feature above upstream `master`.
 The fork's README is the source of truth for every added option.
 The pre-0.9 branch, with the sidebar and tab patches that were dropped, is `patched-0.8.2`.
 
-`herdr-package.nix` keeps the NUR derivation and replaces only its `src` with the `herdr-fork` flake input.
+`herdr-package.nix` builds the fork from its own `nix/package.nix`, through the `herdr-fork` flake input.
 `flake.lock` pins the fork revision.
+The package reads `Cargo.lock` from the tree, so the NUR `herdr` package and its hashes play no part:
+the NUR stays vanilla Herdr for anyone else, and updating it cannot break this build.
 The work Mac installs the same revision through `samirettali/tap/herdr`, pinned in `homebrew-tap`.
-
-The NUR package always tracks upstream `master` HEAD, never a lagging commit: it is the vanilla
-Herdr for anyone else, and the fork rebases on top of the same commit.
 
 To update:
 
-1. Run `pkgs/herdr/update.sh` in the NUR, build it, and push.
-2. Rebase `patched` onto that commit and push the fork branch.
-3. Run `nix flake update herdr-fork samirettali-nur` in this repository.
-4. Bump `revision` in the tap formula.
+1. Rebase `patched` onto upstream `master` and push the fork branch.
+2. Run `nix flake update herdr-fork` in this repository.
+3. Bump `revision` in the tap formula.
+4. Run `pkgs/herdr/update.sh` in the NUR when it should follow, independently of the fork.
 
 Do not export patch files back into this repository.
 The branch is the only source of truth.
-
-Only `src` is overridden, not `cargoDeps`.
-The NUR derivation still computes dependencies from upstream.
-This works while the fork leaves `Cargo.lock` unchanged and fails loudly when it does not.
 
 ## Building and testing on Darwin
 

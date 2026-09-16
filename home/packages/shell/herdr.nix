@@ -1,12 +1,12 @@
 {
   inputs,
   config,
-  nurPkgs,
+  pkgs,
   lib,
   ...
 }: {
   home.packages = [
-    (import ./herdr-package.nix {inherit inputs nurPkgs;})
+    (import ./herdr-package.nix {inherit inputs pkgs;})
   ];
 
   xdg.configFile."herdr/config.toml" = {

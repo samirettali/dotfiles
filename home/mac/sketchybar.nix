@@ -26,7 +26,7 @@
         luasimdjsonPackage
       ]);
 
-  herdrPackage = import ../packages/shell/herdr-package.nix {inherit inputs nurPkgs;};
+  herdrPackage = import ../packages/shell/herdr-package.nix {inherit inputs pkgs;};
 
   herdrSketchybar = pkgs.callPackage ../packages/shell/scripts/herdr-sketchybar.nix {
     sketchybar = config.programs.sketchybar.package;
