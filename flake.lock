@@ -147,6 +147,22 @@
         "type": "github"
       }
     },
+    "linkctl": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789601259,
+        "narHash": "sha256-z1cGsa7XUCWs8ysDPqBoVF95zQcZgbx26K3WS+YrWyk=",
+        "owner": "samirettali",
+        "repo": "linkctl",
+        "rev": "f1a7bbe18ee9598e6d3a586036b1921eb2fc5c4c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "samirettali",
+        "repo": "linkctl",
+        "type": "github"
+      }
+    },
     "monid-skill": {
       "flake": false,
       "locked": {
@@ -309,6 +325,7 @@
         "herdr-fork": "herdr-fork",
         "home-manager": "home-manager",
         "humanlayer-skills": "humanlayer-skills",
+        "linkctl": "linkctl",
         "monid-skill": "monid-skill",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix4vscode": "nix4vscode",

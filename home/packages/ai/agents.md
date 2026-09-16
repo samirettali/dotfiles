@@ -55,7 +55,7 @@ Never written a line myself, only through agents:
 - rbw — Bitwarden CLI
 - spotctl — Spotify CLI
 - fluxctl — Miniflux CLI, my RSS reader
-- linkding — bookmarks
+- linkctl — linkding CLI, my bookmarks
 - sops — secrets
 - nix and home-manager — everything declared
 - NUR — where I publish my own packages
@@ -73,7 +73,7 @@ Never written a line myself, only through agents:
 - Verify in seconds what you would otherwise assert: measure the latency, read the source, take a stack from the hung process, whatever settles it. A wrong theory costs more than the command that rules it out.
 - On `andromeda`, dev servers bind to `0.0.0.0`, including through `make dev`, so I reach them at `http://andromeda:<port>` from my Mac without forwarding ports. Binding is not enough for Vite: it rejects unknown Host headers, so `server.allowedHosts` must always include `andromeda` in dev.
 - Never kill a process by name (`pkill -f vite`, `killall node`): other sessions run processes with the same name on this host, and `pkill -f` matches the shell running it too. Find the specific PID first (`ss -ltnp` for the port, `pgrep -af` to read the list) and kill that one PID; if you did not start it and it is not yours to stop, leave it alone.
-- My CLI wrappers (`firecrawl`, `linkding`, `generate-*`, `tavily`, `x-search`) take their keys from the environment or the rbw vault. Never print, store or pass a key as an argument. If the vault is locked, ask me to unlock it; do not set up another credential store, run a login or installer, or fall back to keyless access.
+- My CLI wrappers (`firecrawl`, `generate-*`, `tavily`, `x-search`) take their keys from the environment or the rbw vault. Never print, store or pass a key as an argument. If the vault is locked, ask me to unlock it; do not set up another credential store, run a login or installer, or fall back to keyless access.
 
 ## Conventions
 

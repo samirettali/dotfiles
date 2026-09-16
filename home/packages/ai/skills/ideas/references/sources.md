@@ -24,16 +24,16 @@ At `~/Documents/Notes`; conventions in its `AGENTS.md`, read them first.
 
 ## Linkding
 
-Through the `linkding` skill. Tags carry no counts, so count them from a full
-listing:
+Through the `linkding` skill (`linkctl`, JSON on stdout). Tags carry no counts,
+so count them from a full listing:
 
 ```sh
-linkding list --json --limit 5000 | jq -r '.[].tag_names[]' | sort | uniq -c | sort -rn | head -40
-linkding list --tag <top-tag> --limit 100
-linkding list --unread --limit 100
+linkctl bookmark list --limit 0 | jq -r '.results[].tag_names[]' | sort | uniq -c | sort -rn | head -40
+linkctl bookmark list --tag <top-tag> --limit 100
+linkctl bookmark list --unread --limit 100
 ```
 
-Unread links and the YouTube ones (`jq 'select(.url | test("youtu"))'`) are
+Unread links and the YouTube ones (`jq '.results[] | select(.url | test("youtu"))'`) are
 the ones he saved and never got to.
 
 Do not mine what he has already built: check `~/dev` for existing projects and

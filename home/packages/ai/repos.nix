@@ -10,6 +10,7 @@
   "${config.home.homeDirectory}/dev/herdr"
   "${config.home.homeDirectory}/dev/homebrew-tap"
   "${config.home.homeDirectory}/dev/infra"
+  "${config.home.homeDirectory}/dev/linkctl"
   "${config.home.homeDirectory}/dev/nur"
   "${config.home.homeDirectory}/dev/pulse"
   "${config.home.homeDirectory}/dev/samirettali"
