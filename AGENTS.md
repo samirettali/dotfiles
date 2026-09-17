@@ -14,6 +14,7 @@ flake output. See "The work Mac" below.
 - `make check` — run `nix flake check`.
 - `make models` — refresh pinned OpenRouter provider limits, then run `make build`.
 - `make update` — run `nix flake update`.
+- `make chezmoi` — render the work Mac's configuration into `chezmoi/`. Run on `mbp`.
 
 Evaluate one option without building:
 
@@ -73,11 +74,16 @@ Use each project's `infra/` directory for resources that share that project's li
 and chezmoi copies the configuration from `chezmoi/`. A file that needs a value
 from the machine ends in `.tmpl`.
 
-An app of Samir's that runs on both machines is therefore configured twice:
+An app of Samir's that runs on both machines is configured once, in nix, and
+copied: `make chezmoi` on `mbp` renders what home-manager builds into
+`chezmoi/`. Commit that, then `chezmoi apply` on `settali`. Adding a file to the
+render, and correcting the home directory and the identity it carries, are in
+`docs/chezmoi-render.md`.
 
-- `mbp` gets the copy nix generates — `home/mac/sottomano.nix` writes
-  `~/.config/sottomano/keymap.json` from a literal attribute set.
-- `settali` gets `chezmoi/dot_config/<app>/`, kept in step by hand.
+What the render does not produce is written straight into `chezmoi/` and kept in
+step by hand, and it is only what nix has no equivalent of: `dot_Brewfile`, the
+Neovim plugins only the work Mac loads, and `dot_config/sottomano/emoji.json`,
+which sottomano does not ship yet.
 
 Two rules for the work copy:
 
@@ -107,6 +113,7 @@ Read the matching document before changing that subsystem:
 - `docs/sketchybar.md` — pending agents and AI subscription usage.
 - `docs/macos-tcc.md` — permissions, application signatures, and stable launch paths.
 - `docs/helium.md` — the Chromium side: re-signing, Widevine, pinned extensions.
+- `docs/chezmoi-render.md` — rendering the work Mac's configuration from what nix builds for `mbp`.
 
 ## Skills
 
