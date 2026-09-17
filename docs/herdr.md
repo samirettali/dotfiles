@@ -51,7 +51,7 @@ Treat `PoisonError { .. }` failures as collateral until the affected module also
 `herdr server live-handoff` replaces the server without killing panes.
 Check `capabilities.live_handoff` in `herdr status --json` first.
 `herdr server stop` is the destructive alternative.
-The handoff supports at most 64 panes.
+The handoff supports more than 64 panes when the sending server is at least 0.9.1.
 
 ## Pane border and tab colours
 
