@@ -1,0 +1,4 @@
+{{/* The export is built for mbp, so it carries that home and that identity. */ -}}
+{{- includeTemplate "git-config" .
+      | replace "/Users/samir/" (printf "%s/" .chezmoi.homeDir)
+      | replace "samir@ettali.com" "s.ettali@young.business" -}}

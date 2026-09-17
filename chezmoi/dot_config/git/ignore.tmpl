@@ -1,0 +1,4 @@
+{{ includeTemplate "git-ignore" . | trim }}
+{{ if eq .profile "work" -}}
+**/.claude/settings.local.json
+{{ end -}}

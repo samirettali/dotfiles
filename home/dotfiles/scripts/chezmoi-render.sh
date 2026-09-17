@@ -47,6 +47,8 @@ directories=(
 # templates instead of the targets.
 templates=(
     .claude/settings.json:claude-settings.json
+    .config/git/config:git-config
+    .config/git/ignore:git-ignore
     .config/nvim/lua/plugins/init.lua:nvim-plugins-init.lua
 )
 
@@ -116,6 +118,13 @@ done
 # The status line is a script nix builds, so the work Mac has not got it.
 template=$source_dir/.chezmoitemplates/claude-settings.json
 jq "del(.statusLine)" "$template" > "$template.tmp" && mv "$template.tmp" "$template"
+
+# git names two commands by store path: the credential helper home-manager writes
+# for gh, and the ssh-keygen that signs. Point them at what the work Mac has.
+template=$source_dir/.chezmoitemplates/git-config
+sed -e 's#/nix/store/[^ "]*/bin/gh#/opt/homebrew/bin/gh#g' \
+    -e 's#/nix/store/[^ "]*/bin/ssh-keygen#/usr/bin/ssh-keygen#g' \
+    "$template" > "$template.tmp" && mv "$template.tmp" "$template"
 
 chmod -R u+w "$source_dir"
 
