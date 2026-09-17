@@ -95,6 +95,7 @@ in {
   generate-music = ./skills/generate-music;
   generate-speech = ./skills/generate-speech;
   herdr = ./skills/herdr;
+  hunk = ./skills/hunk;
   ideas = ./skills/ideas;
   linkding = "${manualSkill "linkding" linkdingSkill}";
   live-ui-variants = ./skills/live-ui-variants;
