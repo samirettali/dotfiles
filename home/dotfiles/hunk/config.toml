@@ -1,0 +1,63 @@
+theme = "ghostty-dark"
+mode = "split"
+agent_notes = true
+menu_bar = false
+wrap_lines = true
+watch = true
+prompt_save_view_preferences = false
+animations = false
+hunk_headers = false
+sidebar = false
+copy_decorations = false
+
+# Ghostty "Builtin Dark": black background, #bbbbbb text, the 16 ANSI colors.
+[themes.ghostty-dark]
+base = "github-dark-default"
+label = "Ghostty Dark"
+background = "#000000"
+panel = "#000000"
+panelAlt = "#111111"
+border = "#555555"
+accent = "#55ffff"
+accentMuted = "#00bbbb"
+text = "#bbbbbb"
+muted = "#555555"
+addedBg = "#062306"
+removedBg = "#230606"
+movedAddedBg = "#062323"
+movedRemovedBg = "#230623"
+contextBg = "#000000"
+addedContentBg = "#0b3a0b"
+removedContentBg = "#3a0b0b"
+contextContentBg = "#000000"
+addedSignColor = "#55ff55"
+removedSignColor = "#ff5555"
+lineNumberBg = "#000000"
+lineNumberFg = "#555555"
+selectedHunk = "#111111"
+badgeAdded = "#00bb00"
+badgeRemoved = "#bb0000"
+badgeNeutral = "#555555"
+fileNew = "#55ff55"
+fileDeleted = "#ff5555"
+fileRenamed = "#55ffff"
+fileModified = "#ffff55"
+fileUntracked = "#555555"
+noteBorder = "#bbbb00"
+noteBackground = "#000000"
+noteTitleBackground = "#111111"
+noteTitleText = "#bbbbbb"
+
+[themes.ghostty-dark.syntax_scopes]
+"comment" = "#555555"
+"punctuation.definition.comment" = "#555555"
+"keyword" = "#ff55ff"
+"storage" = "#ff55ff"
+"keyword.operator" = "#bbbbbb"
+"string" = "#55ff55"
+"constant.numeric" = "#ffff55"
+"constant.language" = "#ffff55"
+"entity.name.function" = "#5555ff"
+"support.function" = "#5555ff"
+"entity.name.type" = "#55ffff"
+"variable" = "#bbbbbb"
