@@ -1,0 +1,11 @@
+*.env
+.DS_Store
+.env*
+.idea
+.opencode
+/target
+Session.vim
+__debug_bin*
+node_modules
+__pycache__
+.crush

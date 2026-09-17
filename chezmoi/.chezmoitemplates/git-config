@@ -1,0 +1,103 @@
+[branch]
+	sort = "-committerdate"
+
+[column]
+	ui = "auto"
+
+[commit]
+	gpgsign = true
+	verbose = true
+
+[core]
+	editor = "nvim"
+	preloadIndex = true
+
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+
+[diff]
+	algorithm = "histogram"
+	colorMoved = "plain"
+	mnemonicPrefix = true
+	renames = true
+	submodule = "log"
+	tool = "nvimdifftool"
+
+[difftool]
+	prompt = false
+
+[difftool "nvimdifftool"]
+	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+
+[fetch]
+	all = true
+	prune = true
+	pruneTags = true
+
+[gpg]
+	format = "ssh"
+
+[gpg "ssh"]
+	allowedSignersFile = "/Users/samir/.config/git/allowed_signers"
+	program = "ssh-keygen"
+
+[help]
+	autocorrect = "prompt"
+
+[init]
+	defaultBranch = "main"
+
+[interactive]
+	singlekey = true
+
+[log]
+	date = "iso"
+
+[merge]
+	conflictStyle = "zdiff3"
+	tool = "nvimdiff"
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+	default = "simple"
+	followtags = true
+
+[rebase]
+	autoStash = true
+	missingCommitsCheck = "warn"
+
+[rerere]
+	enabled = true
+
+[status]
+	showUntrackedFiles = "all"
+	submoduleSummary = true
+
+[tag]
+	gpgsign = true
+	sort = "version:refname"
+
+[url "git@github.com:"]
+	insteadOf = "gh:"
+
+[url "git@github.com:YoungAgency"]
+	insteadOf = "https://github.com/YoungAgency"
+
+[url "git@github.com:samirettali"]
+	insteadOf = "https://github.com/samirettali"
+
+[url "git@github.com:samirettali/"]
+	insteadOf = "se:"
+
+[user]
+	email = "samir@ettali.com"
+	name = "Samir Ettali"
+	signingkey = "/Users/samir/.ssh/github.pub"
