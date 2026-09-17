@@ -50,6 +50,7 @@ templates=(
     .claude/settings.json:claude-settings.json
     .config/git/config:git-config
     .config/git/ignore:git-ignore
+    .config/sottomano/keymap.json:sottomano-keymap.json
     .config/nvim/lua/plugins/init.lua:nvim-plugins-init.lua
 )
 
@@ -119,6 +120,17 @@ done
 # The status line is a script nix builds, so the work Mac has not got it.
 template=$source_dir/.chezmoitemplates/claude-settings.json
 jq "del(.statusLine)" "$template" > "$template.tmp" && mv "$template.tmp" "$template"
+
+# The launcher binds the rbw vault and the sketchybar hook, which the work Mac
+# has not got, and it names every command by store path because `open` gives it
+# launchd's PATH. Dropping the bindings drops rbw, curl and sketchybar with them.
+template=$source_dir/.chezmoitemplates/sottomano-keymap.json
+jq 'del(.hooks) | .entries |= map(select(.name != "links" and .name != "vault"))' \
+    "$template" > "$template.tmp" && mv "$template.tmp" "$template"
+
+sed -e 's#/nix/store/[^ "]*/bin/jq#/opt/homebrew/bin/jq#g' \
+    -e 's#/nix/store/[^ "]*/bin/spotctl#{{ .chezmoi.homeDir }}/go/bin/spotctl#g' \
+    "$template" > "$template.tmp" && mv "$template.tmp" "$template"
 
 # git names two commands by store path: the credential helper home-manager writes
 # for gh, and the ssh-keygen that signs. Point them at what the work Mac has.
