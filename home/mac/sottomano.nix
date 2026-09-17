@@ -315,7 +315,7 @@
       flow = "columns";
       key = "column";
       arrow = true;
-      title = true;
+      title = false;
       group = true;
       size = 18;
       padding = 24;
