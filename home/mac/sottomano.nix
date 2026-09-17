@@ -244,8 +244,9 @@
             name = "otp";
             pick = {
               list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
-              run = ["/bin/sh" "-c" "${rbw} code \"$1\" | /usr/bin/pbcopy" "sh" "{}"];
               typeOutput = ["/bin/sh" "-c" "${rbw} code \"$1\"" "sh" "{}"];
+              copyOutput = ["/bin/sh" "-c" "${rbw} code \"$1\"" "sh" "{}"];
+              secret = true;
               cache = "vault";
             };
           }
@@ -254,8 +255,9 @@
             name = "password";
             pick = {
               list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
-              run = ["/bin/sh" "-c" "${rbw} get \"$1\" | /usr/bin/pbcopy" "sh" "{}"];
               typeOutput = ["/bin/sh" "-c" "${rbw} get \"$1\"" "sh" "{}"];
+              copyOutput = ["/bin/sh" "-c" "${rbw} get \"$1\"" "sh" "{}"];
+              secret = true;
               cache = "vault";
             };
           }
@@ -264,8 +266,9 @@
             name = "username";
             pick = {
               list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
-              run = ["/bin/sh" "-c" "${rbw} get --field username \"$1\" | /usr/bin/pbcopy" "sh" "{}"];
               typeOutput = ["/bin/sh" "-c" "${rbw} get --field username \"$1\"" "sh" "{}"];
+              copyOutput = ["/bin/sh" "-c" "${rbw} get --field username \"$1\"" "sh" "{}"];
+              secret = true;
               cache = "vault";
             };
           }
