@@ -62,8 +62,8 @@ brew "moreutils"
 brew "ncdu"
 # TOML toolkit written in Rust
 brew "taplo"
-# OpenTofu Language Server
-brew "tofu-ls"
+# Terraform Language Server
+brew "terraform-ls"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility

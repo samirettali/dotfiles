@@ -5,10 +5,12 @@
   neovimPackage,
   ...
 }: let
-  # Servers whose binary only arrives with a feature. Enabling one without its
-  # binary leaves nvim reporting a server that cannot start.
+  # Servers that are not the same on every machine: either the binary only
+  # arrives with a feature, or the machine wants a different server for the
+  # same language. The work Mac reads this list through a chezmoi template.
   featureServers =
-    lib.optionals (config.features.js == "full") ["ts_ls" "eslint"]
+    ["tofu_ls"]
+    ++ lib.optionals (config.features.js == "full") ["ts_ls" "eslint"]
     ++ lib.optionals config.features.web3 ["solidity_ls"]
     ++ lib.optionals config.features.dart ["dartls"];
 in {

@@ -59,7 +59,7 @@ templates=(
 # work Mac, the templates that replace a copied file, and the plugin lock, since
 # the work Mac resolves its own plugin versions.
 declare -A skipped=(
-    [.config/nvim]='lua/plugins/roslyn.lua lua/plugins/flutter.lua lua/plugins/init.lua lua/plugins/init.lua.tmpl lua/lsp-features.lua lua/lsp-features.lua.tmpl nvim-pack-lock.json'
+    [.config/nvim]='lua/plugins/roslyn.lua lua/plugins/flutter.lua lua/plugins/init.lua lua/plugins/init.lua.tmpl lua/lsp-features.lua lua/lsp-features.lua.tmpl lsp/terraformls.lua nvim-pack-lock.json'
 )
 
 # .claude/CLAUDE.md and .codex/AGENTS.md are chezmoi templates, not copies.
