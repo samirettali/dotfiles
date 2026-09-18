@@ -91,9 +91,12 @@ Aerospace.__index = Aerospace
 
 function Aerospace.new(path)
 	if not path then
-		local handle = io.popen("id -un")
-		local username = handle:read("*l")
-		handle:close()
+		local username = os.getenv("USER") or os.getenv("LOGNAME")
+		if not username then
+			local handle = io.popen("id -un")
+			username = handle:read("*l")
+			handle:close()
+		end
 		path = SOCK_FMT:format(username)
 	end
 
