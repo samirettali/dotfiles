@@ -80,7 +80,8 @@
         alt-shift-l = ["join-with right" "mode main"];
       };
       on-window-detected = [
-        # workspace assignments (mirrors rift app_rules; rift is 0-indexed)
+        # Workspace assignments. `~=` is a case insensitive regex, so one anchored
+        # alternation replaces a callback per bundle id.
         {
           check-further-callbacks = true;
           "if" = "test %{app-bundle-id} = com.mitchellh.ghostty";
@@ -88,48 +89,18 @@
         }
         {
           check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} = com.hnc.discord";
+          "if" = "test %{app-bundle-id} ~= '^(com\\.hnc\\.discord|ru\\.keepcoder\\.Telegram|com\\.spotify\\.client)$'";
           run = ["move-node-to-workspace 4"];
         }
+        # Floating
         {
           check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} = ru.keepcoder.Telegram";
-          run = ["move-node-to-workspace 4"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} = com.spotify.client";
-          run = ["move-node-to-workspace 4"];
-        }
-        # floating (mirrors rift app_rules floating = true)
-        {
-          check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} = com.apple.calculator";
-          run = ["layout floating"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} = com.apple.systempreferences";
-          run = ["layout floating"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} = com.apple.finder";
+          "if" = "test %{app-bundle-id} ~= '^(com\\.apple\\.calculator|com\\.apple\\.systempreferences|com\\.apple\\.finder|cc\\.ffitch\\.shottr|com\\.riotgames\\.LeagueofLegends\\.LeagueClientUx)$'";
           run = ["layout floating"];
         }
         {
           check-further-callbacks = true;
           "if" = "test %{app-name} ~= 'Archive Utility'";
-          run = ["layout floating"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} = cc.ffitch.shottr";
-          run = ["layout floating"];
-        }
-        {
-          check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} = com.riotgames.LeagueofLegends.LeagueClientUx";
           run = ["layout floating"];
         }
       ];
