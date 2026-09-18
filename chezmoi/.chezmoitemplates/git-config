@@ -13,12 +13,12 @@
 	preloadIndex = true
 
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = ""
+	helper = "/opt/homebrew/bin/gh auth git-credential"
 
 [credential "https://github.com"]
-	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = ""
+	helper = "/opt/homebrew/bin/gh auth git-credential"
 
 [diff]
 	algorithm = "histogram"
@@ -28,11 +28,15 @@
 	submodule = "log"
 	tool = "nvimdifftool"
 
+[diff "lockb"]
+	binary = true
+	textconv = "/opt/homebrew/bin/bun"
+
 [difftool]
 	prompt = false
 
 [difftool "nvimdifftool"]
-	cmd = nvim -d \"$LOCAL\" \"$REMOTE\"
+	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 
 [fetch]
 	all = true
@@ -44,7 +48,7 @@
 
 [gpg "ssh"]
 	allowedSignersFile = "/Users/samir/.config/git/allowed_signers"
-	program = "ssh-keygen"
+	program = "/usr/bin/ssh-keygen"
 
 [help]
 	autocorrect = "prompt"

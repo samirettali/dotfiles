@@ -289,6 +289,7 @@
     "border": "#ffffff4d",
     "borderWidth": 0,
     "flow": "columns",
+    "font": "JetBrainsMono Nerd Font",
     "group": true,
     "iconSize": 38,
     "key": "column",

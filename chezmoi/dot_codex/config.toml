@@ -36,6 +36,9 @@ trust_level = "trusted"
 [projects."/Users/samir/dev/dotfiles"]
 trust_level = "trusted"
 
+[projects."/Users/samir/dev/fluxctl"]
+trust_level = "trusted"
+
 [projects."/Users/samir/dev/herdr"]
 trust_level = "trusted"
 
@@ -43,6 +46,9 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/Users/samir/dev/infra"]
+trust_level = "trusted"
+
+[projects."/Users/samir/dev/linkctl"]
 trust_level = "trusted"
 
 [projects."/Users/samir/dev/nur"]

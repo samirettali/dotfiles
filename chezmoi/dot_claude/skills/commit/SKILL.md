@@ -32,4 +32,4 @@ Create a git commit for the current changes using a concise Conventional Commits
 Inspect the intended diff and staging state before committing. Include only the
 requested changes, preserving unrelated work even when no paths were supplied.
 Follow the repository's documented conventions; consult recent commit subjects
-only when the convention is unclear. Commit with an explicit pathspec.
+only when the convention is unclear.
