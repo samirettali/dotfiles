@@ -1,0 +1,4 @@
+{{ includeTemplate "nvim-lsp-features.lua" . | trim }}
+{{ if eq .profile "work" -}}
+vim.lsp.enable({ "dartls" })
+{{ end -}}
