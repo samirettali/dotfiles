@@ -11,7 +11,6 @@ vim.lsp.enable({
 	"ts_ls", -- TODO: try vtsls
 	"eslint",
 	"nixd",
-	"roslyn_ls",
 	"rust_analyzer",
 	"solidity_ls",
 	"yamlls",
