@@ -46,6 +46,7 @@
   };
 
   home.packages = with pkgs; [
+    buf
     coreutils
     curl
     gnumake
@@ -61,6 +62,7 @@
     snitch
     sqlite
     opentofu
+    taplo
     tree
     unzip
     yt-dlp

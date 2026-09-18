@@ -7,6 +7,7 @@ vim.lsp.enable({
 	"golangci_lint_ls",
 	"lua_ls",
 	"stylua",
+	"taplo",
 	"jsonls",
 	"ts_ls", -- TODO: try vtsls
 	"eslint",

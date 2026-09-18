@@ -18,14 +18,14 @@
       shellcheck
       shfmt
       harper
+      yaml-language-server
+      vscode-langservers-extracted # vscode-json-language-server
       # TODO: lsp formatting and linters
-      # yaml-language-server
-      # buf
-      # taplo
       # codespell
       # yamlfmt
       # zizmor
       # wgsl-analyzer
     ];
   };
+
 }
