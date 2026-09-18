@@ -8,6 +8,8 @@ vim.lsp.enable({
 	"lua_ls",
 	"stylua",
 	"taplo",
+	"tofu_ls",
+	"zizmor",
 	"jsonls",
 	"nixd",
 	"rust_analyzer",
