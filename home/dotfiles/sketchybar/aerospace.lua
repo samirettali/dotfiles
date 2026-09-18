@@ -175,6 +175,19 @@ function Aerospace:workspace(ws)
 	return self:_query({ "workspace", ws }, false)
 end
 
+function Aerospace:occupied_workspaces()
+	return self:_query({
+		"list-workspaces",
+		"--monitor",
+		"all",
+		"--empty",
+		"no",
+		"--format",
+		"%{workspace}%{workspace-is-focused}",
+		"--json",
+	}, true)
+end
+
 function Aerospace:list_all_windows()
 	return self:_query({
 		"list-windows",

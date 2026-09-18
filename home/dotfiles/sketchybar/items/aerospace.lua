@@ -10,22 +10,49 @@ local bootstrap = sbar.add("item", "workspace.bootstrap", {
 	update_freq = 1,
 })
 
-local function query(include_workspaces, focused)
-	local aerospace
-	local ok, state = pcall(function()
-		aerospace = Aerospace.new()
-		return {
-			focused = focused or aerospace:list_current():match("[^\r\n]+") or "",
-			windows = aerospace:list_all_windows(),
-			workspaces = include_workspaces and aerospace:query_workspaces() or nil,
-		}
-	end)
+local client
 
-	if aerospace then
-		aerospace:close()
+local function collect(aerospace, include_workspaces, focused)
+	local rows = aerospace:occupied_workspaces()
+
+	local occupied, in_focus = {}, nil
+	for _, row in ipairs(rows) do
+		occupied[row.workspace] = true
+		if row["workspace-is-focused"] then
+			in_focus = row.workspace
+		end
 	end
 
-	return ok and state or nil
+	return {
+		occupied = occupied,
+		focused = in_focus or focused or aerospace:list_current():match("[^\r\n]+") or "",
+		workspaces = include_workspaces and aerospace:query_workspaces() or nil,
+	}
+end
+
+local function query(include_workspaces, focused)
+	if not client then
+		local ok, new_client = pcall(Aerospace.new)
+		if not ok then
+			return nil
+		end
+		client = new_client
+	end
+
+	local ok, state = pcall(collect, client, include_workspaces, focused)
+	if ok then
+		return state
+	end
+
+	if not pcall(function()
+		client:reconnect()
+	end) then
+		client = nil
+		return nil
+	end
+
+	local retried, retry_state = pcall(collect, client, include_workspaces, focused)
+	return retried and retry_state or nil
 end
 
 local function refresh(focused)
@@ -34,15 +61,10 @@ local function refresh(focused)
 		return
 	end
 
-	local occupied = {}
-	for _, window in ipairs(state.windows) do
-		occupied[window.workspace] = true
-	end
-
 	for workspace, item in pairs(items) do
 		local is_focused = workspace == state.focused
 		item:set({
-			drawing = is_focused or occupied[workspace] or false,
+			drawing = is_focused or state.occupied[workspace] or false,
 			label = { highlight = is_focused },
 		})
 	end
@@ -58,11 +80,6 @@ local function initialize()
 		return
 	end
 
-	local occupied = {}
-	for _, window in ipairs(state.windows) do
-		occupied[window.workspace] = true
-	end
-
 	local item_names = {}
 	for _, entry in ipairs(state.workspaces) do
 		local workspace = entry.workspace
@@ -72,7 +89,7 @@ local function initialize()
 		table.insert(item_names, item_name)
 		items[workspace] = sbar.add("item", item_name, {
 			position = "left",
-			drawing = is_focused or occupied[workspace] or false,
+			drawing = is_focused or state.occupied[workspace] or false,
 			icon = { drawing = false },
 			label = {
 				string = workspace,
