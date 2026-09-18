@@ -132,11 +132,14 @@ sed -e 's#/nix/store/[^ "]*/bin/jq#/opt/homebrew/bin/jq#g' \
     -e 's#/nix/store/[^ "]*/bin/spotctl#{{ .chezmoi.homeDir }}/go/bin/spotctl#g' \
     "$template" > "$template.tmp" && mv "$template.tmp" "$template"
 
-# git names two commands by store path: the credential helper home-manager writes
-# for gh, and the ssh-keygen that signs. Point them at what the work Mac has.
+# git names three commands by store path: the credential helper home-manager
+# writes for gh, the ssh-keygen that signs, and the bun that reads bun.lockb,
+# which the programs.bun module adds as a diff driver. Point them at what the
+# work Mac has.
 template=$source_dir/.chezmoitemplates/git-config
 sed -e 's#/nix/store/[^ "]*/bin/gh#/opt/homebrew/bin/gh#g' \
     -e 's#/nix/store/[^ "]*/bin/ssh-keygen#/usr/bin/ssh-keygen#g' \
+    -e 's#/nix/store/[^ "]*/bin/bun#/opt/homebrew/bin/bun#g' \
     "$template" > "$template.tmp" && mv "$template.tmp" "$template"
 
 chmod -R u+w "$source_dir"
