@@ -10,19 +10,31 @@ require("roslyn").setup({
 	lock_target = false,
 })
 
--- Language-server-specific settings sent to the server. The plugin registers the
--- server under the name `roslyn` (and enables it itself via its plugin/ file), so
--- we extend that config here instead of the old `lsp/roslyn_ls.lua`.
--- Point straight at the roslyn-language-server binary installed as a dotnet
--- global tool. This avoids depending on a correct shell PATH inside nvim (the
--- `~/.dotnet/tools` entry in the login shell has an unexpanded tilde, so the
--- server would otherwise not be found). The symlink is stable across tool
--- updates, so this keeps working after `dotnet tool update`.
+-- The plugin registers the server as `roslyn` and enables it from its own
+-- plugin/ file, so this extends that config.
+--
+-- The path is spelled out because the login shell puts `~/.dotnet/tools` in
+-- PATH with the tilde unexpanded, and the plugin finds the binary with
+-- vim.fn.executable(). The symlink survives `dotnet tool update`.
 local roslyn_bin = vim.fn.expand("~/.dotnet/tools/roslyn-language-server")
 
 vim.lsp.config("roslyn", {
-	cmd = { roslyn_bin, "--stdio" },
-	-- Roslyn expects utf-8 positions; matches the previous working config.
+	-- Same arguments the plugin passes in lsp/roslyn.lua, with the binary
+	-- spelled out: assigning `cmd` replaces that list instead of merging it.
+	cmd = {
+		roslyn_bin,
+		"--stdio",
+		"--daemon-mode",
+		"--clientProcessId",
+		tostring(vim.uv.os_getpid()),
+	},
+	cmd_env = {
+		Configuration = vim.env.Configuration or "Debug",
+		-- Roslyn writes decompiled sources under TMPDIR, which macOS points at
+		-- through a symlink. Resolving it keeps go-to-definition working there.
+		TMPDIR = vim.env.TMPDIR and vim.fn.resolve(vim.env.TMPDIR) or nil,
+	},
+	-- Roslyn expects utf-8 positions.
 	offset_encoding = "utf-8",
 	settings = {
 		["csharp|background_analysis"] = {
