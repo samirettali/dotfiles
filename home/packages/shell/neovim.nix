@@ -28,10 +28,11 @@ in {
       harper
       yaml-language-server
       vscode-langservers-extracted # vscode-json-language-server
+      tofu-ls
+      zizmor
       # TODO: lsp formatting and linters
       # codespell
       # yamlfmt
-      # zizmor
       # wgsl-analyzer
     ];
   };

@@ -8,6 +8,8 @@ tap "ngrok/ngrok"
 tap "samirettali/tap", trusted: true
 # Apple Intelligence from the command-line, with OpenAi-compatible API server
 brew "apfel"
+# New way of working with Protocol Buffers
+brew "buf"
 # Command-line interface for SQLite
 brew "sqlite"
 # Official Amazon AWS command-line interface
@@ -58,6 +60,10 @@ brew "mongosh"
 brew "moreutils"
 # NCurses Disk Usage
 brew "ncdu"
+# TOML toolkit written in Rust
+brew "taplo"
+# OpenTofu Language Server
+brew "tofu-ls"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -90,6 +96,10 @@ brew "unzip"
 brew "uv"
 # Execute commands when watched files change
 brew "watchexec"
+# Language Server for Yaml Files
+brew "yaml-language-server"
+# Find security issues in GitHub Actions setups
+brew "zizmor"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # Desktop-inspired terminal diff viewer for agent-authored changesets
