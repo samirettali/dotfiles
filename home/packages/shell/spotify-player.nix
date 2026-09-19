@@ -41,6 +41,7 @@
   launchd.agents.spotify-player = lib.mkIf (config.programs.spotify-player.enable
     && pkgs.stdenv.hostPlatform.isDarwin) {
     enable = true;
+    domain = "user";
     config = {
       ProgramArguments = [
         (lib.getExe

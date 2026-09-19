@@ -31,12 +31,36 @@
     lib.mapAttrs'
     (name: src: lib.nameValuePair ".pi/agent/skills/${name}" {source = src;})
     (builtins.removeAttrs skills ["x-search"]);
+  enabled = config.programs.pi-coding-agent.enable;
 in {
-  home.packages = [
-    piCodingAgent
-  ];
+  programs.pi-coding-agent = {
+    enable = true;
+    package = piCodingAgent;
 
-  home.sessionVariables = lib.mkIf (builtins.elem piCodingAgent config.home.packages) ({
+    settings = {
+      packages = [
+        "${piMcpAdapter}"
+        "${piAutoresearch}"
+      ];
+      theme = "light/dark";
+      quietStartup = true;
+      hideThinkingBlock = false;
+      defaultProvider = "openai-codex";
+      defaultModel = "gpt-6-astra";
+      defaultThinkingLevel = "medium";
+      enabledModels = modelsConfig.enabledModels;
+      tuiMode = "fullscreen";
+    };
+
+    models = {inherit (modelsConfig) providers;};
+
+    keybindings = {
+      "tui.altScreen.halfPageUp" = "ctrl+u";
+      "tui.altScreen.halfPageDown" = "ctrl+d";
+    };
+  };
+
+  home.sessionVariables = lib.mkIf enabled ({
       PI_PACKAGE_DIR = "${config.home.homeDirectory}/.pi/pi-source";
       PI_TELEMETRY = "0";
       PI_SKIP_VERSION_CHECK = "1";
@@ -48,33 +72,9 @@ in {
       HERDR_TITLE_MODEL = "gpt-5.6-luna";
     });
 
-  home.file = lib.mkIf (builtins.elem piCodingAgent config.home.packages) (skillFiles
+  home.file = lib.mkIf enabled (skillFiles
     // {
       ".pi/pi-source".source = piPackageDir;
-
-      ".pi/agent/settings.json".text = builtins.toJSON {
-        packages = [
-          "${piMcpAdapter}"
-          "${piAutoresearch}"
-        ];
-        theme = "light/dark";
-        quietStartup = true;
-        hideThinkingBlock = false;
-        defaultProvider = "openai-codex";
-        defaultModel = "gpt-6-astra";
-        defaultThinkingLevel = "medium";
-        enabledModels = modelsConfig.enabledModels;
-        tuiMode = "fullscreen";
-      };
-
-      ".pi/agent/models.json".text = builtins.toJSON {
-        inherit (modelsConfig) providers;
-      };
-
-      ".pi/agent/keybindings.json".text = builtins.toJSON {
-        "tui.altScreen.halfPageUp" = "ctrl+u";
-        "tui.altScreen.halfPageDown" = "ctrl+d";
-      };
 
       ".pi/agent/extensions/package.json".text = builtins.toJSON {
         name = "pi-agent-extensions";

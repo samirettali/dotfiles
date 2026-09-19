@@ -69,9 +69,6 @@ in {
         fetch.prune = true;
         fetch.pruneTags = true;
         gpg.format = "ssh";
-        # Signing needs no list; verifying a signature does. Without it, git has
-        # nothing to check a commit against and refuses to report on it.
-        gpg.ssh.allowedSignersFile = "${config.xdg.configHome}/git/allowed_signers";
         help.autocorrect = "prompt";
         init.defaultBranch = "main";
         interactive.singlekey = true;
@@ -108,10 +105,9 @@ in {
         ".crush"
       ];
       signing.format = "ssh";
+      # Signing needs no list; verifying a signature does. Without it, git has
+      # nothing to check a commit against and refuses to report on it.
+      signing.allowedSigners = allowedSigners + "\n";
     };
-  };
-
-  xdg.configFile."git/allowed_signers" = lib.mkIf config.programs.git.enable {
-    text = allowedSigners + "\n";
   };
 }
