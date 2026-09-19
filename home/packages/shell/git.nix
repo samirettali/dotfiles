@@ -6,16 +6,14 @@
   ...
 }: let
   exe = "${lib.getExe config.programs.git.package}";
-  # Every SSH key the account signs with, so a commit from any machine verifies
-  # on all of them. Refresh with:
-  #   gh api users/samirettali/ssh_signing_keys --jq '.[] | .key'
+
+  # `gh api users/samirettali/ssh_signing_keys --jq '.[] | .key'`
   signingKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEUb2sSBUVrFo1qrBNJka1lVoT63PXsl0oOoBhIQiw36"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTS4qYl2b7qP/0LoWBIXv1Z4evTjKzGvcolWGoT2IZj"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK92kPwQJ+dmGtqwA6SEtoc5dLUnWxL69BxVt3ENZBs0"
   ];
 
-  # Both identities: the work Mac signs as the company address.
   signingIdentities = [
     "samir@ettali.com"
     "s.ettali@young.business"
@@ -51,7 +49,6 @@ in {
         branch.sort = "-committerdate";
         column.ui = "auto";
         commit.gpgsign = true;
-        # commit.template = "~/.gitmessage"; # TODO: set this
         commit.verbose = true;
         core.editor = config.home.sessionVariables.EDITOR;
         core.preloadIndex = true;
@@ -61,8 +58,6 @@ in {
         diff.renames = true;
         diff.submodule = "log";
         diff.tool = "nvimdifftool";
-        # Not the builtin nvimdiff: its -R marks the buffers readonly, which
-        # warns on every launch and defeats the write-back of difftool -d.
         difftool.nvimdifftool.cmd = ''nvim -d "$LOCAL" "$REMOTE"'';
         difftool.prompt = false;
         fetch.all = true;
@@ -105,8 +100,6 @@ in {
         ".crush"
       ];
       signing.format = "ssh";
-      # Signing needs no list; verifying a signature does. Without it, git has
-      # nothing to check a commit against and refuses to report on it.
       signing.allowedSigners = allowedSigners + "\n";
     };
   };
