@@ -91,18 +91,6 @@ instead of deleting it.
 - Never kill a process by name (`pkill -f vite`, `killall node`): other sessions run processes with the same name on this host, and `pkill -f` matches the shell running it too. Find the specific PID first (`ss -ltnp` for the port, `pgrep -af` to read the list) and kill that one PID; if you did not start it and it is not yours to stop, leave it alone.
 - My CLI wrappers (`firecrawl`, `generate-*`, `tavily`, `x-search`) take their keys from the environment or the rbw vault. Never print, store or pass a key as an argument. If the vault is locked, ask me to unlock it; do not set up another credential store, run a login or installer, or fall back to keyless access.
 
-## How to write
-
-This applies to everything you write, in the terminal as much as in a repository: replies, commit bodies, pull requests, tickets, docs, code comments. When we speak Italian the same rules hold; the wording below is about English because that is what lands in a repository.
-
-- The readers know English well but are not native speakers: a metaphor or an idiom costs them a translation, the plain word does not.
-- One idea per sentence, the subject first, active voice. "RejectIfDeleting checks the caller", not "the caller is what the gate is evaluated against".
-- Say the concrete thing, not a metaphor for it. "The token is not in the transfers array", not "the token is not carried by the leg". If a sentence needs a picture to be understood, it is describing the thing from too far away.
-- No noun stacks: a chain of nouns the reader has to unpack from the end. "The fee, in that token, in the worst case", not "the worst case network fee token amount". Split it with a preposition or a clause.
-- Name the thing as the code names it. `RejectIfDeleting`, not "the deletion middleware": I copy the name and search for it. The same thing keeps the same name in every mention.
-- Say only what the reader cannot see for themselves. Do not restate the request, the diff, or the ticket.
-- Do not narrate the alternative not taken, a defence against a future reader, or how you got here, unless I ask. In a repository those go in the pull request, not in a comment.
-
 ## Conventions
 
 - Write everything that lands in a repository in English, whatever language we are speaking: issues, pull requests, commit messages, docs and code comments
