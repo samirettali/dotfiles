@@ -81,6 +81,28 @@
     mkdir -p $out
     cp ${inputs."monid-skill"} $out/SKILL.md
   '';
+
+  # Upstream saves the description under .humanlayer/tasks/, the working
+  # directory of HumanLayer's own product. Without it the skill creates that
+  # directory in whatever repository it runs in, to hold a copy of a body that
+  # already lives on GitHub. The bundled references/show-me.md is a stale copy
+  # of the show-me skill and points at the same place.
+  visualPrSkill = pkgs.runCommand "visual-pr-skill" {} ''
+    mkdir -p $out
+    cp -R ${inputs.humanlayer-skills}/plugins/visual-pr/skills/visual-pr/. $out/
+    chmod -R u+w $out
+
+    substituteInPlace $out/SKILL.md \
+      --replace-fail '`.humanlayer/tasks/{task-slug}/pr-description.md` when the task directory exists; otherwise use `.humanlayer/tasks/pr-{number}/description.md`' 'a temporary file outside the repository, such as `$(mktemp -t pr-description)`. Never create a directory in the working tree to hold it'
+
+    substituteInPlace $out/references/show-me.md \
+      --replace-fail 'then display it inline:' 'then open it for the user:' \
+      --replace-fail '```task-artifact' '```' \
+      --replace-fail '.humanlayer/tasks/{task-slug}/show-me-{description}.html' 'Bash(open path/to/show-me-{description}.html)'
+
+    grep -q 'Description saved' $out/references/describe_pr_final_answer.md
+    sed -i '/Description saved/d' $out/references/describe_pr_final_answer.md
+  '';
 in {
   agent-messaging = ./skills/agent-messaging;
   android = ./skills/android;
@@ -112,6 +134,7 @@ in {
   subagents = ./skills/subagents;
   tavily = ./skills/tavily;
   uv = "${inputs.agent-stuff}/skills/uv";
+  visual-pr = "${manualSkill "visual-pr" visualPrSkill}";
   web-browser = "${webBrowserSkill}";
   x-search = ./skills/x-search;
   x-post = "${manualSkill "x-post" "${inputs.skills}/x-post"}";
