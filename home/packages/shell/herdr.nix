@@ -33,8 +33,8 @@
         previous_tab = ["prefix+p" "prefix+ctrl+p"];
         next_tab = ["prefix+n" "prefix+ctrl+n"];
         last_pane = "prefix+tab";
-        split_vertical = "prefix+%";
-        split_horizontal = "prefix+\"";
+        split_vertical = "prefix+v";
+        split_horizontal = "prefix+s";
         focus_pane_left = "ctrl+h";
         focus_pane_down = "ctrl+j";
         focus_pane_up = "ctrl+k";
