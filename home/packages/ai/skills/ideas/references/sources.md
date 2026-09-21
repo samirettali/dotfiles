@@ -24,17 +24,28 @@ At `~/Documents/Notes`; conventions in its `AGENTS.md`, read them first.
 
 ## Linkding
 
-Through the `linkding` skill (`linkctl`, JSON on stdout). Tags carry no counts,
-so count them from a full listing:
+Through the `linkding` skill (`linkctl`, JSON on stdout). The collections have
+separate purposes:
+
+- **Unarchived** is the read/watch-later queue, whether `unread` is true or false.
+- **Archived** holds functional resources: tools, documentation and sites he
+  returns to. It is not a collection of finished reading or a backlog to clear.
+- **`Clippings/`** holds material worth rereading or rewatching. Keep that durable
+  collection separate from both the queue and the functional archive.
+
+The default listing is unarchived; `--unread` narrows it and misses part of the
+queue. Tags carry no counts, so count them from a full queue listing:
 
 ```sh
 linkctl bookmark list --limit 0 | jq -r '.results[].tag_names[]' | sort | uniq -c | sort -rn | head -40
 linkctl bookmark list --tag <top-tag> --limit 100
-linkctl bookmark list --unread --limit 100
+linkctl bookmark list --limit 100
 ```
 
-Unread links and the YouTube ones (`jq '.results[] | select(.url | test("youtu"))'`) are
-the ones he saved and never got to.
+YouTube links (`jq '.results[] | select(.url | test("youtu"))'`) identify the
+medium, not whether he has watched them. Do not infer reading history from that
+or from `unread` alone. A functional resource found in the queue is misfiled:
+propose archiving it, not deleting it. This discovery step changes no bookmarks.
 
 Do not mine what he has already built: check `~/dev` for existing projects and
 skip anything they cover.
