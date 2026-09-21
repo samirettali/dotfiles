@@ -45,8 +45,8 @@ in {
       theme = "light/dark";
       quietStartup = true;
       hideThinkingBlock = false;
-      defaultProvider = "openai-codex";
-      defaultModel = "gpt-6-astra";
+      defaultProvider = "openrouter";
+      defaultModel = "deepseek/deepseek-v4.1-flash";
       defaultThinkingLevel = "medium";
       enabledModels = modelsConfig.enabledModels;
       tuiMode = "fullscreen";
