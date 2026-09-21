@@ -58,11 +58,6 @@
       flake = false;
     };
 
-    wincent-agent-plugins = {
-      url = "github:wincent/wincent-agent-plugins";
-      flake = false;
-    };
-
     monid-skill = {
       url = "file+https://monid.ai/SKILL.md";
       flake = false;

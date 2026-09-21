@@ -51,19 +51,6 @@
     '';
   };
 
-  # Shannon's own wrapper delegates to a tmux-only discovery script at a
-  # hardcoded pack path. Swap in the herdr implementation; SKILL.md already
-  # calls scripts/shannon-find-nvim.sh, so nothing else changes.
-  shannonNeovimSkill = pkgs.runCommand "shannon-neovim-skill" {} ''
-    mkdir -p $out
-    cp -R ${inputs.wincent-agent-plugins}/pi/skills/neovim/. $out/
-    chmod -R u+w $out
-    install -m755 ${./skills/shannon-neovim/shannon-find-nvim.sh} $out/scripts/shannon-find-nvim.sh
-    # Upstream ships this skill inside a plugin, where the name comes from the
-    # directory. Installed as a personal skill it needs the frontmatter field.
-    sed -i '1a name: neovim' $out/SKILL.md
-  '';
-
   spotifySkill = pkgs.runCommand "spotify-skill" {} ''
     mkdir -p $out
     cp -R ${inputs.spotctl}/.agents/skills/spotify/. $out/
@@ -125,7 +112,6 @@ in {
   miniflux = "${manualSkill "miniflux" minifluxSkill}";
   macos-app-release = ./skills/macos-app-release;
   monid = "${manualSkill "monid" monidSkill}";
-  neovim = "${manualSkill "neovim" shannonNeovimSkill}";
   project-workflow = ./skills/project-workflow;
   remotion-best-practices = "${manualSkill "remotion-best-practices" "${inputs.remotion-skills}/skills/remotion-best-practices"}";
   show-me = "${manualSkill "show-me" "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me"}";

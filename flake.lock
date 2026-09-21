@@ -335,8 +335,7 @@
         "remotion-skills": "remotion-skills",
         "samirettali-nur": "samirettali-nur",
         "skills": "skills",
-        "spotctl": "spotctl",
-        "wincent-agent-plugins": "wincent-agent-plugins"
+        "spotctl": "spotctl"
       }
     },
     "samirettali-nur": {
@@ -404,22 +403,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "wincent-agent-plugins": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789121563,
-        "narHash": "sha256-/OlxxXBW11Nl1hFFV4H3xSirOa/VRVSo0XzdYrryIwc=",
-        "owner": "wincent",
-        "repo": "wincent-agent-plugins",
-        "rev": "1d40ae86b451a1b9d6c68b865cf5043faea05167",
-        "type": "github"
-      },
-      "original": {
-        "owner": "wincent",
-        "repo": "wincent-agent-plugins",
         "type": "github"
       }
     }
