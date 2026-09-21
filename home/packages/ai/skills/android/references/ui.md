@@ -46,6 +46,32 @@ enough to prefer it for anything typed.
 `maestro` also ships an MCP server (`maestro mcp`) that exposes these actions as tools; if
 it is declared in `mcp.nix` the actions are callable directly, without writing a flow file.
 
+`maestro` installs its own driver on the device, and it conflicts with UIAutomator2: tools
+built on the latter (mobile-use, the `uiautomator2` Python package) uninstall Maestro's
+package when they connect. Do not point both at the same device.
+
+## The interaction loop
+
+Whichever way an element is addressed, the loop is observe, act, observe. Some rules that
+keep it honest:
+
+- **Combine the hierarchy and the screenshot.** The hierarchy finds elements by name but
+  sees no colour, badge, image or overlay; the screenshot sees all of that but gives no
+  reliable coordinates. After a tap that should change the screen, take a screenshot to
+  confirm it did, even when the tap was by name.
+- **One unpredictable action per turn.** Back, launching or stopping an app, a deep link,
+  a tap that navigates: each of these changes the screen in ways that cannot be planned
+  around. Run it alone, then look at the new screen before deciding the next step.
+- **Never retry a failed action unchanged.** Understand why first. A tap out of bounds means
+  the bounds are stale; an element not found means the screen changed under you. Both
+  call for a fresh hierarchy, not the same tap again.
+- **Scroll the whole form before calling a field missing.** A field seen earlier and gone
+  now has scrolled out of view, not disappeared; scroll back to it rather than typing
+  into the wrong one.
+- **Reason about swipes in screen percentages,** converting with `wm size` at the end, so
+  the same gesture works across devices. A swipe pushes the screen: swiping right reveals
+  what is to the left.
+
 ## Falling back to coordinates
 
 When nothing is addressable, the loop is: screenshot, look at it, act, screenshot again to
