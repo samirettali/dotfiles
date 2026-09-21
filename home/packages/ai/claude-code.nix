@@ -20,7 +20,8 @@ in {
   # Herdr identifies agents by the pane's foreground process, which breaks as
   # soon as Claude spawns MCP servers. The hook reports the agent explicitly.
   home.file.".claude/hooks/herdr-agent-state.sh" = lib.mkIf herdrEnabled {
-    source = ./claude-code-herdr-agent-state.sh;
+    source = "${inputs.herdr-fork}/src/integration/assets/claude/herdr-agent-state.sh";
+    executable = true;
   };
 
   programs.claude-code = {

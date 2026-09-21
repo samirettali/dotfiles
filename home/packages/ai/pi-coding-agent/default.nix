@@ -110,6 +110,10 @@ in {
       ".pi/agent/extensions/node_modules/@types/node".source = piNodeModules + "/@types/node";
     }
     // lib.optionalAttrs herdrEnabled {
+      ".pi/agent/extensions/herdr-agent-state.ts" = {
+        source = "${inputs.herdr-fork}/src/integration/assets/pi/herdr-agent-state.ts";
+        force = true;
+      };
       ".pi/agent/extensions/herdr-session-title.ts".source = ./extensions/herdr-session-title.ts;
     });
 }

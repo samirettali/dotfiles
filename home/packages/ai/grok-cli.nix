@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   nurPkgs,
   pkgs,
@@ -39,7 +40,8 @@ in {
       tomlFormat.generate "grok-managed-config.toml" managedConfig;
 
     ".grok/hooks/herdr-agent-state.sh" = lib.mkIf herdrEnabled {
-      source = ./grok-herdr-agent-state.sh;
+      source = "${inputs.herdr-fork}/src/integration/assets/grok/herdr-agent-state.sh";
+      executable = true;
     };
 
     ".grok/hooks/herdr.json" = lib.mkIf herdrEnabled {

@@ -18,9 +18,14 @@
     timeout = 10;
   };
 in {
-  # Codex reads ~/.codex/hooks.json, which `herdr integration install codex`
-  # used to write. Nix owns it now, herdr's entry copied verbatim, so the read
-  # guard can sit beside it; `force` replaces the file herdr left behind.
+  home.file.".codex/herdr-agent-state.sh" = lib.mkIf herdrEnabled {
+    source = "${inputs.herdr-fork}/src/integration/assets/codex/herdr-agent-state.sh";
+    executable = true;
+    force = true;
+  };
+
+  # Nix owns the hook registration as well as the pinned Herdr asset.
+  # `force` replaces files previously written by the integration installer.
   # Codex asks to trust a new hook on first run and records the answer in
   # config.toml: pin that hash under `hooks.state` below afterwards, or the
   # question comes back at every switch.

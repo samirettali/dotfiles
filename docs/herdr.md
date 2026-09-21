@@ -26,6 +26,38 @@ To update:
 Do not export patch files back into this repository.
 The branch is the only source of truth.
 
+## Agent integrations and ownership
+
+The fork contains its integration assets under `src/integration/assets/`.
+`herdr integration install <agent>` writes those files and, where needed, edits
+agent settings. It is an imperative installer, not the source of truth here.
+
+Home Manager takes the assets directly from `inputs.herdr-fork`, so a fork bump
+updates both the binary and its integrations. The agent modules own registrations:
+
+| Agent | Managed asset | Registration |
+| --- | --- | --- |
+| Pi | `.pi/agent/extensions/herdr-agent-state.ts` | Pi's global extension discovery |
+| Claude | `.claude/hooks/herdr-agent-state.sh` | `settings.json`, `SessionStart` |
+| Codex (personal machines) | `.codex/herdr-agent-state.sh` | `hooks.json`, `SessionStart` |
+| Grok | `.grok/hooks/herdr-agent-state.sh` | `hooks/herdr.json`, `SessionStart` |
+
+Do not run the integration installer over these store-backed files: it attempts
+to write them. Change registrations in the corresponding Nix module, and update
+assets through the fork input. Pi and Codex use `force` only on these exact
+managed paths to replace the previous manually installed files on activation.
+No activation hook runs Herdr's installer.
+
+`herdr-session-title.ts` is a separate, repository-owned Pi extension; Herdr does
+not install it. It remains alongside the upstream state integration. Other
+harness integrations are not enabled merely because the fork ships an asset.
+The work Mac receives only the Claude asset through `make chezmoi`.
+
+After a fork update, run `make check-herdr` to smoke-test the shell hooks against
+an isolated socket and exercise the fork's Pi integration tests. Then inspect
+the rendered Claude registration. These tests never contact the live Herdr
+server. Runtime validation after an approved switch is separate.
+
 ## Building and testing on Darwin
 
 A bare `cargo build` does not work on Darwin.
