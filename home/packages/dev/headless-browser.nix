@@ -3,11 +3,9 @@
   pkgs,
   ...
 }: let
-  # nixpkgs wraps chromium with CHROME_DEVEL_SANDBOX pointing at a setuid helper
-  # that only a root-owned installation can provide. Nix owns nothing outside
-  # the profile on this machine, so chromium finds the helper, refuses to run
-  # unsandboxed and aborts. --no-sandbox is the way in, and it is what every
-  # agent session was passing by hand anyway.
+  # Temporary exception: andromeda blocks user namespaces and has no setuid
+  # helper. See docs/chromium-sandbox.md before changing this bypass; the host
+  # policy belongs in servers, not in Home Manager.
   chromium = pkgs.writeShellScriptBin "chromium" ''
     exec ${lib.getExe pkgs.ungoogled-chromium} --no-sandbox "$@"
   '';
