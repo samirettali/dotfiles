@@ -39,7 +39,7 @@
               set nix_shell_info "<nix-shell> "
           end
 
-          printf (string join "" -- $ssh $nix_shell_info $pwd $bg_marker $symbol)
+          printf '%s' (string join "" -- $ssh $nix_shell_info $pwd $bg_marker $symbol)
         '';
       rbw =
         /*
@@ -54,12 +54,12 @@
         fish
         */
         ''
+          set -l last_status $status
           if contains -- --final-rendering $argv
               return
           end
 
           # Show last status code if != 0
-          set -l last_status $status
 
           set -l stat
           if test $last_status -ne 0
@@ -91,7 +91,7 @@
 
           set duration (set_color -d white)$duration(set_color normal)
 
-          printf (string join ' ' -- $duration $stat $gp)
+          printf '%s' (string join ' ' -- $duration $stat $gp)
         '';
     };
     interactiveShellInit =
