@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  nurPkgs,
   pkgs,
   vars,
   ...
@@ -30,6 +31,7 @@ in {
   home.packages = with pkgs;
     lib.mkIf config.programs.git.enable [
       git-absorb
+      nurPkgs.git-who
     ];
 
   home.shellAliases = lib.mkIf config.programs.git.enable {
