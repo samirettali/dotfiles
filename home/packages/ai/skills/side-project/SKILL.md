@@ -44,6 +44,53 @@ belong with that project; shared account resources belong in `infra`.
   type, motion). Visual identity is per-project and deliberately **not**
   part of this skill.
 
+## Project documentation
+
+Scaffold `AGENTS.md` and `docs/` when initializing a project. Start with a small
+`docs/architecture.md` explaining the actual components and boundaries; add
+subsystem pages only when there is something project-specific to preserve.
+
+Keep `AGENTS.md` thin: project summary, common commands, cross-cutting
+conventions, repository shape, concise deviations from these defaults, and a
+**conditional documentation index**. Do not repeat this skill's defaults.
+
+Put architecture decisions, subsystem invariants, operational procedures and
+troubleshooting knowledge in `docs/<topic>.md`. Separate current guidance from
+historical investigations: keep measurements, rejected approaches and their
+reasons under `docs/history/`, labeled as history rather than current commands.
+When a section stops applying to most tasks, extract it instead of appending
+more detail to the root file. Existing projects can adopt this incrementally;
+preserve the knowledge rather than compressing it into a lossy summary.
+
+Example (only create the pages the project actually needs):
+
+```text
+AGENTS.md
+docs/
+  architecture.md
+  authentication.md
+  operations.md
+  history/
+    search-benchmark.md
+```
+
+An index tells the reader when to load a page, not just that it exists:
+
+```markdown
+## Subsystem documentation
+
+Read only the pages relevant to the task:
+
+- `docs/architecture.md` — read before changing component boundaries or data ownership.
+- `docs/authentication.md` — read before changing login, sessions or access rules.
+- `docs/operations.md` — read before running deployments, migrations or recovery.
+- `docs/history/search-benchmark.md` — historical measurements; read when revisiting search tradeoffs.
+```
+
+GitHub issues, Projects and pull requests remain the task tracker. Documentation
+records knowledge, not a second backlog. Do not create or modify issues as a
+side effect of reorganizing documentation.
+
 ## When a default here changes
 
 This skill and its references are the source of truth, and the projects converge
