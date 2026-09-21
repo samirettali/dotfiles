@@ -117,6 +117,8 @@
       };
     };
 
+    serverUser = users.personal // {homeDirectory = "/home/${defaultUser}";};
+
     # Default feature toggles; override per machine at the call site.
     defaultFeatures = {
       rust = true;
@@ -161,7 +163,59 @@
       };
     };
 
-    # Common Home Manager configuration
+    serverPkgs = import nixpkgs {
+      system = systems.server;
+      inherit (nixpkgsConfig) config;
+    };
+
+    mkHomeSpecialArgs = {
+      user,
+      hostname,
+      pkgs,
+    }: {
+      inherit inputs;
+      nurPkgs = inputs.samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system};
+      neovimPackage = mkNeovimPackage pkgs.stdenv.hostPlatform.system;
+      vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
+      vars = {
+        inherit hostname;
+        inherit (user) email;
+        font = {
+          name = "JetBrainsMono Nerd Font";
+          size =
+            if pkgs.stdenv.hostPlatform.isDarwin
+            then 16
+            else 10;
+        };
+        commands = {
+          # TODO: find a better way
+          copy =
+            if pkgs.stdenv.hostPlatform.isDarwin
+            then "pbcopy"
+            else "xclip -selection clipboard";
+          paste =
+            if pkgs.stdenv.hostPlatform.isDarwin
+            then "pbpaste"
+            else "xclip -o -selection clipboard";
+        };
+      };
+    };
+
+    mkHomeUserModule = {
+      user,
+      features ? defaultFeatures,
+      modules,
+    }: {
+      inherit features;
+      imports = modules;
+      home = {
+        inherit stateVersion;
+        inherit (user) homeDirectory;
+        username = user.name;
+      };
+    };
+
+    # Common Home Manager configuration for nix-darwin and NixOS.
     mkHomeManagerConfig = {
       user,
       hostname,
@@ -173,92 +227,45 @@
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "bak";
-      extraSpecialArgs = {
-        inherit inputs;
-        nurPkgs = inputs.samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system};
-        neovimPackage = mkNeovimPackage pkgs.stdenv.hostPlatform.system;
-        vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
-        vars = {
-          inherit hostname;
-          inherit (user) email;
-          font = {
-            name = "JetBrainsMono Nerd Font";
-            size =
-              if pkgs.stdenv.hostPlatform.isDarwin
-              then 16
-              else 10;
-          };
-          commands = {
-            # TODO: find a better way
-            copy =
-              if pkgs.stdenv.hostPlatform.isDarwin
-              then "pbcopy"
-              else "xclip -selection clipboard";
-            paste =
-              if pkgs.stdenv.hostPlatform.isDarwin
-              then "pbpaste"
-              else "xclip -o -selection clipboard";
-          };
-        };
-      };
-      users.${user.name} = {
-        inherit features;
-
-        imports =
-          [
-            ./home
-          ]
-          ++ extraModules;
-
-        home = {
-          inherit stateVersion;
-          inherit (user) homeDirectory;
-          username = user.name;
-        };
+      extraSpecialArgs = mkHomeSpecialArgs {inherit user hostname pkgs;};
+      users.${user.name} = mkHomeUserModule {
+        inherit user features;
+        modules = [./home] ++ extraModules;
       };
     };
   in {
     homeConfigurations = {
       andromeda = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = systems.server;
-          inherit (nixpkgsConfig) config;
-        };
+        pkgs = serverPkgs;
 
-        extraSpecialArgs = {
-          inherit inputs;
-          nurPkgs = inputs.samirettali-nur.packages.${systems.server};
-          neovimPackage = mkNeovimPackage systems.server;
-          vars = {
-            hostname = "andromeda";
-            inherit (users.personal) email;
-          };
+        extraSpecialArgs = mkHomeSpecialArgs {
+          user = serverUser;
+          hostname = "andromeda";
+          pkgs = serverPkgs;
         };
 
         modules = [
-          ./home/ai.nix
-          ./home/server.nix
-          ({pkgs, ...}: {
+          (mkHomeUserModule {
+            user = serverUser;
             features = {
               c = "minimal";
               python = "minimal";
               js = "minimal";
               go = true;
             };
+            modules = [
+              ./home/ai.nix
+              ./home/server.nix
+              ({pkgs, ...}: {
+                programs.home-manager.enable = true;
 
-            home = {
-              username = defaultUser;
-              homeDirectory = "/home/${defaultUser}";
-              inherit stateVersion;
-            };
+                home.packages = with pkgs; [
+                  ghostty.terminfo
+                ];
 
-            programs.home-manager.enable = true;
-
-            home.packages = with pkgs; [
-              ghostty.terminfo
+                home.file.".terminfo".source = "${pkgs.ghostty.terminfo}/share/terminfo";
+              })
             ];
-
-            home.file.".terminfo".source = "${pkgs.ghostty.terminfo}/share/terminfo";
           })
         ];
       };
