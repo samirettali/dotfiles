@@ -55,10 +55,6 @@ vim.keymap.set("n", "<leader>fk", function()
 	Snacks.picker.keymaps()
 end, { desc = "Snacks: keymaps" })
 
-vim.keymap.set("n", "gd", function()
-	Snacks.picker.lsp_definitions()
-end, { desc = "Snacks: LSP definitions" })
-
 vim.keymap.set("n", "gri", function()
 	Snacks.picker.lsp_implementations()
 end, { desc = "Snacks: LSP implementations" })
