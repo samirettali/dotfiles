@@ -99,13 +99,17 @@ function formatTokens(count: number): string {
  * entry in the session rather than the current branch, including tool results
  * and the usage carried by compaction and branch summaries.
  */
-function usageTotals(ctx: ExtensionContext): { input: number; output: number } {
+function usageTotals(ctx: ExtensionContext): { input: number; output: number; cost: number } {
 	let input = 0;
 	let output = 0;
-	const add = (usage: { input?: number; output?: number } | undefined) => {
+	let cost = 0;
+	const add = (
+		usage: { input?: number; output?: number; cost?: { total?: number } } | undefined,
+	) => {
 		if (!usage) return;
 		input += usage.input ?? 0;
 		output += usage.output ?? 0;
+		cost += usage.cost?.total ?? 0;
 	};
 
 	for (const entry of ctx.sessionManager.getEntries()) {
@@ -117,7 +121,7 @@ function usageTotals(ctx: ExtensionContext): { input: number; output: number } {
 			add(entry.usage);
 		}
 	}
-	return { input, output };
+	return { input, output, cost };
 }
 
 function installFooter(ctx: ExtensionContext): void {
@@ -149,7 +153,7 @@ function renderFooter(ctx: ExtensionContext, theme: Theme, width: number): strin
 		right.push(parts.join(""));
 	}
 
-	const { input, output } = usageTotals(ctx);
+	const { input, output, cost } = usageTotals(ctx);
 	const usage = ctx.getContextUsage();
 	const percent = usage?.percent;
 	right.push(
@@ -160,6 +164,7 @@ function renderFooter(ctx: ExtensionContext, theme: Theme, width: number): strin
 		const color = rounded >= 90 ? "error" : rounded >= 70 ? "warning" : "muted";
 		right.push(theme.fg(color, `${rounded}%`));
 	}
+	right.push(theme.fg("muted", `$${cost.toFixed(3)}`));
 
 	const leftText = left.join(sep);
 	const rightText = right.join(sep);
