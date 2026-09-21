@@ -24,15 +24,13 @@ for tool in rsync nix jq; do
     fi
 done
 
-# `built:target` where the name in the built tree is not the name the work Mac
-# wants: nix keeps the codex config beside the writable copy codex itself edits.
+# Use `built:target` when a target needs a different name.
 files=(
     .config/ghostty/config
     .config/herdr/config.toml
     .config/git/allowed_signers
     .config/tmux/tmux.conf
     .claude/hooks/herdr-agent-state.sh
-    .codex/config.toml.nix:.codex/config.toml
     revive.toml
 )
 
@@ -40,8 +38,6 @@ directories=(
     .config/nvim
     .claude/skills/commit
     .claude/skills/code-review
-    .codex/skills/commit
-    .codex/skills/code-review
 )
 
 # A template merges the work-only additions into these, so they land among the
@@ -62,7 +58,8 @@ declare -A skipped=(
     [.config/nvim]='lua/plugins/roslyn.lua lua/plugins/flutter.lua lua/plugins/init.lua lua/plugins/init.lua.tmpl lua/lsp-features.lua lua/lsp-features.lua.tmpl lsp/terraformls.lua nvim-pack-lock.json'
 )
 
-# .claude/CLAUDE.md and .codex/AGENTS.md are chezmoi templates, not copies.
+# .claude/CLAUDE.md is a chezmoi template, not a copy.
+# Codex is not managed on the work Mac.
 # Everything under .pi stays on this machine.
 
 # chezmoi names a dotfile after its target with the leading dot spelled out.

@@ -59,10 +59,14 @@ edits — the browser to launch, the email to type.
 
 ## What the render does not reach
 
-- `.claude/CLAUDE.md` and `.codex/AGENTS.md` are chezmoi templates built from
+- `.claude/CLAUDE.md` is a chezmoi template built from
   `.chezmoitemplates/agents-md`, which `include`s `home/packages/ai/agents.md`
   out of the source tree at apply time. Nothing to render: an edit there reaches
   the work Mac on the next `chezmoi apply`.
 - Everything under `.pi` stays on `mbp`.
+- Codex is not configured or installed by this work-Mac profile. Its former
+  managed config, instructions and skills are listed individually in
+  `.chezmoiremove`; credentials, sessions and other local Codex data are not
+  removed. No Codex package was present in the Brewfile.
 - `.statusLine` is stripped from the Claude settings: it points at a script nix
   builds, which the work Mac has not got.

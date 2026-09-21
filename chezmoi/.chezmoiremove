@@ -1,0 +1,8 @@
+{{ if eq .profile "work" }}
+.codex/config.toml
+.codex/AGENTS.md
+.codex/skills/commit/SKILL.md
+.codex/skills/code-review/SKILL.md
+.codex/skills/code-review/agents/openai.yaml
+.codex/skills/hunk/SKILL.md
+{{ end }}
