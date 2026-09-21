@@ -1,0 +1,35 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@b85815f71a6de0ddee80b8a80a98d43f4bcc66c7 # v31
+      - name: Format, lint and offline tests
+        shell: bash
+        run: |
+          rev=$(jq -r '.nodes[.nodes.root.inputs.nixpkgs].locked.rev' flake.lock)
+          nix shell \
+            "github:nixos/nixpkgs/$rev#alejandra" \
+            "github:nixos/nixpkgs/$rev#deadnix" \
+            "github:nixos/nixpkgs/$rev#statix" \
+            "github:nixos/nixpkgs/$rev#fish" \
+            "github:nixos/nixpkgs/$rev#nodejs" \
+            --command make check-ci

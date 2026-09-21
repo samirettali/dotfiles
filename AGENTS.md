@@ -10,8 +10,8 @@ flake output. See "The work Mac" below.
 ## Commands
 
 - `make build` — rebuild the current host with nix-darwin or NixOS.
-- `make fmt` — format all Nix files with `alejandra`. Run before committing.
-- `make check` — run `nix flake check`.
+- `make fmt` — format Git-tracked Nix files with `alejandra`, excluding deferred xps. Run before committing.
+- `make check` — format/lint checks, offline tests, supported-host evaluation and chezmoi render verification; see `docs/checks.md`.
 - `make models` — refresh pinned OpenRouter provider limits, then run `make build`.
 - `make update` — run `nix flake update`.
 - `make chezmoi` — render the work Mac's configuration into `chezmoi/`. Run on `mbp`.
@@ -109,7 +109,9 @@ Read the matching document before changing that subsystem:
 - `docs/ai/skill-invocation.md` — manual skill discovery and per-agent metadata.
 - `docs/ai/firecrawl.md` — shared search CLI, vault credentials, costs, and disabled feedback.
 - `docs/ai/browser-skill.md` — shared CDP overlay, action locking, filtered logs and tests.
-- `docs/herdr.md` — patched fork, builds, testing, and Neovim navigation.
+- `docs/checks.md` — individual verification targets, small CI and Home Manager-only Linux activation.
+- `docs/chromium-sandbox.md` — andromeda sandbox findings and the unapproved host-policy path.
+- `docs/herdr.md` — patched fork, declarative agent integrations, builds, testing, and Neovim navigation.
 - `docs/sketchybar.md` — pending agents and AI subscription usage.
 - `docs/macos-tcc.md` — permissions, application signatures, and stable launch paths.
 - `docs/helium.md` — the Chromium side: re-signing, Widevine, pinned extensions.
@@ -133,7 +135,7 @@ Do not install a Claude-only plugin when the shared configuration can represent 
 
 ## Known gotchas
 
-- `xps` full evaluation currently fails on the nixpkgs insecure-package gate for `nodejs-slim`.
+- `xps` support is deferred; keep its configuration but exclude it from `make check`. A direct full-flake check still reaches its unresolved Fish module assertion.
 - `mbp` evaluates cleanly.
 - Verify tool configuration against the installed version rather than memory.
 - Lazygit uses `git.pagers`, not the former `git.paging` option.

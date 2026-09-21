@@ -1,23 +1,19 @@
 .DEFAULT_GOAL := build
-.PHONY: build update clean fmt check models chezmoi
+.PHONY: build update clean fmt check check-ci check-fmt check-lint check-tests check-pi check-herdr check-eval check-chezmoi models chezmoi
+.NOTPARALLEL: check check-ci
 
 OS := $(shell uname -s)
-USERNAME := $(shell whoami)
-HOSTNAME := $(shell hostname)
+HOSTNAME := $(shell hostname -s)
 UPDATE_CMD = nix flake update
-FMT_CMD = alejandra .
-DEADNIX_CMD = deadnix --fail --exclude=machines/xps/hardware-configuration.nix .
-STATIX_CMD = statix check .
-CHECK_CMD = nix flake check
 MODELS_CMD = pi-models --sync --config $(CURDIR)/home/packages/ai/pi-coding-agent/models.json
-CHEZMOI_CMD = chezmoi-render $(CURDIR)/chezmoi
+CHEZMOI_CMD = bash $(CURDIR)/home/dotfiles/scripts/chezmoi-render.sh
 
 ifeq ($(OS),Linux)
     ifneq ($(wildcard /etc/NIXOS),)
         REBUILD_CMD = sudo nixos-rebuild switch --flake .\#$(HOSTNAME)
         CLEAN_CMD = sudo nix-collect-garbage --delete-old
     else
-        REBUILD_CMD = nix run --flake .\#$(HOSTNAME)
+        REBUILD_CMD = activation="$$(nix build --no-link --print-out-paths '.\#homeConfigurations.$(HOSTNAME).activationPackage')" && "$$activation/activate"
         CLEAN_CMD = nix-collect-garbage --delete-old
     endif
 endif
@@ -28,33 +24,52 @@ ifeq ($(OS),Darwin)
 endif
 
 update:
-	@echo "Running command: $(UPDATE_CMD)"
 	@$(UPDATE_CMD)
 
 build:
-	@echo "Running command: $(REBUILD_CMD)"
 	@$(REBUILD_CMD)
 
 clean:
-	@echo "Running command: $(CLEAN_CMD)"
 	@$(CLEAN_CMD)
 
 fmt:
-	@echo "Running command: $(FMT_CMD)"
-	@$(FMT_CMD)
+	@bash scripts/check-nix.sh fmt
 
 models:
-	@echo "Running command: $(MODELS_CMD)"
 	@$(MODELS_CMD)
 
 chezmoi:
-	@echo "Running command: $(CHEZMOI_CMD)"
-	@$(CHEZMOI_CMD)
+	@$(CHEZMOI_CMD) "$(CURDIR)/chezmoi" "$(CURDIR)"
 
-check:
-	@echo "Running command: $(DEADNIX_CMD)"
-	@$(DEADNIX_CMD)
-	@echo "Running command: $(STATIX_CMD)"
-	@$(STATIX_CMD)
-	@echo "Running command: $(CHECK_CMD)"
-	@$(CHECK_CMD)
+check: check-ci check-pi check-herdr check-eval check-chezmoi
+
+check-ci: check-fmt check-lint check-tests
+
+check-fmt:
+	@bash scripts/check-nix.sh fmt-check
+
+check-lint:
+	@bash scripts/check-nix.sh lint
+
+check-tests:
+	@node --test tests/config.test.mjs tests/check-nix.test.mjs
+	@BROWSER_BIN= node --test home/packages/ai/skills/web-browser/browser.test.mjs
+
+check-pi:
+	@node --test tests/x-search.test.mjs
+
+check-herdr:
+	@set -eu; HERDR_SOURCE=$$(nix eval --impure --raw --expr '(builtins.getFlake (toString ./.)).inputs.herdr-fork.outPath'); export HERDR_SOURCE; \
+	node --test tests/herdr-integrations.test.mjs; \
+	env -u HERDR_ENV -u HERDR_SOCKET_PATH -u HERDR_PANE_ID bun test "$$HERDR_SOURCE/src/integration/assets/herdr-agent-state.test.ts"
+
+check-eval:
+	@nix eval --no-write-lock-file --raw .\#darwinConfigurations.mbp.system.drvPath
+	@printf '\n'
+	@nix eval --no-write-lock-file --raw .\#homeConfigurations.andromeda.activationPackage.drvPath
+	@printf '\n'
+
+check-chezmoi:
+	@set -eu; tmp=$$(mktemp -d); trap 'rm -rf "$$tmp"' EXIT; \
+	cp -R chezmoi/. "$$tmp/"; \
+	$(CHEZMOI_CMD) "$$tmp" "$(CURDIR)" && diff -ru chezmoi "$$tmp"

@@ -8,10 +8,11 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 
 const exec = promisify(execFile);
-const scripts = process.env.BROWSER_SKILL_SCRIPTS;
-if (!scripts) throw new Error("Set BROWSER_SKILL_SCRIPTS to the built skill's scripts directory");
+const scripts = process.env.BROWSER_SKILL_SCRIPTS || fileURLToPath(new URL(".", import.meta.url));
 const fixture = fileURLToPath(new URL("./test-log.jsonl", import.meta.url));
-const run = (name, args = [], env = process.env) => exec(join(scripts, name), args, { env, timeout: 40000 });
+const run = (name, args = [], env = process.env) => name === "logs.js"
+  ? exec(process.execPath, [join(scripts, name), ...args], { env, timeout: 40000 })
+  : exec(join(scripts, name), args, { env, timeout: 40000 });
 
 test("logs are filtered, bounded, non-destructive and hide headers by default", async () => {
   const args = ["--file", fixture, "--kind", "network", "--status", "401"];

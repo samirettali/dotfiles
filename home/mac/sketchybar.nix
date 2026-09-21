@@ -34,9 +34,8 @@
   };
 
   aiUsage = pkgs.callPackage ../packages/shell/scripts/ai-usage.nix {
-    codex = nurPkgs.codex;
+    inherit (nurPkgs) codex grok-cli;
     antigravity-cli = config.programs.antigravity-cli.package;
-    grok-cli = nurPkgs.grok-cli;
   };
 in {
   programs.sketchybar = {

@@ -48,7 +48,7 @@ in {
       defaultProvider = "openrouter";
       defaultModel = "deepseek/deepseek-v4.1-flash";
       defaultThinkingLevel = "medium";
-      enabledModels = modelsConfig.enabledModels;
+      inherit (modelsConfig) enabledModels;
       tuiMode = "fullscreen";
     };
 

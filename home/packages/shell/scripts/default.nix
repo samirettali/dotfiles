@@ -22,7 +22,7 @@ in {
       #     else null;
       # })
       (pkgs.callPackage ./lyrics.nix {
-        spotctl = nurPkgs.spotctl;
+        inherit (nurPkgs) spotctl;
         rbw =
           if config.programs.rbw.enable
           then config.programs.rbw.package
@@ -32,9 +32,8 @@ in {
       (pkgs.callPackage ./ccexport.nix {})
       (pkgs.callPackage ./pi-models.nix {})
       (pkgs.callPackage ./ai-usage.nix {
-        codex = nurPkgs.codex;
+        inherit (nurPkgs) codex grok-cli;
         antigravity-cli = config.programs.antigravity-cli.package;
-        grok-cli = nurPkgs.grok-cli;
       })
       (pkgs.writeShellScriptBin "glc" (builtins.readFile "${scriptsDir}/glc.sh"))
       (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
