@@ -1,6 +1,10 @@
 *.env
 .DS_Store
 .env*
+!.envrc
+!.env.example
+!.env.sample
+!.env.template
 .idea
 .opencode
 /target
