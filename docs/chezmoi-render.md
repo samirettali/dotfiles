@@ -34,6 +34,12 @@ The render then fails, on purpose, if a listed path is not in the built tree, or
 if any rendered file mentions `/nix/store` — a store path is useless on a
 machine without nix.
 
+Every rsync uses `--ignore-times`: Nix store files share an epoch timestamp, so
+an equal-sized change can otherwise be skipped forever. These configuration
+files are small enough to transfer unconditionally. `--checksum` is not used
+because Apple's rsync fails when hashing dereferenced store symlinks.
+`make check-chezmoi` renders into a temporary copy and fails on content drift.
+
 ## What a template fixes up
 
 The export is built for `mbp`, so it carries that home directory and that

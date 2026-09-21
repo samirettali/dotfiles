@@ -77,7 +77,7 @@ attribute=darwinConfigurations.mbp.config.home-manager.users.samir.home-files
 
 printf 'Building %s#%s...\n' "$flake_dir" "$attribute"
 
-if ! root=$(nix build --no-link --print-out-paths "$flake_dir#$attribute"); then
+if ! root=$(nix build --no-link --no-write-lock-file --print-out-paths "$flake_dir#$attribute"); then
     printf 'The file tree did not build, so there is nothing to render.\n' >&2
     exit 1
 fi
@@ -92,6 +92,9 @@ done
 
 printf 'Rendering into %s...\n' "$source_dir"
 
+# Store files share an epoch mtime; transfer these small files even at equal size.
+# Apple's rsync cannot checksum dereferenced store symlinks reliably.
+
 for path in "${directories[@]}"; do
     target=$source_dir/$(source_name "$path")
     excludes=()
@@ -99,20 +102,20 @@ for path in "${directories[@]}"; do
         excludes+=("--exclude=/$kept")
     done
     mkdir -p "$target"
-    rsync -aL --delete "${excludes[@]}" "$root/$path/" "$target/"
+    rsync -aL --ignore-times --delete "${excludes[@]}" "$root/$path/" "$target/"
 done
 
 for entry in "${files[@]}"; do
     path=${entry%%:*}
     target=$source_dir/$(source_name "${entry#*:}")
     mkdir -p "${target%/*}"
-    rsync -aL "$root/$path" "$target"
+    rsync -aL --ignore-times "$root/$path" "$target"
 done
 
 for entry in "${templates[@]}"; do
     target=$source_dir/.chezmoitemplates/${entry#*:}
     mkdir -p "${target%/*}"
-    rsync -aL "$root/${entry%%:*}" "$target"
+    rsync -aL --ignore-times "$root/${entry%%:*}" "$target"
 done
 
 # The status line is a script nix builds, so the work Mac has not got it.

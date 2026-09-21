@@ -28,8 +28,8 @@ reload_config = "prefix+r"
 rename_tab = "prefix+,"
 rename_workspace = "prefix+$"
 resize_mode = "prefix+shift+r"
-split_horizontal = 'prefix+"'
-split_vertical = "prefix+%"
+split_horizontal = "prefix+s"
+split_vertical = "prefix+v"
 tab_picker = "prefix+t"
 
 [theme]
