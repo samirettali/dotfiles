@@ -1,20 +1,21 @@
 import assert from "node:assert/strict";
-import { realpathSync } from "node:fs";
-import { homedir } from "node:os";
-import { createRequire } from "node:module";
+import { join } from "node:path";
 import { test } from "node:test";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-// Use the installed pi runtime, as extensions do, without a second dependency tree.
-const modules = `${homedir()}/.pi/agent/extensions/node_modules`;
-const require = createRequire(`${realpathSync(`${modules}/@earendil-works/pi-coding-agent`)}/package.json`);
-const { createJiti } = require("jiti");
-const jiti = createJiti(import.meta.url, {
-    alias: Object.fromEntries(["@earendil-works/pi-coding-agent", "@earendil-works/pi-tui", "typebox"]
-        .map(name => [name, name === "typebox" ? require.resolve(name) : realpathSync(`${modules}/${name}`)])),
-});
-const { default: extension } = await jiti.import("../home/packages/ai/pi-coding-agent/extensions/x-search.ts");
-let tool;
-extension({ registerTool: definition => { tool = definition; } });
+const piPackage = process.env.PI_TEST_PACKAGE;
+assert.ok(piPackage, "Run make check-pi to use the flake-pinned Pi runtime");
+process.env.PI_PACKAGE_DIR = join(piPackage, "share/pi-coding-agent");
+const { loadExtensions } = await import(pathToFileURL(join(piPackage,
+    "lib/node_modules/pi-monorepo/dist/core/extensions/loader.js")).href);
+const { extensions, errors } = await loadExtensions(
+    [fileURLToPath(new URL("../home/packages/ai/pi-coding-agent/extensions/x-search.ts", import.meta.url))],
+    fileURLToPath(new URL("..", import.meta.url)),
+);
+assert.deepEqual(errors, []);
+assert.equal(extensions.length, 1);
+const tool = extensions[0].tools.get("x_search")?.definition;
+assert.ok(tool, "Pi must register the x_search tool");
 const ctx = { modelRegistry: { getApiKeyForProvider: async () => "test-key" } };
 const execute = (params, signal) => tool.execute("test", params, signal, undefined, ctx);
 const response = (body, status = 200, headers = {}) => new Response(JSON.stringify(body), { status, headers });

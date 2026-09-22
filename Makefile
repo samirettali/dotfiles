@@ -56,7 +56,9 @@ check-tests:
 	@BROWSER_BIN= node --test home/packages/ai/skills/web-browser/browser.test.mjs
 
 check-pi:
-	@node --test tests/x-search.test.mjs
+	@set -eu; PI_TEST_PACKAGE=$$(nix build --no-link --print-out-paths --no-write-lock-file --impure \
+		--expr '(builtins.getFlake (toString ./.)).inputs.samirettali-nur.packages.$${builtins.currentSystem}.pi-coding-agent'); \
+	export PI_TEST_PACKAGE; node --test tests/x-search.test.mjs
 
 check-herdr:
 	@set -eu; HERDR_SOURCE=$$(nix eval --impure --raw --expr '(builtins.getFlake (toString ./.)).inputs.herdr-fork.outPath'); export HERDR_SOURCE; \
