@@ -26,6 +26,7 @@
     nurPkgs.t3code
     shottr
     slack
+    telegram-desktop
     the-unarchiver
   ];
 
