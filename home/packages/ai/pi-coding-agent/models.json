@@ -5,7 +5,6 @@
     "openai-codex/gpt-5.6-terra",
     "openai-codex/gpt-5.6-luna",
     "kimi-coding/k3",
-    "xai/grok-4.6",
     "openrouter/minimax/minimax-m3",
     "openrouter/anthropic/claude-opus-5",
     "openrouter/anthropic/claude-sonnet-5",
@@ -23,12 +22,16 @@
     "openrouter/anthropic/claude-fable-5.1",
     "openrouter/tencent/hy4-preview",
     "openrouter/inception/mercury-2.5-preview",
-    "openrouter/xiaomi/mimo-v2.5-pro",
     "openrouter/openai/gpt-6-astra",
     "openrouter/openai/gpt-6-astra-pro",
     "openrouter/inclusionai/ling-3.0-flash-sante:free",
     "openrouter/qwen/qwen3.8-max-0902",
-    "openrouter/deepseek/deepseek-v4.1-flash"
+    "openrouter/deepseek/deepseek-v4.1-flash",
+    "openrouter/xiaomi/mimo-v2.6-pro",
+    "openrouter/xiaomi/mimo-v2.6-flash",
+    "openrouter/xiaomi/mimo-v2.6-pro-ultraspeed",
+    "openrouter/z-ai/glm-5.3-flashx",
+    "openrouter/x-ai/grok-4.7"
   ],
   "providers": {
     "openrouter": {
@@ -262,6 +265,36 @@
           },
           "contextWindow": 1050000,
           "maxTokens": 128000
+        },
+        "xiaomi/mimo-v2.6-pro-ultraspeed": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "xiaomi/fp8"
+              ]
+            }
+          }
+        },
+        "xiaomi/mimo-v2.6-flash": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "xiaomi/fp8"
+              ]
+            }
+          }
+        },
+        "xiaomi/mimo-v2.6-pro": {
+          "compat": {
+            "openRouterRouting": {
+              "allow_fallbacks": false,
+              "only": [
+                "xiaomi/fp8"
+              ]
+            }
+          }
         }
       }
     },
