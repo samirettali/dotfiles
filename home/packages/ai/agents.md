@@ -90,6 +90,11 @@ instead of deleting it.
 - On `andromeda`, dev servers bind to `0.0.0.0`, including through `make dev`, so I reach them at `http://andromeda:<port>` from my Mac without forwarding ports. Binding is not enough for Vite: it rejects unknown Host headers, so `server.allowedHosts` must always include `andromeda` in dev.
 - Never kill a process by name (`pkill -f vite`, `killall node`): other sessions run processes with the same name on this host, and `pkill -f` matches the shell running it too. Find the specific PID first (`ss -ltnp` for the port, `pgrep -af` to read the list) and kill that one PID; if you did not start it and it is not yours to stop, leave it alone.
 - My CLI wrappers (`firecrawl`, `generate-*`, `tavily`, `x-search`) take their keys from the environment or the rbw vault. Never print, store or pass a key as an argument. If the vault is locked, ask me to unlock it; do not set up another credential store, run a login or installer, or fall back to keyless access.
+- Answer the question asked, then stop. No summary of what you just did, no list of what is left, no offer of next steps unless I ask.
+- Cut every sentence that would not change what I do. If a paragraph only frames the next one, delete it.
+- No preambles: not "one thing to know", not "the interesting part is". State the fact.
+- Report a finding in one line. Detail only where I ask for it.
+- When I ask you to explain several things, give one block each, with no intro and no closing.
 
 ## Conventions
 
