@@ -15,6 +15,29 @@
   linkding = "https://links.samirettali.com";
   sketchybar = lib.getExe config.programs.sketchybar.package;
 
+  # A leader entry for the engine and a shifted twin that runs the same search.
+  search = key: name: url: [
+    {
+      inherit key name;
+      search = url;
+    }
+    {
+      inherit key;
+      search = url;
+      shift = true;
+    }
+  ];
+
+  # The vault picker lists every rbw entry with its site's favicon; the command
+  # decides what is typed or copied.
+  vaultPick = command: {
+    list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
+    typeOutput = ["/bin/sh" "-c" "${rbw} ${command} \"$1\"" "sh" "{}"];
+    copyOutput = ["/bin/sh" "-c" "${rbw} ${command} \"$1\"" "sh" "{}"];
+    secret = true;
+    cache = "vault";
+  };
+
   # The keymap as it settled, taken back from the file it was tried out in.
   keymap = {
     capsEscape = false;
@@ -91,88 +114,15 @@
         name = "insert";
       }
       {
-        entries = [
-          {
-            key = "c";
-            name = "code";
-            search = "https://github.com/search?q={}&type=code";
-          }
-          {
-            key = "c";
-            search = "https://github.com/search?q={}&type=code";
-            shift = true;
-          }
-          {
-            key = "g";
-            name = "google";
-            search = "https://google.com/search?q={}";
-          }
-          {
-            key = "g";
-            search = "https://google.com/search?q={}";
-            shift = true;
-          }
-          {
-            key = "m";
-            name = "maps";
-            search = "https://www.google.com/maps/search/{}";
-          }
-          {
-            key = "m";
-            search = "https://www.google.com/maps/search/{}";
-            shift = true;
-          }
-          {
-            key = "n";
-            name = "nixos";
-            search = "https://mynixos.com/search?q={}";
-          }
-          {
-            key = "n";
-            search = "https://mynixos.com/search?q={}";
-            shift = true;
-          }
-          {
-            key = "p";
-            name = "perplexity";
-            search = "https://perplexity.ai/search?q={}";
-          }
-          {
-            key = "p";
-            search = "https://perplexity.ai/search?q={}";
-            shift = true;
-          }
-          {
-            key = "r";
-            name = "repos";
-            search = "https://github.com/search?q={}&type=repositories";
-          }
-          {
-            key = "r";
-            search = "https://github.com/search?q={}&type=repositories";
-            shift = true;
-          }
-          {
-            key = "t";
-            name = "twitter";
-            search = "https://x.com/search?q={}&src=typed_query";
-          }
-          {
-            key = "t";
-            search = "https://x.com/search?q={}&src=typed_query";
-            shift = true;
-          }
-          {
-            key = "y";
-            name = "youtube";
-            search = "https://www.youtube.com/results?search_query={}";
-          }
-          {
-            key = "y";
-            search = "https://www.youtube.com/results?search_query={}";
-            shift = true;
-          }
-        ];
+        entries =
+          search "c" "code" "https://github.com/search?q={}&type=code"
+          ++ search "g" "google" "https://google.com/search?q={}"
+          ++ search "m" "maps" "https://www.google.com/maps/search/{}"
+          ++ search "n" "nixos" "https://mynixos.com/search?q={}"
+          ++ search "p" "perplexity" "https://perplexity.ai/search?q={}"
+          ++ search "r" "repos" "https://github.com/search?q={}&type=repositories"
+          ++ search "t" "twitter" "https://x.com/search?q={}&src=typed_query"
+          ++ search "y" "youtube" "https://www.youtube.com/results?search_query={}";
         key = "q";
         name = "query";
       }
@@ -242,35 +192,17 @@
           {
             key = "o";
             name = "otp";
-            pick = {
-              list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
-              typeOutput = ["/bin/sh" "-c" "${rbw} code \"$1\"" "sh" "{}"];
-              copyOutput = ["/bin/sh" "-c" "${rbw} code \"$1\"" "sh" "{}"];
-              secret = true;
-              cache = "vault";
-            };
+            pick = vaultPick "code";
           }
           {
             key = "p";
             name = "password";
-            pick = {
-              list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
-              typeOutput = ["/bin/sh" "-c" "${rbw} get \"$1\"" "sh" "{}"];
-              copyOutput = ["/bin/sh" "-c" "${rbw} get \"$1\"" "sh" "{}"];
-              secret = true;
-              cache = "vault";
-            };
+            pick = vaultPick "get";
           }
           {
             key = "u";
             name = "username";
-            pick = {
-              list = ["/bin/sh" "-c" "${rbw} list --raw | ${jq} -r '.[] | [.id, .name, (.user // \"\"), ((.uris // [] | map(select(startswith(\"http\"))) | first // \"\") as $u | if $u == \"\" then \"\" else \"https://\" + ($u | split(\"://\") | last | split(\"/\") | first) + \"/favicon.ico\" end)] | @tsv'"];
-              typeOutput = ["/bin/sh" "-c" "${rbw} get --field username \"$1\"" "sh" "{}"];
-              copyOutput = ["/bin/sh" "-c" "${rbw} get --field username \"$1\"" "sh" "{}"];
-              secret = true;
-              cache = "vault";
-            };
+            pick = vaultPick "get --field username";
           }
         ];
       }
