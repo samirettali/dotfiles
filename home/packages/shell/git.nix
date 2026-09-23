@@ -97,7 +97,6 @@ in {
         "!.env.sample"
         "!.env.template"
         ".idea"
-        ".opencode"
         "/target"
         "Session.vim"
         "__debug_bin*"

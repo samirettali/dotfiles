@@ -28,10 +28,8 @@ in {
     ./antigravity-cli.nix
     ./claude-code.nix
     ./codex.nix
-    ./fabric.nix
     ./firecrawl.nix
     ./mcp.nix
-    ./opencode.nix
     ./pi-coding-agent
     ./skill-scripts.nix
   ];
