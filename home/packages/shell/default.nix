@@ -55,7 +55,6 @@
     # kcat # TODO: upstream is broken
     moreutils
     ncdu
-    ngrok
     p7zip
     nurPkgs.go-qo
     scc
