@@ -6,7 +6,6 @@
 }: {
   programs = {
     zsh.enable = false;
-    gnupg.agent.enable = true; # TODO is this needed?
     fish = {
       enable = true;
       useBabelfish = true;

@@ -6,7 +6,6 @@
 }: {
   imports = [
     ./colima.nix
-    ./gpg.nix
     ./sketchybar.nix
     ./sottomano.nix
     ./desktoppr.nix
