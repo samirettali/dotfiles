@@ -115,6 +115,24 @@ end
 vim.api.nvim_create_autocmd("LspAttach", { group = group, callback = on_lsp_attach })
 vim.api.nvim_create_autocmd("LspDetach", { group = group, callback = on_lsp_detach })
 
+-- gopls formats but leaves imports alone; goimports-on-save is a code action.
+local function organize_go_imports(bufnr)
+	local client = vim.lsp.get_clients({ bufnr = bufnr, name = "gopls" })[1]
+	if client == nil then
+		return
+	end
+
+	local params = vim.lsp.util.make_range_params(0, client.offset_encoding)
+	params.context = { only = { "source.organizeImports" }, diagnostics = {} }
+
+	local response = client:request_sync("textDocument/codeAction", params, 1000, bufnr)
+	for _, action in ipairs(response and response.result or {}) do
+		if action.edit then
+			vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+		end
+	end
+end
+
 vim.api.nvim_create_autocmd("BufWritePre", {
 	group = group,
 	callback = function(args)
@@ -141,6 +159,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		if not ok then
 			return
 		end
+
+		organize_go_imports(args.buf)
 
 		vim.lsp.buf.format({
 			bufnr = args.buf,
