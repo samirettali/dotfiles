@@ -11,7 +11,6 @@
     ./sottomano.nix
     ./desktoppr.nix
     ./aerospace.nix
-    # ./rift.nix # temporarily disabled in favor of aerospace
   ];
 
   home.packages = with pkgs; [
