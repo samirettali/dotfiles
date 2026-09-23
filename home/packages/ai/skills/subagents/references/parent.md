@@ -45,7 +45,8 @@ Worktree creation and integration follow the project's workflow.
    `--no-focus`. Do not rebalance existing panes or create tabs by default.
 3. Start the requested interactive harness in the returned pane, using a unique
    agent name and explicit model. For the default roles, native arguments are
-   `--model claude-opus-5` or `--model gemini-3.8-flash-high`, after Herdr's `--`.
+   `--model claude-opus-5-5` for Claude Code, or `--model openrouter/google/gemini-3.8-flash:high`
+   for pi, after Herdr's `--`.
    Preserve normal permissions. Wait for startup readiness before prompting.
 4. Send a focused handoff through `herdr agent prompt`, not a conversation dump.
    Every message must identify its sender and return address per agent-messaging.

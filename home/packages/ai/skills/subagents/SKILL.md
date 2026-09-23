@@ -39,8 +39,8 @@ discard changes as a side effect of closing a child.
 
 | Role | Default harness | Explicit model |
 | --- | --- | --- |
-| worker | Claude Code (`claude`) | `claude-opus-5` |
-| reviewer | Claude Code (`claude`) | `claude-opus-5` |
+| worker | Claude Code (`claude`) | `claude-opus-5-5` |
+| reviewer | Claude Code (`claude`) | `claude-opus-5-5` |
 | scout | pi (`pi`) | `openrouter/google/gemini-3.8-flash`, thinking `high` |
 | researcher | pi (`pi`) | `openrouter/google/gemini-3.8-flash`, thinking `high` |
 
