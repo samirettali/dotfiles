@@ -23,11 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix4vscode = {
       url = "github:nix-community/nix4vscode";
       inputs.nixpkgs.follows = "nixpkgs";
