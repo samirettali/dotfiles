@@ -13,7 +13,7 @@ ifeq ($(OS),Linux)
         REBUILD_CMD = sudo nixos-rebuild switch --flake .\#$(HOSTNAME)
         CLEAN_CMD = sudo nix-collect-garbage --delete-old
     else
-        REBUILD_CMD = activation="$$(nix build --no-link --print-out-paths '.\#homeConfigurations.$(HOSTNAME).activationPackage')" && "$$activation/activate"
+        REBUILD_CMD = activation="$$(nix build --no-link --print-out-paths '.\#homeConfigurations.$(HOSTNAME).activationPackage')" && HOME_MANAGER_BACKUP_EXT=bak HOME_MANAGER_BACKUP_OVERWRITE=1 "$$activation/activate"
         CLEAN_CMD = nix-collect-garbage --delete-old
     endif
 endif

@@ -222,6 +222,8 @@
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "bak";
+      # A second collision on the same path would otherwise abort activation.
+      overwriteBackup = true;
       extraSpecialArgs = mkHomeSpecialArgs {inherit user hostname pkgs;};
       users.${user.name} = mkHomeUserModule {
         inherit user features;
