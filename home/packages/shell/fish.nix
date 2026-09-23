@@ -8,6 +8,15 @@
     generateCompletions = false;
     functions = {
       fish_greeting = "";
+      # Keeps keys and passwords typed inline out of the history file. Defining
+      # it drops fish's own rule for a leading space, so that comes first.
+      fish_should_add_to_history = ''
+        string match -qr '^\s' -- $argv; and return 1
+        string match -qr '[A-Z0-9_]*(KEY|TOKEN|SECRET|PASSWORD|SESSION)[A-Z0-9_]*=[^$(\s]' -- $argv; and return 1
+        string match -qr '^\s*set\s+(-\S+\s+)*[A-Z0-9_]*(KEY|TOKEN|SECRET|PASSWORD|SESSION)[A-Z0-9_]*\s+[^$(\s]' -- $argv; and return 1
+        string match -qr -- '--password[= ][^$(\s]' $argv; and return 1
+        return 0
+      '';
       fish_mode_prompt = "";
       fish_prompt =
         /*
