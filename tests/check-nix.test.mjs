@@ -13,11 +13,10 @@ test("checks see only current Git files, including intent-to-add and spaced name
     execFileSync("git", ["init", "-q"], options);
     writeFileSync(join(dir, "with space.nix"), "{a = 1;}\n");
     execFileSync("git", ["add", "-N", "--", "with space.nix"], options);
-    for (const path of [".delta/worktrees/task", ".claude/worktrees/task", "result", "machines/xps"]) {
+    for (const path of [".delta/worktrees/task", ".claude/worktrees/task", "result"]) {
       mkdirSync(join(dir, path), { recursive: true });
       writeFileSync(join(dir, path, "broken.nix"), "not { valid nix");
     }
-    execFileSync("git", ["add", "machines/xps/broken.nix"], options);
     writeFileSync(join(dir, "untracked.nix"), "invalid {");
     writeFileSync(join(dir, "deleted.nix"), "{a = 1;}\n");
     execFileSync("git", ["add", "deleted.nix"], options);

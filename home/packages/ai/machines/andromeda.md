@@ -5,7 +5,7 @@ a website.
 
 - Nix does **not** own this machine: `~/dev/dotfiles` owns only my user profile
   (`homeConfigurations.andromeda`), so `machines/` and everything under
-  `home/mac` and `home/linux/desktop` do not apply here.
+  `home/mac` does not apply here.
 - The system and the services belong to `~/dev/servers` — Ansible for anything
   needing root, Docker Compose for the containers. If a change needs root, it
   goes there, not here.

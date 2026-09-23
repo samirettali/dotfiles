@@ -24,9 +24,7 @@ test cases, not bootstrapping the toolchain.
 `make fmt` is the explicit formatting command. Format and lint use Git's cached
 file list, handle spaces and deleted files, and never recursively walk worktrees,
 result links or untracked artifacts. Run `git add -N <new-file>` to include a new
-file in both checks and flake evaluation. xps is deliberately excluded from the
-file checks and host evaluations while its support is deferred; its configuration
-remains in the repository.
+file in both checks and flake evaluation.
 
 ## Pi runtime tests
 

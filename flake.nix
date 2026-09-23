@@ -76,8 +76,6 @@
     home-manager,
     ...
   } @ inputs: let
-    inherit (nixpkgs) lib;
-
     # Constants
     # The release whose stateful defaults home-manager keeps. Not bumped with
     # releases: raising it changes those defaults without a migration.
@@ -87,7 +85,6 @@
     # System configurations
     systems = {
       darwin = "aarch64-darwin";
-      linux = "x86_64-linux";
       server = "aarch64-linux";
     };
 
@@ -300,58 +297,6 @@
                 ./home/packages/dev
                 ./home/packages/security.nix
                 ./home/packages/android.nix
-              ];
-            };
-          })
-        ];
-      };
-    };
-
-    nixosConfigurations = {
-      xps = lib.nixosSystem {
-        system = systems.linux;
-        specialArgs = {
-          inherit inputs;
-          user = users.personal.name;
-        };
-        modules = [
-          ./machines/xps/configuration.nix
-          ./machines/xps/hardware-configuration.nix
-          ({pkgs, ...}: {
-            nix =
-              mkNixConfig {}
-              // {
-                package = pkgs.nixVersions.stable;
-                gc = {
-                  automatic = true;
-                  dates = "weekly";
-                  options = "--delete-older-than 7d";
-                };
-              };
-
-            nixpkgs = nixpkgsConfig;
-
-            system.stateVersion = stateVersion;
-
-            users.users.${users.personal.name} = {
-              home = users.personal.homeDirectory;
-              shell = pkgs.fish;
-              isNormalUser = true;
-            };
-          })
-          home-manager.nixosModules.home-manager
-          ({pkgs, ...}: {
-            home-manager = mkHomeManagerConfig {
-              inherit pkgs;
-              user = users.personal;
-              hostname = "xps";
-              features = defaultFeatures;
-              extraModules = [
-                ./home/linux
-                ./home/linux/desktop
-                ./home/packages/desktop
-                ./home/packages/dev
-                ./home/packages/security.nix
               ];
             };
           })

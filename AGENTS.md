@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Nix flake dotfiles managing macOS with nix-darwin and NixOS with home-manager.
-Hosts are `mbp` (darwin), `xps` (nixos), and `andromeda` (home-manager only).
+Hosts are `mbp` (darwin) and `andromeda` (home-manager only).
 
 This repository also carries `settali`, the work Mac, which company policy keeps
 off nix: it is configured from `chezmoi/` with Homebrew, and it appears in no
@@ -10,7 +10,7 @@ flake output. See "The work Mac" below.
 ## Commands
 
 - `make build` — rebuild the current host with nix-darwin or NixOS.
-- `make fmt` — format Git-tracked Nix files with `alejandra`, excluding deferred xps. Run before committing.
+- `make fmt` — format Git-tracked Nix files with `alejandra`. Run before committing.
 - `make check` — format/lint checks, offline tests, supported-host evaluation and chezmoi render verification; see `docs/checks.md`.
 - `make models` — refresh pinned OpenRouter provider limits, then run `make build`.
 - `make update` — run `nix flake update`.
@@ -144,7 +144,6 @@ Do not install a Claude-only plugin when the shared configuration can represent 
 
 ## Known gotchas
 
-- `xps` support is deferred; keep its configuration but exclude it from `make check`. A direct full-flake check still reaches its unresolved Fish module assertion.
 - `mbp` evaluates cleanly.
 - Verify tool configuration against the installed version rather than memory.
 - Lazygit uses `git.pagers`, not the former `git.paging` option.

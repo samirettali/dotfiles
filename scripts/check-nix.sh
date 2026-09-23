@@ -5,7 +5,7 @@ cd "$(git rev-parse --show-toplevel)"
 files=()
 while IFS= read -r -d '' file; do
     [[ -f $file && ! -L $file ]] && files+=("$file")
-done < <(git ls-files --cached -z -- '*.nix' ':(exclude)machines/xps/**')
+done < <(git ls-files --cached -z -- '*.nix')
 
 if [[ ${#files[@]} == 0 ]]; then
     printf 'No tracked Nix files to check.\n'
