@@ -1,5 +1,6 @@
 ---
 name: subagents
+disable-model-invocation: true
 description: "Delegate work to interactive child agents across harnesses in Herdr, with parent-directed questions, nested delegation, inherited model choices, and result handoff. Use when asked to spawn workers, scouts, reviewers or researchers, coordinate subagents, or run a hierarchy of agents. For a message to an existing independent agent, use agent-messaging instead."
 ---
 

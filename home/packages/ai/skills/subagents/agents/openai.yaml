@@ -1,0 +1,6 @@
+interface:
+  display_name: "Subagents"
+  short_description: "Delegate to child agents in visible Herdr panes"
+  default_prompt: "Use $subagents to delegate this task to a child agent in a Herdr pane."
+policy:
+  allow_implicit_invocation: false
