@@ -1,5 +1,8 @@
 vim.diagnostic.config({ signs = false })
 
+-- Server defaults come from nvim-lspconfig; after/lsp/ holds the overrides.
+vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
+
 vim.lsp.enable({
 	"bashls",
 	"clangd",
@@ -16,7 +19,7 @@ vim.lsp.enable({
 	"buf_ls",
 	"basedpyright",
 	"ruff",
-	"harper",
+	"harper_ls",
 	"gdscript",
 })
 
