@@ -7,7 +7,8 @@ import { test } from "node:test";
 
 const evaluate = (file, attribute) => JSON.parse(execFileSync("nix", [
   "eval", "--impure", "--json", "--expr",
-  `(import ${resolve(file)} { config = {}; lib = {}; pkgs = {}; vars = {}; }).${attribute}`,
+  // Every argument the module declares, stubbed: a new one no longer breaks the test.
+  `(let f = import ${resolve(file)}; in f (builtins.mapAttrs (_: _: {}) (builtins.functionArgs f))).${attribute}`,
 ], { encoding: "utf8" }));
 const functions = evaluate("home/packages/shell/fish.nix", "programs.fish.functions");
 const functionsSource = Object.entries(functions).map(([name, body]) => `function ${name}\n${body}\nend`).join("\n");
