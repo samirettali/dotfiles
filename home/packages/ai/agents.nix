@@ -3,6 +3,7 @@
     builtins.readFile ./agents.md
     + ''
 
+      ${builtins.readFile ./personal.md}
       ${builtins.readFile ./projects.md}
       ## This machine
 

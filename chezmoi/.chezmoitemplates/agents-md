@@ -1,6 +1,8 @@
 {{- $ai := joinPath .chezmoi.sourceDir ".." "home" "packages" "ai" -}}
 {{ include (joinPath $ai "agents.md") | trim }}
 {{ if ne .profile "work" }}
+{{ include (joinPath $ai "personal.md") | trim }}
+
 {{ include (joinPath $ai "projects.md") | trim }}
 {{ end }}
 ## This machine
