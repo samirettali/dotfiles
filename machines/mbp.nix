@@ -157,9 +157,8 @@
         # ];
         # AppleLocale = "en_US";
       };
-      LaunchServices = {
-        LSQuarantine = false;
-      };
+      # Explicit: dropping the old `false` would leave it written in the defaults.
+      LaunchServices.LSQuarantine = true;
       menuExtraClock = {
         Show24Hour = true;
         ShowSeconds = true;
