@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}: {
+{lib, ...}: {
   programs.lazydocker = {
     enable = lib.mkDefault true;
     settings = {
@@ -12,9 +7,5 @@
         returnImmediately = true;
       };
     };
-  };
-
-  home.shellAliases = lib.mkIf config.programs.lazydocker.enable {
-    ld = lib.getExe pkgs.lazydocker;
   };
 }
