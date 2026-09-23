@@ -44,7 +44,9 @@ in {
       tui = "fullscreen";
       permissions.defaultMode = "bypassPermissions";
       # a denied tool is dropped from the model's tool list, not only refused
-      permissions.deny = ["ReportFindings"];
+      # pkill -f and killall match other sessions' processes, and the shell
+      # running them; this is the rule from agents.md, enforced.
+      permissions.deny = ["ReportFindings" "Bash(pkill:*)" "Bash(killall:*)"];
       # Artifact has its own switch (also drops the artifact-* skills)
       enableArtifact = false;
       autoMemoryEnabled = false;

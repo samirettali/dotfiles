@@ -24,6 +24,12 @@ in {
     force = true;
   };
 
+  # The same rule Claude Code enforces with permissions.deny.
+  home.file.".codex/rules/kill.rules".text = ''
+    prefix_rule(pattern=["pkill"], decision="forbidden", justification="Find the PID and kill that one process.")
+    prefix_rule(pattern=["killall"], decision="forbidden", justification="Find the PID and kill that one process.")
+  '';
+
   # Nix owns the hook registration as well as the pinned Herdr asset.
   # `force` replaces files previously written by the integration installer.
   # Codex asks to trust a new hook on first run and records the answer in
