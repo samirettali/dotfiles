@@ -74,7 +74,7 @@ in {
       };
       spinnerTipsEnabled = false;
       outputStyle = "Concise";
-      statusLine = {
+      statusLine = lib.mkIf sketchybarEnabled {
         type = "command";
         command = lib.getExe usageStatusLine;
       };
