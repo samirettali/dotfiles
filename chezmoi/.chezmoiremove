@@ -10,11 +10,13 @@
 .config/nvim/after/plugin
 .config/nvim/bin
 .config/nvim/lsp
+.config/nvim/lua/plugins/actions-preview.lua
 .config/nvim/lua/plugins/auto-dark-mode.lua
 .config/nvim/lua/plugins/codediff.lua
 .config/nvim/lua/plugins/copilot.lua
 .config/nvim/lua/plugins/dap.lua
 .config/nvim/lua/plugins/nightfly.lua
 .config/nvim/lua/plugins/snippets
+.config/nvim/lua/plugins/wayfinder.lua
 .config/nvim/queries/go/return-snippet.scm
 {{ end }}
