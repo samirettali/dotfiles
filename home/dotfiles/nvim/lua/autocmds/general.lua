@@ -24,3 +24,21 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = group,
+	desc = "Indent like the formatter: prettier and alejandra use 2 spaces",
+	pattern = { "javascript", "javascriptreact", "typescript", "typescriptreact", "json", "jsonc", "css", "html", "nix" },
+	callback = function()
+		vim.bo.tabstop = 2
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = group,
+	desc = "Indent like stylua: tabs",
+	pattern = "lua",
+	callback = function()
+		vim.bo.expandtab = false
+	end,
+})
