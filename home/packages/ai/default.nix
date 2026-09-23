@@ -31,7 +31,6 @@ in {
     ./fabric.nix
     ./firecrawl.nix
     ./mcp.nix
-    ./mtplx.nix
     ./opencode.nix
     ./pi-coding-agent
     ./skill-scripts.nix
