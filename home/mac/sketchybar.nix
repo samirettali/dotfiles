@@ -12,10 +12,6 @@
     inherit (pkgs.lua55Packages) buildLuarocksPackage;
   };
 
-  luasimdjsonPackage = pkgs.callPackage ./simdjson.nix {
-    inherit (pkgs.lua55Packages) buildLuarocksPackage;
-  };
-
   luaPackage =
     pkgs.lua5_5.withPackages
     (ps:
@@ -23,7 +19,6 @@
         cjson
         pkgs.sbarlua
         luaposixPackage
-        luasimdjsonPackage
       ]);
 
   herdrPackage = import ../packages/shell/herdr-package.nix {inherit inputs pkgs;};
@@ -82,9 +77,6 @@ in {
       force = true;
       text = ''
         #!/usr/bin/env ${lib.getExe config.programs.sketchybar.luaPackage}
-        package.cpath = package.cpath .. ";${pkgs.lua55Packages.getLuaCPath pkgs.sbarlua}"
-        package.cpath = package.cpath .. ";${pkgs.lua55Packages.getLuaCPath luaposixPackage}"
-        package.cpath = package.cpath .. ";${pkgs.lua55Packages.getLuaCPath luasimdjsonPackage}"
         SKETCHYBAR_BIN = "${sketchybarExe}"
         HERDR_BIN = "${lib.getExe herdrPackage}"
         AI_USAGE_BIN = "${lib.getExe aiUsage}"

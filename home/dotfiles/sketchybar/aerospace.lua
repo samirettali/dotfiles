@@ -11,7 +11,6 @@
 local socket = require("posix.sys.socket")
 local unistd = require("posix.unistd")
 local cjson = require("cjson")
-local simdjson = require("simdjson")
 
 local PROTOCOL_VERSION = 1
 local SOCK_FMT = "/tmp/bobko.aerospace-%s.sock"
@@ -27,15 +26,7 @@ local AF_UNIX, SOCK_STREAM = socket.AF_UNIX, socket.SOCK_STREAM
 local write, read, close = unistd.write, unistd.read, unistd.close
 local encode = cjson.encode
 
-local use_simd = true
 local function decode(str)
-	if use_simd then
-		local ok, val = pcall(simdjson.parse, str)
-		if ok then
-			return val
-		end
-		use_simd = false
-	end
 	local ok, val = pcall(cjson.decode, str)
 	if not ok then
 		error(ERR.JSON .. ": " .. tostring(val))
@@ -145,10 +136,6 @@ function Aerospace:_query(args, want_json)
 	return want_json and decode(answer.stdout) or answer.stdout
 end
 
-function Aerospace:list_apps()
-	return self:_query({ "list-apps", "--json" }, true)
-end
-
 function Aerospace:query_workspaces()
 	return self:_query({
 		"list-workspaces",
@@ -161,14 +148,6 @@ end
 
 function Aerospace:list_current()
 	return self:_query({ "list-workspaces", "--focused" }, false)
-end
-
-function Aerospace:list_windows(space)
-	return self:_query({ "list-windows", "--workspace", space, "--json" }, true)
-end
-
-function Aerospace:focused_window()
-	return self:_query({ "list-windows", "--focused", "--json" }, true)
 end
 
 function Aerospace:workspace(ws)
@@ -185,16 +164,6 @@ function Aerospace:occupied_workspaces()
 		"--format",
 		"%{workspace}%{workspace-is-focused}",
 		"--json",
-	}, true)
-end
-
-function Aerospace:list_all_windows()
-	return self:_query({
-		"list-windows",
-		"--all",
-		"--json",
-		"--format",
-		"%{window-id}%{app-name}%{window-title}%{workspace}",
 	}, true)
 end
 
