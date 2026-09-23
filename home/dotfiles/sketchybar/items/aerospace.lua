@@ -70,7 +70,19 @@ local function refresh(focused)
 	end
 end
 
-local function initialize()
+local function focus(workspace)
+	if not client then
+		query(false)
+	end
+	if client then
+		-- Errors such as "already focused" are not worth a log line.
+		pcall(client.workspace, client, workspace)
+	end
+end
+
+-- Items created while the bar is built land before front_app. When AeroSpace
+-- starts later, they are appended after it and have to be moved.
+local function initialize(at_load)
 	if initialized then
 		return
 	end
@@ -100,33 +112,41 @@ local function initialize()
 				padding_left = 3,
 				padding_right = 3,
 			},
-			click_script = AEROSPACE_BIN .. " workspace " .. workspace,
 		})
+		items[workspace]:subscribe("mouse.clicked", function()
+			focus(workspace)
+		end)
 	end
 
-	local moves = {}
-	for _, item_name in ipairs(item_names) do
-		table.insert(moves, "--move " .. item_name .. " before front_app")
+	if not at_load then
+		local moves = {}
+		for _, item_name in ipairs(item_names) do
+			table.insert(moves, "--move " .. item_name .. " before front_app")
+		end
+		sbar.exec(SKETCHYBAR_BIN .. " " .. table.concat(moves, " "))
 	end
-	sbar.exec(SKETCHYBAR_BIN .. " " .. table.concat(moves, " "))
 
 	initialized = true
 	bootstrap:set({ update_freq = 0 })
 end
 
-bootstrap:subscribe({ "forced", "routine" }, initialize)
+initialize(true)
+
+bootstrap:subscribe({ "forced", "routine" }, function()
+	initialize(false)
+end)
 bootstrap:subscribe("aerospace_workspace_change", function(env)
 	if initialized then
 		refresh(env.FOCUSED_WORKSPACE)
 	else
-		initialize()
+		initialize(false)
 	end
 end)
 bootstrap:subscribe({ "front_app_switched", "space_windows_change", "system_woke" }, function()
 	if initialized then
 		refresh()
 	else
-		initialize()
+		initialize(false)
 	end
 end)
 
