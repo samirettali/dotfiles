@@ -38,7 +38,11 @@ local function update(info)
 	current_track_id = id
 	spotify:set({
 		drawing = true,
-		label = { string = ("%s — %s"):format(title, artist) },
+		-- Dimmed while paused, as the volume item is while muted.
+		label = {
+			string = ("%s — %s"):format(title, artist),
+			color = state:lower() == "paused" and colors.grey70 or colors.white,
+		},
 	})
 	media_separator:set({ drawing = true })
 end
