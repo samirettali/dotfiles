@@ -20,7 +20,7 @@
   };
 
   home.shellAliases = {
-    ls = "${lib.getExe' pkgs.coreutils "ls"} --color=always --group-directories-first";
+    ls = "${lib.getExe' pkgs.coreutils "ls"} --color=auto --group-directories-first";
     iip = "dig +short myip.opendns.com @resolver1.opendns.com";
     jj = "${vars.commands.paste} | ${lib.getExe pkgs.jq} -r | ${vars.commands.copy}";
     jjj = "${vars.commands.paste} | ${lib.getExe pkgs.jq} -r";
