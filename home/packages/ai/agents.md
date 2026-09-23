@@ -10,7 +10,7 @@
 
 ## What I know
 
-Pitch explanations with this, not the work itself. Go as technical as you like on the first block. On the last, compare the unfamiliar thing to something I already know. Never turn a request to build something into a lesson about it.
+Pitch explanations with this, not the work itself. Explain anything in the first list at full depth; explain anything in the last list by comparing it to something from the first. Never turn a request to build something into a lesson about it.
 
 Deep, and daily:
 
