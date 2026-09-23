@@ -105,11 +105,6 @@ local fetch_buf_name = function(bufnr)
 		return "Pager"
 	elseif filetype == "help" and not buf.modifiable then
 		return " " .. vim.fn.fnamemodify(buf_name, ":t")
-	elseif string.match(filetype, "^codediff") then
-		return vim.fn.fnamemodify(buf_name, ":t")
-	elseif string.match(buf_name, "^codediff://") then
-		-- Diff buffers are handled especially
-		return vim.fn.fnamemodify(buf_name, ":t")
 	elseif buf_name == "" then
 		-- Avoid empty bufs
 		return "[No Name]"
@@ -246,7 +241,7 @@ local cleanup_bufs = function(base_bufs)
 			base.name = path_aliases[base.name]
 		end
 
-		if vim.wo[base.winnr].diff or api.nvim_buf_get_name(base.bufnr):match("^codediff") then
+		if vim.wo[base.winnr].diff then
 			base.name = " " .. base.name
 		end
 

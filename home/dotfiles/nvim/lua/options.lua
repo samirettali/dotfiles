@@ -20,7 +20,6 @@ if os.getenv("SSH_TTY") then
 	vim.g.clipboard = "osc52"
 end
 vim.opt.signcolumn = "yes"
--- vim.opt.diffopt = "internal,filler,closeoff,algorithm:histogram,context:5,linematch:60" -- TODO: read docs
 -- vim.opt.statusline = '[%n] %<%f %h%w%m%r%=%-14.(%l,%c%V%) %P' -- https://github.com/y9san9/y9san9.nvim/blob/main/init.lua
 vim.opt.completeopt = {
 	"menu",
