@@ -40,8 +40,8 @@ discard changes as a side effect of closing a child.
 | --- | --- | --- |
 | worker | Claude Code (`claude`) | `claude-opus-5` |
 | reviewer | Claude Code (`claude`) | `claude-opus-5` |
-| scout | agy (`agy`) | `gemini-3.8-flash-high` |
-| researcher | agy (`agy`) | `gemini-3.8-flash-high` |
+| scout | pi (`pi`) | `openrouter/google/gemini-3.8-flash`, thinking `high` |
+| researcher | pi (`pi`) | `openrouter/google/gemini-3.8-flash`, thinking `high` |
 
 User overrides win. Every child inherits the **whole effective role policy**,
 including unchanged roles and overrides for roles it may later recruit. Never

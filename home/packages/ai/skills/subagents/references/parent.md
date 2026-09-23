@@ -7,7 +7,7 @@ follow `herdr --skill`, and discover the installed CLI before controlling panes.
 
 Resolve the effective **whole role policy**, including unchanged roles, before
 spawning. Discover valid model IDs and native CLI arguments from the selected
-harness (for example `agy models`, `agy --help`, `claude --help`). Do not guess
+harness (for example `pi --list-models`, `pi --help`, `claude --help`). Do not guess
 identifiers, silently substitute models, or use a moving alias in place of a
 specified version. If an override names a model but leaves its harness ambiguous,
 ask before launching. If a requested model is unavailable, report it to your

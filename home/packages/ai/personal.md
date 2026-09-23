@@ -7,7 +7,6 @@
 - sops — secrets
 - nix and home-manager — everything declared
 - NUR — where I publish my own packages
-- agy (Antigravity CLI) — work outside the code: LinkedIn links, notes from podcasts and YouTube tech talks into the Obsidian vault, throwaway scripts that are not meant to stay. On trial: whether it writes code well is still an open question.
 
 ## Where I keep things
 

@@ -25,7 +25,6 @@
 in {
   imports = [
     ./agents.nix
-    ./antigravity-cli.nix
     ./claude-code.nix
     ./codex.nix
     ./firecrawl.nix

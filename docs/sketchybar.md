@@ -61,7 +61,7 @@ Poll each provider every minute while healthy and every 15 seconds during an inc
 
 ## AI subscription usage
 
-`items/ai_usage.lua` keeps one usage icon visible and puts every Claude, Codex and Antigravity limit in its popup.
+`items/ai_usage.lua` keeps one usage icon visible and puts every Claude and Codex limit in its popup.
 Each row is a Sketchybar slider: window on the left, filled bar, percentage on the right.
 The icon, the bar and the percentage turn yellow at 70% and red at 90%.
 Round fractional usage up and add popup rows as providers expose them.
@@ -116,18 +116,6 @@ The script borrows credentials owned by the corresponding CLI:
 
 - Codex stores its token in `~/.codex/auth.json`.
   Fetch `chatgpt.com/backend-api/wham/usage`.
-- Antigravity stores its Google OAuth token in the login keychain under service `gemini`, account `antigravity`,
-  as go-keyring base64 JSON with an `expiry`.
-  Post `{}` to `daily-cloudcode-pa.googleapis.com/v1internal:retrieveUserQuotaSummary`
-  with a `User-Agent` that names Antigravity, or the API answers `SUBSCRIPTION_REQUIRED`.
-  That daily host is the one the CLI uses; `cloudcode-pa.googleapis.com` keeps a separate pool with other reset times.
-  Gemini models and the Claude and GPT models are metered apart, so each group is its own section keyed `agy.<group>`.
-  The percentage shown is `1 - remainingFraction`, and the weekly bucket is reordered after the 5-hour one.
-
-The Antigravity token lives about an hour and only the CLI refreshes it.
-When it has expired, or the request comes back 401 or 403, fall back to `agy --log-file /dev/null -p /usage --output-format json`,
-which refreshes the keychain and returns the same groups in snake_case in about four seconds.
-Keep `--log-file /dev/null`: every print-mode run otherwise opens a new log file under `~/.gemini/antigravity-cli/log`.
 
 Label windows by duration (`5h`, `1d`, or `7d`), not from primary or secondary position.
 The number and order of returned windows can change.

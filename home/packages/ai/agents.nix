@@ -13,6 +13,5 @@ in {
     ".claude/CLAUDE.md".text = content;
     ".codex/AGENTS.md".text = content;
     ".pi/agent/AGENTS.md".text = content;
-    ".gemini/config/AGENTS.md".text = content;
   };
 }

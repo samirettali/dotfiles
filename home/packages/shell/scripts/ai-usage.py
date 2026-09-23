@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Subscription usage for Claude, Codex and Antigravity, as JSON.
+"""Subscription usage for Claude and Codex, as JSON.
 
 Each provider only exposes this to its own OAuth session, so the credentials
-are borrowed from the CLIs: Claude Code and Antigravity keep their tokens in
-the login keychain, Codex in ~/.codex/auth.json.
+are borrowed from the CLIs: Claude Code keeps its token in the login keychain,
+Codex in ~/.codex/auth.json.
 
 Claude arrives in two pieces. The plan's own windows come free of charge from
 Claude Code's statusLine command, which writes what it already holds to
@@ -15,7 +15,6 @@ them and it has to be asked.
 
 from __future__ import annotations
 
-import base64
 import datetime
 import json
 import os
@@ -45,16 +44,9 @@ CLAUDE_SCOPED_FILE = os.path.expanduser("~/.cache/sketchybar/claude-scoped.json"
 CLAUDE_STATE_FILE = os.path.expanduser("~/.claude.json")
 CLAUDE_USAGE_URL = "https://api.anthropic.com/api/oauth/usage"
 CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage"
-# The daily host is the one the CLI talks to; cloudcode-pa.googleapis.com
-# answers too, but with a separate quota pool and different reset times.
-AGY_USAGE_URL = "https://daily-cloudcode-pa.googleapis.com/v1internal:retrieveUserQuotaSummary"
 
 CLAUDE_PAGE = "https://claude.ai/settings/usage"
 CODEX_PAGE = "https://chatgpt.com/codex/settings/usage"
-AGY_PAGE = "https://antigravity.google/g1-activity"
-
-# The Antigravity CLI fallback starts a whole session before answering.
-AGY_TIMEOUT = 30
 
 def epoch(value: object) -> int | None:
     """Reset instants leave here as Unix seconds, whatever shape the API sent."""
@@ -344,143 +336,8 @@ def codex() -> dict:
     return {"key": "codex", "name": "Codex", "url": CODEX_PAGE, "windows": windows}
 
 
-def agy_error(message: str) -> list[dict]:
-    return [{"key": "agy", "name": "Antigravity", "url": AGY_PAGE, "error": message}]
-
-
-def agy_token() -> tuple[str | None, bool]:
-    """The access token and whether it is still valid, or (None, False)."""
-    try:
-        raw = subprocess.run(
-            ["/usr/bin/security", "find-generic-password", "-s", "gemini", "-a", "antigravity", "-w"],
-            capture_output=True,
-            text=True,
-            timeout=TIMEOUT,
-        )
-    except (OSError, subprocess.SubprocessError):
-        return None, False
-    if raw.returncode != 0:
-        return None, False
-    try:
-        # go-keyring stores what the CLI gave it, base64 behind a prefix.
-        encoded = raw.stdout.strip().removeprefix("go-keyring-base64:")
-        token = json.loads(base64.b64decode(encoded))["token"]
-        access = token["access_token"]
-        expiry = epoch(token.get("expiry"))
-    except (ValueError, KeyError, TypeError):
-        return None, False
-    return access, expiry is None or expiry > time.time() + 30
-
-
-def agy_providers(groups: list[dict]) -> list[dict]:
-    """The HTTP response spells its keys in camelCase, the CLI in snake_case."""
-
-    def pick(mapping: dict, *keys: str) -> object:
-        for key in keys:
-            if key in mapping:
-                return mapping[key]
-        return None
-
-    providers = []
-    for group in groups:
-        name = pick(group, "displayName", "name") or ""
-        if not name:
-            continue
-        # "Gemini Models" and "Claude and GPT models" read better as
-        # "Antigravity Gemini" and "Antigravity Claude and GPT".
-        short = name[: -len(" models")] if name.lower().endswith(" models") else name
-        windows = []
-        for bucket in group.get("buckets") or []:
-            window = bucket.get("window")
-            label = "7d" if window == "weekly" else window
-            remaining = pick(bucket, "remainingFraction", "remaining_fraction")
-            if not label or not isinstance(remaining, (int, float)):
-                continue
-            windows.append(
-                {
-                    "label": label,
-                    "percent": (1 - remaining) * 100,
-                    "resets_at": epoch(pick(bucket, "resetTime", "reset_time")),
-                }
-            )
-        # Antigravity lists the weekly bucket first; the other providers put the
-        # short window on top, so the popup keeps one order throughout.
-        windows.sort(key=lambda window: window["label"] != "5h")
-        providers.append(
-            {
-                "key": "agy." + short.lower().replace(" ", "-"),
-                "name": f"Antigravity {short}",
-                "url": AGY_PAGE,
-                "windows": windows,
-            }
-        )
-    return providers or agy_error("no quota groups")
-
-
-def agy_from_cli() -> list[dict]:
-    """Ask the Antigravity CLI, which refreshes the keychain token on the way.
-
-    `/usage` in print mode returns the same quota groups as the endpoint, in a
-    few seconds rather than a fraction of one, so it is the fallback.
-    """
-    try:
-        # Every print-mode run opens a fresh log file under ~/.gemini; a poller
-        # would leave hundreds a day behind.
-        raw = subprocess.run(
-            ["agy", "--log-file", "/dev/null", "-p", "/usage", "--output-format", "json"],
-            capture_output=True,
-            text=True,
-            timeout=AGY_TIMEOUT,
-        )
-    except (OSError, subprocess.SubprocessError) as error:
-        return agy_error(str(error))
-    if raw.returncode != 0:
-        return agy_error(f"exit {raw.returncode}")
-    try:
-        payload = json.loads(raw.stdout)
-    except ValueError:
-        return agy_error("no json from agy")
-    if payload.get("status") != "SUCCESS":
-        return agy_error(payload.get("status") or "no status")
-    return agy_providers(((payload.get("command") or {}).get("data") or {}).get("groups") or [])
-
-
-def agy() -> list[dict]:
-    """Each quota group (Gemini models, Claude and GPT models) has its own
-    weekly and 5-hour buckets, so each becomes its own provider section, as
-    the model-scoped Claude caps do.
-    """
-    token, valid = agy_token()
-    if not token or not valid:
-        # Nothing here refreshes the token: the CLI owns it, and a second
-        # writer to the keychain would race with it.
-        return agy_from_cli()
-
-    try:
-        # The endpoint is the one the CLI's own /usage draws. It answers with
-        # SUBSCRIPTION_REQUIRED unless the User-Agent names Antigravity.
-        request = urllib.request.Request(
-            AGY_USAGE_URL,
-            data=b"{}",
-            headers={
-                "Authorization": f"Bearer {token}",
-                "Content-Type": "application/json",
-                "User-Agent": "antigravity-cli",
-            },
-        )
-        with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
-            payload = json.load(response)
-    except urllib.error.HTTPError as error:
-        if error.code in (401, 403):
-            return agy_from_cli()
-        return agy_error(f"http {error.code}")
-    except (urllib.error.URLError, TimeoutError, ValueError) as error:
-        return agy_error(str(error))
-    return agy_providers(payload.get("groups") or [])
-
-
 def main() -> int:
-    providers = {"claude": claude, "codex": codex, "agy": agy}
+    providers = {"claude": claude, "codex": codex}
     requested = sys.argv[1:] or list(providers)
     unknown = [key for key in requested if key not in providers]
     if unknown:

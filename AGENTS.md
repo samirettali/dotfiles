@@ -131,7 +131,7 @@ Read the matching document before changing that subsystem:
 `home/packages/ai/agents.md` is the instruction file every agent shares.
 `agents.nix` appends `personal.md`, `projects.md` and, under "This machine",
 `machines/<host>.md`, then writes the result to `~/.claude/CLAUDE.md`,
-`~/.codex/AGENTS.md`, `~/.pi/agent/AGENTS.md` and `~/.gemini/config/AGENTS.md`:
+`~/.codex/AGENTS.md` and `~/.pi/agent/AGENTS.md`:
 read-only store symlinks that change on the next switch.
 
 The work Mac builds it from `chezmoi/.chezmoitemplates/agents-md`, which leaves

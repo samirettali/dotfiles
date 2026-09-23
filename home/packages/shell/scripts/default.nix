@@ -29,7 +29,6 @@ in {
       (pkgs.callPackage ./pi-models.nix {})
       (pkgs.callPackage ./ai-usage.nix {
         inherit (nurPkgs) codex;
-        antigravity-cli = config.programs.antigravity-cli.package;
       })
       # (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
       (pkgs.writeShellScriptBin "chezmoi-render" (builtins.readFile "${scriptsDir}/chezmoi-render.sh"))
