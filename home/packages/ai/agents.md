@@ -49,6 +49,7 @@ Never written a line myself, only through agents:
 - direnv — per-project environments
 - spotctl — Spotify CLI
 - uv — Python
+- HHKB Pro 2 — keyboard: no arrow, function or media keys of its own, only volume and mute through Fn. I switch between the U.S. and Italian - Pro layouts, where ⌥ with a key types a character, so a global shortcut needs ⌃ too.
 
 ## Working with me
 
