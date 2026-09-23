@@ -46,6 +46,13 @@
   },
   "promptSuggestionEnabled": false,
   "skillOverrides": {
+    "anthropic-skills:docx": "off",
+    "anthropic-skills:import-memory": "off",
+    "anthropic-skills:morning": "off",
+    "anthropic-skills:pdf": "off",
+    "anthropic-skills:pptx": "off",
+    "anthropic-skills:skill-creator": "off",
+    "anthropic-skills:xlsx": "off",
     "claude-api": "user-invocable-only",
     "fewer-permission-prompts": "off",
     "init": "user-invocable-only",
