@@ -28,6 +28,8 @@ in {
     enable = lib.mkDefault true;
     package = pkgs.callPackage "${inputs.samirettali-nur}/pkgs/claude-code" {}; # TODO: fix
     enableMcpIntegration = true;
+    # Only Claude Code can sign in to claude.ai, which Claude Design needs.
+    mcpServers.claude-design.url = "https://api.anthropic.com/v1/design/mcp";
     skills = import ./coding-agent-skills.nix {inherit inputs pkgs;};
     settings = {
       model = "claude-opus-5-5";
