@@ -69,4 +69,4 @@ moving to the next topic.
 
 ## Related
 
-**code-review** covers how to word findings once you have them.
+**review-comments** covers how to word findings once you have them.

@@ -5,6 +5,8 @@
 .codex/skills/code-review/SKILL.md
 .codex/skills/code-review/agents/openai.yaml
 .codex/skills/hunk/SKILL.md
+# Renamed to review-comments.
+.claude/skills/code-review
 # Neovim files the config no longer has; server defaults now come from nvim-lspconfig.
 .config/nvim/after/ftplugin
 .config/nvim/after/plugin

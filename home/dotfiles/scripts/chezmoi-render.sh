@@ -36,7 +36,7 @@ files=(
 directories=(
     .config/nvim
     .claude/skills/commit
-    .claude/skills/code-review
+    .claude/skills/review-comments
     .claude/skills/hunk
 )
 

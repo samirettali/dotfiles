@@ -30,7 +30,7 @@ Return a focused map useful to the worker, not a dump of everything read.
 ## Reviewer
 
 Independently inspect the assigned diff or behavior without modifying the repository.
-Use the shared code-review skill for findings. Prioritize concrete correctness,
+Use the shared review-comments skill for findings. Prioritize concrete correctness,
 security, regression, and missing-test issues; cite file/line evidence and explain
 impact. Separate verified defects from questions or untested hypotheses.
 

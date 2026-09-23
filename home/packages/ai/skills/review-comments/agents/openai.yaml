@@ -1,0 +1,3 @@
+interface:
+  display_name: "Review Comments"
+  short_description: "Write code review findings as Conventional Comments"

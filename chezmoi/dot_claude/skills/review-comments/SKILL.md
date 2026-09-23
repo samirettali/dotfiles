@@ -1,7 +1,6 @@
 ---
-name: code-review
-disable-model-invocation: true
-description: Write the findings of a code review — of a pull request, a branch, or a diff — as Conventional Comments. Use when reviewing changes and reporting what is wrong with them, whether the comments go on the pull request or into a message. For prose that is not a review, use writing.
+name: review-comments
+description: Write the findings of a code review — of a pull request, a branch, or a diff — as Conventional Comments. Use when reviewing changes and reporting what is wrong with them, whether the comments go on the pull request or into a message.
 ---
 
 # Code review
