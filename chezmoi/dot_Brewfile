@@ -1,7 +1,5 @@
 tap "common-fate/granted"
 tap "hashicorp/tap"
-tap "homebrew/bundle"
-tap "homebrew/services"
 tap "marcfrederick/tap"
 tap "modem-dev/tap"
 tap "ngrok/ngrok"
