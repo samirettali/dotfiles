@@ -36,7 +36,7 @@ in {
 
   home.shellAliases = lib.mkIf config.programs.git.enable {
     gc = "${exe} clone";
-    gr = "cd $(${exe} rev-parse --show-toplevel) || echo 'Not in a git repository'";
+    gr = "cd \"$(${exe} rev-parse --show-toplevel)\"";
   };
 
   programs = {
