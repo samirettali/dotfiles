@@ -23,10 +23,9 @@ Other agents run CLI binaries, which do not need these GUI grants.
 
 Store-path wrappers are harmless for applications signed with a stable Team ID.
 
-Helium is not one of them: it is re-signed ad-hoc so it can load the Widevine CDM,
-which leaves it with path identity. `BROWSER_BIN` therefore points at the copied
-application, and a version bump costs its camera, microphone and screen recording
-grants. See `docs/helium.md`.
+Helium is re-signed ad hoc in the store so it can load the Widevine CDM, then
+re-signed with the Developer ID after `copyApps`, so its grants survive version
+bumps. `BROWSER_BIN` points at that copied application. See `docs/helium.md`.
 
 ## Diagnosis and recovery
 

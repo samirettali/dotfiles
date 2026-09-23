@@ -54,18 +54,40 @@ await navigator.requestMediaKeySystemAccess('com.widevine.alpha', [{
 `CreateCdmFunc not available` means the CDM was found but refused; the reason is
 in the browser's stderr under `--enable-logging=stderr --v=1`.
 
-## What the ad-hoc signature costs
+## The Developer ID signature
 
-An ad-hoc signed application has no Team ID, so macOS identifies it by path — see
-`docs/macos-tcc.md`. Two consequences, both on every version bump:
+An ad-hoc signed application has no Team ID, so macOS identifies it by cdhash —
+see `docs/macos-tcc.md`. Every version bump used to cost the camera, microphone
+and screen recording grants, and the `Helium Safe Storage` Keychain item: the
+first launch prompted for the login password, and denying it left saved
+passwords and cookies undecryptable.
 
-- Camera, microphone and screen recording grants are asked for again.
-- The `Helium Safe Storage` Keychain item no longer matches the app, so the
-  first launch prompts for the login password. Denying it leaves saved
-  passwords and cookies in the profile undecryptable.
+The store copy is still signed ad hoc, because nix builds as `_nixbld`, which
+cannot reach the login Keychain (`no identity found`). The `signHelium`
+activation in `helium.nix` re-signs the copied bundle instead, with
+`Developer ID Application: Samir Ettali (22K9H4B864)`, inside-out like the NUR
+package. Grants now follow the designated requirement — bundle identifier plus
+Team ID — which survives version bumps.
 
-`BROWSER_BIN` points at the `copyApps` copy, not the store path, so an unrelated
-rebuild does not move the browser out from under those grants.
+- `copyApps` restores the store's bytes on every activation, so the signature is
+  redone every time; it takes about a second.
+- It adds `com.apple.security.device.audio-input` and `.camera`, which
+  upstream's own signature carries and the NUR package's set does not.
+- If codesign cannot reach the identity, activation warns and the app keeps the
+  ad-hoc signature, with the old per-bump cost.
+- The NUR package is untouched: its `signingIdentity` would sign inside the
+  build, which is exactly what `_nixbld` cannot do.
+
+A grant made for an earlier signature can linger and deny in silence. Reset it
+once and grant again on the next launch:
+
+```sh
+tccutil reset Microphone net.imput.helium
+tccutil reset Camera net.imput.helium
+```
+
+`BROWSER_BIN` points at the `copyApps` copy, not the store path, so agents use the
+signed bundle.
 
 ## Extensions
 
