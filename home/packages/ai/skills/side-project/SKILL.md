@@ -28,9 +28,10 @@ relative to this skill:
 | Environments, authentication/access, hostnames, or infrastructure | [Infrastructure and access](references/infrastructure.md) |
 | Interface behavior | [UX defaults](references/ux.md) |
 
-Infrastructure follows validation. A prototype runs on andromeda through an
-SSH port-forward, with no deployment infrastructure; consult the environment
-reference when setting it up or opening access. Resources owned by a project
+Infrastructure follows validation. A prototype runs on andromeda, reached
+directly at `http://andromeda:<port>`, with no deployment infrastructure; a
+project worked on over many sessions gets a dev hostname. Consult the
+environment reference when setting it up or opening access. Resources owned by a project
 belong with that project; shared account resources belong in `infra`.
 
 ## Repo conventions

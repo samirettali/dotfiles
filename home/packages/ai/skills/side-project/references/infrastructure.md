@@ -5,17 +5,22 @@
 Infrastructure follows validation, not the other way around. Most side projects
 die young; don't pay for infra they will never need.
 
-1. **Prototype** — run directly on the dev host (andromeda), reach it over an
-   SSH port-forward. No proxy, no secrets management, no OpenTofu, no deploy.
-   `localhost` is a secure context, so anything needing `crypto.subtle` works
-   through the forward.
+1. **Prototype** — run directly on the dev host (andromeda), bound to
+   `0.0.0.0` and reached at `http://andromeda:<port>` over the tailnet; Vite also
+   needs `andromeda` in `server.allowedHosts`. No proxy, no secrets management,
+   no OpenTofu, no deploy. That origin is plain HTTP, not a secure context:
+   `crypto.subtle`, the clipboard API and service workers do not work there. A
+   prototype that needs them forwards the port for that session (`ssh -L`), or
+   moves to Dev.
    **Auth is stubbed**: the current-user lookup lives in exactly one seam
    (verifier/middleware) and an env-gated mode (`AUTH_MODE=stub`) resolves a
    fixed seeded user. The server must **refuse to start** in stub mode outside
    dev environments. Multi-user flows cannot be validated this way — if
    multi-user *is* the product, bring real auth forward.
-2. **Dev** — a tailnet-only HTTPS hostname through the shared proxy in
-   `servers/side-proxy`, and a real identity provider managed in `infra/dev/`.
+2. **Dev** — for a project worked on over many sessions: a tailnet-only HTTPS
+   hostname through the shared proxy in `servers/side-proxy`, with the dev
+   server on loopback behind it, and a real identity provider managed in
+   `infra/dev/`.
 3. **Staging** — **only when it needs its own data.** Payments to exercise with
    test cards, a migration to rehearse, a demo that must not touch real records.
    Separate database, migrations applied by a `migrate` service on deploy,
