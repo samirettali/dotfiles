@@ -1,6 +1,6 @@
 ---
 name: add-skill
-description: Add an Agent Skill (SKILL.md) from a GitHub repo to this dotfiles repo so it's installed for all coding agents (Claude Code, Codex, pi). Use when the user asks to add/install a skill, points at a skill repo, or says something like "configure <repo> skill".
+description: Add an Agent Skill (SKILL.md) from a GitHub repo to this dotfiles repo so it's installed for every coding agent (Claude Code, Codex, pi). Use when the user asks to add/install a skill, points at a skill repo, or says something like "configure <repo> skill".
 ---
 
 # Add a skill to the dotfiles
@@ -13,11 +13,15 @@ walks through adding a new one end-to-end.
 
 - `flake.nix` — each skill source is a `flake = false` input (`github:owner/repo`).
   `inputs` is threaded into home-manager modules via `extraSpecialArgs`.
-- `home/packages/shell/coding-agent-skills.nix` — the single source of truth:
-  `{inputs}: { <name> = "<dir-with-SKILL.md>"; }`. Every agent imports it:
-  - Claude Code: `programs.claude-code.skills` (`home/packages/shell/claude-code.nix`)
-  - Codex: `programs.codex.skills` (`home/packages/dev/default.nix`)
-  - pi: symlinked into `~/.pi/agent/skills/<name>` (`home/packages/shell/pi-coding-agent/default.nix`)
+- `home/packages/ai/coding-agent-skills.nix` — the single source of truth:
+  `{inputs, pkgs}: { <name> = "<dir-with-SKILL.md>"; }`. Every agent imports it:
+  - Claude Code: `programs.claude-code.skills` (`home/packages/ai/claude-code.nix`)
+  - Codex: `programs.codex.skills` (`home/packages/ai/codex.nix`)
+  - pi: linked into `~/.pi/agent/skills/<name>` (`home/packages/ai/pi-coding-agent/default.nix`)
+- A skill that should run only when invoked by name goes through
+  `manualSkill "<name>" <source>` in the same file: it sets
+  `disable-model-invocation` in SKILL.md and Codex's
+  `allow_implicit_invocation: false`. See `docs/ai/skill-invocation.md`.
 
 So adding a skill = add one input + add one line to the shared list.
 
@@ -56,11 +60,13 @@ So adding a skill = add one input + add one line to the shared list.
 
 5. **Lock it:** `nix flake lock` (adds the input to `flake.lock` at the current HEAD).
 
-6. **Add to the shared list** in `home/packages/shell/coding-agent-skills.nix`,
+6. **Add to the shared list** in `home/packages/ai/coding-agent-skills.nix`,
    one entry per chosen skill:
    ```nix
    <name> = "${inputs.<input>}/<rel-dir>";
    ```
+   Wrap it as `"${manualSkill "<name>" "${inputs.<input>}/<rel-dir>"}"` if it
+   should only run on explicit invocation.
 
 7. **Make new/edited files visible to the flake.** The flake reads the git tree,
    so any *new* file must be staged or Nix won't see it: `git add -N <file>`
@@ -79,7 +85,7 @@ So adding a skill = add one input + add one line to the shared list.
 ## Apply (tell the user; don't run unprompted)
 
 ```
-nix run nix-darwin -- switch --flake .#mbp
+make build
 ```
 
 Update later with `nix flake update <input>` (one) or `nix flake update` (all).
