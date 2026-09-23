@@ -23,8 +23,6 @@ require("vim._core.ui2").enable()
 
 require("ui.tabline")
 require("autocmds")
-require("plugins.nightfly")
-require("plugins.auto-dark-mode")
 
 require("lsp")
 
