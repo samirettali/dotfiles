@@ -14,11 +14,9 @@
 
   home.packages = with pkgs; [
     betterdisplay
-    hidden-bar
     mongodb-compass
     nurPkgs.eqmac
     nurPkgs.mole
-    nurPkgs.sol
     nurPkgs.sottomano
     nurPkgs.sottovoce
     nurPkgs.t3code
