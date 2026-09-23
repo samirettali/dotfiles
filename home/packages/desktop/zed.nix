@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   vars,
   pkgs,
@@ -102,7 +103,7 @@
         default_view = "thread";
         default_model = {
           provider = "anthropic";
-          model = "claude-opus-5";
+          model = "claude-opus-5-5";
         };
         tool_permissions = {
           default = "allow";
@@ -112,7 +113,8 @@
       agent_servers = {
         "Claude Code" = {
           type = "custom";
-          command = lib.getExe pkgs.claude-agent-acp;
+          # Wraps the claude-code configured here, not a second copy from nixpkgs.
+          command = lib.getExe (pkgs.claude-agent-acp.override {claude-code = config.programs.claude-code.package;});
           args = [];
         };
       };
