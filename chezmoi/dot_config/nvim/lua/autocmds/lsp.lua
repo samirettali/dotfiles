@@ -65,10 +65,6 @@ local on_lsp_attach = function(ev)
 		vim.wo[win].foldexpr = vim.lsp.foldexpr
 	end
 
-	if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentColor) then
-		vim.lsp.document_color.enable(true, { client_id = client.id, bufnr = ev.buf }, { style = "background" })
-	end
-
 	if client:supports_method(vim.lsp.protocol.Methods.textDocument_linkedEditingRange) then
 		vim.lsp.linked_editing_range.enable(true, { client_id = client.id, bufnr = ev.buf })
 	end

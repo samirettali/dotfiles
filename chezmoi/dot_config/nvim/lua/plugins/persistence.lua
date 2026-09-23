@@ -31,16 +31,14 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end,
 })
 
--- select a session to load
 vim.keymap.set("n", "<leader>sc", function()
 	require("persistence").select()
-end)
+end, { desc = "Persistence: choose a session" })
 
 vim.keymap.set("n", "<leader>sl", function()
 	require("persistence").load()
-end)
+end, { desc = "Persistence: load this directory's session" })
 
--- select a session to load
 vim.keymap.set("n", "<leader>ss", function()
 	require("persistence").save()
-end)
+end, { desc = "Persistence: save the session" })

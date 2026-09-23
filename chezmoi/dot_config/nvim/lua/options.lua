@@ -6,7 +6,6 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.undofile = true
 vim.opt.swapfile = false
-vim.opt.autoread = true
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 5
 vim.opt.splitbelow = true
@@ -14,7 +13,6 @@ vim.opt.splitright = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.laststatus = 3
-vim.opt.cmdheight = 1
 vim.opt.clipboard = "unnamedplus"
 if os.getenv("SSH_TTY") then
 	vim.g.clipboard = "osc52"
@@ -29,7 +27,6 @@ vim.opt.completeopt = {
 	"popup",
 }
 vim.opt.path:append("**")
-vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full,full"
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.shortmess:append("c")
