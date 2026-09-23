@@ -34,11 +34,11 @@ in {
     settings = {
       model = "claude-opus-5-5";
       effortLevel = "high";
-      includeCoAuthoredBy = false;
+      attribution.commit = "";
+      attribution.pr = "";
       # Remote Control sessions otherwise append a Claude-Session trailer to
       # every commit and a session link to every pull request body.
       attribution.sessionUrl = false;
-      feedbackSurveyRate = 0;
       theme = "auto";
       skipDangerousModePermissionPrompt = true;
       tui = "fullscreen";
@@ -49,7 +49,6 @@ in {
       enableArtifact = false;
       autoMemoryEnabled = false;
       disableClaudeAiConnectors = true;
-      toolSearchEnabled = true;
       disableWorkflows = true;
       cleanupPeriodDays = 3650;
       # bundled skills: "user-invocable-only" leaves the model's prompt but
