@@ -55,7 +55,7 @@ local function add_provider_header(key)
 		icon = {
 			string = provider_names[key],
 			color = colors.white,
-			font = { family = "JetBrainsMonoNL Nerd Font", style = "Bold" },
+			font = { family = FONT, style = "Bold" },
 			padding_right = 2,
 		},
 		label = {
@@ -108,7 +108,7 @@ local function rebuild_view()
 			local row = add_popup("slider", ("usage.%s.%d"):format(key, index), BAR_WIDTH, {
 				position = "popup.usage",
 				icon = {
-					font = { family = "JetBrainsMonoNL Nerd Font" },
+					font = { family = FONT },
 					color = colors.grey70,
 					width = 142,
 					align = "left",

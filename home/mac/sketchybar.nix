@@ -4,6 +4,7 @@
   pkgs,
   inputs,
   nurPkgs,
+  vars,
   ...
 }: let
   sketchybarExe = lib.getExe config.programs.sketchybar.package;
@@ -79,6 +80,8 @@ in {
         #!/usr/bin/env ${lib.getExe config.programs.sketchybar.luaPackage}
         SKETCHYBAR_BIN = "${sketchybarExe}"
         HERDR_BIN = "${lib.getExe herdrPackage}"
+        -- vars.font in flake.nix, shared with Ghostty, Zed and sottomano.
+        FONT = "${vars.font.name}"
         AI_USAGE_BIN = "${lib.getExe aiUsage}"
         require("init")
       '';

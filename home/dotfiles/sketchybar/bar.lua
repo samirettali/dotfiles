@@ -10,14 +10,13 @@ sbar.bar({
 	shadow = true,
 })
 
-local font = "JetBrainsMonoNL Nerd Font"
 local style = "Regular"
 
 sbar.default({
 	updates = "when_shown",
 	icon = {
 		font = {
-			family = "JetBrainsMono Nerd Font",
+			family = FONT,
 			style = style,
 			size = 14,
 		},
@@ -27,7 +26,7 @@ sbar.default({
 	},
 	label = {
 		font = {
-			family = font,
+			family = FONT,
 			style = style,
 			size = 14,
 		},
