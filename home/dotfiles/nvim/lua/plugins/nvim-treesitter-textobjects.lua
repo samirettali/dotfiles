@@ -56,13 +56,6 @@ vim.keymap.set({ "x", "o" }, "i=", function()
 	select.select_textobject("@assignment.inner", "textobjects")
 end, { desc = "inside an assignment" })
 
-vim.keymap.set({ "x", "o" }, "l=", function()
-	select.select_textobject("@assignment.lhs", "textobjects")
-end, { desc = "left-hand side of an assignment" })
-vim.keymap.set({ "x", "o" }, "r=", function()
-	select.select_textobject("@assignment.rhs", "textobjects")
-end, { desc = "right-hand side of an assignment" })
-
 -- Movement between objects
 vim.keymap.set("n", "[f", function()
 	move.goto_previous_start("@function.outer", "textobjects")
