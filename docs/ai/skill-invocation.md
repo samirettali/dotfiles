@@ -1,10 +1,12 @@
 # Manual skill invocation
 
-These skills require explicit invocation rather than automatic discovery:
+A skill is manual when its SKILL.md sets `disable-model-invocation: true`. To
+list the manual skills an agent actually gets, search the deployed copies (they
+are symlinks, hence `-L`):
 
-- `autoresearch-create`, `autoresearch-finalize`, `autoresearch-hooks`
-- `generate-music`, `generate-speech`, `ideas`
-- `live-ui-variants`, `show-me`
+```sh
+rg -L -l 'disable-model-invocation: true' ~/.claude/skills ~/.pi/agent/skills
+```
 
 In pi, `disable-model-invocation: true` removes the name and description from
 the model's skill catalog. The skill remains available through `/skill:name`.
@@ -18,8 +20,8 @@ boundary.
 
 ## Where the policy lives
 
-Repository-owned skills declare it in their own metadata. Imported
-`show-me` skill passes through `manualSkill` in
+Repository-owned skills declare it in their own metadata. Imported skills that
+should be manual pass through `manualSkill` in
 `home/packages/ai/coding-agent-skills.nix`. That builder preserves their bodies,
 support files, and existing Codex metadata while setting both fields.
 
@@ -29,7 +31,7 @@ not the manifest, extension, or support files. Filtering the skills out of the
 package would also remove their slash commands, which is not the desired behavior.
 
 After `make build`, use `/reload` or start a new pi session. Verify that the
-listed skills remain discoverable as commands but not in `formatSkillsForPrompt`.
+manual skills remain discoverable as commands but not in `formatSkillsForPrompt`.
 All other skills retain their existing invocation policy.
 
 ## X search in pi
