@@ -2,25 +2,30 @@ local M = {}
 
 local api = vim.api
 
-M.get_mode_hl = function()
-	local mode = api.nvim_get_mode().mode
-	local mini_mode = "MiniStatuslineMode"
-
-	-- These groups are enabled because catppuccin detects mini.ai and enables all of mini's hl groups
-
+local function mode_suffix(mode)
 	if vim.startswith(mode, "i") or mode == "t" then
-		return mini_mode .. "Insert"
+		return "Insert"
 	elseif vim.startswith(mode, "n") then
-		return mini_mode .. "Normal"
+		return "Normal"
 	elseif vim.startswith(mode, "R") then
-		return mini_mode .. "Replace"
+		return "Replace"
 	elseif vim.startswith(mode:lower(), "v") then
-		return mini_mode .. "Visual"
+		return "Visual"
 	elseif mode == "c" then
-		return mini_mode .. "Command"
+		return "Command"
 	else
-		return mini_mode .. "Other"
+		return "Other"
 	end
+end
+
+-- Moonfly defines the MiniStatuslineMode* groups; the default colorscheme,
+-- used in light mode, does not.
+M.get_mode_hl = function()
+	local group = "MiniStatuslineMode" .. mode_suffix(api.nvim_get_mode().mode)
+	if next(api.nvim_get_hl(0, { name = group })) == nil then
+		return "TabLineSel"
+	end
+	return group
 end
 
 return M

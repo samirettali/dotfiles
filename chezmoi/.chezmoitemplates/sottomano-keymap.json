@@ -250,6 +250,7 @@
       },
       "key": "delete",
       "modifiers": [
+        "control",
         "option"
       ]
     },
@@ -264,6 +265,7 @@
       },
       "key": "[",
       "modifiers": [
+        "control",
         "option"
       ]
     },
@@ -278,6 +280,7 @@
       },
       "key": "]",
       "modifiers": [
+        "control",
         "option"
       ]
     }

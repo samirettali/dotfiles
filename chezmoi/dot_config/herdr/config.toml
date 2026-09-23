@@ -49,8 +49,6 @@ tab_inactive_fg = "darkgray"
 [ui]
 agent_panel_sort = "spaces"
 confirm_close = true
-detach_effect = "matrix"
-detach_effect_ms = 800
 hide_tab_bar_when_single_tab = false
 hide_tab_bar_with_tree_sidebar = true
 mobile_width_threshold = 68

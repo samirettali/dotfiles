@@ -5,4 +5,16 @@
 .codex/skills/code-review/SKILL.md
 .codex/skills/code-review/agents/openai.yaml
 .codex/skills/hunk/SKILL.md
+# Neovim files the config no longer has; server defaults now come from nvim-lspconfig.
+.config/nvim/after/ftplugin
+.config/nvim/after/plugin
+.config/nvim/bin
+.config/nvim/lsp
+.config/nvim/lua/plugins/auto-dark-mode.lua
+.config/nvim/lua/plugins/codediff.lua
+.config/nvim/lua/plugins/copilot.lua
+.config/nvim/lua/plugins/dap.lua
+.config/nvim/lua/plugins/nightfly.lua
+.config/nvim/lua/plugins/snippets
+.config/nvim/queries/go/return-snippet.scm
 {{ end }}

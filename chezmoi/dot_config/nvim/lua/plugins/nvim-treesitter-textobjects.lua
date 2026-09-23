@@ -56,13 +56,6 @@ vim.keymap.set({ "x", "o" }, "i=", function()
 	select.select_textobject("@assignment.inner", "textobjects")
 end, { desc = "inside an assignment" })
 
-vim.keymap.set({ "x", "o" }, "l=", function()
-	select.select_textobject("@assignment.lhs", "textobjects")
-end, { desc = "left-hand side of an assignment" })
-vim.keymap.set({ "x", "o" }, "r=", function()
-	select.select_textobject("@assignment.rhs", "textobjects")
-end, { desc = "right-hand side of an assignment" })
-
 -- Movement between objects
 vim.keymap.set("n", "[f", function()
 	move.goto_previous_start("@function.outer", "textobjects")
@@ -93,18 +86,11 @@ vim.keymap.set("n", "]C", function()
 	move.goto_next_end("@class.outer", "textobjects")
 end, { desc = "Next class end" })
 
-vim.keymap.set("n", "[p", function()
-	move.goto_previous_start("@parameter.inner", "textobjects")
-end, { desc = "Previous parameter" })
-vim.keymap.set("n", "]p", function()
-	move.goto_next_start("@parameter.inner", "textobjects")
-end, { desc = "Next parameter" })
-
 -- Swap objects
-vim.keymap.set("n", "g>", function()
+vim.keymap.set("n", "<leader>>", function()
 	swap.swap_next("@parameter.inner")
 end, { desc = "Swap parameter with next" })
-vim.keymap.set("n", "g<", function()
+vim.keymap.set("n", "<leader><", function()
 	swap.swap_previous("@parameter.inner")
 end, { desc = "Swap parameter with previous" })
 

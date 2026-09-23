@@ -91,9 +91,7 @@ local fetch_buf_name = function(bufnr)
 	local buf_name = api.nvim_buf_get_name(bufnr)
 	-- vim.notify(" Filetype: " .. filetype .. " Buftype: " .. buftype, vim.log.levels.INFO, { title = "Tabline Debug" })
 
-	if filetype == "fzf" then
-		return "  FZF"
-	elseif filetype == "oil" then
+	if filetype == "oil" then
 		return "oil"
 	elseif buftype == "terminal" then
 		local title = vim.b[bufnr].term_title
@@ -105,39 +103,8 @@ local fetch_buf_name = function(bufnr)
 		return "QuickFix"
 	elseif filetype == "pager" then
 		return "Pager"
-	elseif filetype == "NvimTree" then
-		return "NvimTree"
-	elseif filetype == "mason" then
-		return "Mason"
-	elseif filetype == "lazy" then
-		return "Lazy"
 	elseif filetype == "help" and not buf.modifiable then
 		return " " .. vim.fn.fnamemodify(buf_name, ":t")
-	elseif filetype == "dap-view" then
-		return "DAP View"
-	elseif filetype == "dap-repl" then
-		return "DAP REPL"
-	elseif filetype == "dap-float" then
-		return "DAP"
-	elseif filetype == "octo_panel" then
-		return "Octo Panel"
-	elseif string.match(buf_name, "^octo://") then
-		---@type string?
-		local is_pr = string.match(buf_name, "pull/%d+")
-		if is_pr then
-			return "  PR " .. is_pr:sub(6)
-		else
-			return "  " .. buf_name:gsub("octo:/.*/", "")
-		end
-	elseif string.match(filetype, "^Neogit") then
-		return filetype
-	elseif string.match(filetype, "^codediff") then
-		return vim.fn.fnamemodify(buf_name, ":t")
-	elseif buf_name == "kulala://ui" then
-		return "Kulala"
-	elseif string.match(buf_name, "^codediff://") then
-		-- Diff buffers are handled especially
-		return vim.fn.fnamemodify(buf_name, ":t")
 	elseif buf_name == "" then
 		-- Avoid empty bufs
 		return "[No Name]"
@@ -274,7 +241,7 @@ local cleanup_bufs = function(base_bufs)
 			base.name = path_aliases[base.name]
 		end
 
-		if vim.wo[base.winnr].diff or api.nvim_buf_get_name(base.bufnr):match("^codediff") then
+		if vim.wo[base.winnr].diff then
 			base.name = " " .. base.name
 		end
 
