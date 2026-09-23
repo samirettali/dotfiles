@@ -1,7 +1,6 @@
 require("plugins.snacks")
 require("plugins.persistence")
 require("plugins.quicker")
-require("plugins.wayfinder")
 require("plugins.obsidian")
 require("plugins.actions-preview")
 require("plugins.split")
