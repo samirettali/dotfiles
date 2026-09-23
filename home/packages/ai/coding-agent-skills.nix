@@ -62,7 +62,13 @@
 
   minifluxSkill = "${inputs.fluxctl}/.agents/skills/miniflux";
 
-  linkdingSkill = "${inputs.linkctl}/.agents/skills/linkding";
+  linkdingSkill = pkgs.runCommand "linkding-skill" {} ''
+    mkdir -p $out
+    cp -R ${inputs.linkctl}/.agents/skills/linkding/. $out/
+    chmod -R u+w $out
+    printf '\n' >> $out/SKILL.md
+    cat ${./skills/linkding/additions.md} >> $out/SKILL.md
+  '';
 
   monidSkill = pkgs.runCommand "monid-skill" {} ''
     mkdir -p $out

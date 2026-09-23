@@ -40,15 +40,11 @@ Never written a line myself, only through agents:
 
 `mbp` is my own Mac (nix-darwin), where I do everything that is mine. `settali` is my work Mac, where company policy forbids nix. `andromeda` is my Linux server. `xps` is a NixOS laptop I barely use any more.
 
-- Ghostty — terminal
 - herdr — terminal multiplexer
 - Neovim — editor
 - fish — shell
-- fzf — fuzzy finder
-- zoxide — directory jumping
 - ripgrep — search in files
 - fd — find files
-- lazygit — git
 - gh — GitHub CLI
 - direnv — per-project environments
 - spotctl — Spotify CLI
