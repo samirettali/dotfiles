@@ -102,7 +102,6 @@ Two rules for the work copy:
 Read the matching document before changing that subsystem:
 
 - `docs/ai/pi-models.md` — pi model registry, provider pinning, and limit synchronization.
-- `docs/ai/spoken-responses.md` — streamed ElevenLabs responses from pi.
 - `docs/ai/design-skill.md` — shared UX guidance, project-owned style, sources, and review cases.
 - `docs/ai/skill-invocation.md` — manual skill discovery and per-agent metadata.
 - `docs/ai/firecrawl.md` — shared search CLI, vault credentials, costs, and disabled feedback.

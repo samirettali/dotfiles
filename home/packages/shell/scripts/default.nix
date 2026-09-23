@@ -9,12 +9,6 @@
 in {
   home.packages = [
     copy
-    # (pkgs.callPackage ./speak.nix {
-    #   rbw =
-    #     if config.programs.rbw.enable
-    #     then config.programs.rbw.package
-    #     else null;
-    # })
     (pkgs.callPackage ./lyrics.nix {
       inherit (nurPkgs) spotctl;
       rbw =
