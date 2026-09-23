@@ -20,7 +20,7 @@ item:subscribe("keyboard_layout_change", function(env)
 	set(env.SOURCE_ID or "")
 end)
 
--- The event is pushed by hammerspoon, which sketchybar can outlive, so resolve
+-- The event is pushed by sottomano, which sketchybar can outlive, so resolve
 -- the current source once at startup. Text Input Services is the authoritative
 -- answer, unlike the com.apple.HIToolbox prefs.
 local read_source_id = table.concat({
