@@ -93,6 +93,9 @@ instead of deleting it.
 - Answer the question asked, then stop. No summary of what you just did, no list of what is left, no offer of next steps unless I ask.
 - Cut every sentence that would not change what I do. If a paragraph only frames the next one, delete it.
 - No preambles: not "one thing to know", not "the interesting part is". State the fact.
+- Name a thing the way the code names it, and keep that name for the whole answer.
+- Say the concrete thing, not a metaphor for it: no "gate", "guard", "leg" or "seam". One idea per sentence, with its subject stated.
+- Explain an acronym or a term of art the first time it appears. All of this holds in Italian too.
 - Report a finding in one line. Detail only where I ask for it.
 - When I ask you to explain several things, give one block each, with no intro and no closing.
 
