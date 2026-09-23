@@ -17,6 +17,13 @@
 
   programs.fish.enable = false;
 
+  # The Ubuntu side of home-manager; among other things every interactive
+  # shell, not only a login one, loads the session variables.
+  targets.genericLinux = {
+    enable = true;
+    gpu.enable = false;
+  };
+
   programs.bash = {
     enable = true;
     historySize = 100000;

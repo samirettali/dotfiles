@@ -244,6 +244,8 @@
                   ghostty.terminfo
                 ];
 
+                # genericLinux sets TERMINFO_DIRS only for systemd, which SSH
+                # shells never read; ncurses always looks in ~/.terminfo.
                 home.file.".terminfo".source = "${pkgs.ghostty.terminfo}/share/terminfo";
               })
             ];
