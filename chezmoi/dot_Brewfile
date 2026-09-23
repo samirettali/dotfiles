@@ -43,7 +43,7 @@ brew "git-delta"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Agent multiplexer that lives in your terminal
-brew "herdr"
+brew "samirettali/tap/herdr", trusted: true
 # Textual User Interface for interacting with Atlassian Jira from your shell
 brew "jiratui"
 # Lightweight and flexible command-line JSON processor
