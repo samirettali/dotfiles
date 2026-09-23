@@ -289,7 +289,7 @@
           shell = ["/usr/bin/osascript" "-e" "tell application \"Spotify\" to playpause"];
         };
         key = "delete";
-        modifiers = ["option"];
+        modifiers = ["control" "option"];
       }
       {
         entry = {
@@ -297,7 +297,7 @@
           shell = ["/usr/bin/osascript" "-e" "tell application \"Spotify\" to previous track"];
         };
         key = "[";
-        modifiers = ["option"];
+        modifiers = ["control" "option"];
       }
       {
         entry = {
@@ -305,7 +305,7 @@
           shell = ["/usr/bin/osascript" "-e" "tell application \"Spotify\" to next track"];
         };
         key = "]";
-        modifiers = ["option"];
+        modifiers = ["control" "option"];
       }
     ];
     theme = {
