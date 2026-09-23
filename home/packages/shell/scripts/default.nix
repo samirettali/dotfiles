@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  neovimPackage,
   nurPkgs,
   ...
 }: let
@@ -12,9 +11,6 @@ in {
   home.packages =
     [
       copy
-      (pkgs.callPackage ./nhash.nix {
-        inherit copy;
-      })
       # (pkgs.callPackage ./speak.nix {
       #   rbw =
       #     if config.programs.rbw.enable
@@ -35,25 +31,8 @@ in {
         inherit (nurPkgs) codex grok-cli;
         antigravity-cli = config.programs.antigravity-cli.package;
       })
-      (pkgs.writeShellScriptBin "glc" (builtins.readFile "${scriptsDir}/glc.sh"))
       (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
-      (pkgs.writeShellScriptBin "ticker" (builtins.readFile "${scriptsDir}/ticker.sh"))
-      (pkgs.writeShellScriptBin "extract" (builtins.readFile "${scriptsDir}/extract.sh"))
       (pkgs.writeShellScriptBin "chezmoi-render" (builtins.readFile "${scriptsDir}/chezmoi-render.sh"))
-      (pkgs.writeShellScriptBin "zv" ''
-        set -euo pipefail
-
-        if [ -z "$1" ]; then
-            echo "Usage: zv <target>"
-            exit 1
-        fi
-
-        target=$(${lib.getExe pkgs.zoxide} query "''${1}")
-
-        cd "''${target}" || exit 1
-
-        ${lib.getExe neovimPackage} .
-      '')
     ]
     ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       (pkgs.writeShellScriptBin "passbemenu" (builtins.readFile "${scriptsDir}/passbemenu.sh"))
