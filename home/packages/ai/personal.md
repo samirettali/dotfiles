@@ -3,7 +3,6 @@
 - rbw — Bitwarden CLI
 - fluxctl — Miniflux CLI, my RSS reader
 - linkctl — linkding CLI, my bookmarks
-- sops — secrets
 - nix and home-manager — everything declared
 - NUR — where I publish my own packages
 

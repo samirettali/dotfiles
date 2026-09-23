@@ -61,7 +61,7 @@ Use Ansible for anything requiring root or needed before Nix works.
 Use this repository for files under `/home/samir`.
 
 Store service secrets in the `servers` ansible-vault.
-Store secrets consumed by Samir's tools in this repository with sops.
+Store secrets consumed by Samir's tools in the rbw vault; the tools read them with `rbw get`.
 
 Use `infra` for account-wide resources on third-party systems.
 Use each project's `infra/` directory for resources that share that project's lifecycle.

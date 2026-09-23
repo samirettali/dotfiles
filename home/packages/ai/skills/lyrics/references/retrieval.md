@@ -60,7 +60,7 @@ deciding what matters, read by `position` when writing the answer.
 
 ~71% of tracks carry at least one, 55% carry three or more. Absence is normal,
 not failure. `annotations.available: false` carries a `reason`; the token lives
-in sops as `genius_access_token` and can be regenerated at
+in the rbw vault as `genius-access-token` and can be regenerated at
 genius.com/api-clients if rejected.
 
 Annotations are user-contributed, occasionally wrong or joking. Attribute any
