@@ -141,7 +141,6 @@ def write_detail(agents: list[dict]) -> None:
 def publish(counts: dict[str, int]) -> None:
     args = ["sketchybar", "--trigger", "herdr_agents"]
     args += [f"{status}={counts[status]}" for status in PENDING_STATUSES]
-    log("publish " + " ".join(f"{k}={v}" for k, v in counts.items()))
     try:
         subprocess.run(args, capture_output=True, timeout=10)
     except (OSError, subprocess.TimeoutExpired) as err:
@@ -180,10 +179,12 @@ def watch(path: str, published: dict[str, dict[str, int] | None]) -> None:
     `published` carries the last counts across connections, so the reconnect a
     new pane triggers does not re-send an unchanged count.
     """
-    agents = agent_list()
-    subscribed = pane_ids(agents)
     with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as stream:
+        # Connect first: while herdr is down this fails without starting the
+        # CLI, which would only log that the server is not running.
         stream.connect(path)
+        agents = agent_list()
+        subscribed = pane_ids(agents)
         subscribe(stream, subscribed)
         while True:
             counts = count_pending(agents)
