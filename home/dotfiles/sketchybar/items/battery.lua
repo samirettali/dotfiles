@@ -25,7 +25,7 @@ local detail = sbar.add("item", "widgets.battery.detail", {
 	icon = { drawing = false },
 })
 
-battery:subscribe({ "routine", "power_source_change", "system_woke" }, function()
+local function update()
 	sbar.exec("pmset -g batt", function(batt_info)
 		local found, _, charge = batt_info:find("(%d+)%%")
 		if not found then
@@ -66,6 +66,9 @@ battery:subscribe({ "routine", "power_source_change", "system_woke" }, function(
 		battery:set({ icon = { string = icon, color = color } })
 		detail:set({ label = { string = ("%s · %d%%"):format(state, charge) } })
 	end)
-end)
+end
 
-popup.setup(battery)
+battery:subscribe({ "routine", "power_source_change", "system_woke" }, update)
+
+-- Refresh on open, like the volume and usage popups: the routine runs every 180s.
+popup.setup(battery, update)

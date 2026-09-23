@@ -100,7 +100,7 @@ for _, provider in ipairs(providers) do
 			position = "popup.status." .. provider.key,
 			drawing = false,
 			icon = { drawing = false },
-			click_script = ("open %q"):format(provider.page),
+			click_script = ("open %q; sketchybar --set status.%s popup.drawing=off"):format(provider.page, provider.key),
 		})
 	end
 
