@@ -21,33 +21,4 @@
       settings = {};
     };
   };
-
-  dotfiles.vscode.extensionIds =
-    lib.optionals (config.features.python == "full") [
-      "ms-python.debugpy"
-      "ms-python.python"
-      "ms-toolsai.jupyter"
-      "ms-toolsai.jupyter-renderers"
-    ]
-    ++ lib.optionals (config.features.python == "full" && builtins.elem pkgs.basedpyright config.home.packages) [
-      "detachhead.basedpyright"
-    ]
-    ++ lib.optionals (config.features.python == "full" && config.programs.ruff.enable) [
-      "charliermarsh.ruff"
-    ]
-    ++ lib.optionals (config.features.python == "full" && builtins.elem pkgs.ty config.home.packages) [
-      "astral-sh.ty"
-    ];
-
-  programs.vscode.profiles.default = lib.optionalAttrs (config.features.python == "full") {
-    userSettings = {
-      "files.exclude" =
-        {
-          "**/__pycache__" = true;
-        }
-        // lib.optionalAttrs config.programs.ruff.enable {
-          "**/.ruff_cache" = true;
-        };
-    };
-  };
 }

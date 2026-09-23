@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   programs.direnv = {
     enable = lib.mkDefault true;
     enableGitIntegration = true;
@@ -17,8 +13,4 @@
       };
     };
   };
-
-  dotfiles.vscode.extensionIds = lib.optionals config.programs.direnv.enable [
-    "mkhl.direnv"
-  ];
 }

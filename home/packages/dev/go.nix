@@ -42,27 +42,4 @@ in {
           tags = ["postgres"];
         }))
     ];
-
-  dotfiles.vscode.extensionIds = lib.optionals config.features.go [
-    "golang.go"
-  ];
-
-  programs.vscode.profiles.default = lib.optionalAttrs config.features.go {
-    userSettings = {
-      "go.formatTool" = "gofumpt";
-      "go.delveConfig" = {
-        "showGlobalVariables" = true;
-      };
-      "go.lintTool" = "golangci-lint-v2"; # TODO: this downloads golangci-lint-v2 in ~/go/bin
-      "go.coverOnSingleTest" = true;
-      "go.showWelcome" = true;
-      "gopls" = {
-        "ui.diagnostic.analyses" = {
-          "modernize" = true;
-          "shadow" = true;
-        };
-        "ui.semanticTokens" = false;
-      };
-    };
-  };
 }

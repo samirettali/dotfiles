@@ -23,11 +23,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix4vscode = {
-      url = "github:nix-community/nix4vscode";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     herdr-fork = {
       url = "github:samirettali/herdr?ref=patched";
       flake = false;
@@ -161,7 +156,6 @@
       inherit inputs;
       nurPkgs = inputs.samirettali-nur.packages.${pkgs.stdenv.hostPlatform.system};
       neovimPackage = mkNeovimPackage pkgs.stdenv.hostPlatform.system;
-      vscodeExtLib = inputs.nix4vscode.lib.${pkgs.stdenv.hostPlatform.system};
       vars = {
         inherit hostname;
         inherit (user) email;

@@ -6,7 +6,6 @@
     ./keepassxc.nix
     ./mpv.nix
     ./obsidian.nix
-    ./vscode.nix
     ./zed.nix
   ];
 

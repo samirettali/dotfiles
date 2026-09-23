@@ -5,11 +5,6 @@
         ansible.enable = lib.mkEnableOption "Ansible tooling";
         git-sync.enable = lib.mkEnableOption "git-sync";
       };
-
-      vscode.extensionIds = lib.mkOption {
-        type = with lib.types; listOf str;
-        default = [];
-      };
     };
 
     features = {
