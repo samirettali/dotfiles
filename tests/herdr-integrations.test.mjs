@@ -11,7 +11,7 @@ const exec = promisify(execFile);
 const source = process.env.HERDR_SOURCE;
 if (!source) throw new Error("HERDR_SOURCE must name the pinned fork source");
 
-for (const agent of ["claude", "codex", "grok"]) {
+for (const agent of ["claude", "codex"]) {
   test(`${agent}: SessionStart reports to an isolated Herdr socket`, async () => {
     const dir = await mkdtemp(join(tmpdir(), "hd-"));
     const socket = join(dir, "s");
@@ -33,7 +33,6 @@ for (const agent of ["claude", "codex", "grok"]) {
     try {
       const env = { ...process.env, HERDR_ENV: "1", HERDR_PANE_ID: "test-pane", HERDR_SOCKET_PATH: socket };
       delete env.CODEX_THREAD_ID;
-      delete env.GROK_SESSION_ID;
       delete env.CURSOR_VERSION;
       const hook = join(source, "src/integration/assets", agent, "herdr-agent-state.sh");
       const run = async event => {

@@ -40,7 +40,6 @@ updates both the binary and its integrations. The agent modules own registration
 | Pi | `.pi/agent/extensions/herdr-agent-state.ts` | Pi's global extension discovery |
 | Claude | `.claude/hooks/herdr-agent-state.sh` | `settings.json`, `SessionStart` |
 | Codex (personal machines) | `.codex/herdr-agent-state.sh` | `hooks.json`, `SessionStart` |
-| Grok | `.grok/hooks/herdr-agent-state.sh` | `hooks/herdr.json`, `SessionStart` |
 
 Do not run the integration installer over these store-backed files: it attempts
 to write them. Change registrations in the corresponding Nix module, and update

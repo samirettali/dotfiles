@@ -14,7 +14,7 @@ local BAR_WIDTH = 90
 -- One poller per credential source; a source may expose several providers,
 -- because Claude reports model-scoped caps alongside the plan-wide ones and
 -- Antigravity meters its Gemini and third-party models separately.
-local POLL_ORDER = { "claude", "codex", "agy", "grok" }
+local POLL_ORDER = { "claude", "codex", "agy" }
 local provider_order = { "claude", "codex" }
 local provider_names = { claude = "Claude", codex = "Codex" }
 

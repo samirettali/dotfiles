@@ -34,7 +34,7 @@
   };
 
   aiUsage = pkgs.callPackage ../packages/shell/scripts/ai-usage.nix {
-    inherit (nurPkgs) codex grok-cli;
+    inherit (nurPkgs) codex;
     antigravity-cli = config.programs.antigravity-cli.package;
   };
 in {

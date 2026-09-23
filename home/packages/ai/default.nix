@@ -30,7 +30,6 @@ in {
     ./codex.nix
     ./fabric.nix
     ./firecrawl.nix
-    ./grok-cli.nix
     ./mcp.nix
     ./mtplx.nix
     ./opencode.nix
