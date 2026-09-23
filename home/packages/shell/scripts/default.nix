@@ -31,7 +31,7 @@ in {
         inherit (nurPkgs) codex grok-cli;
         antigravity-cli = config.programs.antigravity-cli.package;
       })
-      (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
+      # (pkgs.writeShellScriptBin "tad" (builtins.readFile "${scriptsDir}/tad.sh"))
       (pkgs.writeShellScriptBin "chezmoi-render" (builtins.readFile "${scriptsDir}/chezmoi-render.sh"))
     ]
     ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [

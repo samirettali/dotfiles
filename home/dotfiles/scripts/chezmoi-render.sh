@@ -29,7 +29,6 @@ files=(
     .config/ghostty/config
     .config/herdr/config.toml
     .config/git/allowed_signers
-    .config/tmux/tmux.conf
     .claude/hooks/herdr-agent-state.sh
     revive.toml
 )
