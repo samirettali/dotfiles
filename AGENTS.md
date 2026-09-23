@@ -28,11 +28,9 @@ The `warning: Git tree ... is dirty` line during evaluation is benign.
 
 - Use concise, lowercase Conventional Commit subjects: `type(scope): subject`.
 - Add a commit body only when it explains a useful reason.
-- Format every edited `.nix` file with `alejandra` before committing.
 - New files are invisible to the flake until staged. Run `git add -N <file>` before evaluation.
 - Always commit with an explicit pathspec because files may only be staged for flake evaluation.
 - Avoid repeated full rebuilds while iterating. Test the tool directly, then move the settled change back into Nix.
-- Build an instrument when measurement will settle a question faster than another guess.
 - Never use `mkOutOfStoreSymlink` or non-store symlinks unless Samir agrees.
 - Keep comments sparse.
 - Keep this file limited to cross-cutting guidance. Put subsystem decisions in `docs/` and link them below.
