@@ -1,0 +1,6 @@
+interface:
+  display_name: "Review Loop"
+  short_description: "Get the change reviewed and fix findings until none are left"
+  default_prompt: "Use $review-loop to get this change reviewed and iterate until it is clean."
+policy:
+  allow_implicit_invocation: false

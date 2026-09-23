@@ -119,6 +119,7 @@ in {
   monid = "${manualSkill "monid" monidSkill}";
   project-workflow = ./skills/project-workflow;
   review-comments = ./skills/review-comments;
+  review-loop = ./skills/review-loop;
   show-me = "${manualSkill "show-me" "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me"}";
   side-project = ./skills/side-project;
   spotify = "${manualSkill "spotify" spotifySkill}";

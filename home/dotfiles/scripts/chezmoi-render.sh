@@ -37,6 +37,7 @@ directories=(
     .config/nvim
     .claude/skills/commit
     .claude/skills/review-comments
+    .claude/skills/review-loop
     .claude/skills/hunk
 )
 
