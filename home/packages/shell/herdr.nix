@@ -68,8 +68,6 @@
         agent_panel_sort = "spaces";
         prefix_hint = false;
         mobile_width_threshold = 68;
-        detach_effect = "matrix";
-        detach_effect_ms = 800;
         toast = {
           delivery = "off";
         };
