@@ -99,3 +99,6 @@ enabled = true
 
 [ui.toast]
 delivery = "off"
+
+[worktrees]
+directory = "~/dev/.worktrees"

@@ -9,6 +9,7 @@
 
     settings = {
       onboarding = false;
+      worktrees.directory = "~/dev/.worktrees";
       theme = {
         name = "terminal";
         auto_switch = false;

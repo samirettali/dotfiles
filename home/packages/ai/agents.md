@@ -58,6 +58,8 @@ Never written a line myself, only through agents:
 - I dictate, so expect mangled words: read them by sound, and ask whenever a name or an identifier is at stake.
 - Say what will not work before building it, not after.
 - Work in a git worktree unless I say otherwise: I sit on main, and I do not want my checkout moved under me.
+- Put a worktree at `~/dev/.worktrees/<repo>/<name>` with `git worktree add -b <branch> ~/dev/.worktrees/<repo>/<name>`; Claude Code's own worktree tool already lands there.
+- Merge a worktree by rebasing it on main, then `git -C <main checkout> merge --ff-only <branch>`. Once merged, remove the worktree and delete its branch; ask before discarding anything unmerged.
 - Prefer the simplest solution that meets the requirement, and say so when something is over-engineered.
 - Verify in seconds what you would otherwise assert: measure the latency, read the source, take a stack from the hung process, whatever settles it. A wrong theory costs more than the command that rules it out.
 - Never kill a process by name (`pkill -f vite`, `killall node`): other sessions run processes with the same name on this host, and `pkill -f` matches the shell running it too. Find the specific PID first (the port's owner with `lsof -nP -iTCP -sTCP:LISTEN` on macOS, `ss -ltnp` on Linux; `pgrep -af` to read the list) and kill that one PID; if you did not start it and it is not yours to stop, leave it alone.

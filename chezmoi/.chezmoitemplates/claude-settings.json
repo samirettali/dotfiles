@@ -32,6 +32,26 @@
         ],
         "matcher": "*"
       }
+    ],
+    "WorktreeCreate": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/Users/samir/.claude/hooks/worktree.sh' create",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "WorktreeRemove": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/Users/samir/.claude/hooks/worktree.sh' remove",
+            "type": "command"
+          }
+        ]
+      }
     ]
   },
   "model": "claude-opus-5-5",

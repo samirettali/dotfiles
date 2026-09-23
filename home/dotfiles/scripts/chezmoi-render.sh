@@ -30,6 +30,7 @@ files=(
     .config/herdr/config.toml
     .config/git/allowed_signers
     .claude/hooks/herdr-agent-state.sh
+    .claude/hooks/worktree.sh
     revive.toml
 )
 

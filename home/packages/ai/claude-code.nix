@@ -6,6 +6,7 @@
   ...
 }: let
   herdrHook = "${config.home.homeDirectory}/.claude/hooks/herdr-agent-state.sh";
+  worktreeHook = "${config.home.homeDirectory}/.claude/hooks/worktree.sh";
   # Matched by pname: herdr ships patched, so it is not the nurPkgs derivation.
   herdrEnabled = lib.any (p: (p.pname or "") == "herdr") config.home.packages;
   # The status line prints nothing: its job is to hand Claude Code's own rate
@@ -21,6 +22,13 @@ in {
   # soon as Claude spawns MCP servers. The hook reports the agent explicitly.
   home.file.".claude/hooks/herdr-agent-state.sh" = lib.mkIf herdrEnabled {
     source = "${inputs.herdr-fork}/src/integration/assets/claude/herdr-agent-state.sh";
+    executable = true;
+  };
+
+  # Claude Code's worktrees go to ~/dev/.worktrees/<repo>/<name>, where herdr and
+  # the other agents put theirs, instead of .claude/worktrees in the checkout.
+  home.file.".claude/hooks/worktree.sh" = {
+    source = ./claude-worktree.sh;
     executable = true;
   };
 
@@ -90,20 +98,43 @@ in {
         type = "command";
         command = lib.getExe usageStatusLine;
       };
-      hooks = lib.optionalAttrs herdrEnabled {
-        SessionStart = [
-          {
-            matcher = "*";
-            hooks = [
-              {
-                type = "command";
-                command = "bash '${herdrHook}' session";
-                timeout = 10;
-              }
-            ];
-          }
-        ];
-      };
+      hooks =
+        {
+          WorktreeCreate = [
+            {
+              hooks = [
+                {
+                  type = "command";
+                  command = "bash '${worktreeHook}' create";
+                }
+              ];
+            }
+          ];
+          WorktreeRemove = [
+            {
+              hooks = [
+                {
+                  type = "command";
+                  command = "bash '${worktreeHook}' remove";
+                }
+              ];
+            }
+          ];
+        }
+        // lib.optionalAttrs herdrEnabled {
+          SessionStart = [
+            {
+              matcher = "*";
+              hooks = [
+                {
+                  type = "command";
+                  command = "bash '${herdrHook}' session";
+                  timeout = 10;
+                }
+              ];
+            }
+          ];
+        };
       env = {
         CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL = "1";
         # CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1"; # TODO
