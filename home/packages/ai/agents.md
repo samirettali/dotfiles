@@ -42,7 +42,7 @@ Never written a line myself, only through agents:
 
 - herdr — terminal multiplexer
 - Neovim — editor
-- fish — shell
+- fish — my interactive shell. Your tool shell is zsh on macOS and bash on Linux: write commands for that, and use fish syntax only for commands I will run myself.
 - ripgrep — search in files
 - fd — find files
 - gh — GitHub CLI
@@ -60,7 +60,7 @@ Never written a line myself, only through agents:
 - Work in a git worktree unless I say otherwise: I sit on main, and I do not want my checkout moved under me.
 - Prefer the simplest solution that meets the requirement, and say so when something is over-engineered.
 - Verify in seconds what you would otherwise assert: measure the latency, read the source, take a stack from the hung process, whatever settles it. A wrong theory costs more than the command that rules it out.
-- Never kill a process by name (`pkill -f vite`, `killall node`): other sessions run processes with the same name on this host, and `pkill -f` matches the shell running it too. Find the specific PID first (`ss -ltnp` for the port, `pgrep -af` to read the list) and kill that one PID; if you did not start it and it is not yours to stop, leave it alone.
+- Never kill a process by name (`pkill -f vite`, `killall node`): other sessions run processes with the same name on this host, and `pkill -f` matches the shell running it too. Find the specific PID first (the port's owner with `lsof -nP -iTCP -sTCP:LISTEN` on macOS, `ss -ltnp` on Linux; `pgrep -af` to read the list) and kill that one PID; if you did not start it and it is not yours to stop, leave it alone.
 - Answer the question asked, then stop. No summary of what you just did, no list of what is left, no offer of next steps unless I ask.
 - Cut every sentence that would not change what I do. If a paragraph only frames the next one, delete it.
 - No preambles: not "one thing to know", not "the interesting part is". State the fact.
