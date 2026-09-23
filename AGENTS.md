@@ -30,6 +30,7 @@ The `warning: Git tree ... is dirty` line during evaluation is benign.
 - Add a commit body only when it explains a useful reason.
 - New files are invisible to the flake until staged. Run `git add -N <file>` before evaluation.
 - Always commit with an explicit pathspec because files may only be staged for flake evaluation.
+- A change to anything the work Mac render copies includes its `make chezmoi` output in the same commit. Run `make check` before committing: it fails on a render left behind.
 - Avoid repeated full rebuilds while iterating. Test the tool directly, then move the settled change back into Nix.
 - Never use `mkOutOfStoreSymlink` or non-store symlinks unless Samir agrees.
 - Keep comments sparse.
