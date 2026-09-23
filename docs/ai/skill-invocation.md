@@ -4,7 +4,7 @@ These skills require explicit invocation rather than automatic discovery:
 
 - `autoresearch-create`, `autoresearch-finalize`, `autoresearch-hooks`
 - `generate-music`, `generate-speech`, `ideas`
-- `live-ui-variants`, `show-me`, `remotion-best-practices`
+- `live-ui-variants`, `show-me`
 
 In pi, `disable-model-invocation: true` removes the name and description from
 the model's skill catalog. The skill remains available through `/skill:name`.
@@ -19,7 +19,7 @@ boundary.
 ## Where the policy lives
 
 Repository-owned skills declare it in their own metadata. Imported
-`show-me` and `remotion-best-practices` skills pass through `manualSkill` in
+`show-me` skill passes through `manualSkill` in
 `home/packages/ai/coding-agent-skills.nix`. That builder preserves their bodies,
 support files, and existing Codex metadata while setting both fields.
 

@@ -119,7 +119,6 @@ in {
   macos-app-release = ./skills/macos-app-release;
   monid = "${manualSkill "monid" monidSkill}";
   project-workflow = ./skills/project-workflow;
-  remotion-best-practices = "${manualSkill "remotion-best-practices" "${inputs.remotion-skills}/skills/remotion-best-practices"}";
   show-me = "${manualSkill "show-me" "${inputs.humanlayer-skills}/plugins/show-me/skills/show-me"}";
   side-project = ./skills/side-project;
   spotify = "${manualSkill "spotify" spotifySkill}";

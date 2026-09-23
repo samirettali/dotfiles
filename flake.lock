@@ -301,22 +301,6 @@
         "type": "github"
       }
     },
-    "remotion-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790061394,
-        "narHash": "sha256-BRdhHYm2RW7EPx1ZbJgDu075REuxsQXQXPwJooNpGRM=",
-        "owner": "remotion-dev",
-        "repo": "skills",
-        "rev": "9682e994989f951c75912fbc49aa10332a512685",
-        "type": "github"
-      },
-      "original": {
-        "owner": "remotion-dev",
-        "repo": "skills",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "agent-stuff": "agent-stuff",
@@ -332,7 +316,6 @@
         "nixpkgs": "nixpkgs_2",
         "nur": "nur",
         "pi-autoresearch": "pi-autoresearch",
-        "remotion-skills": "remotion-skills",
         "samirettali-nur": "samirettali-nur",
         "skills": "skills",
         "spotctl": "spotctl"
