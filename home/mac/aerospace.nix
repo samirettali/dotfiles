@@ -7,7 +7,6 @@
     enable = true;
     settings = {
       config-version = 2;
-      start-at-login = true;
       accordion-padding = 30;
       automatically-unhide-macos-hidden-apps = false;
       persistent-workspaces = ["1" "2" "3" "4"];
