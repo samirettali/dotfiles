@@ -1,5 +1,6 @@
 ---
 name: agent-messaging
+disable-model-invocation: true
 description: Discover and message existing agent sessions in Herdr to coordinate work or report status. Use subagents instead when spawning and managing child agents.
 ---
 

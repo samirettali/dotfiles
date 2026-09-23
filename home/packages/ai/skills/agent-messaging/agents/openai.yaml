@@ -1,0 +1,6 @@
+interface:
+  display_name: "Agent Messaging"
+  short_description: "Message existing agent sessions in Herdr"
+  default_prompt: "Use $agent-messaging to send this to the agent in the other Herdr pane."
+policy:
+  allow_implicit_invocation: false
