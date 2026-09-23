@@ -14,7 +14,6 @@
 
   home.shell = {
     enableBashIntegration = false;
-    enableFishIntegration = false;
     enableZshIntegration = false;
   };
 

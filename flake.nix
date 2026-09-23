@@ -269,11 +269,7 @@
         specialArgs = {inherit inputs;};
         modules = [
           ./machines/mbp.nix
-          ({
-            config,
-            pkgs,
-            ...
-          }: {
+          ({pkgs, ...}: {
             nix = mkNixConfig {
               username = users.personal.name;
             };
@@ -287,7 +283,6 @@
               home = users.personal.homeDirectory;
               shell = pkgs.fish;
             };
-            environment.shellAliases = config.home-manager.users."${defaultUser}".home.shellAliases;
           })
           home-manager.darwinModules.home-manager
           ({pkgs, ...}: {

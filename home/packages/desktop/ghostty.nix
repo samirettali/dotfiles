@@ -6,6 +6,9 @@
 }: {
   programs.ghostty = {
     enable = true;
+    # Ghostty injects its shell integration itself; sourcing it again from
+    # config.fish only costs startup time.
+    enableFishIntegration = false;
     package =
       if pkgs.stdenv.hostPlatform.isDarwin
       then nurPkgs.ghostty

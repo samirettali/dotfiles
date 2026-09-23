@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }: {
@@ -32,9 +31,5 @@
         # }
       ];
     };
-  };
-
-  home.shellAliases = lib.mkIf config.programs.lazygit.enable {
-    lg = lib.getExe pkgs.lazygit;
   };
 }

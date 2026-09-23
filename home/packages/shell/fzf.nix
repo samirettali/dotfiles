@@ -1,7 +1,6 @@
 {config, ...}: {
   programs.fzf = {
     enable = true;
-    enableFishIntegration = true;
     tmux.enableShellIntegration = config.programs.tmux.enable;
     defaultOptions = [
       "--ansi"
