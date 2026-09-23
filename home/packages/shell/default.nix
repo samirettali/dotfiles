@@ -67,12 +67,12 @@
     unzip
     yt-dlp
     ffmpeg
-    # watchexec TODO: upstream is broken
+    watchexec
     # nurPkgs.tredis
     # duf
     # vi-mongo
     # bitwarden-cli
-    # ghui # TODO: upstream is broken
+    ghui
     # yubikey-manager
     # repomix
     # amp-cli
