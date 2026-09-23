@@ -21,8 +21,8 @@
   home.shellAliases = {
     ls = "${lib.getExe' pkgs.coreutils "ls"} --color=auto --group-directories-first";
     ns = "${lib.getExe' pkgs.nix "nix-shell"} --run $SHELL -p";
-    cc = "${lib.getExe config.programs.claude-code.package}/bin/claude --continue";
-    cr = "${lib.getExe config.programs.claude-code.package}/bin/claude resume";
+    cc = "${lib.getExe' config.programs.claude-code.package "claude"} --continue";
+    cr = "${lib.getExe' config.programs.claude-code.package "claude"} --resume";
   };
 
   # macOS's own trash, which Finder shows and empties: trash-cli used the Linux
