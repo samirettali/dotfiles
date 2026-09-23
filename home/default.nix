@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   vars,
   neovimPackage,
   ...
@@ -27,6 +28,8 @@
     rm = lib.getExe pkgs.trash-cli;
     ns = "${lib.getExe' pkgs.nix "nix-shell"} --run $SHELL -p";
     nd = "${lib.getExe pkgs.nix} develop -c $SHELL";
+    cc = "${lib.getExe config.programs.claude-code.package}/bin/claude --continue";
+    cr = "${lib.getExe config.programs.claude-code.package}/bin/claude resume";
   };
 
   home.sessionVariables = {
