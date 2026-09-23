@@ -40,7 +40,7 @@
         alt-shift-l = "move right";
 
         alt-f = "fullscreen";
-        alt-e = "layout tiles accordion";
+        alt-s = "layout tiles accordion";
         alt-shift-space = "layout floating tiling";
         alt-slash = "layout tiles horizontal vertical";
 
