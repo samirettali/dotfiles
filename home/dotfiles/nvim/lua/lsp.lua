@@ -14,7 +14,6 @@ vim.lsp.enable({
 	"rust_analyzer",
 	"yamlls",
 	"buf_ls",
-	"copilot",
 	"basedpyright",
 	"ruff",
 	"harper",
