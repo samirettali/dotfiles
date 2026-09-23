@@ -9,7 +9,6 @@
       python314
     ]
     ++ lib.optionals (config.features.python == "full") [
-      python314Packages.debugpy # used by neovim dap (TODO: remove?)
       basedpyright
       pyrefly
       ty

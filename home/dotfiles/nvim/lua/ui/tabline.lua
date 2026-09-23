@@ -113,12 +113,6 @@ local fetch_buf_name = function(bufnr)
 		return "Lazy"
 	elseif filetype == "help" and not buf.modifiable then
 		return " " .. vim.fn.fnamemodify(buf_name, ":t")
-	elseif filetype == "dap-view" then
-		return "DAP View"
-	elseif filetype == "dap-repl" then
-		return "DAP REPL"
-	elseif filetype == "dap-float" then
-		return "DAP"
 	elseif filetype == "octo_panel" then
 		return "Octo Panel"
 	elseif string.match(buf_name, "^octo://") then
