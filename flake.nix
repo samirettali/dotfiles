@@ -79,6 +79,8 @@
     inherit (nixpkgs) lib;
 
     # Constants
+    # The release whose stateful defaults home-manager keeps. Not bumped with
+    # releases: raising it changes those defaults without a migration.
     stateVersion = "26.11";
     defaultUser = "samir";
 
