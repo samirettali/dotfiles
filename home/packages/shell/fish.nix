@@ -8,6 +8,7 @@
     generateCompletions = false;
     functions = {
       fish_greeting = "";
+      mc = "mkdir -p $argv[1]; and cd $argv[1]";
       # Keeps keys and passwords typed inline out of the history file. Defining
       # it drops fish's own rule for a leading space, so that comes first.
       fish_should_add_to_history = ''
