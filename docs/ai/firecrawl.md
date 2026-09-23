@@ -19,8 +19,7 @@ Recheck command syntax when updating the CLI, especially Developer Index filters
 version 1.23.3 only accepts query text and count, while the HTTP API also exposes
 hard repository/type/source filters. Query-text scoping is not a hard filter.
 
-Tavily remains available only by explicit skill invocation. `native-web-search`
-is removed from the shared registry; `agent-stuff` remains pinned for other skills.
+`native-web-search` is removed from the shared registry; `agent-stuff` remains pinned for other skills.
 Dedicated tools such as GitHub CLI and X Search keep precedence for their services.
 No Firecrawl MCP server or imperative `firecrawl setup` is needed.
 

@@ -68,16 +68,6 @@ in {
       ];
     })
     (wrap {
-      name = "tavily";
-      script = ./skills/tavily/scripts/tavily.py;
-      vars = [
-        {
-          env = "TAVILY_API_KEY";
-          entry = "tavily-api-key";
-        }
-      ];
-    })
-    (wrap {
       name = "x-search";
       script = ./skills/x-search/scripts/x_search.py;
       vars = [

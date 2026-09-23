@@ -124,7 +124,6 @@ in {
   side-project = ./skills/side-project;
   spotify = "${manualSkill "spotify" spotifySkill}";
   subagents = ./skills/subagents;
-  tavily = ./skills/tavily;
   uv = "${inputs.agent-stuff}/skills/uv";
   visual-pr = "${manualSkill "visual-pr" visualPrSkill}";
   web-browser = "${webBrowserSkill}";
