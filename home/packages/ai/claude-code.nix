@@ -69,6 +69,15 @@ in {
         keybindings-help = "off";
         schedule = "off";
         update-config = "off";
+        # Synced from the claude.ai account, not from this repo, and never used;
+        # import-memory also goes against keeping memory in AGENTS.md.
+        "anthropic-skills:docx" = "off";
+        "anthropic-skills:import-memory" = "off";
+        "anthropic-skills:morning" = "off";
+        "anthropic-skills:pdf" = "off";
+        "anthropic-skills:pptx" = "off";
+        "anthropic-skills:skill-creator" = "off";
+        "anthropic-skills:xlsx" = "off";
       };
       promptSuggestionEnabled = false;
       spinnerVerbs = {
