@@ -76,6 +76,8 @@
     home-manager,
     ...
   } @ inputs: let
+    inherit (nixpkgs) lib;
+
     # Constants
     # The release whose stateful defaults home-manager keeps. Not bumped with
     # releases: raising it changes those defaults without a migration.
@@ -215,6 +217,13 @@
       };
     };
   in {
+    devShells = lib.genAttrs (builtins.attrValues systems) (system: {
+      default = import ./shell.nix {
+        pkgs = import nixpkgs {inherit system;};
+        nurPkgs = inputs.samirettali-nur.packages.${system};
+      };
+    });
+
     homeConfigurations = {
       andromeda = home-manager.lib.homeManagerConfiguration {
         pkgs = serverPkgs;

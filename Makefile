@@ -52,13 +52,12 @@ check-lint:
 	@bash scripts/check-nix.sh lint
 
 check-tests:
-	@node --test tests/config.test.mjs tests/check-nix.test.mjs
+	@node --test tests/config.test.mjs tests/check-nix.test.mjs tests/js-profile.test.mjs
 	@BROWSER_BIN= node --test home/packages/ai/skills/web-browser/browser.test.mjs
 
 check-pi:
-	@set -eu; PI_TEST_PACKAGE=$$(nix build --no-link --print-out-paths --no-write-lock-file --impure \
-		--expr '(builtins.getFlake (toString ./.)).inputs.samirettali-nur.packages.$${builtins.currentSystem}.pi-coding-agent'); \
-	export PI_TEST_PACKAGE; node --test tests/x-search.test.mjs
+	@nix develop --no-write-lock-file --command bash -eu -c \
+		'tsc --project home/packages/ai/pi-coding-agent/tsconfig.json; node --test tests/x-search.test.mjs'
 
 check-herdr:
 	@set -eu; HERDR_SOURCE=$$(nix eval --impure --raw --expr '(builtins.getFlake (toString ./.)).inputs.herdr-fork.outPath'); export HERDR_SOURCE; \

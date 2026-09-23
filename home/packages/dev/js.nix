@@ -10,12 +10,12 @@
     lib.optionals (config.features.js == "minimal" || config.features.js == "full") [
       nodejs
       pnpm
+      typescript-language-server
     ]
     ++ lib.optionals (config.features.js == "full") [
       eslint_d
       eslint
       js-beautify
-      typescript-language-server
       prettierd
       vscode-langservers-extracted
     ];

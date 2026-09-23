@@ -3,8 +3,9 @@ import {
 	type ExtensionAPI,
 	type ExtensionContext,
 	type KeybindingsManager,
+	type Theme,
 } from "@earendil-works/pi-coding-agent";
-import type { EditorTheme, Theme, TUI } from "@earendil-works/pi-tui";
+import type { EditorTheme, TUI } from "@earendil-works/pi-tui";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";

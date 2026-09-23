@@ -8,8 +8,8 @@ mbp; individual targets are useful while iterating:
 | --- | --- | --- |
 | `make check-fmt` | Alejandra, read-only | Git, Alejandra |
 | `make check-lint` | deadnix and Statix | Git, deadnix, Statix |
-| `make check-tests` | Fish prompts, Git ignores, `gd` ownership, file selection, browser log filtering | Node, Fish, Nix, Git, lint tools |
-| `make check-pi` | X Search loaded through the pinned Pi runtime, with mocked HTTP | Nix, Node, flake inputs |
+| `make check-tests` | Fish prompts, Git ignores, `gd` ownership, JavaScript profiles, file selection, browser log filtering | Node, Fish, Nix, Git, lint tools |
+| `make check-pi` | Type-check all local Pi extensions, then test X Search with mocked HTTP | Nix, flake inputs |
 | `make check-herdr` | Shell hooks on a test socket and the pinned fork's integration tests | Nix, Node, Bun, Python 3 on PATH for upstream hooks |
 | `make check-eval` | mbp system and andromeda activation derivations | Flake inputs available locally |
 | `make check-chezmoi` | Render in a temporary copy and diff against `chezmoi/` | Darwin builder, Nix, Bash, rsync, jq |
@@ -28,16 +28,19 @@ file in both checks and flake evaluation.
 
 ## Pi runtime tests
 
-`make check-pi` builds the current platform's Pi package from the locked NUR input
-without activating Home Manager or writing the lock file. It passes the store
-path as `PI_TEST_PACKAGE`; the test uses Pi's own extension loader rather than
-maintaining a second set of dependency aliases. An installed Pi configuration
-and links under `~/.pi/agent/extensions/node_modules` are not required.
+`make check-pi` enters the development shell, which provides the current
+platform's Pi package from the locked NUR input as `PI_TEST_PACKAGE`. It prepares
+an ignored source-tree dependency link and runs TypeScript checks before the
+mocked HTTP tests, without activating Home Manager or writing the lock file.
+The tests use Pi's own extension loader rather than maintaining a second set of
+runtime aliases. An installed Pi configuration and links under
+`~/.pi/agent/extensions/node_modules` are not required.
 
 Pi supplies the SDK and TypeBox aliases when loading extensions. Our current
 extensions therefore need no deployed `package.json`, `tsconfig.json`, or
 `node_modules` links. Those files would not configure TypeScript editing in the
-repository anyway; a source-tree development setup is separate and deferred.
+repository anyway; the separate [development setup](ai/pi-development.md) puts
+them next to the sources instead.
 The NUR wrapper already disables telemetry and update checks. The old
 `PI_AI_MODULE_PATH` and `PI_AI_OAUTH_MODULE_PATH` overrides belonged to the retired
 native web-search skill, not Pi's loader.

@@ -10,7 +10,8 @@
   # same language. The work Mac reads this list through a chezmoi template.
   featureServers =
     ["tofu_ls"]
-    ++ lib.optionals (config.features.js == "full") ["ts_ls" "eslint"]
+    ++ lib.optionals (config.features.js == "minimal" || config.features.js == "full") ["ts_ls"]
+    ++ lib.optionals (config.features.js == "full") ["eslint"]
     ++ lib.optionals config.features.web3 ["solidity_ls"]
     ++ lib.optionals config.features.dart ["dartls"];
 in {
