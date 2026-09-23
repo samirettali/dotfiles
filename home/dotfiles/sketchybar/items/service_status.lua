@@ -81,17 +81,6 @@ for _, provider in ipairs(providers) do
 			font = provider.icon_font and { family = provider.icon_font } or nil,
 		},
 		label = { drawing = false },
-		popup = {
-			align = "right",
-			background = {
-				color = colors.black,
-				border_color = colors.grey,
-				border_width = 1,
-				corner_radius = 6,
-				padding_left = 6,
-				padding_right = 6,
-			},
-		},
 	})
 
 	local rows = {}

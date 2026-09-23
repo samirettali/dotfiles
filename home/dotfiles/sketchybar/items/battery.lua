@@ -7,17 +7,6 @@ local battery = sbar.add("item", "widgets.battery", {
 	padding_left = 6,
 	update_freq = 180,
 	label = { drawing = false },
-	popup = {
-		align = "right",
-		background = {
-			color = colors.black,
-			border_color = colors.grey,
-			border_width = 1,
-			corner_radius = 6,
-			padding_left = 6,
-			padding_right = 6,
-		},
-	},
 })
 
 local detail = sbar.add("item", "widgets.battery.detail", {

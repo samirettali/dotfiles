@@ -7,17 +7,6 @@ local volume = sbar.add("item", "widgets.volume", {
 	padding_left = 6,
 	icon = { width = 16, align = "center" },
 	label = { drawing = false },
-	popup = {
-		align = "right",
-		background = {
-			color = colors.black,
-			border_color = colors.grey,
-			border_width = 1,
-			corner_radius = 6,
-			padding_left = 6,
-			padding_right = 6,
-		},
-	},
 })
 
 -- The popup slider both reports the level and sets it, so the popup needs no
@@ -26,15 +15,7 @@ local detail = sbar.add("slider", "widgets.volume.detail", 120, {
 	position = "popup.widgets.volume",
 	icon = { drawing = false },
 	label = { align = "right", width = 44, padding_left = 6 },
-	slider = {
-		highlight_color = colors.white,
-		background = {
-			color = colors.grey23,
-			height = 10,
-			corner_radius = 2,
-		},
-		knob = { drawing = false },
-	},
+	slider = popup.slider,
 })
 
 -- A slider click arrives as PERCENTAGE, not inside INFO.

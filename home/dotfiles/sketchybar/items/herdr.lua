@@ -36,17 +36,6 @@ local item = sbar.add("item", "herdr.agents", {
 	label = { font = { style = "Bold" }, color = STATE_COLOR.done },
 	-- The popup background is not drawn by default, which leaves the rows
 	-- floating over the desktop. Matched to `bar.lua`.
-	popup = {
-		align = "right",
-		background = {
-			color = colors.black,
-			border_color = colors.grey,
-			border_width = 1,
-			corner_radius = 6,
-			padding_left = 6,
-			padding_right = 6,
-		},
-	},
 })
 
 local rows = {}

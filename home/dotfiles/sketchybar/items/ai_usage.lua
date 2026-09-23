@@ -22,17 +22,6 @@ local usage = sbar.add("item", "usage", {
 	updates = "on",
 	icon = { string = icons.usage },
 	label = { drawing = false },
-	popup = {
-		align = "right",
-		background = {
-			color = colors.black,
-			border_color = colors.grey,
-			border_width = 1,
-			corner_radius = 6,
-			padding_left = 6,
-			padding_right = 6,
-		},
-	},
 })
 
 local limits_by_provider = {}
@@ -125,15 +114,7 @@ local function rebuild_view()
 					align = "left",
 				},
 				label = { align = "right", width = 44, padding_left = 6 },
-				slider = {
-					highlight_color = colors.white,
-					background = {
-						color = colors.grey23,
-						height = 10,
-						corner_radius = 2,
-					},
-					knob = { drawing = false },
-				},
+				slider = popup.slider,
 			})
 			row:subscribe("mouse.clicked", function()
 				open_provider(key)
