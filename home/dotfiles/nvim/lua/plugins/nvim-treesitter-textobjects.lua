@@ -86,18 +86,11 @@ vim.keymap.set("n", "]C", function()
 	move.goto_next_end("@class.outer", "textobjects")
 end, { desc = "Next class end" })
 
-vim.keymap.set("n", "[p", function()
-	move.goto_previous_start("@parameter.inner", "textobjects")
-end, { desc = "Previous parameter" })
-vim.keymap.set("n", "]p", function()
-	move.goto_next_start("@parameter.inner", "textobjects")
-end, { desc = "Next parameter" })
-
 -- Swap objects
-vim.keymap.set("n", "g>", function()
+vim.keymap.set("n", "<leader>>", function()
 	swap.swap_next("@parameter.inner")
 end, { desc = "Swap parameter with next" })
-vim.keymap.set("n", "g<", function()
+vim.keymap.set("n", "<leader><", function()
 	swap.swap_previous("@parameter.inner")
 end, { desc = "Swap parameter with previous" })
 
