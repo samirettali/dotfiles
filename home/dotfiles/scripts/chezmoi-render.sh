@@ -37,6 +37,7 @@ directories=(
     .config/nvim
     .claude/skills/commit
     .claude/skills/code-review
+    .claude/skills/hunk
 )
 
 # A template merges the work-only additions into these, so they land among the
