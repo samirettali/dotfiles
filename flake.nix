@@ -104,7 +104,6 @@
     # Default feature toggles; override per machine at the call site.
     defaultFeatures = {
       rust = true;
-      dart = false;
       security = false;
       android = false;
       web3 = false;

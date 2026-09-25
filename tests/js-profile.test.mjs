@@ -15,7 +15,7 @@ const profiles = JSON.parse(execFileSync("nix", ["eval", "--impure", "--json", "
       "js-beautify" "prettierd" "vscode-langservers-extracted"
     ]);
   in map (js: let
-    config.features = { inherit js; web3 = false; dart = false; };
+    config.features = { inherit js; web3 = false; };
     tools = import ${JSON.stringify(resolve("home/packages/dev/js.nix"))} { inherit config lib pkgs; };
     editor = import ${JSON.stringify(resolve("home/packages/shell/neovim.nix"))} {
       inherit config lib pkgs;

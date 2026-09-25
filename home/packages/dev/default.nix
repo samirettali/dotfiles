@@ -10,7 +10,6 @@
     ./java.nix
     ./web3.nix
     ./zig.nix
-    ./dart.nix
     ./godot.nix
   ];
 

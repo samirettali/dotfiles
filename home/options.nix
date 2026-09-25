@@ -9,7 +9,6 @@
 
     features = {
       rust = lib.mkEnableOption "Rust tooling";
-      dart = lib.mkEnableOption "Dart tooling";
       security = lib.mkEnableOption "security tooling";
       android = lib.mkEnableOption "Android device tooling";
       web3 = lib.mkEnableOption "Web3 tooling";
