@@ -11,8 +11,7 @@
   featureServers =
     ["tofu_ls"]
     ++ lib.optionals (config.features.js == "minimal" || config.features.js == "full") ["ts_ls"]
-    ++ lib.optionals (config.features.js == "full") ["eslint"]
-    ++ lib.optionals config.features.web3 ["solidity_ls"];
+    ++ lib.optionals (config.features.js == "full") ["eslint"];
 in {
   programs.neovim = {
     enable = lib.mkDefault true;
