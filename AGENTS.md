@@ -43,7 +43,7 @@ The `warning: Git tree ... is dirty` line during evaluation is benign.
 - `machines/<host>.nix` contains host and system configuration.
 - `home/` contains user configuration.
 - `home/packages/{shell,dev,desktop}/` use one file per tool, imported by each directory's `default.nix`.
-- Host features pass through `mkHomeManagerConfig { features = ...; }` and default to `defaultFeatures`.
+- Each host passes the features it turns on through `mkHomeManagerConfig { features = ...; }`; every feature is off by default.
 - `js` and `python` are `false`, `"minimal"`, or `"full"`; other features are booleans.
 - Use the `nurPkgs` special argument instead of expanding `samirettali-nur.packages.${system}`.
 

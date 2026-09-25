@@ -101,21 +101,6 @@
 
     serverUser = users.personal // {homeDirectory = "/home/${defaultUser}";};
 
-    # Default feature toggles; override per machine at the call site.
-    defaultFeatures = {
-      rust = true;
-      security = false;
-      android = false;
-      web3 = false;
-      zig = false;
-      java = false;
-      js = "minimal";
-      c = false;
-      go = true;
-      godot = false;
-      python = "minimal";
-    };
-
     mkNeovimPackage = system:
       inputs.neovim-nightly-overlay.packages.${system}.default.overrideAttrs (_: {
         doCheck = false; # TODO: upstream is broken
@@ -183,7 +168,7 @@
 
     mkHomeUserModule = {
       user,
-      features ? defaultFeatures,
+      features,
       modules,
     }: {
       inherit features;
@@ -200,7 +185,7 @@
       user,
       hostname,
       extraModules ? [],
-      features ? defaultFeatures,
+      features,
       pkgs,
       ...
     }: {
@@ -289,13 +274,14 @@
               inherit pkgs;
               user = users.personal;
               hostname = "mbp";
-              features =
-                defaultFeatures
-                // {
-                  android = true;
-                  godot = true;
-                  python = "full";
-                };
+              features = {
+                rust = true;
+                go = true;
+                js = "minimal";
+                python = "full";
+                android = true;
+                godot = true;
+              };
               extraModules = [
                 ./home/mac
                 ./home/packages/desktop
