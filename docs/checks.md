@@ -48,17 +48,26 @@ native web-search skill, not Pi's loader.
 Keep `~/.pi/pi-source` and the `PI_PACKAGE_DIR` override: they give agents readable
 paths to the installed documentation and examples rather than long store paths.
 
-## Small CI
+## CI
 
-`.github/workflows/check.yml` runs `make check-ci`: format, lint and portable
-offline tests. It obtains tools from the public nixpkgs revision already recorded
-in `flake.lock`, without evaluating the dotfiles flake. The latter has a private
-SSH input, so running complete host evaluation in credential-free CI would not
-work on a cold runner. CI has read-only repository permission, no stored checkout
-credentials, no secrets, and no system build matrix.
+`.github/workflows/check.yml` has two jobs, with read-only repository permission
+and no stored checkout credentials.
 
-Pi-runtime tests, Herdr tests, host evaluation and the full Darwin chezmoi render
-remain explicit local gates in `make check`, not silently skipped CI jobs. Browser
+`offline-checks` runs `make check-ci`: format, lint and portable offline tests. It
+obtains tools from the public nixpkgs revision already recorded in `flake.lock`,
+without evaluating the dotfiles flake, and has no secrets.
+
+`evaluate` runs `make check-eval-andromeda` on `ubuntu-24.04-arm` and
+`make check-eval-mbp` on `macos-latest`. The flake has a private SSH input,
+`samirettali/skills`, so the job loads a read-only deploy key from the
+`SKILLS_DEPLOY_KEY` secret, which the infra repository generates and declares in
+`github/deploy-keys.tf`. Each host evaluates on its own platform because
+`pi-mcp-adapter` and `pi-provider-kimi-code` in the NUR use `importNpmLock`, which
+reads the npm lock file from their source during evaluation. Pull requests from
+forks get no secrets, so they skip this job.
+
+Pi-runtime tests, Herdr tests and the full Darwin chezmoi render remain explicit
+local gates in `make check`, not silently skipped CI jobs. Browser
 CDP integration is opt-in: set `BROWSER_BIN` and `BROWSER_SKILL_SCRIPTS` to the
 built skill when running `browser.test.mjs` directly. `make check-tests` clears
 `BROWSER_BIN` so it never launches a browser implicitly.

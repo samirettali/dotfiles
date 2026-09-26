@@ -33,3 +33,40 @@ jobs:
             "github:nixos/nixpkgs/$rev#fish" \
             "github:nixos/nixpkgs/$rev#nodejs" \
             --command make check-ci
+
+  # The flake has a private input, samirettali/skills, reached with a read-only
+  # deploy key declared in the infra repo. Each host evaluates on its own
+  # platform: two NUR packages read their npm lock file during evaluation, which
+  # builds their source for that platform.
+  evaluate:
+    name: evaluate ${{ matrix.host }}
+    # A pull request from a fork gets no secrets.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - host: andromeda
+            runner: ubuntu-24.04-arm
+          - host: mbp
+            runner: macos-latest
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@b85815f71a6de0ddee80b8a80a98d43f4bcc66c7 # v31
+      - name: Load the deploy key for samirettali/skills
+        shell: bash
+        env:
+          SKILLS_DEPLOY_KEY: ${{ secrets.SKILLS_DEPLOY_KEY }}
+        run: |
+          eval "$(ssh-agent -s)"
+          ssh-add - <<<"$SKILLS_DEPLOY_KEY"
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> "$GITHUB_ENV"
+          mkdir -p ~/.ssh
+          # GitHub's published host key, from https://api.github.com/meta.
+          echo 'github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl' >> ~/.ssh/known_hosts
+      - name: Evaluate ${{ matrix.host }}
+        run: make check-eval-${{ matrix.host }}
