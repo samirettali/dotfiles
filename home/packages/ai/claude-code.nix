@@ -54,7 +54,10 @@ in {
       # a denied tool is dropped from the model's tool list, not only refused
       # pkill -f and killall match other sessions' processes, and the shell
       # running them; this is the rule from agents.md, enforced.
-      permissions.deny = ["ReportFindings" "Bash(pkill:*)" "Bash(killall:*)"];
+      # Web search and page reads go through Firecrawl, which returns whole
+      # pages where WebFetch returns a small model's summary; see
+      # docs/ai/firecrawl.md.
+      permissions.deny = ["ReportFindings" "Bash(pkill:*)" "Bash(killall:*)" "WebSearch" "WebFetch"];
       # Artifact has its own switch (also drops the artifact-* skills)
       enableArtifact = false;
       autoMemoryEnabled = false;

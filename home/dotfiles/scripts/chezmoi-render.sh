@@ -121,8 +121,11 @@ for entry in "${templates[@]}"; do
 done
 
 # The status line is a script nix builds, so the work Mac has not got it.
+# Firecrawl reads its key from the rbw vault, which the work Mac has not got
+# either, so Claude Code keeps its own WebSearch and WebFetch there.
 template=$source_dir/.chezmoitemplates/claude-settings.json
-jq "del(.statusLine)" "$template" > "$template.tmp" && mv "$template.tmp" "$template"
+jq 'del(.statusLine) | .permissions.deny -= ["WebSearch", "WebFetch"]' \
+    "$template" > "$template.tmp" && mv "$template.tmp" "$template"
 
 # The launcher binds the rbw vault and the sketchybar hook, which the work Mac
 # has not got, and it names every command by store path because `open` gives it
