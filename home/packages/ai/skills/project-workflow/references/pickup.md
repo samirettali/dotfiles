@@ -9,8 +9,11 @@
 
 2. Read the project's `AGENTS.md`. Use the docs index to locate relevant
    guidance; read journal entries only when the issue depends on that history.
-3. Create a worktree at `~/dev/.worktrees/<repo>/issue-<N>-<slug>`, on a new
-   `issue-<N>-<slug>` branch.
+3. Fetch, then create a worktree at `~/dev/.worktrees/<repo>/issue-<N>-<slug>`,
+   on a new `issue-<N>-<slug>` branch from `origin/main`:
+   `git fetch origin && git worktree add -b issue-<N>-<slug> ~/dev/.worktrees/<repo>/issue-<N>-<slug> origin/main`.
+   The pull request merges into `origin/main`, so it starts from there, not from
+   a local `main` that may be behind or carry commits not yet pushed.
 4. Move the issue to `🏗 In progress`.
 5. Investigate apparent ambiguity against the current code and issue discussion;
    an old issue may describe a problem that has since changed. Ask about unresolved
