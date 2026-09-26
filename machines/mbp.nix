@@ -168,9 +168,13 @@
       };
 
       CustomUserPreferences = {
-        # The interface is in American English only. NSGlobalDomain has no
-        # option for it in nix-darwin.
-        NSGlobalDomain.AppleLanguages = ["en-US"];
+        # The interface is in American English only, with Italy's formats for
+        # dates, numbers and currency. nix-darwin's NSGlobalDomain has no option
+        # for either.
+        NSGlobalDomain = {
+          AppleLanguages = ["en-US"];
+          AppleLocale = "en_US@rg=itzzzz";
+        };
         # The keyboard layouts in the input menu. AppleLanguages sets the
         # language of the interface, not these.
         "com.apple.HIToolbox".AppleEnabledInputSources = [
@@ -183,10 +187,6 @@
             InputSourceKind = "Keyboard Layout";
             "KeyboardLayout ID" = 0;
             "KeyboardLayout Name" = "U.S.";
-          }
-          {
-            "Bundle ID" = "com.apple.CharacterPaletteIM";
-            InputSourceKind = "Non Keyboard Input Method";
           }
         ];
         "com.apple.symbolichotkeys" = {
