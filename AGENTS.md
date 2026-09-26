@@ -109,7 +109,7 @@ Read the matching document before changing that subsystem:
 - `docs/ai/skill-invocation.md` — manual skill discovery and per-agent metadata.
 - `docs/ai/firecrawl.md` — shared search CLI, vault credentials, costs, and disabled feedback.
 - `docs/ai/browser-skill.md` — shared CDP overlay, action locking, filtered logs and tests.
-- `docs/checks.md` — individual verification targets, small CI and Home Manager-only Linux activation.
+- `docs/checks.md` — individual verification targets, CI and Home Manager-only Linux activation.
 - `docs/chromium-sandbox.md` — andromeda sandbox findings and the unapproved host-policy path.
 - `docs/herdr.md` — patched fork, declarative agent integrations, builds, testing, and Neovim navigation.
 - `docs/sketchybar.md` — pending agents and AI subscription usage.
