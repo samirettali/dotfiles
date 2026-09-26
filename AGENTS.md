@@ -116,6 +116,7 @@ Read the matching document before changing that subsystem:
 - `docs/macos-tcc.md` — permissions, application signatures, and stable launch paths.
 - `docs/helium.md` — the Chromium side: re-signing, Widevine, pinned extensions.
 - `docs/chezmoi-render.md` — rendering the work Mac's configuration from what nix builds for `mbp`.
+- `docs/bootstrap.md` — setting up a new Mac, and the settings that stay manual.
 
 ## Skills
 
