@@ -59,6 +59,12 @@
     "''${user_cmd[@]}" ${lib.getExe pkgs.duti} -s ${heliumBundleId} http || true
     "''${user_cmd[@]}" ${lib.getExe pkgs.duti} -s ${heliumBundleId} https || true
 
+    # users.users.<name>.shell only reaches users in users.knownUsers, which
+    # must not hold the admin user, so the login shell is set here.
+    /usr/bin/dscl . -create /Users/${user} UserShell /run/current-system/sw/bin/fish
+
+    # Low Power Mode off, on battery as well as on AC.
+    /usr/bin/pmset -a lowpowermode 0
   '');
 
   # Hack: system.keyboard.remapCapsLockToControl only runs hidutil once at
@@ -168,6 +174,24 @@
       };
 
       CustomUserPreferences = {
+        # The keyboard layouts in the input menu. AppleLanguages sets the
+        # language of the interface, not these.
+        "com.apple.HIToolbox".AppleEnabledInputSources = [
+          {
+            InputSourceKind = "Keyboard Layout";
+            "KeyboardLayout ID" = 223;
+            "KeyboardLayout Name" = "Italian - Pro";
+          }
+          {
+            InputSourceKind = "Keyboard Layout";
+            "KeyboardLayout ID" = 0;
+            "KeyboardLayout Name" = "U.S.";
+          }
+          {
+            "Bundle ID" = "com.apple.CharacterPaletteIM";
+            InputSourceKind = "Non Keyboard Input Method";
+          }
+        ];
         "com.apple.symbolichotkeys" = {
           AppleSymbolicHotKeys = {
             "60" = {enabled = false;}; # Disable "Select the previous input source" (Ctrl+Space)
