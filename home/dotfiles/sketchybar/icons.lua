@@ -2,6 +2,7 @@ local icons = {
 	error = " ",
 	spotify = "",
 	usage = "󰄧",
+	mail = "\u{f01ee}",
 
 	herdr = "\u{f0a0b}",
 

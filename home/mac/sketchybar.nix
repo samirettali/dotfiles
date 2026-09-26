@@ -29,6 +29,11 @@
     herdr = herdrPackage;
   };
 
+  mailSketchybar = pkgs.callPackage ../packages/shell/scripts/mail-sketchybar.nix {
+    sketchybar = config.programs.sketchybar.package;
+    rbw = config.programs.rbw.package;
+  };
+
   aiUsage = pkgs.callPackage ../packages/shell/scripts/ai-usage.nix {
     inherit (nurPkgs) codex;
   };
@@ -53,6 +58,19 @@ in {
       ProcessType = "Background";
       StandardOutPath = "${config.home.homeDirectory}/Library/Logs/herdr-sketchybar.log";
       StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/herdr-sketchybar.err.log";
+    };
+  };
+
+  # Holds Fastmail's JMAP event stream open and triggers the `mail_unread` event.
+  launchd.agents.mail-sketchybar = {
+    enable = config.programs.sketchybar.enable && config.programs.rbw.enable;
+    config = {
+      ProgramArguments = [(lib.getExe mailSketchybar)];
+      RunAtLoad = true;
+      KeepAlive = true;
+      ProcessType = "Background";
+      StandardOutPath = "${config.home.homeDirectory}/Library/Logs/mail-sketchybar.log";
+      StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/mail-sketchybar.err.log";
     };
   };
 

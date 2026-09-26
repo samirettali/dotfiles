@@ -1,6 +1,6 @@
 # Sketchybar integrations
 
-Read this before changing the workspace, pending-agent, or AI-usage items.
+Read this before changing the workspace, pending-agent, AI-usage, or mail items.
 
 ## AeroSpace workspaces
 
@@ -42,6 +42,23 @@ Sketchybar's `media_change` never fires on macOS 26: MediaRemote now requires an
 The item sets `updates=on` because the default, `when_shown`, drops events while it is hidden.
 A JXA query covers startup, wake and unlock, when notifications may have been missed.
 Keep the item hidden when Spotify has no track, and derive Sottotesto links from Spotify's track URI.
+
+## Fastmail unread
+
+`items/mail.lua` shows the unread count of the Fastmail inbox, hidden at zero.
+Clicking it opens the inbox in the browser.
+
+`mail-sketchybar` lives under `home/packages/shell/scripts/`.
+A LaunchAgent in `home/mac/sketchybar.nix` holds Fastmail's JMAP event source, a Server-Sent Events stream, and triggers the `mail_unread` event.
+Nothing polls.
+
+- The token is the read-only JMAP API token `fastmail-api-key` in the rbw vault, with the Email scope only.
+- Check `rbw unlocked` before `rbw get`: on a locked vault `rbw get` opens a pinentry prompt from a background process.
+  While the vault is locked, the watcher retries every minute.
+- Fastmail ignores ping intervals below 30 seconds.
+  The watcher treats 75 seconds of silence as a dead connection, which is also how sleep shows up, and reconnects.
+- Count with `Mailbox/get` on every `state` event.
+  The first `state` arrives on connect, so a reconnect recounts what changed while the stream was down.
 
 ## Compact system widgets
 
