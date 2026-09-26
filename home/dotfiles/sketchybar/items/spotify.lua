@@ -5,6 +5,9 @@ local separator = require("separator")
 local spotify = sbar.add("item", "spotify", {
 	position = "right",
 	drawing = false,
+	-- The default, `when_shown`, drops every event while the item is hidden, so
+	-- it would never show again.
+	updates = true,
 	icon = {
 		string = icons.spotify,
 		color = colors.spotify,
@@ -58,11 +61,21 @@ local function refresh()
 	)
 end
 
--- `media_change` is missed while the machine sleeps or the screen is locked, so
+-- Spotify posts its state with every change. Sketchybar's `media_change` never
+-- fires on macOS 26, where MediaRemote needs an Apple entitlement.
+sbar.add("event", "spotify_change", "com.spotify.client.PlaybackStateChanged")
+
+spotify:subscribe("spotify_change", function(env)
+	if type(env.INFO) == "table" then
+		update(env.INFO)
+	end
+end)
+
+-- Notifications are missed while the machine sleeps or the screen is locked, so
 -- the item would keep whatever it showed before. Both wake paths re-query.
 sbar.add("event", "screen_unlocked", "com.apple.screenIsUnlocked")
 
-spotify:subscribe({ "media_change", "system_woke", "screen_unlocked" }, refresh)
+spotify:subscribe({ "system_woke", "screen_unlocked" }, refresh)
 
 spotify:subscribe("mouse.clicked", function(_)
 	if current_track_id then

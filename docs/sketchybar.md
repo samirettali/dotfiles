@@ -37,9 +37,10 @@ Nothing polls.
 
 ## Spotify now playing
 
-`items/spotify.lua` listens to Sketchybar's `media_change` event, so track changes need no polling.
-On each event it queries Spotify locally through JXA because MediaRemote omits the Spotify track ID.
-The same query runs once at startup, while later events cover Spotify opening after Sketchybar.
+`items/spotify.lua` listens to Spotify's `com.spotify.client.PlaybackStateChanged` distributed notification, which carries state, title, artist and track URI, so track changes need no polling.
+Sketchybar's `media_change` never fires on macOS 26: MediaRemote now requires an Apple entitlement.
+The item sets `updates=on` because the default, `when_shown`, drops events while it is hidden.
+A JXA query covers startup, wake and unlock, when notifications may have been missed.
 Keep the item hidden when Spotify has no track, and derive Sottotesto links from Spotify's track URI.
 
 ## Compact system widgets
