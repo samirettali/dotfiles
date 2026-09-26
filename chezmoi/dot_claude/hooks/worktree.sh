@@ -16,6 +16,9 @@ create)
     dir="$HOME/dev/.worktrees/$repo/$name"
     mkdir -p "$(dirname "$dir")"
     git -C "$cwd" worktree add -b "worktree-$name" "$dir" HEAD >&2
+    # A failed setup still leaves a usable checkout, so it only warns.
+    "$HOME/.local/bin/worktree-setup" "$dir" >&2 ||
+        printf 'worktree-setup failed in %s\n' "$dir" >&2
     printf '%s\n' "$dir"
     ;;
 remove)

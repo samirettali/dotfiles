@@ -18,12 +18,15 @@
 
 ## Worktree bootstrap
 
-A worktree carries only the tracked files:
+A worktree carries only the tracked files. `~/.local/bin/worktree-setup <dir>`
+fills in what the repo declares: it copies the untracked files listed in
+`.worktreeinclude`, allows the `.envrc`, and runs `make worktree` if the repo has
+that target. Claude Code's worktree tool runs it already; after `git worktree add`,
+run it yourself.
 
-- run `make worktree` if the repo has that target — it is the repo's own bootstrap;
-- otherwise symlink what cannot be regenerated (`.env`, local config), regenerate
-  what can (`pnpm install`), and **ask** about live state, like a local database:
-  copying it forks it, sharing it means two processes on one file.
+For anything the repo does not declare, regenerate what can be regenerated
+(`pnpm install`) and **ask** about live state, like a local database: copying it
+forks it, sharing it means two processes on one file.
 
 With two worktrees open the default port is taken, so bind another one and **say
 which URL you bound**.

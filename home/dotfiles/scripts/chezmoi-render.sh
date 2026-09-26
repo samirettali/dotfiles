@@ -31,6 +31,7 @@ files=(
     .config/git/allowed_signers
     .claude/hooks/herdr-agent-state.sh
     .claude/hooks/worktree.sh
+    .local/bin/worktree-setup:.local/bin/executable_worktree-setup
     revive.toml
 )
 
