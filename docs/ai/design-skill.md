@@ -59,8 +59,8 @@ navigation. The skill preserves both rather than averaging their tokens.
 
 Their implementation choices are examples, not universal rules. Sottotesto's
 persistent request button teaches continuity, not a ban on unmounting elements.
-Sottocasa's submit policy teaches discoverable prerequisites, not a requirement
-to disable every invalid form.
+Sottocasa disables submit until a form is valid, which the skill no longer
+recommends; that stays its convention until it is migrated.
 
 ## Review cases for future edits
 
@@ -73,7 +73,7 @@ scope. A model-based evaluation must report its prompts, model, and actual outpu
 | Fix Sottocasa's booking picker | Reuse the themed picker and square controls; do not migrate to native styling |
 | Improve Sottotesto's reading view | Preserve its palette and typography; do not add display fonts, cards, or a hero |
 | Review Sottotesto's faint text | Report measured failures; ask before changing locked tokens; never claim the documented exception passes |
-| Add an input to a form with disabled submits | Preserve the clear convention; verify the reason for unavailability and server validation |
+| Add an input to a form with disabled submits | Follow the form's convention and verify server validation; report the disabled submit and ask before migrating |
 | Retry a failed reading request | Keep useful state and focus; do not offer retries for a known permanent failure |
 | Confirm a booking that sends a message | Do not call Undo equivalent to preventing the outgoing notification |
 | Review a narrow screen without a browser | Report source findings and mark rendered behavior unverified |

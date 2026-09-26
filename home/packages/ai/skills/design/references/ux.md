@@ -116,9 +116,10 @@ Validate at a useful moment. Show format hints before input; avoid announcing
 an error on each keystroke while a value is incomplete. Check cross-field and
 server constraints at submission even when the client also validates.
 
-An enabled submit can reveal validation problems. A disabled submit is acceptable
-when the missing requirements remain discoverable without activating it. Never
-leave a person guessing why they cannot continue.
+Keep submit enabled: activating it shows what is missing, next to each field. A
+disabled submit says nothing about why and cannot take focus, so a keyboard or
+screen reader user may never find it. Never leave a person guessing why they
+cannot continue.
 
 Place field errors next to their fields and connect them programmatically. For
 long forms, an error summary can link to each problem. On failure, direct focus
