@@ -150,12 +150,6 @@
         "com.apple.mouse.tapBehavior" = null;
         "com.apple.swipescrolldirection" = false;
         "com.apple.trackpad.scaling" = 3.0;
-        # TODO
-        # AppleLanguages = [
-        #   "en-US"
-        #   "it-IT"
-        # ];
-        # AppleLocale = "en_US";
       };
       # Explicit: dropping the old `false` would leave it written in the defaults.
       LaunchServices.LSQuarantine = true;
@@ -174,6 +168,9 @@
       };
 
       CustomUserPreferences = {
+        # The interface is in American English only. NSGlobalDomain has no
+        # option for it in nix-darwin.
+        NSGlobalDomain.AppleLanguages = ["en-US"];
         # The keyboard layouts in the input menu. AppleLanguages sets the
         # language of the interface, not these.
         "com.apple.HIToolbox".AppleEnabledInputSources = [
