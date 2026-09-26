@@ -59,6 +59,9 @@ in {
         });
       approval_policy = "never";
       sandbox_mode = "danger-full-access";
+      # Codex searches the web by default ("cached"); searches go through
+      # Firecrawl instead, see docs/ai/firecrawl.md.
+      web_search = "disabled";
       features.context_management.experimental_mode = true;
       hooks.state."${codexHome}/hooks.json:session_start:0:0" = {
         trusted_hash = "sha256:4167dc7691a7b44db36e4b20a0cf5ffae824133f8bfcd02cfa15b2caae716a76";

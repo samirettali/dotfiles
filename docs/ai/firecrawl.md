@@ -1,11 +1,12 @@
 # Firecrawl
 
 Firecrawl is the web search and page reader for every agent. Claude Code's own
-`WebSearch` and `WebFetch` are denied in `claude-code.nix`: in a benchmark of 30
-real searches and 20 real page reads (September 2026), Firecrawl matched
-WebSearch and read 14 pages completely against WebFetch's 7, because WebFetch
-returns a small model's answer instead of the page. The work Mac, which has no
-rbw vault, keeps them. Running out of credits before the month ends is accepted.
+`WebSearch` and `WebFetch` are denied in `claude-code.nix`, and Codex's search is
+off (`web_search = "disabled"` in `codex.nix`). In a benchmark of 30 real
+searches and 20 real page reads (September 2026), Firecrawl matched WebSearch and
+read 14 pages completely against WebFetch's 7, because WebFetch returns a small
+model's answer instead of the page. The work Mac, which has no rbw vault, keeps
+Claude Code's tools. Running out of credits before the month ends is accepted.
 
 The CLI lives in
 `samirettali/nur` as `firecrawl-cli`, including its automatic release updater.
