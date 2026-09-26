@@ -64,6 +64,11 @@
       flake = false;
     };
 
+    finctl = {
+      url = "github:samirettali/finctl";
+      flake = false;
+    };
+
     skills = {
       url = "git+ssh://git@github.com/samirettali/skills.git";
       flake = false;

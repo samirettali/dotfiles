@@ -101,6 +101,7 @@ in {
   android = ./skills/android;
   commit = ./skills/commit;
   design = ./skills/design;
+  finance = "${manualSkill "finance" "${inputs.finctl}/.agents/skills/finance"}";
   firecrawl-search = ./skills/firecrawl-search;
   firecrawl-scrape = ./skills/firecrawl-scrape;
   firecrawl-developer-index = ./skills/firecrawl-developer-index;

@@ -34,6 +34,7 @@
     ./spotctl.nix
     ./fluxctl.nix
     ./linkctl.nix
+    ./finctl.nix
     ./spotify-player.nix
     ./tealdeer.nix
     ./tmux.nix

@@ -36,6 +36,22 @@
         "type": "github"
       }
     },
+    "finctl": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790408764,
+        "narHash": "sha256-Sx6qgYI/fsqwGaVDamUQZCfMKWc85vRhYQD/n5n8qQY=",
+        "owner": "samirettali",
+        "repo": "finctl",
+        "rev": "c2a1a8e26416575856996448e306bd88b3fe86f0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "samirettali",
+        "repo": "finctl",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -228,6 +244,7 @@
       "inputs": {
         "agent-stuff": "agent-stuff",
         "darwin": "darwin",
+        "finctl": "finctl",
         "fluxctl": "fluxctl",
         "herdr-fork": "herdr-fork",
         "home-manager": "home-manager",
@@ -249,11 +266,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790189940,
-        "narHash": "sha256-bWQ8K08Y/Kycj/wasnWQAPSn8dtCz5ASJDO6T/DhnAM=",
+        "lastModified": 1790408983,
+        "narHash": "sha256-V23WWDC5/q5vjclqbHd9fqiampwZJimdCNFT4zk2vs4=",
         "owner": "samirettali",
         "repo": "nur",
-        "rev": "e5c391411c844910338a97b3dd95924176a3431f",
+        "rev": "981a48edbdba052b1667806c042078b5264d08e1",
         "type": "github"
       },
       "original": {
