@@ -37,6 +37,7 @@ upstream prompts. These are the inspected snapshots, not runtime dependencies.
 | [Taste-skill](https://github.com/Leonxlnx/taste-skill/tree/ccbc15639c97057cbfcf32ecebc38ef716e4bb37/skills/taste-skill) | Separate refinement from overhaul, verify motion and assets | Style dials, prescribed stack, mandatory dark mode, punctuation bans |
 | [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/f3ac195224eac1eb0dfe1a3059c2a6add78ffbe3/.claude/skills/ui-ux-pro-max) | Prioritize usability, identify the actual platform, load focused guidance | Search runtime, style database, generated design systems |
 | [Emil Kowalski's skills](https://github.com/emilkowalski/skill/tree/d23d7f88a2e21c9e4b1418c7abe420f5c1052ba7/skills/emil-design-eng) | Animate by frequency and purpose, easing by direction, press feedback, near-visible entrances, origin-aware popovers, reduced motion keeps feedback | Course advertisement, mandatory review table, fixed curves and durations, Swift, Expo, Sonner and library picks |
+| [UX Patterns' border-radius reel](https://www.instagram.com/reel/Dcx__07t8e5/) | Project-scale radii, concentric nested corners, outer rings, flush edges, clipped images | The reel's example values and universal rounding prescription |
 
 Accessibility thresholds follow [WCAG 2.2](https://www.w3.org/TR/WCAG22/) rather
 than informal upstream summaries. In particular, 44px is not the universal AA

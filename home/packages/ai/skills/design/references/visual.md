@@ -110,9 +110,18 @@ viewport collision handling, and focus behavior intact.
 Reuse the project's controls, icon family, and state vocabulary. A visual redesign
 should not discard working keyboard behavior or create a second button system.
 
-When rounded surfaces nest, check the visible gap around their contours. The
-outer radius often follows the inner radius plus the inset; deliberate nonconcentric
-shapes need not follow that recipe. Square-cornered projects need no radius fix.
+Treat corner radii as a small project-owned scale matched to element size, not
+one radius repeated on every surface. Check nested corners for a shared center:
+for a uniform inset, the inner radius is usually the outer radius minus the
+inset. If a border or selection ring surrounds a surface, its outer radius
+usually equals the surface radius plus the visible gap. Inspect the actual
+contours instead of blindly applying the arithmetic, especially with unequal
+insets or borders. A fully rounded pill should complete its shape on one line;
+do not substitute an arbitrarily large radius for every rounded component.
+When a surface is flush with a viewport edge, omit the corners touching that
+edge. Clip images to their containing surface so their corners do not protrude.
+Preserve deliberate nonconcentric shapes and square-cornered systems rather
+than imposing rounding on them.
 
 Check icon alignment and optical weight beside real text. Use meaningful labels
 for unfamiliar or ambiguous actions. Do not hand-build a control solely because
