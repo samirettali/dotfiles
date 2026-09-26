@@ -31,6 +31,11 @@ TTL, invalidated by the mutations that change it.
 regenerates oapi-codegen + sqlc + TS clients), `air` for backend live
 reload, `direnv`, `pnpm`.
 
+**Make targets** share one vocabulary: `dev` starts the project for
+development, `fmt` formats, `lint` lints, `test` runs the tests, and `verify`
+runs what CI runs. A target with another job gets a name that says it, such as
+`verify-signature`.
+
 ## Session configuration
 
 **The `.envrc` is committed, and there is no `.envrc.example`.** It holds no
