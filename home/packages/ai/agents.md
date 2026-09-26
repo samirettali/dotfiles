@@ -58,7 +58,8 @@ Never written a line myself, only through agents:
 - I dictate, so expect mangled words: read them by sound, and ask whenever a name or an identifier is at stake.
 - Say what will not work before building it, not after.
 - Work in a git worktree unless I say otherwise: I sit on main, and I do not want my checkout moved under me.
-- Put a worktree at `~/dev/.worktrees/<repo>/<name>` with `git worktree add -b <branch> ~/dev/.worktrees/<repo>/<name>`, then run `~/.local/bin/worktree-setup ~/dev/.worktrees/<repo>/<name>`. Claude Code's own worktree tool already does both.
+- Name a branch `issue-<N>-<slug>` when it works on an issue, otherwise `<type>-<slug>` with the commit type: `feat-…`, `fix-…`, `docs-…`. No `/`, so the name is also the worktree's directory.
+- Put a worktree at `~/dev/.worktrees/<repo>/<branch>` with `git worktree add -b <branch> ~/dev/.worktrees/<repo>/<branch>`, then run `~/.local/bin/worktree-setup ~/dev/.worktrees/<repo>/<branch>`. Claude Code's own worktree tool already does both, and the name you give it becomes the branch.
 - Merge a worktree by rebasing it on main, then `git -C <main checkout> merge --ff-only <branch>`. Once merged, remove the worktree and delete its branch; ask before discarding anything unmerged.
 - Prefer the simplest solution that meets the requirement, and say so when something is over-engineered.
 - Verify in seconds what you would otherwise assert: measure the latency, read the source, take a stack from the hung process, whatever settles it. A wrong theory costs more than the command that rules it out.

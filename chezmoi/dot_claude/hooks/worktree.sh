@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Claude Code's WorktreeCreate and WorktreeRemove hook. Every worktree lives at
-# ~/dev/.worktrees/<repo>/<name>, on a branch worktree-<name> taken from the
+# ~/dev/.worktrees/<repo>/<name>, on a branch named <name> taken from the
 # checkout's HEAD, so local commits not yet pushed come along. Only the final
 # path goes to stdout: Claude Code reads it as the worktree's location.
 set -euo pipefail
@@ -15,7 +15,7 @@ create)
     repo=$(basename "$(dirname "$common")")
     dir="$HOME/dev/.worktrees/$repo/$name"
     mkdir -p "$(dirname "$dir")"
-    git -C "$cwd" worktree add -b "worktree-$name" "$dir" HEAD >&2
+    git -C "$cwd" worktree add -b "$name" "$dir" HEAD >&2
     # A failed setup still leaves a usable checkout, so it only warns.
     "$HOME/.local/bin/worktree-setup" "$dir" >&2 ||
         printf 'worktree-setup failed in %s\n' "$dir" >&2
