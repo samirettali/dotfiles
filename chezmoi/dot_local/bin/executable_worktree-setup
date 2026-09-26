@@ -8,8 +8,12 @@ set -euo pipefail
 dir=$(cd "${1:-.}" && pwd -P)
 main=$(dirname "$(git -C "$dir" rev-parse --path-format=absolute --git-common-dir)")
 
-if [[ -f $main/.worktreeinclude && $dir != "$main" ]]; then
-    git -C "$main" ls-files -z --others --ignored --exclude-from="$main/.worktreeinclude" |
+# The worktree's own .worktreeinclude, so a branch that adds or changes it is
+# set up by its version; the main checkout's when the branch has none.
+include=$dir/.worktreeinclude
+[[ -f $include ]] || include=$main/.worktreeinclude
+if [[ -f $include && $dir != "$main" ]]; then
+    git -C "$main" ls-files -z --others --ignored --exclude-from="$include" |
         while IFS= read -r -d '' file; do
             mkdir -p "$dir/$(dirname "$file")"
             cp -p "$main/$file" "$dir/$file"
