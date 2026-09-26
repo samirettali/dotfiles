@@ -7,8 +7,6 @@ const profiles = JSON.parse(execFileSync("nix", ["eval", "--impure", "--json", "
   let
     lib = {
       optionals = enabled: values: if enabled then values else [];
-      concatMapStringsSep = separator: f: values:
-        builtins.concatStringsSep separator (map f values);
     };
     pkgs = builtins.listToAttrs (map (name: { inherit name; value = name; }) [
       "nodejs" "pnpm" "typescript-language-server" "eslint_d" "eslint"
@@ -17,14 +15,10 @@ const profiles = JSON.parse(execFileSync("nix", ["eval", "--impure", "--json", "
   in map (js: let
     config.features = { inherit js; };
     tools = import ${JSON.stringify(resolve("home/packages/dev/js.nix"))} { inherit config lib pkgs; };
-    editor = import ${JSON.stringify(resolve("home/packages/shell/neovim.nix"))} {
-      inherit config lib pkgs;
-      neovimPackage = null;
-    };
   in {
     inherit js;
     packages = tools.home.packages;
-    servers = editor.home.file.".config/nvim/lua/lsp-features.lua".text;
+    servers = tools.dotfiles.neovim.lspServers;
   }) [false "minimal" "full"]
 `], { encoding: "utf8" }));
 
@@ -33,8 +27,8 @@ for (const profile of profiles) {
     const enabled = profile.js !== false;
     const full = profile.js === "full";
     assert.equal(profile.packages.includes("typescript-language-server"), enabled);
-    assert.equal(profile.servers.includes('"ts_ls"'), enabled);
+    assert.equal(profile.servers.includes("ts_ls"), enabled);
     assert.equal(profile.packages.includes("eslint"), full);
-    assert.equal(profile.servers.includes('"eslint"'), full);
+    assert.equal(profile.servers.includes("eslint"), full);
   });
 }

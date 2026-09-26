@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -13,4 +14,6 @@
       cppcheck
       cpplint
     ];
+
+  dotfiles.neovim.lspServers = lib.optionals (config.features.c == "full") ["clangd"];
 }

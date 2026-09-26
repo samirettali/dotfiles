@@ -42,4 +42,6 @@ in {
           tags = ["postgres"];
         }))
     ];
+
+  dotfiles.neovim.lspServers = lib.optionals config.features.go ["gopls" "golangci_lint_ls"];
 }

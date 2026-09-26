@@ -10,4 +10,6 @@
     lua-language-server
     stylua
   ];
+
+  dotfiles.neovim.lspServers = ["lua_ls" "stylua"];
 }

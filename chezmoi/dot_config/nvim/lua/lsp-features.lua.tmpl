@@ -1,4 +1,0 @@
-{{ includeTemplate "nvim-lsp-features.lua" . | replace "\t\"tofu_ls\",\n" "" | trim }}
-{{ if eq .profile "work" -}}
-vim.lsp.enable({ "terraformls" })
-{{ end -}}

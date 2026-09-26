@@ -12,4 +12,6 @@
       solc-select
       vscode-solidity-server
     ];
+
+  dotfiles.neovim.lspServers = lib.optionals config.features.web3 ["solidity_ls"];
 }

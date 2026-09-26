@@ -23,4 +23,8 @@
   home.sessionVariables = lib.optionalAttrs (config.features.js == "full") {
     NEXT_TELEMETRY_DISABLED = "1";
   };
+
+  dotfiles.neovim.lspServers =
+    lib.optionals (config.features.js == "minimal" || config.features.js == "full") ["ts_ls"]
+    ++ lib.optionals (config.features.js == "full") ["eslint"];
 }

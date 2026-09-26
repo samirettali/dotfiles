@@ -81,8 +81,9 @@ render, and correcting the home directory and the identity it carries, are in
 
 What the render does not produce is written straight into `chezmoi/` and kept in
 step by hand, and it is only what nix has no equivalent of: `dot_Brewfile`, the
-Neovim plugins only the work Mac loads, and `dot_config/sottomano/emoji.json`,
-which sottomano does not ship yet.
+Neovim plugins only the work Mac loads, the language servers it enables
+(`dot_config/nvim/lua/lsp-servers.lua`, in step with `dot_Brewfile`), and
+`dot_config/sottomano/emoji.json`, which sottomano does not ship yet.
 
 Two rules for the work copy:
 

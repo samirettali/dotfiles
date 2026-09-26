@@ -48,6 +48,8 @@
 
   home.sessionPath = ["$HOME/.local/bin"];
 
+  dotfiles.neovim.lspServers = ["buf_ls" "taplo"];
+
   home.packages = with pkgs; [
     buf
     coreutils

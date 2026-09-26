@@ -5,6 +5,13 @@
         ansible.enable = lib.mkEnableOption "Ansible tooling";
         git-sync.enable = lib.mkEnableOption "git-sync";
       };
+
+      # The module that installs a language server names it here, so Neovim
+      # enables only the servers this machine has.
+      neovim.lspServers = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+      };
     };
 
     features = {

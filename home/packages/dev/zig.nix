@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -8,4 +9,6 @@
       zig
       zls
     ];
+
+  dotfiles.neovim.lspServers = lib.optionals config.features.zig ["zls"];
 }

@@ -24,4 +24,6 @@
     LIBRARY_PATH = ''${lib.makeLibraryPath [pkgs.libiconv]}''${LIBRARY_PATH:+:$LIBRARY_PATH}'';
     RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
   };
+
+  dotfiles.neovim.lspServers = lib.optionals config.features.rust ["rust_analyzer"];
 }

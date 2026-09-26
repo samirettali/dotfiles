@@ -21,4 +21,6 @@
       settings = {};
     };
   };
+
+  dotfiles.neovim.lspServers = lib.optionals (config.features.python == "full") ["basedpyright" "ruff"];
 }

@@ -12,4 +12,6 @@
     lib.optionals config.features.java [
       jdt-language-server
     ];
+
+  dotfiles.neovim.lspServers = lib.optionals config.features.java ["jdtls"];
 }

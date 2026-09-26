@@ -5,4 +5,6 @@
     nixd
     statix
   ];
+
+  dotfiles.neovim.lspServers = ["nixd"];
 }
