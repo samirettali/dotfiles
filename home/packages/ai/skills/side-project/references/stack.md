@@ -23,7 +23,9 @@ way schema changes — never hand-edit a tracked database, write a migration
 for icons (never unicode glyphs as icons), `@fontsource` for fonts.
 Formatting and linting with **Biome** (formatter at 120 columns, linter with
 the react domain; every suppression carries a reason). Public marketing/booking
-site, when one exists: **Astro with React islands**.
+site, when one exists: **Astro with React islands**. Every `<button>` carries an
+explicit `type`. Data a flow shows is prefetched into a module-level cache with a
+TTL, invalidated by the mutations that change it.
 
 **Tooling** — nix devshell + Makefile as the entry point (`make generate`
 regenerates oapi-codegen + sqlc + TS clients), `air` for backend live

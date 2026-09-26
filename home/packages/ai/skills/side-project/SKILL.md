@@ -1,6 +1,6 @@
 ---
 name: side-project
-description: The conventions of Samir's personal side projects — default stack, staged infrastructure, where infrastructure lives, repo layout and UX defaults. Use when starting one, when adding a major component (backend, frontend, public site) to an existing one, and when a project has to adopt a convention that changed here.
+description: The conventions of Samir's personal side projects — default stack, staged infrastructure, where infrastructure lives and repo layout. Use when starting one, when adding a major component (backend, frontend, public site) to an existing one, and when a project has to adopt a convention that changed here.
 ---
 
 # Side project
@@ -26,7 +26,6 @@ relative to this skill:
 | --- | --- |
 | Backend, data, frontend, tooling, `.envrc`, or testing setup | [Stack defaults](references/stack.md) |
 | Environments, authentication/access, hostnames, or infrastructure | [Infrastructure and access](references/infrastructure.md) |
-| Interface behavior | [UX defaults](references/ux.md) |
 
 Infrastructure follows validation. A prototype runs on andromeda, reached
 directly at `http://andromeda:<port>`, with no deployment infrastructure; a
@@ -43,7 +42,7 @@ belong with that project; shared account resources belong in `infra`.
   paperwork.
 - A locked `design.md` defines the visual system per project (palette,
   type, motion). Visual identity is per-project and deliberately **not**
-  part of this skill.
+  part of this skill; interface behavior follows the `design` skill.
 
 ## Project documentation
 

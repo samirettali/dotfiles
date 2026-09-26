@@ -71,6 +71,11 @@ Reserve space where predictable content changes would otherwise move a target.
 Use a fitting minimum size rather than a fixed height that clips longer text.
 Never keep stale results under a new query without distinguishing them.
 
+Do not open a view on emptiness it could have avoided. When it opens on a choice,
+such as a day or a section, preselect the first one with content. Offer filter
+options that lead to results, and keep selected options visible so they can be
+removed even when nothing matches them any more.
+
 ## Match feedback to the work
 
 A visible state change can be its own success message. Add confirmation when the
@@ -84,6 +89,10 @@ independent failures distinguishable.
 Acknowledge input immediately. Prevent duplicate submissions while a request is
 pending without making the focused control vanish. Do not claim success before
 the system confirms a non-optimistic operation.
+
+Load what a flow will show before the person opens it, when that is cheap, so it
+opens populated instead of loading in front of them. A failed load shows the
+failure and a retry in place.
 
 Choose loading feedback for the observed wait. Do not invent percentages or
 countdowns. For long jobs, provide a durable status and a way to return to it.
