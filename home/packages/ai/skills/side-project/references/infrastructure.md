@@ -20,7 +20,8 @@ die young; don't pay for infra they will never need.
 2. **Dev** — for a project worked on over many sessions: a tailnet-only HTTPS
    hostname through the shared proxy in `servers/side-proxy`, with the dev
    server on loopback behind it, and a real identity provider managed in
-   `infra/dev/`.
+   `infra/dev/`. The project gets tests from here on
+   ([Testing](stack.md#testing-and-auth)).
 3. **Staging** — **only when it needs its own data.** Payments to exercise with
    test cards, a migration to rehearse, a demo that must not touch real records.
    Separate database, migrations applied by a `migrate` service on deploy,

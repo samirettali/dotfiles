@@ -76,9 +76,13 @@ a message and a hang.
 
 ## Testing and auth
 
-**Testing** — Go table tests at the application layer with stubbed ports;
-domain logic tested pure. No frontend test framework by default: typecheck,
-lint, and live browser verification carry the frontend.
+**Testing** — A prototype has no tests: typecheck, lint, and live browser
+verification carry it, and most prototypes die young. Once the idea is validated
+and the project leaves the [prototype stage](infrastructure.md#environments), it
+gets tests. On the backend, Go table tests at the application layer with stubbed
+ports, and domain logic tested pure. On the frontend, Vitest and Testing Library,
+starting with the flows that cost the most when they break silently: bookings,
+sign-in, asynchronous states, focus.
 
 **Auth** — only if the product has users, and **not at the start**. See the
 [prototype stage](infrastructure.md#environments). When real auth arrives:
