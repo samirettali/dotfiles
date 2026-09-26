@@ -17,3 +17,6 @@
    --log-failed` prints the logs of the failed steps only.
 5. Do not close the issue by hand, and do not set it to `✅ Done`: the merge takes
    care of it.
+
+A commit pushed straight to main, without a PR, closes the issue only with
+`Closes #<N>` in its message; `(#<N>)` in the subject does not.
