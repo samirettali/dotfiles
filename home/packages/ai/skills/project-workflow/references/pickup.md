@@ -28,8 +28,9 @@ that target. Claude Code's worktree tool runs it already; after `git worktree ad
 run it yourself.
 
 For anything the repo does not declare, regenerate what can be regenerated
-(`pnpm install`) and **ask** about live state, like a local database: copying it
-forks it, sharing it means two processes on one file.
+(`pnpm install`). The local database is not copied: when the work needs real
+data, copy it into the worktree yourself and work on the copy, so the main
+checkout's database is never touched.
 
 With two worktrees open the default port is taken, so bind another one and **say
 which URL you bound**.
