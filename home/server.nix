@@ -51,6 +51,5 @@
     };
   };
 
-  home.sessionPath = ["$HOME/.local/bin"];
   home.sessionVariables.KIMI_MEMBERSHIP_LEVEL = "moderato";
 }

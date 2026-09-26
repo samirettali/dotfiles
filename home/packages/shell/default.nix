@@ -46,6 +46,8 @@
     git-sync.enable = lib.mkDefault true;
   };
 
+  home.sessionPath = ["$HOME/.local/bin"];
+
   home.packages = with pkgs; [
     buf
     coreutils
