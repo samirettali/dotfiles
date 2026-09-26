@@ -5,7 +5,12 @@ Firecrawl is the default shared external web search provider. The CLI lives in
 Dotfiles only wrap `nurPkgs.firecrawl-cli` and configure usage policy.
 
 `home/packages/ai/firecrawl.nix` reads `FIRECRAWL_API_KEY`, falling back to the
-unlocked rbw entry `firecrawl-api-key`. No key is stored in Nix or CLI config.
+unlocked rbw entries `firecrawl-api-key` and `firecrawl-api-key-2`, one per
+account. No key is stored in Nix or CLI config. The wrapper tries the accounts
+in order and drops one that answers 402 (out of credits). The CLI does not retry
+a 429; the wrapper moves on to the next account, and when every account is
+limited it waits as long as the error's "retry after" says, up to three minutes.
+Each account allowed about 14 requests a minute in September 2026.
 Feedback/refunds are unwanted: the wrapper forces `FIRECRAWL_NO_SEARCH_FEEDBACK=1`
 and makes both feedback commands no-ops. Telemetry is also disabled.
 
@@ -25,7 +30,9 @@ No Firecrawl MCP server or imperative `firecrawl setup` is needed.
 
 Use `firecrawl credit-usage --json` for balance checks. Search costs 2 credits per
 1–10 results; plain scrape costs 1 per page, including cache hits. Research Index
-paper endpoints are currently free. Never estimate net costs from refunds.
+paper endpoints are currently free. Scrape keeps the whole page: in a benchmark
+of 20 pages, `--only-main-content` cut a quarter of the text but dropped content
+the agent needed on two of them, and the skill saves the page to a file anyway. Never estimate net costs from refunds.
 The account's monthly recharge cap is managed in Firecrawl billing, not by this
 wrapper. Pricing and provider-side limits can change independently of the CLI.
 

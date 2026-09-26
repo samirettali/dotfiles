@@ -14,7 +14,7 @@ Feedback and telemetry are disabled; do not send feedback or request refunds.
 ```bash
 work=$(mktemp -d "${TMPDIR:-/tmp}/firecrawl-scrape.XXXXXX")
 firecrawl scrape 'https://example.com/article' --format markdown \
-  --only-main-content -o "$work/page.md"
+  -o "$work/page.md"
 test -s "$work/page.md"
 ```
 
