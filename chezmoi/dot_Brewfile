@@ -115,8 +115,6 @@ cask "flutter"
 cask "font-jetbrains-mono-nerd-font"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Desktop automation application
-cask "hammerspoon"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # API development environment
