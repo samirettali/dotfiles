@@ -40,7 +40,7 @@ belong with that project; shared account resources belong in `infra`.
   DEV-only `VariantSwitcher` dock, tracked in `EXPERIMENTS.md` — but only
   committed experiments get an entry; same-session throwaways skip the
   paperwork.
-- A locked `design.md` defines the visual system per project (palette,
+- A locked `DESIGN.md` defines the visual system per project (palette,
   type, motion). Visual identity is per-project and deliberately **not**
   part of this skill; interface behavior follows the `design` skill.
 
