@@ -63,6 +63,11 @@ the file, so the render drops it in the script rather than in the template:
 with them every mention of rbw, curl and sketchybar. What is left the template
 edits — the browser to launch, the email to type.
 
+fish's `config.fish` sources the session variables from the store. The render
+puts in its place only the ones the work Mac can use — the editor, the man
+pager, the fzf options and `~/.local/bin` on the PATH — and drops the
+`nix-shell` alias and the rbw TTY line. The rbw wrapper function is not copied.
+
 ## What the render does not reach
 
 - `.claude/CLAUDE.md` is a chezmoi template built from

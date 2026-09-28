@@ -37,6 +37,7 @@ files=(
 
 directories=(
     .config/nvim
+    .config/fish/functions
     .claude/skills/commit
     .claude/skills/review-comments
     .claude/skills/review-loop
@@ -47,6 +48,7 @@ directories=(
 # templates instead of the targets.
 templates=(
     .claude/settings.json:claude-settings.json
+    .config/fish/config.fish:fish-config
     .config/git/config:git-config
     .config/git/ignore:git-ignore
     .config/sottomano/keymap.json:sottomano-keymap.json
@@ -54,10 +56,12 @@ templates=(
 )
 
 # Paths the render neither copies nor deletes: files written by hand for the
-# work Mac, the templates that replace a copied file, and the plugin lock, since
-# the work Mac resolves its own plugin versions.
+# work Mac, the templates that replace a copied file, the plugin lock, since
+# the work Mac resolves its own plugin versions, and the rbw wrapper, since the
+# work Mac has not got rbw.
 declare -A skipped=(
     [.config/nvim]='lua/plugins/roslyn.lua lua/plugins/flutter.lua lua/plugins/init.lua lua/plugins/init.lua.tmpl lua/lsp-servers.lua nvim-pack-lock.json'
+    [.config/fish/functions]='rbw.fish'
 )
 
 # .claude/CLAUDE.md is a chezmoi template, not a copy.
@@ -146,6 +150,31 @@ template=$source_dir/.chezmoitemplates/git-config
 sed -e 's#/nix/store/[^ "]*/bin/gh#/opt/homebrew/bin/gh#g' \
     -e 's#/nix/store/[^ "]*/bin/ssh-keygen#/usr/bin/ssh-keygen#g' \
     -e 's#/nix/store/[^ "]*/bin/bun#/opt/homebrew/bin/bun#g' \
+    "$template" > "$template.tmp" && mv "$template.tmp" "$template"
+
+# fish sources the session variables from the store. Inline the ones the work
+# Mac can use in their place; the rest name mbp's own paths and apps.
+template=$source_dir/.chezmoitemplates/fish-config
+awk -v kept='^(__HM_SESS_VARS_SOURCED|EDITOR|VISUAL|FZF_DEFAULT_OPTS|MANPAGER|PATH|TERM)$' '
+    /^source \/nix\/store\/[^ ]*\/hm-session-vars\.fish$/ {
+        while ((getline line < $2) > 0) {
+            split(line, word, " ")
+            if (word[1] == "set" && word[2] == "-gx" && word[3] !~ kept) continue
+            print line
+        }
+        next
+    }
+    { print }
+' "$template" > "$template.tmp" && mv "$template.tmp" "$template"
+
+# The work Mac has neither nix-shell nor rbw. Claude Code comes from its own
+# installer there, and the rest from Homebrew, where GNU ls is gls.
+sed -E -e '/^ *alias ns /d' \
+    -e '/ttyname lookup rbw/d' \
+    -e '/RBW_TTY/d' \
+    -e 's#/nix/store/[^ "]*/bin/claude#{{ .chezmoi.homeDir }}/.local/bin/claude#g' \
+    -e 's#/nix/store/[^ "]*/bin/ls#/opt/homebrew/bin/gls#g' \
+    -e 's#/nix/store/[^ "]*/bin/(direnv|fzf|git|nvim|zoxide)#/opt/homebrew/bin/\1#g' \
     "$template" > "$template.tmp" && mv "$template.tmp" "$template"
 
 chmod -R u+w "$source_dir"

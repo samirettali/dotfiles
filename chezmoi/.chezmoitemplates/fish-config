@@ -1,0 +1,65 @@
+# ~/.config/fish/config.fish: DO NOT EDIT -- this file has been generated
+# automatically by home-manager.
+
+# Only execute this file once per shell.
+set -q __fish_home_manager_config_sourced; and exit
+set -g __fish_home_manager_config_sourced 1
+
+function setup_hm_session_vars;
+# Only source this once.
+if [ -n (set -q __HM_SESS_VARS_SOURCED && echo "$__HM_SESS_VARS_SOURCED" || echo '') ]
+  return
+end
+set -gx __HM_SESS_VARS_SOURCED '1'
+set -gx EDITOR 'nvim'
+set -gx FZF_DEFAULT_OPTS '--ansi --bind space:jump,jump:accept --color 16 --height ~30 --info hidden --reverse --style minimal'
+set -gx MANPAGER '/opt/homebrew/bin/nvim -c \'Man!\' -'
+set -gx VISUAL 'nvim'
+set -gx PATH "$HOME"'/.local/bin'(test -n "$PATH" && echo ':' || echo)"$PATH"
+# reset TERM with new TERMINFO available (if any)
+set -gx TERM "$TERM"
+end
+setup_hm_session_vars
+
+# Source handler functions
+
+status is-login; and begin
+
+    # Login shell initialisation
+
+end
+
+status is-interactive; and begin
+
+    # Abbreviations
+
+    # Aliases
+    alias cc '{{ .chezmoi.homeDir }}/.local/bin/claude --continue'
+    alias cr '{{ .chezmoi.homeDir }}/.local/bin/claude --resume'
+    alias gc '/opt/homebrew/bin/git clone'
+    alias gr 'cd "$(/opt/homebrew/bin/git rev-parse --show-toplevel)"'
+    alias ls '/opt/homebrew/bin/gls --color=auto --group-directories-first'
+    alias vimdiff 'nvim -d'
+
+    # Interactive shell initialisation
+    /opt/homebrew/bin/fzf --fish | source
+
+    set -g fish_transient_prompt 1
+
+    set fish_color_command green
+    set fish_color_valid_path normal
+
+    if not set -q NVIM
+        set -g fish_key_bindings fish_hybrid_key_bindings
+    end
+
+    # bind \cz 'fg 2>/dev/null; commandline -f repaint' # without vim mode
+    bind -M insert \cz 'fg 2>/dev/null; commandline -f repaint'
+
+    /opt/homebrew/bin/zoxide init fish | source
+
+    if not functions -q __direnv_export_eval
+        /opt/homebrew/bin/direnv hook fish | source
+    end
+
+end
