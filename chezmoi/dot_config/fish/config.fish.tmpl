@@ -1,1 +1,6 @@
 {{ includeTemplate "fish-config" . | trim }}
+{{ if eq .profile "work" }}
+fish_add_path --global ~/go/bin ~/.bun/bin ~/.dotnet/tools
+
+status is-interactive; and alias assume 'source /opt/homebrew/bin/assume.fish'
+{{ end -}}
