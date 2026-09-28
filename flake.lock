@@ -3,11 +3,11 @@
     "agent-stuff": {
       "flake": false,
       "locked": {
-        "lastModified": 1788688003,
-        "narHash": "sha256-T//Fsq+nj4Tt1CahE3pCCVzVwoDH6bt1Ocfzg80wHDw=",
+        "lastModified": 1790543438,
+        "narHash": "sha256-tIKtwPCXCYhYza7BgRQiRK+Lv9YrI+xpDtfSPrzR3w4=",
         "owner": "mitsuhiko",
         "repo": "agent-stuff",
-        "rev": "122e2994adddb113c04764c5697217dae120fcc6",
+        "rev": "0865c849befd2021490679f96a8dee58c84ac857",
         "type": "github"
       },
       "original": {
@@ -179,11 +179,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790467351,
-        "narHash": "sha256-qOjLam4J3U7hEU3M2rTAB0jsoChIRn5FIHiGVUsPAJE=",
+        "lastModified": 1790553755,
+        "narHash": "sha256-1C94UhZyIaC7UBituHwzMmdqYz40NbxEhezXcqo7bhw=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "b0eaa61443067850ed9b17a14c0eb8b0883a811b",
+        "rev": "12716739581f26ef5638213294068a3b4d486e83",
         "type": "github"
       },
       "original": {
@@ -195,11 +195,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1790386563,
-        "narHash": "sha256-dNRu3Gb173b4aRTDLNEYtrLFwS5IeqmdmYRldmRZzuE=",
+        "lastModified": 1790551127,
+        "narHash": "sha256-2fDj5DuftpkqXi153mIAmPCZq36yTYEj0kvWwCPDxJI=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "521eddec7c243a8166609bf1734cb940e9510fc5",
+        "rev": "ef3ae3d19d3f1ab1d3a5f318ad61ac0c707869bb",
         "type": "github"
       },
       "original": {
@@ -210,11 +210,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1790510107,
-        "narHash": "sha256-EVMNYv7hYDDD9TGVT/hIyTYgpiXA8y3m5xIEIxuGNU0=",
+        "lastModified": 1790570722,
+        "narHash": "sha256-Avcz96Q+8OkfUIUXipBBVsQn19L622BtKP7mk6M+uls=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3181085bfd08663b6b9e60bc7a8395c2aaa741bd",
+        "rev": "419fe0f449b3fbe3bdd53d9840288db4509ec32e",
         "type": "github"
       },
       "original": {
@@ -266,11 +266,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790536112,
-        "narHash": "sha256-KMw0uyIP2MQjBzWV5cfLNsIPH3oPppip/ViR/xpD5Cg=",
+        "lastModified": 1790597694,
+        "narHash": "sha256-kGsSZWj0Dslcr/XYabbk6KB4sAQU56XA34+4l/RFrLc=",
         "owner": "samirettali",
         "repo": "nur",
-        "rev": "bd680fedabc1f8496675cf82c0aff7a256a7b8ae",
+        "rev": "dc5fca98f0561c97bdc897e48890714fe8bb056e",
         "type": "github"
       },
       "original": {
