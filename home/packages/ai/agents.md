@@ -70,7 +70,6 @@ Never written a line myself, only through agents:
 - No preambles: not "one thing to know", not "the interesting part is". State the fact.
 - Name a thing the way the code names it, and keep that name for the whole answer.
 - Say the concrete thing, not a metaphor for it: no "gate", "guard", "leg" or "seam". One idea per sentence, with its subject stated.
-- Explain an acronym or a term of art the first time it appears. All of this holds in Italian too.
 - Report a finding in one line. Detail only where I ask for it.
 - When I ask you to explain several things, give one block each, with no intro and no closing.
 
