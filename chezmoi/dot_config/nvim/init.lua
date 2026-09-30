@@ -7,8 +7,6 @@ function N(x, level, opts)
 	return x
 end
 
-require("plugins.start")
-
 vim.cmd("packadd nvim.undotree") -- built in
 vim.cmd("packadd nvim.difftool") -- built in
 
