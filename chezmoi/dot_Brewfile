@@ -94,6 +94,8 @@ brew "unzip"
 brew "uv"
 # Execute commands when watched files change
 brew "watchexec"
+# CLI for Git worktree management, designed for parallel AI agent workflows
+brew "worktrunk"
 # Language Server for Yaml Files
 brew "yaml-language-server"
 # Find security issues in GitHub Actions setups

@@ -1,0 +1,4 @@
+worktree-path = "~/dev/.worktrees/{{ repo }}/{{ branch | sanitize }}"
+
+[pre-start]
+setup = "~/.local/bin/worktree-setup {{ worktree_path }}"

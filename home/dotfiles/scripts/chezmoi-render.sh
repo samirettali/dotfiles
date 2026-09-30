@@ -29,6 +29,7 @@ files=(
     .config/ghostty/config
     .config/herdr/config.toml
     .config/git/allowed_signers
+    .config/worktrunk/config.toml
     .claude/hooks/herdr-agent-state.sh
     .claude/hooks/worktree.sh
     .local/bin/worktree-setup:.local/bin/executable_worktree-setup
@@ -174,7 +175,7 @@ sed -E -e '/^ *alias ns /d' \
     -e '/RBW_TTY/d' \
     -e 's#/nix/store/[^ "]*/bin/claude#{{ .chezmoi.homeDir }}/.local/bin/claude#g' \
     -e 's#/nix/store/[^ "]*/bin/ls#/opt/homebrew/bin/gls#g' \
-    -e 's#/nix/store/[^ "]*/bin/(direnv|fzf|git|nvim|zoxide)#/opt/homebrew/bin/\1#g' \
+    -e 's#/nix/store/[^ "]*/bin/(direnv|fzf|git|nvim|wt|zoxide)#/opt/homebrew/bin/\1#g' \
     "$template" > "$template.tmp" && mv "$template.tmp" "$template"
 
 chmod -R u+w "$source_dir"

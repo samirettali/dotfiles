@@ -58,6 +58,8 @@ status is-interactive; and begin
 
     /opt/homebrew/bin/zoxide init fish | source
 
+    /opt/homebrew/bin/wt config shell init fish | source
+
     if not functions -q __direnv_export_eval
         /opt/homebrew/bin/direnv hook fish | source
     end

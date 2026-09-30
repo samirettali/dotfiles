@@ -38,6 +38,7 @@
     ./spotify-player.nix
     ./tealdeer.nix
     ./tmux.nix
+    ./worktrunk.nix
     ./zoxide.nix
   ];
 
