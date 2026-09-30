@@ -4,7 +4,7 @@
 
 OS := $(shell uname -s)
 HOSTNAME := $(shell hostname -s)
-UPDATE_CMD = nix flake update
+UPDATE_CMD = bash scripts/update.sh
 MODELS_CMD = pi-models --sync --config $(CURDIR)/home/packages/ai/pi-coding-agent/models.json
 CHEZMOI_CMD = bash $(CURDIR)/home/dotfiles/scripts/chezmoi-render.sh
 
