@@ -33,6 +33,8 @@ return {
 			staticcheck = true,
 			directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
 			semanticTokens = true,
+			-- workspace/symbol skips dependencies and the standard library.
+			symbolScope = "workspace",
 		},
 	},
 	on_attach = function(_, bufnr)
