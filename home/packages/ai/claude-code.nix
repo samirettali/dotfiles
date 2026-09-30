@@ -42,6 +42,8 @@ in {
     settings = {
       model = "claude-opus-5-5";
       effortLevel = "high";
+      # a top-level effortLevel skips models newer than the Claude Code build
+      modelSettings."claude-opus-5-5".effortLevel = "high";
       attribution.commit = "";
       attribution.pr = "";
       # Remote Control sessions otherwise append a Claude-Session trailer to
