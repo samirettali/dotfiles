@@ -13,17 +13,10 @@ vim.cmd("packadd nvim.undotree") -- built in
 vim.cmd("packadd nvim.difftool") -- built in
 
 require("options")
-
 require("vim._core.ui2").enable({ msg = { targets = "msg" } })
-
 require("ui.tabline")
 require("autocmds")
-
 require("lsp")
-
--- plugins setup
 require("plugins")
-
 require("commands")
-
 require("keymaps")
