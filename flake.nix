@@ -107,8 +107,10 @@
     serverUser = users.personal // {homeDirectory = "/home/${defaultUser}";};
 
     mkNeovimPackage = system:
-      inputs.neovim-nightly-overlay.packages.${system}.default.overrideAttrs (_: {
+      inputs.neovim-nightly-overlay.packages.${system}.default.overrideAttrs (old: {
         doCheck = false; # TODO: upstream is broken
+        # The nightly's version is the upstream commit, so its changelog is the commit log.
+        meta = old.meta // {changelog = "https://github.com/neovim/neovim/commits/${old.version}";};
       });
 
     # Common Nix configuration
