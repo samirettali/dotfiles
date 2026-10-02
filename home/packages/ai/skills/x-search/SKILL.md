@@ -21,6 +21,8 @@ Ask what people said. Do not ask the search model to explain the underlying topi
 ## Filters
 
 Pass handles without `@`. Include or exclude up to 20 handles, but never both.
+The search model cannot see the filter, so `x-search` names the handles at the start of the query;
+the query can refer to them as "they".
 
 ```sh
 x-search --handle mitchellh --handle rob_pike 'What did they say about Zig?'

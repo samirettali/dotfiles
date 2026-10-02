@@ -95,6 +95,16 @@ def build_tool(args: argparse.Namespace, allowed: list[str], excluded: list[str]
     return tool
 
 
+def scoped_query(query: str, allowed: list[str], excluded: list[str]) -> str:
+    # The model does not see the tool's handle filter: asked about "they" with only
+    # --handle set, it answers that no accounts were named, without searching.
+    if allowed:
+        return f"Posts from {', '.join('@' + h for h in allowed)}. {query}"
+    if excluded:
+        return f"Ignore posts from {', '.join('@' + h for h in excluded)}. {query}"
+    return query
+
+
 def retry_delay(response: httpx.Response | None, attempt: int) -> float:
     if response is not None and (value := response.headers.get("Retry-After")):
         try:
@@ -227,7 +237,7 @@ def main() -> None:
         raise SystemExit("XAI_API_KEY is not set")
 
     tool = build_tool(args, allowed, excluded)
-    body = request(api_key, args.query.strip(), tool)
+    body = request(api_key, scoped_query(args.query.strip(), allowed, excluded), tool)
 
     answer = extract_answer(body)
     citations = extract_citations(body)
