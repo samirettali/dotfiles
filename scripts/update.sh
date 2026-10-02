@@ -106,10 +106,13 @@ jq -r -n --argjson old "$old" --argjson new "$new" '
 ' | sort | while IFS=$'\x1f' read -r name from to old_changelog changelog owner repo old_rev rev github; do
     printf '%s: %s -> %s\n' "$name" "$from" "$to"
     link=$changelog
+    # A source fetched as a flake input, such as neovim's, has a revision but no owner or repo.
+    source=${owner:+$owner/$repo}
+    source=${source:-$github}
     if md=$(releases "$changelog" "$old_changelog") || md=$(changelog_file "$changelog" "$from" "$to"); then
         :
-    elif [[ -n $owner && -n $repo ]] && md=$(commits "$owner/$repo" "$old_rev" "$rev"); then
-        link=https://github.com/$owner/$repo/compare/$old_rev...$rev
+    elif [[ -n $source ]] && md=$(commits "$source" "$old_rev" "$rev"); then
+        link=https://github.com/$source/compare/$old_rev...$rev
     elif [[ -n $github ]] && md=$(commits "$github" "v$from" "v$to"); then
         link=https://github.com/$github/compare/v$from...v$to
     elif [[ -n $github ]] && md=$(commits "$github" "$from" "$to"); then
