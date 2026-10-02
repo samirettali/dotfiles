@@ -13,7 +13,7 @@ flake output. See "The work Mac" below.
 - `make fmt` — format Git-tracked Nix files with `alejandra`. Run before committing.
 - `make check` — format/lint checks, offline tests, supported-host evaluation and chezmoi render verification; see `docs/checks.md`.
 - `make models` — refresh pinned OpenRouter provider limits, then run `make build`.
-- `make update` — run `nix flake update`, then write an HTML report under `~/.cache/flake-update/` with the changelog of every package it bumps on this host: GitHub release notes, the `CHANGELOG.md` entries, or the commits between the two sources.
+- `make update` — run `nix flake update`, then write an HTML report under `~/.cache/flake-update/` with the commits between the old and new source of every package it bumps on this host. Checkboxes select a whole package or single commits, and Copy puts them on the clipboard to paste to an agent.
 - `make chezmoi` — render the work Mac's configuration into `chezmoi/`. Run on `mbp`.
 
 Evaluate one option without building:
