@@ -31,6 +31,7 @@ return {
 	lime = 0xff85dc85,
 	green = 0xff8cc85f,
 	spotify = 0xff1ed760,
+	claude = 0xffd97757,
 	ethereum = 0xff627eea,
 	emerald = 0xff36c692,
 	turquoise = 0xff79dac8,

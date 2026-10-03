@@ -1,6 +1,6 @@
 # Sketchybar integrations
 
-Read this before changing the workspace, pending-agent, AI-usage, mail, or gas items.
+Read this before changing the workspace, pending-agent, Claude usage, mail, or gas items.
 
 ## AeroSpace workspaces
 
@@ -97,81 +97,29 @@ Clicking an incident icon opens the affected component names, colored by severit
 Clicking a component opens the corresponding provider status page.
 Poll each provider every minute while healthy and every 15 seconds during an incident.
 
-## AI subscription usage
+## Claude usage
 
-`items/ai_usage.lua` keeps one usage icon visible and puts every Claude and Codex limit in its popup.
-Each row is a Sketchybar slider: window on the left, filled bar, percentage on the right.
-The icon, the bar and the percentage turn yellow at 70% and red at 90%.
-Round fractional usage up and add popup rows as providers expose them.
-Each provider has its own header, and only its `(cached)` suffix turns grey after that provider fails to refresh.
-`ai-usage` under `home/packages/shell/scripts/` prints the providers as JSON.
+`items/ai_usage.lua` shows the Claude mark (`:claude:` from sketchybar-app-font, in Claude's orange) followed by the 5-hour and 7-day percentages.
+Each percentage turns yellow at 70% and red at 90%, and fractional usage rounds up.
+The two percentages are two items, `usage` and `usage.7d`, because one label carries one colour.
+The popup hangs from `usage.7d`, the right edge of the pair, so its right-aligned rows line up with the widget; clicking either item opens it.
+Each row is a slider with the window, its reset instant and the percentage.
+The reset instants sit right-aligned in a fixed field so the times stack in one column, and the weekday appears only beyond twenty hours.
+Clicking a row opens claude.ai's usage page and closes the popup.
 
-Rows carry the reset instant, right-aligned in a fixed field so the times stack in one column.
-The weekday appears only beyond twenty hours, which keeps the short windows narrow.
-Clicking a row or a header opens that provider's usage page, taken from the `url` the script returns.
-
-Poll each credential source every five minutes below its own threshold and every minute above it.
-Opening the popup refreshes every source immediately.
-
-Claude arrives in two pieces, because no single source carries both.
-
-The plan's own windows cost nothing. Claude Code's `statusLine` command
-(`home/packages/ai/claude-usage-statusline.py`) receives `rate_limits` on every render,
+Claude Code's `statusLine` command (`home/packages/ai/claude-usage-statusline.py`) receives `rate_limits` on every render,
 writes them to `~/.cache/sketchybar/claude-usage.json` when they change, and triggers `claude_usage`.
-The `ai-usage claude` poller reads that file, so the widget shows what the last active
-Claude Code session saw. The status line prints nothing.
+The item reads that file on `claude_usage`, at startup and on wake, so it shows what the last active Claude Code session saw.
+The file is written atomically and survives restarts, so the item keeps no cache of its own.
+The status line prints nothing.
 
-Only the 5-hour and 7-day windows reach the status line, and no amount of work will change that:
+The file changes only while a session runs.
+A 60-second routine re-reads it and shows 0% for a window whose reset instant has passed.
+
+Only the 5-hour and 7-day windows reach the status line:
 Claude Code builds that payload from the `anthropic-ratelimit-unified-*` response headers,
 which carry `five_hour`, `seven_day`, `seven_day_overage_included` and `overage` and nothing else.
-A model-scoped weekly cap ("Fable", say) exists only in `api.anthropic.com/api/oauth/usage`.
-
-That endpoint allows roughly one call an hour per access token and Claude Code spends them itself,
-so a 429 there is the normal answer rather than a fault, and its `Retry-After` runs to most of an hour.
-The model-scoped sections therefore work on a budget of their own:
-
-- Start from `cachedUsageUtilization` in `~/.claude.json`, which is Claude Code's own copy of that
-  endpoint's last answer, `limits[]` included. Free, but only rewritten when something made it ask.
-- Ask the endpoint when that reading is over five minutes old and no `Retry-After` is still running.
-  The refusal costs one request an hour; `~/.cache/sketchybar/claude-scoped.json` carries the reading
-  and the block across runs.
-- Past ninety minutes without a reading, return the sections with an `error` and no windows.
-  The rows keep their last numbers and turn grey rather than disappearing.
-
-Never refresh the token: Claude Code owns it, and writing a new one back to the keychain would race with it.
-
-A poller can therefore fail on one section and succeed on another.
-Mark only the section the error names; grey out all of a poller's sections only when nothing came back at all.
-
-One poller may own several providers.
-A poller's extra buckets become their own sections, keyed `<poller>.<group>` and named after the group,
-because their percentage is not overall plan usage and reading it as such is wrong.
-Sections, names and URLs come from the data and are cached, so a new group needs no code change.
-A fetch that returns nothing at all marks every provider of that poller as cached and empties nothing.
-
-No provider exposes a public usage API.
-The script borrows credentials owned by the corresponding CLI:
-
-- Codex stores its token in `~/.codex/auth.json`.
-  Fetch `chatgpt.com/backend-api/wham/usage`.
-
-Label windows by duration (`5h`, `1d`, or `7d`), not from primary or secondary position.
-The number and order of returned windows can change.
-
-Codex tokens expire quickly.
-When the direct request fails, fall back to `codex app-server` and call `account/rateLimits/read`.
-The app server refreshes the token and returns equivalent data.
-Read its long-lived stdout with a real deadline and always reap the process.
-A stale token can produce Cloudflare 403 HTML rather than a JSON 401.
-
-Discover app-server methods with `codex app-server generate-json-schema --out <dir>`.
-The server keeps its connection open and interleaves notifications.
-Read until the response with the requested ID arrives instead of waiting for EOF.
-
-Cache each provider's last successful limits and update time across Sketchybar restarts.
-A failed fetch must keep those values and mark that provider's header as cached so a temporary renewal or rate limit never empties the popup or looks fresh.
-
-Keep one invisible poller per provider, because their rate limits are independent.
+Model-scoped weekly caps exist only in `api.anthropic.com/api/oauth/usage`; they were dropped, together with Codex and the `ai-usage` poller that fetched both.
 
 ## Spacing and separators
 

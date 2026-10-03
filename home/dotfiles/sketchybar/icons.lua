@@ -1,7 +1,7 @@
 local icons = {
 	error = " ",
 	spotify = "",
-	usage = "󰄧",
+	claude = ":claude:",
 	mail = "\u{f01ee}",
 	gas = "\u{f086a}",
 

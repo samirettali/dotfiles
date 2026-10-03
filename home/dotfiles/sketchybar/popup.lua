@@ -40,7 +40,7 @@ function popup.setup(item, on_open)
 		end
 	end)
 
-	item:subscribe("mouse.clicked", function()
+	local function toggle()
 		local current = item:query()
 		local open = current and current.popup and current.popup.drawing == "on"
 		if open then
@@ -53,9 +53,11 @@ function popup.setup(item, on_open)
 			on_open()
 		end
 		item:set({ popup = { drawing = true } })
-	end)
+	end
 
+	item:subscribe("mouse.clicked", toggle)
 	item:subscribe("mouse.exited.global", close)
+	return toggle
 end
 
 return popup

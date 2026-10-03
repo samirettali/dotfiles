@@ -3,7 +3,6 @@
   lib,
   pkgs,
   inputs,
-  nurPkgs,
   vars,
   ...
 }: let
@@ -37,10 +36,6 @@
   gasSketchybar = pkgs.callPackage ../packages/shell/scripts/gas-sketchybar.nix {
     sketchybar = config.programs.sketchybar.package;
     rbw = config.programs.rbw.package;
-  };
-
-  aiUsage = pkgs.callPackage ../packages/shell/scripts/ai-usage.nix {
-    inherit (nurPkgs) codex;
   };
 in {
   programs.sketchybar = {
@@ -119,7 +114,6 @@ in {
         HERDR_BIN = "${lib.getExe herdrPackage}"
         -- vars.font in flake.nix, shared with Ghostty, Zed and sottomano.
         FONT = "${vars.font.name}"
-        AI_USAGE_BIN = "${lib.getExe aiUsage}"
         require("init")
       '';
     };
