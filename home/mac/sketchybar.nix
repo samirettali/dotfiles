@@ -41,10 +41,11 @@ in {
   programs.sketchybar = {
     enable = true;
     inherit luaPackage;
-    extraPackages = with pkgs; [
-      sketchybar-app-font
-    ];
   };
+
+  # `extraPackages` only reaches Sketchybar's PATH. A font in home.packages is
+  # linked into ~/Library/Fonts/HomeManager, where macOS finds it.
+  home.packages = [pkgs.sketchybar-app-font];
 
   # Holds Herdr's socket open and triggers the `herdr_agents` event, so the item
   # is pushed rather than polled. Runs as a LaunchAgent because SbarLua cannot
