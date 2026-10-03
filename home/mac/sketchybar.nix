@@ -34,6 +34,11 @@
     rbw = config.programs.rbw.package;
   };
 
+  gasSketchybar = pkgs.callPackage ../packages/shell/scripts/gas-sketchybar.nix {
+    sketchybar = config.programs.sketchybar.package;
+    rbw = config.programs.rbw.package;
+  };
+
   aiUsage = pkgs.callPackage ../packages/shell/scripts/ai-usage.nix {
     inherit (nurPkgs) codex;
   };
@@ -72,6 +77,19 @@ in {
       ProcessType = "Background";
       StandardOutPath = "${config.home.homeDirectory}/Library/Logs/mail-sketchybar.log";
       StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/mail-sketchybar.err.log";
+    };
+  };
+
+  # Holds an Infura `newHeads` subscription open and triggers the `gas_price` event.
+  launchd.agents.gas-sketchybar = {
+    enable = config.programs.sketchybar.enable && config.programs.rbw.enable;
+    config = {
+      ProgramArguments = [(lib.getExe gasSketchybar)];
+      RunAtLoad = true;
+      KeepAlive = true;
+      ProcessType = "Background";
+      StandardOutPath = "${config.home.homeDirectory}/Library/Logs/gas-sketchybar.log";
+      StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/gas-sketchybar.err.log";
     };
   };
 

@@ -3,6 +3,7 @@ local icons = {
 	spotify = "",
 	usage = "󰄧",
 	mail = "\u{f01ee}",
+	gas = "\u{f086a}",
 
 	herdr = "\u{f0a0b}",
 

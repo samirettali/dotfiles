@@ -112,7 +112,7 @@ Read the matching document before changing that subsystem:
 - `docs/checks.md` — individual verification targets, CI and Home Manager-only Linux activation.
 - `docs/chromium-sandbox.md` — andromeda sandbox findings and the unapproved host-policy path.
 - `docs/herdr.md` — patched fork, declarative agent integrations, builds, testing, and Neovim navigation.
-- `docs/sketchybar.md` — pending agents and AI subscription usage.
+- `docs/sketchybar.md` — pending agents, AI subscription usage, mail and Ethereum gas.
 - `docs/macos-tcc.md` — permissions, application signatures, and stable launch paths.
 - `docs/helium.md` — the Chromium side: re-signing, Widevine, pinned extensions.
 - `docs/chezmoi-render.md` — rendering the work Mac's configuration from what nix builds for `mbp`.

@@ -1,6 +1,6 @@
 # Sketchybar integrations
 
-Read this before changing the workspace, pending-agent, AI-usage, or mail items.
+Read this before changing the workspace, pending-agent, AI-usage, mail, or gas items.
 
 ## AeroSpace workspaces
 
@@ -59,6 +59,26 @@ Nothing polls.
   The watcher treats 75 seconds of silence as a dead connection, which is also how sleep shows up, and reconnects.
 - Count with `Mailbox/get` on every `state` event.
   The first `state` arrives on connect, so a reconnect recounts what changed while the stream was down.
+
+## Ethereum gas
+
+`items/gas.lua` shows the Ethereum logo, in Ethereum's blue-violet, and the mainnet base fee in gwei.
+Clicking it opens Etherscan's gas tracker.
+
+`gas-sketchybar` lives under `home/packages/shell/scripts/`.
+A LaunchAgent in `home/mac/sketchybar.nix` holds an `eth_subscribe newHeads` subscription on Infura's WebSocket and triggers the `gas_price` event.
+Nothing polls.
+
+- The key is `infura-api-key` in the rbw vault, read the same way as the Fastmail token, with the same wait while the vault is locked.
+- Every block header carries `baseFeePerGas`, so the base fee costs no request beyond the subscription.
+  The priority fee would cost an `eth_maxPriorityFeePerGas` call per block, and is left out.
+- The watcher triggers on every block, not only on a change, so a restarted Sketchybar shows the fee again within one block.
+  The fee is rounded to two significant digits below 1 gwei, one decimal below 10, whole numbers above, choosing the format from the rounded value.
+- The item sits left of Spotify, behind its own separator, which hides with the item.
+- A block is due every 12 seconds, so 60 seconds of silence counts as a dead connection and the watcher reconnects.
+- While the subscription is down, the last fee turns grey. The first block after a reconnect restores it.
+- The item also turns grey on `system_woke`: the watcher's timeouts run on a monotonic clock that stops during sleep, so a dead socket can take up to a minute after wake to notice.
+- `publicnode` closed the subscription on a keepalive timeout when tested; `wss://eth.drpc.org` worked without a key.
 
 ## Compact system widgets
 
