@@ -14,6 +14,7 @@ Do not replace this with launch ordering or a fixed startup delay.
 `items/herdr.lua` shows agents waiting for input.
 It counts `blocked` and `done`, never `working` or `idle`.
 Its popup contains one clickable row per agent.
+A separator on its right, between it and the Claude usage, shows and hides with the item.
 
 `herdr-sketchybar` lives under `home/packages/shell/scripts/`.
 A LaunchAgent in `home/mac/sketchybar.nix` keeps Herdr's socket open and triggers the `herdr_agents` event.

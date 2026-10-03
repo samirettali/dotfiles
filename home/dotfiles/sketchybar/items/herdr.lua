@@ -1,6 +1,7 @@
 local cjson = require("cjson")
 local colors = require("colors")
 local popup = require("popup")
+local separator = require("separator")
 
 -- Agents waiting for you: blocked, and finished-but-unseen. Hidden while nothing
 -- is pending, like the status items, so it only shows up as something to act on.
@@ -27,6 +28,11 @@ local MAX_ROWS = 10
 local TERMINAL_APP = "Ghostty"
 
 sbar.add("event", "herdr_agents")
+
+-- Created before the item, so it sits on its right, between it and the Claude
+-- usage. It follows the item's visibility.
+local herdr_separator = separator.add("herdr")
+herdr_separator:set({ drawing = false })
 
 local item = sbar.add("item", "herdr.agents", {
 	position = "right",
@@ -102,6 +108,7 @@ item:subscribe("herdr_agents", function(env)
 	local blocked = tonumber(env.blocked) or 0
 	local done = tonumber(env.done) or 0
 
+	herdr_separator:set({ drawing = blocked + done > 0 })
 	if blocked + done == 0 then
 		item:set({ drawing = false, popup = { drawing = false } })
 		return
