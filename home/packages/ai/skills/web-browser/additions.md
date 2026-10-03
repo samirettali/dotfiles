@@ -54,3 +54,40 @@ into showing them. These are headers from ordinary CDP request/response events,
 not a guarantee of every on-wire header. Enabling sensitive headers writes
 credentials into local JSONL logs: remove those logs when finished. Do not enable
 capture speculatively or expose tokens in responses to the user.
+
+## Samir's own browser (live session)
+
+Use this only when Samir asks you to act in the browser he is using, on a site
+where he is already logged in. Everything above works on separate profiles.
+
+Helium has remote debugging enabled from `chrome://inspect`. In that mode it
+exposes only the WebSocket named in
+`~/Library/Application Support/net.imput.helium/DevToolsActivePort` (port 9222),
+with no `/json` endpoints. So `start.js` and the Chrome DevTools MCP
+(`--browserUrl`) cannot attach, and Helium asks Samir to allow every new
+connection. `live.js` opens one connection and keeps it:
+
+```bash
+./scripts/live.js serve        # run in the background; Samir clicks Allow once
+./scripts/live.js targets      # <targetId> <url> for every tab
+./scripts/live.js revolut.com text
+./scripts/live.js revolut.com shot /tmp/page.png
+./scripts/live.js revolut.com click 'Send' [nth]
+./scripts/live.js revolut.com clicksel 'button[type="submit"]'
+./scripts/live.js revolut.com type 'text'      # into the focused element
+./scripts/live.js revolut.com key Escape
+./scripts/live.js revolut.com eval 'document.title'
+./scripts/live.js revolut.com nav https://example.com
+./scripts/live.js stop
+```
+
+The first argument is a targetId or a URL substring that must match exactly one
+tab. `click` takes the innermost visible element whose text or `aria-label`
+equals the argument. The connection closes after 30 idle minutes
+(`BROWSER_LIVE_IDLE_MS`). Run `stop` when done: it is a debugger attached to
+Samir's logged-in sessions. `BROWSER_PROFILE_DIR` selects another Chromium
+profile directory.
+
+These are Samir's tabs: never close, reload or navigate away from one he did not
+point you at, and stop before any payment, purchase or send unless that was the
+request.

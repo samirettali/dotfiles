@@ -45,7 +45,7 @@
         makeWrapper ${pkgs.nodejs}/bin/node $out/scripts/$command.js \
           --add-flags "$out/scripts/serialized.js $out/scripts/interact.js $command"
       done
-      chmod +x $out/scripts/logs.js
+      chmod +x $out/scripts/logs.js $out/scripts/live.js
 
       runHook postInstall
     '';
