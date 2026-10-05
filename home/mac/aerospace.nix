@@ -101,6 +101,11 @@
           "if" = "test %{app-name} ~= 'Archive Utility'";
           run = ["layout floating"];
         }
+        {
+          check-further-callbacks = true;
+          "if" = "test %{app-bundle-id} = net.imput.helium && test %{window-title} ~= 'Rabby Wallet Notification'";
+          run = ["layout floating"];
+        }
       ];
     };
     launchd = {
