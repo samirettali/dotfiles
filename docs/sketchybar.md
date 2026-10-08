@@ -162,6 +162,9 @@ Equal padding still looks unequal, because each glyph leaves a different amount 
 Balance a gap by trimming the padding of one neighbour, and check the result on a screenshot instead of guessing.
 Digits stay one point apart even in a monospace font, which guarantees equal advance, not equal ink.
 
+The same measure makes text move. Sketchybar sizes a label from its glyphs' ink (`kCTLineBoundsUseGlyphPathBounds` in `src/text.c`), so a ticking number changes its label's width and shifts every item beside it, and leading or trailing spaces add nothing.
+Give such a label an explicit width from `mono.lua`, which counts characters at the font's 8.4-point advance: the clock, the market prices and the popup's columns all use it.
+
 ## SbarLua callbacks
 
 Keep SbarLua hotloading disabled.

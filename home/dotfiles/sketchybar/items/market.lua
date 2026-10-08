@@ -1,5 +1,6 @@
 local cjson = require("cjson")
 local colors = require("colors")
+local mono = require("mono")
 local popup = require("popup")
 local separator = require("separator")
 
@@ -54,7 +55,7 @@ for index = #markets, 1, -1 do
 			position = "right",
 			drawing = false,
 			updates = "on",
-			icon = { string = market.name, color = colors.grey70, padding_right = 0 },
+			icon = { string = market.name, color = colors.grey70 },
 		})
 		bar[index] = item
 		-- The popup hangs from the rightmost, so its right-aligned rows line up
@@ -119,14 +120,20 @@ local function fill_popup()
 		local quote = current[market.symbol]
 		if quote then
 			local stale = quote.stale == true
+			local icon_text = format:format(market.name, quote.session, quote.price)
+			local change_text = change_format:format(quote.change)
 			rows[index]:set({
 				drawing = true,
 				icon = {
-					string = format:format(market.name, quote.session, quote.price),
+					string = icon_text,
+					width = mono.width(icon_text),
+					align = "left",
 					color = stale and colors.grey70 or colors.white,
 				},
 				label = {
-					string = change_format:format(quote.change),
+					string = change_text,
+					width = mono.width(change_text),
+					align = "right",
 					color = stale and colors.grey70 or CHANGE_COLOR[quote.direction] or colors.grey70,
 				},
 			})
@@ -157,6 +164,7 @@ local function render()
 			label = {
 				drawing = shown,
 				string = quote and quote.price or "",
+				width = quote and mono.width(quote.price) or 0,
 				color = quote and quote.stale == true and colors.grey70 or colors.white,
 			},
 		})
