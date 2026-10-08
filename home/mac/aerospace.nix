@@ -1,8 +1,25 @@
 {
   config,
   lib,
+  pkgs,
   ...
-}: {
+}: let
+  # Chromium shows an extension popup before the page sets its title, and
+  # on-window-detected reads the title only once, so wait for it here.
+  floatRabbyNotification = pkgs.writeShellApplication {
+    name = "aerospace-float-rabby-notification";
+    runtimeInputs = [config.programs.aerospace.package pkgs.coreutils pkgs.gnugrep];
+    text = ''
+      for _ in $(seq 20); do
+        if aerospace list-windows --all --format '%{window-id}|%{window-title}' |
+          grep -q "^$AEROSPACE_WINDOW_ID|.*Rabby Wallet Notification"; then
+          exec aerospace layout floating --window-id "$AEROSPACE_WINDOW_ID"
+        fi
+        sleep 0.1
+      done
+    '';
+  };
+in {
   programs.aerospace = {
     enable = true;
     settings = {
@@ -103,8 +120,8 @@
         }
         {
           check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} = net.imput.helium && test %{window-title} ~= 'Rabby Wallet Notification'";
-          run = ["layout floating"];
+          "if" = "test %{app-bundle-id} = net.imput.helium";
+          run = ["exec-and-forget ${lib.getExe floatRabbyNotification}"];
         }
       ];
     };
