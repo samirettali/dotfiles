@@ -37,6 +37,40 @@
     sketchybar = config.programs.sketchybar.package;
     rbw = config.programs.rbw.package;
   };
+
+  marketSketchybar = pkgs.callPackage ../packages/shell/scripts/market-sketchybar.nix {
+    sketchybar = config.programs.sketchybar.package;
+  };
+
+  # Every price followed, in the order the bar and the popup show them. The
+  # popup lists them all; `bar` puts one in the bar as well. Crypto comes from
+  # Binance against USDT, stocks from Yahoo Finance under Yahoo's symbol.
+  markets = let
+    crypto = name: {
+      symbol = "${name}USDT";
+      source = "binance";
+      inherit name;
+    };
+    stock = symbol: {
+      inherit symbol;
+      source = "yahoo";
+      name = symbol;
+    };
+    bar = market: market // {bar = true;};
+  in
+    builtins.toFile "markets.json" (builtins.toJSON [
+      (bar (crypto "BTC"))
+      (bar (crypto "ETH"))
+      (crypto "AAVE")
+      (crypto "SOL")
+      (bar (stock "GOOG"))
+      (bar (stock "NVDA"))
+      (stock "NET")
+      (stock "SNOW")
+      (stock "SPCX")
+      (stock "INTC")
+      (stock "AAOI")
+    ]);
 in {
   programs.sketchybar = {
     enable = true;
@@ -88,6 +122,20 @@ in {
     };
   };
 
+  # Holds Binance's and Yahoo Finance's price streams open and triggers the
+  # `market_update` event.
+  launchd.agents.market-sketchybar = {
+    enable = config.programs.sketchybar.enable;
+    config = {
+      ProgramArguments = [(lib.getExe marketSketchybar) markets];
+      RunAtLoad = true;
+      KeepAlive = true;
+      ProcessType = "Background";
+      StandardOutPath = "${config.home.homeDirectory}/Library/Logs/market-sketchybar.log";
+      StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/market-sketchybar.err.log";
+    };
+  };
+
   programs.aerospace.settings.exec-on-workspace-change = lib.mkIf (config.programs.aerospace.enable && config.programs.sketchybar.enable) [
     "/bin/bash"
     "-c"
@@ -112,6 +160,7 @@ in {
         #!/usr/bin/env ${lib.getExe config.programs.sketchybar.luaPackage}
         SKETCHYBAR_BIN = "${sketchybarExe}"
         HERDR_BIN = "${lib.getExe herdrPackage}"
+        MARKETS = "${markets}"
         -- vars.font in flake.nix, shared with Ghostty, Zed and sottomano.
         FONT = "${vars.font.name}"
         require("init")

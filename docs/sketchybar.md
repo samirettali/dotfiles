@@ -1,6 +1,6 @@
 # Sketchybar integrations
 
-Read this before changing the workspace, pending-agent, Claude usage, mail, or gas items.
+Read this before changing the workspace, pending-agent, Claude usage, mail, gas, or market items.
 
 ## AeroSpace workspaces
 
@@ -80,6 +80,34 @@ Nothing polls.
 - While the subscription is down, the last fee turns grey. The first block after a reconnect restores it.
 - The item also turns grey on `system_woke`: the watcher's timeouts run on a monotonic clock that stops during sleep, so a dead socket can take up to a minute after wake to notice.
 - `publicnode` closed the subscription on a keepalive timeout when tested; `wss://eth.drpc.org` worked without a key.
+
+## Market prices
+
+`items/market.lua` shows live crypto and stock prices.
+The list lives in `home/mac/sketchybar.nix`, in display order; `sketchybarrc` hands its JSON to the item as `MARKETS`, and the LaunchAgent passes the same file to the watcher.
+The markets marked `bar` show their name and price in the bar, without the change.
+Clicking any of them opens a popup with every market, its change and, outside regular hours, its session.
+Clicking a row opens the market on Binance or Yahoo Finance.
+The popup hangs from the rightmost bar market. Sketchybar draws no popup for an item it does not draw, so that item stays drawn, empty and without padding, while any bar market shows.
+
+`market-sketchybar` lives under `home/packages/shell/scripts/`.
+A LaunchAgent in `home/mac/sketchybar.nix` holds two WebSockets, writes `~/.cache/sketchybar/market.json` and triggers `market_update`.
+It triggers at most once a second, and only when a formatted value changed.
+Nothing polls, and neither source needs a key.
+
+- Crypto comes from Binance's `@ticker` streams, one update per second per pair, against USDT.
+  The change is over the rolling 24 hours. Binance closes every connection after 24 hours; the watcher reconnects.
+- Stocks come from Yahoo Finance's unofficial streamer, `wss://streamer.finance.yahoo.com/?version=2`: JSON carrying a base64 `PricingData` protobuf, decoded by hand.
+  yfinance's `pricing.proto` names the fields. It is the only free stream found that covers small caps, pre-market and after-hours; Alpaca and Tiingo stream IEX only, Finnhub trades only, Twelve Data eight trial symbols.
+- Yahoo sends a symbol only when it trades, so a price from before a reconnect may be hours old.
+  Each Yahoo connection reads every stock the stream has not sent on it from `query1.finance.yahoo.com/v8/finance/chart`, replacing the old price, and retries failures every 60 seconds.
+  It reads `fulldayPrice` and `fulldayChangePercent`, which include extended hours, falling back to `regularMarketPrice` against `chartPreviousClose`, and takes the session from `currentTradingPeriod`.
+  The endpoint answers 429 without a browser User-Agent.
+- The change is always measured from the previous close. Outside regular hours field 8 measures from the regular close instead, so the watcher prefers field 47, which is absent from yfinance's proto and was read off live messages.
+- `market_hours` (field 7) is 1 for crypto and 2 after-hours. Proto3 omits zero, so a missing field reads as pre-market. Pre-market and overnight (3) are unverified.
+- Stocks go quiet when the market closes, so silence cannot tell a dead socket from a weekend. The Yahoo connection also subscribes `BTC-USD` as a heartbeat and does not show it.
+  The subscription is re-sent every 15 seconds, as yfinance does.
+- A source counts as down after 15 seconds of silence for Binance and 30 for Yahoo, measured on the wall clock. The wall clock runs through sleep, so prices turn grey on wake without the `system_woke` handling the gas item needs, and the watcher reconnects.
 
 ## Compact system widgets
 
