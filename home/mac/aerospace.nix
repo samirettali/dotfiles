@@ -110,7 +110,7 @@ in {
         # Floating
         {
           check-further-callbacks = true;
-          "if" = "test %{app-bundle-id} ~= '^(com\\.apple\\.calculator|com\\.apple\\.systempreferences|com\\.apple\\.finder|cc\\.ffitch\\.shottr|com\\.riotgames\\.LeagueofLegends\\.LeagueClientUx)$'";
+          "if" = "test %{app-bundle-id} ~= '^(com\\.apple\\.calculator|com\\.apple\\.systempreferences|com\\.apple\\.finder|cc\\.ffitch\\.shottr|com\\.riotgames\\.LeagueofLegends\\.LeagueClientUx|com\\.riotgames\\.RiotGames\\.RiotClient)$'";
           run = ["layout floating"];
         }
         {
