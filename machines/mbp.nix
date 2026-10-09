@@ -122,8 +122,12 @@
         CreateDesktop = true;
         NewWindowTarget = "Home";
       };
+      # `true` turns "Displays have separate Spaces" off, as AeroSpace advises:
+      # with it on, focus and window moves between monitors misbehave.
+      # Sketchybar then treats the display under the mouse as the active one,
+      # so a popup opens on the display it was clicked on.
       spaces = {
-        spans-displays = false;
+        spans-displays = true;
       };
       ".GlobalPreferences" = {
         "com.apple.mouse.scaling" = 3.0;
