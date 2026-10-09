@@ -74,7 +74,7 @@ Nothing polls.
   The priority fee would cost an `eth_maxPriorityFeePerGas` call per block, and is left out.
 - The watcher triggers on every block, not only on a change, so a restarted Sketchybar shows the fee again within one block.
   The fee is rounded to two significant digits below 1 gwei, one decimal below 10, whole numbers above, choosing the format from the rounded value.
-- The item sits left of Spotify, behind its own separator, which hides with the item.
+- The item sits between the market prices and the Claude usage, behind its own separator, which hides with the item.
 - A block is due every 12 seconds, so 60 seconds of silence counts as a dead connection and the watcher reconnects.
 - While the subscription is down, the last fee turns grey. The first block after a reconnect restores it.
 - The item also turns grey on `system_woke`: the watcher's timeouts run on a monotonic clock that stops during sleep, so a dead socket can take up to a minute after wake to notice.
