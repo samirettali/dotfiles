@@ -17,6 +17,7 @@ local spotify = sbar.add("item", "spotify", {
 	updates = true,
 	icon = {
 		string = icons.spotify,
+		font = icons.app_font,
 		color = colors.spotify,
 	},
 })

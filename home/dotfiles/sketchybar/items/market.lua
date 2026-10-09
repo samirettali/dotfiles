@@ -85,7 +85,7 @@ local crypto = sbar.add("item", "market", {
 	position = "right",
 	drawing = false,
 	updates = "on",
-	icon = { string = icons.market },
+	icon = { string = icons.market, font = icons.app_font },
 	label = { padding_right = 0 },
 })
 

@@ -14,7 +14,7 @@ local gas = sbar.add("item", "gas", {
 	position = "right",
 	drawing = false,
 	updates = "on",
-	icon = { string = icons.gas },
+	icon = { string = icons.gas, font = icons.app_font },
 	click_script = "/usr/bin/open 'https://etherscan.io/gastracker'",
 })
 

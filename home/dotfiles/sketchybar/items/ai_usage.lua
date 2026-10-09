@@ -31,7 +31,7 @@ local usage = sbar.add("item", "usage", {
 	update_freq = 60,
 	icon = {
 		string = icons.claude,
-		font = { family = "sketchybar-app-font" },
+		font = icons.app_font,
 		color = colors.claude,
 	},
 	label = { padding_right = 0 },

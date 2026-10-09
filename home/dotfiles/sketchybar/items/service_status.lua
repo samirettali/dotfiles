@@ -25,7 +25,6 @@ local providers = {
 		key = "claude",
 		-- The same mark as the Claude usage item.
 		icon = icons.claude,
-		icon_font = "sketchybar-app-font",
 		-- status.anthropic.com 302s here; hitting it directly avoids the redirect.
 		api = "https://status.claude.com/api/v2/summary.json",
 		page = "https://status.claude.com",
@@ -39,7 +38,6 @@ local providers = {
 	{
 		key = "openai",
 		icon = icons.status.openai,
-		icon_font = "sketchybar-app-font",
 		api = "https://status.openai.com/api/v2/summary.json",
 		page = "https://status.openai.com",
 		components = {
@@ -81,7 +79,7 @@ for _, provider in ipairs(providers) do
 		update_freq = HEALTHY_FREQ,
 		icon = {
 			string = provider.icon,
-			font = provider.icon_font and { family = provider.icon_font } or nil,
+			font = icons.app_font,
 		},
 		label = { drawing = false },
 	})

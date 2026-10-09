@@ -1,24 +1,28 @@
+-- Ligatures, like `:spotify:`, come from sketchybar-app-font and need
+-- `font = icons.app_font` on the item; the rest are Nerd Font glyphs.
 local icons = {
-	error = " ",
-	spotify = "",
+	app_font = { family = "sketchybar-app-font" },
+
+	error = ":cancel:",
+	spotify = ":spotify:",
 	claude = ":claude:",
 	mail = "\u{f01ee}",
-	gas = "\u{f086a}",
-	market = "\u{f201}",
+	gas = ":ethereum:",
+	market = ":statistics:",
 
 	herdr = "\u{f0a0b}",
 
 	status = {
-		github = "\u{f09b}",
+		github = ":git_hub:",
 		openai = ":openai:",
 	},
 
 	volume = {
-		_100 = "",
-		_66 = "",
-		_33 = "",
-		_10 = "",
-		_0 = "",
+		_100 = ":volume_high:",
+		_66 = ":volume_high:",
+		_33 = ":volume_low:",
+		_10 = ":volume_low:",
+		_0 = ":volume_muted:",
 	},
 	battery = {
 		_100 = "󰁹",
@@ -29,9 +33,9 @@ local icons = {
 		charging = "󰂄",
 	},
 	media = {
-		play_pause = "",
-		play = "",
-		pause = "",
+		play_pause = ":playing:",
+		play = ":playing:",
+		pause = ":paused:",
 	},
 }
 
