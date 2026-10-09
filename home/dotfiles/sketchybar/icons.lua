@@ -10,7 +10,6 @@ local icons = {
 
 	status = {
 		github = "\u{f09b}",
-		claude = "\u{f06c4}",
 		openai = ":openai:",
 	},
 

@@ -23,7 +23,9 @@ local providers = {
 	},
 	{
 		key = "claude",
-		icon = icons.status.claude,
+		-- The same mark as the Claude usage item.
+		icon = icons.claude,
+		icon_font = "sketchybar-app-font",
 		-- status.anthropic.com 302s here; hitting it directly avoids the redirect.
 		api = "https://status.claude.com/api/v2/summary.json",
 		page = "https://status.claude.com",
