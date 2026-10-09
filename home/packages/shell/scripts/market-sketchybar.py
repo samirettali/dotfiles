@@ -67,19 +67,24 @@ RECONNECT_DELAY_SECONDS = 5
 SEED_RETRY_SECONDS = 60
 PUBLISH_INTERVAL_SECONDS = 1
 
-# PricingData's `market_hours`. Crypto arrives as 1, after-hours stocks as 2,
-# and the overnight session (20:00 to 4:00 ET) as 4, which Yahoo counts as the
-# next trading day: its change starts again from the regular close. Proto3
-# omits a zero, so a message without the field is pre-market.
-SESSIONS = {0: "pre", 2: "post", 4: "night"}
+# Only these trade outside regular hours: pre-market, after-hours and overnight
+# (20:00 to 4:00 ET, Sunday to Thursday). Yahoo counts overnight as the next
+# trading day, so its change starts again from the regular close. Indices,
+# futures and currencies are only open or closed.
+EXTENDED_TYPES = ("EQUITY", "ETF")
+# Trading hours come with every chart read; a day's schedule changes only on
+# holidays and early closes.
+HOURS_REFRESH_SECONDS = 1800
+HOURS_FIRST_PASS_SECONDS = 60
 
 
 def log(message: str) -> None:
     print(message, file=sys.stderr, flush=True)
 
 
-# The bar's two figures, crypto first.
-SIDES = (("crypto", "binance"), ("stocks", "yahoo"))
+# The groups that get a figure in the bar, crypto first. The macro group
+# (indices, currencies, commodities) has no market cap and gets none.
+SIDES = ("crypto", "stocks")
 
 
 def yahoo_symbol(market: dict) -> str:
@@ -96,6 +101,8 @@ class Prices:
         self.heard: dict[str, float] = {}
         # Units outstanding by Yahoo symbol: shares, or coins in circulation.
         self.units: dict[str, float] = {}
+        # Trading hours by Yahoo symbol, from the chart endpoint's meta.
+        self.hours: dict[str, dict] = {}
 
     def symbols(self, source: str) -> list[str]:
         return [market["symbol"] for market in self.markets if market["source"] == source]
@@ -103,13 +110,19 @@ class Prices:
     def alive(self, source: str) -> None:
         self.heard[source] = time.time()
 
-    def set(self, symbol: str, price: float, change: float | None, session: str | None) -> None:
-        self.quotes[symbol] = {"price": price, "change": change, "session": session}
+    def set(self, symbol: str, price: float, change: float | None) -> None:
+        self.quotes[symbol] = {"price": price, "change": change}
+
+    def status(self, market: dict, now: float) -> str:
+        if market["source"] == "binance":
+            return "open"
+        hours = self.hours.get(market["symbol"])
+        return market_status(hours, now) if hours else "closed"
 
     def stale(self, source: str) -> bool:
         return time.time() - self.heard.get(source, 0) > STALE_AFTER_SECONDS[source]
 
-    def side(self, source: str) -> dict | None:
+    def side(self, group: str) -> dict | None:
         """The change of the side's total market cap since the previous close.
 
         A market without units counts only when no market on that side has
@@ -117,9 +130,10 @@ class Prices:
         """
         now = before = 0.0
         changes = []
+        sources = {market["source"] for market in self.markets if market["group"] == group}
         for market in self.markets:
             quote = self.quotes.get(market["symbol"])
-            if market["source"] != source or quote is None or quote["change"] is None:
+            if market["group"] != group or quote is None or quote["change"] is None:
                 continue
             changes.append(quote["change"])
             units = self.units.get(yahoo_symbol(market))
@@ -133,7 +147,7 @@ class Prices:
         return {
             "change": f"{change:+.2f}%",
             "direction": direction(change),
-            "stale": self.stale(source),
+            "stale": any(self.stale(source) for source in sources),
         }
 
     def document(self) -> dict:
@@ -144,21 +158,44 @@ class Prices:
                 continue
             change = quote["change"]
             quotes[market["symbol"]] = {
-                "price": format_price(quote["price"]),
+                "price": format_price(quote["price"], market.get("decimals")),
                 "change": "" if change is None else f"{change:+.2f}%",
                 "direction": direction(change),
-                "session": quote["session"] or "",
+                "status": self.status(market, time.time()),
                 "stale": self.stale(market["source"]),
             }
         sides = {}
-        for name, source in SIDES:
-            side = self.side(source)
+        for group in SIDES:
+            side = self.side(group)
             if side is not None:
-                sides[name] = side
-        return {"quotes": quotes, "sides": sides}
+                sides[group] = side
+        return {"quotes": quotes, "sides": sides, "order": self.order()}
+
+    def order(self) -> dict[str, list[str]]:
+        """Each side's symbols by market cap, largest first.
+
+        A market without a cap keeps its place in the list, after the others.
+        """
+
+        def cap(market: dict) -> float:
+            quote = self.quotes.get(market["symbol"])
+            units = self.units.get(yahoo_symbol(market))
+            return quote["price"] * units if quote and units else -1.0
+
+        return {
+            group: [
+                market["symbol"]
+                for market in sorted(
+                    (market for market in self.markets if market["group"] == group), key=cap, reverse=True
+                )
+            ]
+            for group in SIDES
+        }
 
 
-def format_price(price: float) -> str:
+def format_price(price: float, decimals: int | None = None) -> str:
+    if decimals is not None:
+        return f"{price:,.{decimals}f}"
     if price >= 1000:
         return f"{price:,.0f}"
     if price >= 1:
@@ -196,7 +233,7 @@ async def watch_binance(prices: Prices) -> None:
                 continue
             prices.alive("binance")
             # `P` is the change over the rolling 24 hours, crypto's only "day".
-            prices.set(data["s"], float(data["c"]), float(data["P"]), None)
+            prices.set(data["s"], float(data["c"]), float(data["P"]))
 
 
 def read_varint(data: bytes, index: int) -> tuple[int, int]:
@@ -244,33 +281,78 @@ def apply_pricing(prices: Prices, fields: dict[int, object], wanted: set[str]) -
     # Using 47 when present keeps the figure on the same base all day. It is
     # not in yfinance's proto: it was read off live messages.
     change = fields.get(47, fields.get(8))
-    session = SESSIONS.get(int(fields.get(7, 0)))
-    prices.set(symbol, float(fields[2]), None if change is None else float(change), session)
+    prices.set(symbol, float(fields[2]), None if change is None else float(change))
     return symbol
 
 
-def trading_session(periods: dict, now: float) -> str | None:
-    for session in ("pre", "post"):
-        period = periods.get(session) or {}
-        if period.get("start", 0) <= now < period.get("end", 0):
-            return session
-    return None
+def hours_from(meta: dict) -> dict:
+    return {
+        "type": meta.get("instrumentType"),
+        "offset": int(meta.get("gmtoffset") or 0),
+        "periods": meta.get("currentTradingPeriod") or {},
+    }
 
 
-def fetch_chart(symbol: str) -> tuple[float, float | None, str | None]:
+def market_status(hours: dict, now: float) -> str:
+    """open, pre, post, night or closed, from a market's trading hours."""
+    periods = hours["periods"]
+    # The schedule is for one day. A later weekday reuses it, so a new session
+    # starts on time without waiting for the next read; a holiday shows up only
+    # with that read.
+    spans = [span for span in periods.values() if isinstance(span, dict) and "start" in span]
+    first = min((span["start"] for span in spans), default=now)
+    days = int((now - first) // 86400)
+    if days > 0:
+        weekday = time.gmtime(first + days * 86400 + hours["offset"]).tm_wday
+        if weekday < 5:
+            periods = {
+                name: {"start": span["start"] + days * 86400, "end": span["end"] + days * 86400}
+                for name, span in periods.items()
+                if isinstance(span, dict) and "start" in span and "end" in span
+            }
+
+    def within(name: str) -> bool:
+        span = periods.get(name) or {}
+        return span.get("start", 0) <= now < span.get("end", 0)
+
+    if within("regular"):
+        return "open"
+    if hours["type"] in EXTENDED_TYPES:
+        if within("pre"):
+            return "pre"
+        if within("post"):
+            return "post"
+        local = time.gmtime(now + hours["offset"])
+        evening = local.tm_hour >= 20 and local.tm_wday in (6, 0, 1, 2, 3)
+        morning = local.tm_hour < 4 and local.tm_wday in (0, 1, 2, 3, 4)
+        if evening or morning:
+            return "night"
+    return "closed"
+
+
+def fetch_meta(symbol: str) -> dict:
     url = YAHOO_CHART_URL.format(symbol=urllib.parse.quote(symbol, safe=""))
     request = urllib.request.Request(url, headers={"User-Agent": YAHOO_USER_AGENT})
     with urllib.request.urlopen(request, timeout=15) as response:
-        meta = json.load(response)["chart"]["result"][0]["meta"]
-    session = trading_session(meta.get("currentTradingPeriod") or {}, time.time())
+        return json.load(response)["chart"]["result"][0]["meta"]
+
+
+def quote_from(meta: dict, now: float) -> tuple[float, float | None]:
     # `fulldayPrice` includes extended hours and its change is measured from the
     # previous close, the same figures the stream carries in 2 and 47.
     if "fulldayPrice" in meta:
+        price = float(meta["fulldayPrice"])
+        if market_status(hours_from(meta), now) == "night" and meta.get("regularMarketPrice"):
+            # Overnight already belongs to the next day, as the stream has it.
+            return price, (price / meta["regularMarketPrice"] - 1) * 100
         change = meta.get("fulldayChangePercent")
-        return float(meta["fulldayPrice"]), None if change is None else float(change), session
+        return price, None if change is None else float(change)
     price = float(meta["regularMarketPrice"])
     previous = meta.get("chartPreviousClose")
-    return price, (price - previous) / previous * 100 if previous else None, session
+    return price, (price - previous) / previous * 100 if previous else None
+
+
+CHART_ERRORS = (OSError, ValueError, KeyError, IndexError, TypeError, http.client.HTTPException)
 
 
 async def seed_yahoo(prices: Prices, streamed: set[str]) -> None:
@@ -283,18 +365,40 @@ async def seed_yahoo(prices: Prices, streamed: set[str]) -> None:
     while True:
         for symbol in sorted(pending - streamed):
             try:
-                price, change, session = await asyncio.to_thread(fetch_chart, symbol)
-            except (OSError, ValueError, KeyError, IndexError, TypeError, http.client.HTTPException) as err:
+                meta = await asyncio.to_thread(fetch_meta, symbol)
+                price, change = quote_from(meta, time.time())
+            except CHART_ERRORS as err:
                 log(f"yahoo chart {symbol}: {err!r}")
                 continue
+            prices.hours[symbol] = hours_from(meta)
             # The stream may have sent it while the request was in flight.
             if symbol not in streamed:
-                prices.set(symbol, price, change, session)
+                prices.set(symbol, price, change)
             pending.discard(symbol)
         pending -= streamed
         if not pending:
             return
         await asyncio.sleep(SEED_RETRY_SECONDS)
+
+
+async def keep_hours(prices: Prices) -> None:
+    """Keep every Yahoo market's trading hours current.
+
+    The seed reads them only for the markets the stream has not sent, so the
+    first pass, once the seed has had its turn, fills the rest.
+    """
+    await asyncio.sleep(HOURS_FIRST_PASS_SECONDS)
+    every = False
+    while True:
+        for symbol in prices.symbols("yahoo"):
+            if not every and symbol in prices.hours:
+                continue
+            try:
+                prices.hours[symbol] = hours_from(await asyncio.to_thread(fetch_meta, symbol))
+            except CHART_ERRORS as err:
+                log(f"yahoo hours {symbol}: {err!r}")
+        every = True
+        await asyncio.sleep(HOURS_REFRESH_SECONDS)
 
 
 async def resubscribe(ws: websockets.ClientConnection, subscription: str) -> None:
@@ -381,7 +485,7 @@ def write_units(fetched: float, units: dict[str, float]) -> None:
 
 async def keep_units(prices: Prices) -> None:
     """Keep the units no older than a day, across restarts through the cache."""
-    wanted = sorted({yahoo_symbol(market) for market in prices.markets})
+    wanted = sorted({yahoo_symbol(market) for market in prices.markets if market["group"] in SIDES})
     fetched, prices.units = read_units()
     while True:
         due = fetched + UNITS_MAX_AGE_SECONDS - time.time()
@@ -472,6 +576,7 @@ async def main() -> int:
         tasks.append(keep_watching("binance", watch_binance, prices))
     if prices.symbols("yahoo"):
         tasks.append(keep_watching("yahoo", watch_yahoo, prices))
+        tasks.append(keep_hours(prices))
     await asyncio.gather(*tasks)
     return 0
 

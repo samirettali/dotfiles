@@ -42,18 +42,32 @@
     sketchybar = config.programs.sketchybar.package;
   };
 
+  # The market popup's status dots, one PNG per status.
+  marketDots = pkgs.runCommand "sketchybar-market-dots" {} ''
+    ${lib.getExe pkgs.python3} ${./sketchybar-dots.py} $out
+  '';
+
   # Every price followed, in the order the popup lists them. Crypto comes from
-  # Binance against USDT, stocks from Yahoo Finance under Yahoo's symbol.
+  # Binance against USDT; stocks and the macro group (indices, currencies,
+  # commodities) from Yahoo Finance under Yahoo's symbol. Only crypto and stocks
+  # have a market cap, and so a figure in the bar.
   markets = let
     crypto = name: {
       symbol = "${name}USDT";
       source = "binance";
+      group = "crypto";
       inherit name;
     };
     stock = symbol: {
       inherit symbol;
       source = "yahoo";
+      group = "stocks";
       name = symbol;
+    };
+    macro = symbol: name: {
+      inherit symbol name;
+      source = "yahoo";
+      group = "macro";
     };
   in
     builtins.toFile "markets.json" (builtins.toJSON [
@@ -68,6 +82,12 @@
       (stock "SPCX")
       (stock "INTC")
       (stock "AAOI")
+      (macro "EURUSD=X" "EURUSD" // {decimals = 4;})
+      (macro "^VIX" "VIX")
+      (macro "GC=F" "GOLD")
+      (macro "CL=F" "OIL")
+      (macro "^GSPC" "SPX")
+      (macro "^NDX" "NDX")
     ]);
 in {
   programs.sketchybar = {
@@ -159,6 +179,7 @@ in {
         SKETCHYBAR_BIN = "${sketchybarExe}"
         HERDR_BIN = "${lib.getExe herdrPackage}"
         MARKETS = "${markets}"
+        MARKET_DOTS = "${marketDots}"
         -- vars.font in flake.nix, shared with Ghostty, Zed and sottomano.
         FONT = "${vars.font.name}"
         require("init")
