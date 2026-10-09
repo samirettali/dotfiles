@@ -59,8 +59,6 @@ TRADINGVIEW_SESSIONS = {
     "night": "night",
     "out_of_session": "closed",
 }
-# A fresh snapshot of every session this often, in case a change is not pushed.
-TRADINGVIEW_REFRESH_SECONDS = 300
 # How long the first Yahoo reads wait for the sessions, which decide the
 # overnight basis.
 SESSIONS_WAIT_SECONDS = 10
@@ -392,17 +390,6 @@ def tradingview_frame(method: str, *params: object) -> str:
     return f"~m~{len(body)}~m~{body}"
 
 
-async def refresh_sessions(ws: websockets.ClientConnection, session: str, symbols: list[str]) -> None:
-    """Re-add every symbol now and then, which makes TradingView resend it whole."""
-    while True:
-        await asyncio.sleep(TRADINGVIEW_REFRESH_SECONDS)
-        try:
-            await ws.send(tradingview_frame("quote_remove_symbols", session, *symbols))
-            await ws.send(tradingview_frame("quote_add_symbols", session, *symbols))
-        except websockets.ConnectionClosed:
-            return
-
-
 async def watch_tradingview(prices: Prices) -> None:
     symbols = sorted({market["tradingview"] for market in prices.markets if market.get("tradingview")})
     session = "qs_" + "".join(random.choices(string.ascii_lowercase, k=12))
@@ -414,31 +401,27 @@ async def watch_tradingview(prices: Prices) -> None:
         await ws.send(tradingview_frame("quote_set_fields", session, "current_session"))
         await ws.send(tradingview_frame("quote_add_symbols", session, *symbols))
         prices.alive("tradingview")
-        refresh = asyncio.create_task(refresh_sessions(ws, session, symbols))
-        try:
-            while True:
-                raw = await receive(ws, prices, "tradingview")
-                # One frame can carry several messages, each behind its length.
-                for body in re.split(r"~m~\d+~m~", raw if isinstance(raw, str) else raw.decode()):
-                    if body.startswith("~h~"):
-                        # A heartbeat, which TradingView wants echoed.
-                        prices.alive("tradingview")
-                        await ws.send(f"~m~{len(body)}~m~{body}")
-                        continue
-                    if not body.startswith("{"):
-                        continue
-                    message = json.loads(body)
-                    if message.get("m") != "qsd":
-                        continue
-                    quote = message["p"][1]
-                    current = quote.get("v", {}).get("current_session")
-                    if quote.get("s") == "ok" and current in TRADINGVIEW_SESSIONS:
-                        prices.alive("tradingview")
-                        prices.sessions[quote["n"]] = TRADINGVIEW_SESSIONS[current]
-                        if set(symbols) <= set(prices.sessions):
-                            prices.sessions_heard.set()
-        finally:
-            refresh.cancel()
+        while True:
+            raw = await receive(ws, prices, "tradingview")
+            # One frame can carry several messages, each behind its length.
+            for body in re.split(r"~m~\d+~m~", raw if isinstance(raw, str) else raw.decode()):
+                if body.startswith("~h~"):
+                    # A heartbeat, which TradingView wants echoed.
+                    prices.alive("tradingview")
+                    await ws.send(f"~m~{len(body)}~m~{body}")
+                    continue
+                if not body.startswith("{"):
+                    continue
+                message = json.loads(body)
+                if message.get("m") != "qsd":
+                    continue
+                quote = message["p"][1]
+                current = quote.get("v", {}).get("current_session")
+                if quote.get("s") == "ok" and current in TRADINGVIEW_SESSIONS:
+                    prices.alive("tradingview")
+                    prices.sessions[quote["n"]] = TRADINGVIEW_SESSIONS[current]
+                    if set(symbols) <= set(prices.sessions):
+                        prices.sessions_heard.set()
 
 
 def fetch_units(symbols: list[str]) -> dict[str, float]:
