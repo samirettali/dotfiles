@@ -4,12 +4,14 @@ local separator = {}
 
 -- Right-side items render in creation order, rightmost first, so a separator
 -- added between two `require` calls lands between those two groups.
+-- On the left side creation order runs left to right instead; `position`
+-- picks the side, right by default.
 -- `nudge` shifts the rule right by that many points. Equal padding still looks
 -- unequal because each neighbour leaves a different amount of empty box around
 -- its glyph, so the gaps are balanced by ink, measured from a screenshot.
-function separator.add(name, nudge)
+function separator.add(name, nudge, position)
 	return sbar.add("item", "separator." .. name, {
-		position = "right",
+		position = position or "right",
 		icon = { drawing = false },
 		-- Sketchybar sizes a label from the glyph's tight bounding box, and the
 		-- pipe's is two pixels wide, so without an explicit width it is clipped

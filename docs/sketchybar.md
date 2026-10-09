@@ -156,7 +156,7 @@ Model-scoped weekly caps exist only in `api.anthropic.com/api/oauth/usage`; they
 ## Spacing and separators
 
 `separator.lua` adds a thin `|` between groups, and `items/init.lua` places one between the `require` calls.
-The items that show only when something needs you (provider incidents, pending agents, unread mail) sit left of the Claude usage, behind one separator from `alerts.lua`.
+The items that show only when something needs you (unread mail, pending agents, provider incidents) sit on the left after the front app, behind one separator from `alerts.lua`, and their popups open left-aligned.
 Each reports its visibility with `alerts.show`, and the separator shows while any of them does.
 Right-side items render in creation order, rightmost first, so the position follows from where the call sits.
 Give the separator label an explicit width: Sketchybar sizes a label from the glyph's tight bounding box,

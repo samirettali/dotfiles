@@ -30,7 +30,7 @@ local TERMINAL_APP = "Ghostty"
 sbar.add("event", "herdr_agents")
 
 local item = sbar.add("item", "herdr.agents", {
-	position = "right",
+	position = "left",
 	drawing = false,
 	updates = "on",
 	icon = { font = { style = "Bold" }, color = STATE_COLOR.blocked },
@@ -122,4 +122,4 @@ item:subscribe("herdr_agents", function(env)
 	end
 end)
 
-popup.setup(item, fill_popup)
+popup.setup(item, fill_popup, "left")

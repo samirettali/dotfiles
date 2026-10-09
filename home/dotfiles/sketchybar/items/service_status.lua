@@ -73,7 +73,7 @@ for _, provider in ipairs(providers) do
 	end
 
 	local item = sbar.add("item", "status." .. provider.key, {
-		position = "right",
+		position = "left",
 		drawing = false,
 		updates = "on",
 		update_freq = HEALTHY_FREQ,
@@ -186,7 +186,7 @@ for _, provider in ipairs(providers) do
 		refresh()
 	end)
 
-	popup.setup(item)
+	popup.setup(item, nil, "left")
 
 	refresh(true)
 end

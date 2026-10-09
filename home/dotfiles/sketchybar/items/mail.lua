@@ -8,7 +8,7 @@ local icons = require("icons")
 sbar.add("event", "mail_unread")
 
 local mail = sbar.add("item", "mail", {
-	position = "right",
+	position = "left",
 	drawing = false,
 	updates = "on",
 	icon = { string = icons.mail },

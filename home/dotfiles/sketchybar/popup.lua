@@ -27,8 +27,13 @@ popup.slider = {
 
 sbar.add("event", "popup_opened")
 
-function popup.setup(item, on_open)
+-- `align` defaults to right; an item on the left side wants left, or its popup
+-- runs off the screen.
+function popup.setup(item, on_open, align)
 	item:set({ popup = style })
+	if align then
+		item:set({ popup = { align = align } })
+	end
 
 	local function close()
 		item:set({ popup = { drawing = false } })
