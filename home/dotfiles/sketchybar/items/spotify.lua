@@ -2,8 +2,15 @@ local colors = require("colors")
 local icons = require("icons")
 local separator = require("separator")
 
+-- Owned here rather than by `items.init` so it hides with the item and the bar
+-- never shows two adjacent rules around an empty section. Left-side items render
+-- in creation order, so the rule is added first to sit between the window title
+-- and the track.
+local media_separator = separator.add("media", nil, "left")
+media_separator:set({ drawing = false })
+
 local spotify = sbar.add("item", "spotify", {
-	position = "right",
+	position = "left",
 	drawing = false,
 	-- The default, `when_shown`, drops every event while the item is hidden, so
 	-- it would never show again.
@@ -13,11 +20,6 @@ local spotify = sbar.add("item", "spotify", {
 		color = colors.spotify,
 	},
 })
-
--- Owned here rather than by `items.init` so it hides with the item and the bar
--- never shows two adjacent rules around an empty section.
-local media_separator = separator.add("media")
-media_separator:set({ drawing = false })
 
 local current_track_id
 

@@ -42,6 +42,7 @@ Sketchybar's `media_change` never fires on macOS 26: MediaRemote now requires an
 The item sets `updates=on` because the default, `when_shown`, drops events while it is hidden.
 A JXA query covers startup, wake and unlock, when notifications may have been missed.
 Keep the item hidden when Spotify has no track, and derive Sottotesto links from Spotify's track URI.
+The item sits on the left between the window title and the alert items, behind a separator of its own that hides with it.
 
 ## Fastmail unread
 
