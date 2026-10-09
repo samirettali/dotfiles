@@ -86,16 +86,16 @@ Nothing polls.
 The list lives in `home/mac/sketchybar.nix`, in popup order; `sketchybarrc` hands its JSON to the item as `MARKETS`, and the LaunchAgent passes the same file to the watcher.
 Clicking the item opens a popup with every market under a Crypto, a Stocks and a Macro heading. Crypto and stocks are sorted by market cap, largest first; macro keeps the list's order.
 The macro group holds indices, currencies and commodities from Yahoo; they have no market cap, so they get no figure in the bar.
-A row reads name, price and change. A dot after the name shows the session in TradingView's colours: teal open, orange pre-market, light blue after-hours, purple overnight, grey closed.
+A row reads name, price and change. Prices carry two decimals, EURUSD four. A dot after the name shows the session in TradingView's colours: teal open, orange pre-market, light blue after-hours, purple overnight, grey closed.
 A label carries one colour, so the dot is the row's background image, moved past the name by the image's `padding_left`; `home/mac/sketchybar-dots.py` draws one PNG per session at build time and `sketchybarrc` passes their directory as `MARKET_DOTS`.
 Popup rows default to the bar's height, so the item sets `popup.height`; a popup cell grows to its item's background, so an invisible, taller background on a heading opens the space between groups.
 Clicking a row opens the market on Binance or Yahoo Finance.
 The two figures are two items, `market` and `market.stocks`, because one label carries one colour. The popup hangs from `market.stocks`, the right edge of the pair, as the Claude usage popup hangs from `usage.7d`; that item stays drawn while the crypto figure shows, because Sketchybar draws no popup for an item it does not draw.
 
 `market-sketchybar` lives under `home/packages/shell/scripts/`.
-A LaunchAgent in `home/mac/sketchybar.nix` holds two WebSockets, writes `~/.cache/sketchybar/market.json` and triggers `market_update`.
+A LaunchAgent in `home/mac/sketchybar.nix` holds three WebSockets, writes `~/.cache/sketchybar/market.json` and triggers `market_update`.
 It triggers at most once a second, and only when a formatted value changed.
-Nothing polls, and neither source needs a key.
+Nothing polls, and no source needs a key.
 
 - Crypto comes from Binance's `@ticker` streams, one update per second per pair, against USDT.
   The change is over the rolling 24 hours. Binance closes every connection after 24 hours; the watcher reconnects.
@@ -104,8 +104,10 @@ Nothing polls, and neither source needs a key.
 - Yahoo sends a symbol only when it trades, so a price from before a reconnect may be hours old.
   Each Yahoo connection reads every stock the stream has not sent on it from `query1.finance.yahoo.com/v8/finance/chart`, replacing the old price, and retries failures every 60 seconds.
   It reads `fulldayPrice` and `fulldayChangePercent`, which include extended hours, falling back to `regularMarketPrice` against `chartPreviousClose`.
-- The session comes from the same endpoint's `currentTradingPeriod`, read for every symbol every 30 minutes and shifted onto later weekdays between reads. Stocks and ETFs add the overnight session (20:00 to 4:00 ET, Sunday to Thursday) by the clock. Futures and currencies get a placeholder from 00:00 to 23:59, so they read open through the CME's daily break and closed on Sunday evening.
-  The endpoint answers 429 without a browser User-Agent.
+- The session comes from TradingView's quote stream, `wss://data.tradingview.com/socket.io/websocket`, used without an account as its pages use it. Each Yahoo market carries its TradingView symbol in the list, and the stream's `current_session` field is `market`, `pre_market`, `post_market`, `night` or `out_of_session`.
+  Yahoo's own `currentTradingPeriod` was dropped: for futures and currencies it is a placeholder from 00:00 to 23:59, and it has no overnight session. TradingView's covers the CME's daily break, holidays and overnight trading on BOATS.
+  Frames are `~m~<length>~m~<body>`; the server sends `~h~<n>` every 10 seconds and wants it echoed. The watcher re-adds every symbol every 5 minutes for a fresh snapshot, in case a session change is not pushed, and shows every session as closed while the stream is silent.
+  TradingView's prices are not used: crypto updates a few times in 30 seconds against Binance's one a second, its change runs from 00:00 UTC rather than over 24 hours, futures and indices are 10 minutes late without a paid plan, and an anonymous session gets no overnight price.
 - The change is always measured from the previous close. After hours field 8 measures from the regular close instead, so the watcher prefers field 47, which is absent from yfinance's proto and was read off live messages.
 - `market_hours` (field 7) is 1 for crypto, 2 after-hours and 4 overnight (20:00 to 4:00 ET). Yahoo counts the overnight session as the next trading day, so the change starts again from the regular close at 20:00 ET. Proto3 omits zero, so a missing field reads as pre-market; pre-market is unverified.
 - A side's figure is the change of its total market cap, live price times units outstanding, against the same total at the previous close.

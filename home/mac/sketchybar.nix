@@ -49,8 +49,9 @@
 
   # Every price followed, in the order the popup lists them. Crypto comes from
   # Binance against USDT; stocks and the macro group (indices, currencies,
-  # commodities) from Yahoo Finance under Yahoo's symbol. Only crypto and stocks
-  # have a market cap, and so a figure in the bar.
+  # commodities) from Yahoo Finance under Yahoo's symbol. TradingView, under its
+  # own symbol, says which session each Yahoo market is in. Only crypto and
+  # stocks have a market cap, and so a figure in the bar.
   markets = let
     crypto = name: {
       symbol = "${name}USDT";
@@ -58,14 +59,15 @@
       group = "crypto";
       inherit name;
     };
-    stock = symbol: {
+    stock = exchange: symbol: {
       inherit symbol;
       source = "yahoo";
       group = "stocks";
       name = symbol;
+      tradingview = "${exchange}:${symbol}";
     };
-    macro = symbol: name: {
-      inherit symbol name;
+    macro = symbol: name: tradingview: {
+      inherit symbol name tradingview;
       source = "yahoo";
       group = "macro";
     };
@@ -75,19 +77,19 @@
       (crypto "ETH")
       (crypto "AAVE")
       (crypto "SOL")
-      (stock "GOOG")
-      (stock "NVDA")
-      (stock "NET")
-      (stock "SNOW")
-      (stock "SPCX")
-      (stock "INTC")
-      (stock "AAOI")
-      (macro "EURUSD=X" "EURUSD" // {decimals = 4;})
-      (macro "^VIX" "VIX")
-      (macro "GC=F" "GOLD")
-      (macro "CL=F" "OIL")
-      (macro "^GSPC" "SPX")
-      (macro "^NDX" "NDX")
+      (stock "NASDAQ" "GOOG")
+      (stock "NASDAQ" "NVDA")
+      (stock "NYSE" "NET")
+      (stock "NYSE" "SNOW")
+      (stock "NASDAQ" "SPCX")
+      (stock "NASDAQ" "INTC")
+      (stock "NASDAQ" "AAOI")
+      (macro "EURUSD=X" "EURUSD" "FX:EURUSD" // {decimals = 4;})
+      (macro "^VIX" "VIX" "CBOE:VIX")
+      (macro "GC=F" "GOLD" "COMEX:GC1!")
+      (macro "CL=F" "OIL" "NYMEX:CL1!")
+      (macro "^GSPC" "SPX" "SP:SPX")
+      (macro "^NDX" "NDX" "NASDAQ:NDX")
     ]);
 in {
   programs.sketchybar = {

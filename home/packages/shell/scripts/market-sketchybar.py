@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Push live crypto and stock prices into sketchybar items.
 
-Two WebSockets, no keys: Binance's `@ticker` streams for the crypto pairs, one
-update a second each, and Yahoo Finance's streamer for the stocks, which also
-carries pre-market and after-hours prices. Yahoo sends a symbol only when it
+Three WebSockets, no keys: Binance's `@ticker` streams for the crypto pairs, one
+update a second each, Yahoo Finance's streamer for the stocks, which also
+carries pre-market and after-hours prices, and TradingView's quote stream for
+the session each Yahoo market is in. Yahoo sends a symbol only when it
 trades, so after a closed market or a sleep the stocks would be empty or old:
 every Yahoo connection reads each one from the chart endpoint until the stream
 sends it.
@@ -24,6 +25,9 @@ import http.client
 import http.cookiejar
 import json
 import os
+import random
+import re
+import string
 import struct
 import subprocess
 import sys
@@ -44,6 +48,23 @@ YAHOO_COOKIE_URL = "https://fc.yahoo.com"
 YAHOO_CRUMB_URL = "https://query1.finance.yahoo.com/v1/test/getcrumb"
 YAHOO_QUOTE_URL = "https://query1.finance.yahoo.com/v7/finance/quote?symbols={symbols}&crumb={crumb}"
 
+# TradingView's quote stream, as its own pages use it, without an account.
+TRADINGVIEW_URL = "wss://data.tradingview.com/socket.io/websocket"
+TRADINGVIEW_ORIGIN = "https://www.tradingview.com"
+# TradingView's names for a session, mapped to the item's.
+TRADINGVIEW_SESSIONS = {
+    "market": "open",
+    "pre_market": "pre",
+    "post_market": "post",
+    "night": "night",
+    "out_of_session": "closed",
+}
+# A fresh snapshot of every session this often, in case a change is not pushed.
+TRADINGVIEW_REFRESH_SECONDS = 300
+# How long the first Yahoo reads wait for the sessions, which decide the
+# overnight basis.
+SESSIONS_WAIT_SECONDS = 10
+
 STATE_PATH = os.path.expanduser("~/.cache/sketchybar/market.json")
 UNITS_PATH = os.path.expanduser("~/.cache/sketchybar/market-units.json")
 # Shares outstanding and coin supply move slowly; a day-old figure is fine.
@@ -60,22 +81,14 @@ YAHOO_RESUBSCRIBE_SECONDS = 15
 # Wall-clock seconds of silence after which a source counts as down. The wall
 # clock keeps running through sleep, unlike asyncio's monotonic one, so prices
 # grey out as soon as the Mac wakes rather than a timeout later.
-STALE_AFTER_SECONDS = {"binance": 15, "yahoo": 30}
+# TradingView sends a heartbeat every 10 seconds.
+STALE_AFTER_SECONDS = {"binance": 15, "yahoo": 30, "tradingview": 45}
 RECV_POLL_SECONDS = 5
 RECONNECT_DELAY_SECONDS = 5
 # The chart endpoint rate-limits with 429; a failed symbol waits this long.
 SEED_RETRY_SECONDS = 60
 PUBLISH_INTERVAL_SECONDS = 1
 
-# Only these trade outside regular hours: pre-market, after-hours and overnight
-# (20:00 to 4:00 ET, Sunday to Thursday). Yahoo counts overnight as the next
-# trading day, so its change starts again from the regular close. Indices,
-# futures and currencies are only open or closed.
-EXTENDED_TYPES = ("EQUITY", "ETF")
-# Trading hours come with every chart read; a day's schedule changes only on
-# holidays and early closes.
-HOURS_REFRESH_SECONDS = 1800
-HOURS_FIRST_PASS_SECONDS = 60
 
 
 def log(message: str) -> None:
@@ -101,8 +114,9 @@ class Prices:
         self.heard: dict[str, float] = {}
         # Units outstanding by Yahoo symbol: shares, or coins in circulation.
         self.units: dict[str, float] = {}
-        # Trading hours by Yahoo symbol, from the chart endpoint's meta.
-        self.hours: dict[str, dict] = {}
+        # Sessions by TradingView symbol: open, pre, post, night or closed.
+        self.sessions: dict[str, str] = {}
+        self.sessions_heard = asyncio.Event()
 
     def symbols(self, source: str) -> list[str]:
         return [market["symbol"] for market in self.markets if market["source"] == source]
@@ -113,11 +127,13 @@ class Prices:
     def set(self, symbol: str, price: float, change: float | None) -> None:
         self.quotes[symbol] = {"price": price, "change": change}
 
-    def status(self, market: dict, now: float) -> str:
+    def status(self, market: dict) -> str:
+        """The market's session; closed, shown grey, while it is unknown."""
         if market["source"] == "binance":
             return "open"
-        hours = self.hours.get(market["symbol"])
-        return market_status(hours, now) if hours else "closed"
+        if self.stale("tradingview"):
+            return "closed"
+        return self.sessions.get(market.get("tradingview", ""), "closed")
 
     def stale(self, source: str) -> bool:
         return time.time() - self.heard.get(source, 0) > STALE_AFTER_SECONDS[source]
@@ -161,7 +177,7 @@ class Prices:
                 "price": format_price(quote["price"], market.get("decimals")),
                 "change": "" if change is None else f"{change:+.2f}%",
                 "direction": direction(change),
-                "status": self.status(market, time.time()),
+                "status": self.status(market),
                 "stale": self.stale(market["source"]),
             }
         sides = {}
@@ -194,13 +210,7 @@ class Prices:
 
 
 def format_price(price: float, decimals: int | None = None) -> str:
-    if decimals is not None:
-        return f"{price:,.{decimals}f}"
-    if price >= 1000:
-        return f"{price:,.0f}"
-    if price >= 1:
-        return f"{price:,.2f}"
-    return f"{price:.4g}"
+    return f"{price:,.{2 if decimals is None else decimals}f}"
 
 
 def direction(change: float | None) -> str:
@@ -285,51 +295,6 @@ def apply_pricing(prices: Prices, fields: dict[int, object], wanted: set[str]) -
     return symbol
 
 
-def hours_from(meta: dict) -> dict:
-    return {
-        "type": meta.get("instrumentType"),
-        "offset": int(meta.get("gmtoffset") or 0),
-        "periods": meta.get("currentTradingPeriod") or {},
-    }
-
-
-def market_status(hours: dict, now: float) -> str:
-    """open, pre, post, night or closed, from a market's trading hours."""
-    periods = hours["periods"]
-    # The schedule is for one day. A later weekday reuses it, so a new session
-    # starts on time without waiting for the next read; a holiday shows up only
-    # with that read.
-    spans = [span for span in periods.values() if isinstance(span, dict) and "start" in span]
-    first = min((span["start"] for span in spans), default=now)
-    days = int((now - first) // 86400)
-    if days > 0:
-        weekday = time.gmtime(first + days * 86400 + hours["offset"]).tm_wday
-        if weekday < 5:
-            periods = {
-                name: {"start": span["start"] + days * 86400, "end": span["end"] + days * 86400}
-                for name, span in periods.items()
-                if isinstance(span, dict) and "start" in span and "end" in span
-            }
-
-    def within(name: str) -> bool:
-        span = periods.get(name) or {}
-        return span.get("start", 0) <= now < span.get("end", 0)
-
-    if within("regular"):
-        return "open"
-    if hours["type"] in EXTENDED_TYPES:
-        if within("pre"):
-            return "pre"
-        if within("post"):
-            return "post"
-        local = time.gmtime(now + hours["offset"])
-        evening = local.tm_hour >= 20 and local.tm_wday in (6, 0, 1, 2, 3)
-        morning = local.tm_hour < 4 and local.tm_wday in (0, 1, 2, 3, 4)
-        if evening or morning:
-            return "night"
-    return "closed"
-
-
 def fetch_meta(symbol: str) -> dict:
     url = YAHOO_CHART_URL.format(symbol=urllib.parse.quote(symbol, safe=""))
     request = urllib.request.Request(url, headers={"User-Agent": YAHOO_USER_AGENT})
@@ -337,12 +302,12 @@ def fetch_meta(symbol: str) -> dict:
         return json.load(response)["chart"]["result"][0]["meta"]
 
 
-def quote_from(meta: dict, now: float) -> tuple[float, float | None]:
+def quote_from(meta: dict, night: bool) -> tuple[float, float | None]:
     # `fulldayPrice` includes extended hours and its change is measured from the
     # previous close, the same figures the stream carries in 2 and 47.
     if "fulldayPrice" in meta:
         price = float(meta["fulldayPrice"])
-        if market_status(hours_from(meta), now) == "night" and meta.get("regularMarketPrice"):
+        if night and meta.get("regularMarketPrice"):
             # Overnight already belongs to the next day, as the stream has it.
             return price, (price / meta["regularMarketPrice"] - 1) * 100
         change = meta.get("fulldayChangePercent")
@@ -361,16 +326,21 @@ async def seed_yahoo(prices: Prices, streamed: set[str]) -> None:
     A price from before the connection may be hours old, from before a sleep or
     a weekend, so it is replaced rather than trusted.
     """
-    pending = set(prices.symbols("yahoo"))
+    markets = {market["symbol"]: market for market in prices.markets if market["source"] == "yahoo"}
+    pending = set(markets)
+    try:
+        await asyncio.wait_for(prices.sessions_heard.wait(), SESSIONS_WAIT_SECONDS)
+    except TimeoutError:
+        log("tradingview sessions not in yet; reading yahoo without them")
     while True:
         for symbol in sorted(pending - streamed):
+            night = prices.status(markets[symbol]) == "night"
             try:
                 meta = await asyncio.to_thread(fetch_meta, symbol)
-                price, change = quote_from(meta, time.time())
+                price, change = quote_from(meta, night)
             except CHART_ERRORS as err:
                 log(f"yahoo chart {symbol}: {err!r}")
                 continue
-            prices.hours[symbol] = hours_from(meta)
             # The stream may have sent it while the request was in flight.
             if symbol not in streamed:
                 prices.set(symbol, price, change)
@@ -379,26 +349,6 @@ async def seed_yahoo(prices: Prices, streamed: set[str]) -> None:
         if not pending:
             return
         await asyncio.sleep(SEED_RETRY_SECONDS)
-
-
-async def keep_hours(prices: Prices) -> None:
-    """Keep every Yahoo market's trading hours current.
-
-    The seed reads them only for the markets the stream has not sent, so the
-    first pass, once the seed has had its turn, fills the rest.
-    """
-    await asyncio.sleep(HOURS_FIRST_PASS_SECONDS)
-    every = False
-    while True:
-        for symbol in prices.symbols("yahoo"):
-            if not every and symbol in prices.hours:
-                continue
-            try:
-                prices.hours[symbol] = hours_from(await asyncio.to_thread(fetch_meta, symbol))
-            except CHART_ERRORS as err:
-                log(f"yahoo hours {symbol}: {err!r}")
-        every = True
-        await asyncio.sleep(HOURS_REFRESH_SECONDS)
 
 
 async def resubscribe(ws: websockets.ClientConnection, subscription: str) -> None:
@@ -435,6 +385,60 @@ async def watch_yahoo(prices: Prices) -> None:
                 heartbeat.cancel()
     finally:
         seed.cancel()
+
+
+def tradingview_frame(method: str, *params: object) -> str:
+    body = json.dumps({"m": method, "p": list(params)})
+    return f"~m~{len(body)}~m~{body}"
+
+
+async def refresh_sessions(ws: websockets.ClientConnection, session: str, symbols: list[str]) -> None:
+    """Re-add every symbol now and then, which makes TradingView resend it whole."""
+    while True:
+        await asyncio.sleep(TRADINGVIEW_REFRESH_SECONDS)
+        try:
+            await ws.send(tradingview_frame("quote_remove_symbols", session, *symbols))
+            await ws.send(tradingview_frame("quote_add_symbols", session, *symbols))
+        except websockets.ConnectionClosed:
+            return
+
+
+async def watch_tradingview(prices: Prices) -> None:
+    symbols = sorted({market["tradingview"] for market in prices.markets if market.get("tradingview")})
+    session = "qs_" + "".join(random.choices(string.ascii_lowercase, k=12))
+    async with websockets.connect(
+        TRADINGVIEW_URL, origin=TRADINGVIEW_ORIGIN, user_agent_header=YAHOO_USER_AGENT, open_timeout=30
+    ) as ws:
+        await ws.send(tradingview_frame("set_auth_token", "unauthorized_user_token"))
+        await ws.send(tradingview_frame("quote_create_session", session))
+        await ws.send(tradingview_frame("quote_set_fields", session, "current_session"))
+        await ws.send(tradingview_frame("quote_add_symbols", session, *symbols))
+        prices.alive("tradingview")
+        refresh = asyncio.create_task(refresh_sessions(ws, session, symbols))
+        try:
+            while True:
+                raw = await receive(ws, prices, "tradingview")
+                # One frame can carry several messages, each behind its length.
+                for body in re.split(r"~m~\d+~m~", raw if isinstance(raw, str) else raw.decode()):
+                    if body.startswith("~h~"):
+                        # A heartbeat, which TradingView wants echoed.
+                        prices.alive("tradingview")
+                        await ws.send(f"~m~{len(body)}~m~{body}")
+                        continue
+                    if not body.startswith("{"):
+                        continue
+                    message = json.loads(body)
+                    if message.get("m") != "qsd":
+                        continue
+                    quote = message["p"][1]
+                    current = quote.get("v", {}).get("current_session")
+                    if quote.get("s") == "ok" and current in TRADINGVIEW_SESSIONS:
+                        prices.alive("tradingview")
+                        prices.sessions[quote["n"]] = TRADINGVIEW_SESSIONS[current]
+                        if set(symbols) <= set(prices.sessions):
+                            prices.sessions_heard.set()
+        finally:
+            refresh.cancel()
 
 
 def fetch_units(symbols: list[str]) -> dict[str, float]:
@@ -576,7 +580,8 @@ async def main() -> int:
         tasks.append(keep_watching("binance", watch_binance, prices))
     if prices.symbols("yahoo"):
         tasks.append(keep_watching("yahoo", watch_yahoo, prices))
-        tasks.append(keep_hours(prices))
+    if any(market.get("tradingview") for market in prices.markets):
+        tasks.append(keep_watching("tradingview", watch_tradingview, prices))
     await asyncio.gather(*tasks)
     return 0
 
