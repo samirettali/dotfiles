@@ -82,12 +82,11 @@ Nothing polls.
 
 ## Market prices
 
-`items/market.lua` shows live crypto and stock prices.
-The list lives in `home/mac/sketchybar.nix`, in display order; `sketchybarrc` hands its JSON to the item as `MARKETS`, and the LaunchAgent passes the same file to the watcher.
-The markets marked `bar` show their name and price in the bar, without the change.
-Clicking any of them opens a popup with every market, its change and, outside regular hours, its session.
+`items/market.lua` shows a chart icon and two figures, crypto then stocks: the change of each side's total market cap.
+The list lives in `home/mac/sketchybar.nix`, in popup order; `sketchybarrc` hands its JSON to the item as `MARKETS`, and the LaunchAgent passes the same file to the watcher.
+Clicking the item opens a popup with every market, its change and, outside regular hours, its session, under a Crypto and a Stocks heading that carry the side's figure.
 Clicking a row opens the market on Binance or Yahoo Finance.
-The popup hangs from the rightmost bar market. Sketchybar draws no popup for an item it does not draw, so that item stays drawn, empty and without padding, while any bar market shows.
+The two figures are two items, `market` and `market.stocks`, because one label carries one colour. The popup hangs from `market.stocks`, the right edge of the pair, as the Claude usage popup hangs from `usage.7d`; that item stays drawn while the crypto figure shows, because Sketchybar draws no popup for an item it does not draw.
 
 `market-sketchybar` lives under `home/packages/shell/scripts/`.
 A LaunchAgent in `home/mac/sketchybar.nix` holds two WebSockets, writes `~/.cache/sketchybar/market.json` and triggers `market_update`.
@@ -102,8 +101,13 @@ Nothing polls, and neither source needs a key.
   Each Yahoo connection reads every stock the stream has not sent on it from `query1.finance.yahoo.com/v8/finance/chart`, replacing the old price, and retries failures every 60 seconds.
   It reads `fulldayPrice` and `fulldayChangePercent`, which include extended hours, falling back to `regularMarketPrice` against `chartPreviousClose`, and takes the session from `currentTradingPeriod`.
   The endpoint answers 429 without a browser User-Agent.
-- The change is always measured from the previous close. Outside regular hours field 8 measures from the regular close instead, so the watcher prefers field 47, which is absent from yfinance's proto and was read off live messages.
-- `market_hours` (field 7) is 1 for crypto and 2 after-hours. Proto3 omits zero, so a missing field reads as pre-market. Pre-market and overnight (3) are unverified.
+- The change is always measured from the previous close. After hours field 8 measures from the regular close instead, so the watcher prefers field 47, which is absent from yfinance's proto and was read off live messages.
+- `market_hours` (field 7) is 1 for crypto, 2 after-hours and 4 overnight (20:00 to 4:00 ET). Yahoo counts the overnight session as the next trading day, so the change starts again from the regular close at 20:00 ET. Proto3 omits zero, so a missing field reads as pre-market; pre-market is unverified.
+- A side's figure is the change of its total market cap, live price times units outstanding, against the same total at the previous close.
+  Units come once a day from `v7/finance/quote`, crypto as `<coin>-USD`, and are cached in `~/.cache/sketchybar/market-units.json` across restarts.
+  That endpoint wants the crumb of Yahoo's session: a cookie from `fc.yahoo.com`, which answers 404 and sets it anyway, then `v1/test/getcrumb`.
+  Units are `marketCap` over `regularMarketPrice`, not `sharesOutstanding`, which counts one share class only: GOOG's leaves out GOOGL.
+  A market without units drops out of its side's figure; with none at all the figure falls back to a plain average.
 - Stocks go quiet when the market closes, so silence cannot tell a dead socket from a weekend. The Yahoo connection also subscribes `BTC-USD` as a heartbeat and does not show it.
   The subscription is re-sent every 15 seconds, as yfinance does.
 - A source counts as down after 15 seconds of silence for Binance and 30 for Yahoo, measured on the wall clock. The wall clock runs through sleep, so prices turn grey on wake without the `system_woke` handling the gas item needs, and the watcher reconnects.

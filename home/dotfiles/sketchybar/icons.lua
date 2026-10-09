@@ -4,6 +4,7 @@ local icons = {
 	claude = ":claude:",
 	mail = "\u{f01ee}",
 	gas = "\u{f086a}",
+	market = "\u{f201}",
 
 	herdr = "\u{f0a0b}",
 

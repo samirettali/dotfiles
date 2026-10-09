@@ -8,6 +8,10 @@ trades, so after a closed market or a sleep the stocks would be empty or old:
 every Yahoo connection reads each one from the chart endpoint until the stream
 sends it.
 
+Each side also gets one figure for the bar: the change of its total market cap.
+Caps are prices times units outstanding, which come from Yahoo's quote endpoint
+once a day and are cached.
+
 Prices go to a JSON file, which the items read on `market_update`. The trigger
 fires at most once a second, and only when something on screen changed.
 """
@@ -17,12 +21,14 @@ from __future__ import annotations
 import asyncio
 import base64
 import http.client
+import http.cookiejar
 import json
 import os
 import struct
 import subprocess
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -34,7 +40,15 @@ YAHOO_CHART_URL = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?in
 # The chart endpoint answers 429 to a request without a browser User-Agent.
 YAHOO_USER_AGENT = "Mozilla/5.0"
 
+YAHOO_COOKIE_URL = "https://fc.yahoo.com"
+YAHOO_CRUMB_URL = "https://query1.finance.yahoo.com/v1/test/getcrumb"
+YAHOO_QUOTE_URL = "https://query1.finance.yahoo.com/v7/finance/quote?symbols={symbols}&crumb={crumb}"
+
 STATE_PATH = os.path.expanduser("~/.cache/sketchybar/market.json")
+UNITS_PATH = os.path.expanduser("~/.cache/sketchybar/market-units.json")
+# Shares outstanding and coin supply move slowly; a day-old figure is fine.
+UNITS_MAX_AGE_SECONDS = 24 * 3600
+UNITS_RETRY_SECONDS = 3600
 
 # Stocks go quiet when their market closes, so silence on the Yahoo socket
 # cannot tell a dead connection from a weekend. Bitcoin trades around the clock
@@ -53,13 +67,26 @@ RECONNECT_DELAY_SECONDS = 5
 SEED_RETRY_SECONDS = 60
 PUBLISH_INTERVAL_SECONDS = 1
 
-# PricingData's `market_hours`. Crypto arrives as 1, after-hours stocks as 2.
-# Proto3 omits a zero, so a message without the field is pre-market.
-SESSIONS = {0: "pre", 2: "post", 3: "night"}
+# PricingData's `market_hours`. Crypto arrives as 1, after-hours stocks as 2,
+# and the overnight session (20:00 to 4:00 ET) as 4, which Yahoo counts as the
+# next trading day: its change starts again from the regular close. Proto3
+# omits a zero, so a message without the field is pre-market.
+SESSIONS = {0: "pre", 2: "post", 4: "night"}
 
 
 def log(message: str) -> None:
     print(message, file=sys.stderr, flush=True)
+
+
+# The bar's two figures, crypto first.
+SIDES = (("crypto", "binance"), ("stocks", "yahoo"))
+
+
+def yahoo_symbol(market: dict) -> str:
+    """Yahoo's quote symbol, which for a Binance pair is its coin in dollars."""
+    if market["source"] == "binance":
+        return f"{market['name']}-USD"
+    return market["symbol"]
 
 
 class Prices:
@@ -67,6 +94,8 @@ class Prices:
         self.markets = markets
         self.quotes: dict[str, dict] = {}
         self.heard: dict[str, float] = {}
+        # Units outstanding by Yahoo symbol: shares, or coins in circulation.
+        self.units: dict[str, float] = {}
 
     def symbols(self, source: str) -> list[str]:
         return [market["symbol"] for market in self.markets if market["source"] == source]
@@ -79,6 +108,33 @@ class Prices:
 
     def stale(self, source: str) -> bool:
         return time.time() - self.heard.get(source, 0) > STALE_AFTER_SECONDS[source]
+
+    def side(self, source: str) -> dict | None:
+        """The change of the side's total market cap since the previous close.
+
+        A market without units counts only when no market on that side has
+        any, and the figure falls back to a plain average.
+        """
+        now = before = 0.0
+        changes = []
+        for market in self.markets:
+            quote = self.quotes.get(market["symbol"])
+            if market["source"] != source or quote is None or quote["change"] is None:
+                continue
+            changes.append(quote["change"])
+            units = self.units.get(yahoo_symbol(market))
+            if units:
+                cap = quote["price"] * units
+                now += cap
+                before += cap / (1 + quote["change"] / 100)
+        if not changes:
+            return None
+        change = (now / before - 1) * 100 if before else sum(changes) / len(changes)
+        return {
+            "change": f"{change:+.2f}%",
+            "direction": direction(change),
+            "stale": self.stale(source),
+        }
 
     def document(self) -> dict:
         quotes = {}
@@ -94,7 +150,12 @@ class Prices:
                 "session": quote["session"] or "",
                 "stale": self.stale(market["source"]),
             }
-        return {"quotes": quotes}
+        sides = {}
+        for name, source in SIDES:
+            side = self.side(source)
+            if side is not None:
+                sides[name] = side
+        return {"quotes": quotes, "sides": sides}
 
 
 def format_price(price: float) -> str:
@@ -272,6 +333,82 @@ async def watch_yahoo(prices: Prices) -> None:
         seed.cancel()
 
 
+def fetch_units(symbols: list[str]) -> dict[str, float]:
+    """Units outstanding per symbol, as market cap over price.
+
+    `sharesOutstanding` counts one share class only (Alphabet's GOOG leaves out
+    GOOGL), while `marketCap` covers the company, so the quotient does too.
+    The endpoint wants the crumb that goes with Yahoo's session cookie.
+    """
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    opener.addheaders = [("User-Agent", YAHOO_USER_AGENT)]
+    try:
+        opener.open(YAHOO_COOKIE_URL, timeout=15).close()
+    except urllib.error.HTTPError:
+        # It answers 404, with the cookie set all the same.
+        pass
+    with opener.open(YAHOO_CRUMB_URL, timeout=15) as response:
+        crumb = response.read().decode().strip()
+    url = YAHOO_QUOTE_URL.format(
+        symbols=urllib.parse.quote(",".join(symbols)), crumb=urllib.parse.quote(crumb)
+    )
+    with opener.open(url, timeout=15) as response:
+        results = json.load(response)["quoteResponse"]["result"]
+    units = {}
+    for quote in results:
+        cap, price = quote.get("marketCap"), quote.get("regularMarketPrice")
+        if cap and price:
+            units[quote["symbol"]] = cap / price
+    return units
+
+
+def read_units() -> tuple[float, dict[str, float]]:
+    try:
+        with open(UNITS_PATH) as handle:
+            cached = json.load(handle)
+        return float(cached["fetched"]), {str(k): float(v) for k, v in cached["units"].items()}
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return 0.0, {}
+
+
+def write_units(fetched: float, units: dict[str, float]) -> None:
+    os.makedirs(os.path.dirname(UNITS_PATH), exist_ok=True)
+    temporary = f"{UNITS_PATH}.tmp"
+    with open(temporary, "w") as handle:
+        json.dump({"fetched": fetched, "units": units}, handle)
+    os.replace(temporary, UNITS_PATH)
+
+
+async def keep_units(prices: Prices) -> None:
+    """Keep the units no older than a day, across restarts through the cache."""
+    wanted = sorted({yahoo_symbol(market) for market in prices.markets})
+    fetched, prices.units = read_units()
+    while True:
+        due = fetched + UNITS_MAX_AGE_SECONDS - time.time()
+        if due > 0 and set(wanted) <= set(prices.units):
+            await asyncio.sleep(due)
+            continue
+        try:
+            units = await asyncio.to_thread(fetch_units, wanted)
+        except (OSError, ValueError, KeyError, IndexError, TypeError, http.client.HTTPException) as err:
+            log(f"yahoo units: {err!r}")
+            await asyncio.sleep(UNITS_RETRY_SECONDS)
+            continue
+        missing = set(wanted) - set(units)
+        if missing:
+            log(f"yahoo units missing for {', '.join(sorted(missing))}")
+        # A symbol the answer left out keeps its previous figure.
+        prices.units = {**prices.units, **units}
+        fetched = time.time()
+        try:
+            await asyncio.to_thread(write_units, fetched, prices.units)
+        except OSError as err:
+            log(f"could not write {UNITS_PATH}: {err}")
+        if missing:
+            await asyncio.sleep(UNITS_RETRY_SECONDS)
+            fetched = 0.0
+
+
 async def keep_watching(name: str, watch, prices: Prices) -> None:
     while True:
         try:
@@ -330,7 +467,7 @@ async def main() -> int:
         return 2
     with open(sys.argv[1]) as handle:
         prices = Prices(json.load(handle))
-    tasks = [publish(prices)]
+    tasks = [publish(prices), keep_units(prices)]
     if prices.symbols("binance"):
         tasks.append(keep_watching("binance", watch_binance, prices))
     if prices.symbols("yahoo"):

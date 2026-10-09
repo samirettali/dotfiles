@@ -42,8 +42,7 @@
     sketchybar = config.programs.sketchybar.package;
   };
 
-  # Every price followed, in the order the bar and the popup show them. The
-  # popup lists them all; `bar` puts one in the bar as well. Crypto comes from
+  # Every price followed, in the order the popup lists them. Crypto comes from
   # Binance against USDT, stocks from Yahoo Finance under Yahoo's symbol.
   markets = let
     crypto = name: {
@@ -56,15 +55,14 @@
       source = "yahoo";
       name = symbol;
     };
-    bar = market: market // {bar = true;};
   in
     builtins.toFile "markets.json" (builtins.toJSON [
-      (bar (crypto "BTC"))
-      (bar (crypto "ETH"))
+      (crypto "BTC")
+      (crypto "ETH")
       (crypto "AAVE")
       (crypto "SOL")
-      (bar (stock "GOOG"))
-      (bar (stock "NVDA"))
+      (stock "GOOG")
+      (stock "NVDA")
       (stock "NET")
       (stock "SNOW")
       (stock "SPCX")
