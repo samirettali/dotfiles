@@ -1,3 +1,4 @@
+local alerts = require("alerts")
 local icons = require("icons")
 
 -- Unread mail in the Fastmail inbox. Hidden at zero, like the status items.
@@ -16,6 +17,7 @@ local mail = sbar.add("item", "mail", {
 
 mail:subscribe("mail_unread", function(env)
 	local count = tonumber(env.count) or 0
+	alerts.show("mail", count > 0)
 	mail:set({
 		drawing = count > 0,
 		label = { string = tostring(count) },

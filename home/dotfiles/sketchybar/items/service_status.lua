@@ -1,3 +1,4 @@
+local alerts = require("alerts")
 local cjson = require("cjson")
 local colors = require("colors")
 local icons = require("icons")
@@ -154,6 +155,7 @@ for _, provider in ipairs(providers) do
 				end
 			end
 
+			alerts.show(item.name, worst > 0)
 			if worst == 0 then
 				set_rows({})
 				item:set({

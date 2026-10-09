@@ -14,7 +14,6 @@ Do not replace this with launch ordering or a fixed startup delay.
 `items/herdr.lua` shows agents waiting for input.
 It counts `blocked` and `done`, never `working` or `idle`.
 Its popup contains one clickable row per agent.
-A separator on its right, between it and the Claude usage, shows and hides with the item.
 
 `herdr-sketchybar` lives under `home/packages/shell/scripts/`.
 A LaunchAgent in `home/mac/sketchybar.nix` keeps Herdr's socket open and triggers the `herdr_agents` event.
@@ -153,6 +152,8 @@ Model-scoped weekly caps exist only in `api.anthropic.com/api/oauth/usage`; they
 ## Spacing and separators
 
 `separator.lua` adds a thin `|` between groups, and `items/init.lua` places one between the `require` calls.
+The items that show only when something needs you (provider incidents, pending agents, unread mail) sit left of the Claude usage, behind one separator from `alerts.lua`.
+Each reports its visibility with `alerts.show`, and the separator shows while any of them does.
 Right-side items render in creation order, rightmost first, so the position follows from where the call sits.
 Give the separator label an explicit width: Sketchybar sizes a label from the glyph's tight bounding box,
 and the pipe's is two pixels wide, so without a width the character is clipped away entirely.
