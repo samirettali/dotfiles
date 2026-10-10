@@ -27,14 +27,14 @@ in {
       done
 
       # An exported FIRECRAWL_API_KEY alone, otherwise one key per account from
-      # the vault, in order: the second account takes over when the first runs
+      # the vault, in order: each account takes over when the one before it runs
       # out of credits.
       keys=()
       if [ -n "''${FIRECRAWL_API_KEY-}" ]; then
         keys=("$FIRECRAWL_API_KEY")
       ${lib.optionalString (rbw != null) ''
         elif ${lib.getExe rbw} unlocked 2>/dev/null; then
-          for entry in firecrawl-api-key firecrawl-api-key-2; do
+          for entry in firecrawl-api-key firecrawl-api-key-2 firecrawl-api-key-3; do
             if key="$(${lib.getExe rbw} get "$entry" 2>/dev/null)"; then
               keys+=("$key")
             fi

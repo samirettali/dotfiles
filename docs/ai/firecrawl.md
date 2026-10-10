@@ -13,8 +13,8 @@ The CLI lives in
 Dotfiles only wrap `nurPkgs.firecrawl-cli` and configure usage policy.
 
 `home/packages/ai/firecrawl.nix` reads `FIRECRAWL_API_KEY`, falling back to the
-unlocked rbw entries `firecrawl-api-key` and `firecrawl-api-key-2`, one per
-account. No key is stored in Nix or CLI config. The wrapper tries the accounts
+unlocked rbw entries `firecrawl-api-key`, `firecrawl-api-key-2` and
+`firecrawl-api-key-3`, one per account. No key is stored in Nix or CLI config. The wrapper tries the accounts
 in order and drops one that answers 402 (out of credits). The CLI does not retry
 a 429; the wrapper moves on to the next account, and when every account is
 limited it waits as long as the error's "retry after" says, up to three minutes.
