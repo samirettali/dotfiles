@@ -55,6 +55,7 @@ Never written a line myself, only through agents:
 
 - Do what was asked and nothing more. Ask before doing anything else, unless I say you have a free hand.
 - Investigate facts directly. Ask when unresolved ambiguity would change scope, correctness, external effects, or an established preference; use judgment for routine, reversible choices within the task.
+- Reply in the language of my last message, and keep it for the whole turn: through long tool runs, subagent results and after a context summary.
 - I dictate, so expect mangled words: read them by sound, and ask whenever a name or an identifier is at stake.
 - Say what will not work before building it, not after.
 - Work in a git worktree unless I say otherwise: I sit on main, and I do not want my checkout moved under me.
@@ -102,7 +103,7 @@ How it looks:
 
 ## Conventions
 
-- Write everything that lands in a repository in English, whatever language we are speaking: issues, pull requests, commit messages, docs and code comments
+- Write everything that lands in a repository in English unless I say otherwise, whatever language we are speaking: issues, pull requests, commit messages, docs and code comments
 - One commit per logical change, and only what this task changed
 - Never pass `-c user.name` or `-c user.email` to git: the repository already knows who I am, and a name taken from the session context signs the commit as somebody else
 - Title a pull request like a commit subject
