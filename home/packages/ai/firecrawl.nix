@@ -34,7 +34,7 @@ in {
         keys=("$FIRECRAWL_API_KEY")
       ${lib.optionalString (rbw != null) ''
         elif ${lib.getExe rbw} unlocked 2>/dev/null; then
-          for entry in firecrawl-api-key firecrawl-api-key-2 firecrawl-api-key-3; do
+          for entry in firecrawl-api-key firecrawl-api-key-2 firecrawl-api-key-3 firecrawl-api-key-4; do
             if key="$(${lib.getExe rbw} get "$entry" 2>/dev/null)"; then
               keys+=("$key")
             fi
