@@ -16,6 +16,10 @@
       # Statuses a restart would meet again (the runbook lists them).
       RestartPreventExitStatus = "3 4 5";
       TimeoutStopSec = 30;
+      # JSON lines, which Vector (servers) sends to Loki like every file in
+      # that directory. Not rotated yet.
+      StandardOutput = "append:${config.home.homeDirectory}/.local/state/logs/mevbot.jsonl";
+      StandardError = "append:${config.home.homeDirectory}/.local/state/logs/mevbot.jsonl";
     };
     Install.WantedBy = ["default.target"];
   };
