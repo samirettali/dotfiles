@@ -1,7 +1,7 @@
 ---
 name: review-loop
 description: Have a second agent review the work, fix every finding that holds, and repeat until the reviewer has none left. Use when asked to get the change reviewed and to keep going until it is clean — "get a review and fix everything", "ask another agent for a review", "keep going until it says it is fine", "review loop", "get this reviewed and iterate".
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Review loop
