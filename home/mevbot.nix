@@ -8,7 +8,7 @@
       WorkingDirectory = "${config.home.homeDirectory}/dev/mevbot";
       ExecStart = "${config.home.homeDirectory}/dev/mevbot/scripts/live";
       Environment = [
-        # "MEVBOT_SEND=1"
+        "MEVBOT_SEND=1"
         "PATH=${config.home.profileDirectory}/bin:/usr/bin:/bin"
       ];
       Restart = "on-failure";
