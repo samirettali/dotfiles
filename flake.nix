@@ -237,6 +237,7 @@
             modules = [
               ./home/ai.nix
               ./home/server.nix
+              ./home/mevbot.nix
               ({pkgs, ...}: {
                 programs.home-manager.enable = true;
 
