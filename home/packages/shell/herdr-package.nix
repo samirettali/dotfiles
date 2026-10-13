@@ -10,4 +10,16 @@
 #
 # Defined apart from `herdr.nix` so anything that needs the binary by path — the
 # sketchybar watcher — gets this exact build instead of guessing a profile path.
-pkgs.callPackage "${inputs.herdr-fork}/nix/package.nix" {}
+#
+# On Linux it links with lld: with binutils 2.46, ld.bfd rejects the debug
+# relocations in the compiler_rt object Zig puts in libghostty-vt.a.
+let
+  herdr = pkgs.callPackage "${inputs.herdr-fork}/nix/package.nix" {};
+in
+  if pkgs.stdenv.hostPlatform.isLinux
+  then
+    herdr.overrideAttrs (old: {
+      nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.lld];
+      env = old.env // {RUSTFLAGS = "-C link-arg=-fuse-ld=lld";};
+    })
+  else herdr
