@@ -1,13 +1,10 @@
 {
   inputs,
   pkgs,
-  vars,
   ...
 }: {
   programs.herdr = {
-    # Off on andromeda until the fork links on aarch64-linux again: with
-    # binutils 2.46, ld.bfd fails on libghostty-vt's zig objects.
-    enable = vars.hostname != "andromeda";
+    enable = true;
     package = import ./herdr-package.nix {inherit inputs pkgs;};
 
     settings = {
