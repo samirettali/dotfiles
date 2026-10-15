@@ -73,7 +73,7 @@
           delivery = "off";
         };
         sound = {
-          enabled = true;
+          enabled = false;
         };
         sidebar = {
           layout = "tree";
