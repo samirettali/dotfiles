@@ -3,7 +3,15 @@
 # when it cannot. The alerts in servers notice.
 {config, ...}: {
   systemd.user.services.mevbot = {
-    Unit.Description = "mevbot live";
+    Unit = {
+      Description = "mevbot live";
+      # Ten starts in five minutes is a crash loop: the unit stops, and
+      # Grafana's mevbot down pages. RestartSteps would back off, but its
+      # count never resets while the unit runs, so a crash days later would
+      # wait the longest delay too (systemd 255, measured 2026-10-15).
+      StartLimitIntervalSec = 300;
+      StartLimitBurst = 10;
+    };
     Service = {
       WorkingDirectory = "${config.home.homeDirectory}/dev/mevbot";
       ExecStart = "${config.home.homeDirectory}/dev/mevbot/scripts/live";
@@ -12,7 +20,7 @@
         "PATH=${config.home.profileDirectory}/bin:/usr/bin:/bin"
       ];
       Restart = "on-failure";
-      RestartSec = 30;
+      RestartSec = 1;
       # Statuses a restart would meet again (the runbook lists them).
       RestartPreventExitStatus = "3 4 5";
       TimeoutStopSec = 30;
