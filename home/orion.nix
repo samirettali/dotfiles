@@ -23,6 +23,13 @@
     sqlite
   ];
 
+  # orion has no C compiler, and the bot needs none: its SQLite is pure Go,
+  # and go-ethereum signs with its pure-Go secp256k1 without cgo.
+  home.sessionVariables.CGO_ENABLED = "0";
+
   # scripts/live reads the node on this host instead of Alchemy.
-  systemd.user.services.mevbot.Service.Environment = ["MEVBOT_NODE=127.0.0.1"];
+  systemd.user.services.mevbot.Service.Environment = [
+    "MEVBOT_NODE=127.0.0.1"
+    "CGO_ENABLED=0"
+  ];
 }
