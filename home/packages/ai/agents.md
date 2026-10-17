@@ -112,5 +112,5 @@ How it looks:
 ## Memory
 
 - To change these instructions, edit `~/dev/dotfiles/home/packages/ai/agents.md`; the dotfiles `AGENTS.md` says how the deployed copies are put together.
-- Never use a built-in memory tool. I run Claude Code, Codex and pi, and per-tool memories drift apart; `AGENTS.md` is the only store.
+- Never use a built-in memory tool. I run Claude Code, Codex, pi and agy, and per-tool memories drift apart; `AGENTS.md` is the only store.
 - Put durable facts in the relevant project's `AGENTS.md`. Anything long or rarely needed gets its own file, linked from there in one line.
