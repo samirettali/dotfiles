@@ -238,17 +238,6 @@
               ./home/ai.nix
               ./home/server.nix
               ./home/mevbot.nix
-              ({pkgs, ...}: {
-                programs.home-manager.enable = true;
-
-                home.packages = with pkgs; [
-                  ghostty.terminfo
-                ];
-
-                # genericLinux sets TERMINFO_DIRS only for systemd, which SSH
-                # shells never read; ncurses always looks in ~/.terminfo.
-                home.file.".terminfo".source = "${pkgs.ghostty.terminfo}/share/terminfo";
-              })
             ];
           })
         ];
