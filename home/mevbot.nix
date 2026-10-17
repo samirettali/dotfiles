@@ -1,7 +1,11 @@
 # The live MEV bot (~/dev/mevbot; its AGENTS.md has the runbook). The script
 # reads its keys at start, and stops with a status the unit does not restart
 # when it cannot. The alerts in servers notice.
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   systemd.user.services.mevbot = {
     Unit = {
       Description = "mevbot live";
@@ -31,4 +35,10 @@
     };
     Install.WantedBy = ["default.target"];
   };
+
+  # systemd creates the log file but not its directory, which a new host
+  # (orion) lacks: the unit would fail with 209/STDOUT.
+  home.activation.mevbotLogs = lib.hm.dag.entryBetween ["reloadSystemd"] ["writeBoundary"] ''
+    run mkdir -p ${config.home.homeDirectory}/.local/state/logs
+  '';
 }

@@ -11,10 +11,10 @@ mbp; individual targets are useful while iterating:
 | `make check-tests` | Fish prompts, Git ignores, `gd` ownership, JavaScript profiles, file selection, browser log filtering | Node, Fish, Nix, Git, lint tools |
 | `make check-pi` | Type-check all local Pi extensions, then test X Search with mocked HTTP | Nix, flake inputs |
 | `make check-herdr` | Shell hooks on a test socket and the pinned fork's integration tests | Nix, Node, Bun, Python 3 on PATH for upstream hooks |
-| `make check-eval` | mbp system and andromeda activation derivations | Flake inputs available locally |
+| `make check-eval` | mbp system, andromeda and orion activation derivations | Flake inputs available locally |
 | `make check-chezmoi` | Render in a temporary copy and diff against `chezmoi/` | Darwin builder, Nix, Bash, rsync, jq |
 
-Host evaluation does not build or activate either configuration. The chezmoi
+Host evaluation does not build or activate any configuration. The chezmoi
 check builds only Home Manager's file tree, not the full system, and leaves the
 working tree unchanged. If it reports drift, run `make chezmoi` and review the
 rendered diff. Both targets disable lock-file writes. Input fetching and missing
@@ -57,8 +57,9 @@ and no stored checkout credentials.
 obtains tools from the public nixpkgs revision already recorded in `flake.lock`,
 without evaluating the dotfiles flake, and has no secrets.
 
-`evaluate` runs `make check-eval-andromeda` on `ubuntu-24.04-arm` and
-`make check-eval-mbp` on `macos-latest`. The flake has a private SSH input,
+`evaluate` runs `make check-eval-andromeda` on `ubuntu-24.04-arm`,
+`make check-eval-orion` on `ubuntu-24.04` and `make check-eval-mbp` on
+`macos-latest`. The flake has a private SSH input,
 `samirettali/skills`, so the job loads a read-only deploy key from the
 `SKILLS_DEPLOY_KEY` secret, which the infra repository generates and declares in
 `github/deploy-keys.tf`. Each host evaluates on its own platform because

@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Nix flake dotfiles managing macOS with nix-darwin and NixOS with home-manager.
-Hosts are `mbp` (darwin) and `andromeda` (home-manager only).
+Hosts are `mbp` (darwin), and `andromeda` and `orion` (home-manager only).
 
 This repository also carries `settali`, the work Mac, which company policy keeps
 off nix: it is configured from `chezmoi/` with Homebrew, and it appears in no
@@ -49,7 +49,9 @@ The `warning: Git tree ... is dirty` line during evaluation is benign.
 
 ## Repository ownership
 
-`andromeda` is an Ubuntu ARM server where Nix owns only Samir's user profile.
+`andromeda` (Ubuntu, ARM) and `orion` (Ubuntu, x86_64) are servers where Nix
+owns only Samir's user profile. orion's (`home/orion.nix`) holds only what
+mevbot's unit needs and a shell over SSH, without the agents.
 
 | Layer | Owner | Contents |
 | --- | --- | --- |

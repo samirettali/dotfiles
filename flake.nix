@@ -93,6 +93,8 @@
     systems = {
       darwin = "aarch64-darwin";
       server = "aarch64-linux";
+      # orion, a Hetzner dedicated server.
+      serverX86 = "x86_64-linux";
     };
 
     # User configurations
@@ -138,6 +140,11 @@
 
     serverPkgs = import nixpkgs {
       system = systems.server;
+      inherit (nixpkgsConfig) config;
+    };
+
+    serverX86Pkgs = import nixpkgs {
+      system = systems.serverX86;
       inherit (nixpkgsConfig) config;
     };
 
@@ -237,6 +244,27 @@
             modules = [
               ./home/ai.nix
               ./home/server.nix
+              ./home/mevbot.nix
+            ];
+          })
+        ];
+      };
+
+      orion = home-manager.lib.homeManagerConfiguration {
+        pkgs = serverX86Pkgs;
+
+        extraSpecialArgs = mkHomeSpecialArgs {
+          user = serverUser;
+          hostname = "orion";
+          pkgs = serverX86Pkgs;
+        };
+
+        modules = [
+          (mkHomeUserModule {
+            user = serverUser;
+            features.go = true;
+            modules = [
+              ./home/orion.nix
               ./home/mevbot.nix
             ];
           })

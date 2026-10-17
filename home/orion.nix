@@ -1,0 +1,28 @@
+# orion: mevbot's Ethereum node and, from the cutover, the live bot
+# (~/dev/mevbot, AGENTS.md "Live"). What the bot's unit needs and the basics
+# of a shell over SSH. No agents: they would be most of the profile, and
+# nothing run on orion needs them.
+{pkgs, ...}: {
+  imports = [
+    ./dotfiles.nix
+    ./linux-shell.nix
+    ./options.nix
+    ./packages/dev/go.nix
+    ./packages/shell/btop.nix
+    ./packages/shell/direnv.nix
+    ./packages/shell/fd.nix
+    ./packages/shell/jq.nix
+    ./packages/shell/neovim.nix
+    ./packages/shell/ripgrep.nix
+  ];
+
+  # make for the unit's build (scripts/live runs `make build`), sqlite3 for
+  # the cache. git is Ubuntu's.
+  home.packages = with pkgs; [
+    gnumake
+    sqlite
+  ];
+
+  # scripts/live reads the node on this host instead of Alchemy.
+  systemd.user.services.mevbot.Service.Environment = ["MEVBOT_NODE=127.0.0.1"];
+}
