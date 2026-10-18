@@ -1,7 +1,7 @@
 vim.pack.add({ "https://github.com/pablopunk/pi.nvim" })
 
 require("pi").setup({
-	provider = "openai-codex",
+	provider = "openai",
 	thinking = "off",
 	model = "gpt-5.6-sol",
 	skills = true,

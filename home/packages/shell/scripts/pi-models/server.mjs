@@ -66,7 +66,7 @@ async function builtinCatalog() {
     // Without the cache we cannot tell redundant from meaningful, so claim to know nothing
     // and let every write through rather than silently dropping a limit the user wanted.
     return Object.fromEntries(
-      ["openai-codex", "openrouter", "xai", "kimi-coding", "google", "openai"].map((p) => [p, {}]),
+      ["openrouter", "xai", "kimi-coding", "google", "openai"].map((p) => [p, {}]),
     );
   }
 }

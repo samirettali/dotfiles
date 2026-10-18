@@ -27,7 +27,6 @@ in {
     ./agents.nix
     ./antigravity-cli.nix
     ./claude-code.nix
-    ./codex.nix
     ./firecrawl.nix
     ./mcp.nix
     ./pi-coding-agent

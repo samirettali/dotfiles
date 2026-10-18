@@ -16,7 +16,7 @@ import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-a
 import type { TextContent } from "@earendil-works/pi-ai";
 import { completeSimple } from "@earendil-works/pi-ai/compat";
 
-const PROVIDER = process.env.HERDR_TITLE_PROVIDER || "openai-codex";
+const PROVIDER = process.env.HERDR_TITLE_PROVIDER || "openai";
 const MODEL_ID = process.env.HERDR_TITLE_MODEL || "gpt-5.6-luna";
 const TOKEN_SOURCE = "pi-session-title";
 const MAX_INPUT_CHARS = 2000;

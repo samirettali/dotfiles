@@ -1,6 +1,6 @@
 ---
 name: add-skill
-description: Add an Agent Skill (SKILL.md) from a GitHub repo to this dotfiles repo so it's installed for every coding agent (Claude Code, Codex, pi). Use when the user asks to add/install a skill, points at a skill repo, or says something like "configure <repo> skill".
+description: Add an Agent Skill (SKILL.md) from a GitHub repo to this dotfiles repo so it's installed for every coding agent (Claude Code, pi, agy). Use when the user asks to add/install a skill, points at a skill repo, or says something like "configure <repo> skill".
 ---
 
 # Add a skill to the dotfiles
@@ -16,12 +16,11 @@ walks through adding a new one end-to-end.
 - `home/packages/ai/coding-agent-skills.nix` — the single source of truth:
   `{inputs, pkgs}: { <name> = "<dir-with-SKILL.md>"; }`. Every agent imports it:
   - Claude Code: `programs.claude-code.skills` (`home/packages/ai/claude-code.nix`)
-  - Codex: `programs.codex.skills` (`home/packages/ai/codex.nix`)
   - pi: linked into `~/.pi/agent/skills/<name>` (`home/packages/ai/pi-coding-agent/default.nix`)
 - A skill that should run only when invoked by name goes through
   `manualSkill "<name>" <source>` in the same file: it sets
-  `disable-model-invocation` in SKILL.md and Codex's
-  `allow_implicit_invocation: false`. See `docs/ai/skill-invocation.md`.
+  `disable-model-invocation` in SKILL.md and
+  `allow_implicit_invocation: false` in `agents/openai.yaml`. See `docs/ai/skill-invocation.md`.
 
 So adding a skill = add one input + add one line to the shared list.
 
@@ -75,7 +74,6 @@ So adding a skill = add one input + add one line to the shared list.
 8. **Verify it resolves for every agent** (should all print the same store path):
    ```
    nix eval --json '.#darwinConfigurations.mbp.config.home-manager.users.samir.programs.claude-code.skills'
-   nix eval --json '.#darwinConfigurations.mbp.config.home-manager.users.samir.programs.codex.skills'
    nix eval --raw '.#darwinConfigurations.mbp.config.home-manager.users.samir.home.file' \
      --apply 'f: f.".pi/agent/skills/<name>".source'
    ```

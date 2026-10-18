@@ -11,7 +11,7 @@ const exec = promisify(execFile);
 const source = process.env.HERDR_SOURCE;
 if (!source) throw new Error("HERDR_SOURCE must name the pinned fork source");
 
-for (const agent of ["claude", "codex"]) {
+for (const agent of ["claude"]) {
   test(`${agent}: SessionStart reports to an isolated Herdr socket`, async () => {
     const dir = await mkdtemp(join(tmpdir(), "hd-"));
     const socket = join(dir, "s");

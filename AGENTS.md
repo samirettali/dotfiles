@@ -134,7 +134,7 @@ Read the matching document before changing that subsystem:
 `home/packages/ai/agents.md` is the instruction file every agent shares.
 `agents.nix` appends `personal.md`, `projects.md` and, under "This machine",
 `machines/<host>.md`, then writes the result to `~/.claude/CLAUDE.md`,
-`~/.codex/AGENTS.md`, `~/.pi/agent/AGENTS.md` and `~/.gemini/config/AGENTS.md`:
+`~/.pi/agent/AGENTS.md` and `~/.gemini/config/AGENTS.md`:
 read-only store symlinks that change on the next switch.
 
 The work Mac builds it from `chezmoi/.chezmoitemplates/agents-md`, which leaves
@@ -143,7 +143,7 @@ out `personal.md` and `projects.md` and picks the machine file from `.profile`.
 ## MCP servers
 
 Declare MCP servers once in `home/packages/ai/mcp.nix`.
-Home-manager exposes them to Claude Code, Codex, and pi.
+Home-manager exposes them to Claude Code and pi.
 Treat vendor plugin instructions as an MCP declaration plus any required skills.
 Do not install a Claude-only plugin when the shared configuration can represent it.
 

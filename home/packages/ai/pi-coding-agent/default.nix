@@ -62,7 +62,7 @@ in {
       PI_PACKAGE_DIR = "${config.home.homeDirectory}/.pi/pi-source";
     }
     // lib.optionalAttrs herdrEnabled {
-      HERDR_TITLE_PROVIDER = "openai-codex";
+      HERDR_TITLE_PROVIDER = "openai";
       HERDR_TITLE_MODEL = "gpt-5.6-luna";
     });
 

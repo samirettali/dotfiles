@@ -14,7 +14,7 @@ Its full instructions still load when invoked. This does not remove content
 already read into a conversation or hide an extension's tools and commands.
 
 The shared skills also carry `policy.allow_implicit_invocation: false`
-in `agents/openai.yaml` for Codex. The SKILL.md flag covers pi and Claude Code;
+in `agents/openai.yaml`, which OpenAI's agents read. The SKILL.md flag covers pi and Claude Code;
 other agents may ignore these fields. Manual invocation is not an access-control
 boundary.
 
@@ -23,7 +23,7 @@ boundary.
 Repository-owned skills declare it in their own metadata. Imported skills that
 should be manual pass through `manualSkill` in
 `home/packages/ai/coding-agent-skills.nix`. That builder preserves their bodies,
-support files, and existing Codex metadata while setting both fields.
+support files, and existing `agents/openai.yaml` metadata while setting both fields.
 
 Autoresearch stays a pi-only package. Its wrapper in
 `home/packages/ai/pi-coding-agent/default.nix` patches the three skill headers,
@@ -37,8 +37,8 @@ All other skills retain their existing invocation policy.
 ## X search in pi
 
 Pi excludes the shared `x-search` skill because its native `x_search` tool uses
-pi's xAI credentials and carries the search guidance itself. Claude Code and
-Codex keep the CLI skill. Keep the tool and CLI aligned on the model, handle
+pi's xAI credentials and carries the search guidance itself. Claude Code keeps
+the CLI skill. Keep the tool and CLI aligned on the model, handle
 limit, retry policy, citation cleanup, and usage reporting.
 
 Run `node --test tests/x-search.test.mjs` with the installed pi runtime to test

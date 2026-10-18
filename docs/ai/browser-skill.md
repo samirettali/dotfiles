@@ -2,7 +2,7 @@
 
 `home/packages/ai/coding-agent-skills.nix` builds the pinned `agent-stuff` browser
 skill, then layers `home/packages/ai/skills/web-browser/` onto it. Keep this shared
-across pi, Claude Code and Codex; do not introduce a separate pi-owned browser.
+across pi, Claude Code and agy; do not introduce a separate pi-owned browser.
 
 The overlay deliberately uses the existing CDP client rather than adding
 Playwright and a second browser binary. It adds:

@@ -39,11 +39,10 @@ updates both the binary and its integrations. The agent modules own registration
 | --- | --- | --- |
 | Pi | `.pi/agent/extensions/herdr-agent-state.ts` | Pi's global extension discovery |
 | Claude | `.claude/hooks/herdr-agent-state.sh` | `settings.json`, `SessionStart` |
-| Codex (personal machines) | `.codex/herdr-agent-state.sh` | `hooks.json`, `SessionStart` |
 
 Do not run the integration installer over these store-backed files: it attempts
 to write them. Change registrations in the corresponding Nix module, and update
-assets through the fork input. Pi and Codex use `force` only on these exact
+assets through the fork input. Pi uses `force` only on these exact
 managed paths to replace the previous manually installed files on activation.
 No activation hook runs Herdr's installer.
 
