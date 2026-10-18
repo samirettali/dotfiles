@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  nurPkgs,
   ...
 }: {
   imports = [
@@ -57,12 +56,10 @@
     curl
     gnumake
     gnused
-    iredis
     # kcat # TODO: upstream is broken
     moreutils
     ncdu
     p7zip
-    nurPkgs.go-qo
     scc
     snitch
     sqlite
@@ -77,7 +74,6 @@
     # duf
     # vi-mongo
     # bitwarden-cli
-    ghui
     # yubikey-manager
     # repomix
     # amp-cli

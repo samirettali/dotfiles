@@ -1,3 +1,3 @@
 {...}: {
-  programs.jqp.enable = true;
+  programs.jqp.enable = false;
 }
