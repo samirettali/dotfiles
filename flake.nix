@@ -244,7 +244,6 @@
             modules = [
               ./home/ai.nix
               ./home/server.nix
-              ./home/mevbot.nix
             ];
           })
         ];
