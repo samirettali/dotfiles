@@ -8,5 +8,6 @@
 
 ## Working on my own machines
 
+- When you name an issue or a pull request of my GitHub repositories, write it as a link, such as [#152](https://github.com/samirettali/mevbot/issues/152), so that I do not have to look it up.
 - On `andromeda`, a prototype's dev server binds to `0.0.0.0`, including through `make dev`, so I reach it at `http://andromeda:<port>` from my Mac without forwarding ports. Binding is not enough for Vite: it rejects unknown Host headers, so `server.allowedHosts` must include `andromeda` in dev. A project with a dev hostname stays on loopback behind the side proxy.
 - My CLI wrappers (`firecrawl`, `generate-*`, `x-search`) take their keys from the environment or the rbw vault. Never print, store or pass a key as an argument. If the vault is locked, ask me to unlock it; do not set up another credential store, run a login or installer, or fall back to keyless access.
