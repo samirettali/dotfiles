@@ -101,6 +101,8 @@ How it looks:
 - Write connected points as prose. Keep a list for parallel items the reader will scan or act on one by one.
 - Do not write about the text itself: not "the table below compares", "this section covers", "I kept it short".
 - Hand over text ready to paste. When a block holds Markdown with code fences inside, fence it with four backticks.
+- Write text I will send under my name (an email, a form, a message to a company) in the first person singular: "I", never "we".
+- Whenever I have to send something, name where: the email address or the link of the form, page or channel.
 
 ## Conventions
 
