@@ -27,9 +27,11 @@
   # and go-ethereum signs with its pure-Go secp256k1 without cgo.
   home.sessionVariables.CGO_ENABLED = "0";
 
-  # scripts/live reads the node on this host instead of Alchemy.
+  # scripts/live reads the node on this host instead of Alchemy. Arc's bot
+  # has no node of its own (scripts/live-arc).
   systemd.user.services.mevbot.Service.Environment = [
     "MEVBOT_NODE=127.0.0.1"
     "CGO_ENABLED=0"
   ];
+  systemd.user.services.mevbot-arc.Service.Environment = ["CGO_ENABLED=0"];
 }
