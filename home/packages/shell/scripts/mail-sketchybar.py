@@ -8,11 +8,14 @@ the mailboxes changed.
 
 The count comes from `Mailbox/get`, not from the events: a state change says
 something changed, not what the count is.
+
+The Fastmail token comes from `FASTMAIL_API_KEY`.
 """
 
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import time
@@ -20,7 +23,6 @@ import urllib.error
 import urllib.request
 
 SESSION_URL = "https://api.fastmail.com/jmap/session"
-TOKEN_ENTRY = "fastmail-api-key"
 USING = ["urn:ietf:params:jmap:core", "urn:ietf:params:jmap:mail"]
 
 # Fastmail ignores intervals below 30 seconds. Silence for over two pings means
@@ -28,25 +30,13 @@ USING = ["urn:ietf:params:jmap:core", "urn:ietf:params:jmap:mail"]
 PING_SECONDS = 30
 READ_TIMEOUT_SECONDS = 75
 RECONNECT_DELAY_SECONDS = 5
-# Waiting for the vault to be unlocked. `rbw get` on a locked vault would open
-# a pinentry prompt from a background process.
-VAULT_RETRY_SECONDS = 60
+# launchd spawns an agent at most once every 10 seconds, so a token rejected
+# right after the start would be retried that often.
+REJECTED_EXIT_DELAY_SECONDS = 60
 
 
 def log(message: str) -> None:
     print(message, file=sys.stderr, flush=True)
-
-
-def read_token() -> str | None:
-    unlocked = subprocess.run(["rbw", "unlocked"], capture_output=True)
-    if unlocked.returncode != 0:
-        log("rbw vault is locked")
-        return None
-    result = subprocess.run(["rbw", "get", TOKEN_ENTRY], capture_output=True, text=True)
-    if result.returncode != 0:
-        log(f"rbw get {TOKEN_ENTRY} exited {result.returncode}: {result.stderr.strip()}")
-        return None
-    return result.stdout.strip() or None
 
 
 def request(token: str, url: str, body: dict | None = None, timeout: float = 30):
@@ -119,27 +109,25 @@ def watch(token: str, published: dict[str, int | None]) -> None:
 
 
 def main() -> int:
+    token = os.environ.get("FASTMAIL_API_KEY")
+    if not token:
+        log("FASTMAIL_API_KEY is not set")
+        return 1
     published: dict[str, int | None] = {"last": None}
-    token = None
     while True:
-        if token is None:
-            token = read_token()
-            if token is None:
-                time.sleep(VAULT_RETRY_SECONDS)
-                continue
-        delay = RECONNECT_DELAY_SECONDS
         try:
             watch(token, published)
             log("event stream closed")
         except urllib.error.HTTPError as err:
             log(f"fastmail returned {err.code}")
             if err.code in (401, 403):
-                # A revoked or replaced token: read it again from the vault.
-                token = None
-                delay = VAULT_RETRY_SECONDS
+                # A revoked or replaced token: exit, so the caller can start
+                # this again with a new one.
+                time.sleep(REJECTED_EXIT_DELAY_SECONDS)
+                return 1
         except (OSError, ValueError, KeyError) as err:
             log(f"fastmail unavailable: {err!r}")
-        time.sleep(delay)
+        time.sleep(RECONNECT_DELAY_SECONDS)
 
 
 if __name__ == "__main__":

@@ -54,8 +54,10 @@ A LaunchAgent in `home/mac/sketchybar.nix` holds Fastmail's JMAP event source, a
 Nothing polls.
 
 - The token is the read-only JMAP API token `fastmail-api-key` in the rbw vault, with the Email scope only.
-- Check `rbw unlocked` before `rbw get`: on a locked vault `rbw get` opens a pinentry prompt from a background process.
-  While the vault is locked, the watcher retries every minute.
+  The watcher reads it from `FASTMAIL_API_KEY`, which the Nix wrapper exports from the vault.
+- The wrapper checks `rbw unlocked` before `rbw get`: on a locked vault `rbw get` opens a pinentry prompt from a background process.
+  While the vault is locked, it retries every minute.
+- On a 401 or 403 the watcher waits a minute and exits, and launchd starts the wrapper again, which reads the token again.
 - Fastmail ignores ping intervals below 30 seconds.
   The watcher treats 75 seconds of silence as a dead connection, which is also how sleep shows up, and reconnects.
 - Count with `Mailbox/get` on every `state` event.
