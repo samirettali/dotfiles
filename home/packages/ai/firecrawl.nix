@@ -63,7 +63,7 @@ in {
             exit 0
           elif grep -q '"status":429' "$err"; then
             limited=1
-          elif grep -qE '"status":402|Insufficient credits' "$err"; then
+          elif grep -qE '"status":402|status code 402|Insufficient credits' "$err"; then
             keys[i]=""
           else
             cat "$err" >&2
