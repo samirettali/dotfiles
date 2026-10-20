@@ -5,43 +5,33 @@ An `eth_subscribe newHeads` subscription over Infura's WebSocket delivers every
 block header, about one every 12 seconds, and each header carries
 `baseFeePerGas`. So this holds the socket open and publishes on every block,
 which also refills the item after Sketchybar restarts.
+
+The Infura key comes from `INFURA_API_KEY`.
 """
 
 from __future__ import annotations
 
 import asyncio
 import json
+import os
 import subprocess
 import sys
 
 import websockets
 
 URL = "wss://mainnet.infura.io/ws/v3/{key}"
-KEY_ENTRY = "infura-api-key"
 
 # A block is due every 12 seconds. A minute without one means the connection is
 # dead, which is also how a sleep shows up.
 READ_TIMEOUT_SECONDS = 60
 RECONNECT_DELAY_SECONDS = 5
-# Waiting for the vault to be unlocked. `rbw get` on a locked vault would open
-# a pinentry prompt from a background process.
-VAULT_RETRY_SECONDS = 60
+# launchd spawns an agent at most once every 10 seconds, so a key rejected
+# right after the start would be retried that often.
+REJECTED_EXIT_DELAY_SECONDS = 60
 
 
 def log(message: str) -> None:
     print(message, file=sys.stderr, flush=True)
-
-
-def read_key() -> str | None:
-    unlocked = subprocess.run(["rbw", "unlocked"], capture_output=True)
-    if unlocked.returncode != 0:
-        log("rbw vault is locked")
-        return None
-    result = subprocess.run(["rbw", "get", KEY_ENTRY], capture_output=True, text=True)
-    if result.returncode != 0:
-        log(f"rbw get {KEY_ENTRY} exited {result.returncode}: {result.stderr.strip()}")
-        return None
-    return result.stdout.strip() or None
 
 
 def format_gwei(wei: int) -> str:
@@ -88,25 +78,22 @@ async def watch(key: str, published: dict[str, str | None]) -> None:
 
 
 async def main() -> int:
+    key = os.environ.get("INFURA_API_KEY")
+    if not key:
+        log("INFURA_API_KEY is not set")
+        return 1
     published: dict[str, str | None] = {"last": None}
-    key = None
     while True:
-        if key is None:
-            key = read_key()
-            if key is None:
-                await asyncio.sleep(VAULT_RETRY_SECONDS)
-                continue
-        delay = RECONNECT_DELAY_SECONDS
+        rejected = False
         try:
             await watch(key, published)
             log("subscription closed")
         except websockets.InvalidStatus as err:
             status = err.response.status_code
             log(f"infura returned {status}")
-            if status in (401, 403):
-                # A revoked or replaced key: read it again from the vault.
-                key = None
-                delay = VAULT_RETRY_SECONDS
+            # A revoked or replaced key: exit, so the caller can start this
+            # again with a new one.
+            rejected = status in (401, 403)
         except (
             OSError,
             ValueError,
@@ -121,7 +108,10 @@ async def main() -> int:
         if published["last"] is not None:
             publish(gwei=published["last"], stale="1")
             published["last"] = None
-        await asyncio.sleep(delay)
+        if rejected:
+            await asyncio.sleep(REJECTED_EXIT_DELAY_SECONDS)
+            return 1
+        await asyncio.sleep(RECONNECT_DELAY_SECONDS)
 
 
 if __name__ == "__main__":

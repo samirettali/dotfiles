@@ -72,7 +72,7 @@ Clicking it opens Etherscan's gas tracker.
 A LaunchAgent in `home/mac/sketchybar.nix` holds an `eth_subscribe newHeads` subscription on Infura's WebSocket and triggers the `gas_price` event.
 Nothing polls.
 
-- The key is `infura-api-key` in the rbw vault, read the same way as the Fastmail token, with the same wait while the vault is locked.
+- The key is `infura-api-key-3` in the rbw vault, exported as `INFURA_API_KEY` by the wrapper the same way as the Fastmail token, with the same wait while the vault is locked and the same exit on a 401 or 403.
 - Every block header carries `baseFeePerGas`, so the base fee costs no request beyond the subscription.
   The priority fee would cost an `eth_maxPriorityFeePerGas` call per block, and is left out.
 - The watcher triggers on every block, not only on a change, so a restarted Sketchybar shows the fee again within one block.
