@@ -33,6 +33,13 @@
     "openrouter/anthropic/claude-sonnet-5.5"
   ],
   "providers": {
+    "kimi-coding": {
+      "modelOverrides": {
+        "k3.1-pro": {
+          "contextWindow": 256000
+        }
+      }
+    },
     "openrouter": {
       "baseUrl": "https://openrouter.ai/api/v1",
       "api": "openai-completions",
