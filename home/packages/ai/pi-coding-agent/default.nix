@@ -9,7 +9,6 @@
   piCodingAgent = nurPkgs.pi-coding-agent;
   piPackageDir = piCodingAgent + "/share/pi-coding-agent";
 
-  piMcpAdapter = nurPkgs.pi-mcp-adapter;
   piAutoresearch = pkgs.runCommand "pi-autoresearch-manual-skills" {nativeBuildInputs = [pkgs.yq-go];} ''
     mkdir -p $out
     cp -R ${inputs.pi-autoresearch}/. $out/
@@ -37,7 +36,6 @@ in {
 
     settings = {
       packages = [
-        "${piMcpAdapter}"
         "${piAutoresearch}"
       ];
       theme = "light/dark";
@@ -69,6 +67,7 @@ in {
   home.file = lib.mkIf enabled (skillFiles
     // {
       ".pi/pi-source".source = piPackageDir;
+      ".pi/agent/mcp.json".source = config.xdg.configFile."mcp/mcp.json".source;
 
       ".pi/agent/extensions/ask-user-question.ts".source = ./extensions/ask-user-question.ts;
       ".pi/agent/extensions/system-prompt.ts".source = ./extensions/system-prompt.ts;
