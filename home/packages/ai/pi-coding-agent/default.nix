@@ -61,7 +61,7 @@ in {
     }
     // lib.optionalAttrs herdrEnabled {
       HERDR_TITLE_PROVIDER = "openai";
-      HERDR_TITLE_MODEL = "gpt-5.6-luna";
+      HERDR_TITLE_MODEL = "gpt-6-luna";
     });
 
   home.file = lib.mkIf enabled (skillFiles
