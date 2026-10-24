@@ -43,8 +43,8 @@ in {
       theme = "light/dark";
       quietStartup = true;
       hideThinkingBlock = false;
-      defaultProvider = "openrouter";
-      defaultModel = "deepseek/deepseek-v4.1-flash";
+      defaultProvider = "openai";
+      defaultModel = "gpt-6.1-sol";
       defaultThinkingLevel = "medium";
       inherit (modelsConfig) enabledModels;
       tuiMode = "fullscreen";

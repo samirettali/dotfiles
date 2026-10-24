@@ -1,6 +1,7 @@
 {
   "enabledModels": [
-    "kimi-coding/k3",
+    "kimi-coding/k3.1-pro",
+    "openai/gpt-6.1-sol",
     "openrouter/minimax/minimax-m3",
     "openrouter/qwen/qwen3.8-2.4t-a95b",
     "openrouter/meta/muse-glimmer-30b",
