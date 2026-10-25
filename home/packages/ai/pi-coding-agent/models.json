@@ -1,13 +1,12 @@
 {
   "enabledModels": [
     "kimi-coding/k3.1-pro",
+    "zai/glm-5.3",
     "openai/gpt-6.1-sol",
     "openrouter/minimax/minimax-m3",
     "openrouter/qwen/qwen3.8-2.4t-a95b",
     "openrouter/meta/muse-glimmer-30b",
     "openrouter/qwen/qwen3.8-27b",
-    "openrouter/z-ai/glm-5.3",
-    "openrouter/z-ai/glm-5.3-flash",
     "openrouter/qwen/qwen3.8-flash",
     "openrouter/deepseek/deepseek-v4-pro-0813",
     "openrouter/google/gemini-3.8-flash",
@@ -57,18 +56,6 @@
           },
           "contextWindow": 1048576,
           "maxTokens": 131072
-        },
-        "moonshotai/kimi-k2.7-code": {
-          "name": "OpenRouter Kimi K2.7 Code",
-          "compat": {
-            "openRouterRouting": {
-              "allow_fallbacks": false,
-              "data_collection": "deny",
-              "only": [
-                "siliconflow"
-              ]
-            }
-          }
         },
         "deepseek/deepseek-v4-pro": {
           "name": "OpenRouter DeepSeek V4 Pro",
