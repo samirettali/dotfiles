@@ -56,7 +56,7 @@ check-lint:
 	@bash scripts/check-nix.sh lint
 
 check-tests:
-	@node --test tests/config.test.mjs tests/check-nix.test.mjs tests/js-profile.test.mjs
+	@node --test tests/config.test.mjs tests/check-nix.test.mjs tests/js-profile.test.mjs tests/claude-cloud.test.mjs
 	@BROWSER_BIN= node --test home/packages/ai/skills/web-browser/browser.test.mjs
 
 check-pi:

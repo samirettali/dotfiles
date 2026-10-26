@@ -8,7 +8,7 @@ mbp; individual targets are useful while iterating:
 | --- | --- | --- |
 | `make check-fmt` | Alejandra, read-only | Git, Alejandra |
 | `make check-lint` | deadnix and Statix | Git, deadnix, Statix |
-| `make check-tests` | Fish prompts, Git ignores, `gd` ownership, JavaScript profiles, file selection, browser log filtering | Node, Fish, Nix, Git, lint tools |
+| `make check-tests` | Fish prompts, Git ignores, `gd` ownership, JavaScript profiles, file selection, browser log filtering, the Claude cloud setup | Node, Fish, Nix, Git, lint tools |
 | `make check-pi` | Type-check all local Pi extensions, then test X Search with mocked HTTP | Nix, flake inputs |
 | `make check-herdr` | Shell hooks on a test socket and the pinned fork's integration tests | Nix, Node, Bun, Python 3 on PATH for upstream hooks |
 | `make check-eval` | mbp system, andromeda and orion activation derivations | Flake inputs available locally |
