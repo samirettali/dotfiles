@@ -15,6 +15,7 @@ flake output. See "The work Mac" below.
 - `make models` — refresh pinned OpenRouter provider limits, then run `make build`.
 - `make update` — run `nix flake update`, then write an HTML report under `~/.cache/flake-update/` with the commits between the old and new source of every package it bumps on this host. Checkboxes select a whole package or single commits, and Copy puts them on the clipboard to paste to an agent.
 - `make chezmoi` — render the work Mac's configuration into `chezmoi/`. Run on `mbp`.
+- `make claude-cloud` — render Claude Code's settings and skills for its cloud sessions into `claude-cloud/home/`. Run on `mbp`; see `docs/ai/claude-cloud.md`.
 
 Evaluate one option without building:
 
@@ -111,6 +112,7 @@ Read the matching document before changing that subsystem:
 - `docs/ai/skill-invocation.md` — manual skill discovery and per-agent metadata.
 - `docs/ai/firecrawl.md` — shared search CLI, vault credentials, costs, and disabled feedback.
 - `docs/ai/browser-skill.md` — shared CDP overlay, action locking, filtered logs and tests.
+- `docs/ai/claude-cloud.md` — Claude Code's cloud sessions: the render, the environment's setup script, and what the container lacks.
 - `docs/checks.md` — individual verification targets, CI and Home Manager-only Linux activation.
 - `docs/chromium-sandbox.md` — andromeda sandbox findings and the unapproved host-policy path.
 - `docs/herdr.md` — patched fork, declarative agent integrations, builds, testing, and Neovim navigation.
@@ -139,6 +141,8 @@ read-only store symlinks that change on the next switch.
 
 The work Mac builds it from `chezmoi/.chezmoitemplates/agents-md`, which leaves
 out `personal.md` and `projects.md` and picks the machine file from `.profile`.
+A Claude Code cloud session builds it in `claude-cloud/setup.sh`, with
+`machines/claude-cloud.md`.
 
 ## MCP servers
 

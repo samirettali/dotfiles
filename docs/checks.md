@@ -8,11 +8,12 @@ mbp; individual targets are useful while iterating:
 | --- | --- | --- |
 | `make check-fmt` | Alejandra, read-only | Git, Alejandra |
 | `make check-lint` | deadnix and Statix | Git, deadnix, Statix |
-| `make check-tests` | Fish prompts, Git ignores, `gd` ownership, JavaScript profiles, file selection, browser log filtering | Node, Fish, Nix, Git, lint tools |
+| `make check-tests` | Fish prompts, Git ignores, `gd` ownership, JavaScript profiles, file selection, browser log filtering, the Claude cloud setup | Node, Fish, Nix, Git, lint tools |
 | `make check-pi` | Type-check all local Pi extensions, then test X Search with mocked HTTP | Nix, flake inputs |
 | `make check-herdr` | Shell hooks on a test socket and the pinned fork's integration tests | Nix, Node, Bun, Python 3 on PATH for upstream hooks |
 | `make check-eval` | mbp system, andromeda and orion activation derivations | Flake inputs available locally |
 | `make check-chezmoi` | Render in a temporary copy and diff against `chezmoi/` | Darwin builder, Nix, Bash, rsync, jq |
+| `make check-claude-cloud` | Render in a temporary directory and diff against `claude-cloud/home/` | Darwin builder, Nix, Bash, rsync, jq |
 
 Host evaluation does not build or activate any configuration. The chezmoi
 check builds only Home Manager's file tree, not the full system, and leaves the
@@ -67,7 +68,7 @@ without evaluating the dotfiles flake, and has no secrets.
 reads the npm lock file from their source during evaluation. Pull requests from
 forks get no secrets, so they skip this job.
 
-Pi-runtime tests, Herdr tests and the full Darwin chezmoi render remain explicit
+Pi-runtime tests, Herdr tests and the full Darwin chezmoi and Claude cloud renders remain explicit
 local gates in `make check`, not silently skipped CI jobs. Browser
 CDP integration is opt-in: set `BROWSER_BIN` and `BROWSER_SKILL_SCRIPTS` to the
 built skill when running `browser.test.mjs` directly. `make check-tests` clears
