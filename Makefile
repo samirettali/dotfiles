@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := build
-.PHONY: build update clean fmt check check-ci check-fmt check-lint check-tests check-pi check-herdr check-eval check-eval-mbp check-eval-andromeda check-eval-orion check-chezmoi models chezmoi
+.PHONY: build update clean fmt check check-ci check-fmt check-lint check-tests check-pi check-herdr check-eval check-eval-mbp check-eval-andromeda check-eval-orion check-chezmoi check-claude-cloud models chezmoi claude-cloud
 .NOTPARALLEL: check check-ci
 
 OS := $(shell uname -s)
@@ -7,6 +7,7 @@ HOSTNAME := $(shell hostname -s)
 UPDATE_CMD = bash scripts/update.sh
 MODELS_CMD = pi-models --sync --config $(CURDIR)/home/packages/ai/pi-coding-agent/models.json
 CHEZMOI_CMD = bash $(CURDIR)/home/dotfiles/scripts/chezmoi-render.sh
+CLAUDE_CLOUD_CMD = bash $(CURDIR)/home/dotfiles/scripts/claude-cloud-render.sh
 
 ifeq ($(OS),Linux)
     ifneq ($(wildcard /etc/NIXOS),)
@@ -41,7 +42,10 @@ models:
 chezmoi:
 	@$(CHEZMOI_CMD) "$(CURDIR)/chezmoi" "$(CURDIR)"
 
-check: check-ci check-pi check-herdr check-eval check-chezmoi
+claude-cloud:
+	@$(CLAUDE_CLOUD_CMD) "$(CURDIR)/claude-cloud/home" "$(CURDIR)"
+
+check: check-ci check-pi check-herdr check-eval check-chezmoi check-claude-cloud
 
 check-ci: check-fmt check-lint check-tests
 
@@ -82,3 +86,7 @@ check-chezmoi:
 	@set -eu; tmp=$$(mktemp -d); trap 'rm -rf "$$tmp"' EXIT; \
 	cp -R chezmoi/. "$$tmp/"; \
 	$(CHEZMOI_CMD) "$$tmp" "$(CURDIR)" && diff -ru chezmoi "$$tmp"
+
+check-claude-cloud:
+	@set -eu; tmp=$$(mktemp -d); trap 'rm -rf "$$tmp"' EXIT; \
+	$(CLAUDE_CLOUD_CMD) "$$tmp" "$(CURDIR)" && diff -ru claude-cloud/home "$$tmp"
