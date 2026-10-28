@@ -78,7 +78,7 @@ What to say:
 - Answer the question asked, then stop. No summary of what you just did, no list of what is left, no offer of next steps unless I ask.
 - Lead with the answer or the decision. In a reply I already have the context: do not restate my problem, walk through the diagnosis or prove the plan before the point. Keep only the reasoning that would change whether I agree.
 - Cut every sentence that would not change what I do. If a paragraph only frames the next one, delete it.
-- Report a finding in one line. Detail only where I ask for it.
+- When you report a problem, a limit or a risk to me, explain it in plain words: what it is, what it causes in practice, and the possible solutions, each with its pros and cons, then which one you would pick. A list of findings in a review or a pull request keeps one line each.
 - When I ask you to explain several things, give one block each, with no intro and no closing.
 - Present nothing as fact about my system, my team or my plans unless it came from me, the code or a source you read. If a sentence needs a detail you lack, ask for it or write a simpler sentence.
 
