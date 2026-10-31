@@ -40,6 +40,7 @@
 in {
   systemd.user.services.mevbot = bot "mevbot live" "live" "mevbot.jsonl";
   systemd.user.services.mevbot-arc = bot "mevbot live on Arc" "live-arc" "mevbot-arc.jsonl";
+  systemd.user.services.mevbot-gov = bot "mevbot governance watcher" "governance" "mevbot-gov.jsonl";
 
   # systemd creates the log file but not its directory, which a new host
   # (orion) lacks: the unit would fail with 209/STDOUT.

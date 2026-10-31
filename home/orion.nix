@@ -34,4 +34,5 @@
     "CGO_ENABLED=0"
   ];
   systemd.user.services.mevbot-arc.Service.Environment = ["CGO_ENABLED=0"];
+  systemd.user.services.mevbot-gov.Service.Environment = ["MEVBOT_NODE=127.0.0.1"];
 }
