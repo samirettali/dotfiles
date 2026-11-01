@@ -29,7 +29,9 @@
     "openrouter/google/gemini-4-argon",
     "openrouter/meta/muse-spark-open",
     "openrouter/deepseek/deepseek-v4.1-flash-1017",
-    "openrouter/anthropic/claude-sonnet-5.5"
+    "openrouter/anthropic/claude-sonnet-5.5",
+    "openrouter/minimax/minimax-m3.1-flash",
+    "openrouter/moonshotai/kimi-k3.1-pro"
   ],
   "providers": {
     "kimi-coding": {
