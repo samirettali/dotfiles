@@ -19,7 +19,7 @@ const files = (dir) =>
 test("the cloud setup installs the render and builds CLAUDE.md as agents.nix does", () => {
   const home = mkdtempSync(join(tmpdir(), "claude-cloud-"));
   try {
-    const result = spawnSync("bash", [script], { env: { ...process.env, HOME: home }, encoding: "utf8" });
+    const result = spawnSync("bash", [script], { env: { ...process.env, HOME: home, CLAUDE_CLOUD_NO_INSTALL: "1" }, encoding: "utf8" });
     assert.equal(result.status, 0, result.stderr);
 
     for (const path of files(rendered)) {

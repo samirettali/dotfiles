@@ -25,7 +25,16 @@ cp -R "$repo/claude-cloud/home/." "$HOME/"
 } > "$HOME/.claude/CLAUDE.md"
 
 # Only cloud sessions join the tailnet, so the hook is added here and not in
-# the render of mbp's settings.
+# the render of mbp's settings. The test sets CLAUDE_CLOUD_NO_INSTALL to keep
+# the packages off the machine it runs on.
+if [[ -z ${CLAUDE_CLOUD_NO_INSTALL:-} ]]; then
+    tailscale_version=1.104.4
+    curl -fsSL "https://pkgs.tailscale.com/stable/tailscale_${tailscale_version}_amd64.tgz" | tar xz -C /opt
+    ln -sf "/opt/tailscale_${tailscale_version}_amd64/tailscale" "/opt/tailscale_${tailscale_version}_amd64/tailscaled" /usr/local/bin/
+    apt-get update -qq
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq openssh-client
+fi
+
 mkdir -p "$HOME/.claude/hooks"
 install -m 0755 "$repo/claude-cloud/tailscale.sh" "$HOME/.claude/hooks/tailscale.sh"
 settings=$HOME/.claude/settings.json

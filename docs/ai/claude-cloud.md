@@ -38,14 +38,7 @@ set -euo pipefail
 git clone --depth 1 https://github.com/samirettali/dotfiles /tmp/dotfiles
 bash /tmp/dotfiles/claude-cloud/setup.sh
 rm -rf /tmp/dotfiles
-v=1.104.4
-curl -fsSL "https://pkgs.tailscale.com/stable/tailscale_${v}_amd64.tgz" | tar xz -C /opt
-ln -sf /opt/tailscale_${v}_amd64/tailscale /opt/tailscale_${v}_amd64/tailscaled /usr/local/bin/
-apt-get install -y openssh-client
 ```
-
-The last four lines install Tailscale and the SSH client for the tailnet
-(below).
 
 The repository is public, so the clone needs no key; the script cannot read
 the environment's variables and secrets anyway. A new session runs the script
@@ -61,8 +54,10 @@ the session link stayed until `attribution.sessionUrl` is false.
 
 A cloud session joins the tailnet so that it can run commands on vega, where
 the checkouts, caches and research-rpc proxies are, with `ssh vega`. Only cloud
-sessions do: `setup.sh` adds the SessionStart hook `claude-cloud/tailscale.sh`
-to the rendered settings and writes the `Host vega` entry of `~/.ssh/config`.
+sessions do: `setup.sh` installs Tailscale (pinned in `tailscale_version`) and
+the SSH client, which the image lacks, adds the SessionStart hook
+`claude-cloud/tailscale.sh` to the rendered settings and writes the `Host vega`
+entry of `~/.ssh/config`.
 The hook starts `tailscaled` and runs `tailscale up` with `TS_AUTHKEY`, and
 prints one line, which goes into the session's context: up, or why not. The
 setup script cannot do it, since it cannot read the environment's variables.
