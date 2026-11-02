@@ -23,3 +23,22 @@ cp -R "$repo/claude-cloud/home/." "$HOME/"
     printf '\n## This machine\n\n'
     cat "$ai/machines/claude-cloud.md"
 } > "$HOME/.claude/CLAUDE.md"
+
+# Only cloud sessions join the tailnet, so the hook is added here and not in
+# the render of mbp's settings.
+mkdir -p "$HOME/.claude/hooks"
+install -m 0755 "$repo/claude-cloud/tailscale.sh" "$HOME/.claude/hooks/tailscale.sh"
+settings=$HOME/.claude/settings.json
+jq --arg command "$HOME/.claude/hooks/tailscale.sh" \
+    '.hooks.SessionStart = [{hooks: [{type: "command", command: $command, timeout: 60}]}]' \
+    "$settings" > "$settings.tmp" && mv "$settings.tmp" "$settings"
+
+# Tailscale SSH needs no key: the tailnet's policy lets tag:claude-cloud in.
+mkdir -p "$HOME/.ssh"
+chmod 700 "$HOME/.ssh"
+grep -qs '^Host vega$' "$HOME/.ssh/config" || cat >> "$HOME/.ssh/config" <<'EOF'
+Host vega
+    User samir
+    ProxyCommand tailscale nc %h %p
+    StrictHostKeyChecking accept-new
+EOF

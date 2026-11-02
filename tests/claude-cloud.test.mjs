@@ -23,8 +23,18 @@ test("the cloud setup installs the render and builds CLAUDE.md as agents.nix doe
     assert.equal(result.status, 0, result.stderr);
 
     for (const path of files(rendered)) {
+      if (path === ".claude/settings.json") continue;
       assert.equal(read(join(home, path)), read(join(rendered, path)), path);
     }
+
+    // The render plus the tailnet's SessionStart hook, which only cloud
+    // sessions get.
+    const hook = join(home, ".claude/hooks/tailscale.sh");
+    const { hooks, ...settings } = JSON.parse(read(join(home, ".claude/settings.json")));
+    assert.deepEqual(settings, JSON.parse(read(join(rendered, ".claude/settings.json"))));
+    assert.deepEqual(hooks, { SessionStart: [{ hooks: [{ type: "command", command: hook, timeout: 60 }] }] });
+    assert.equal(read(hook), read(resolve("claude-cloud/tailscale.sh")));
+    assert.match(read(join(home, ".ssh/config")), /^Host vega\n {4}User samir\n {4}ProxyCommand tailscale nc %h %p\n/m);
 
     // agents.nix: agents.md, then personal.md, projects.md and the machine
     // file under "This machine".

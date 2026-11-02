@@ -12,9 +12,13 @@ the settings and the skills; the clone it ran from is gone.
   uses. Never ask me to paste one into the chat. Firecrawl, the
   `generate-*` wrappers and `x-search` are not here: use WebSearch and
   WebFetch.
-- `andromeda`, `orion` and the tailnet are out of reach, and with them their
-  caches, proxies and nodes. Work that needs them (a backtest, a fork test, a
-  measurement, a deploy) runs there: say so, and do the part that does not.
+- `ssh vega` reaches vega as samir over Tailscale SSH, through the tailnet a
+  SessionStart hook joins; the hook's line in the context says whether it is
+  up. Work that needs vega's checkouts, caches, proxies or tools (a backtest,
+  a fork test, a measurement) runs there over `ssh vega`; the link is a relay,
+  so send commands, not data. `andromeda`, `orion` and the rest of the
+  tailnet stay out of reach: work that needs them runs there, so say so and
+  do the part that does not.
 - The container is the isolation: work in the clone, with no worktree. My
   branch names hold here too: name the branch `issue-<N>-<slug>` or
   `<type>-<slug>` and push that, not the one the session names.
