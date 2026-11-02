@@ -2,6 +2,10 @@
 # (mevbot) and Arc's (mevbot-arc, #67), each from its own script in the same
 # checkout. The scripts read their keys at start, and stop with a status the
 # unit does not restart when they cannot. The alerts in servers notice.
+# mevbot-settings holds no key: it serves the settings' site,
+# mevbot.samirettali.com, over the live bot's control socket, and a change to
+# it does not touch the bot.
+# servers scrapes it at orion:9467 and alerts after 5 minutes without an answer.
 {
   config,
   lib,
@@ -41,6 +45,7 @@ in {
   systemd.user.services.mevbot = bot "mevbot live" "live" "mevbot.jsonl";
   systemd.user.services.mevbot-arc = bot "mevbot live on Arc" "live-arc" "mevbot-arc.jsonl";
   systemd.user.services.mevbot-gov = bot "mevbot governance watcher" "governance" "mevbot-gov.jsonl";
+  systemd.user.services.mevbot-settings = bot "mevbot settings bridge" "settings-http" "mevbot-settings.jsonl";
 
   # systemd creates the log file but not its directory, which a new host
   # (orion) lacks: the unit would fail with 209/STDOUT.
