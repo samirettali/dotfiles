@@ -168,7 +168,7 @@
       {
         key = "t";
         name = "terminal";
-        launch = "Ghostty";
+        launch = "Rex Beta";
       }
       {
         key = ",";
