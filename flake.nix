@@ -93,7 +93,7 @@
     systems = {
       darwin = "aarch64-darwin";
       server = "aarch64-linux";
-      # orion, a Hetzner dedicated server.
+      # orion and vega, Hetzner dedicated servers.
       serverX86 = "x86_64-linux";
     };
 
@@ -230,6 +230,33 @@
           user = serverUser;
           hostname = "andromeda";
           pkgs = serverPkgs;
+        };
+
+        modules = [
+          (mkHomeUserModule {
+            user = serverUser;
+            features = {
+              c = "minimal";
+              python = "minimal";
+              js = "minimal";
+              go = true;
+            };
+            modules = [
+              ./home/ai.nix
+              ./home/server.nix
+              ./home/andromeda.nix
+            ];
+          })
+        ];
+      };
+
+      vega = home-manager.lib.homeManagerConfiguration {
+        pkgs = serverX86Pkgs;
+
+        extraSpecialArgs = mkHomeSpecialArgs {
+          user = serverUser;
+          hostname = "vega";
+          pkgs = serverX86Pkgs;
         };
 
         modules = [

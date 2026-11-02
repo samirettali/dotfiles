@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := build
-.PHONY: build update clean fmt check check-ci check-fmt check-lint check-tests check-pi check-herdr check-eval check-eval-mbp check-eval-andromeda check-eval-orion check-chezmoi check-claude-cloud models chezmoi claude-cloud
+.PHONY: build update clean fmt check check-ci check-fmt check-lint check-tests check-pi check-herdr check-eval check-eval-mbp check-eval-andromeda check-eval-vega check-eval-orion check-chezmoi check-claude-cloud models chezmoi claude-cloud
 .NOTPARALLEL: check check-ci
 
 OS := $(shell uname -s)
@@ -68,7 +68,7 @@ check-herdr:
 	node --test tests/herdr-integrations.test.mjs; \
 	env -u HERDR_ENV -u HERDR_SOCKET_PATH -u HERDR_PANE_ID bun test "$$HERDR_SOURCE/src/integration/assets/herdr-agent-state.test.ts"
 
-check-eval: check-eval-mbp check-eval-andromeda check-eval-orion
+check-eval: check-eval-mbp check-eval-andromeda check-eval-vega check-eval-orion
 
 check-eval-mbp:
 	@nix eval --no-write-lock-file --raw .\#darwinConfigurations.mbp.system.drvPath
@@ -76,6 +76,10 @@ check-eval-mbp:
 
 check-eval-andromeda:
 	@nix eval --no-write-lock-file --raw .\#homeConfigurations.andromeda.activationPackage.drvPath
+	@printf '\n'
+
+check-eval-vega:
+	@nix eval --no-write-lock-file --raw .\#homeConfigurations.vega.activationPackage.drvPath
 	@printf '\n'
 
 check-eval-orion:

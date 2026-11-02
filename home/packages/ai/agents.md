@@ -38,7 +38,7 @@ Never written a line myself, only through agents:
 
 ## Tools I use daily
 
-`mbp` is my own Mac (nix-darwin), where I do everything that is mine. `settali` is my work Mac, where company policy forbids nix. `andromeda` is my Linux server.
+`mbp` is my own Mac (nix-darwin), where I do everything that is mine. `settali` is my work Mac, where company policy forbids nix. `andromeda` is my Linux server, with the self-hosted services. `vega` is my development server, where new sessions start.
 
 - herdr — terminal multiplexer
 - Neovim — editor

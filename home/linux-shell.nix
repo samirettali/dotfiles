@@ -1,5 +1,5 @@
 # The shell of an Ubuntu host where home-manager owns only the user profile
-# (andromeda, orion): bash as Ubuntu set it up, reached over SSH from Ghostty.
+# (andromeda, vega, orion): bash as Ubuntu set it up, reached over SSH from Ghostty.
 {pkgs, ...}: {
   # The Ubuntu side of home-manager; among other things every interactive
   # shell, not only a login one, loads the session variables.

@@ -3,7 +3,7 @@
 Each lives under `~/dev` with its own `AGENTS.md`. Read it before working on the project, and add to it any decision the code alone would not reveal.
 
 - dotfiles — NixOS + home-manager config.
-- servers — the machines I own and what runs on them, Docker Compose + Ansible. `andromeda` today.
+- servers — the machines I own and what runs on them, Docker Compose + Ansible. `andromeda`, `vega` and `orion` today.
 - nur — personal NUR repository.
 - sottocasa — multi-tenant booking product: Go API, React owner panel.
 - sottovoce — macOS menu bar dictation app.

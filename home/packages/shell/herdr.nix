@@ -112,6 +112,10 @@
                 icon = " ";
                 name = "andromeda";
               };
+              vega = {
+                icon = " ";
+                name = "vega";
+              };
               work = {
                 icon = "󰃖 ";
                 name = "work";
