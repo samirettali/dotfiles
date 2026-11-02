@@ -66,6 +66,7 @@ in {
       # a 400k summary keeps more than one taken at the 1M edge; see
       # ~/dev/benchs/handoff-vs-compaction
       autoCompactWindow = 400000;
+      subagentPromptCacheTtl = "1h";
       disableClaudeAiConnectors = true;
       disableWorkflows = true;
       cleanupPeriodDays = 3650;
