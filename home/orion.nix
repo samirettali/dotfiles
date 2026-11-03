@@ -14,6 +14,7 @@
     ./packages/shell/jq.nix
     ./packages/shell/neovim.nix
     ./packages/shell/ripgrep.nix
+    ./packages/shell/ssh.nix
   ];
 
   # make for the unit's build (scripts/live runs `make build`), sqlite3 for

@@ -30,6 +30,7 @@
     ./ripgrep.nix
     ./scripts
     ./sesh.nix
+    ./ssh.nix
     ./spotctl.nix
     ./fluxctl.nix
     ./linkctl.nix
