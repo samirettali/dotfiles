@@ -8,12 +8,15 @@
   ...
 }: let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
-  # rbw's runtime directory: $XDG_RUNTIME_DIR on Linux; on macOS, which has
-  # none, a directory per user under $TMPDIR.
+  # rbw's runtime directory: $XDG_RUNTIME_DIR on Linux, spelled with ssh's
+  # %i (the uid) because ssh refuses the whole file when a variable it
+  # expands is unset, as in a system service (mevbot-index's reads of orion
+  # failed so on 2026-11-03); on macOS, which has none, a directory per user
+  # under $TMPDIR, which launchd sets in every user session.
   rbwAgent =
     if isDarwin
     then "\${TMPDIR}/rbw-%i/ssh-agent-socket"
-    else "\${XDG_RUNTIME_DIR}/rbw/ssh-agent-socket";
+    else "/run/user/%i/rbw/ssh-agent-socket";
 in {
   programs.ssh = {
     enable = true;
