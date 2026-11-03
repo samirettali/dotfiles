@@ -271,6 +271,7 @@
             modules = [
               ./home/ai.nix
               ./home/server.nix
+              ./home/vega.nix
             ];
           })
         ];
