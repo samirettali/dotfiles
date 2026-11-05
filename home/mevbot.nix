@@ -9,9 +9,24 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   home = config.home.homeDirectory;
+  # systemd's own lines on a unit (an OOM kill, a timeout, a crash with no
+  # panic) stay in the journal, which Vector does not read and which drops
+  # its oldest files by size. ExecStopPost runs this, its stdout is the unit's log
+  # file, so that Loki keeps how each run ended, as mevbot-index's
+  # --stopped does in servers. A clean stop is SERVICE_RESULT=success;
+  # anything else is an error.
+  stopped = pkgs.writeShellScript "mevbot-stopped" ''
+    level=ERROR
+    if [ "$SERVICE_RESULT" = success ]; then level=INFO; fi
+    printf '{"time":"%s","level":"%s","msg":"stopped: result=%s code=%s status=%s","result":"%s","code":"%s","status":"%s"}\n' \
+      "$(${pkgs.coreutils}/bin/date -u +%Y-%m-%dT%H:%M:%S.%NZ)" "$level" \
+      "''${SERVICE_RESULT:-?}" "''${EXIT_CODE:-?}" "''${EXIT_STATUS:-?}" \
+      "''${SERVICE_RESULT:-?}" "''${EXIT_CODE:-?}" "''${EXIT_STATUS:-?}"
+  '';
   bot = description: script: log: {
     Unit = {
       Description = description;
@@ -25,6 +40,9 @@
     Service = {
       WorkingDirectory = "${home}/dev/mevbot";
       ExecStart = "${home}/dev/mevbot/scripts/${script}";
+      # How the run ended, into the log file (stopped above); "-" so that
+      # its failure never fails the unit.
+      ExecStopPost = "-${stopped}";
       Environment = [
         "MEVBOT_SEND=1"
         "PATH=${config.home.profileDirectory}/bin:/usr/bin:/bin"
