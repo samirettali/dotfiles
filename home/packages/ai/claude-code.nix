@@ -150,6 +150,7 @@ in {
         CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1";
         DISABLE_AUTOUPDATER = "1";
         ENABLE_TOOL_SEARCH = "true";
+        CLAUDE_AUTOCOMPACT_PCT_OVERRIDE = "75";
       };
     };
   };
