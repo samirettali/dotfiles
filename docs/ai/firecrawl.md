@@ -13,13 +13,15 @@ Dotfiles only wrap `nurPkgs.firecrawl-cli` and configure usage policy.
 
 `home/packages/ai/firecrawl.nix` reads `FIRECRAWL_API_KEY`, falling back to the
 unlocked rbw entries `firecrawl-api-key`, `firecrawl-api-key-2` and
-`firecrawl-api-key-3`, `firecrawl-api-key-4`, one per account. No key is stored in Nix or CLI config. The wrapper tries the accounts
-in order and drops one that answers 402 (out of credits). The CLI does not retry
-a 429; the wrapper moves on to the next account, and when every account is
-limited it waits as long as the error's "retry after" says, up to three minutes.
-Each account allowed about 14 requests a minute in September 2026.
-Feedback/refunds are unwanted: the wrapper forces `FIRECRAWL_NO_SEARCH_FEEDBACK=1`
-and makes both feedback commands no-ops. Telemetry is also disabled.
+`firecrawl-api-key-3`, `firecrawl-api-key-4`, `firecrawl-api-key-5`,
+firecrawl-api-key-6 one per account. No key is stored in Nix or CLI config.
+The wrapper tries the accounts in order and drops one that answers 402 (out of
+credits). The CLI does not retry a 429; the wrapper moves on to the next
+account, and when every account is limited it waits as long as the error's
+"retry after" says, up to three minutes. Each account allowed about 14 requests
+a minute in September 2026. Feedback/refunds are unwanted: the wrapper forces
+`FIRECRAWL_NO_SEARCH_FEEDBACK=1` and makes both feedback commands no-ops.
+Telemetry is also disabled.
 
 Four repository-owned skills cover Search, Scrape, Developer Index, and Research
 Index. They adapt the vendor workflows to our CLI version and conventions:
