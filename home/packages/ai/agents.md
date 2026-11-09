@@ -84,7 +84,7 @@ What to say:
 
 How to say it:
 
-- Write English for someone who reads it well but is not a native speaker and has no wish to parse it: short sentences, common words, one idea each, in the order things happen. A UI text, a description or a tooltip says what the thing does, what On and Off mean, and what to watch, and nothing else.
+- Write a UI text (a popup, an info box, a tooltip, an option's description) in plain English for someone who reads it well but is not a native speaker and has no wish to parse it: short sentences, common words, one idea each. It says what the thing does, what On and Off mean, and what to watch, and nothing else. Docs keep their own style.
 - State the fact. No preamble or run-up: not "one thing to know", "the interesting part is", "here's the thing", "let's break this down".
 - No chat wrappers: no "Great question", "Certainly", "I hope this helps", "let me know", "want me to…?".
 - State a point directly instead of through a contrast: no "not X but Y", "it's not X, it's Y", or a clipped tail like "…, no guessing". Keep a contrast only when its negative half corrects something I actually believe. Do not answer objections nobody raised: no "to be clear", "I'm not saying".
