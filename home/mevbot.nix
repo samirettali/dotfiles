@@ -63,7 +63,16 @@ in {
   systemd.user.services.mevbot = bot "mevbot live" "live" "mevbot.jsonl";
   systemd.user.services.mevbot-arc = bot "mevbot live on Arc" "live-arc" "mevbot-arc.jsonl";
   systemd.user.services.mevbot-gov = bot "mevbot governance watcher" "governance" "mevbot-gov.jsonl";
-  systemd.user.services.mevbot-settings = bot "mevbot settings bridge" "settings-http" "mevbot-settings.jsonl";
+  # The site's reads must never slow the bot down (mevbot#637): under
+  # contention mevbot-settings gets a fifth of mevbot's CPU share. The user
+  # manager has the cpu controller delegated; it lacks io, and orion's NVMe
+  # disks have no I/O scheduler, so IOWeight would do nothing.
+  systemd.user.services.mevbot-settings = lib.recursiveUpdate (bot "mevbot settings bridge" "settings-http" "mevbot-settings.jsonl") {
+    Service = {
+      CPUWeight = 20;
+      Nice = 10;
+    };
+  };
 
   # systemd creates the log file but not its directory, which a new host
   # (orion) lacks: the unit would fail with 209/STDOUT.
