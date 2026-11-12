@@ -99,6 +99,7 @@
 in {
   agent-messaging = ./skills/agent-messaging;
   android = ./skills/android;
+  brainstorm = ./skills/brainstorm;
   commit = ./skills/commit;
   design = ./skills/design;
   finance = "${manualSkill "finance" "${inputs.finctl}/.agents/skills/finance"}";
