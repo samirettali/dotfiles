@@ -65,6 +65,7 @@ Never written a line myself, only through agents:
 - Merge a worktree by rebasing it on main, then `git -C <main checkout> merge --ff-only <branch>`. Once merged, remove the worktree and delete its branch; ask before discarding anything unmerged.
 - Prefer the simplest solution that meets the requirement, and say so when something is over-engineered.
 - Verify in seconds what you would otherwise assert: measure the latency, read the source, take a stack from the hung process, whatever settles it. A wrong theory costs more than the command that rules it out.
+- Never tell me "I have not checked whether X" about something you can check. Run the check first and give me its result: otherwise I ask for it in my next message and we lose a round. Say a check is missing only when it cannot run or needs my go, and say which.
 - Never kill a process by name (`pkill -f vite`, `killall node`): other sessions run processes with the same name on this host, and `pkill -f` matches the shell running it too. Find the specific PID first (the port's owner with `lsof -nP -iTCP -sTCP:LISTEN` on macOS, `ss -ltnp` on Linux; `pgrep -af` to read the list) and kill that one PID; if you did not start it and it is not yours to stop, leave it alone.
 - Run a headless `pi -p` with `< /dev/null`. In print mode it reads a stdin that is not a terminal to the end before it calls the model, and an agent's shell never closes it, so the run hangs with no output.
 
