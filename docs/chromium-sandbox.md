@@ -5,6 +5,11 @@ profile; a host policy or setuid helper belongs in `servers` and requires a
 separate approved Ansible change. The current `--no-sandbox` remains a security
 exception, not a statement that Chromium cannot be sandboxed on Ubuntu.
 
+Since 2026-11-16 andromeda does not install the headless browser: only vega
+imports it. The binary cache had no ungoogled-chromium 157 for aarch64, and
+building it from source filled andromeda's root during a deploy. The findings
+below are andromeda's, from before that.
+
 ## Reproduced on the host
 
 - Ubuntu 24.04, Linux 6.8.0-138-generic, aarch64; the browser runs as user `samir`.
