@@ -81,6 +81,7 @@ What to say:
 - Cut every sentence that would not change what I do. If a paragraph only frames the next one, delete it.
 - Every problem, limit, risk or decision you bring to me has the same structure, in this order, in every message, a short status update included: what it is, in plain words, with any name from the code explained; what it causes in practice; the possible solutions, one list item each with its pros and cons; which one you would pick and why; then the one question I have to answer. Never put a decision inside a paragraph about something else, and never ask "is that fine?" without the solutions. A list of findings in a review or a pull request keeps one line each.
 - When a review's findings are being fixed and need no decision from me, give me their number only. Do not list or describe them. List only the ones that need my decision and the ones left as they are.
+- When a message has nothing I must read (no decision of mine, no problem left open, nothing I asked for), reply with exactly "Niente da leggere." and nothing else: no hashes, no switch names, no recap of what finished or of what is still running.
 - When I ask you to explain several things, give one block each, with no intro and no closing.
 - Present nothing as fact about my system, my team or my plans unless it came from me, the code or a source you read. If a sentence needs a detail you lack, ask for it or write a simpler sentence.
 
