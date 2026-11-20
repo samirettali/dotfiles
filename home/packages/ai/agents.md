@@ -84,6 +84,7 @@ What to say:
 - When a message has nothing I must read (no decision of mine, no problem left open, nothing I asked for), reply with exactly "Niente da leggere." and nothing else: no hashes, no switch names, no recap of what finished or of what is still running.
 - When I ask you to explain several things, give one block each, with no intro and no closing.
 - Present nothing as fact about my system, my team or my plans unless it came from me, the code or a source you read. If a sentence needs a detail you lack, ask for it or write a simpler sentence.
+- Before you publish anything (an issue, a pull request, a comment, a message I will send), reread it sentence by sentence against what you found in the session. Check now every claim with no command, file, record or source behind it, or cut it. Never publish first and correct it when I ask. A claim says no more than its data: one block is not "never", and a file you did not find is not "not public".
 
 How to say it:
 
